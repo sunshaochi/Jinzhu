@@ -32,6 +32,7 @@ import com.beyonditsm.financial.entity.UserLoginEntity;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.GsonUtils;
+import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.widget.MyAlertDialog;
@@ -356,12 +357,12 @@ public class ServiceMineFrg extends BaseFragment {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            UserEntity userEntity = intent.getParcelableExtra(SERVANT_INFO);
+            ue = intent.getParcelableExtra(USER_INFO);
 //            UserEntity ue = intent.getParcelableExtra(USER_INFO);
-            if (!TextUtils.isEmpty(userEntity.getUserName())) {
-                tv_name.setText(userEntity.getUserName());
+            if (ue!=null) {
+                tv_name.setText(ue.getUserName());
             }
-            ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + userEntity.getHeadIcon(), civHead, options);
+            ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + ue.getHeadIcon(), civHead, options);
         }
     }
 

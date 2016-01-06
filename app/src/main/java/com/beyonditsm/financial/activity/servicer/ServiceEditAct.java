@@ -2,8 +2,11 @@ package com.beyonditsm.financial.activity.servicer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.text.method.DialerKeyListener;
+import android.text.method.DigitsKeyListener;
 import android.view.View;
 import android.widget.EditText;
 
@@ -24,6 +27,8 @@ import com.tandong.sa.eventbus.EventBus;
 
 import org.json.JSONException;
 
+import java.lang.reflect.Type;
+
 /**
  * Created by Administrator on 2015/11/29.
  */
@@ -35,6 +40,7 @@ public class ServiceEditAct extends BaseActivity {
     public static String USER_TYPE = "type";
 //    private ServantEntity servantInfo;
     private UserEntity userInfo;
+    private int type1;
 
     @Override
     public void setLayout() {
@@ -47,6 +53,7 @@ public class ServiceEditAct extends BaseActivity {
         userInfo = getIntent().getParcelableExtra(ServiceMineFrg.SERVANT_INFO);
 //        userInfo = getIntent().getParcelableExtra(ServiceMineFrg.USER_INFO);
         TYPE = getIntent().getIntExtra(USER_TYPE, 0);
+        type1 = getIntent().getIntExtra(USER_TYPE,0);
         setTopT(TYPE);
         if (!TextUtils.isEmpty(etM.getText().toString().trim())) {
             etM.setSelection(etM.getText().toString().length());
@@ -63,6 +70,7 @@ public class ServiceEditAct extends BaseActivity {
                 switch (TYPE) {
                     case 0://真实姓名
                         userInfo.setUserName(content);
+                        updateUserData(userInfo);
                         break;
                     case 1://身份证号
                         if (!IdcardUtils.validateCard(content)) {
@@ -82,32 +90,37 @@ public class ServiceEditAct extends BaseActivity {
                         }
                         if (TextUtils.isEmpty(userInfo.getNativePlace()))
                             userInfo.setNativePlace(IdcardUtils.getProvinceByIdCard(content));
+                        updateUserData(userInfo);
                         break;
 
                     case 7://邮箱
                         userInfo.setEmail(content);
+                        updateUserData(userInfo);
                         break;
                     case 8://年龄
                         userInfo.setUserAge(Integer.valueOf(content));
+                        updateUserData(userInfo);
                         break;
-
                 }
-                updateUserData(userInfo);
-                switch (TYPE){
+
+                switch (type1){
                     case 4://收支银行
                         userInfo.setBankNameTitle(content);
+                        updateData(userInfo);
                         break;
                     case 5://收支支行
                         userInfo.setBankName(content);
+                        updateData(userInfo);
                         break;
                     case 6://银行账号
                         userInfo.setBankAccNo(content);
+                        updateData(userInfo);
                         break;
                     case 9://所在支行
                         userInfo.setBankName(content);
+                        updateData(userInfo);
                         break;
                 }
-                updateData(userInfo);
             }
         });
     }
@@ -130,6 +143,7 @@ public class ServiceEditAct extends BaseActivity {
             case 1:
                 setTopTitle("身份证号");
                 etM.setHint("请输入身份证号");
+                etM.setFilters(new InputFilter[]{new InputFilter.LengthFilter(18)});
                 if (!TextUtils.isEmpty(userInfo.getIdentCard())) {//NullPoint
                     etM.setText(userInfo.getIdentCard());
                 }
@@ -152,6 +166,8 @@ public class ServiceEditAct extends BaseActivity {
             case 6:
                 setTopTitle("银行账号");
                 etM.setHint("请输入银行账号");
+                etM.setFilters(new InputFilter[]{new InputFilter.LengthFilter(20)});
+                etM.setInputType(InputType.TYPE_CLASS_NUMBER);
                 if (!TextUtils.isEmpty(userInfo.getBankAccNo())) {
                     etM.setText(userInfo.getBankAccNo());
                 }
@@ -186,27 +202,29 @@ public class ServiceEditAct extends BaseActivity {
      * 更新资料
      */
     private void updateData(final UserEntity se) {
+        MyLogUtils.info("66666666666666666666666");
         RequestManager.getServicerManager().UpadateServantData(se, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
                 EventBus.getDefault().post(new UserEvent(se, TYPE));
 
-                Intent intent = new Intent(ServiceMineFrg.UPDATE_SERVANT);
-                intent.putExtra(ServiceMineFrg.SERVANT_INFO, se);
-                sendBroadcast(intent);
+//                Intent intent = new Intent(ServiceMineFrg.UPDATE_SERVANT);
+//                intent.putExtra(ServiceMineFrg.SERVANT_INFO, se);
+//                sendBroadcast(intent);
 
                 MyToastUtils.showShortToast(getApplicationContext(), "更新成功");
                 finish();
             }
 
             @Override
-            public void onError(int status,String msg) {
+            public void onError(int status, String msg) {
                 MyToastUtils.showShortToast(getApplicationContext(), msg);
             }
         });
     }
 
     private void updateUserData(final UserEntity userEntity){
+        MyLogUtils.info("00000000000000000000000000");
         RequestManager.getCommManager().updateData(userEntity, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
