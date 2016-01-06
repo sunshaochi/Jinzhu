@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_color">
+
+    <include layout="@layout/title_act_layout">
+
+    </include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:orientation="horizontal"
+        android:background="@color/bg_color"
+        android:paddingRight="15dp">
+
+        <TextView
+            style="@style/tv_second_style"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingLeft="15dp"
+            android:textSize="14sp"
+            android:gravity="center_vertical"
+            android:text="贷款产品"/>
+
+        <TextView
+            style="@style/tv_second_style"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingLeft="15dp"
+            android:textSize="14sp"
+            android:gravity="center"
+
+            android:text="总金额"/>
+
+        <TextView
+            style="@style/tv_second_style"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingLeft="15dp"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:text="单期还款"/>
+
+        <TextView
+            style="@style/tv_second_style"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingLeft="15dp"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:text="贷款情况"/>
+    </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <com.beyonditsm.financial.view.pullfreshview.LoadRefreshView
+                android:id="@+id/plv"
+                style="@style/pullrefresh_style"></com.beyonditsm.financial.view.pullfreshview.LoadRefreshView>
+
+            <com.beyonditsm.financial.view.LoadingView
+                android:id="@+id/loadingView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></com.beyonditsm.financial.view.LoadingView>
+        </FrameLayout>
+
+</LinearLayout>

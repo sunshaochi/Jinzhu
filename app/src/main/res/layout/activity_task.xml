@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/topLayout"
+        layout="@layout/title_act_layout"></include>
+
+
+    <LinearLayout
+        android:id="@+id/tsliner1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/undownbt"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:text="未完成"
+            android:textColor="#999999"
+            android:textSize="32px" />
+
+        <Button
+            android:id="@+id/downbt"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:text="已完成"
+            android:textColor="#999999"
+            android:textSize="32px" />
+
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/tsmianframe"
+        android:background="@color/white"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+    </FrameLayout>
+</LinearLayout>

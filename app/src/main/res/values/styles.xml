@@ -1,0 +1,284 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowAnimationStyle">@style/activityAnimation</item>
+    </style>
+
+
+    <style name="activityAnimation" parent="@android:style/Animation">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_from_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_out_to_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_in_from_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_to_right</item>
+    </style>
+    <!--注册界面线-->
+    <style name="zc_line">
+
+        <item name="android:layout_height">1px</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/line_color</item>
+    </style>
+    <!--注册界面et-->
+    <style name="zc_et">
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@null</item>
+        <item name="android:textColorHint">#999999</item>
+        <item name="android:singleLine">true</item>
+    </style>
+    <!--补充资料界面-->
+    <style name="add_et">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:background">@null</item>
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:layout_marginBottom">15dp</item>
+        <item name="android:layout_marginLeft">18dp</item>
+        <item name="android:textColorHint">#999999</item>
+        <item name="android:singleLine">true</item>
+
+
+
+
+    </style>
+
+    <!--通用蓝底btn-->
+    <style name="zc_btn">
+        <item name="android:layout_marginRight">25dp</item>
+        <item name="android:layout_marginLeft">25dp</item>
+        <item name="android:layout_height">44dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@drawable/button_gen</item>
+    </style>
+
+    <!-- 登录线的颜色-->
+    <style name="view_line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:background">@color/view_line</item>
+    </style>
+
+    <!-- 首页底部-->
+    <style name="main_btm_ll">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!-- 首页图标-->
+    <style name="main_btm_iv">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="main_btm_tv">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">#666666</item>
+
+    </style>
+
+    <!-- 一级标题文字样式-->
+    <style name="tv_primary_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/tv_primary_color</item>
+    </style>
+
+    <!-- 二级说明文字样式-->
+    <style name="tv_second_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/tv_second_color</item>
+    </style>
+
+    <!-- 三级辅助文字样式-->
+    <style name="tv_third_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/tv_third_color</item>
+    </style>
+
+    <!-- 价格-->
+    <style name="tv_price">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/tv_price_color</item>
+    </style>
+
+
+    <!-- pullfresh样式-->
+    <style name="pullrefresh_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/bg_color</item>
+        <item name="android:scrollbars">none</item>
+        <item name="android:cacheColorHint">#00000000</item>
+    </style>
+
+    <!-- 红色字体样式-->
+    <style name="tv_red_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/red_color</item>
+    </style>
+
+    <!-- 我的页面前面图片样式-->
+    <style name="iv_mine">
+        <item name="android:layout_width">20dp</item>
+        <item name="android:layout_height">20dp</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+    <!-- 我的样式-->
+    <style name="rl_mine_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">41dp</item>
+        <item name="android:background">@drawable/item_back</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+    </style>
+
+    <style name="arrow_right_style">
+        <item name="android:layout_width">8dp</item>
+        <item name="android:layout_height">13dp</item>
+        <item name="android:background">@mipmap/ico_arrow_no</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <!--贷款步骤et-->
+    <style name="cre_et">
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_marginLeft">75dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <!--<item name="android:background">@drawable/cre_et_bg</item>-->
+        <item name="android:background">@null</item>
+        <item name="android:singleLine">true</item>
+    </style>
+    <style name="task_et">
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_marginLeft">95dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@drawable/cre_et_bg</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <!-- 修改资料右边文字样式-->
+    <style name="tv_update_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/tv_second_color</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <!-- 贷款步骤选项文字样式-->
+    <style name="tv_select_style">
+        <item name="android:drawableRight">@mipmap/button_select</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#f63</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:drawablePadding">5dp</item>
+    </style>
+
+    <!--修改密码et-->
+    <style name="update_et">
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="iv_noData_noIntent">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginTop">67dp</item>
+    </style>
+
+    <style name="umeng_socialize_dialog_animations"></style>
+    <!-- 首页字体样式-->
+    <style name="home_text_style">
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_marginTop">20dp</item>
+    </style>
+    <style name="home_head_layout">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/home_btn_bg</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+    </style>
+
+    <!-- 信贷经理订单管理自定义指示器-->
+    <style name="mana_order_tab_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">44dp</item>
+        <!--<item name="android:layout_centerInParent">true</item>-->
+        <!--<item name="android:layout_marginRight">10dp</item>-->
+        <!--<item name="android:layout_marginLeft">10dp</item>-->
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@drawable/textview_color</item>
+    </style>
+
+    <!-- 登陆、注册、修改密码、忘记密码输入框-->
+    <style name="input_corners">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:background">@drawable/reg_conuers</item>
+    </style>
+
+
+    <!-- Loding_dialog样式Start -->
+    <style name="Dialog_bocop">
+        <item name="android:windowBackground">@color/dialog_bg</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@+android:style/Animation.Dialog</item>
+    </style>
+</resources>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    android:background="@drawable/item_back"
+    android:layout_width="match_parent" android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tv_zm"
+        android:background="#E0E0E0"
+        android:paddingLeft="15dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="24px"
+        android:layout_weight="1"
+        android:textColor="#333333"
+        android:text="A"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_gravity="center"
+            android:id="@+id/iv_head"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="10dp"
+            android:src="@mipmap/friend_img"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+        <LinearLayout
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_name"
+                android:text="张潇"
+                android:textSize="32px"
+                android:textColor="#333333"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tv_phonenumber"
+                android:text="15290398920"
+                android:textSize="28px"
+                android:textColor="#666666"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:gravity="right"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/btn_invate"
+                android:layout_marginRight="30dp"
+                android:text="邀请"
+                android:textSize="28px"
+                android:textColor="#ffffff"
+                android:background="@drawable/btn_invate"
+                android:clickable="true"
+                android:layout_width="55dp"
+                android:layout_height="30dp"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/tv_aregister"
+                android:text="已注册"
+                android:visibility="gone"
+                android:textColor="#999999"
+                android:textSize="28px"
+                android:layout_marginRight="32dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </LinearLayout>
+
+
+
+</LinearLayout>

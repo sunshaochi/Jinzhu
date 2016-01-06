@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_color">
+    <include layout="@layout/title_act_layout"></include>
+
+    <com.beyonditsm.financial.widget.ClearEditText
+        android:id="@+id/etM"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:textSize="14sp"
+        android:textColor="@color/tv_second_color"
+        />
+</LinearLayout>

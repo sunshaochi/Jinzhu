@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="main_color">#f58b35</color>
+    <color name="white">#ffffff</color>
+
+    <!-- 底部按钮线-->
+    <color name="bottom_lines">#b2b2b2</color>
+    <!-- 背景色-->
+    <color name="bg_color">#efeff4</color>
+    <!-- 线的颜色-->
+    <color name="view_line">#e7e7e7</color>
+    <color name="tv_black">#333333</color>
+    <!-- 灰色字体-->
+    <color name="tv_gray">#636568</color>
+    <!-- 注册线的颜色-->
+    <color name="line_color">#dcdcdc</color>
+
+    <!--基本任务下的线颜色-->
+    <color name="base_line_color">#dbdbdb</color>
+
+    <!-- 一级标题字颜色-->
+    <color name="tv_primary_color">#333333</color>
+    <!-- 二级标题字颜色-->
+    <color name="tv_second_color">#666666</color>
+    <!-- 三级辅助字颜色-->
+    <color name="tv_third_color">#999999</color>
+
+    <!-- 价格字体颜色-->
+    <color name="tv_price_color">#ff6633</color>
+    <!---->
+    <color name="gray_item">#e7e7e7</color>
+
+    <!-- 红色字颜色-->
+    <color name="red_color">#ff6633</color>
+
+    <!-- 绿色字颜色-->
+    <color name="green_color">#51da7b</color>
+    <!--蓝色-->
+    <color name="blue_color">#7ab3ff</color>
+
+    <color name="actionsheet_gray">#8F8F8F</color>
+
+    <color name="rateColor">#fff0a3</color>
+
+    <color name="province_line_border">#C7C7C7</color>
+
+    <!-- 自定义 dialog弹出框颜色 -->
+    <color name="trans">#00000000</color>
+    <color name="black">#000000</color>
+    <color name="alertdialog_line">#c6c6c6</color>
+    <color name="actionsheet_blue">#037BFF</color>
+    <color name="actionsheet_red">#FD4A2E</color>
+
+    <color name="gray_color">#3e444f</color>
+    <color name="address_color">#CCCCCC</color>
+
+    <drawable name="transparent">#f58b35</drawable>
+    <drawable name="default_pressed">#e86c07</drawable>
+
+    <color name="dialog_bg">#77000000</color>
+
+
+</resources>

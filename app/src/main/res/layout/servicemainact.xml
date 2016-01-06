@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical">
+    <include layout="@layout/main_title"></include>
+
+    <FrameLayout
+        android:id="@+id/main_frame"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"></FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/bottom_lines"></View>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/bg_color"
+        android:orientation="horizontal">
+        <!--钱包-->
+        <LinearLayout
+            android:id="@+id/llMyWallet"
+            style="@style/main_btm_ll">
+
+            <ImageView
+                android:id="@+id/ivMyWallet"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@mipmap/tab_package_nor"/>
+
+            <TextView
+                android:id="@+id/tvMyWallet"
+                style="@style/main_btm_tv"
+                android:text="钱包"
+               />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llCredit"
+            style="@style/main_btm_ll">
+
+            <ImageView
+                android:id="@+id/ivCredit"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@mipmap/tab_credit_nor"/>
+
+            <TextView
+                android:id="@+id/tvCredit"
+                style="@style/main_btm_tv"
+                android:text="贷款"
+                />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:id="@+id/llChat"
+                style="@style/main_btm_ll">
+
+                <ImageView
+                    android:id="@+id/ivMes"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@mipmap/tab_chat_nor"/>
+
+                <TextView
+                    android:id="@+id/tvMes"
+                    style="@style/main_btm_tv"
+                    android:text="沟通"
+                    />
+            </LinearLayout>
+
+            <ImageView
+                android:visibility="gone"
+                android:layout_marginTop="5dp"
+                android:id="@+id/iv_tag"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginRight="15dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/unread_count_bg"
+                />
+
+        </RelativeLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/llMine"
+            style="@style/main_btm_ll">
+
+            <ImageView
+                android:id="@+id/ivMine"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@mipmap/tab_me_nor"/>
+
+            <TextView
+                android:id="@+id/tvMine"
+                style="@style/main_btm_tv"
+                android:text="我的"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical">
+
+    <include layout="@layout/title_act_layout"></include>
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_remark"
+        android:layout_marginTop="25dp"
+        android:textSize="14sp"
+        android:textColor="#333"
+        android:layout_marginLeft="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="附件说明："/>
+
+    <TextView
+        android:padding="10dp"
+        android:background="@color/white"
+        android:id="@+id/tv_sm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:text="客户上传的附件"
+        android:textColor="#333"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <GridView
+            android:id="@+id/gv_pic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@color/white"
+            android:columnWidth="90dp"
+            android:gravity="center"
+            android:horizontalSpacing="2.5dp"
+            android:numColumns="3"
+            android:paddingBottom="15dp"
+            android:scrollbars="none"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="2.5dp"></GridView>
+
+        <TextView
+            android:id="@+id/no_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="110dp"
+            android:drawablePadding="10dp"
+            android:drawableTop="@mipmap/icon_nofile"
+            android:gravity="center"
+            android:text="暂时没有附件"
+            android:visibility="gone" />
+
+        <com.beyonditsm.financial.view.LoadingView
+            android:id="@+id/loadView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+</LinearLayout>

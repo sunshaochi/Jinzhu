@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/credit_item"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:gravity="center_vertical">
+
+    <include
+        android:id="@+id/ll_list_head"
+        layout="@layout/list_head" />
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        >
+
+        <View
+            android:id="@+id/top_lines"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="56dp"
+            android:background="@color/line_color"></View>
+
+        <LinearLayout
+            android:id="@+id/ll_left"
+            android:layout_width="26dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="15dp"
+            android:orientation="vertical"
+
+            >
+
+            <ImageView
+                android:layout_width="4px"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="13dp"
+                android:layout_weight="1"
+                android:background="@color/line_color" />
+
+            <RelativeLayout
+                android:layout_width="26dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+
+                <ImageView
+                    android:id="@+id/icon_credit_status"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ico_status_f" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="4px"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="13dp"
+                android:layout_weight="1"
+                android:background="@color/line_color" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_alignLeft="@+id/top_lines"
+            android:layout_toRightOf="@+id/ll_left"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_credit_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/tv_primary_color"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/tv_credit_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="14:29"
+                android:textColor="@color/tv_second_color" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_alignLeft="@+id/top_lines"
+            android:layout_alignParentBottom="true"
+            android:background="@color/line_color"></View>
+
+        <ImageView
+            android:id="@+id/iv_connetion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="25dp"
+            android:src="@drawable/button_chat_r"
+            android:visibility="gone" />
+    </RelativeLayout>
+    <include
+        android:id="@+id/ll_list_bottom"
+        layout="@layout/list_foot"/>
+</LinearLayout>

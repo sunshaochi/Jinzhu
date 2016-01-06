@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/ivPic"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+             />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="15dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_money"
+                style="@style/tv_primary_style"
+                android:text="贷款50万" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_rate"
+                    style="@style/tv_second_style"
+                    android:text="利率：0.88%"
+                    android:layout_marginRight="10dp"/>
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:text="用户等级：D"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_default_rate"
+                style="@style/tv_second_style"
+                android:layout_marginTop="5dp"
+                android:text="违约率：0.05%" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:text="总金额 ¥" />
+
+                <TextView
+                    android:id="@+id/tv_total_money"
+                    style="@style/tv_primary_style"
+                    android:layout_marginLeft="5dp"
+                    android:text="500000"
+                    android:textColor="#f63"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:layout_gravity="center_vertical"
+            android:id="@+id/graborder_btn"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="15dp"
+            android:textSize="14sp"
+            android:background="@drawable/cre_btn_bg_orange"
+            android:text="抢单"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <View style="@style/view_line"></View>
+
+</LinearLayout>

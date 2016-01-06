@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android_custom="http://schemas.android.com/apk/res-auto"
+    xmlns:mz="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical">
+
+    <include layout="@layout/title_act_layout"></include>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/single_two"
+                android:background="#ffffff"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="137dp"
+                    android:layout_height="137dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:id="@+id/up_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="30dp"
+                        android:textColor="#ff8383"
+                        android:textSize="14sp" />
+
+                    <com.beyonditsm.financial.view.RoundProgressBar
+                        android:id="@+id/up_progress"
+                        android:layout_width="137dp"
+                        android:layout_height="137dp"
+                        android_custom:roundColor="#e5e5e5"
+                        android_custom:roundProgressColor="#ff8383"
+                        android_custom:roundWidth1="13dp"
+                        android_custom:textColor="#ff8383"
+                        android_custom:textSize="42sp" />
+
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/up_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#999"
+                    android:textSize="12sp" />
+
+                <RelativeLayout
+                    android:layout_width="137dp"
+                    android:layout_height="137dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:id="@+id/down_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="30dp"
+                        android:textColor="#83ccff"
+                        android:textSize="14sp" />
+
+                    <com.beyonditsm.financial.view.RoundProgressBar
+                        android:id="@+id/down_progress"
+                        android:layout_width="137dp"
+                        android:layout_height="137dp"
+                        android_custom:roundColor="#e5e5e5"
+                        android_custom:roundProgressColor="#83ccff"
+                        android_custom:roundWidth1="13dp"
+                        android_custom:textColor="#83ccff"
+                        android_custom:textSize="42sp" />
+
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/down_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#999"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="#ffffff">
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/myViewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <com.beyonditsm.financial.view.viewpagerindicator.CirclePageIndicator
+                    android:id="@+id/budgetpic_indicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:padding="10dip"
+                    mz:fillColor="#fead00"
+                    mz:pageColor="#00000000"
+                    mz:radius="5dp"
+                    mz:strokeColor="#ccc" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_marginTop="15dp"
+                android:text="当6个指标全部达到100%时，用户可点击升级后成为服务者。每日可享受最高2000元的奖励"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btn_tobe_service"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:layout_marginTop="22dp"
+                android:background="@drawable/button_gen"
+                android:text="升级成为服务者"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <com.beyonditsm.financial.view.LoadingView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/loadView"
+        />
+    </FrameLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical">
+
+    <include layout="@layout/title_act_layout"></include>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rlHead"
+                style="@style/rl_mine_style"
+                android:layout_height="70dp">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="头像" />
+
+                <ImageView
+                    android:id="@+id/ivArrowHead"
+                    style="@style/arrow_right_style"
+                    android:layout_alignParentRight="true" />
+
+                <com.beyonditsm.financial.widget.ScaleAllImageView
+                    android:id="@+id/civHead"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@id/ivArrowHead"
+                    android:src="@mipmap/ava_default" />
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <RelativeLayout
+                android:id="@+id/rlCard"
+                style="@style/rl_mine_style">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="身份证号" />
+
+                <ImageView
+                    android:id="@+id/ivArrowCard"
+                    style="@style/arrow_right_style"
+                    android:layout_alignParentRight="true" />
+
+                <TextView
+                    android:id="@+id/tvCard"
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@id/ivArrowCard" />
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <RelativeLayout
+                android:id="@+id/rlsexSelector"
+                style="@style/rl_mine_style">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="性别" />
+
+                <ImageView
+                    android:id="@+id/ivArrowSex"
+                    style="@style/arrow_right_style"
+                    android:layout_alignParentRight="true" />
+
+                <TextView
+                    android:id="@+id/tvSex"
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@id/ivArrowSex" />
+
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <RelativeLayout
+                android:id="@+id/rlAge"
+                style="@style/rl_mine_style">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="年龄" />
+
+                <ImageView
+                    android:id="@+id/ivArrowAge"
+                    style="@style/arrow_right_style"
+                    android:layout_alignParentRight="true" />
+
+                <TextView
+                    android:id="@+id/tvAge"
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@id/ivArrowAge" />
+
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <RelativeLayout
+                android:id="@+id/rlHome"
+                style="@style/rl_mine_style">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="常住地" />
+
+                <ImageView
+                    android:id="@+id/ivArrowOften"
+                    style="@style/arrow_right_style"
+                    android:layout_alignParentRight="true" />
+
+                <TextView
+                    android:id="@+id/tvHome"
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@id/ivArrowOften" />
+
+            </RelativeLayout>
+
+
+            <View style="@style/view_line"></View>
+
+            <RelativeLayout
+                android:id="@+id/rlName"
+                style="@style/rl_mine_style"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="真实姓名" />
+
+                <ImageView
+                    android:id="@+id/ivArrowName"
+                    style="@style/arrow_right_style"
+                    android:layout_alignParentRight="true" />
+
+                <TextView
+                    android:id="@+id/tvName"
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@id/ivArrowName" />
+
+            </RelativeLayout>
+
+
+            <View style="@style/view_line"></View>
+
+            <RelativeLayout
+                android:id="@+id/rlCity"
+                style="@style/rl_mine_style">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="所在城市" />
+
+                <ImageView
+                    android:id="@+id/ivArrowCity"
+                    style="@style/arrow_right_style"
+                    android:layout_alignParentRight="true" />
+
+                <TextView
+
+                    android:id="@+id/tvCity"
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@id/ivArrowCity" />
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <RelativeLayout
+                android:id="@+id/rlNative"
+                style="@style/rl_mine_style"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="所在支行" />
+
+                <ImageView
+                    android:id="@+id/ivArrowNative"
+                    style="@style/arrow_right_style"
+                    android:layout_alignParentRight="true" />
+
+                <TextView
+                    android:id="@+id/tvNative"
+                    style="@style/tv_update_style"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@id/ivArrowNative" />
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <RelativeLayout
+                android:id="@+id/rlHouseHold"
+                style="@style/rl_mine_style">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="户籍地址" />
+
+                <ImageView
+                    android:id="@+id/ivArrowHouseHold"
+                    style="@style/arrow_right_style"
+                    android:layout_alignParentRight="true" />
+
+                <TextView
+                    android:id="@+id/tvHouseHold"
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@id/ivArrowHouseHold" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rlBank"
+                style="@style/rl_mine_style"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="收款银行" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/tvBank"
+                        style="@style/tv_update_style"
+                        android:layout_marginRight="10dp" />
+
+                    <ImageView style="@style/arrow_right_style" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <RelativeLayout
+                android:id="@+id/rlSubbranch"
+                style="@style/rl_mine_style">
+                <TextView
+                    style="@style/tv_second_style"
+                    android:text="收款支行"
+                    android:layout_centerVertical="true"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:orientation="horizontal"
+                    android:layout_centerVertical="true">
+                    <TextView
+                        android:id="@+id/tv_subbranch"
+                        style="@style/tv_update_style"
+                        android:layout_marginRight="10dp"/>
+                    <ImageView
+                        style="@style/arrow_right_style" />
+                </LinearLayout>
+            </RelativeLayout>
+            <View style="@style/view_line"></View>
+            <RelativeLayout
+                android:id="@+id/rlBankAccount"
+                style="@style/rl_mine_style">
+                <TextView
+                    style="@style/tv_second_style"
+                    android:text="银行账号"
+                    android:layout_centerVertical="true"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true">
+                    <TextView
+                        android:id="@+id/tv_bankAcount"
+                        style="@style/tv_update_style"
+                        android:layout_marginRight="10dp"/>
+                    <ImageView
+                        style="@style/arrow_right_style" />
+                </LinearLayout>
+            </RelativeLayout>
+            <View style="@style/view_line"></View>
+            <RelativeLayout
+                android:id="@+id/rlEmail"
+                style="@style/rl_mine_style">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="电子邮箱" />
+
+                <ImageView
+                    android:id="@+id/ivArrowEmail"
+                    style="@style/arrow_right_style"
+                    android:layout_alignParentRight="true" />
+
+                <TextView
+                    android:id="@+id/tvEmail"
+                    style="@style/tv_update_style"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@id/ivArrowEmail" />
+
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

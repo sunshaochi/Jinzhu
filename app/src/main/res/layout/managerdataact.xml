@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_color"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/title_act_layout"></include>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:id="@+id/rlHead"
+                style="@style/rl_mine_style"
+                android:layout_height="70dp">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="头像" />
+
+                <com.beyonditsm.financial.view.CircleImageView
+                    android:id="@+id/civHead"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@mipmap/ava_default" />
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <RelativeLayout style="@style/rl_mine_style">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="性别" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="男"/>
+
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <RelativeLayout
+                android:id="@+id/rlAge"
+                style="@style/rl_mine_style">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="年龄" />
+
+                <TextView
+                    android:layout_marginRight="0dp"
+                    android:id="@+id/tvAge"
+                    style="@style/tv_update_style"
+                    android:text="26" />
+
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <RelativeLayout
+                android:id="@+id/rlHome"
+                style="@style/rl_mine_style">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="常住地" />
+
+                <TextView
+                    android:layout_marginRight="0dp"
+                    android:id="@+id/tvHome"
+                    style="@style/tv_update_style"
+                    android:text="上海" />
+
+            </RelativeLayout>
+
+
+            <View style="@style/view_line"></View>
+
+            <RelativeLayout
+                android:id="@+id/rlName"
+                style="@style/rl_mine_style"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="真实姓名" />
+
+                <TextView
+                    android:layout_marginRight="0dp"
+                    android:id="@+id/tvName"
+                    style="@style/tv_update_style"
+                    android:text="张三" />
+
+            </RelativeLayout>
+
+
+            <View style="@style/view_line"></View>
+
+            <RelativeLayout
+                android:id="@+id/rlCard"
+                style="@style/rl_mine_style">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="身份证号" />
+
+                <TextView
+                    android:layout_marginRight="0dp"
+                    android:id="@+id/tvCard"
+                    style="@style/tv_update_style"
+                    android:text="411323188990982234" />
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <RelativeLayout
+                android:id="@+id/rlCity"
+                style="@style/rl_mine_style">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="所在城市" />
+
+                <TextView
+                    android:layout_marginRight="0dp"
+                    android:id="@+id/tvCity"
+                    style="@style/tv_update_style"
+                    android:text="上海" />
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <RelativeLayout
+                android:id="@+id/rlNative"
+                style="@style/rl_mine_style">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="所在支行" />
+
+                <TextView
+                    android:layout_marginRight="0dp"
+                    android:id="@+id/tvnative"
+                    style="@style/tv_update_style"
+                    android:text="大宁支行" />
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <RelativeLayout
+                android:id="@+id/rlHouseHold"
+                style="@style/rl_mine_style">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="户籍地址" />
+
+                <TextView
+                    android:layout_marginRight="0dp"
+                    android:id="@+id/tvHouseHold"
+                    style="@style/tv_update_style"
+                    android:text="上海市长宁区" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/rlBank"
+                    style="@style/rl_mine_style">
+
+                    <TextView
+                        style="@style/tv_second_style"
+                        android:layout_centerVertical="true"
+                        android:text="入职时间" />
+
+                    <TextView
+                        android:layout_marginRight="0dp"
+                        android:id="@+id/tvStart"
+                        style="@style/tv_update_style"
+                        android:text="2009/09" />
+
+                </RelativeLayout>
+
+                <View style="@style/view_line"></View>
+
+                <RelativeLayout
+                    android:id="@+id/rlSonBank"
+                    style="@style/rl_mine_style">
+
+                    <TextView
+                        style="@style/tv_second_style"
+                        android:layout_centerVertical="true"
+                        android:text="工作年限" />
+
+                    <TextView
+                        android:layout_marginRight="0dp"
+                        android:id="@+id/tvYear"
+                        style="@style/tv_update_style"
+                        android:text="3年" />
+
+                </RelativeLayout>
+
+                <View style="@style/view_line"></View>
+
+                <RelativeLayout
+                    android:id="@+id/rlBankNumber"
+                    style="@style/rl_mine_style">
+
+                    <TextView
+                        style="@style/tv_second_style"
+                        android:layout_centerVertical="true"
+                        android:text="职级" />
+
+                    <TextView
+                        android:layout_marginRight="0dp"
+                        android:id="@+id/tvJob"
+                        style="@style/tv_update_style"
+                        android:text="部门经理" />
+
+                </RelativeLayout>
+
+                <View style="@style/view_line"></View>
+
+                <RelativeLayout
+                    android:id="@+id/rlEmail"
+                    style="@style/rl_mine_style">
+
+                    <TextView
+                        style="@style/tv_second_style"
+                        android:layout_centerVertical="true"
+                        android:text="电子邮箱" />
+                    <TextView
+                        android:layout_marginRight="0dp"
+                        android:id="@+id/tvEmail"
+                        style="@style/tv_update_style"
+                        android:text="2009@qq.com" />
+
+                </RelativeLayout>
+
+                <View style="@style/view_line"></View>
+
+                <RelativeLayout
+                    android:id="@+id/rlWx"
+                    style="@style/rl_mine_style">
+
+                    <TextView
+                        style="@style/tv_second_style"
+                        android:layout_centerVertical="true"
+                        android:text="微信号" />
+
+                    <TextView
+                        android:layout_marginRight="0dp"
+                        android:id="@+id/tvWx"
+                        style="@style/tv_update_style"
+                        android:text="jm21231" />
+
+                </RelativeLayout>
+
+                <View style="@style/view_line"></View>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

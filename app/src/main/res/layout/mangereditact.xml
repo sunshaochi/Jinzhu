@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_color"
+    android:layout_height="match_parent">
+    <include layout="@layout/title_act_layout"></include>
+
+    <EditText
+        android:id="@+id/manager_et"
+        android:textSize="14sp"
+        android:textColor="#333"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:paddingLeft="15dp"/>
+
+</LinearLayout>

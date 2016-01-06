@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical">
+
+    <include layout="@layout/title_act_layout"></include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的推荐码"
+            android:textColor="@color/tv_black" />
+
+        <TextView
+            android:id="@+id/my_tjm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="232n1jk3n2kjnk"
+            android:textColor="@color/tv_black" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/my_ewm"
+        android:layout_width="176dp"
+        android:layout_height="176dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:src="@mipmap/erweima" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="推荐链接"
+            android:textColor="@color/tv_black" />
+
+        <TextView
+            android:id="@+id/my_lj"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="http://123.com"
+            android:textColor="@color/tv_black" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp">
+
+        <TextView
+            android:layout_gravity="bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我要分享"
+            android:textColor="@color/tv_black" />
+
+        <ImageView
+            android:id="@+id/share_wx"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:src="@mipmap/wx_logo" />
+
+        <ImageView
+            android:id="@+id/share_wb"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/weibo_logo" />
+
+        <ImageView
+            android:id="@+id/share_qq"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/qq_logo" />
+
+    </LinearLayout>
+    
+    <View
+        android:layout_marginTop="35dp"
+        android:background="@color/gray_item"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"></View>
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textColor="@color/tv_black"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="推荐用户贷款总金额："/>
+        <TextView
+            android:id="@+id/my_total_money"
+            android:textSize="16sp"
+            android:textColor="#f63"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="500000"/>
+        <TextView
+            android:textColor="@color/tv_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="元"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_marginLeft="15dp"
+        android:textColor="@color/tv_black"
+        android:text="我推荐的用户"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ListView
+        android:id="@+id/my_tj_list"
+        android:divider="@null"
+        android:scrollbars="none"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
+</LinearLayout>

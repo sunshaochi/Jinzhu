@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.beyonditsm.financial" >
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <permission
+        android:name="com.beyonditsm.financial.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <!-- Required  一些系统要求的权限，如访问网络等-->
+    <uses-permission android:name="com.beyonditsm.financial.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.WRITE_APN_SETTINGS"/>
+
+
+
+    <!-- Optional for location -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+
+    <!-- ###################声明SDK使用的相关权限###################### -->
+    <!-- 检测网络状态 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 获取mac地址作为用户的备用唯一标识 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 获取用户手机的IMEI，用来唯一的标识用户 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 缓存资源优先存入SDcard -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 允许应用程序联网，以便向我们的服务器端发送数据 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- QQ、QQ空间所需权限 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/logo"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+        android:name=".MyApplication">
+        <activity
+            android:name=".activity.SplashAct"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- 主页面-->
+        <activity android:name=".activity.MainActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.VIEW" />-->
+
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+
+                <!--<data-->
+                    <!--android:host="com.beyonditsm.financial"-->
+                    <!--android:pathPrefix="/conversationlist"-->
+                    <!--android:scheme="rong" />-->
+            <!--</intent-filter>-->
+
+        </activity>
+        <!-- 引导页-->
+        <activity android:name=".activity.GuideActivity"
+            android:screenOrientation="portrait"></activity>
+        <!-- 登录-->
+        <activity android:name=".activity.user.LoginAct"
+            android:screenOrientation="portrait"></activity>
+        <!-- 注册-->
+        <activity android:name=".activity.user.RegisterAct"
+            android:screenOrientation="portrait"></activity>
+        <!-- 贷款详情-->
+        <activity android:name=".activity.credit.CreditDetailAct"
+            android:screenOrientation="portrait"></activity>
+        <!-- 热门贷款详情-->
+        <activity android:name=".activity.user.HotCreditDetailAct"
+            android:screenOrientation="portrait"></activity>
+        <!-- 设置-->
+        <activity android:name=".activity.user.SettingAct"
+            android:screenOrientation="portrait"></activity>
+        <!-- 修改资料-->
+        <activity android:name=".activity.user.UpdateAct"
+            android:screenOrientation="portrait"></activity>
+        <!-- 找回密码-->
+        <activity android:name=".activity.user.FindPwdAct"
+            android:screenOrientation="portrait"></activity>
+        <!-- 重置密码-->
+        <activity android:name=".activity.user.UpdatePwdAct"
+            android:screenOrientation="portrait"></activity>
+        <!-- 打工挣钱-->
+        <!-- 我的贷款-->
+        <activity android:name=".activity.user.MyCreditAct"
+            android:screenOrientation="portrait"></activity>
+        <!-- 贷款流程-->
+        <activity android:name=".activity.credit.CreditStepAct"
+            android:screenOrientation="portrait"></activity>
+        <!-- 裁减图像-->
+        <activity android:name=".view.crop.ClipActivity"
+            android:screenOrientation="portrait"></activity>
+        <!-- 修改信息-->
+        <activity
+            android:name=".activity.user.EditAct"
+            android:screenOrientation="portrait"></activity>
+        <!--我的贷款详情-->
+        <activity
+            android:name=".activity.credit.MyCreditDAct"
+            android:screenOrientation="portrait"></activity>
+        <!-- 我的推荐-->
+        <activity android:name=".activity.user.MyRecommAct"
+            android:screenOrientation="portrait"></activity>
+        <!--忘记密码-->
+        <activity
+            android:name=".activity.user.FogetPwdAct"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".activity.user.CultivationAct"
+            android:screenOrientation="portrait"></activity>
+        <!-- 我的任务-->
+        <!-- 上传附件-->
+        <activity android:name=".activity.credit.UpLoadFileAct"
+            android:screenOrientation="portrait"></activity>
+        <!--补充资料-->
+        <activity android:name=".activity.user.AddInfo"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".activity.user.CreditPointAct"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".activity.user.TiJiaoFuJianAct"
+            android:screenOrientation="portrait"></activity>
+
+        <!-- 首页订单详情activity-->
+        <activity android:name=".activity.user.HomeCreditDetailAct"
+            android:screenOrientation="portrait"></activity>
+
+        <!-- 服务者主act-->
+        <activity
+            android:name=".activity.servicer.ServiceMainAct"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.VIEW" />-->
+
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+
+                <!--<data-->
+                    <!--android:host="com.beyonditsm.financial"-->
+                    <!--android:pathPrefix="/conversationlist"-->
+                    <!--android:scheme="rong" />-->
+            <!--</intent-filter>-->
+
+        </activity>
+        <!-- 提现记录-->
+        <activity
+            android:name=".activity.servicer.WithdrawalsAct"
+            android:screenOrientation="portrait"></activity>
+        <!-- 服务者设置界面-->
+        <!-- 服务者修改密码界面-->
+        <activity
+            android:name=".activity.servicer.ChangePwdAct"
+            android:screenOrientation="portrait"></activity>
+        <!-- 服务者我的资料界面 -->
+        <activity
+            android:name=".activity.servicer.ServiceDataAct"
+            android:screenOrientation="portrait"/>
+
+        <!-- 服务者修改资料条目界面-->
+        <activity
+            android:name=".activity.servicer.ServiceEditAct"
+            android:screenOrientation="portrait"/>
+        <!-- 信贷经理主界面-->
+        <activity
+            android:name=".activity.manager.ManagerMainAct"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.VIEW" />-->
+
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
+
+                <!--<data-->
+                    <!--android:host="com.beyonditsm.financial"-->
+                    <!--android:pathPrefix="/conversationlist"-->
+                    <!--android:scheme="rong" />-->
+            <!--</intent-filter>-->
+
+        </activity>
+        <!-- 信贷经理订单管理界面-->
+        <activity
+            android:name=".activity.manager.OrderAct"
+            android:screenOrientation="portrait"></activity>
+        <!-- 信贷经理订单详情界面-->
+        <activity
+            android:name=".activity.manager.DribblewareAct"
+            android:screenOrientation="portrait"></activity>
+        <!-- 信贷经理修改个人资料界面以及个人资料界面-->
+        <activity
+            android:name=".activity.manager.ManagerUpdateAct"
+            android:screenOrientation="portrait"></activity>
+        <!-- 信贷经理编辑个人资料界面-->
+        <activity
+            android:name=".activity.manager.ManagerEditAct"
+            android:screenOrientation="portrait"></activity>
+        <!-- 选择性别界面-->
+        <activity
+            android:name=".activity.manager.SelectSexAct"
+            android:screenOrientation="portrait"></activity>
+
+        <!--信用耕耘界面-->
+        <!--做上传照片的任务-->
+        <activity android:name=".activity.user.DoTaskPicture"
+            android:screenOrientation="portrait"></activity>
+        <!--做最近游玩地方的任务-->
+        <activity android:name=".activity.user.DoTaskPlaceAct"
+            android:screenOrientation="portrait"></activity>
+        <!--评估界面-->
+        <activity android:name=".activity.manager.PGAct"
+            android:screenOrientation="portrait"></activity>
+        <!--查看图片界面-->
+        <activity android:name=".activity.PhotoActivity"
+            android:screenOrientation="portrait"></activity>
+        <!--通讯录-->
+        <activity android:name=".activity.user.AddressBookAct"
+            android:screenOrientation="portrait"></activity>
+        <!--删除照片-->
+        <!--信用耕耘-->
+        <activity android:name=".activity.user.HardCreditAct"
+            android:screenOrientation="portrait"></activity>
+        <!--初级任务-->
+        <!--任务详情-->
+        <activity android:name=".activity.user.TaskDetail"
+            android:screenOrientation="portrait"></activity>
+        <!--补充资料-->
+        <activity android:name=".activity.user.SuppleInfoAct"
+            android:screenOrientation="portrait"></activity>
+        <!--基本任务-->
+        <activity android:name=".activity.user.BaseTaskAct"
+            android:screenOrientation="portrait"></activity>
+        <!--中级任务-->
+        <!--高级任务-->
+        <!--完成传照片任务-->
+        <activity android:name=".activity.user.FinishTaskPicture"
+            android:screenOrientation="portrait"></activity>
+        <!--完成填写游玩地方任务-->
+        <activity android:name=".activity.user.FinishTaskPlaceAct"
+            android:screenOrientation="portrait"></activity>
+        <!--完成补充资料任务-->
+        <!--完成选择教育程度任务-->
+        <!--游戏-->
+        <activity android:name=".activity.user.GameActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".activity.user.TaskLevelAct"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".activity.manager.GetPictureAct"
+            android:screenOrientation="portrait"></activity>
+
+        <activity android:name=".view.crop.square.CropImageActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.photo.PicSelectActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.photo.ImagePagerActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.photo.ImageBrowserActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.manager.OrderDetailAct"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.user.NewWorkAct"
+            android:screenOrientation="portrait"></activity>
+        <!--消息中心-->
+        <activity android:name=".activity.MessageActivity"
+            android:screenOrientation="portrait"></activity>
+
+        <!-- 扫描二维码结果展示界面 -->
+
+        <!-- ###################注册SDK使用的Activity###################### -->
+        <!--分享编辑页-->
+        <activity
+            android:name="com.umeng.socialize.view.ShareActivity"
+            android:configChanges="orientation|keyboard"
+            android:launchMode="singleTask"
+            android:noHistory="true"
+            android:windowSoftInputMode="stateVisible|adjustResize" >
+        </activity>
+
+        <!-- 腾讯SSO授权的Activity注册 -->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent1105013184" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+
+        <!-- 微信回调activity -->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!-- ###################添加UmengAppkey###################### -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5668ecbde0f55aa3b5002968" >
+        </meta-data>
+
+        <!--推广渠道-->
+        <!--<meta-data android:value="Wandoujia" android:name="UMENG_CHANNEL"/>-->
+
+        <!--会话界面-->
+        <activity
+            android:name=".activity.ConversationActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="com.beyonditsm.financial"
+                    android:pathPrefix="/conversation/"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+
+
+
+        <!-- Required SDK核心功能-->
+        <activity
+            android:name="cn.jpush.android.ui.PushActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="cn.jpush.android.ui.PushActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="com.beyonditsm.financial" />
+            </intent-filter>
+        </activity>
+        <!-- Required  SDK核心功能-->
+        <service
+            android:name="cn.jpush.android.service.DownloadService"
+            android:enabled="true"
+            android:exported="false" >
+        </service>
+
+
+        <!-- Required SDK 核心功能-->
+        <!-- 可配置android:process参数将PushService放在其他进程中 -->
+        <service
+            android:name="cn.jpush.android.service.PushService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTER" />
+                <action android:name="cn.jpush.android.intent.REPORT" />
+                <action android:name="cn.jpush.android.intent.PushService" />
+                <action android:name="cn.jpush.android.intent.PUSH_TIME" />
+            </intent-filter>
+        </service>
+
+        <!-- since 1.8.0 option 可选项。用于同一设备中不同应用的JPush服务相互拉起的功能。 -->
+        <!-- 若不启用该功能可删除该组件，将不拉起其他应用也不能被其他应用拉起 -->
+        <service
+            android:name="cn.jpush.android.service.DaemonService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.DaemonService" />
+                <category android:name="com.beyonditsm.financial" />
+            </intent-filter>
+
+        </service>
+
+        <!-- Required SDK核心功能-->
+        <receiver
+            android:name="cn.jpush.android.service.PushReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter android:priority="1000">
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />   <!--Required  显示通知栏 -->
+                <category android:name="com.beyonditsm.financial" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <!-- Optional -->
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <data android:scheme="package" />
+            </intent-filter>
+
+        </receiver>
+
+        <!-- Required SDK核心功能-->
+        <receiver android:name="cn.jpush.android.service.AlarmReceiver" android:exported="false"/>
+
+        <!-- User defined.  For test only  用户自定义的广播接收器-->
+        <receiver
+            android:name=".receiver.MyReceiver"
+            android:exported="false"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!--Required  用户注册SDK的intent-->
+                <action android:name="cn.jpush.android.intent.UNREGISTRATION" />
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!--Required  用户接收SDK消息的intent-->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!--Required  用户接收SDK通知栏信息的intent-->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!--Required  用户打开自定义通知栏的intent-->
+                <action android:name="cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK" /> <!--Optional 用户接受Rich Push Javascript 回调函数的intent-->
+                <action android:name="cn.jpush.android.intent.CONNECTION" /><!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <category android:name="com.beyonditsm.financial" />
+            </intent-filter>
+        </receiver>
+
+
+        <!-- Required  . Enable it you can get statistics data with channel -->
+        <meta-data android:name="JPUSH_CHANNEL" android:value="developer-default"/>
+        <meta-data android:name="JPUSH_APPKEY" android:value="e6589d90b8f1bb68c7869df1" /> <!--  </>值来自开发者平台取得的AppKey-->
+
+    </application>
+
+
+
+</manifest>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical">
+    <include layout="@layout/title_act_layout"></include>
+
+    <RelativeLayout
+        android:id="@+id/rlManaData"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/item_back"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:layout_marginTop="10dp"
+        >
+
+        <com.beyonditsm.financial.widget.ScaleAllImageView
+            android:id="@+id/civHead"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/ava_default"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#333333"
+            android:layout_toRightOf="@id/civHead"
+            android:layout_centerVertical="true"
+            android:textSize="15sp"
+            android:layout_marginLeft="15dp"
+            />
+
+        <ImageView
+            style="@style/arrow_right_style"
+            android:layout_alignParentRight="true" />
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="1px"
+        android:background="@color/line_color"></View>
+
+    <RelativeLayout
+        android:id="@+id/rlMyOrder"
+        style="@style/rl_mine_style"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        >
+
+        <ImageView
+            android:id="@+id/ivLines"
+            style="@style/iv_mine"
+            android:src="@mipmap/ico_code" />
+
+        <TextView
+            style="@style/tv_second_style"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/ivLines"
+            android:text="订单管理" />
+
+        <ImageView
+            style="@style/arrow_right_style"
+            android:layout_alignParentRight="true" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="1px"
+        android:background="@color/line_color"></View>
+
+    <RelativeLayout
+        android:id="@+id/rlMyPre"
+        style="@style/rl_mine_style"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/ivpre"
+            style="@style/iv_mine"
+            android:src="@mipmap/ico_myinfo" />
+
+        <TextView
+            style="@style/tv_second_style"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/ivpre"
+            android:text="我的资料" />
+
+        <ImageView
+            style="@style/arrow_right_style"
+            android:layout_alignParentRight="true" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:visibility="gone"
+        android:layout_marginLeft="45dp"
+        android:background="@color/line_color"></View>
+    <RelativeLayout
+        android:id="@+id/rlMyChat"
+        style="@style/rl_mine_style"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/ivCredit"
+            style="@style/iv_mine"
+            android:src="@mipmap/ico_friend" />
+
+        <TextView
+            style="@style/tv_second_style"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/ivCredit"
+            android:text="我的沟通" />
+
+        <ImageView
+            style="@style/arrow_right_style"
+            android:layout_alignParentRight="true" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rlSet"
+        style="@style/rl_mine_style"
+        android:layout_marginTop="10dp">
+
+        <ImageView
+            android:id="@+id/ivSet"
+            style="@style/iv_mine"
+            android:src="@mipmap/ico_settting_sec" />
+
+        <TextView
+            style="@style/tv_second_style"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@id/ivSet"
+            android:text="设置" />
+
+        <ImageView
+            style="@style/arrow_right_style"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tvExit"
+        android:layout_width="match_parent"
+        android:layout_height="41dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/item_back"
+        android:gravity="center"
+        android:text="退出登录"
+        android:textColor="#333333"
+        android:textSize="16sp" />
+
+</LinearLayout>

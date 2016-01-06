@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical">
+
+    <include layout="@layout/title_act_layout"></include>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:id="@+id/rl_JobNum"
+                style="@style/rl_mine_style"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="工号" />
+
+                <ImageView
+                    android:id="@+id/ivArrowName"
+                    style="@style/arrow_right_style"
+                    android:layout_alignParentRight="true" />
+                <TextView
+                    android:id="@+id/tv_JobNum"
+                    style="@style/tv_update_style"
+
+                    android:layout_toLeftOf="@id/ivArrowName"
+                    android:layout_marginRight="10dp"/>
+
+            </RelativeLayout>
+
+
+            <View style="@style/view_line"></View>
+
+            <RelativeLayout
+                android:id="@+id/rl_ManaName"
+                style="@style/rl_mine_style">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="姓名" />
+                <ImageView
+                    android:id="@+id/ivArrowCard"
+                    style="@style/arrow_right_style"
+                    android:layout_alignParentRight="true" />
+                <TextView
+                    android:id="@+id/tv_ManaName"
+                    style="@style/tv_update_style"
+
+                    android:layout_toLeftOf="@id/ivArrowCard"
+                    android:layout_marginRight="10dp"/>
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <RelativeLayout
+                android:id="@+id/rl_ManaTel"
+                style="@style/rl_mine_style">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="联系方式" />
+                <ImageView
+                    android:id="@+id/ivArrowCity"
+                    style="@style/arrow_right_style"
+                    android:layout_alignParentRight="true" />
+                <TextView
+                    android:id="@+id/tv_ManaTel"
+                    style="@style/tv_update_style"
+
+                    android:layout_toLeftOf="@id/ivArrowCity"
+                    android:layout_marginRight="10dp"/>
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <RelativeLayout
+                android:id="@+id/rl_Address"
+                style="@style/rl_mine_style">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="地址" />
+                <ImageView
+                    android:id="@+id/ivArrowNative"
+                    style="@style/arrow_right_style"
+                    android:layout_alignParentRight="true" />
+                <TextView
+                    android:id="@+id/tv_Address"
+                    style="@style/tv_update_style"
+
+                    android:layout_toLeftOf="@id/ivArrowNative"
+                    android:layout_marginRight="10dp"/>
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <RelativeLayout
+                android:id="@+id/rl_jobName"
+                style="@style/rl_mine_style">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="职位名称" />
+                <ImageView
+                    android:id="@+id/ivArrowHouseHold"
+                    style="@style/arrow_right_style"
+                    android:layout_alignParentRight="true" />
+                <TextView
+                    android:id="@+id/tv_jobName"
+                    style="@style/tv_update_style"
+
+                    android:layout_toLeftOf="@id/ivArrowHouseHold"
+                    android:layout_marginRight="10dp"/>
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <RelativeLayout
+                android:id="@+id/rl_Work"
+                style="@style/rl_mine_style">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="所属机构" />
+                <ImageView
+                    android:id="@+id/ivArrowWork"
+                    style="@style/arrow_right_style"
+                    android:layout_alignParentRight="true" />
+                <TextView
+                    android:id="@+id/tv_Work"
+                    style="@style/tv_update_style"
+
+                    android:layout_toLeftOf="@id/ivArrowWork"
+                    android:layout_marginRight="10dp"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

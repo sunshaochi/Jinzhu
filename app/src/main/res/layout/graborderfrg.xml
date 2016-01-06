@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/main_color">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="抢单"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <!--<include layout="@layout/search_tit"-->
+        <!-- -->
+        <!--></include>-->
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.beyonditsm.financial.view.pullfreshview.LoadRefreshView
+            android:id="@+id/plv"
+            android:background="@color/white"
+            style="@style/pullrefresh_style"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"></com.beyonditsm.financial.view.pullfreshview.LoadRefreshView>
+
+        <com.beyonditsm.financial.view.LoadingView
+            android:id="@+id/loadingView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </com.beyonditsm.financial.view.LoadingView>
+    </FrameLayout>
+
+
+</LinearLayout>

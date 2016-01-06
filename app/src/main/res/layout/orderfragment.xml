@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/title_act_layout" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:id="@+id/tvDtj"
+                    style="@style/mana_order_tab_title"
+                    android:layout_weight="1"
+                    android:text="待提交"
+                    android:textSize="14sp" />
+
+
+                <TextView
+                    android:id="@+id/tvYtj"
+                    style="@style/mana_order_tab_title"
+                    android:layout_weight="1"
+                    android:text="已提交"
+                    android:textSize="14sp" />
+
+
+                <TextView
+                    android:id="@+id/tvBjz"
+                    style="@style/mana_order_tab_title"
+                    android:layout_weight="1"
+                    android:text="补件中"
+                    android:textSize="14sp" />
+
+
+                <TextView
+                    android:id="@+id/tvYfk"
+                    style="@style/mana_order_tab_title"
+                    android:layout_weight="1"
+                    android:text="已放款"
+                    android:textSize="14sp" />
+
+
+                <TextView
+                    android:id="@+id/tvShdtg"
+                    style="@style/mana_order_tab_title"
+                    android:layout_centerVertical="true"
+                    android:layout_weight="1"
+                    android:text="审核未通过"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <View style="@style/view_line"></View>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/vp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v4.view.ViewPager>
+
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

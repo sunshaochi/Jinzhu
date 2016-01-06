@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/bg_color">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/progress_01" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true"
+                    android:text="姓名" />
+
+                <EditText
+                    android:id="@+id/cre_name"
+                    style="@style/cre_et"
+                    android:hint="您的称呼"
+                    android:maxLength="20" />
+
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true"
+                    android:text="手机号" />
+
+                <EditText
+                    android:id="@+id/cre_phone"
+                    style="@style/cre_et"
+                    android:hint="手机号码"
+                    android:inputType="phone"
+                    android:maxLength="11" />
+
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true"
+                    android:text="验证码" />
+
+                <EditText
+                    android:id="@+id/cre_yzm"
+                    style="@style/cre_et"
+                    android:hint="请输入验证码"
+                    android:inputType="number"
+                    android:maxLength="6" />
+
+                <TextView
+                    android:id="@+id/cre_btn_yzm"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text="发送验证码"
+                    android:textColor="#f63"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true"
+                    android:text="密码" />
+
+                <EditText
+                    android:id="@+id/cre_pwd"
+                    style="@style/cre_et"
+                    android:hint="请输入密码"
+                    android:inputType="textPassword"
+                    android:maxLength="20" />
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <!--<RelativeLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content">-->
+
+                <!--<TextView-->
+                    <!--style="@style/tv_primary_style"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:text="确认密码" />-->
+
+
+                <!--<EditText-->
+                    <!--android:id="@+id/cre_pwd2"-->
+                    <!--style="@style/cre_et"-->
+                    <!--android:hint="确认密码"-->
+                    <!--android:inputType="textPassword"-->
+                    <!--android:maxLength="20" />-->
+            <!--</RelativeLayout>-->
+
+            <!--<View style="@style/view_line"></View>-->
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true"
+                    android:text="邀请码" />
+
+                <EditText
+                    android:id="@+id/cre_yqm"
+                    style="@style/cre_et"
+                    android:hint="请输入好友邀请码（非必填）"
+                    android:maxLength="20" />
+
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+
+            <CheckBox
+                android:gravity="center_vertical"
+                android:id="@+id/cre_tk"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:button="@drawable/checkbox"
+                android:paddingStart="4dp"
+                android:text="同意金珠条款"
+                android:textColor="#333333"
+                android:checked="true"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/first_btn_next"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/button_gen"
+                android:text="下一步"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/cre_tv_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="25dp"
+                android:layout_marginTop="20dp"
+                android:drawablePadding="5dp"
+                android:drawableRight="@mipmap/arrow_inner"
+                android:text="已有账号，先登录"
+                android:textColor="#fead00"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

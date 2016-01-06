@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/title_act_layout"></include>
+
+    <EditText
+        android:id="@+id/bj_et"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/cre_rb_normal"
+        android:gravity="top|left"
+        android:hint="请输入需要补件的内容"
+        android:maxLength="200"
+        android:padding="10dp"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/bj_commit"
+        android:layout_margin="10dp"
+        android:background="@drawable/button_gen"
+        android:textColor="@color/white"
+        android:layout_width="match_parent"
+        android:text="提交"
+        android:layout_height="36dp" />
+
+</LinearLayout>

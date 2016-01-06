@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical">
+
+    <include layout="@layout/title_act_layout"></include>
+
+    <!--<include layout="@layout/tj_up_content"></include>-->
+
+
+
+    <com.beyonditsm.financial.view.pullfreshview.PullToRefreshListView
+        android:id="@+id/fr_tj_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="42dp"
+        android:layout_marginRight="42dp"
+        android:paddingBottom="10dp"
+        android:layout_marginBottom="10dp"
+        android:scrollbars="none"
+        >
+    </com.beyonditsm.financial.view.pullfreshview.PullToRefreshListView>
+</LinearLayout>

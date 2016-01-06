@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_color"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/title_act_layout"></include>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:id="@+id/rlHead"
+                style="@style/rl_mine_style"
+                android:layout_height="70dp">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="头像" />
+
+                <ImageView
+                    style="@style/arrow_right_style"
+                    android:layout_alignParentRight="true" />
+
+                <com.beyonditsm.financial.view.CircleImageView
+                    android:id="@+id/civHead"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginRight="18dp"
+                    android:src="@mipmap/ava" />
+
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <RelativeLayout style="@style/rl_mine_style">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="性别" />
+
+                <RadioGroup
+                    android:id="@+id/sex_rg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:textColor="@color/tv_gray"
+                        android:gravity="center"
+                        android:button="@null"
+                        android:background="@drawable/man_rb_select"
+                        android:id="@+id/man_rb"
+                        android:layout_width="50dp"
+                        android:layout_height="32dp"
+                        android:layout_marginRight="5dp"
+                        android:text="男" />
+
+                    <RadioButton
+                        android:textColor="@color/tv_gray"
+                        android:gravity="center"
+                        android:button="@null"
+                        android:background="@drawable/woman_rb_select"
+                        android:id="@+id/woman_rb"
+                        android:layout_width="50dp"
+                        android:layout_height="32dp"
+                        android:layout_marginLeft="5dp"
+                        android:text="女" />
+                </RadioGroup>
+
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <RelativeLayout
+                android:id="@+id/rlAge"
+                style="@style/rl_mine_style">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="年龄" />
+
+
+                <ImageView
+                    style="@style/arrow_right_style"
+                    android:layout_alignParentRight="true" />
+
+
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <RelativeLayout
+                android:id="@+id/rlHome"
+                style="@style/rl_mine_style">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="常住地" />
+
+
+                <ImageView
+                    style="@style/arrow_right_style"
+                    android:layout_alignParentRight="true" />
+
+
+            </RelativeLayout>
+
+
+            <View style="@style/view_line"></View>
+
+            <RelativeLayout
+                android:id="@+id/rlName"
+                style="@style/rl_mine_style"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="真实姓名" />
+
+
+                <ImageView
+                    style="@style/arrow_right_style"
+                    android:layout_alignParentRight="true" />
+
+
+            </RelativeLayout>
+
+
+            <View style="@style/view_line"></View>
+
+            <RelativeLayout
+                android:id="@+id/rlCard"
+                style="@style/rl_mine_style">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="身份证号" />
+
+
+                <ImageView
+                    style="@style/arrow_right_style"
+                    android:layout_alignParentRight="true" />
+
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <RelativeLayout
+                android:id="@+id/rlCity"
+                style="@style/rl_mine_style">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="所在城市" />
+
+
+                <ImageView
+                    style="@style/arrow_right_style"
+                    android:layout_alignParentRight="true" />
+
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <RelativeLayout
+                android:id="@+id/rlNative"
+                style="@style/rl_mine_style">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="所在支行" />
+
+
+                <ImageView
+                    style="@style/arrow_right_style"
+                    android:layout_alignParentRight="true" />
+
+
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <RelativeLayout
+                android:id="@+id/rlHouseHold"
+                style="@style/rl_mine_style">
+
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="户籍地址" />
+
+
+                <ImageView
+                    style="@style/arrow_right_style"
+                    android:layout_alignParentRight="true" />
+
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/rlBank"
+                    style="@style/rl_mine_style">
+
+                    <TextView
+                        style="@style/tv_second_style"
+                        android:layout_centerVertical="true"
+                        android:text="收支银行" />
+
+                    <ImageView
+                        style="@style/arrow_right_style"
+                        android:layout_alignParentRight="true" />
+
+                </RelativeLayout>
+
+                <View style="@style/view_line"></View>
+
+                <RelativeLayout
+                    android:id="@+id/rlSonBank"
+                    style="@style/rl_mine_style">
+
+                    <TextView
+                        style="@style/tv_second_style"
+                        android:layout_centerVertical="true"
+                        android:text="收支支行" />
+
+                    <ImageView
+                        style="@style/arrow_right_style"
+                        android:layout_alignParentRight="true" />
+
+                </RelativeLayout>
+
+                <View style="@style/view_line"></View>
+
+                <RelativeLayout
+                    android:id="@+id/rlBankNumber"
+                    style="@style/rl_mine_style">
+
+                    <TextView
+                        style="@style/tv_second_style"
+                        android:layout_centerVertical="true"
+                        android:text="银行账号" />
+
+                    <ImageView
+                        style="@style/arrow_right_style"
+                        android:layout_alignParentRight="true" />
+
+                </RelativeLayout>
+
+                <View style="@style/view_line"></View>
+
+                <RelativeLayout
+                    android:id="@+id/rlEmail"
+                    style="@style/rl_mine_style">
+
+                    <TextView
+                        style="@style/tv_second_style"
+                        android:layout_centerVertical="true"
+                        android:text="电子邮箱" />
+
+                    <ImageView
+                        style="@style/arrow_right_style"
+                        android:layout_alignParentRight="true" />
+
+                </RelativeLayout>
+
+                <View style="@style/view_line"></View>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

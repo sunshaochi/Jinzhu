@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical">
+
+    <include layout="@layout/title_act_layout"></include>
+
+    <RelativeLayout
+        android:id="@+id/rlSet"
+        style="@style/rl_mine_style"
+        android:layout_marginTop="10dp">
+
+
+        <TextView
+            style="@style/tv_second_style"
+            android:layout_centerVertical="true"
+            android:text="接收新消息" />
+
+        <com.beyonditsm.financial.widget.ToggleButton
+            android:id="@+id/tb_msg"
+            android:layout_width="48dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            app:borderWidth="1px"
+            app:offBorderColor="#e7e7e7"
+            app:offColor="#f5f5f5"
+            app:onColor="#4dd963"
+            app:spotColor="#fff"/>
+
+    </RelativeLayout>
+
+    <View style="@style/view_line"></View>
+
+    <RelativeLayout style="@style/rl_mine_style">
+
+
+        <TextView
+            style="@style/tv_second_style"
+            android:layout_centerVertical="true"
+            android:text="消息免打扰" />
+
+        <com.beyonditsm.financial.widget.ToggleButton
+            android:id="@+id/tb_sleep"
+            android:layout_width="48dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            app:borderWidth="1px"
+            app:offBorderColor="#e7e7e7"
+            app:offColor="#f5f5f5"
+            app:onColor="#4dd963"
+            app:spotColor="#fff"/>
+
+    </RelativeLayout>
+
+    <View style="@style/view_line"></View>
+
+    <RelativeLayout
+        android:id="@+id/rlUpdate"
+        style="@style/rl_mine_style"
+        android:layout_marginTop="10dp"
+        android:visibility="gone">
+
+
+        <TextView
+            style="@style/tv_second_style"
+            android:layout_centerVertical="true"
+            android:text="修改资料" />
+
+        <ImageView
+            style="@style/arrow_right_style"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rlUpdatePwd"
+        style="@style/rl_mine_style">
+
+
+        <TextView
+            style="@style/tv_second_style"
+            android:layout_centerVertical="true"
+            android:text="修改密码" />
+
+        <ImageView
+            style="@style/arrow_right_style"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+
+    <View style="@style/view_line"></View>
+
+    <RelativeLayout
+        android:id="@+id/rlAbout"
+        style="@style/rl_mine_style">
+
+
+        <TextView
+            style="@style/tv_second_style"
+            android:layout_centerVertical="true"
+            android:text="关于" />
+
+        <ImageView
+            style="@style/arrow_right_style"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+    <View style="@style/view_line"></View>
+
+    <RelativeLayout
+        android:id="@+id/rlcheck"
+        style="@style/rl_mine_style"
+        android:visibility="visible">
+
+
+        <TextView
+            style="@style/tv_second_style"
+            android:layout_centerVertical="true"
+            android:text="检测新版本"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="#f63"
+            android:gravity="right"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:text=""
+            android:layout_toStartOf="@+id/iv" />
+
+        <ImageView
+            android:id="@+id/iv"
+            style="@style/arrow_right_style"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+</LinearLayout>

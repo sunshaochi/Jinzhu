@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/bg_color">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/progress_03" />
+    </RelativeLayout>
+
+    <TextView
+        android:drawablePadding="15dp"
+        android:drawableTop="@mipmap/ico_success"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:textColor="#333333"
+        android:textSize="21sp"
+        android:text="恭喜，您已经成功申请了贷款！"
+        />
+
+    <LinearLayout
+        android:layout_marginTop="40dp"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/crethr_btn1"
+            android:background="@drawable/crethr_btn1_bg"
+            android:textSize="16sp"
+            android:textColor="#28c350"
+            android:layout_marginRight="5dp"
+            android:text="继续申请"
+            android:layout_width="100dp"
+            android:layout_height="36dp" />
+
+        <Button
+            android:id="@+id/crethr_btn2"
+            android:background="@drawable/crethe_btn2_bg"
+            android:textSize="16sp"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/white"
+            android:text="返回首页"
+            android:layout_width="100dp"
+            android:layout_height="36dp" />
+    </LinearLayout>
+
+</LinearLayout>

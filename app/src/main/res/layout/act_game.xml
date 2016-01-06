@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_color">
+<include layout="@layout/title_act_layout"></include>
+
+    <!--<LinearLayout-->
+        <!--android:id="@+id/llGame"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:orientation="vertical"></LinearLayout>-->
+    <WebView
+        android:id="@+id/wvGame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        ></WebView>
+
+</LinearLayout>

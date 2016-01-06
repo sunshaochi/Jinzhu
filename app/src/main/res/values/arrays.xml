@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="money">
+        <item>一万元</item>
+        <item>两万元</item>
+        <item>三万元</item>
+    </string-array>
+
+    <string-array name="date">
+        <item>一个月</item>
+        <item>两个月</item>
+        <item>三个月</item>
+    </string-array>
+</resources>
