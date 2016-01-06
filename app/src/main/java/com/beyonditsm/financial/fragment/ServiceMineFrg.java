@@ -359,10 +359,12 @@ public class ServiceMineFrg extends BaseFragment {
         public void onReceive(Context context, Intent intent) {
             ue = intent.getParcelableExtra(USER_INFO);
 //            UserEntity ue = intent.getParcelableExtra(USER_INFO);
-            if (ue!=null) {
+
+            if (ue!=null&&!TextUtils.isEmpty(ue.getUserName())) {
                 tv_name.setText(ue.getUserName());
+                ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + ue.getHeadIcon(), civHead, options);
+
             }
-            ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + ue.getHeadIcon(), civHead, options);
         }
     }
 
