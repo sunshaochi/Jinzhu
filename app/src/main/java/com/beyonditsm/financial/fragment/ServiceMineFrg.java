@@ -364,6 +364,8 @@ public class ServiceMineFrg extends BaseFragment {
                 tv_name.setText(ue.getUserName());
                 ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + ue.getHeadIcon(), civHead, options);
 
+
+//                
             }
         }
     }
