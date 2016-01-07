@@ -55,7 +55,33 @@ public class UserEntity implements Parcelable {
 
     private String companyName;//公司名称
     private String business;//职务
+    private String havaJobName;//职业身份
+    private String haveCarName;//车产
+    private String haveHoursName;//房产
 
+    public String getHavaJobName() {
+        return havaJobName;
+    }
+
+    public void setHavaJobName(String havaJobName) {
+        this.havaJobName = havaJobName;
+    }
+
+    public String getHaveCarName() {
+        return haveCarName;
+    }
+
+    public void setHaveCarName(String haveCarName) {
+        this.haveCarName = haveCarName;
+    }
+
+    public String getHaveHoursName() {
+        return haveHoursName;
+    }
+
+    public void setHaveHoursName(String haveHoursName) {
+        this.haveHoursName = haveHoursName;
+    }
 
     public String getCompanyName() {
         return companyName;
@@ -476,6 +502,10 @@ public class UserEntity implements Parcelable {
         dest.writeString(this.wkCardPic);
         dest.writeString(this.companyName);
         dest.writeString(this.business);
+        dest.writeString(this.havaJobName);
+        dest.writeString(this.haveCarName);
+        dest.writeString(this.haveHoursName);
+        dest.writeString(this.towYearCredName);
     }
 
     public UserEntity() {
@@ -531,6 +561,10 @@ public class UserEntity implements Parcelable {
         this.servantId = in.readString();
         this.companyName=in.readString();
         this.business=in.readString();
+        this.havaJobName=in.readString();
+        this.haveCarName=in.readString();
+        this.haveHoursName=in.readString();
+        this.towYearCredName=in.readString();
     }
 
     public static final Creator<UserEntity> CREATOR = new Creator<UserEntity>() {
