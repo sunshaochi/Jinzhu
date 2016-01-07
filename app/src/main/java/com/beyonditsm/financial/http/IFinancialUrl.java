@@ -161,4 +161,6 @@ public interface IFinancialUrl {
     String VERSION_URL = BASE_URL + API_VERSION + "/platform/unLogin/checkUpdrage.do";
     /*取消订单*/
     String CANCEL_ORDER = BASE_URL + API_VERSION + "/platform/login/modifyToCancelOrderById.do";
+    /*根据key查找各种特点*/
+    String DIC_MAP_URL=BASE_URL+API_VERSION+"/manager/unLogin/findDictMap.do";
 }

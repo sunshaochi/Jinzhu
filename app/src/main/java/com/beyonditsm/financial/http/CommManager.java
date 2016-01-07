@@ -67,13 +67,13 @@ public class CommManager extends RequestManager {
      * @param ue
      * @param callBack
      */
-    public void toRegister(UserEntity ue,String phoneNumber,String captcha, CallBack callBack) {
+    public void toRegister(UserEntity ue, String phoneNumber, String captcha, CallBack callBack) {
         List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
         queryParams.add(new BasicNameValuePair("username", ue.getUsername()));
         queryParams.add(new BasicNameValuePair("password", ue.getPassword()));
         queryParams.add(new BasicNameValuePair("phoneNumber", phoneNumber));
         queryParams.add(new BasicNameValuePair("captcha", captcha));
-        if(!TextUtils.isEmpty(ue.getReferralCode())){
+        if (!TextUtils.isEmpty(ue.getReferralCode())) {
             queryParams.add(new BasicNameValuePair("referralCode", ue.getReferralCode()));
 
         }
@@ -154,9 +154,9 @@ public class CommManager extends RequestManager {
      * @param
      * @param callBack
      */
-    public void findCity( final CallBack callBack) {
+    public void findCity(final CallBack callBack) {
         List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
-            queryParams.add(new BasicNameValuePair("code", ""));
+        queryParams.add(new BasicNameValuePair("code", ""));
         doPost(IFinancialUrl.QUERYALLCITY_URL, queryParams, callBack);
 
     }
@@ -167,7 +167,7 @@ public class CommManager extends RequestManager {
      * @param
      * @param callBack
      */
-    public void findArea( final CallBack callBack) {
+    public void findArea(final CallBack callBack) {
         List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
         queryParams.add(new BasicNameValuePair("cityCode", ""));
         doPost(IFinancialUrl.QUERYALLAREA_URL, queryParams, callBack);
@@ -183,25 +183,25 @@ public class CommManager extends RequestManager {
     public void updateData(UserEntity ue, CallBack callBack) {
         List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
         MyLogUtils.info("客户信息：" + GsonUtils.bean2Json(ue));
-        String json=GsonUtils.bean2Json(ue);
+        String json = GsonUtils.bean2Json(ue);
         try {
-            JSONObject obj=new JSONObject(json);
-            if((obj.toString()).indexOf("createTime")!=-1){
+            JSONObject obj = new JSONObject(json);
+            if ((obj.toString()).indexOf("createTime") != -1) {
                 obj.remove("createTime");
             }
-            if((obj.toString()).indexOf("createPersonId")!=-1){
+            if ((obj.toString()).indexOf("createPersonId") != -1) {
                 obj.remove("createPerson");
             }
-            if((obj.toString()).indexOf("modifyTime")!=-1){
+            if ((obj.toString()).indexOf("modifyTime") != -1) {
                 obj.remove("modifyTime");
             }
-            if((obj.toString()).indexOf("modifyPersonId")!=-1){
+            if ((obj.toString()).indexOf("modifyPersonId") != -1) {
                 obj.remove("modifyPersonId");
             }
-            Iterator<String> it=obj.keys();
-            while (it.hasNext()){
-                String key=it.next();
-                queryParams.add(new BasicNameValuePair(key,String.valueOf(obj.get(key))));
+            Iterator<String> it = obj.keys();
+            while (it.hasNext()) {
+                String key = it.next();
+                queryParams.add(new BasicNameValuePair(key, String.valueOf(obj.get(key))));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -210,7 +210,7 @@ public class CommManager extends RequestManager {
         doPost(IFinancialUrl.UPDATE_USER_URL, queryParams, callBack);
     }
 
-    public void toUpLoadFile(final Map<String, FileBody> fileMaps,final CallBack callBack) {
+    public void toUpLoadFile(final Map<String, FileBody> fileMaps, final CallBack callBack) {
         loadImage(IFinancialUrl.UPLOAD_URL, fileMaps, callBack);
     }
 
@@ -226,34 +226,37 @@ public class CommManager extends RequestManager {
         doPost(IFinancialUrl.SUBMITORDER_URL, queryParams, callBack);
     }
 
-    public void loadSmalImage(final Map<String, FileBody> fileMaps,final CallBack callBack){
+    public void loadSmalImage(final Map<String, FileBody> fileMaps, final CallBack callBack) {
         loadImage(IFinancialUrl.UPLOAD_small_URL, fileMaps, callBack);
     }
 
     /**
      * 忘记密码
+     *
      * @param
      * @param newPassword
      * @param callBack
      */
-    public void fogetPwd(String phoneNumber,String captcha,String newPassword,CallBack callBack){
+    public void fogetPwd(String phoneNumber, String captcha, String newPassword, CallBack callBack) {
         List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
         queryParams.add(new BasicNameValuePair("phoneNumber", phoneNumber));
         queryParams.add(new BasicNameValuePair("captcha", captcha));
-        queryParams.add(new BasicNameValuePair("newPassword",newPassword));
+        queryParams.add(new BasicNameValuePair("newPassword", newPassword));
         doPost(IFinancialUrl.FOGET_PWD_URL, queryParams, callBack);
     }
 
     /**
      * 判断手机号码是否可用
+     *
      * @param phoneNumber
      * @param callBack
      */
-    public void isPhoneValidate(String phoneNumber,CallBack callBack){
-        List<NameValuePair> queryParams=new ArrayList<NameValuePair>();
+    public void isPhoneValidate(String phoneNumber, CallBack callBack) {
+        List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
         queryParams.add(new BasicNameValuePair("username", phoneNumber));
         doPost(IFinancialUrl.ISVALIDATE_URL, queryParams, callBack);
     }
+
     /**
      * 发送验证码找回密码验证码
      *
@@ -265,6 +268,7 @@ public class CommManager extends RequestManager {
         queryParams.add(new BasicNameValuePair("phoneNumber", phoneNumber));
         doPost(IFinancialUrl.FPRGET_PWD_SMSCAPTCHA, queryParams, callBack);
     }
+
     /**
      * 是否允许升级
      *
@@ -274,6 +278,7 @@ public class CommManager extends RequestManager {
         List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
         doPost(IFinancialUrl.ISALLOW_UPGRADE_URL, queryParams, callBack);
     }
+
     /**
      * 是否提交过升级申请
      *
@@ -283,6 +288,7 @@ public class CommManager extends RequestManager {
         List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
         doPost(IFinancialUrl.ISSUBMIT_UP_URL, queryParams, callBack);
     }
+
     /**
      * 升级服务者
      *
@@ -290,17 +296,17 @@ public class CommManager extends RequestManager {
      * @param servant_role_id
      * @param callBack
      */
-    public void  upgrade(ServantEntity servant,String servant_role_id,CallBack callBack){
+    public void upgrade(ServantEntity servant, String servant_role_id, CallBack callBack) {
         List<NameValuePair> queryParams = ParamsUtil.getInstance().BeanToForm(GsonUtils.bean2Json(servant));
-        queryParams.add(new BasicNameValuePair("servant_role_id",servant_role_id));
+        queryParams.add(new BasicNameValuePair("servant_role_id", servant_role_id));
         LogUtils.i(queryParams + "");
-        doPost(IFinancialUrl.APPLY_LVUP_SERVANT_URL, queryParams,callBack);
+        doPost(IFinancialUrl.APPLY_LVUP_SERVANT_URL, queryParams, callBack);
     }
 
     /**
      * 用户查看订单详情
      *
-     * @param orderId 订单id
+     * @param orderId  订单id
      * @param callBack
      */
     public void checkMyOrderDetail(String orderId, CallBack callBack) {
@@ -321,6 +327,7 @@ public class CommManager extends RequestManager {
         queryParams.add(new BasicNameValuePair("myReferralCode", myReferralCode));
         doPost(IFinancialUrl.MYREFERRALCODE_URL, queryParams, callBack);
     }
+
     /**
      * 通过账户id获取好友列表
      *
@@ -349,15 +356,15 @@ public class CommManager extends RequestManager {
      *
      * @param callBack
      */
-    public void loadImage(final Map<String, FileBody> fileMaps,final CallBack callBack){
-        final HttpManager manager=new HttpManager();
-        final  Map<String, String> par=new HashMap<String,String>();
-        par.put("type","img");
+    public void loadImage(final Map<String, FileBody> fileMaps, final CallBack callBack) {
+        final HttpManager manager = new HttpManager();
+        final Map<String, String> par = new HashMap<String, String>();
+        par.put("type", "img");
         par.put("uploadLableName", "file");
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... params) {
-                return  manager.upLoadFile(IFinancialUrl.UPLOAD_OTHER_URL,par,fileMaps);
+                return manager.upLoadFile(IFinancialUrl.UPLOAD_OTHER_URL, par, fileMaps);
             }
 
             @Override
@@ -367,15 +374,15 @@ public class CommManager extends RequestManager {
 
             @Override
             protected void onPostExecute(String result) {
-                MyLogUtils.info("上传图片："+result);
-                JSONObject obj= null;
+                MyLogUtils.info("上传图片：" + result);
+                JSONObject obj = null;
                 try {
                     obj = new JSONObject(result);
-                    int status= obj.getInt("status");
-                    if(status==200){
+                    int status = obj.getInt("status");
+                    if (status == 200) {
                         callBack.onSucess(result);
-                    }else{
-                        callBack.onError(obj.getInt("status"),obj.getString("message"));
+                    } else {
+                        callBack.onError(obj.getInt("status"), obj.getString("message"));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -386,20 +393,22 @@ public class CommManager extends RequestManager {
 
     /**
      * 提交附件
+     *
      * @param orderNo
      * @param fileMaps
      * @param callBack
      */
-    public void submitFujian(String orderNo,Map<String, List<FileBody>> fileMaps,CallBack callBack){
+    public void submitFujian(String orderNo, Map<String, List<FileBody>> fileMaps, CallBack callBack) {
         submitFujian(IFinancialUrl.SUBMIT_FUJIAN_URL, orderNo, fileMaps, callBack);
     }
 
     /**
      * 添加好友
+     *
      * @param phone
      * @param callBack
      */
-    public void addFriend(String phone,CallBack callBack){
+    public void addFriend(String phone, CallBack callBack) {
         List<NameValuePair> queryParams = new ArrayList<>();
         queryParams.add(new BasicNameValuePair("phone", phone));
         doPost(IFinancialUrl.ADD_FRIEND_URL, queryParams, callBack);
@@ -407,15 +416,37 @@ public class CommManager extends RequestManager {
 
     /**
      * 检查版本更新
+     *
      * @param currentVersion 当前版本
-     * @param platform 平台 ANDROID IOS
+     * @param platform       平台 ANDROID IOS
      * @param callBack
      */
-    public void toVersion(int currentVersion,String platform,CallBack callBack){
-        MyLogUtils.info("currentVersion:"+currentVersion+";;platform:"+platform);
+    public void toVersion(int currentVersion, String platform, CallBack callBack) {
+        MyLogUtils.info("currentVersion:" + currentVersion + ";;platform:" + platform);
         List<NameValuePair> queryParams = new ArrayList<>();
-        queryParams.add(new BasicNameValuePair("currentVersion", currentVersion+""));
+        queryParams.add(new BasicNameValuePair("currentVersion", currentVersion + ""));
         queryParams.add(new BasicNameValuePair("platform", platform));
         doPost(IFinancialUrl.VERSION_URL, queryParams, callBack);
+    }
+
+
+    /**
+     * 字典类型查询字典
+     *
+     * @param key 字典类型 名下是否有车 key="under_own_car";  两年内信用 key="two_year_credit";
+     *            名下房产 key="under_own_hour";  职业身份 key="job_identity" ;信用状况 key="ep_credit_conditions";
+     *            产品特点 key="ep_product_features"; 个人资料 key="ep_order_001"; 佣金计算百分比 key="grade_percentage";
+     *            机构类型 key ="ep_org_001"; 订单状态 key ="ep_order_001"; 还款方式 key ="ep_order_002";
+     *            贷款金额 key ="ep_loan_amount"; 贷款期限 key ="ep_loan_deadline"; 产品特点 key ="ep_product_features";
+     *            个人资料 key ="ep_order_001"; 担保类型 key ="111"; 订单状态 key ="ep_order_001";
+     *            贷款状态 key ="ep_loan_003"; 抵押类型 key ="ep_product_004"; 担保类型 key ="ep_product_005";
+     *            待审批key ="ep_servant_app_sts"; 审批通过 key ="ep_servant_app_sts"; 审批未通过 key ="ep_servant_app_sts";
+     *            贷款期限key ="ep_loan_deadline"; 无抵押key ="ep_product_004";
+     * @return Map&lt;字典ID, 字典名称&gt;
+     */
+    public void getDicMap(String key, CallBack callBack) {
+        List<NameValuePair> queryParams = new ArrayList<>();
+        queryParams.add(new BasicNameValuePair("key", key));
+        doPost(IFinancialUrl.DIC_MAP_URL, queryParams, callBack);
     }
 }
