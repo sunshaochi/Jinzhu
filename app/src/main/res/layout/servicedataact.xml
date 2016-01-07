@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+
             <RelativeLayout
                 android:id="@+id/rlHead"
                 style="@style/rl_mine_style"
@@ -42,13 +43,10 @@
                     android:layout_toLeftOf="@id/ivArrowHead"
                     android:src="@mipmap/ava_default" />
             </RelativeLayout>
-
             <View style="@style/view_line"></View>
-
             <RelativeLayout
                 android:id="@+id/rlCard"
                 style="@style/rl_mine_style">
-
                 <TextView
                     style="@style/tv_second_style"
                     android:layout_centerVertical="true"
@@ -66,9 +64,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_toLeftOf="@id/ivArrowCard" />
             </RelativeLayout>
-
             <View style="@style/view_line"></View>
-
             <RelativeLayout
                 android:id="@+id/rlsexSelector"
                 style="@style/rl_mine_style">
@@ -93,7 +89,6 @@
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
-
             <RelativeLayout
                 android:id="@+id/rlAge"
                 style="@style/rl_mine_style">
@@ -116,7 +111,6 @@
                     android:layout_toLeftOf="@id/ivArrowAge" />
 
             </RelativeLayout>
-
             <View style="@style/view_line"></View>
 
             <RelativeLayout
@@ -144,7 +138,6 @@
 
 
             <View style="@style/view_line"></View>
-
             <RelativeLayout
                 android:id="@+id/rlName"
                 style="@style/rl_mine_style"
@@ -171,7 +164,6 @@
 
 
             <View style="@style/view_line"></View>
-
             <RelativeLayout
                 android:id="@+id/rlCity"
                 style="@style/rl_mine_style">
@@ -196,32 +188,6 @@
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
-
-            <RelativeLayout
-                android:id="@+id/rlNative"
-                style="@style/rl_mine_style"
-                android:visibility="gone">
-
-                <TextView
-                    style="@style/tv_second_style"
-                    android:layout_centerVertical="true"
-                    android:text="所在支行" />
-
-                <ImageView
-                    android:id="@+id/ivArrowNative"
-                    style="@style/arrow_right_style"
-                    android:layout_alignParentRight="true" />
-
-                <TextView
-                    android:id="@+id/tvNative"
-                    style="@style/tv_update_style"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@id/ivArrowNative" />
-            </RelativeLayout>
-
-            <View style="@style/view_line"></View>
-
             <RelativeLayout
                 android:id="@+id/rlHouseHold"
                 style="@style/rl_mine_style">
@@ -269,7 +235,6 @@
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
-
             <RelativeLayout
                 android:id="@+id/rlSubbranch"
                 style="@style/rl_mine_style">
@@ -336,9 +301,7 @@
                     android:layout_toLeftOf="@id/ivArrowEmail" />
 
             </RelativeLayout>
-
             <View style="@style/view_line"></View>
-
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

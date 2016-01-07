@@ -449,7 +449,7 @@ public class MyCreditDetailFragment extends BaseFragment {
                             tvStatus.setText("审批中");
                         } else if ("PASS".equals(status)) {
                             tvStatus.setText("审批通过");
-                            llCreditRemark.setVisibility(View.VISIBLE);
+                            llCreditRemark.setVisibility(View.GONE);
                             if (!TextUtils.isEmpty(data.getPracticalLoan()))
                                 tvTotal.setText("¥" + df.format(Double.valueOf(data.getPracticalLoan()) / 10000) + "万");
                             if (!TextUtils.isEmpty(data.getRealMonthlyInterestRate()))
