@@ -49,7 +49,7 @@ public class SplashAct extends BaseActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                gotoActivity(MainActivity.class, true);
+//                gotoActivity(MainActivity.class, true);
                 boolean isFirst = SpUtils.getIsFirst(getApplicationContext());
                 Intent intent = null;
                 if (isFirst) {

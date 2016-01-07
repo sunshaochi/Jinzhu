@@ -38,7 +38,6 @@ import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.lidroid.xutils.util.LogUtils;
 import com.lidroid.xutils.view.annotation.event.OnClick;
-import com.tandong.sa.eventbus.EventBus;
 import com.tandong.sa.json.Gson;
 
 import org.json.JSONException;
@@ -270,7 +269,9 @@ public class ManagerMainAct extends BaseActivity{
             Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
             touchTime = currentTime;
         } else {
-            RongIM.getInstance().disconnect();
+            if(RongIM.getInstance()!=null)
+                RongIM.getInstance().disconnect();
+//            finish();
             try {
                 Thread.sleep(500);
                 android.os.Process.killProcess(android.os.Process.myPid());
@@ -454,7 +455,7 @@ public class ManagerMainAct extends BaseActivity{
 
     @Override
     protected void onDestroy() {
-        EventBus.getDefault().unregister(this);
+//        EventBus.getDefault().unregister(this);
         this.unregisterReceiver(myReceiver);
         myReceiver = null;
         super.onDestroy();
