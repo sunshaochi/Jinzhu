@@ -33,7 +33,6 @@ public class ServiceEditAct extends BaseActivity {
     public static String USER_TYPE = "type";
 //    private ServantEntity servantInfo;
     private UserEntity userInfo;
-    private int type1;
 
     @Override
     public void setLayout() {
@@ -46,7 +45,6 @@ public class ServiceEditAct extends BaseActivity {
         userInfo = getIntent().getParcelableExtra(ServiceMineFrg.SERVANT_INFO);
 //        userInfo = getIntent().getParcelableExtra(ServiceMineFrg.USER_INFO);
         TYPE = getIntent().getIntExtra(USER_TYPE, 0);
-        type1 = getIntent().getIntExtra(USER_TYPE,0);
         setTopT(TYPE);
         if (!TextUtils.isEmpty(etM.getText().toString().trim())) {
             etM.setSelection(etM.getText().toString().length());
@@ -56,7 +54,7 @@ public class ServiceEditAct extends BaseActivity {
             public void onClick(View v) {
                 String content = etM.getText().toString().trim();
                 if (TextUtils.isEmpty(content)) {
-                    MyToastUtils.showShortToast(getApplicationContext(), "请填写后点击保存");
+                    MyToastUtils.showShortToast(getApplicationContext(), "请填写后点击提交");
                     return;
                 }
 
@@ -94,9 +92,6 @@ public class ServiceEditAct extends BaseActivity {
                         userInfo.setUserAge(Integer.valueOf(content));
                         updateUserData(userInfo);
                         break;
-                }
-
-                switch (type1){
                     case 4://收支银行
                         userInfo.setBankNameTitle(content);
                         updateData(userInfo);
