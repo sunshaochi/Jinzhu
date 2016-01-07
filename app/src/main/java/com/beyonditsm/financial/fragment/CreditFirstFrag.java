@@ -19,6 +19,7 @@ import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.credit.CreditStepAct;
+import com.beyonditsm.financial.activity.user.ClauseJinzhu;
 import com.beyonditsm.financial.activity.user.LoginAct;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.http.RequestManager;
@@ -67,6 +68,7 @@ public class CreditFirstFrag extends BaseFragment {
     private int i = 60;
     private Timer timer;
     private MyTimerTask myTask;
+    private TextView intro;//金蛛条款说明
 
 
 
@@ -81,6 +83,7 @@ public class CreditFirstFrag extends BaseFragment {
         creTk = (CheckBox) view.findViewById(R.id.cre_tk);
         firstBtnNext = (Button) view.findViewById(R.id.first_btn_next);
         creTvLogin = (TextView) view.findViewById(R.id.cre_tv_login);
+        intro= (TextView) view.findViewById(R.id.intro);
     }
 
 
@@ -101,9 +104,15 @@ public class CreditFirstFrag extends BaseFragment {
 
     }
 
-    @OnClick({R.id.cre_btn_yzm, R.id.first_btn_next, R.id.cre_tv_login})
+    @OnClick({R.id.cre_btn_yzm, R.id.first_btn_next, R.id.cre_tv_login,R.id.intro})
     public void todo(View v) {
         switch (v.getId()) {
+            //金蛛条款说明
+            case R.id.intro:
+                Intent intent=new Intent();
+                intent.setClass(context, ClauseJinzhu.class);
+                getActivity().startActivity(intent);
+                break;
             //获取验证码
             case R.id.cre_btn_yzm:
                 phone = crePhone.getText().toString().trim();

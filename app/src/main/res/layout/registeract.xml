@@ -175,6 +175,18 @@
             android:text="同意金蛛条款"
             android:textColor="#333333"
             android:textSize="14sp" />
+        <TextView
+            android:id="@+id/intro"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_below="@+id/llReg"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/cre_tk"
+            android:gravity="center_vertical"
+            android:textColor="#333333"
+            android:textSize="14sp"
+            android:text="（金蛛条款说明）"/>
 
         <Button
             android:id="@+id/reg_btn"
