@@ -24,6 +24,8 @@ import io.rong.imlib.RongIMClient;
  * Created by wangbin on 15/11/11.
  */
 public class SplashAct extends BaseActivity {
+//    @ViewInject(R.id.ivSplash)
+//    private ImageView ivSplash;
     @Override
     public void setLayout() {
         setContentView(R.layout.activity_splash);
@@ -34,27 +36,20 @@ public class SplashAct extends BaseActivity {
         MyApplication.screenWith = FinancialUtil.getScreenWidth(this);
         MyApplication.screenHeight = FinancialUtil.getScreenHeight(this);
 
-//        if(ProvinceDao.getProvince().size()==0){
-//
-//        }
 
-//        if(ProvinceDao.getProvince().size()==0){
-//            Gson gson=new Gson();
-//            String pJson=getResources().getString(R.string.province);
-//            String cJson=getResources().getString(R.string.city);
-//            String aJson=getResources().getString(R.string.area);
-//
-//            ProvinceDao.addProvince((List<ProvinceInfo>) gson.fromJson(pJson, new TypeToken<List<ProvinceInfo>>() {
-//            }.getType()));
-//            CityDao.addCity((List<CityInfo>) gson.fromJson(cJson, new TypeToken<List<CityInfo>>() {
-//            }.getType()));
-//            AreaDao.addArea((List<AreaInfo>) gson.fromJson(aJson, new TypeToken<List<AreaInfo>>() {
-//            }.getType()));
-//
-//        }
-        new Handler().postDelayed(new Runnable() {
+
+
+    }
+
+    private Handler handler=new Handler();
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                gotoActivity(MainActivity.class, true);
                 boolean isFirst = SpUtils.getIsFirst(getApplicationContext());
                 Intent intent = null;
                 if (isFirst) {
