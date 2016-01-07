@@ -157,8 +157,12 @@ public class MyWalletFrg extends BaseFragment implements View.OnClickListener {
                     MyToastUtils.showShortToast(getActivity(), "请输入提现金额");
                     return;
                 }
+                if (Integer.valueOf(money)>0) {
 //                double amount = se.getAccountBalance() - Double.valueOf(money);
-                serviceWitchDraw(money);
+                    serviceWitchDraw(money);
+                }else{
+                    txBtn.setEnabled(false);
+                }
 
                 break;
             //查看提现记录
@@ -213,7 +217,7 @@ public class MyWalletFrg extends BaseFragment implements View.OnClickListener {
                     String balance = ue.getAccountBalance();
                     if (!TextUtils.isEmpty(balance)) {
                         String fmtMicrometer = FinancialUtil.fmtMicrometer(balance);
-                        tvTotal.setText(fmtMicrometer);
+                        tvTotal.setText("¥ "+fmtMicrometer);
                     }
                 }
             }

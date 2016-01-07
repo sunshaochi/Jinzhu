@@ -22,6 +22,7 @@ import com.beyonditsm.financial.view.pullfreshview.PullToRefreshListView;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -119,7 +120,7 @@ public class WithdrawalsAct extends BaseActivity {
                     datas.clear();
                 }
                 datas.addAll(list);
-
+                Collections.reverse(list);
                 if (adapter==null){
 //                    if (!TextUtils.isEmpty(money)) {
 

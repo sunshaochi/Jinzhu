@@ -32,6 +32,7 @@ import com.beyonditsm.financial.entity.UserLoginEntity;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.GsonUtils;
+import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.widget.MyAlertDialog;
@@ -90,7 +91,6 @@ public class ServiceMineFrg extends BaseFragment {
     private TextView tv_name;
 
     public static final String SERVANT_INFO = "servant_info";
-    public static final String USER_INFO = "user_info";
 
     @SuppressWarnings("deprecation")
     private DisplayImageOptions options = new DisplayImageOptions.Builder()
@@ -254,8 +254,8 @@ public class ServiceMineFrg extends BaseFragment {
                 ue = rd.getData();
                 if (ue != null) {
                     if (ue.getServantId() != null) {
-                        if (ue.getAccountName() != null) {
-                            tv_name.setText(ue.getAccountName());
+                        if (!TextUtils.isEmpty(ue.getUserName())) {
+                            tv_name.setText(ue.getUserName());
                         }
                         if (!TextUtils.isEmpty(ue.getCreditScore())){
                             tvCredit.setText(ue.getCreditScore());
@@ -356,11 +356,11 @@ public class ServiceMineFrg extends BaseFragment {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            UserEntity userEntity = intent.getParcelableExtra(SERVANT_INFO);
+            ue = intent.getParcelableExtra(SERVANT_INFO);
 //            UserEntity ue = intent.getParcelableExtra(USER_INFO);
-            if (ue!=null&&!TextUtils.isEmpty(userEntity.getUserName())) {
-                tv_name.setText(userEntity.getUserName());
-                ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + userEntity.getHeadIcon(), civHead, options);
+            if (ue!=null&&!TextUtils.isEmpty(ue.getUserName())) {
+                tv_name.setText(ue.getUserName());
+                ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + ue.getHeadIcon(), civHead, options);
 
             }
         }

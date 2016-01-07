@@ -12,17 +12,14 @@ public interface IFinancialUrl {
 //    String BASE_URL = "http://option.myjinzhu.com";
 //    String BASE_URL = "http://172.16.12.237:8080";
 
-    String GAME_URL = "http://m.farm.myjinzhu.com/";
-//    String BASE_URL = "http://139.196.111.82:8080";
-//        String BASE_URL = "http://172.16.21.22:8080";
-//    String BASE_URL = "http://172.16.12.237:8080";
-//String BASE_URL ="http://172.16.10.189:8080";
-//    String BASE_URL="http://172.16.12.235:8080";
-
+    /*正式游戏地址*/
+//    String GAME_URL = "http://m.farm.myjinzhu.com/";
+    /*测试游戏地址*/
+    String GAME_URL = "http://139.196.111.82:8081/farm/";
 
     String API_VERSION = "/easyplay";
 
-    String BASE_IMAGE_URL = BASE_URL +API_VERSION+ "/";
+    String BASE_IMAGE_URL = BASE_URL + API_VERSION + "/";
 
     /*登录*/
     String LOGIN_URL = BASE_URL + API_VERSION + "/manager/unLogin/login.do";
@@ -161,7 +158,9 @@ public interface IFinancialUrl {
     /*添加好友*/
     String ADD_FRIEND_URL = BASE_URL + API_VERSION + "/platform/login/findBookAddByPhone.do";
     /*检查版本更新*/
-    String VERSION_URL=BASE_URL + API_VERSION + "/platform/unLogin/checkUpdrage.do";
+    String VERSION_URL = BASE_URL + API_VERSION + "/platform/unLogin/checkUpdrage.do";
     /*取消订单*/
-    String CANCEL_ORDER = BASE_URL+API_VERSION+"/platform/login/modifyToCancelOrderById.do";
+    String CANCEL_ORDER = BASE_URL + API_VERSION + "/platform/login/modifyToCancelOrderById.do";
+    /*根据key查找各种特点*/
+    String DIC_MAP_URL=BASE_URL+API_VERSION+"/manager/unLogin/findDictMap.do";
 }

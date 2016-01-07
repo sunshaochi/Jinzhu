@@ -53,8 +53,7 @@ public class SettingAct extends BaseActivity {
                     if (JPushInterface.isPushStopped(getApplicationContext()))
                         JPushInterface.resumePush(getApplicationContext());
                 } else {
-                    SpUtils.setMsg(getApplicationContext(), false);
-                    JPushInterface.stopPush(getApplicationContext());
+
                 }
             }
         });
@@ -94,6 +93,16 @@ public class SettingAct extends BaseActivity {
                 }
             }
         });
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(!tb_msg.IsSwitch()){
+            SpUtils.setMsg(getApplicationContext(), false);
+            JPushInterface.stopPush(getApplicationContext());
+        }
     }
 
     /**

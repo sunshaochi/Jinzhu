@@ -57,6 +57,8 @@ public class RegisterAct extends BaseActivity {
     private Button regBtn;//注册
     @ViewInject(R.id.cre_tk)
     private CheckBox cb;//金蛛条款
+    @ViewInject(R.id.intro)
+    private TextView intro;//金蛛条款说明
 
     private String phone;
     private String pwd;
@@ -93,9 +95,15 @@ public class RegisterAct extends BaseActivity {
         generalUtil = new GeneralUtils();
     }
 
-    @OnClick({R.id.reg_yzm_btn, R.id.reg_btn})
+    @OnClick({R.id.reg_yzm_btn, R.id.reg_btn,R.id.intro})
     public void todo(View v) {
         switch (v.getId()) {
+            //金蛛条款说明
+            case R.id.intro:
+                Intent intent = new Intent();
+                intent.setClass(RegisterAct.this, ClauseJinzhu.class);
+                startActivity(intent);
+                break;
             //获取验证码
             case R.id.reg_yzm_btn:
                 phone = regPhone.getText().toString().trim();

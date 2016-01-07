@@ -10,14 +10,12 @@ import android.text.TextUtils;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.manager.SelectSexAct;
 import com.beyonditsm.financial.entity.ResultData;
-import com.beyonditsm.financial.entity.ServantEntity;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.entity.UserEvent;
 import com.beyonditsm.financial.fragment.ServiceMineFrg;
@@ -90,10 +88,6 @@ public class ServiceDataAct extends BaseActivity {
 
     @ViewInject(R.id.tvCity)
     private TextView tvCity;
-
-    //所在支行
-    @ViewInject(R.id.tvNative)
-    private TextView tvNative;
 
     //户籍地址
     @ViewInject(R.id.tvHouseHold)
@@ -193,7 +187,6 @@ public class ServiceDataAct extends BaseActivity {
             //银行账号
             if (!TextUtils.isEmpty(se.getBankAccNo())) {
                 tvSubbranch.setText(se.getBankAccNo());
-                MyLogUtils.info("========"+tvBankAcount.getText().toString());
             }
             //邮箱
             if (!TextUtils.isEmpty(se.getEmail())) {
@@ -213,7 +206,6 @@ public class ServiceDataAct extends BaseActivity {
             //所在支行、收支支行
             if (!TextUtils.isEmpty(se.getBankName())) {
                 tvBankAcount.setText(se.getBankName());
-                MyLogUtils.info("----------"+tvSubbranch.getText().toString());
             }
             //收支银行
             if (!TextUtils.isEmpty(se.getBankNameTitle())) {
@@ -241,19 +233,16 @@ public class ServiceDataAct extends BaseActivity {
                 tvBank.setText(servantInfo.getBankNameTitle());
                 break;
             case 5://收支支行
-                tvBankAcount.setText(servantInfo.getBankName());
+                tvSubbranch.setText(servantInfo.getBankName());
                 break;
             case 6://银行账户
-                tvSubbranch.setText(servantInfo.getBankAccNo());
+                tvBankAcount.setText(servantInfo.getBankAccNo());
                 break;
             case 7://电子邮箱
                 tvEmail.setText(servantInfo.getEmail());
                 break;
             case 8://修改年龄
                 tvAge.setText(servantInfo.getUserAge() + "");
-                break;
-            case 9://所在支行
-                tvNative.setText(servantInfo.getBankName());
                 break;
             case 10://修改性别
                 if (servantInfo.getUserSex() == 0) {
@@ -347,12 +336,6 @@ public class ServiceDataAct extends BaseActivity {
                         updateServantDatas(servantInfo, 1);
                     }
                 });
-                break;
-            case R.id.rlNative://所在支行
-                intent = new Intent(this, ServiceEditAct.class);
-                intent.putExtra(ServiceEditAct.USER_TYPE, 9);
-                intent.putExtra(ServiceMineFrg.SERVANT_INFO, servantInfo);
-                startActivity(intent);
                 break;
             case R.id.rlHouseHold://户籍
                 DialogChooseAdress dialogChooseAdress2 = new DialogChooseAdress(this).builder();
