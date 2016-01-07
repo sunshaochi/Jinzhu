@@ -293,6 +293,9 @@
         <!--消息中心-->
         <activity android:name=".activity.MessageActivity"
             android:screenOrientation="portrait"></activity>
+        <!--金蛛条款-->
+        <activity android:name=".activity.user.ClauseJinzhu"
+            android:screenOrientation="portrait"></activity>
 
         <!-- 扫描二维码结果展示界面 -->
 
