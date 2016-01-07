@@ -139,14 +139,14 @@ public class ServiceEditAct extends BaseActivity {
 
             case 4:////
                 setTopTitle("收款银行");
-                etM.setText("请输入收支银行");
+                etM.setText("请输入收款银行");
                 if (!TextUtils.isEmpty(userInfo.getBankNameTitle())) {
                     etM.setText(userInfo.getBankNameTitle());
                 }
                 break;
             case 5://
                 setTopTitle("收款支行");
-                etM.setHint("请输入收支支行");
+                etM.setHint("请输入收款支行");
                 if (!TextUtils.isEmpty(userInfo.getBankName())) {
                     etM.setText(userInfo.getBankName());
                 }
@@ -190,7 +190,6 @@ public class ServiceEditAct extends BaseActivity {
      * 更新资料
      */
     private void updateData(final UserEntity se) {
-        MyLogUtils.info("66666666666666666666666");
         RequestManager.getServicerManager().UpadateServantData(se, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
@@ -212,13 +211,12 @@ public class ServiceEditAct extends BaseActivity {
     }
 
     private void updateUserData(final UserEntity userEntity){
-        MyLogUtils.info("00000000000000000000000000");
         RequestManager.getCommManager().updateData(userEntity, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
                 EventBus.getDefault().post(new UserEvent(userEntity, TYPE));
                 Intent intent = new Intent(ServiceMineFrg.UPDATE_SERVANT);
-                intent.putExtra(ServiceMineFrg.USER_INFO, userEntity);
+                intent.putExtra(ServiceMineFrg.SERVANT_INFO, userEntity);
                 sendBroadcast(intent);
 
                 MyToastUtils.showShortToast(getApplicationContext(), "更新成功");

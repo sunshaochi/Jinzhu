@@ -8,7 +8,6 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Process;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -441,10 +440,12 @@ public class MainActivity extends BaseActivity{
             Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
             touchTime = currentTime;
         } else {
-            RongIM.getInstance().disconnect();
+            if(RongIM.getInstance()!=null)
+                RongIM.getInstance().disconnect();
+//            finish();
             try {
                 Thread.sleep(500);
-                android.os.Process.killProcess(Process.myPid());
+                android.os.Process.killProcess(android.os.Process.myPid());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
