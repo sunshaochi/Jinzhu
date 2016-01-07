@@ -193,7 +193,6 @@ public class ServiceDataAct extends BaseActivity {
             //银行账号
             if (!TextUtils.isEmpty(se.getBankAccNo())) {
                 tvSubbranch.setText(se.getBankAccNo());
-                MyLogUtils.info("========"+tvBankAcount.getText().toString());
             }
             //邮箱
             if (!TextUtils.isEmpty(se.getEmail())) {
@@ -213,7 +212,6 @@ public class ServiceDataAct extends BaseActivity {
             //所在支行、收支支行
             if (!TextUtils.isEmpty(se.getBankName())) {
                 tvBankAcount.setText(se.getBankName());
-                MyLogUtils.info("----------"+tvSubbranch.getText().toString());
             }
             //收支银行
             if (!TextUtils.isEmpty(se.getBankNameTitle())) {
