@@ -5,17 +5,12 @@ import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.text.method.DialerKeyListener;
-import android.text.method.DigitsKeyListener;
 import android.view.View;
-import android.widget.EditText;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
-import com.beyonditsm.financial.entity.ServantEntity;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.entity.UserEvent;
-import com.beyonditsm.financial.entity.UpdateServantEntity;
 import com.beyonditsm.financial.fragment.ServiceMineFrg;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.IdcardUtils;
@@ -26,8 +21,6 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.tandong.sa.eventbus.EventBus;
 
 import org.json.JSONException;
-
-import java.lang.reflect.Type;
 
 /**
  * Created by Administrator on 2015/11/29.

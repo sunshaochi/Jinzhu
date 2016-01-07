@@ -93,9 +93,16 @@ public class RegisterAct extends BaseActivity {
         generalUtil = new GeneralUtils();
     }
 
-    @OnClick({R.id.reg_yzm_btn, R.id.reg_btn})
+    @OnClick({R.id.reg_yzm_btn, R.id.reg_btn,R.id.cre_tk})
     public void todo(View v) {
         switch (v.getId()) {
+            case R.id.cre_tk:
+                if(cb.isChecked()) {
+                    Intent intent = new Intent();
+                    intent.setClass(RegisterAct.this, ClauseJinzhu.class);
+                    startActivity(intent);
+                }
+                break;
             //获取验证码
             case R.id.reg_yzm_btn:
                 phone = regPhone.getText().toString().trim();
