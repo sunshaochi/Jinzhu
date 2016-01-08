@@ -75,9 +75,17 @@ public class ServantWithdrawBean implements Parcelable{
         private long operatTime;
         private String auditStatus;
         private String remark;
-
+        private String balance;//余额
         public void setCommissionType(String commissionType) {
             this.commissionType = commissionType;
+        }
+
+        public String getBalance() {
+            return balance;
+        }
+
+        public void setBalance(String balance) {
+            this.balance = balance;
         }
 
         public void setAmount(String amount) {
