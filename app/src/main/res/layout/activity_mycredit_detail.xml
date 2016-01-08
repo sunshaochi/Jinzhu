@@ -664,7 +664,7 @@
                             android:id="@+id/house_data"
                             style="@style/tv_red_style"
                             android:layout_gravity="bottom"
-                            android:text="商品房" />
+                            android:text="" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -682,7 +682,7 @@
                             android:id="@+id/car_data"
                             style="@style/tv_red_style"
                             android:layout_gravity="bottom"
-                            android:text="小轿车" />
+                            android:text="" />
                     </LinearLayout>
 
                     <LinearLayout
