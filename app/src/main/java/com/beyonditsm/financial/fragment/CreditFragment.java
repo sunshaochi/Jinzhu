@@ -5,8 +5,10 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -86,7 +88,7 @@ public class CreditFragment extends BaseFragment {
     public void initData(Bundle savedInstanceState) {
         tvTitle.setText("贷款");
         loadView.setNoContentTxt("暂无此类产品，换个条件试试");
-        etAmount.setText(5+"");
+        etAmount.setText(5 + "");
         tvM.setText(6+"");
         etAmount.setSelection(etAmount.getText().length());
         rl_back.setVisibility(View.GONE);
@@ -103,26 +105,51 @@ public class CreditFragment extends BaseFragment {
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 plv.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
                 currentP = 1;
-                getCredit(currentP,cMoney,cTime);
+                getCredit(currentP, cMoney, cTime);
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 currentP++;
-                getCredit(currentP,cMoney,cTime);
+                getCredit(currentP, cMoney, cTime);
             }
         });
-        getCredit(currentP,cMoney,cTime);
+        getCredit(currentP, cMoney, cTime);
         loadView.setOnRetryListener(new LoadingView.OnRetryListener() {
             @Override
             public void OnRetry() {
-                getCredit(currentP,cMoney,cTime);
+                getCredit(currentP, cMoney, cTime);
             }
         });
+        /*把回车键换成搜索*/
+        etAmount.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
     }
 
     @Override
     public void setListener() {
+        /*监听回车键*/
+        etAmount.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
+                    FinancialUtil.closeIM(getActivity(),etAmount);
+                    loadView.loading();
+                    if(TextUtils.isEmpty(etAmount.getText().toString().trim())){
+                        etAmount.setText(ConstantValue.CREDIT_MONEY+"");
+                    }
+                    if(TextUtils.isEmpty(tvM.getText().toString().trim())){
+                        tvM.setText(ConstantValue.CREDIT_MONTH+"");
+                    }
+
+                    cMoney=etAmount.getText().toString().trim();
+                    cTime=tvM.getText().toString().trim();
+                    getCredit(currentP, cMoney, cTime);
+                    return true;
+                }
+
+                return false;
+            }
+        });
 //        String[] moneys = getResources().getStringArray(R.array.money);
 //        for (int i = 0; i < moneys.length; i++) {
 //            CustemObject object = new CustemObject();
@@ -214,6 +241,7 @@ public class CreditFragment extends BaseFragment {
                 });
                 break;
             case R.id.tvSearch:
+                FinancialUtil.closeIM(getActivity(),etAmount);
                 loadView.loading();
                 if(TextUtils.isEmpty(etAmount.getText().toString().trim())){
                     etAmount.setText(ConstantValue.CREDIT_MONEY+"");

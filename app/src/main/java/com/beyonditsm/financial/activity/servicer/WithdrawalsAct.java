@@ -17,7 +17,6 @@ import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
-import com.beyonditsm.financial.view.pullfreshview.PullToRefreshListView;
 
 import org.json.JSONException;
 
