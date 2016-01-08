@@ -67,6 +67,7 @@ public class WithDrawalsAdp extends BaseAdapter {
         holder.txjltime.setText(sdf.format(date));
         holder.txjlmoney.setText(rowsEntity.getAmount());
         holder.txjlstatus.setText(rowsEntity.getAuditStatus());
+        holder.txjlyue.setText(rowsEntity.getBalance());
 //        if (money!=null) {
 //            holder.txjlmoney.setText(money);
 //        }
