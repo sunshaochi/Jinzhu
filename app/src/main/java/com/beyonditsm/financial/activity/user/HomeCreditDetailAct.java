@@ -4,7 +4,9 @@ import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -12,6 +14,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.AppManager;
+import com.beyonditsm.financial.ConstantValue;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.credit.CreditStepAct;
@@ -19,6 +22,7 @@ import com.beyonditsm.financial.entity.ProductInfo;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.view.LoadingView;
@@ -202,7 +206,8 @@ public class HomeCreditDetailAct extends BaseActivity {
             }
         });
 
-
+        /*把回车键换成搜索*/
+        etAmount.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
     }
 
 
@@ -211,9 +216,38 @@ public class HomeCreditDetailAct extends BaseActivity {
      *
      * @param v
      */
-    @OnClick({R.id.rlRequire, R.id.rlMaterial, R.id.rlDetail, R.id.tvApplay, R.id.rlMonth, R.id.tvCal})
+    @OnClick({R.id.rlRequire, R.id.rlMaterial, R.id.rlDetail, R.id.tvApplay, R.id.rlMonth, R.id.tvCal,R.id.etAmount})
     public void toClick(View v) {
         switch (v.getId()) {
+            //搜索
+            case R.id.etAmount:
+
+                /*监听回车键*/
+                etAmount.setOnKeyListener(new View.OnKeyListener() {
+                    @Override
+                    public boolean onKey(View v, int keyCode, KeyEvent event) {
+                        if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
+                            FinancialUtil.closeIM(HomeCreditDetailAct.this, etAmount);
+                            if (TextUtils.isEmpty(etAmount.getText().toString().trim())) {
+                                etAmount.setText("5");
+                                creditMoney = "5";
+                            } else {
+                                creditMoney = etAmount.getText().toString().trim();
+                            }
+                            final double minVal = Double.valueOf(productEntity.getMinVal());
+                            double maxVal = Double.valueOf(productEntity.getMaxVal());
+                            double curVal = Double.valueOf(creditMoney.toString()) * 10000;
+                            creditMonth = tvM.getText().toString();
+                            validateCredit(minVal, maxVal, curVal, creditMonth);
+
+                            return true;
+                        }
+
+                        return false;
+                    }
+                });
+
+                break;
             //申请条件
             case R.id.rlRequire:
 
@@ -297,21 +331,21 @@ public class HomeCreditDetailAct extends BaseActivity {
                 });
                 break;
             //计算
-            case R.id.tvCal:
-                if (TextUtils.isEmpty(etAmount.getText().toString().trim())) {
-                    etAmount.setText("5");
-                    creditMoney = "5";
-                } else {
-                    creditMoney = etAmount.getText().toString().trim();
-                }
-                final double minVal = Double.valueOf(productEntity.getMinVal());
-                double maxVal = Double.valueOf(productEntity.getMaxVal());
-                double curVal = Double.valueOf(creditMoney.toString()) * 10000;
-                creditMonth = tvM.getText().toString();
-                validateCredit(minVal, maxVal, curVal, creditMonth);
-
-
-                break;
+//            case R.id.tvCal:
+//                if (TextUtils.isEmpty(etAmount.getText().toString().trim())) {
+//                    etAmount.setText("5");
+//                    creditMoney = "5";
+//                } else {
+//                    creditMoney = etAmount.getText().toString().trim();
+//                }
+//                final double minVal = Double.valueOf(productEntity.getMinVal());
+//                double maxVal = Double.valueOf(productEntity.getMaxVal());
+//                double curVal = Double.valueOf(creditMoney.toString()) * 10000;
+//                creditMonth = tvM.getText().toString();
+//                validateCredit(minVal, maxVal, curVal, creditMonth);
+//
+//
+//                break;
         }
     }
 

@@ -133,7 +133,8 @@ public class SettingAct extends BaseActivity {
                 break;
             //关于
             case R.id.rlAbout:
-
+                intent=new Intent(this,AboutOurs.class);
+                startActivity(intent);
                 break;
         }
 

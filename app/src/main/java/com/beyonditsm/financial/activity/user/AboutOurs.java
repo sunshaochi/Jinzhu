@@ -13,12 +13,12 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 /**
  * Created by gxy on 2016/1/7.
  */
-public class ClauseJinzhu extends BaseActivity {
+public class AboutOurs extends BaseActivity {
     @ViewInject(R.id.clause)
-    private WebView clause;//金蛛条款
+    private WebView clause;//关于我们
 
 
-    private String clause_url="file:///android_asset/clause.html";
+    private String clause_url="file:///android_asset/aboutOurs.html";
     @Override
     public void setLayout() {
         setContentView(R.layout.act_clausejinzhu);
@@ -26,7 +26,7 @@ public class ClauseJinzhu extends BaseActivity {
 
     @Override
     public void init(Bundle savedInstanceState) {
-        setTopTitle("金蛛条款");
+        setTopTitle("关于我们");
         setLeftTv("返回");
         //如果访问的页面中有javascript，则webview必须设置支持javascript
         clause.getSettings().setJavaScriptEnabled(true);
