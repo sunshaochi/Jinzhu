@@ -282,4 +282,9 @@ public class CreditPointAct extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getUserInfo();
+    }
 }
