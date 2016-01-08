@@ -104,10 +104,6 @@ public class ServiceEditAct extends BaseActivity {
                         userInfo.setBankAccNo(content);
                         updateData(userInfo);
                         break;
-                    case 9://所在支行
-                        userInfo.setBankName(content);
-                        updateData(userInfo);
-                        break;
                 }
             }
         });

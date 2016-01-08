@@ -118,8 +118,8 @@ public class UserEntity implements Parcelable {
      * bankNameTitle : 111111
      */
 
-    private String bankName;
-    private String bankAccNo;
+    private String bankName;//收款支行
+    private String bankAccNo;//银行账号
     private String wkCardPic;
     private String servantId;
     private String customerId;
