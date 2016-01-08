@@ -296,6 +296,9 @@
         <!--金蛛条款-->
         <activity android:name=".activity.user.ClauseJinzhu"
             android:screenOrientation="portrait"></activity>
+        <!--关于我们-->
+        <activity android:name=".activity.user.AboutOurs"
+            android:screenOrientation="portrait"></activity>
 
         <!-- 扫描二维码结果展示界面 -->
 
