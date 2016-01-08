@@ -213,7 +213,7 @@ public class ServiceDataAct extends BaseActivity {
             if (!TextUtils.isEmpty(usrInfo.getBankNameTitle())) {
                 tvBank.setText(usrInfo.getBankNameTitle());
             }
-            MyLogUtils.error("收款支行"+usrInfo.getBankName()+"银行账号"+usrInfo.getBankAccNo());
+            MyLogUtils.error("收款支行" + usrInfo.getBankName() + "银行账号" + usrInfo.getBankAccNo());
         }
     }
 
@@ -330,23 +330,23 @@ public class ServiceDataAct extends BaseActivity {
                 startActivity(intent);
                 break;
             case R.id.rlCity://所在城市
-                DialogChooseAdress dialogChooseAdress1 = new DialogChooseAdress(this).builder();
+                DialogChooseProvince dialogChooseAdress1 = new DialogChooseProvince(this).builder();
                 dialogChooseAdress1.show();
-                dialogChooseAdress1.setOnSheetItemClickListener(new DialogChooseAdress.SexClickListener() {
+                dialogChooseAdress1.setOnSheetItemClickListener(new DialogChooseProvince.SexClickListener() {
                     @Override
-                    public void getAdress(List<String> adress) {
-                        servantInfo.setDetailAddr(adress.get(0)+adress.get(1)+adress.get(2));
+                    public void getAdress(String adress) {
+                        servantInfo.setNativePlace(adress);
                         updateServantDatas(servantInfo, 1);
                     }
                 });
                 break;
             case R.id.rlHouseHold://户籍
-                DialogChooseProvince dialogChooseAdress2 = new DialogChooseProvince(this).builder();
+                DialogChooseAdress dialogChooseAdress2 = new DialogChooseAdress(this).builder();
                 dialogChooseAdress2.show();
-                dialogChooseAdress2.setOnSheetItemClickListener(new DialogChooseProvince.SexClickListener() {
+                dialogChooseAdress2.setOnSheetItemClickListener(new DialogChooseAdress.SexClickListener() {
                     @Override
-                    public void getAdress(String adress) {
-                        servantInfo.setNativePlace(adress);
+                    public void getAdress(List<String> adress) {
+                        servantInfo.setDetailAddr(adress.get(0)+adress.get(1)+adress.get(2));
                         updateServantDatas(servantInfo, 2);
                     }
                 });
