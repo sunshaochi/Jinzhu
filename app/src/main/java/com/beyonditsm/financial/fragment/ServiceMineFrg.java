@@ -116,7 +116,7 @@ public class ServiceMineFrg extends BaseFragment {
         tvTitle.setText("我");
         rlBack.setVisibility(View.GONE);
         msg_top.setVisibility(View.VISIBLE);
-        findServantInfo();
+//        findServantInfo();
         getUserLoginInfo();
     }
 
@@ -372,5 +372,11 @@ public class ServiceMineFrg extends BaseFragment {
         public void onReceive(Context context, Intent intent) {
             msg_top_point.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        findServantInfo();
     }
 }

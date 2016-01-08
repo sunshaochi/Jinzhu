@@ -113,7 +113,7 @@ public class MineFragment extends BaseFragment {
         } else {
             isLogin = true;
             tvExit.setVisibility(View.VISIBLE);
-            getUserInfo();
+//            getUserInfo();
             getUserLoginInfo();
         }
     }
@@ -389,5 +389,12 @@ public class MineFragment extends BaseFragment {
 
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getUserInfo();
+
     }
 }
