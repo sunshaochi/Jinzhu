@@ -35,6 +35,7 @@ import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
 import com.beyonditsm.financial.activity.user.TaskDetail;
 import com.beyonditsm.financial.activity.user.TaskLevelAct;
 import com.beyonditsm.financial.adapter.PrimaryTaskAdapter;
+import com.beyonditsm.financial.entity.DictionaryType;
 import com.beyonditsm.financial.entity.ImageBean;
 import com.beyonditsm.financial.entity.OrderBean;
 import com.beyonditsm.financial.entity.ProductInfo;
@@ -176,6 +177,10 @@ public class CreditSecondFrag extends BaseFragment {
     private Map<Integer, Boolean> map = new HashMap<>();
     private MySelfSheetDialog dialog;
 
+    private List<DictionaryType> carList,jobList,hourseList,creditList;//车产，职业，房产，信用
+    private int jobPos,carPos,hoursePos,creditPos;
+
+
     @Override
     public View initView(LayoutInflater inflater) {
         view = View.inflate(context, R.layout.creditsecondfrag, null);
@@ -189,6 +194,14 @@ public class CreditSecondFrag extends BaseFragment {
         finishList = new ArrayList<TaskEntity>();
         taskStrategyEntityList = new ArrayList<TaskStrategyEntity>();
         taskEntityList = new ArrayList<TaskEntity>();
+        carList=new ArrayList<DictionaryType>();
+        jobList=new ArrayList<DictionaryType>();
+        hourseList=new ArrayList<DictionaryType>();
+        creditList=new ArrayList<DictionaryType>();
+        getDictionaryContent(0,"job_identity");//职业身份
+        getDictionaryContent(1,"under_own_car");//名下车产
+        getDictionaryContent(2,"under_own_hour");//名下房产
+        getDictionaryContent(3,"ep_credit_conditions");//信用状况
 
         obaDown = ObjectAnimator.ofFloat(ivSlide, "rotation", 0,
                 180);
@@ -560,141 +573,187 @@ public class CreditSecondFrag extends BaseFragment {
             case R.id.rl_work:
                 //企业主、个体户、上班族、无固定职业
                 dialog = new MySelfSheetDialog(getActivity()).builder();
-                dialog.addSheetItem("企业主", null, new MySelfSheetDialog.OnSheetItemClickListener() {
-                    @Override
-                    public void onClick(int which) {
-                        tvWork.setText("企业主");
+                if(jobList.size()!=0){
+                    for(int i=0;i<jobList.size();i++){
+                        dialog.addSheetItem(jobList.get(i).getName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which) {
+                                tvWork.setText(jobList.get(which-1).getName());
+                                jobPos=which-1;
+                            }
+                        });
                     }
-                });
-                dialog.addSheetItem("个体户", null, new MySelfSheetDialog.OnSheetItemClickListener() {
-                    @Override
-                    public void onClick(int which) {
-                        tvWork.setText("个体户");
-                    }
-                });
-                dialog.addSheetItem("上班族", null, new MySelfSheetDialog.OnSheetItemClickListener() {
-                    @Override
-                    public void onClick(int which) {
-                        tvWork.setText("上班族");
-                    }
-                });
-                dialog.addSheetItem("无固定职业", null, new MySelfSheetDialog.OnSheetItemClickListener() {
-                    @Override
-                    public void onClick(int which) {
-                        tvWork.setText("无固定职业");
-                    }
-                });
+                }
+
+//                dialog.addSheetItem("企业主", null, new MySelfSheetDialog.OnSheetItemClickListener() {
+//                    @Override
+//                    public void onClick(int which) {
+//                        tvWork.setText("企业主");
+//                    }
+//                });
+//                dialog.addSheetItem("个体户", null, new MySelfSheetDialog.OnSheetItemClickListener() {
+//                    @Override
+//                    public void onClick(int which) {
+//                        tvWork.setText("个体户");
+//                    }
+//                });
+//                dialog.addSheetItem("上班族", null, new MySelfSheetDialog.OnSheetItemClickListener() {
+//                    @Override
+//                    public void onClick(int which) {
+//                        tvWork.setText("上班族");
+//                    }
+//                });
+//                dialog.addSheetItem("无固定职业", null, new MySelfSheetDialog.OnSheetItemClickListener() {
+//                    @Override
+//                    public void onClick(int which) {
+//                        tvWork.setText("无固定职业");
+//                    }
+//                });
                 dialog.show();
                 break;
             case R.id.rl_home:
                 //无房产、商品房、 住宅、 商铺、 办公楼、 厂房、经济/限价房、房改/危改房
                 dialog = new MySelfSheetDialog(getActivity()).builder();
-                dialog.addSheetItem("无房产", null, new MySelfSheetDialog.OnSheetItemClickListener() {
-                    @Override
-                    public void onClick(int which) {
-                        tvHome.setText("无房产");
+                if(hourseList.size()!=0){
+                    for(int i=0;i<hourseList.size();i++){
+                        dialog.addSheetItem(hourseList.get(i).getName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which) {
+                                tvHome.setText(hourseList.get(which-1).getName());
+                                hoursePos=which-1;
+                            }
+                        });
                     }
-                });
-                dialog.addSheetItem("商品房", null, new MySelfSheetDialog.OnSheetItemClickListener() {
-                    @Override
-                    public void onClick(int which) {
-                        tvHome.setText("商品房");
-                    }
-                });
-                dialog.addSheetItem("住宅", null, new MySelfSheetDialog.OnSheetItemClickListener() {
-                    @Override
-                    public void onClick(int which) {
-                        tvHome.setText("住宅");
-                    }
-                });
-                dialog.addSheetItem("商铺", null, new MySelfSheetDialog.OnSheetItemClickListener() {
-                    @Override
-                    public void onClick(int which) {
-                        tvHome.setText("商铺");
-                    }
-                });
-                dialog.addSheetItem("办公楼", null, new MySelfSheetDialog.OnSheetItemClickListener() {
-                    @Override
-                    public void onClick(int which) {
-                        tvHome.setText("办公楼");
-                    }
-                });
-                dialog.addSheetItem("厂房", null, new MySelfSheetDialog.OnSheetItemClickListener() {
-                    @Override
-                    public void onClick(int which) {
-                        tvHome.setText("厂房");
-                    }
-                });
-                dialog.addSheetItem("经济/限价房", null, new MySelfSheetDialog.OnSheetItemClickListener() {
-                    @Override
-                    public void onClick(int which) {
-                        tvHome.setText("经济/限价房");
-                    }
-                });
-                dialog.addSheetItem("房改/危改房", null, new MySelfSheetDialog.OnSheetItemClickListener() {
-                    @Override
-                    public void onClick(int which) {
-                        tvHome.setText("房改/危改房");
-                    }
-                });
+                }
+//                dialog.addSheetItem("无房产", null, new MySelfSheetDialog.OnSheetItemClickListener() {
+//                    @Override
+//                    public void onClick(int which) {
+//                        tvHome.setText("无房产");
+//                    }
+//                });
+//                dialog.addSheetItem("商品房", null, new MySelfSheetDialog.OnSheetItemClickListener() {
+//                    @Override
+//                    public void onClick(int which) {
+//                        tvHome.setText("商品房");
+//                    }
+//                });
+//                dialog.addSheetItem("住宅", null, new MySelfSheetDialog.OnSheetItemClickListener() {
+//                    @Override
+//                    public void onClick(int which) {
+//                        tvHome.setText("住宅");
+//                    }
+//                });
+//                dialog.addSheetItem("商铺", null, new MySelfSheetDialog.OnSheetItemClickListener() {
+//                    @Override
+//                    public void onClick(int which) {
+//                        tvHome.setText("商铺");
+//                    }
+//                });
+//                dialog.addSheetItem("办公楼", null, new MySelfSheetDialog.OnSheetItemClickListener() {
+//                    @Override
+//                    public void onClick(int which) {
+//                        tvHome.setText("办公楼");
+//                    }
+//                });
+//                dialog.addSheetItem("厂房", null, new MySelfSheetDialog.OnSheetItemClickListener() {
+//                    @Override
+//                    public void onClick(int which) {
+//                        tvHome.setText("厂房");
+//                    }
+//                });
+//                dialog.addSheetItem("经济/限价房", null, new MySelfSheetDialog.OnSheetItemClickListener() {
+//                    @Override
+//                    public void onClick(int which) {
+//                        tvHome.setText("经济/限价房");
+//                    }
+//                });
+//                dialog.addSheetItem("房改/危改房", null, new MySelfSheetDialog.OnSheetItemClickListener() {
+//                    @Override
+//                    public void onClick(int which) {
+//                        tvHome.setText("房改/危改房");
+//                    }
+//                });
                 dialog.show();
                 break;
             case R.id.rl_car:
                 //无车 、名下有车 、有车，但车已被抵押 、无车，准备购买
                 dialog = new MySelfSheetDialog(getActivity()).builder();
-                dialog.addSheetItem("无车", null, new MySelfSheetDialog.OnSheetItemClickListener() {
-                    @Override
-                    public void onClick(int which) {
-                        tvCar.setText("无车");
+
+                if(carList.size()!=0){
+                    for(int i=0;i<carList.size();i++){
+                        dialog.addSheetItem(carList.get(i).getName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which) {
+                                tvCar.setText(carList.get(which-1).getName());
+                                carPos=which-1;
+                            }
+                        });
                     }
-                });
-                dialog.addSheetItem("名下有车", null, new MySelfSheetDialog.OnSheetItemClickListener() {
-                    @Override
-                    public void onClick(int which) {
-                        tvCar.setText("名下有车");
-                    }
-                });
-                dialog.addSheetItem("有车，但车已被抵押", null, new MySelfSheetDialog.OnSheetItemClickListener() {
-                    @Override
-                    public void onClick(int which) {
-                        tvCar.setText("有车，但车已被抵押");
-                    }
-                });
-                dialog.addSheetItem("无车，准备购买", null, new MySelfSheetDialog.OnSheetItemClickListener() {
-                    @Override
-                    public void onClick(int which) {
-                        tvCar.setText("无车，准备购买");
-                    }
-                });
+                }
+//                dialog.addSheetItem("无车", null, new MySelfSheetDialog.OnSheetItemClickListener() {
+//                    @Override
+//                    public void onClick(int which) {
+//                        tvCar.setText("无车");
+//                    }
+//                });
+//                dialog.addSheetItem("名下有车", null, new MySelfSheetDialog.OnSheetItemClickListener() {
+//                    @Override
+//                    public void onClick(int which) {
+//                        tvCar.setText("名下有车");
+//                    }
+//                });
+//                dialog.addSheetItem("有车，但车已被抵押", null, new MySelfSheetDialog.OnSheetItemClickListener() {
+//                    @Override
+//                    public void onClick(int which) {
+//                        tvCar.setText("有车，但车已被抵押");
+//                    }
+//                });
+//                dialog.addSheetItem("无车，准备购买", null, new MySelfSheetDialog.OnSheetItemClickListener() {
+//                    @Override
+//                    public void onClick(int which) {
+//                        tvCar.setText("无车，准备购买");
+//                    }
+//                });
                 dialog.show();
                 break;
             case R.id.rl_xy:
                 //无信用卡活贷款 、信用良好
                 dialog = new MySelfSheetDialog(getActivity()).builder();
-                dialog.addSheetItem("无信用卡或贷款", null, new MySelfSheetDialog.OnSheetItemClickListener() {
-                    @Override
-                    public void onClick(int which) {
-                        tvXy.setText("无信用卡或贷款");
+                if(creditList.size()!=0){
+                    for(int i=0;i<creditList.size();i++){
+                        dialog.addSheetItem(creditList.get(i).getName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which) {
+                                tvXy.setText(creditList.get(which-1).getName());
+                                creditPos=which-1;
+                            }
+                        });
                     }
-                });
-                dialog.addSheetItem("信用良好", null, new MySelfSheetDialog.OnSheetItemClickListener() {
-                    @Override
-                    public void onClick(int which) {
-                        tvXy.setText("信用良好");
-                    }
-                });
-                dialog.addSheetItem("有少数逾期", null, new MySelfSheetDialog.OnSheetItemClickListener() {
-                    @Override
-                    public void onClick(int which) {
-                        tvXy.setText("有少数逾期");
-                    }
-                });
-                dialog.addSheetItem("长期多次逾期", null, new MySelfSheetDialog.OnSheetItemClickListener() {
-                    @Override
-                    public void onClick(int which) {
-                        tvXy.setText("长期多次逾期");
-                    }
-                });
+                }
+//                dialog.addSheetItem("无信用卡或贷款", null, new MySelfSheetDialog.OnSheetItemClickListener() {
+//                    @Override
+//                    public void onClick(int which) {
+//                        tvXy.setText("无信用卡或贷款");
+//                    }
+//                });
+//                dialog.addSheetItem("信用良好", null, new MySelfSheetDialog.OnSheetItemClickListener() {
+//                    @Override
+//                    public void onClick(int which) {
+//                        tvXy.setText("信用良好");
+//                    }
+//                });
+//                dialog.addSheetItem("有少数逾期", null, new MySelfSheetDialog.OnSheetItemClickListener() {
+//                    @Override
+//                    public void onClick(int which) {
+//                        tvXy.setText("有少数逾期");
+//                    }
+//                });
+//                dialog.addSheetItem("长期多次逾期", null, new MySelfSheetDialog.OnSheetItemClickListener() {
+//                    @Override
+//                    public void onClick(int which) {
+//                        tvXy.setText("长期多次逾期");
+//                    }
+//                });
                 dialog.show();
                 break;
             case R.id.commit_file:
@@ -704,6 +763,41 @@ public class CreditSecondFrag extends BaseFragment {
         }
     }
 
+    private void getDictionaryContent(final int pos,String key){
+
+        RequestManager.getCommManager().getDicMap(key, new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                JSONObject jsonObject = new JSONObject(result);
+                JSONArray dataArr = jsonObject.getJSONArray("data");
+                Gson gson = new Gson();
+                switch (pos) {
+                    case 0:
+                        jobList = gson.fromJson(dataArr.toString(), new TypeToken<List<DictionaryType>>() {
+                        }.getType());
+                        break;
+                    case 1:
+                        carList = gson.fromJson(dataArr.toString(), new TypeToken<List<DictionaryType>>() {
+                        }.getType());
+                        break;
+                    case 2:
+                        hourseList = gson.fromJson(dataArr.toString(), new TypeToken<List<DictionaryType>>() {
+                        }.getType());
+                        break;
+                    case 3:
+                        creditList = gson.fromJson(dataArr.toString(), new TypeToken<List<DictionaryType>>() {
+                        }.getType());
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     /**
      * 获取个人资料
@@ -736,7 +830,18 @@ public class CreditSecondFrag extends BaseFragment {
 //                            sexWoman.setTextColor(Color.WHITE);
                         }
                     }
-                    tvWork.setText(user.getJobName());//职务
+                   /* if(!TextUtils.isEmpty(user.getJobId())){//职业身份
+                        for (int i=0;i<jobList.size();i++){
+                            if(jobList.get(i).getId().equals(user.getJobId())){
+                                tvWork.setText(jobList.get(i).getName());
+                                break;
+                            }
+                        }
+                    }*/
+                    if(!TextUtils.isEmpty(user.getHavaJobName())){//职业身份
+                        tvWork.setText(user.getHavaJobName());
+                    }
+//                    tvWork.setText(user.getJobName());//职务
                     if (user.getUserAge() != null)
                         age.setText(user.getUserAge() + "");//年龄
                     if (user.getProFund() != null) {
@@ -771,11 +876,27 @@ public class CreditSecondFrag extends BaseFragment {
                         else
                             tvSb.setText("是，有本地社保");
                     }
-                    if (!TextUtils.isEmpty(user.getHaveHours())) {//房产类型
-                        tvHome.setText(user.getHaveHours());
+                /*    if (!TextUtils.isEmpty(user.getHaveHours())) {//房产类型
+                        for (int i=0;i<hourseList.size();i++){
+                            if(hourseList.get(i).getId().equals(user.getHaveHours())){
+                                tvHome.setText(hourseList.get(i).getName());
+                                break;
+                            }
+                        }
+                    }*/
+                    if(!TextUtils.isEmpty(user.getHaveHoursName())){//房产类型
+                        tvHome.setText(user.getHaveHoursName());
                     }
-                    if (!TextUtils.isEmpty(user.getHaveCar())) {
-                        tvCar.setText(user.getHaveCar());
+                   /* if (!TextUtils.isEmpty(user.getHaveCar())) {//车产
+                        for (int i=0;i<carList.size();i++){
+                            if(carList.get(i).getId().equals(user.getHaveCar())){
+                                tvCar.setText(carList.get(i).getName());
+                                break;
+                            }
+                        }
+                    }*/
+                    if(!TextUtils.isEmpty(user.getHaveCarName())){//车产
+                        tvCar.setText(user.getHaveCarName());
                     }
 //                    if(!TextUtils.isEmpty(user.getJobName())){
 //                        companyName.setText(user.getJobName());
@@ -789,8 +910,16 @@ public class CreditSecondFrag extends BaseFragment {
                     if (!TextUtils.isEmpty(user.getNativePlaceAddr())) {
                     }
 
-                    if (!TextUtils.isEmpty(user.getTowYearCred())) {
-                        tvXy.setText(user.getTowYearCred());
+                   /* if (!TextUtils.isEmpty(user.getTowYearCred())) {//信用
+                        for (int i=0;i<creditList.size();i++){
+                            if(creditList.get(i).getId().equals(user.getTowYearCred())){
+                                tvXy.setText(creditList.get(i).getName());
+                                break;
+                            }
+                        }
+                    }*/
+                    if(!TextUtils.isEmpty(user.getTowYearCredName())){//信用
+                        tvXy.setText(user.getTowYearCredName());
                     }
                 }
             }
@@ -809,18 +938,26 @@ public class CreditSecondFrag extends BaseFragment {
     private void upData() {
         if (isHaveData()) {
             user.setIdentCard(IdCard.getText().toString());
-            user.setJobName(tvWork.getText().toString());
+//            user.setJobName(tvWork.getText().toString());
+            //职业身份
+            user.setJobId(jobList.get(jobPos).getId());
             user.setDetailAddr(address.getText().toString());
             user.setNativePlace(tvJiguan.getText().toString());
             user.setNativePlaceAddr(tvAddress.getText().toString());
             user.setUserAge(Integer.parseInt(age.getText().toString()));
-            user.setHaveCar(tvCar.getText().toString());
-            user.setHaveHours(tvHome.getText().toString());
+//            user.setHaveCar(tvCar.getText().toString());
+            //车产
+            user.setHaveCar(carList.get(carPos).getId());
+//            user.setHaveHours(tvHome.getText().toString());
+            //房产
+            user.setHaveHours(hourseList.get(hoursePos).getId());
             user.setUserName(name.getText().toString());
             user.setCompanyName(companyName.getText().toString());
             user.setBusiness(zhiwu.getText().toString());
 //            user.setJobName(companyName.getText().toString().trim());
-            user.setTowYearCred(tvXy.getText().toString().trim());
+//            user.setTowYearCred(tvXy.getText().toString().trim());
+            //信用状况
+            user.setTowYearCred(creditList.get(creditPos).getId());
             RequestManager.getCommManager().updateData(user, new RequestManager.CallBack() {
                 @Override
                 public void onSucess(String result) throws JSONException {
