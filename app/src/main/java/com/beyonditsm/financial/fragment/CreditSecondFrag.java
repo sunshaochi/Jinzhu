@@ -48,6 +48,7 @@ import com.beyonditsm.financial.util.AddressUtil;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.IdcardUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.widget.DialogChooseAdress;
@@ -961,6 +962,18 @@ public class CreditSecondFrag extends BaseFragment {
             RequestManager.getCommManager().updateData(user, new RequestManager.CallBack() {
                 @Override
                 public void onSucess(String result) throws JSONException {
+                    String roleName = SpUtils.getRoleName(getActivity());
+                    if (roleName.equals("ROLE_COMMON_CLIENT")){
+                        Intent intent = new Intent(MineFragment.UPDATE_USER);
+                        intent.putExtra(MineFragment.USER_KEY,user);
+                        getActivity().sendBroadcast(intent);
+                        getActivity().sendBroadcast(new Intent(MineFragment.UPDATE_SCORE));
+                    }else{
+                        Intent intent = new Intent(ServiceMineFrg.UPDATE_SERVANT);
+                        intent.putExtra(ServiceMineFrg.SERVANT_INFO,user);
+                        getActivity().sendBroadcast(intent);
+                    }
+
                     toSubmitOrder();
                 }
 
