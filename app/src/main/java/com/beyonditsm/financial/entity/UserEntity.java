@@ -8,7 +8,6 @@ import android.os.Parcelable;
  * Created by wangbin on 15/11/18.
  */
 public class UserEntity implements Parcelable {
-
     private String username;//用户名
     private String password;//密码
     private String captcha;//短信验证码
@@ -58,55 +57,6 @@ public class UserEntity implements Parcelable {
     private String havaJobName;//职业身份
     private String haveCarName;//车产
     private String haveHoursName;//房产
-
-    public String getHavaJobName() {
-        return havaJobName;
-    }
-
-    public void setHavaJobName(String havaJobName) {
-        this.havaJobName = havaJobName;
-    }
-
-    public String getHaveCarName() {
-        return haveCarName;
-    }
-
-    public void setHaveCarName(String haveCarName) {
-        this.haveCarName = haveCarName;
-    }
-
-    public String getHaveHoursName() {
-        return haveHoursName;
-    }
-
-    public void setHaveHoursName(String haveHoursName) {
-        this.haveHoursName = haveHoursName;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    public String getBusiness() {
-        return business;
-    }
-
-    public void setBusiness(String business) {
-        this.business = business;
-    }
-
-    public String getTowYearCredName() {
-        return towYearCredName;
-    }
-
-    public void setTowYearCredName(String towYearCredName) {
-        this.towYearCredName = towYearCredName;
-    }
-
     private String rcUserId;//容云useriID
     /**
      * bankName :
@@ -118,13 +68,14 @@ public class UserEntity implements Parcelable {
      * bankNameTitle : 111111
      */
 
-    private String bankName;
-    private String bankAccNo;
+    private String bankName;//收款支行
+    private String bankAccNo;//银行账号
     private String wkCardPic;
     private String servantId;
     private String customerId;
     private String idCardPic;
     private String bankNameTitle;
+
 
     public String getUsername() {
         return username;
@@ -366,6 +317,14 @@ public class UserEntity implements Parcelable {
         this.isValid = isValid;
     }
 
+    public String getCurrAddress() {
+        return currAddress;
+    }
+
+    public void setCurrAddress(String currAddress) {
+        this.currAddress = currAddress;
+    }
+
     public String getDetailAddr() {
         return detailAddr;
     }
@@ -430,6 +389,54 @@ public class UserEntity implements Parcelable {
         this.referralCode = referralCode;
     }
 
+    public String getTowYearCredName() {
+        return towYearCredName;
+    }
+
+    public void setTowYearCredName(String towYearCredName) {
+        this.towYearCredName = towYearCredName;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getBusiness() {
+        return business;
+    }
+
+    public void setBusiness(String business) {
+        this.business = business;
+    }
+
+    public String getHavaJobName() {
+        return havaJobName;
+    }
+
+    public void setHavaJobName(String havaJobName) {
+        this.havaJobName = havaJobName;
+    }
+
+    public String getHaveCarName() {
+        return haveCarName;
+    }
+
+    public void setHaveCarName(String haveCarName) {
+        this.haveCarName = haveCarName;
+    }
+
+    public String getHaveHoursName() {
+        return haveHoursName;
+    }
+
+    public void setHaveHoursName(String haveHoursName) {
+        this.haveHoursName = haveHoursName;
+    }
+
     public String getRcUserId() {
         return rcUserId;
     }
@@ -438,13 +445,62 @@ public class UserEntity implements Parcelable {
         this.rcUserId = rcUserId;
     }
 
-    public String getCurrAddress() {
-        return currAddress;
+    public String getBankName() {
+        return bankName;
     }
 
-    public void setCurrAddress(String currAddress) {
-        this.currAddress = currAddress;
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
     }
+
+    public String getBankAccNo() {
+        return bankAccNo;
+    }
+
+    public void setBankAccNo(String bankAccNo) {
+        this.bankAccNo = bankAccNo;
+    }
+
+    public String getWkCardPic() {
+        return wkCardPic;
+    }
+
+    public void setWkCardPic(String wkCardPic) {
+        this.wkCardPic = wkCardPic;
+    }
+
+    public String getServantId() {
+        return servantId;
+    }
+
+    public void setServantId(String servantId) {
+        this.servantId = servantId;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    public String getIdCardPic() {
+        return idCardPic;
+    }
+
+    public void setIdCardPic(String idCardPic) {
+        this.idCardPic = idCardPic;
+    }
+
+    public String getBankNameTitle() {
+        return bankNameTitle;
+    }
+
+    public void setBankNameTitle(String bankNameTitle) {
+        this.bankNameTitle = bankNameTitle;
+    }
+
 
     @Override
     public int describeContents() {
@@ -483,6 +539,7 @@ public class UserEntity implements Parcelable {
         dest.writeString(this.modifyTime);
         dest.writeString(this.modifyPersonId);
         dest.writeValue(this.isValid);
+        dest.writeString(this.currAddress);
         dest.writeString(this.detailAddr);
         dest.writeString(this.province);
         dest.writeString(this.city);
@@ -491,21 +548,20 @@ public class UserEntity implements Parcelable {
         dest.writeString(this.nativePlace);
         dest.writeString(this.nativePlaceAddr);
         dest.writeString(this.referralCode);
-        dest.writeString(this.rcUserId);
-        dest.writeString(this.currAddress);
-        dest.writeString(this.bankName);
-        dest.writeString(this.bankAccNo);
-        dest.writeString(this.bankNameTitle);
-        dest.writeString(this.customerId);
-        dest.writeString(this.servantId);
-        dest.writeString(this.idCardPic);
-        dest.writeString(this.wkCardPic);
+        dest.writeString(this.towYearCredName);
         dest.writeString(this.companyName);
         dest.writeString(this.business);
         dest.writeString(this.havaJobName);
         dest.writeString(this.haveCarName);
         dest.writeString(this.haveHoursName);
-        dest.writeString(this.towYearCredName);
+        dest.writeString(this.rcUserId);
+        dest.writeString(this.bankName);
+        dest.writeString(this.bankAccNo);
+        dest.writeString(this.wkCardPic);
+        dest.writeString(this.servantId);
+        dest.writeString(this.customerId);
+        dest.writeString(this.idCardPic);
+        dest.writeString(this.bankNameTitle);
     }
 
     public UserEntity() {
@@ -542,6 +598,7 @@ public class UserEntity implements Parcelable {
         this.modifyTime = in.readString();
         this.modifyPersonId = in.readString();
         this.isValid = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.currAddress = in.readString();
         this.detailAddr = in.readString();
         this.province = in.readString();
         this.city = in.readString();
@@ -550,21 +607,20 @@ public class UserEntity implements Parcelable {
         this.nativePlace = in.readString();
         this.nativePlaceAddr = in.readString();
         this.referralCode = in.readString();
+        this.towYearCredName = in.readString();
+        this.companyName = in.readString();
+        this.business = in.readString();
+        this.havaJobName = in.readString();
+        this.haveCarName = in.readString();
+        this.haveHoursName = in.readString();
         this.rcUserId = in.readString();
-        this.currAddress=in.readString();
-        this.bankAccNo = in.readString();
         this.bankName = in.readString();
-        this.bankNameTitle = in.readString();
-        this.idCardPic = in.readString();
+        this.bankAccNo = in.readString();
         this.wkCardPic = in.readString();
-        this.customerId = in.readString();
         this.servantId = in.readString();
-        this.companyName=in.readString();
-        this.business=in.readString();
-        this.havaJobName=in.readString();
-        this.haveCarName=in.readString();
-        this.haveHoursName=in.readString();
-        this.towYearCredName=in.readString();
+        this.customerId = in.readString();
+        this.idCardPic = in.readString();
+        this.bankNameTitle = in.readString();
     }
 
     public static final Creator<UserEntity> CREATOR = new Creator<UserEntity>() {
@@ -576,60 +632,4 @@ public class UserEntity implements Parcelable {
             return new UserEntity[size];
         }
     };
-
-    public void setBankName(String bankName) {
-        this.bankName = bankName;
-    }
-
-    public void setBankAccNo(String bankAccNo) {
-        this.bankAccNo = bankAccNo;
-    }
-
-    public void setWkCardPic(String wkCardPic) {
-        this.wkCardPic = wkCardPic;
-    }
-
-    public void setServantId(String servantId) {
-        this.servantId = servantId;
-    }
-
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
-    }
-
-    public void setIdCardPic(String idCardPic) {
-        this.idCardPic = idCardPic;
-    }
-
-    public void setBankNameTitle(String bankNameTitle) {
-        this.bankNameTitle = bankNameTitle;
-    }
-
-    public String getBankName() {
-        return bankName;
-    }
-
-    public String getBankAccNo() {
-        return bankAccNo;
-    }
-
-    public String getWkCardPic() {
-        return wkCardPic;
-    }
-
-    public String getServantId() {
-        return servantId;
-    }
-
-    public String getCustomerId() {
-        return customerId;
-    }
-
-    public String getIdCardPic() {
-        return idCardPic;
-    }
-
-    public String getBankNameTitle() {
-        return bankNameTitle;
-    }
 }

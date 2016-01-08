@@ -219,19 +219,17 @@
                     android:layout_centerVertical="true"
                     android:text="收款银行" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                <ImageView
+                    android:id="@+id/iv_Bank"
+                    style="@style/arrow_right_style"
+                    android:layout_alignParentRight="true" />
+                <TextView
+                    android:id="@+id/tvBank"
+                    style="@style/tv_second_style"
                     android:layout_centerVertical="true"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:id="@+id/tvBank"
-                        style="@style/tv_update_style"
-                        android:layout_marginRight="10dp" />
-
-                    <ImageView style="@style/arrow_right_style" />
-                </LinearLayout>
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@+id/iv_Bank"
+                     />
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
@@ -242,21 +240,20 @@
                     style="@style/tv_second_style"
                     android:text="收款支行"
                     android:layout_centerVertical="true"/>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:orientation="horizontal"
-                    android:layout_centerVertical="true">
-                    <TextView
-                        android:id="@+id/tv_subbranch"
-                        style="@style/tv_update_style"
-                        android:layout_marginRight="10dp"/>
-                    <ImageView
-                        style="@style/arrow_right_style" />
-                </LinearLayout>
+                <ImageView
+                    android:id="@+id/iv_Subbranch"
+                    style="@style/arrow_right_style"
+                    android:layout_alignParentRight="true" />
+                <TextView
+                    android:id="@+id/tv_subbranch"
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@+id/iv_Subbranch"/>
             </RelativeLayout>
+
             <View style="@style/view_line"></View>
+
             <RelativeLayout
                 android:id="@+id/rlBankAccount"
                 style="@style/rl_mine_style">
@@ -264,19 +261,17 @@
                     style="@style/tv_second_style"
                     android:text="银行账号"
                     android:layout_centerVertical="true"/>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true">
-                    <TextView
-                        android:id="@+id/tv_bankAcount"
-                        style="@style/tv_update_style"
-                        android:layout_marginRight="10dp"/>
-                    <ImageView
-                        style="@style/arrow_right_style" />
-                </LinearLayout>
+                <ImageView
+                    android:id="@+id/iv_BankAccount"
+                    style="@style/arrow_right_style"
+                    android:layout_alignParentRight="true"/>
+                <TextView
+                    android:id="@+id/tv_bankAcount"
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@+id/iv_BankAccount"
+                    />
             </RelativeLayout>
             <View style="@style/view_line"></View>
             <RelativeLayout

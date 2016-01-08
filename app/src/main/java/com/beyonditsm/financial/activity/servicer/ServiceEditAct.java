@@ -104,10 +104,6 @@ public class ServiceEditAct extends BaseActivity {
                         userInfo.setBankAccNo(content);
                         updateData(userInfo);
                         break;
-                    case 9://所在支行
-                        userInfo.setBankName(content);
-                        updateData(userInfo);
-                        break;
                 }
             }
         });
@@ -195,9 +191,9 @@ public class ServiceEditAct extends BaseActivity {
             public void onSucess(String result) {
                 EventBus.getDefault().post(new UserEvent(se, TYPE));
 
-//                Intent intent = new Intent(ServiceMineFrg.UPDATE_SERVANT);
-//                intent.putExtra(ServiceMineFrg.SERVANT_INFO, se);
-//                sendBroadcast(intent);
+                Intent intent = new Intent(ServiceMineFrg.UPDATE_SERVANT);
+                intent.putExtra(ServiceMineFrg.SERVANT_INFO, se);
+                sendBroadcast(intent);
 
                 MyToastUtils.showShortToast(getApplicationContext(), "更新成功");
                 finish();

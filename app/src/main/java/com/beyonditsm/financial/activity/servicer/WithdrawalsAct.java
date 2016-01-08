@@ -119,7 +119,6 @@ public class WithdrawalsAct extends BaseActivity {
                     datas.clear();
                 }
                 datas.addAll(list);
-                Collections.reverse(list);
                 if (adapter==null){
 //                    if (!TextUtils.isEmpty(money)) {
 

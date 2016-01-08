@@ -30,6 +30,7 @@ import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.view.crop.square.CameraUtils;
 import com.beyonditsm.financial.view.crop.square.Crop;
 import com.beyonditsm.financial.widget.DialogChooseAdress;
+import com.beyonditsm.financial.widget.DialogChooseProvince;
 import com.beyonditsm.financial.widget.ScaleAllImageView;
 import com.lidroid.xutils.http.client.multipart.content.FileBody;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -143,6 +144,7 @@ public class ServiceDataAct extends BaseActivity {
         setTopTitle("我的资料");
         addressUtil = new AddressUtil(this);
         servantInfo = getIntent().getParcelableExtra(ServiceMineFrg.SERVANT_INFO);
+        MyLogUtils.error("收款支行"+servantInfo.getBankName()+"银行账号"+servantInfo.getBankAccNo());
 //        userInfo = getIntent().getParcelableExtra(ServiceMineFrg.USER_INFO);
 //        MyLogUtils.info("------------------------"+userInfo);
         if (servantInfo != null) {
@@ -150,67 +152,68 @@ public class ServiceDataAct extends BaseActivity {
         }else{
             findServantDatas();
         }
-
         EventBus.getDefault().register(this);
         photoSavePath = Environment.getExternalStorageDirectory() + "/ClipHeadPhoto/cache/";
     }
 
-    private void setServantInfo(UserEntity se) {
-        if (se!=null) {
+    private void setServantInfo(UserEntity usrInfo) {
+        if (usrInfo!=null) {
+
             //头像
-            ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + se.getHeadIcon(), civHead, options);
+            ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + usrInfo.getHeadIcon(), civHead, options);
 
             //用户姓名
-            if (!TextUtils.isEmpty(se.getUserName())) {
-                tvName.setText(se.getUserName());
+            if (!TextUtils.isEmpty(usrInfo.getUserName())) {
+                tvName.setText(usrInfo.getUserName());
             }
             //身份证号
-            if (!TextUtils.isEmpty(se.getIdentCard())) {
-                tvCard.setText(se.getIdentCard());
+            if (!TextUtils.isEmpty(usrInfo.getIdentCard())) {
+                tvCard.setText(usrInfo.getIdentCard());
             }
             //性别
-            if (se.getUserSex() != null) {
-                if (se.getUserSex() == 0) {
+            if (usrInfo.getUserSex() != null) {
+                if (usrInfo.getUserSex() == 0) {
                     tvSex.setText("女");
                 } else {
                     tvSex.setText("男");
                 }
             }
             //年龄
-            if (se.getUserAge() != null) {
-                tvAge.setText(se.getUserAge()+"");
+            if (usrInfo.getUserAge() != null) {
+                tvAge.setText(usrInfo.getUserAge()+"");
             }
             //户籍地址
-            if (!TextUtils.isEmpty(se.getNativePlaceAddr())) {
-                tvHouseHold.setText(se.getNativePlaceAddr());
+            if (!TextUtils.isEmpty(usrInfo.getNativePlaceAddr())) {
+                tvHouseHold.setText(usrInfo.getNativePlaceAddr());
             }
             //银行账号
-            if (!TextUtils.isEmpty(se.getBankAccNo())) {
-                tvSubbranch.setText(se.getBankAccNo());
+            if (!TextUtils.isEmpty(usrInfo.getBankAccNo())) {
+                tvBankAcount.setText(usrInfo.getBankAccNo());
             }
             //邮箱
-            if (!TextUtils.isEmpty(se.getEmail())) {
-                tvEmail.setText(se.getEmail());
+            if (!TextUtils.isEmpty(usrInfo.getEmail())) {
+                tvEmail.setText(usrInfo.getEmail());
             }
             //常住地
-            if (!TextUtils.isEmpty(se.getProvince())&&!TextUtils.isEmpty(se.getCity())&&!TextUtils.isEmpty(se.getDistrict())) {
+            if (!TextUtils.isEmpty(usrInfo.getProvince())&&!TextUtils.isEmpty(usrInfo.getCity())&&!TextUtils.isEmpty(usrInfo.getDistrict())) {
 //                tvHome.setText(se.getProvince()+se.getCity()+se.getDistrict());
-               tvHome.setText(addressUtil.getProName(se.getProvince())
-                        +addressUtil.getCityName(se.getProvince(),se.getCity())
-                        +addressUtil.getCountryName(se.getCity(),se.getDistrict()));
+               tvHome.setText(addressUtil.getProName(usrInfo.getProvince())
+                        +addressUtil.getCityName(usrInfo.getProvince(),usrInfo.getCity())
+                        +addressUtil.getCountryName(usrInfo.getCity(),usrInfo.getDistrict()));
             }
             //所在城市
-            if (!TextUtils.isEmpty(se.getDetailAddr())) {
-                tvCity.setText(se.getDetailAddr());
+            if (!TextUtils.isEmpty(usrInfo.getNativePlace())) {
+                tvCity.setText(usrInfo.getNativePlace());
             }
-            //所在支行、收支支行
-            if (!TextUtils.isEmpty(se.getBankName())) {
-                tvBankAcount.setText(se.getBankName());
+            //收款支行
+            if (!TextUtils.isEmpty(usrInfo.getBankName())) {
+                tvSubbranch.setText(usrInfo.getBankName());
             }
-            //收支银行
-            if (!TextUtils.isEmpty(se.getBankNameTitle())) {
-                tvBank.setText(se.getBankNameTitle());
+            //收款银行
+            if (!TextUtils.isEmpty(usrInfo.getBankNameTitle())) {
+                tvBank.setText(usrInfo.getBankNameTitle());
             }
+            MyLogUtils.error("收款支行" + usrInfo.getBankName() + "银行账号" + usrInfo.getBankAccNo());
         }
     }
 
@@ -327,12 +330,12 @@ public class ServiceDataAct extends BaseActivity {
                 startActivity(intent);
                 break;
             case R.id.rlCity://所在城市
-                DialogChooseAdress dialogChooseAdress1 = new DialogChooseAdress(this).builder();
+                DialogChooseProvince dialogChooseAdress1 = new DialogChooseProvince(this).builder();
                 dialogChooseAdress1.show();
-                dialogChooseAdress1.setOnSheetItemClickListener(new DialogChooseAdress.SexClickListener() {
+                dialogChooseAdress1.setOnSheetItemClickListener(new DialogChooseProvince.SexClickListener() {
                     @Override
-                    public void getAdress(List<String> adress) {
-                        servantInfo.setDetailAddr(adress.get(0)+adress.get(1)+adress.get(2));
+                    public void getAdress(String adress) {
+                        servantInfo.setNativePlace(adress);
                         updateServantDatas(servantInfo, 1);
                     }
                 });
@@ -343,7 +346,7 @@ public class ServiceDataAct extends BaseActivity {
                 dialogChooseAdress2.setOnSheetItemClickListener(new DialogChooseAdress.SexClickListener() {
                     @Override
                     public void getAdress(List<String> adress) {
-                        servantInfo.setNativePlaceAddr(adress.get(0)+adress.get(1)+adress.get(2));
+                        servantInfo.setDetailAddr(adress.get(0)+adress.get(1)+adress.get(2));
                         updateServantDatas(servantInfo, 2);
                     }
                 });
@@ -535,7 +538,7 @@ public class ServiceDataAct extends BaseActivity {
                                 +addressUtil.getCountryName(se.getCity(),se.getDistrict()));
                         break;
                     case 1://所在城市
-                        tvCity.setText(se.getDetailAddr());
+                        tvCity.setText(se.getNativePlace());
                         break;
                     case 2://户籍
                         tvHouseHold.setText(se.getNativePlaceAddr());
