@@ -1,6 +1,5 @@
 package com.beyonditsm.financial.http;
 
-import com.beyonditsm.financial.entity.ServantEntity;
 import com.beyonditsm.financial.entity.ServantWithdrawEntity;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.util.GsonUtils;

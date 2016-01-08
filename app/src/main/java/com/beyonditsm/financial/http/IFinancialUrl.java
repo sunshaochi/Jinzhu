@@ -15,7 +15,7 @@ public interface IFinancialUrl {
     /*正式游戏地址*/
 //    String GAME_URL = "http://m.farm.myjinzhu.com/";
     /*测试游戏地址*/
-    String GAME_URL = "http://139.196.111.82:8081/farm/";
+    String GAME_URL = "http://myjinzhu.com:5011/";
 
     String API_VERSION = "/easyplay";
 

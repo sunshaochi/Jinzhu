@@ -404,8 +404,8 @@ public class MyCreditDetailFragment extends BaseFragment {
                         if (!TextUtils.isEmpty(data.getNativePlaceAddr())) {
                             user_data.setText(data.getNativePlaceAddr());
                         }
-                        if (!TextUtils.isEmpty(data.getJobName())) {
-                            tv_zy.setText(data.getJobName());
+                        if (!TextUtils.isEmpty(data.getJobIdentityName())) {
+                            tv_zy.setText(data.getJobIdentityName());
                         }
                         if (data.getSecailSecurity() == 1) {
                             tv_sb.setText("有");
@@ -418,8 +418,8 @@ public class MyCreditDetailFragment extends BaseFragment {
                         } else {
                             gjj_data.setText("无");
                         }
-                        if (!TextUtils.isEmpty(data.getHaveHours())) {
-                            house_data.setText(data.getHaveHours());
+                        if (!TextUtils.isEmpty(data.getPropertyTypeName())) {
+                            house_data.setText(data.getPropertyTypeName());
                         }
 
                         if (!TextUtils.isEmpty(data.getCarStatusName())) {

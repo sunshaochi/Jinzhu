@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
@@ -21,7 +20,6 @@ import com.beyonditsm.financial.entity.MyCreditBean;
 import com.beyonditsm.financial.fragment.MyCreditDetailFragment;
 import com.beyonditsm.financial.fragment.MyCreditStatusFragment;
 import com.beyonditsm.financial.http.RequestManager;
-import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.widget.DialogHint;
 import com.beyonditsm.financial.widget.MyAlertDialog;
