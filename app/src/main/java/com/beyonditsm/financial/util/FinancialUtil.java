@@ -703,4 +703,25 @@ public class FinancialUtil {
         return df.format(number);
     }
 
+
+    /**
+     * 打开输入法
+     * @param context
+     * @param editText
+     */
+    public static  void openIM(Context context, View editText){
+        InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.showSoftInput(editText, 0);
+    }
+
+    /**
+     * 关闭输入法
+     * @param context
+     * @param editText
+     */
+    public static void closeIM(Context context, View editText){
+        InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+    }
+
 }
