@@ -724,4 +724,7 @@ public class FinancialUtil {
         inputMethodManager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
     }
 
+
+
+
 }

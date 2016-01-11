@@ -128,7 +128,7 @@ public class SettingAct extends BaseActivity {
                 break;
             //检测新版本
             case R.id.rlcheck:
-                gUtils.toVersion(SettingAct.this, FinancialUtil.getAppVer(SettingAct.this));
+                gUtils.toVersion(SettingAct.this, FinancialUtil.getAppVer(SettingAct.this),0);
 
                 break;
             //关于
