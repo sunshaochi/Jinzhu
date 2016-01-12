@@ -64,12 +64,13 @@ public class GeneralUtils {
     }
 
 
-    public void toVersion(final Context context, final int currentVersion ){
+    public void toVersion(final Context context, final int currentVersion,final int type){
         RequestManager.getCommManager().toVersion(currentVersion, "ANDROID", new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
                 ResultData<VersionInfo> rd= (ResultData<VersionInfo>) GsonUtils.json(result,VersionInfo.class);
                 if (!rd.getData().isNeedUpdrage()) {
+                    if(type==0)
                     MyToastUtils.showShortToast(context, "当前已是最新版本！");
 
                 }else{
