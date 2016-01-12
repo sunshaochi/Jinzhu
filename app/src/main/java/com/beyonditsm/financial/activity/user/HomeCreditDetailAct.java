@@ -200,6 +200,7 @@ public class HomeCreditDetailAct extends BaseActivity {
         final String productId = getIntent().getStringExtra(PRODUCTINFO);
         creditMoney = getIntent().getStringExtra(CREDIT_AMOUNT);
         creditMonth = getIntent().getStringExtra(CREDIT_TIME);
+        tvM.setText(creditMonth);
         findOrderDetail(productId);
 
         loadView.setOnRetryListener(new LoadingView.OnRetryListener() {
@@ -233,7 +234,7 @@ public class HomeCreditDetailAct extends BaseActivity {
 //                etAmount.setText(s.toString().substring(0,length-1));
 //            }
 
-           /* //如果用户输入的数值比额度范围最小值小则计算最小的，比额度范围值最大的大计算最大的
+       /*     //如果用户输入的数值比额度范围最小值小则计算最小的，比额度范围值最大的大计算最大的
             if(!s.toString().startsWith(".")) {
                 if (!TextUtils.isEmpty(etAmount.getText().toString().trim())) {
                     creditMoney = etAmount.getText().toString().trim();
@@ -247,14 +248,17 @@ public class HomeCreditDetailAct extends BaseActivity {
                 Toast.makeText(HomeCreditDetailAct.this,"不能以小数点开头",Toast.LENGTH_SHORT).show();
                 etAmount.setText("");
             }*/
-
         }
 
         @Override
         public void afterTextChanged(Editable s) {
+
             //如果用户输入的数值比额度范围最小值小则计算最小的，比额度范围值最大的大计算最大的
             if(!s.toString().startsWith(".")) {
 
+                if(s.toString().trim().length()==0){
+                    creditMoney="0.0";
+                }
                 if (!TextUtils.isEmpty(etAmount.getText().toString().trim())) {
                     creditMoney = etAmount.getText().toString().trim();
                 }
@@ -355,10 +359,19 @@ public class HomeCreditDetailAct extends BaseActivity {
                 break;
             //免费申请
             case R.id.tvApplay:
-                AppManager.getAppManager().addActivity(HomeCreditDetailAct.this);
-                Bundle bundle = new Bundle();
-                bundle.putParcelable(PRODUCTINFO, productEntity);
-                gotoActivity(CreditStepAct.class, false, bundle);
+                if(productEntity!=null) {
+                    final double minVal = Double.valueOf(productEntity.getMinVal());
+                    double maxVal = Double.valueOf(productEntity.getMaxVal());
+                    double curVal = Double.valueOf(creditMoney.toString()) * 10000;
+                    if (curVal < minVal || curVal > maxVal) {
+                        Toast.makeText(HomeCreditDetailAct.this, "您输入的金额不在额度范围内", Toast.LENGTH_SHORT).show();
+                    } else {
+                        AppManager.getAppManager().addActivity(HomeCreditDetailAct.this);
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable(PRODUCTINFO, productEntity);
+                        gotoActivity(CreditStepAct.class, false, bundle);
+                    }
+                }
                 break;
             case R.id.rlMonth:
                 int postition;
@@ -422,29 +435,58 @@ public class HomeCreditDetailAct extends BaseActivity {
     private void validateCredit(final double minVal, double maxVal, double curVal, String creditMonth) {
         String monthRath = (Double.valueOf(productEntity.getMonthlyRathMin()) + Double.valueOf(productEntity.getMonthlyRathMax())) / 2 + "";
 
-        if(curVal==0){
+        getMOnthPay(curVal / 10000 + "", monthRath, creditMonth);
 
-        }else {
-            if (curVal < minVal || curVal > maxVal) {
-                //如果用户输入的数值比额度范围最小值小则计算最小的，比额度范围值最大的大计算最大的
-                if (curVal < minVal) {
-                    Toast.makeText(HomeCreditDetailAct.this, "您输入的金额数字不在额度范围内,默认为您设置为最小额度", Toast.LENGTH_SHORT).show();
-                    etAmount.setText(df.format(minVal / 10000) + "");
-                    etAmount.setSelection(etAmount.getText().length());
-                    getMOnthPay(minVal / 10000 + "", monthRath, creditMonth);
-                }
-                if (curVal > maxVal) {
-                    Toast.makeText(HomeCreditDetailAct.this, "您输入的金额数字不在额度范围内,默认为您设置为最大额度", Toast.LENGTH_SHORT).show();
-                    etAmount.setText(df.format(maxVal / 10000) + "");
-                    etAmount.setSelection(etAmount.getText().length());
-                    getMOnthPay(maxVal / 10000 + "", monthRath, creditMonth);
-                }
+      /*  //如果最小额度在0-1之间
+        if((minVal/10000)>0&&(minVal/10000)<1) {
+            if (curVal == 0) {
 
             } else {
-                getMOnthPay(curVal / 10000 + "", monthRath, creditMonth);
+                if (curVal < minVal || curVal > maxVal) {
+                    //如果用户输入的数值比额度范围最小值小则计算最小的，比额度范围值最大的大计算最大的
+                    if (curVal < minVal) {
+                        Toast.makeText(HomeCreditDetailAct.this, "您输入的金额数字不在额度范围内,默认为您设置为最小额度", Toast.LENGTH_SHORT).show();
+                        etAmount.setText(df.format(minVal / 10000) + "");
+                        etAmount.setSelection(etAmount.getText().length());
+                        getMOnthPay(minVal / 10000 + "", monthRath, creditMonth);
+                    }
+                    if (curVal > maxVal) {
+                        Toast.makeText(HomeCreditDetailAct.this, "您输入的金额数字不在额度范围内,默认为您设置为最大额度", Toast.LENGTH_SHORT).show();
+                        etAmount.setText(df.format(maxVal / 10000) + "");
+                        etAmount.setSelection(etAmount.getText().length());
+                        getMOnthPay(maxVal / 10000 + "", monthRath, creditMonth);
+                    }
 
+                } else {
+                    getMOnthPay(curVal / 10000 + "", monthRath, creditMonth);
+
+                }
             }
-        }
+        }else {
+            if(curVal>0&&curVal<minVal){
+
+            }else {
+                if (curVal < minVal || curVal > maxVal) {
+                    //如果用户输入的数值比额度范围最小值小则计算最小的，比额度范围值最大的大计算最大的
+                    if (curVal < minVal) {
+                        Toast.makeText(HomeCreditDetailAct.this, "您输入的金额数字不在额度范围内,默认为您设置为最小额度", Toast.LENGTH_SHORT).show();
+                        etAmount.setText(df.format(minVal / 10000) + "");
+                        etAmount.setSelection(etAmount.getText().length());
+                        getMOnthPay(minVal / 10000 + "", monthRath, creditMonth);
+                    }
+                    if (curVal > maxVal) {
+                        Toast.makeText(HomeCreditDetailAct.this, "您输入的金额数字不在额度范围内,默认为您设置为最大额度", Toast.LENGTH_SHORT).show();
+                        etAmount.setText(df.format(maxVal / 10000) + "");
+                        etAmount.setSelection(etAmount.getText().length());
+                        getMOnthPay(maxVal / 10000 + "", monthRath, creditMonth);
+                    }
+
+                } else {
+                    getMOnthPay(curVal / 10000 + "", monthRath, creditMonth);
+
+                }
+            }
+        }*/
     }
 
     /**
@@ -495,7 +537,7 @@ public class HomeCreditDetailAct extends BaseActivity {
                         creditMonth = maxMont + "";
                     }
                     etAmount.setText(creditMoney);
-                    tvM.setText(creditMonth);
+//                    tvM.setText(creditMonth);
 
                     etAmount.setSelection(etAmount.getText().length());
 
@@ -532,9 +574,9 @@ public class HomeCreditDetailAct extends BaseActivity {
 //            tvTotal.setText(productInfo.getTotalInterest());
                     tvLoan.setText(productEntity.getLoanPeriod() + "个工作日");
                     if (Double.valueOf(productEntity.getMonthlyRathMin()) - Double.valueOf(productEntity.getMonthlyRathMax()) == 0) {
-                        tvRate.setText("月利率:" + productEntity.getMonthlyRathMin() + "%");
+                        tvRate.setText("月利率：" + productEntity.getMonthlyRathMin() + "%");
                     } else {
-                        tvRate.setText("月利率:" + productEntity.getMonthlyRathMin() + "%~" + productEntity.getMonthlyRathMax() + "%");
+                        tvRate.setText("月利率：" + productEntity.getMonthlyRathMin() + "%~" + productEntity.getMonthlyRathMax() + "%");
                     }
                     tvCon.setText(productEntity.getApplyCondition());
                     tvNeed.setText(productEntity.getApplyMaterial());
