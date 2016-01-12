@@ -87,12 +87,11 @@
                 android:layout_marginTop="15dp"
                 android:background="@drawable/et_witchdraw"
                 android:cursorVisible="false"
-                android:digits="0123456789."
                 android:hint="请输入提现金额"
                 android:maxLength="20"
                 android:paddingLeft="10dp"
                 android:textSize="14sp"
-                android:inputType="number"/>
+                android:inputType="numberDecimal"/>
 
             <Button
                 android:id="@+id/tx_btn"

@@ -28,6 +28,7 @@ import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * 服务者钱包
@@ -58,7 +59,6 @@ public class MyWalletFrg extends BaseFragment implements View.OnClickListener {
         etMoney.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
@@ -188,9 +188,11 @@ public class MyWalletFrg extends BaseFragment implements View.OnClickListener {
         RequestManager.getServicerManager().serviceWithDraw(amount, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
+                JSONObject object= new JSONObject(result);
+                String message = object.getString("message");
                 findServantInfo();
 
-                MyToastUtils.showShortToast(getContext(), "提现申请成功");
+                MyToastUtils.showShortToast(getContext(), message);
             }
 
             @Override
