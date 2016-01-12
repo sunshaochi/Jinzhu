@@ -3,7 +3,9 @@ package com.beyonditsm.financial.activity.user;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -12,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.beyonditsm.financial.AppManager;
 import com.beyonditsm.financial.ConstantValue;
@@ -207,9 +210,65 @@ public class HomeCreditDetailAct extends BaseActivity {
         });
 
         /*把回车键换成搜索*/
-        etAmount.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+//        etAmount.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+        etAmount.addTextChangedListener(textWatcher);
     }
 
+    private TextWatcher textWatcher=new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            //如果用户输入的以小数点开头
+//            if(s.toString().startsWith(".")){
+//                int length=s.toString().length();
+//                etAmount.setText(s.toString().substring(1,length-1));
+//            }
+//            //如果用户输入的以小数点结尾
+//            if(s.toString().endsWith(".")){
+//                int length=s.toString().length();
+//                etAmount.setText(s.toString().substring(0,length-2));
+//            }
+
+           /* //如果用户输入的数值比额度范围最小值小则计算最小的，比额度范围值最大的大计算最大的
+            if(!s.toString().startsWith(".")) {
+                if (!TextUtils.isEmpty(etAmount.getText().toString().trim())) {
+                    creditMoney = etAmount.getText().toString().trim();
+                }
+                final double minVal = Double.valueOf(productEntity.getMinVal());
+                double maxVal = Double.valueOf(productEntity.getMaxVal());
+                double curVal = Double.valueOf(creditMoney.toString()) * 10000;
+                creditMonth = tvM.getText().toString();
+                validateCredit(minVal, maxVal, curVal, creditMonth);
+            }else if(s.toString().startsWith(".")){
+                Toast.makeText(HomeCreditDetailAct.this,"不能以小数点开头",Toast.LENGTH_SHORT).show();
+                etAmount.setText("");
+            }*/
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            //如果用户输入的数值比额度范围最小值小则计算最小的，比额度范围值最大的大计算最大的
+            if(!s.toString().startsWith(".")) {
+
+                if (!TextUtils.isEmpty(etAmount.getText().toString().trim())) {
+                    creditMoney = etAmount.getText().toString().trim();
+                }
+                final double minVal = Double.valueOf(productEntity.getMinVal());
+                double maxVal = Double.valueOf(productEntity.getMaxVal());
+                double curVal = Double.valueOf(creditMoney.toString()) * 10000;
+                creditMonth = tvM.getText().toString();
+                validateCredit(minVal, maxVal, curVal, creditMonth);
+            }else if(s.toString().startsWith(".")){
+                Toast.makeText(HomeCreditDetailAct.this,"不能以小数点开头",Toast.LENGTH_SHORT).show();
+                etAmount.setText("");
+            }
+        }
+    };
 
     /**
      * 点击事件
@@ -220,34 +279,34 @@ public class HomeCreditDetailAct extends BaseActivity {
     public void toClick(View v) {
         switch (v.getId()) {
             //搜索
-            case R.id.etAmount:
-
-                /*监听回车键*/
-                etAmount.setOnKeyListener(new View.OnKeyListener() {
-                    @Override
-                    public boolean onKey(View v, int keyCode, KeyEvent event) {
-                        if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
-                            FinancialUtil.closeIM(HomeCreditDetailAct.this, etAmount);
-                            if (TextUtils.isEmpty(etAmount.getText().toString().trim())) {
-                                etAmount.setText("5");
-                                creditMoney = "5";
-                            } else {
-                                creditMoney = etAmount.getText().toString().trim();
-                            }
-                            final double minVal = Double.valueOf(productEntity.getMinVal());
-                            double maxVal = Double.valueOf(productEntity.getMaxVal());
-                            double curVal = Double.valueOf(creditMoney.toString()) * 10000;
-                            creditMonth = tvM.getText().toString();
-                            validateCredit(minVal, maxVal, curVal, creditMonth);
-
-                            return true;
-                        }
-
-                        return false;
-                    }
-                });
-
-                break;
+//            case R.id.etAmount:
+//
+//                /*监听回车键*/
+//                etAmount.setOnKeyListener(new View.OnKeyListener() {
+//                    @Override
+//                    public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                        if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
+//                            FinancialUtil.closeIM(HomeCreditDetailAct.this, etAmount);
+//                            if (TextUtils.isEmpty(etAmount.getText().toString().trim())) {
+//                                etAmount.setText("5");
+//                                creditMoney = "5";
+//                            } else {
+//                                creditMoney = etAmount.getText().toString().trim();
+//                            }
+//                            final double minVal = Double.valueOf(productEntity.getMinVal());
+//                            double maxVal = Double.valueOf(productEntity.getMaxVal());
+//                            double curVal = Double.valueOf(creditMoney.toString()) * 10000;
+//                            creditMonth = tvM.getText().toString();
+//                            validateCredit(minVal, maxVal, curVal, creditMonth);
+//
+//                            return true;
+//                        }
+//
+//                        return false;
+//                    }
+//                });
+//
+//                break;
             //申请条件
             case R.id.rlRequire:
 
@@ -331,21 +390,21 @@ public class HomeCreditDetailAct extends BaseActivity {
                 });
                 break;
             //计算
-//            case R.id.tvCal:
-//                if (TextUtils.isEmpty(etAmount.getText().toString().trim())) {
-//                    etAmount.setText("5");
-//                    creditMoney = "5";
-//                } else {
-//                    creditMoney = etAmount.getText().toString().trim();
-//                }
-//                final double minVal = Double.valueOf(productEntity.getMinVal());
-//                double maxVal = Double.valueOf(productEntity.getMaxVal());
-//                double curVal = Double.valueOf(creditMoney.toString()) * 10000;
-//                creditMonth = tvM.getText().toString();
-//                validateCredit(minVal, maxVal, curVal, creditMonth);
-//
-//
-//                break;
+            case R.id.tvCal:
+                if (TextUtils.isEmpty(etAmount.getText().toString().trim())) {
+                    etAmount.setText("5");
+                    creditMoney = "5";
+                } else {
+                    creditMoney = etAmount.getText().toString().trim();
+                }
+                final double minVal = Double.valueOf(productEntity.getMinVal());
+                double maxVal = Double.valueOf(productEntity.getMaxVal());
+                double curVal = Double.valueOf(creditMoney.toString()) * 10000;
+                creditMonth = tvM.getText().toString();
+                validateCredit(minVal, maxVal, curVal, creditMonth);
+
+
+                break;
         }
     }
 
@@ -359,13 +418,28 @@ public class HomeCreditDetailAct extends BaseActivity {
     private void validateCredit(final double minVal, double maxVal, double curVal, String creditMonth) {
         String monthRath = (Double.valueOf(productEntity.getMonthlyRathMin()) + Double.valueOf(productEntity.getMonthlyRathMax())) / 2 + "";
 
-        if (curVal < minVal || curVal > maxVal) {
-            etAmount.setText(df.format(maxVal / 10000) + "");
-            etAmount.setSelection(etAmount.getText().length());
-            getMOnthPay(maxVal / 10000 + "", monthRath, creditMonth);
-        } else {
-            getMOnthPay(curVal / 10000 + "", monthRath, creditMonth);
+        if(curVal==0){
 
+        }else {
+            if (curVal < minVal || curVal > maxVal) {
+                //如果用户输入的数值比额度范围最小值小则计算最小的，比额度范围值最大的大计算最大的
+                if (curVal < minVal) {
+                    Toast.makeText(HomeCreditDetailAct.this, "您输入的金额数字不在额度范围内,默认为您设置为最小额度", Toast.LENGTH_SHORT).show();
+                    etAmount.setText(df.format(minVal / 10000) + "");
+                    etAmount.setSelection(etAmount.getText().length());
+                    getMOnthPay(minVal / 10000 + "", monthRath, creditMonth);
+                }
+                if (curVal > maxVal) {
+                    Toast.makeText(HomeCreditDetailAct.this, "您输入的金额数字不在额度范围内,默认为您设置为最大额度", Toast.LENGTH_SHORT).show();
+                    etAmount.setText(df.format(maxVal / 10000) + "");
+                    etAmount.setSelection(etAmount.getText().length());
+                    getMOnthPay(maxVal / 10000 + "", monthRath, creditMonth);
+                }
+
+            } else {
+                getMOnthPay(curVal / 10000 + "", monthRath, creditMonth);
+
+            }
         }
     }
 

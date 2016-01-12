@@ -60,11 +60,11 @@ public class MyRecommAct extends BaseActivity {
     private Context context;
     private UserLoginEntity ule;
 
-    private String title = "金蛛金服，业内反佣减利最高，欢迎加入抢钱大队";
+    private String title = "金蛛金服，业内返佣减利最高，欢迎加入抢钱大队";
     private String content = "金蛛金服－－圆你土豪梦想";
     private FrAdapter frAdapter;
 
-    String codeUrl = "http://139.196.111.82:81/#/tab/home?redirctUrl=/register/";
+    String codeUrl = "http://m.myjinzhu.com/#/tab/home?redirctUrl=/register/";
 
     @Override
     public void setLayout() {
@@ -245,9 +245,9 @@ public class MyRecommAct extends BaseActivity {
         qqSsoHandler.addToSocialSDK();
 
         //分享到空间
-        QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(MyRecommAct.this, APP_ID,
-                APP_KEY);
-        qZoneSsoHandler.addToSocialSDK();
+//        QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(MyRecommAct.this, APP_ID,
+//                APP_KEY);
+//        qZoneSsoHandler.addToSocialSDK();
 
         //设置分享到qq的内容
         QQShareContent qqContent = new QQShareContent();
