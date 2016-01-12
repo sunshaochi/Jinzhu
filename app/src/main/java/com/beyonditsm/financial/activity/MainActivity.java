@@ -32,7 +32,10 @@ import com.beyonditsm.financial.fragment.FriendFrg;
 import com.beyonditsm.financial.fragment.HomeFragment;
 import com.beyonditsm.financial.fragment.MineFragment;
 import com.beyonditsm.financial.http.IFinancialUrl;
+import com.beyonditsm.financial.http.NetUtil;
 import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.FinancialUtil;
+import com.beyonditsm.financial.util.GeneralUtils;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.lidroid.xutils.util.LogUtils;
@@ -87,6 +90,8 @@ public class MainActivity extends BaseActivity{
 
     private int game_type;
 
+    private GeneralUtils gUtils;
+
     /**/
     private void assignViews() {
         ivMyCredit = (ImageView) findViewById(R.id.ivMyCredit);
@@ -113,6 +118,8 @@ public class MainActivity extends BaseActivity{
     public void init(Bundle savedInstanceState) {
 //        getCity();
 //        RongIM.setUserInfoProvider(this, true);
+        gUtils = new GeneralUtils();
+
         //注册EventBus
         EventBus.getDefault().register(this);
         assignViews();
@@ -128,6 +135,10 @@ public class MainActivity extends BaseActivity{
                 RongIM.getInstance().setOnReceiveUnreadCountChangedListener
                         (new MyReceiveUnreadCountChangedListener(), Conversation.ConversationType.PRIVATE);
             }
+        }
+
+        if(NetUtil.isWifiConnection(getApplicationContext())){
+            gUtils.toVersion(MainActivity.this, FinancialUtil.getAppVer(MainActivity.this),1);
         }
 
     }

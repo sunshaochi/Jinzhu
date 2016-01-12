@@ -38,8 +38,7 @@
                 android:orientation="horizontal">
 
                 <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
+                    android:layout_width="100dp"
                     android:layout_height="30dp"
                     android:background="@drawable/et_back"
                     android:paddingLeft="10dp"
@@ -80,8 +79,7 @@
 
                 <RelativeLayout
                     android:id="@+id/rlMonth"
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
+                    android:layout_width="105dp"
                     android:layout_height="30dp"
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/et_back"
@@ -121,7 +119,7 @@
                 </RelativeLayout>
 
                 <TextView
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:id="@+id/tvCal"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
