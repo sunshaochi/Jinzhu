@@ -230,7 +230,7 @@ public class HomeCreditDetailAct extends BaseActivity {
 //            //如果用户输入的以小数点结尾
 //            if(s.toString().endsWith(".")){
 //                int length=s.toString().length();
-//                etAmount.setText(s.toString().substring(0,length-2));
+//                etAmount.setText(s.toString().substring(0,length-1));
 //            }
 
            /* //如果用户输入的数值比额度范围最小值小则计算最小的，比额度范围值最大的大计算最大的
@@ -395,6 +395,10 @@ public class HomeCreditDetailAct extends BaseActivity {
                     etAmount.setText("5");
                     creditMoney = "5";
                 } else {
+                    if(etAmount.getText().toString().trim().endsWith(".")){
+                        int length=etAmount.getText().toString().length();
+                        etAmount.setText(etAmount.getText().toString().substring(0,length-1));
+                    }
                     creditMoney = etAmount.getText().toString().trim();
                 }
                 final double minVal = Double.valueOf(productEntity.getMinVal());
