@@ -23,6 +23,7 @@ import java.util.List;
 import io.rong.imkit.RongIM;
 
 /**
+ * 我的贷款——贷款详情Adapter
  * Created by Administrator on 2015/12/15.
  */
 public class OrderDetailAdapter extends BaseAdapter implements View.OnClickListener {

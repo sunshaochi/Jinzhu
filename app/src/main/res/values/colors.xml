@@ -58,6 +58,6 @@
     <drawable name="default_pressed">#e86c07</drawable>
 
     <color name="dialog_bg">#77000000</color>
-
-
+    <color name="green_order">#64cd6a</color>
+    <color name="backed">#ff000c</color>
 </resources>
