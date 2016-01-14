@@ -299,6 +299,15 @@
         <!--关于我们-->
         <activity android:name=".activity.user.AboutOurs"
             android:screenOrientation="portrait"></activity>
+        <!--我的钱包-->
+        <activity android:name=".activity.wallet.MyWalletActivity"
+            android:screenOrientation="portrait"></activity>
+        <!--现金兑换-->
+        <activity android:name=".activity.wallet.CashExchange"
+            android:screenOrientation="portrait"></activity>
+        <!--抵扣利息-->
+        <activity android:name=".activity.wallet.InterestDeduction"
+            android:screenOrientation="portrait"></activity>
 
         <!-- 扫描二维码结果展示界面 -->
 
