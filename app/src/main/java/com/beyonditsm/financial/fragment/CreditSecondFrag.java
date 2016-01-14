@@ -972,6 +972,7 @@ public class CreditSecondFrag extends BaseFragment {
                         Intent intent = new Intent(ServiceMineFrg.UPDATE_SERVANT);
                         intent.putExtra(ServiceMineFrg.SERVANT_INFO,user);
                         getActivity().sendBroadcast(intent);
+                        getActivity().sendBroadcast(new Intent(ServiceMineFrg.UPDATE_SCORE));
                     }
 
                     toSubmitOrder();

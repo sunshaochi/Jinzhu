@@ -334,6 +334,10 @@ public class ServiceMineFrg extends BaseFragment {
         if(messageReceiver==null){
             messageReceiver=new MessageBroadCastReceiver();
         }
+        if (scoreReceiver==null){
+            scoreReceiver = new ScoreBroadCastReceiver();
+        }
+        getActivity().registerReceiver(scoreReceiver,new IntentFilter(UPDATE_SCORE));
         getActivity().registerReceiver(mineReceiver, new IntentFilter(UPDATE_SERVANT));
         getActivity().registerReceiver(messageReceiver,new IntentFilter(MineFragment.UPDATE_MESSAGE));
 
@@ -347,6 +351,9 @@ public class ServiceMineFrg extends BaseFragment {
         }
         if(messageReceiver!=null){
             getActivity().unregisterReceiver(messageReceiver);
+        }
+        if (scoreReceiver!=null){
+            getActivity().unregisterReceiver(scoreReceiver);
         }
     }
 
@@ -374,6 +381,15 @@ public class ServiceMineFrg extends BaseFragment {
         }
     }
 
+    private ScoreBroadCastReceiver scoreReceiver;
+    public static final String UPDATE_SCORE="com.update.score";
+    public class ScoreBroadCastReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            findServantInfo();
+        }
+    }
     @Override
     public void onResume() {
         super.onResume();

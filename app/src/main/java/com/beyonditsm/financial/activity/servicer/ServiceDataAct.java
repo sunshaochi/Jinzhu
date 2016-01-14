@@ -346,7 +346,7 @@ public class ServiceDataAct extends BaseActivity {
                 dialogChooseAdress2.setOnSheetItemClickListener(new DialogChooseAdress.SexClickListener() {
                     @Override
                     public void getAdress(List<String> adress) {
-                        servantInfo.setDetailAddr(adress.get(0)+adress.get(1)+adress.get(2));
+                        servantInfo.setNativePlaceAddr(adress.get(0)+adress.get(1)+adress.get(2));
                         updateServantDatas(servantInfo, 2);
                     }
                 });

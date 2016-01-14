@@ -11,6 +11,8 @@ public interface IFinancialUrl {
 //    String BASE_URL = "http://139.196.111.82:5018";
     String BASE_URL = "http://option.myjinzhu.com";
 //    String BASE_URL = "http://172.16.12.237:8080";
+/*调试用户端好友显示地址*/
+//String BASE_URL = "http://172.16.12.238:8080";
     
     /*正式游戏地址*/
     String GAME_URL = "http://m.farm.myjinzhu.com/";
