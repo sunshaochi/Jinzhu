@@ -23,9 +23,15 @@ public class MyWalletActivity extends BaseActivity{
     @ViewInject(R.id.tvPhone)
     private TextView tvPhone;
     @ViewInject(R.id.rlMyPayments)
-    private RelativeLayout rlMyPayments;
+    private RelativeLayout rlMyPayments;//收支明细
     @ViewInject(R.id.rlMyOrder)
-    private RelativeLayout rlMyOrder;
+    private RelativeLayout rlMyOrder;//订单明细
+    @ViewInject(R.id.tv_ExchangeMoney)
+    private TextView tvExangeMoney;
+    @ViewInject(R.id.tv_WeitGetMoney)
+    private TextView tvWeitGetMoney;
+    @ViewInject(R.id.tv_DikouMoney)
+    private TextView tvDikouMoney;
 
     @Override
     public void setLayout() {

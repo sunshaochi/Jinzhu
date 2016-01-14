@@ -27,6 +27,7 @@
 
     <!-- 价格字体颜色-->
     <color name="tv_price_color">#ff6633</color>
+    <color name="tv_money_color">#f58b35</color>
     <!---->
     <color name="gray_item">#e7e7e7</color>
 

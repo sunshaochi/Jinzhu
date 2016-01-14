@@ -7,8 +7,8 @@
     <include layout="@layout/title_act_layout"></include>
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none">
+        android:layout_height="match_parent"
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
@@ -30,17 +30,18 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_gravity="center_vertical"
                     android:text="抵扣券"
                     />
                 <TextView
+                    android:id="@+id/tv_DikouMoney"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="27sp"
-                    android:textColor="@color/tv_price_color"
+                    android:textSize="32sp"
+                    android:textColor="@color/tv_money_color"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginLeft="20dp"
                     android:text="200"/>
             </LinearLayout>
             <LinearLayout
@@ -75,6 +76,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
                     android:background="@color/line_color"/>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -101,6 +103,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
                     android:background="@color/line_color"/>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -127,6 +130,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
                     android:background="@color/line_color"/>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -142,26 +146,47 @@
                         android:layout_gravity="center_vertical"
                         android:text="抵扣利息"/>
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/tvlixifen"
+                        android:layout_width="150dp"
+                        android:layout_height="40dp"
                         android:layout_marginLeft="15dp"
-                        android:textSize="27sp"
-                        android:textColor="@color/tv_price_color"
+                        android:textSize="24sp"
+                        android:background="@drawable/dikoufen"
+                        android:textColor="@color/tv_money_color"
                         android:layout_gravity="center_vertical"
-                        android:text="200"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:text="        200"
                         />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="27sp"
+                        android:textSize="24sp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="15dp"
-                        android:text="= 20元"/>
+                        android:text="="/>
+                    <TextView
+                        android:id="@+id/tvlixixianjin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="24sp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="15dp"
+                        android:text="20"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:text="元"/>
                 </LinearLayout>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
                     android:background="@color/line_color"/>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -186,6 +211,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
                     android:background="@color/line_color"/>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -209,6 +235,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
                     android:background="@color/line_color"/>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -234,7 +261,7 @@
                     android:layout_marginLeft="15dp"
                     android:background="@color/line_color"/>
                 <LinearLayout
-                    android:id="@+id/rldiqu"
+                    android:id="@+id/lldiqu"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -267,6 +294,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
                     android:background="@color/line_color"/>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -290,32 +318,42 @@
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
                     android:background="@color/line_color"/>
 
 
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/item_back"
+                android:orientation="vertical">
+                <Button
+                    android:id="@+id/btn_ok"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/button_gen"
+                    android:text="确认"
+                    android:textColor="#ffffff" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tvset"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_centerInParent="true"
+                        android:textColor="@color/tv_price_color"
+                        android:text="设置资金密码>"/>
+                </RelativeLayout>
+            </LinearLayout>
         </LinearLayout>
 
     </ScrollView>
-    <Button
-        android:id="@+id/btn_submit"
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="25dp"
-        android:background="@drawable/button_gen"
-        android:text="确认"
-        android:textColor="#ffffff" />
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_centerInParent="true"
-            android:textColor="@color/tv_price_color"
-            android:text="设置资金密码>"/>
-    </RelativeLayout>
+
+
 </LinearLayout>

@@ -96,6 +96,7 @@
                         android:textColor="@color/tv_second_color"
                         android:text="可兑换："/>
                     <TextView
+                        android:id="@+id/tv_ExchangeMoney"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="15dp"
@@ -114,6 +115,7 @@
                         android:textColor="@color/tv_third_color"
                         android:text="待奖励："/>
                     <TextView
+                        android:id="@+id/tv_WeitGetMoney"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="15dp"
@@ -146,6 +148,7 @@
                 android:layout_marginTop="30dp"
                 android:text="抵扣券"/>
             <TextView
+                android:id="@+id/tv_DikouMoney"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#333333"
