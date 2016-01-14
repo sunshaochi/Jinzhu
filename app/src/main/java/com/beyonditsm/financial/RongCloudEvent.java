@@ -66,8 +66,8 @@ public final class RongCloudEvent implements RongIM.UserInfoProvider, RongIM.Con
 
     private static RongCloudEvent mRongCloudInstance;
     private List<FriendBean> friendBeans = new ArrayList<>();
-//    private List<UserEntity> friends = new ArrayList<>();
-    private List<FriendEntity> friends = new ArrayList<>();
+    private List<UserEntity> friends = new ArrayList<>();
+//    private List<FriendEntity> friends = new ArrayList<>();
     private Gson gson = new Gson();
     private Context mContext;
     private Handler mHandler;
@@ -129,17 +129,25 @@ public final class RongCloudEvent implements RongIM.UserInfoProvider, RongIM.Con
 
                 JSONObject obj = new JSONObject(result);
                 JSONArray array = obj.getJSONArray("data");
-                friends = gson.fromJson(array.toString(), new TypeToken<List<FriendEntity>>() {
+                friends = gson.fromJson(array.toString(), new TypeToken<List<UserEntity>>() {
                 }.getType());
+//                friends = gson.fromJson(array.toString(), new TypeToken<List<FriendEntity>>() {
+//                }.getType());
                 if (friends != null && friends.size() > 0) {
                     for (int i = 0; i < friends.size(); i++) {
                         FriendBean friendBean = new FriendBean();
                         friendBean.setUserId(friends.get(i).getAccountId());
-                        friendBean.setUserHead(IFinancialUrl.BASE_IMAGE_URL + friends.get(i).getWkCardPic());
-                        if (TextUtils.isEmpty(friends.get(i).getManaName()))
-                            friendBean.setUserName(friends.get(i).getTel());
+//                        friendBean.setUserHead(IFinancialUrl.BASE_IMAGE_URL + friends.get(i).getWkCardPic());
+//                        if (TextUtils.isEmpty(friends.get(i).getManaName()))
+//                            friendBean.setUserName(friends.get(i).getTel());
+//                        else
+//                            friendBean.setUserName(friends.get(i).getManaName());
+
+                        friendBean.setUserHead(IFinancialUrl.BASE_IMAGE_URL + friends.get(i).getHeadIcon());
+                        if (TextUtils.isEmpty(friends.get(i).getUserName()))
+                            friendBean.setUserName(friends.get(i).getMobile());
                         else
-                            friendBean.setUserName(friends.get(i).getManaName());
+                            friendBean.setUserName(friends.get(i).getUserName());
                         FriendDao.saveMes(friendBean);
                     }
                 }

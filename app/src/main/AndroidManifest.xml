@@ -299,16 +299,15 @@
         <!--关于我们-->
         <activity android:name=".activity.user.AboutOurs"
             android:screenOrientation="portrait"></activity>
-        <!--我的钱包-->
-        <activity android:name=".activity.wallet.MyWalletActivity"
+        <!--设置钱包密码-->
+        <activity android:name=".activity.wallet.SetPwdActivity"
             android:screenOrientation="portrait"></activity>
-        <!--现金兑换-->
-        <activity android:name=".activity.wallet.CashExchange"
+        <!--收支明细-->
+        <activity android:name=".activity.wallet.BalancePaymentsAct"
             android:screenOrientation="portrait"></activity>
-        <!--抵扣利息-->
-        <activity android:name=".activity.wallet.InterestDeduction"
+        <!--订单明细-->
+        <activity android:name=".activity.wallet.OrderDetailAct"
             android:screenOrientation="portrait"></activity>
-
         <!-- 扫描二维码结果展示界面 -->
 
         <!-- ###################注册SDK使用的Activity###################### -->

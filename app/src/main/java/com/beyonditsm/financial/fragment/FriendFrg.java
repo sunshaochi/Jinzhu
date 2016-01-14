@@ -57,8 +57,8 @@ public class FriendFrg extends BaseFragment {
     private NewFriendAdapter newFriendAdapter;
     private MyFriendAdapter myFriendAdapter;
 
-//    private List<UserEntity> friends = new ArrayList<>();
-    private List<FriendEntity> friends = new ArrayList<>();
+    private List<UserEntity> friends = new ArrayList<>();
+    //    private List<FriendEntity> friends = new ArrayList<>();
     private Gson gson = new Gson();
     @SuppressWarnings("deprecation")
     private DisplayImageOptions options = new DisplayImageOptions.Builder()
@@ -107,7 +107,7 @@ public class FriendFrg extends BaseFragment {
                     if (TextUtils.isEmpty(friend.getManaName())) {
                         RongIM.getInstance().startPrivateChat(context, friend.getAccountId(), friend.getTel());
                         RongIM.getInstance().refreshUserInfoCache(new UserInfo(friend.getAccountId(), friend.getTel(),
-                                Uri.parse(IFinancialUrl.BASE_IMAGE_URL+friend.getWkCardPic())));
+                                Uri.parse(IFinancialUrl.BASE_IMAGE_URL + friend.getWkCardPic())));
                     } else {
                         RongIM.getInstance().startPrivateChat(context, friend.getAccountId(), friend.getManaName());
                         RongIM.getInstance().refreshUserInfoCache(new UserInfo(friend.getAccountId(), friend.getManaName(),
@@ -125,23 +125,25 @@ public class FriendFrg extends BaseFragment {
                 mylv.onPullDownRefreshComplete();
                 JSONObject obj = new JSONObject(result);
                 JSONArray array = obj.getJSONArray("data");
-                friends = gson.fromJson(array.toString(), new TypeToken<List<FriendEntity>>() {
+                friends = gson.fromJson(array.toString(), new TypeToken<List<UserEntity>>() {
                 }.getType());
+//                friends = gson.fromJson(array.toString(), new TypeToken<List<FriendEntity>>() {
+//                }.getType());
                 if (friends != null && friends.size() > 0) {
                     for (int i = 1; i < friends.size(); i++) {
                         FriendBean friendBean = new FriendBean();
                         friendBean.setUserId(friends.get(i).getAccountId());
 
-//                        friendBean.setUserHead(IFinancialUrl.BASE_IMAGE_URL + friends.get(i).getHeadIcon());
-//                        if (TextUtils.isEmpty(friends.get(i).getUserName()))
-//                            friendBean.setUserName(friends.get(i).getAccountName());
-//                        else
-//                            friendBean.setUserName(friends.get(i).getUserName());
+                        friendBean.setUserHead(IFinancialUrl.BASE_IMAGE_URL + friends.get(i).getHeadIcon());
+                        if (TextUtils.isEmpty(friends.get(i).getUserName()))
+                            friendBean.setUserName(friends.get(i).getAccountName());
+                        else
+                            friendBean.setUserName(friends.get(i).getUserName());
 
-                        friendBean.setUserId(friends.get(i).getAccountId());
-                        friendBean.setUserHead(IFinancialUrl.BASE_IMAGE_URL + friends.get(i).getWkCardPic());
-                        if (!TextUtils.isEmpty(friends.get(i).getManaName()))
-                            friendBean.setUserName(friends.get(i).getManaName());
+//                        friendBean.setUserId(friends.get(i).getAccountId());
+//                        friendBean.setUserHead(IFinancialUrl.BASE_IMAGE_URL + friends.get(i).getHeadIcon());
+//                        if (!TextUtils.isEmpty(friends.get(i).getManaName()))
+//                            friendBean.setUserName(friends.get(i).getManaName());
 
                         FriendDao.saveMes(friendBean);
                     }
@@ -220,37 +222,37 @@ public class FriendFrg extends BaseFragment {
                 holder = (ViewHolder) view.getTag();
             }
 
-//            ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL +
-//                    friends.get(i).getHeadIcon(), holder.headicon, options);
-//            if (TextUtils.isEmpty(friends.get(i).getUserName())) {
-//                if (TextUtils.isEmpty(friends.get(i).getAccountName())) {
-//                    holder.username.setText("" + "(手机号：" + ")");
-//                } else {
-//                    holder.username.setText("" + "(手机号：" + friends.get(i).getAccountName() + ")");
-//                }
-//            } else {
-//                if (TextUtils.isEmpty(friends.get(i).getAccountName())) {
-//                    holder.username.setText(friends.get(i).getUserName() + "(手机号：" + ")");
-//                } else {
-//                    holder.username.setText(friends.get(i).getUserName() + "(手机号：" + friends.get(i).getAccountName() + ")");
-//                }
-//            }
-
             ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL +
-                    friends.get(i).getWkCardPic(), holder.headicon, options);
-            if (TextUtils.isEmpty(friends.get(i).getManaName())) {
-                if (TextUtils.isEmpty(friends.get(i).getTel())) {
+                    friends.get(i).getHeadIcon(), holder.headicon, options);
+            if (TextUtils.isEmpty(friends.get(i).getUserName())) {
+                if (TextUtils.isEmpty(friends.get(i).getAccountName())) {
                     holder.username.setText("" + "(手机号：" + ")");
                 } else {
-                    holder.username.setText("" + "(手机号：" + friends.get(i).getTel() + ")");
+                    holder.username.setText("" + "(手机号：" + friends.get(i).getAccountName() + ")");
                 }
             } else {
-                if (TextUtils.isEmpty(friends.get(i).getTel())) {
-                    holder.username.setText(friends.get(i).getManaName() + "(手机号：" + ")");
+                if (TextUtils.isEmpty(friends.get(i).getAccountName())) {
+                    holder.username.setText(friends.get(i).getUserName() + "(手机号：" + ")");
                 } else {
-                    holder.username.setText(friends.get(i).getManaName() + "(手机号：" + friends.get(i).getTel() + ")");
+                    holder.username.setText(friends.get(i).getUserName() + "(手机号：" + friends.get(i).getAccountName() + ")");
                 }
             }
+
+//            ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL +
+//                    friends.get(i).getWkCardPic(), holder.headicon, options);
+//            if (TextUtils.isEmpty(friends.get(i).getManaName())) {
+//                if (TextUtils.isEmpty(friends.get(i).getTel())) {
+//                    holder.username.setText("" + "(手机号：" + ")");
+//                } else {
+//                    holder.username.setText("" + "(手机号：" + friends.get(i).getTel() + ")");
+//                }
+//            } else {
+//                if (TextUtils.isEmpty(friends.get(i).getTel())) {
+//                    holder.username.setText(friends.get(i).getManaName() + "(手机号：" + ")");
+//                } else {
+//                    holder.username.setText(friends.get(i).getManaName() + "(手机号：" + friends.get(i).getTel() + ")");
+//                }
+//            }
             return view;
         }
 
