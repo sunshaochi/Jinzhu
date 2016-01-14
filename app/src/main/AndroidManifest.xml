@@ -317,6 +317,9 @@
         <!--抵扣利息-->
         <activity android:name=".activity.wallet.InterestDeduction"
             android:screenOrientation="portrait"></activity>
+        <!--订单提交成功-->
+        <activity android:name=".activity.wallet.OrderCommitSusAct"
+            android:screenOrientation="portrait"></activity>
         <!-- 扫描二维码结果展示界面 -->
 
         <!-- ###################注册SDK使用的Activity###################### -->

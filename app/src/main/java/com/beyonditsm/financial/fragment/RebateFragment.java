@@ -27,6 +27,8 @@ public class RebateFragment extends BaseFragment{
     private LoadRefreshView plv;
     @ViewInject(R.id.loadingView)
     private LoadingView loadingView;
+    @ViewInject(R.id.lv)
+    private ListView lv;
     //    private List<OrderDealEntity> orderList;
     private BalanceAdapter balanceAdapter;
     @Override
@@ -36,35 +38,35 @@ public class RebateFragment extends BaseFragment{
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        plv.setPullRefreshEnabled(true);
-        plv.setScrollLoadEnabled(false);
-        plv.setPullLoadEnabled(false);
-        plv.setHasMoreData(true);
-        plv.getRefreshableView().setDivider(null);
-        plv.getRefreshableView().setVerticalScrollBarEnabled(false);
-        plv.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
-        plv.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
+//        plv.setPullRefreshEnabled(true);
+//        plv.setScrollLoadEnabled(false);
+//        plv.setPullLoadEnabled(false);
+//        plv.setHasMoreData(true);
+//        plv.getRefreshableView().setDivider(null);
+//        plv.getRefreshableView().setVerticalScrollBarEnabled(false);
+//        plv.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
+//        plv.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
         findOrderDealHisory("");
     }
 
     @Override
     public void setListener() {
-        plv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
-            @Override
-            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-//                findOrderDealHisory(rowe.getId());
-            }
-
-            @Override
-            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-
-            }
-        });
+//        plv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+//            @Override
+//            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+////                findOrderDealHisory(rowe.getId());
+//            }
+//
+//            @Override
+//            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+//
+//            }
+//        });
     }
     public void findOrderDealHisory(String orderId){
-        RequestManager.getUserManager().findOrderDealHistory(orderId, new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
+//        RequestManager.getUserManager().findOrderDealHistory(orderId, new RequestManager.CallBack() {
+//            @Override
+//            public void onSucess(String result) throws JSONException {
 //                loadingView.loadComplete();
 //                plv.onPullDownRefreshComplete();
 //                JSONObject object = new JSONObject(result);
@@ -78,15 +80,15 @@ public class RebateFragment extends BaseFragment{
 //                Collections.reverse(orderList);
                 if (balanceAdapter == null) {
                     balanceAdapter = new BalanceAdapter();
-                    plv.getRefreshableView().setAdapter(balanceAdapter);
+                    lv.setAdapter(balanceAdapter);
                 }
-            }
+//            }
 
-            @Override
-            public void onError(int status, String msg) {
-                plv.onPullDownRefreshComplete();
-                loadingView.loadError();
-            }
-        });
+//            @Override
+//            public void onError(int status, String msg) {
+//                plv.onPullDownRefreshComplete();
+//                loadingView.loadError();
+//            }
+//        });
     }
 }

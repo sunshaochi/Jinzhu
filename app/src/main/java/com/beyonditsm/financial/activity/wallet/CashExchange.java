@@ -29,8 +29,8 @@ public class CashExchange extends BaseActivity {
         Intent intent=null;
         switch (v.getId()){
             case R.id.btn_ok:
-//                intent=new Intent(CashExchange.this,BalancePaymentsAct.class);
-//                startActivity(intent);
+                intent=new Intent(CashExchange.this,OrderCommitSusAct.class);
+                startActivity(intent);
                 break;
             case R.id.rlset:
                 intent=new Intent(CashExchange.this,SetPwdActivity.class);
