@@ -60,6 +60,7 @@
         android:layout_height="wrap_content">
 
         <RelativeLayout
+            android:id="@+id/rlxianjin"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -126,7 +127,9 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rldikou"
             android:layout_weight="1"
+            android:layout_marginLeft="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView

@@ -1,6 +1,8 @@
 package com.beyonditsm.financial.activity.wallet;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -8,6 +10,7 @@ import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.widget.ScaleAllImageView;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
 
 /**
  * Created by wangbin on 16/1/14.
@@ -33,5 +36,28 @@ public class MyWalletActivity extends BaseActivity{
     public void init(Bundle savedInstanceState) {
         setLeftTv("返回");
         setTopTitle("我的钱包");
+    }
+
+    @OnClick({R.id.rlMyPayments,R.id.rlMyOrder,R.id.rlxianjin,R.id.rldikou})
+    public void toClick(View v){
+        Intent intent=null;
+        switch (v.getId()){
+            case R.id.rlMyPayments:
+                intent=new Intent(MyWalletActivity.this,BalancePaymentsAct.class);
+                startActivity(intent);
+                break;
+            case R.id.rlMyOrder:
+                intent=new Intent(MyWalletActivity.this,OrderDetailAct.class);
+                startActivity(intent);
+                break;
+            case R.id.rlxianjin:
+                intent=new Intent(MyWalletActivity.this,CashExchange.class);
+                startActivity(intent);
+                break;
+            case R.id.rldikou:
+                intent=new Intent(MyWalletActivity.this,InterestDeduction.class);
+                startActivity(intent);
+                break;
+        }
     }
 }

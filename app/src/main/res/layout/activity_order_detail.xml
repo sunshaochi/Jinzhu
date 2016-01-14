@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/title_act_layout"></include>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <com.beyonditsm.financial.view.pullfreshview.LoadRefreshView
+            android:id="@+id/lv_order_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+
+            >
+        </com.beyonditsm.financial.view.pullfreshview.LoadRefreshView>
+        <com.beyonditsm.financial.view.LoadingView
+            android:id="@+id/loadingView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></com.beyonditsm.financial.view.LoadingView>
+    </FrameLayout>
+</LinearLayout>
