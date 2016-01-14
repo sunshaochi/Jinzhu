@@ -3,6 +3,7 @@ package com.beyonditsm.financial.activity.wallet;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.widget.ListView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
@@ -21,31 +22,33 @@ public class OrderDetailAct extends BaseActivity {
     private LoadRefreshView lvOrderDetail;
     @ViewInject(R.id.loadingView)
     private LoadingView loadingView;
+    @ViewInject(R.id.lv_Order_Detail)
+    private ListView lvOrder;
     private OrderDetailAdp orderDetailAdapter;
 
     @Override
     public void setLayout() {
-        setLeftTv("返回");
-        setTopTitle("订单明细");
         setContentView(R.layout.activity_order_detail);
     }
 
     @Override
     public void init(Bundle savedInstanceState) {
-        lvOrderDetail.setPullRefreshEnabled(true);
-        lvOrderDetail.setScrollLoadEnabled(false);
-        lvOrderDetail.setPullLoadEnabled(false);
-        lvOrderDetail.setHasMoreData(true);
-        lvOrderDetail.getRefreshableView().setDivider(null);
-        lvOrderDetail.getRefreshableView().setVerticalScrollBarEnabled(false);
-        lvOrderDetail.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
-        lvOrderDetail.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
+        setLeftTv("返回");
+        setTopTitle("订单明细");
+//        lvOrderDetail.setPullRefreshEnabled(true);
+//        lvOrderDetail.setScrollLoadEnabled(false);
+//        lvOrderDetail.setPullLoadEnabled(false);
+//        lvOrderDetail.setHasMoreData(true);
+//        lvOrderDetail.getRefreshableView().setDivider(null);
+//        lvOrderDetail.getRefreshableView().setVerticalScrollBarEnabled(false);
+//        lvOrderDetail.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
+//        lvOrderDetail.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
         findOrderDetail();
     }
     private void findOrderDetail() {
         if (orderDetailAdapter==null) {
             orderDetailAdapter = new OrderDetailAdp();
-            lvOrderDetail.getRefreshableView().setAdapter(orderDetailAdapter);
+            lvOrder.setAdapter(orderDetailAdapter);
         }
     }
 }

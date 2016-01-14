@@ -48,12 +48,12 @@ public class BalancePaymentsAct extends BaseActivity{
     }
     private void initViewpager() {
         ArrayList<Fragment> fragmentList = new ArrayList<>();
-        Bundle bundle = new Bundle();
+//        Bundle bundle = new Bundle();
 //        bundle.putParcelable("rowe", rowe);
         CouponsFragment couponsFragment = new CouponsFragment();
         RebateFragment rebateFragment =new RebateFragment();
-//        statusFragment.setArguments(bundle);
-//        detailFragment.setArguments(bundle);
+//        couponsFragment.setArguments(bundle);
+//        rebateFragment.setArguments(bundle);
         fragmentList.add(couponsFragment);
         fragmentList.add(rebateFragment);
         myCreditViewpager.setAdapter(new MyAdapter(getSupportFragmentManager(), fragmentList));

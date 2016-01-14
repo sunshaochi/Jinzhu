@@ -5,7 +5,8 @@
     android:paddingTop="20dp"
     android:paddingBottom="20dp"
     android:paddingLeft="15dp"
-    android:paddingRight="15dp">
+    android:paddingRight="15dp"
+    android:background="@color/white">
 
     <RelativeLayout
         android:layout_width="match_parent"
