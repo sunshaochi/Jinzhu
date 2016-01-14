@@ -314,6 +314,21 @@
         <!--设置钱包密码-->
         <activity android:name=".activity.wallet.SetPwdActivity"
             android:screenOrientation="portrait"></activity>
+        <!--收支明细-->
+        <activity android:name=".activity.wallet.BalancePaymentsAct"
+            android:screenOrientation="portrait"></activity>
+        <!--订单明细-->
+        <activity android:name=".activity.wallet.OrderDetailAct"
+            android:screenOrientation="portrait"></activity>
+        <!--我的钱包-->
+        <activity android:name=".activity.wallet.MyWalletActivity"
+            android:screenOrientation="portrait"></activity>
+        <!--现金兑换-->
+        <activity android:name=".activity.wallet.CashExchange"
+            android:screenOrientation="portrait"></activity>
+        <!--抵扣利息-->
+        <activity android:name=".activity.wallet.InterestDeduction"
+            android:screenOrientation="portrait"></activity>
         <!-- 扫描二维码结果展示界面 -->
 
         <!-- ###################注册SDK使用的Activity###################### -->

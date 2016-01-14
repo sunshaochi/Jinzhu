@@ -23,6 +23,7 @@ import com.beyonditsm.financial.activity.user.MyRecommAct;
 import com.beyonditsm.financial.activity.user.NewWorkAct;
 import com.beyonditsm.financial.activity.user.SettingAct;
 import com.beyonditsm.financial.activity.user.UpdateAct;
+import com.beyonditsm.financial.activity.wallet.MyWalletActivity;
 import com.beyonditsm.financial.db.FriendDao;
 import com.beyonditsm.financial.db.MessageDao;
 import com.beyonditsm.financial.entity.FriendBean;
@@ -123,7 +124,7 @@ public class MineFragment extends BaseFragment {
     }
 
     @OnClick({R.id.rlMyCode, R.id.rlRecomm, R.id.rlLines, R.id.rlMyCredit, R.id.rlSet, R.id.tvExit,
-            R.id.rlWork, R.id.rlMyData,R.id.msg_top})
+            R.id.rlWork, R.id.rlMyData,R.id.msg_top,R.id.rlWallet})
     public void toClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
@@ -174,6 +175,11 @@ public class MineFragment extends BaseFragment {
                 intent.putExtra("accountId", user);
                 if (ule != null)
                     intent.putExtra(NewWorkAct.ROLE, ule.getRoleName());
+                getActivity().startActivity(intent);
+                break;
+            //我的钱包
+            case R.id.rlWallet:
+                intent=new Intent(getActivity(), MyWalletActivity.class);
                 getActivity().startActivity(intent);
                 break;
             //设置
