@@ -286,4 +286,12 @@
         <item name="android:windowBackground">@drawable/splash</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+
+    <!-- 钱包黑色字体样式-->
+    <style name="tv_wallet_black">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#333333</item>
+    </style>
 </resources>
