@@ -114,6 +114,7 @@ public class InterestDeduction extends BaseActivity {
             //设置资金密码
             case R.id.tvset:
                 intent=new Intent(InterestDeduction.this,SetPwdActivity.class);
+                intent.putExtra("userPhone",user.getAccountName());
                 startActivity(intent);
                 break;
             case R.id.tv_creName:

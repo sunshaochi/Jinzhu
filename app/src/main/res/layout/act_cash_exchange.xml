@@ -172,7 +172,7 @@
                 style="@style/cre_et"
                 android:layout_marginLeft="15dp"
                 android:hint="请输入银行卡号"
-                android:maxLength="18" />
+                android:maxLength="19" />
         </LinearLayout>
         <View
             android:layout_width="match_parent"
@@ -231,6 +231,7 @@
                 android:id="@+id/moneyPassword"
                 style="@style/cre_et"
                 android:layout_marginLeft="15dp"
+                android:password="true"
                 android:hint="请输入6位数资金密码"
                 android:maxLength="6" />
         </LinearLayout>
