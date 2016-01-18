@@ -9,14 +9,22 @@ import android.widget.ListView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.adapter.BalanceAdapter;
+import com.beyonditsm.financial.entity.OrderDealEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.tandong.sa.json.Gson;
+import com.tandong.sa.json.reflect.TypeToken;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Collections;
+import java.util.List;
 
 
 /**
@@ -32,6 +40,7 @@ public class CouponsFragment extends BaseFragment{
     private ListView lv;
 //    private List<OrderDealEntity> orderList;
     private BalanceAdapter balanceAdapter;
+    private int page;
     @Override
     public View initView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.act_balance,null);
@@ -39,6 +48,8 @@ public class CouponsFragment extends BaseFragment{
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        page=1;
+        findOrderDealHisory();
 //        plv.setPullRefreshEnabled(true);
 //        plv.setScrollLoadEnabled(false);
 //        plv.setPullLoadEnabled(false);
@@ -47,10 +58,11 @@ public class CouponsFragment extends BaseFragment{
 //        plv.getRefreshableView().setVerticalScrollBarEnabled(false);
 //        plv.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
 //        plv.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
-        if (balanceAdapter == null) {
-            balanceAdapter = new BalanceAdapter();
-            lv.setAdapter(balanceAdapter);
-        }
+
+//        if (balanceAdapter == null) {
+//            balanceAdapter = new BalanceAdapter();
+//            lv.setAdapter(balanceAdapter);
+//        }
     }
 
     @Override
@@ -67,29 +79,18 @@ public class CouponsFragment extends BaseFragment{
 //            }
 //        });
     }
-//    public void findOrderDealHisory(String orderId){
-//        RequestManager.getUserManager().findOrderDealHistory(orderId, new RequestManager.CallBack() {
-//            @Override
-//            public void onSucess(String result) throws JSONException {
-//                loadingView.loadComplete();
-//                plv.onPullDownRefreshComplete();
-//                JSONObject object = new JSONObject(result);
-//                JSONArray data = object.getJSONArray("data");
-//                if (data == null) {
-//                    loadingView.noContent();
-//                }
-//                Gson gson = new Gson();
-//                orderList = gson.fromJson(data.toString(), new TypeToken<List<OrderDealEntity>>() {
-//                }.getType());
-//                Collections.reverse(orderList);
+    public void findOrderDealHisory(){
+        int rows = 10;
+        RequestManager.getWalletManager().findCashHistory(page, rows, new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
 
-//            }
+            }
 
-//            @Override
-//            public void onError(int status, String msg) {
-//                plv.onPullDownRefreshComplete();
-//                loadingView.loadError();
-//            }
-//        });
-//    }
+            @Override
+            public void onError(int status, String msg) {
+
+            }
+        });
+    }
 }
