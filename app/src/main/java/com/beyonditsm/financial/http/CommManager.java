@@ -221,8 +221,14 @@ public class CommManager extends RequestManager {
      * @param callBack
      */
     public void submitOrder(OrderBean orderBean, final CallBack callBack) {
-        List<NameValuePair> queryParams = ParamsUtil.getInstance().BeanToForm(GsonUtils.bean2Json(orderBean));
-        LogUtils.i(queryParams + "");
+        List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
+        queryParams.add(new BasicNameValuePair("orderNo", orderBean.getOrderNo()));
+
+        queryParams.add(new BasicNameValuePair("productId", orderBean.getProductId()));
+        queryParams.add(new BasicNameValuePair("totalAmount", orderBean.getTotalAmount()));
+        queryParams.add(new BasicNameValuePair("totalPeriods", orderBean.getTotalPeriods()));
+        queryParams.add(new BasicNameValuePair("periodsAmount", orderBean.getPeriodsAmount()));
+
         doPost(IFinancialUrl.SUBMITORDER_URL, queryParams, callBack);
     }
 

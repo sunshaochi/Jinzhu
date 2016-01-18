@@ -2,11 +2,9 @@ package com.beyonditsm.financial.util;
 
 import com.beyonditsm.financial.entity.ResultData;
 import com.tandong.sa.json.Gson;
-import com.tandong.sa.json.reflect.TypeToken;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.List;
 
 /**
  * json工具类
@@ -40,17 +38,7 @@ public class GsonUtils {
 		return gson.toJson(obj);
 	}
 
-	/**
-	 * json转List
-	 * @param json
-	 * @param <T>
-	 * @return
-	 */
-	public static <T>List<T> jsonToList(String json){
-		Gson gson = new Gson();
-		return gson.fromJson(json,new TypeToken<List<T>>(){}.getType());
-	}
-	
+
 	
 	public static ResultData<?> json(String result,Class<?> clazz){
 		Gson gson = new Gson();

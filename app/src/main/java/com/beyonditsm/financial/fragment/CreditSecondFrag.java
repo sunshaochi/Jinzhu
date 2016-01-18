@@ -1118,17 +1118,19 @@ public class CreditSecondFrag extends BaseFragment {
         orderBean.setTotalAmount(Double.parseDouble(HomeCreditDetailAct.creditMoney) * 10000 + "");//总金额
         orderBean.setTotalPeriods(HomeCreditDetailAct.creditMonth);//总期数
         orderBean.setPeriodsAmount(HomeCreditDetailAct.monthlyPayments);//单期还款金额
-        RequestManager.getCommManager().submitOrder(orderBean, new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
-                EventBus.getDefault().post(new CreditStepAct.FirstEvent(2));
-            }
+        if(orderBean!=null) {
+            RequestManager.getCommManager().submitOrder(orderBean, new RequestManager.CallBack() {
+                @Override
+                public void onSucess(String result)  {
+                    EventBus.getDefault().post(new CreditStepAct.FirstEvent(2));
+                }
 
-            @Override
-            public void onError(int status, String msg) {
-                MyToastUtils.showShortToast(context, msg);
-            }
-        });
+                @Override
+                public void onError(int status, String msg) {
+                    MyToastUtils.showShortToast(context, msg);
+                }
+            });
+        }
     }
 
 }
