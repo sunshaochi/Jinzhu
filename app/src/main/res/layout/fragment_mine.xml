@@ -319,7 +319,10 @@
 
                 <RelativeLayout
                     android:id="@+id/rlWallet"
-                    style="@style/rl_mine_style">
+                    style="@style/rl_mine_style"
+                    android:visibility="visible"
+
+                    >
 
                     <ImageView
                         android:id="@+id/ivMyWallet"
