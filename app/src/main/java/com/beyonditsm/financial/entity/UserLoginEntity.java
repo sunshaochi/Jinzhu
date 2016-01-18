@@ -21,12 +21,14 @@ public class UserLoginEntity implements Parcelable{
     private String myReferralCode;//我的邀请码
     private String referralCode;//邀请码
     private String roleName;//角色
+    private String description;//用户类型
     private String username;//用户名
 
     protected UserLoginEntity(Parcel in) {
         myReferralCode = in.readString();
         referralCode = in.readString();
         roleName = in.readString();
+        description=in.readString();
         username = in.readString();
     }
 
@@ -43,6 +45,14 @@ public class UserLoginEntity implements Parcelable{
     };
 
     public UserLoginEntity() {
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setMyReferralCode(String myReferralCode) {
@@ -87,6 +97,7 @@ public class UserLoginEntity implements Parcelable{
         dest.writeString(myReferralCode);
         dest.writeString(referralCode);
         dest.writeString(roleName);
+        dest.writeString(description);
         dest.writeString(username);
     }
 }

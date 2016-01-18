@@ -179,6 +179,8 @@ public class ServiceMineFrg extends BaseFragment {
             //我的钱包
             case R.id.rlWallet:
                 intent=new Intent(getActivity(), MyWalletActivity.class);
+                intent.putExtra("userLogin",ule);
+                intent.putExtra("userInfo",ue);
                 getActivity().startActivity(intent);
                 break;
             //设置

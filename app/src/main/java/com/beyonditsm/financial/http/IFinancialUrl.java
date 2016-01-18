@@ -165,4 +165,11 @@ public interface IFinancialUrl {
     String CANCEL_ORDER = BASE_URL + API_VERSION + "/platform/login/modifyToCancelOrderById.do";
     /*根据key查找各种特点*/
     String DIC_MAP_URL=BASE_URL+API_VERSION+"/manager/unLogin/findDictMap.do";
+
+    /*抵扣券兑现提交订单*/
+    String SUBMIT_DEDUCTION_ORDER=BASE_URL+API_VERSION+"/wallet/login/submitDeductionTOrder.do";
+    /*抵扣券兑现提交订单*/
+    String SUBMIT_Cash_ORDER=BASE_URL+API_VERSION+"/wallet/login/submitCashTOrder.do";
+
+
 }

@@ -76,6 +76,38 @@ public class UserEntity implements Parcelable {
     private String idCardPic;
     private String bankNameTitle;
 
+    /**
+     * cashTicketAmount 现金券数量<br>
+     * unCashTicketAmount 不可用现金券数量<br>
+     * deductionTicketAmount 抵扣券数量<br>
+     */
+    private String cashTicketAmount;//现金券数量
+    private String unCashTicketAmount;//不可用现金券数量
+    private String deductionTicketAmount;//抵扣券数量
+
+    public String getCashTicketAmount() {
+        return cashTicketAmount;
+    }
+
+    public void setCashTicketAmount(String cashTicketAmount) {
+        this.cashTicketAmount = cashTicketAmount;
+    }
+
+    public String getUnCashTicketAmount() {
+        return unCashTicketAmount;
+    }
+
+    public void setUnCashTicketAmount(String unCashTicketAmount) {
+        this.unCashTicketAmount = unCashTicketAmount;
+    }
+
+    public String getDeductionTicketAmount() {
+        return deductionTicketAmount;
+    }
+
+    public void setDeductionTicketAmount(String deductionTicketAmount) {
+        this.deductionTicketAmount = deductionTicketAmount;
+    }
 
     public String getUsername() {
         return username;
@@ -562,6 +594,9 @@ public class UserEntity implements Parcelable {
         dest.writeString(this.customerId);
         dest.writeString(this.idCardPic);
         dest.writeString(this.bankNameTitle);
+        dest.writeString(this.cashTicketAmount);
+        dest.writeString(this.unCashTicketAmount);
+        dest.writeString(this.deductionTicketAmount);
     }
 
     public UserEntity() {
@@ -621,6 +656,9 @@ public class UserEntity implements Parcelable {
         this.customerId = in.readString();
         this.idCardPic = in.readString();
         this.bankNameTitle = in.readString();
+        this.cashTicketAmount=in.readString();
+        this.unCashTicketAmount=in.readString();
+        this.deductionTicketAmount=in.readString();
     }
 
     public static final Creator<UserEntity> CREATOR = new Creator<UserEntity>() {
