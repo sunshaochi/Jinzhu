@@ -8,10 +8,13 @@ import android.widget.ListView;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.adapter.OrderDetailAdp;
+import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.lidroid.xutils.view.annotation.ViewInject;
+
+import org.json.JSONException;
 
 /**
  * 订单明细
@@ -25,6 +28,7 @@ public class OrderDetailAct extends BaseActivity {
     @ViewInject(R.id.lv_Order_Detail)
     private ListView lvOrder;
     private OrderDetailAdp orderDetailAdapter;
+    private int page;
 
     @Override
     public void setLayout() {
@@ -35,6 +39,7 @@ public class OrderDetailAct extends BaseActivity {
     public void init(Bundle savedInstanceState) {
         setLeftTv("返回");
         setTopTitle("订单明细");
+        page = 1;
 //        lvOrderDetail.setPullRefreshEnabled(true);
 //        lvOrderDetail.setScrollLoadEnabled(false);
 //        lvOrderDetail.setPullLoadEnabled(false);
@@ -46,9 +51,21 @@ public class OrderDetailAct extends BaseActivity {
         findOrderDetail();
     }
     private void findOrderDetail() {
-        if (orderDetailAdapter==null) {
-            orderDetailAdapter = new OrderDetailAdp();
-            lvOrder.setAdapter(orderDetailAdapter);
-        }
+        int rows = 10;
+        RequestManager.getWalletManager().findOrderList(page, rows, new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+//                if (orderDetailAdapter==null) {
+//            orderDetailAdapter = new OrderDetailAdp();
+//            lvOrder.setAdapter(orderDetailAdapter);
+//        }
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
+            }
+        });
+//
     }
 }

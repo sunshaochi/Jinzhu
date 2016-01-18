@@ -2,13 +2,17 @@ package com.beyonditsm.financial.activity.wallet;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
+import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+
+import org.json.JSONException;
 
 /**
  * 设置资金密码
@@ -44,9 +48,9 @@ public class SetPwdActivity extends BaseActivity {
     }
 
     @OnClick(R.id.tvSure)
-    public void onClick(){
+    public void onClick(View view){
         if(isValidate()){
-            finish();
+            setFunPwd(apwd,capPwd);
         }
     }
 
@@ -66,13 +70,37 @@ public class SetPwdActivity extends BaseActivity {
             return false;
         }
         if(TextUtils.isEmpty(capPwd)){
-            MyToastUtils.showShortToast(getApplicationContext(),"请输入资金密码");
+            MyToastUtils.showShortToast(getApplicationContext(), "请输入资金密码");
             return false;
         }
         if(TextUtils.isEmpty(surePwd)){
-            MyToastUtils.showShortToast(getApplicationContext(),"请确认资金密码");
+            MyToastUtils.showShortToast(getApplicationContext(), "请确认资金密码");
+            return false;
+        }
+        if(!capPwd.equals(surePwd)){
+            MyToastUtils.showShortToast(getApplicationContext(), "两次输入的资金密码不一致");
             return false;
         }
         return true;
+    }
+
+    /**
+     * 设置密码
+     * @param userPassword
+     * @param fundPassword
+     */
+    private void setFunPwd(final String userPassword,final String fundPassword){
+
+        RequestManager.getWalletManager().setFunPwd(userPassword, fundPassword, new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+               MyToastUtils.showShortToast(getApplicationContext(),msg);
+            }
+        });
     }
 }
