@@ -2,7 +2,9 @@ package com.beyonditsm.financial.activity.wallet;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,7 +38,7 @@ public class InterestDeduction extends BaseActivity {
     @ViewInject(R.id.deductionDebit)
     private TextView deductionDebit;//可扣款利息
     @ViewInject(R.id.tvlixifen)
-    private TextView tvlixifen;//可扣款利息分
+    private EditText tvlixifen;//可扣款利息分
     @ViewInject(R.id.tvlixixianjin)
     private TextView tvlixixianjin;//可扣款利息现金
     @ViewInject(R.id.name)
@@ -72,10 +74,39 @@ public class InterestDeduction extends BaseActivity {
         if(user!=null){
             if(!TextUtils.isEmpty(user.getDeductionTicketAmount())){
                 tvDikouMoney.setText(user.getDeductionTicketAmount());
-                tvlixifen.setText(user.getDeductionTicketAmount());
-                tvlixixianjin.setText(Double.parseDouble(user.getDeductionTicketAmount())/10+"");
+//                tvlixifen.setText(user.getDeductionTicketAmount());
+//                tvlixixianjin.setText(Double.parseDouble(user.getDeductionTicketAmount())/10+"");
             }
         }
+        tvlixifen.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!s.toString().startsWith(".")) {
+
+                    if (s.toString().trim().length() == 0) {
+                        tvlixixianjin.setText("");
+                    }
+                    if (!TextUtils.isEmpty(tvlixifen.getText().toString().trim())) {
+                        tvlixixianjin.setText(Double.parseDouble(s.toString()) / 10 + "");
+
+                    }
+
+                } else if (s.toString().startsWith(".")) {
+                    Toast.makeText(InterestDeduction.this, "不能以小数点开头", Toast.LENGTH_SHORT).show();
+                    tvlixifen.setText("");
+                }
+            }
+        });
     }
     @OnClick({R.id.btn_ok,R.id.lldiqu,R.id.tvset,R.id.tv_creName})
     public void toClick(View v){
@@ -84,22 +115,39 @@ public class InterestDeduction extends BaseActivity {
             //确认
             case R.id.btn_ok:
                 setOrderBean();
-                if(orderBean!=null&&!TextUtils.isEmpty(tvset.getText().toString())) {
-                    RequestManager.getWalletManager().submitCashTOrder(orderBean, tvset.getText().toString(), new RequestManager.CallBack() {
-                        @Override
-                        public void onSucess(String result) throws JSONException {
-                            Intent intent=new Intent(InterestDeduction.this,OrderCommitSusAct.class);
-                            startActivity(intent);
-                        }
-
-                        @Override
-                        public void onError(int status, String msg) {
-
-                        }
-                    });
+                double d=0.0;
+                if(tvlixifen.getText().toString().trim().length()==0){
+                    d=0.0;
                 }else {
-                    Toast.makeText(InterestDeduction.this, "请检查您的输入是否有误", Toast.LENGTH_SHORT).show();
+                    d=Double.parseDouble(tvlixifen.getText().toString());
                 }
+                    if (d <= Double.parseDouble(user.getDeductionTicketAmount())) {
+
+                        if (orderBean != null && !TextUtils.isEmpty(zjPassword.getText().toString())
+                                && !TextUtils.isEmpty(orderBean.getUserName())
+                                && !TextUtils.isEmpty(orderBean.getBankName())
+                                && !TextUtils.isEmpty(orderBean.getBankCardNo())
+                                && !TextUtils.isEmpty(orderBean.getCashOutAmount()+"")
+                                ) {
+                            RequestManager.getWalletManager().submitDeductionTOrder(orderBean, zjPassword.getText().toString(), new RequestManager.CallBack() {
+                                @Override
+                                public void onSucess(String result) throws JSONException {
+                                    Intent intent = new Intent(InterestDeduction.this, OrderCommitSusAct.class);
+                                    startActivity(intent);
+                                }
+
+                                @Override
+                                public void onError(int status, String msg) {
+
+                                }
+                            });
+                        } else {
+                            Toast.makeText(InterestDeduction.this, "请检查您的输入是否有误", Toast.LENGTH_SHORT).show();
+                        }
+                    }else {
+                        Toast.makeText(InterestDeduction.this,"您的抵扣券没有这么多哦",Toast.LENGTH_SHORT).show();
+                        tvlixifen.requestFocus();
+                    }
                 break;
             case R.id.lldiqu:
                 DialogChooseProvince dialogChooseProvince = new DialogChooseProvince(this).builder();
@@ -136,6 +184,8 @@ public class InterestDeduction extends BaseActivity {
         }
         if(!TextUtils.isEmpty(tvDikouMoney.getText().toString())){
             orderBean.setCashOutAmount(Double.parseDouble(tvDikouMoney.getText().toString()));
+        }else {
+            orderBean.setCashOutAmount(0.0);
         }
     }
 

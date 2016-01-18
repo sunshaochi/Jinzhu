@@ -162,14 +162,15 @@
                         android:layout_gravity="center_vertical"
                         android:background="@drawable/dikoufen"
                         android:layout_marginLeft="15dp">
-                        <TextView
+                        <EditText
                             android:id="@+id/tvlixifen"
+                            android:background="@null"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="24sp"
+                            android:cursorVisible="true"
                             android:textColor="@color/tv_money_color"
                             android:layout_centerInParent="true"
-                            android:text="200"
                             />
                     </RelativeLayout>
 
@@ -187,7 +188,7 @@
                         android:textSize="24sp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="15dp"
-                        android:text="20"/>
+                        />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -276,6 +277,7 @@
                     android:background="@color/line_color"/>
                 <LinearLayout
                     android:id="@+id/lldiqu"
+                    android:visibility="gone"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">

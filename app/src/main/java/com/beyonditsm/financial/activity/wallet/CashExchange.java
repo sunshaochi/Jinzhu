@@ -2,7 +2,9 @@ package com.beyonditsm.financial.activity.wallet;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +18,7 @@ import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.entity.OrderBean;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.widget.DialogChooseProvince;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
@@ -30,7 +33,7 @@ public class CashExchange extends BaseActivity {
     @ViewInject(R.id.tvxianjin)
     private TextView tvxianjin;//兑换现金
     @ViewInject(R.id.tvxianjinfen)
-    private TextView tvxianjinfen;//可兑换现金利息分
+    private EditText tvxianjinfen;//可兑换现金利息分
     @ViewInject(R.id.tvgetxianjin)
     private TextView tvgetxianjin;//可兑换现金
     @ViewInject(R.id.name)
@@ -66,10 +69,38 @@ public class CashExchange extends BaseActivity {
         if(user!=null){
             if(!TextUtils.isEmpty(user.getCashTicketAmount())){
                 tvxianjin.setText(user.getCashTicketAmount());
-                tvxianjinfen.setText(user.getCashTicketAmount());
-                tvgetxianjin.setText(Double.parseDouble(user.getCashTicketAmount())/10+"");
+//                tvxianjinfen.setText(user.getCashTicketAmount());
             }
         }
+        tvxianjinfen.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(!s.toString().startsWith(".")) {
+
+                    if(s.toString().trim().length()==0){
+                        tvgetxianjin.setText("");
+                    }
+                    if (!TextUtils.isEmpty(tvxianjinfen.getText().toString().trim())) {
+                        tvgetxianjin.setText(Double.parseDouble(s.toString())/10+"");
+
+                    }
+
+                }else if(s.toString().startsWith(".")){
+                    Toast.makeText(CashExchange.this,"不能以小数点开头",Toast.LENGTH_SHORT).show();
+                    tvxianjinfen.setText("");
+                }
+            }
+        });
     }
     @OnClick({R.id.btn_ok,R.id.lldiqu,R.id.rlset})
     public void toClick(View v){
@@ -77,22 +108,40 @@ public class CashExchange extends BaseActivity {
         switch (v.getId()){
             case R.id.btn_ok:
                 setOrderBean();
-                if(orderBean!=null&&!TextUtils.isEmpty(tvset.getText().toString())) {
-                    RequestManager.getWalletManager().submitCashTOrder(orderBean, tvset.getText().toString(), new RequestManager.CallBack() {
-                        @Override
-                        public void onSucess(String result) throws JSONException {
-                             Intent intent=new Intent(CashExchange.this,OrderCommitSusAct.class);
-                             startActivity(intent);
-                        }
-
-                        @Override
-                        public void onError(int status, String msg) {
-
-                        }
-                    });
+                double d=0.0;
+                if(tvxianjinfen.getText().toString().trim().length()==0){
+                    d=0.0;
                 }else {
-                    Toast.makeText(CashExchange.this,"请检查您的输入是否有误",Toast.LENGTH_SHORT).show();
+                    d=Double.parseDouble(tvxianjinfen.getText().toString());
                 }
+                    if (d<=Double.parseDouble(user.getCashTicketAmount())) {
+                        if (orderBean != null
+                                && !TextUtils.isEmpty(zjPassword.getText().toString())
+                                && !TextUtils.isEmpty(orderBean.getUserName())
+                                && !TextUtils.isEmpty(orderBean.getBankName())
+                                && !TextUtils.isEmpty(orderBean.getBankCardNo())
+                                && !TextUtils.isEmpty(orderBean.getCashOutAmount()+"")) {
+                            RequestManager.getWalletManager().submitCashTOrder(orderBean, zjPassword.getText().toString(), new RequestManager.CallBack() {
+                                @Override
+                                public void onSucess(String result) throws JSONException {
+                                    Intent intent = new Intent(CashExchange.this, OrderCommitSusAct.class);
+                                    startActivity(intent);
+                                }
+
+                                @Override
+                                public void onError(int status, String msg) {
+                                    MyLogUtils.degug(msg);
+                                    MyLogUtils.degug(orderBean.getUserName()+">"+orderBean.getBankName()+">"+orderBean.getBankCardNo()
+                                    +">"+orderBean.getCashOutAmount()+">"+zjPassword.getText().toString());
+                                }
+                            });
+                        } else {
+                            Toast.makeText(CashExchange.this, "请检查您的输入是否有误", Toast.LENGTH_SHORT).show();
+                        }
+                    }else {
+                        Toast.makeText(CashExchange.this,"您的现金券没有这么多哦",Toast.LENGTH_SHORT).show();
+                        tvxianjinfen.requestFocus();
+                    }
 
                 break;
             case R.id.lldiqu:
@@ -126,6 +175,8 @@ public class CashExchange extends BaseActivity {
         }
         if(!TextUtils.isEmpty(tvxianjin.getText().toString())){
             orderBean.setCashOutAmount(Double.parseDouble(tvxianjin.getText().toString()));
+        }else {
+            orderBean.setCashOutAmount(0.0);
         }
     }
 }

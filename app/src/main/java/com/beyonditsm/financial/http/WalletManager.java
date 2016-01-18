@@ -30,9 +30,18 @@ public class WalletManager extends RequestManager{
         queryParams.add(new BasicNameValuePair("fundPassword",fundPassword));
         doPost(IFinancialUrl.SUBMIT_DEDUCTION_ORDER,queryParams,callBack);
     }
-
+    /**
+     * 提交现金券兑现订单
+     * @param orderBean 订单实体
+     * @param fundPassword 资金密码
+     * @param callBack
+     */
     public void submitCashTOrder(OrderBean orderBean,String fundPassword,CallBack callBack) {
-        List<NameValuePair> queryParams = ParamsUtil.getInstance().BeanToForm(GsonUtils.bean2Json(orderBean));
+        List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
+        queryParams.add(new BasicNameValuePair("bankCardNo",orderBean.getBankCardNo()));
+        queryParams.add(new BasicNameValuePair("bankName",orderBean.getBankName()));
+        queryParams.add(new BasicNameValuePair("cashOutAmount",orderBean.getCashOutAmount()+""));
+        queryParams.add(new BasicNameValuePair("userName",orderBean.getUserName()));
         queryParams.add(new BasicNameValuePair("fundPassword", fundPassword));
         doPost(IFinancialUrl.SUBMIT_Cash_ORDER, queryParams, callBack);
     }
