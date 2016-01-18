@@ -19,14 +19,15 @@ import java.util.List;
  * Created by Administrator on 2016/1/14.
  */
 public class OrderDetailAdp extends BaseAdapter {
-    private List<OrderListEntity> list;
+    private List<OrderListEntity.RowsEntity> list;
     private Context context;
-    public OrderDetailAdp(Context context,List<OrderListEntity> list) {
+    public OrderDetailAdp(Context context,List<OrderListEntity.RowsEntity> list) {
         this.context = context;
         this.list = list;
     }
 
-    public void setDatas(Context context){
+    public void setDatas(List<OrderListEntity.RowsEntity> list){
+        this.list = list;
         notifyDataSetChanged();
     }
     @Override
@@ -59,12 +60,12 @@ public class OrderDetailAdp extends BaseAdapter {
         }else{
             holder = (ViewHolder) convertView.getTag();
         }
-        OrderListEntity orderListEntity = list.get(position);
-        holder.orderNo.setText(orderListEntity.getORDER_ID());
-        holder.orderStatus.setText(orderListEntity.getORDER_STS());
-        holder.orderAmount.setText(orderListEntity.getCASH_OUT_AMOUNT());
-        holder.orderType.setText(orderListEntity.getO_TYPE());
-        Date date = new Date(orderListEntity.getCREATE_TIME());
+        OrderListEntity.RowsEntity rowsEntity = list.get(position);
+        holder.orderNo.setText(rowsEntity.getORDER_ID());
+        holder.orderStatus.setText(rowsEntity.getORDER_STS());
+        holder.orderAmount.setText(rowsEntity.getCASH_OUT_AMOUNT());
+        holder.orderType.setText(rowsEntity.getO_TYPE());
+        Date date = new Date(rowsEntity.getCREATE_TIME());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         holder.orderTime.setText(sdf.format(date));
 //        if (position==0){

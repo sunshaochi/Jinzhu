@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,24 +8,39 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
+import com.beyonditsm.financial.entity.BalanceEntity;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/1/14.
  */
 public class BalanceAdapter extends BaseAdapter {
+    private List<BalanceEntity.RowsEntity> list;
+    private Context context;
+
+    public BalanceAdapter(Context context,List<BalanceEntity.RowsEntity> list) {
+        this.list = list;
+        this.context = context;
+    }
+    public void setDatas(List<BalanceEntity.RowsEntity> list){
+        this.list=list;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getCount() {
-        return 4;
+        return list!=null?list.size():0;
     }
 
     @Override
     public Object getItem(int position) {
-        return 4;
+        return list!=null?list.get(position):null;
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override

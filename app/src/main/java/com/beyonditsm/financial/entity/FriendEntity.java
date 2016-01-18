@@ -41,6 +41,31 @@ public class FriendEntity implements Parcelable {
     private String idCardPic;
     private String email;
     private String manaName;
+    private String rcHendPic;
+
+    public String getpName() {
+        return pName;
+    }
+
+    public void setpName(String pName) {
+        this.pName = pName;
+    }
+
+    public String getcName() {
+        return cName;
+    }
+
+    public void setcName(String cName) {
+        this.cName = cName;
+    }
+
+    public String getRcHendPic() {
+        return rcHendPic;
+    }
+
+    public void setRcHendPic(String rcHendPic) {
+        this.rcHendPic = rcHendPic;
+    }
 
     protected FriendEntity(Parcel in) {
         aname = in.readString();
@@ -58,6 +83,8 @@ public class FriendEntity implements Parcelable {
         idCardPic = in.readString();
         email = in.readString();
         manaName = in.readString();
+        rcHendPic = in.readString();
+
     }
 
     public static final Creator<FriendEntity> CREATOR = new Creator<FriendEntity>() {
