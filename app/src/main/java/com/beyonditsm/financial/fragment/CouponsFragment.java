@@ -1,6 +1,5 @@
 package com.beyonditsm.financial.fragment;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.widget.ListView;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.adapter.BalanceAdapter;
 import com.beyonditsm.financial.entity.BalanceEntity;
-import com.beyonditsm.financial.entity.OrderDealEntity;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
@@ -20,15 +18,10 @@ import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.tandong.sa.json.Gson;
-import com.tandong.sa.json.reflect.TypeToken;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 
