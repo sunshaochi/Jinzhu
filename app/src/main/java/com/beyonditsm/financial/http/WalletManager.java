@@ -25,4 +25,16 @@ public class WalletManager extends RequestManager{
         queryParams.add(new BasicNameValuePair("rows", rows + ""));
         doPost(IFinancialUrl.DEDUCTION_HISTORY, queryParams, callBack);
     }
+    /*订单明细（现金券）*/
+    public void findCashOrderDetail(String cashTOrderId,CallBack callBack){
+        List<NameValuePair> queryParams = new ArrayList<>();
+        queryParams.add(new BasicNameValuePair("cashTOrderId", cashTOrderId));
+        doPost(IFinancialUrl.CASH_ORDER_DETAIL,queryParams,callBack);
+    }
+    /*订单明细（抵扣券）*/
+    public void findDeductionOrderDetail(String deductionTOrderId,CallBack callBack){
+        List<NameValuePair> queryParams = new ArrayList<>();
+        queryParams.add(new BasicNameValuePair("deductionTOrderId", deductionTOrderId));
+        doPost(IFinancialUrl.DEDUCTION_ORDER_DETAIL,queryParams,callBack);
+    }
 }

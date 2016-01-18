@@ -170,4 +170,8 @@ public interface IFinancialUrl {
     String CASH_HISTORY = BASE_URL+API_VERSION+"/wallet/login/cashTHistory.do";
     /*抵扣券收支明细*/
     String DEDUCTION_HISTORY = BASE_URL+API_VERSION+"/wallet/login/deductionTHistory.do";
+    /*订单明细（现金券）*/
+    String CASH_ORDER_DETAIL =BASE_URL+API_VERSION+"/wallet/login/cashTOrderDetail.do";
+    /*订单明细（折扣券）*/
+    String DEDUCTION_ORDER_DETAIL = BASE_URL+API_VERSION+"/wallet/login/deductionTOrderDetail.do";
 }
