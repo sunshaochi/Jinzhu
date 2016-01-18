@@ -174,4 +174,6 @@ public interface IFinancialUrl {
     String CASH_ORDER_DETAIL =BASE_URL+API_VERSION+"/wallet/login/cashTOrderDetail.do";
     /*订单明细（折扣券）*/
     String DEDUCTION_ORDER_DETAIL = BASE_URL+API_VERSION+"/wallet/login/deductionTOrderDetail.do";
+    /*订单明细*/
+    String ORDER_LIST = BASE_URL+API_VERSION+"/wallet/login/tOrderList.do";
 }
