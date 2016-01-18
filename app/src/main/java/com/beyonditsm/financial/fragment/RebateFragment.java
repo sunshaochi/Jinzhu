@@ -31,6 +31,7 @@ public class RebateFragment extends BaseFragment{
     private ListView lv;
     //    private List<OrderDealEntity> orderList;
     private BalanceAdapter balanceAdapter;
+    private int page;
     @Override
     public View initView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.act_balance,null);
@@ -38,6 +39,7 @@ public class RebateFragment extends BaseFragment{
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        page=1;
 //        plv.setPullRefreshEnabled(true);
 //        plv.setScrollLoadEnabled(false);
 //        plv.setPullLoadEnabled(false);
@@ -46,7 +48,7 @@ public class RebateFragment extends BaseFragment{
 //        plv.getRefreshableView().setVerticalScrollBarEnabled(false);
 //        plv.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
 //        plv.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
-        findOrderDealHisory("");
+        findOrderDealHisory();
     }
 
     @Override
@@ -63,32 +65,22 @@ public class RebateFragment extends BaseFragment{
 //            }
 //        });
     }
-    public void findOrderDealHisory(String orderId){
-//        RequestManager.getUserManager().findOrderDealHistory(orderId, new RequestManager.CallBack() {
-//            @Override
-//            public void onSucess(String result) throws JSONException {
-//                loadingView.loadComplete();
-//                plv.onPullDownRefreshComplete();
-//                JSONObject object = new JSONObject(result);
-//                JSONArray data = object.getJSONArray("data");
-//                if (data == null) {
-//                    loadingView.noContent();
-//                }
-//                Gson gson = new Gson();
-//                orderList = gson.fromJson(data.toString(), new TypeToken<List<OrderDealEntity>>() {
-//                }.getType());
-//                Collections.reverse(orderList);
-                if (balanceAdapter == null) {
-                    balanceAdapter = new BalanceAdapter();
-                    lv.setAdapter(balanceAdapter);
-                }
-//            }
+    public void findOrderDealHisory(){
+        int rows = 10;
+        RequestManager.getWalletManager().findDeductionHistory(page, rows, new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
 
-//            @Override
-//            public void onError(int status, String msg) {
-//                plv.onPullDownRefreshComplete();
-//                loadingView.loadError();
-//            }
-//        });
+//                if (balanceAdapter == null) {
+//                    balanceAdapter = new BalanceAdapter();
+//                    lv.setAdapter(balanceAdapter);
+//                }
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
+            }
+        });
     }
 }
