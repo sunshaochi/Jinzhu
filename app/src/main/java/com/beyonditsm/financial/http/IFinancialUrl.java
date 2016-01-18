@@ -166,6 +166,8 @@ public interface IFinancialUrl {
     /*根据key查找各种特点*/
     String DIC_MAP_URL=BASE_URL+API_VERSION+"/manager/unLogin/findDictMap.do";
 
+    /*设置资金密码*/
+    String SET_PWD_URL=BASE_URL+API_VERSION+"/wallet/login/setFundPassword.do";
     /*现金券收支明细*/
     String CASH_HISTORY = BASE_URL+API_VERSION+"/wallet/login/cashTHistory.do";
     /*抵扣券收支明细*/
