@@ -27,6 +27,43 @@ public class OrderBean implements Parcelable{
     private String totalAmount;//总金额 单位 元
     private String totalPeriods;//总期数 单位 月
 
+    private String userName;//用户姓名
+    private String bankName;//银行名称
+    private String bankCardNo;//银行卡号
+    private Double cashOutAmount;//现金兑换数量
+
+    public Double getCashOutAmount() {
+        return cashOutAmount;
+    }
+
+    public void setCashOutAmount(Double cashOutAmount) {
+        this.cashOutAmount = cashOutAmount;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    public String getBankCardNo() {
+        return bankCardNo;
+    }
+
+    public void setBankCardNo(String bankCardNo) {
+        this.bankCardNo = bankCardNo;
+    }
+
     public String getId() {
         return id;
     }
@@ -196,6 +233,10 @@ public class OrderBean implements Parcelable{
         dest.writeString(this.productId);
         dest.writeString(this.totalAmount);
         dest.writeString(this.totalPeriods);
+        dest.writeString(this.userName);
+        dest.writeString(this.bankName);
+        dest.writeString(this.bankCardNo);
+        dest.writeValue(this.cashOutAmount);
     }
 
     public OrderBean() {
@@ -220,6 +261,10 @@ public class OrderBean implements Parcelable{
         this.productId = in.readString();
         this.totalAmount = in.readString();
         this.totalPeriods = in.readString();
+        this.userName=in.readString();
+        this.bankName=in.readString();
+        this.bankCardNo=in.readString();
+        this.cashOutAmount= (Double) in.readValue(Double.class.getClassLoader());
     }
 
     public static final Creator<OrderBean> CREATOR = new Creator<OrderBean>() {

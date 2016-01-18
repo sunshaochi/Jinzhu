@@ -62,16 +62,22 @@
                 android:textColor="#333333"
                 android:layout_gravity="center_vertical"
                 android:text="现金兑换"/>
-            <TextView
-                android:id="@+id/tvxianjinfen"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:textSize="24sp"
-                android:textColor="@color/tv_money_color"
+            <RelativeLayout
+                android:layout_width="150dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center_vertical"
-                android:text="200"
-                />
+                android:background="@drawable/dikoufen"
+                android:layout_marginLeft="15dp">
+                <TextView
+                    android:id="@+id/tvxianjinfen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:textColor="@color/tv_money_color"
+                    android:layout_centerInParent="true"
+                    android:text="200"
+                    />
+            </RelativeLayout>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -166,7 +172,7 @@
                 style="@style/cre_et"
                 android:layout_marginLeft="15dp"
                 android:hint="请输入银行卡号"
-                android:maxLength="18" />
+                android:maxLength="19" />
         </LinearLayout>
         <View
             android:layout_width="match_parent"
@@ -225,6 +231,7 @@
                 android:id="@+id/moneyPassword"
                 style="@style/cre_et"
                 android:layout_marginLeft="15dp"
+                android:password="true"
                 android:hint="请输入6位数资金密码"
                 android:maxLength="6" />
         </LinearLayout>

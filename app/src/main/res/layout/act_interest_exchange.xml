@@ -62,14 +62,25 @@
                         android:layout_gravity="center_vertical"
                         android:textSize="14sp"
                         android:text="贷款产品"/>
-                    <TextView
+                    <RelativeLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/creName"
-                        android:layout_gravity="center_vertical"
                         android:layout_marginLeft="15dp"
-                        android:hint="DX121212"
-                        />
+                        android:layout_height="45dp">
+
+                        <TextView
+                            android:id="@+id/creName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:textColor="#333333"
+                            android:textSize="14sp"
+                            android:hint="DX121212"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_creName"
+                            style="@style/tv_select_style" />
+                    </RelativeLayout>
                 </LinearLayout>
 
                 <View
@@ -96,7 +107,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_gravity="center_vertical"
-                        android:hint="10000元"
+                        android:text="10000元"
                         android:maxLength="18" />
                 </LinearLayout>
                 <View
@@ -123,7 +134,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:hint="1000元"
+                        android:text="1000元"
                         android:maxLength="18" />
                 </LinearLayout>
                 <View
@@ -256,7 +267,7 @@
                         style="@style/cre_et"
                         android:layout_marginLeft="15dp"
                         android:hint="请输入银行卡号"
-                        android:maxLength="18" />
+                        android:maxLength="19" />
                 </LinearLayout>
                 <View
                     android:layout_width="match_parent"
@@ -314,6 +325,7 @@
                         android:id="@+id/moneyPassword"
                         style="@style/cre_et"
                         android:layout_marginLeft="15dp"
+                        android:password="true"
                         android:hint="请输入6位数资金密码"
                         android:maxLength="6" />
                 </LinearLayout>

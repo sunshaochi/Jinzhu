@@ -180,6 +180,8 @@ public class MineFragment extends BaseFragment {
             //我的钱包
             case R.id.rlWallet:
                 intent=new Intent(getActivity(), MyWalletActivity.class);
+                intent.putExtra("userLogin",ule);
+                intent.putExtra("userInfo",user);
                 getActivity().startActivity(intent);
                 break;
             //设置

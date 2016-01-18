@@ -45,6 +45,8 @@ public class SetPwdActivity extends BaseActivity {
         setTopTitle("设置资金密码");
         setLeftTv("返回");
         assignViews();
+        amount=getIntent().getStringExtra("userPhone");
+        tvAmount.setText(amount);
     }
 
     @OnClick(R.id.tvSure)
@@ -59,7 +61,7 @@ public class SetPwdActivity extends BaseActivity {
      * @return
      */
     private boolean isValidate(){
-//        amount=tvAmount.getText().toString().trim();
+        amount=tvAmount.getText().toString().trim();
         apwd=etAPwd.getText().toString().trim();
         capPwd=etCapitalPwd.getText().toString().trim();
         surePwd=etSurePwd.getText().toString().trim();
@@ -94,7 +96,8 @@ public class SetPwdActivity extends BaseActivity {
         RequestManager.getWalletManager().setFunPwd(userPassword, fundPassword, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-
+                MyToastUtils.showShortToast(getApplicationContext(),"设置成功");
+                finish();
             }
 
             @Override
