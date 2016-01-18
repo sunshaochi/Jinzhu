@@ -94,7 +94,8 @@ public class SetPwdActivity extends BaseActivity {
         RequestManager.getWalletManager().setFunPwd(userPassword, fundPassword, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-
+                MyToastUtils.showShortToast(getApplicationContext(),"设置成功");
+                finish();
             }
 
             @Override
