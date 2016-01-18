@@ -34,6 +34,7 @@ public class RequestManager {
     private static UserManager userManager;//用户接口
     private static ServicerManager servicerManager;//服务者接口
     private static MangManger mangManger;//信贷经理人接口
+    private static WalletManager walletManager;//钱包
 
     private static RequestManager manager;
 
@@ -72,7 +73,12 @@ public class RequestManager {
         return manager;
     }
 
-
+    public static WalletManager getWalletManager() {
+        if (walletManager == null) {
+            walletManager = new WalletManager();
+        }
+        return walletManager;
+    }
 
 
 
