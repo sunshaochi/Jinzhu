@@ -60,13 +60,13 @@ public class OrderDetailAdp extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         OrderListEntity orderListEntity = list.get(position);
-        holder.orderNo.setText(orderListEntity.getORDER_ID());
-        holder.orderStatus.setText(orderListEntity.getORDER_STS());
-        holder.orderAmount.setText(orderListEntity.getCASH_OUT_AMOUNT());
-        holder.orderType.setText(orderListEntity.getO_TYPE());
-        Date date = new Date(orderListEntity.getCREATE_TIME());
+//        holder.orderNo.setText(orderListEntity.getORDER_ID());
+//        holder.orderStatus.setText(orderListEntity.getORDER_STS());
+//        holder.orderAmount.setText(orderListEntity.getCASH_OUT_AMOUNT());
+//        holder.orderType.setText(orderListEntity.getO_TYPE());
+//        Date date = new Date(orderListEntity.getCREATE_TIME());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        holder.orderTime.setText(sdf.format(date));
+//        holder.orderTime.setText(sdf.format(date));
 //        if (position==0){
 //            holder.orderNo.setText("订单号：11111111111");
 //            holder.orderStatus.setText("审批中");

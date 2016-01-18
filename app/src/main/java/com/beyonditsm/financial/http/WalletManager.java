@@ -1,12 +1,12 @@
 package com.beyonditsm.financial.http;
 
-<<<<<<< .merge_file_a07892
+import org.apache.http.message.BasicNameValuePair;
+
+
 import com.beyonditsm.financial.entity.OrderBean;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
 
-=======
->>>>>>> .merge_file_a07820
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
@@ -20,7 +20,6 @@ import java.util.List;
 public class WalletManager extends RequestManager{
 
     /**
-<<<<<<< .merge_file_a07892
      * 提交抵扣券兑现订单
      * @param orderBean 订单实体
      * @param fundPassword 资金密码
@@ -32,12 +31,12 @@ public class WalletManager extends RequestManager{
         doPost(IFinancialUrl.SUBMIT_DEDUCTION_ORDER,queryParams,callBack);
     }
 
-    public void submitCashTOrder(OrderBean orderBean,String fundPassword,CallBack callBack){
-        List<NameValuePair> queryParams= ParamsUtil.getInstance().BeanToForm(GsonUtils.bean2Json(orderBean));
-        queryParams.add(new BasicNameValuePair("fundPassword",fundPassword));
-        doPost(IFinancialUrl.SUBMIT_Cash_ORDER,queryParams,callBack);
-=======
-     * 设置资金密码
+    public void submitCashTOrder(OrderBean orderBean,String fundPassword,CallBack callBack) {
+        List<NameValuePair> queryParams = ParamsUtil.getInstance().BeanToForm(GsonUtils.bean2Json(orderBean));
+        queryParams.add(new BasicNameValuePair("fundPassword", fundPassword));
+        doPost(IFinancialUrl.SUBMIT_Cash_ORDER, queryParams, callBack);
+    }
+    /** 设置资金密码
      * @param userPassword 用户登录密码
      * @param fundPassword 资金密码
      * @param callBack
@@ -80,6 +79,5 @@ public class WalletManager extends RequestManager{
         queryParams.add(new BasicNameValuePair("page", page + ""));
         queryParams.add(new BasicNameValuePair("rows", rows + ""));
         doPost(IFinancialUrl.ORDER_LIST, queryParams, callBack);
->>>>>>> .merge_file_a07820
     }
 }
