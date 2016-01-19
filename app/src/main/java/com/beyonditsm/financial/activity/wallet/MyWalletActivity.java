@@ -192,15 +192,6 @@ public class MyWalletActivity extends BaseActivity{
                 ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
                 user = rd.getData();
                 if (user != null) {
-                    if (!TextUtils.isEmpty(user.getCashTicketAmount())) {
-                        tvExangeMoney.setText(user.getCashTicketAmount());
-                    }
-                    if (!TextUtils.isEmpty(user.getUnCashTicketAmount())) {
-                        tvWeitGetMoney.setText(user.getUnCashTicketAmount());
-                    }
-                    if (!TextUtils.isEmpty(user.getDeductionTicketAmount())) {
-                        tvDikouMoney.setText(user.getDeductionTicketAmount());
-                    }
                     if(!TextUtils.isEmpty(user.getCashTicketAmount())){
                         double dCashA=Double.valueOf(user.getCashTicketAmount());
                         tvExangeMoney.setText((long)dCashA+"");
@@ -235,14 +226,17 @@ public class MyWalletActivity extends BaseActivity{
                 ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
                 user = rd.getData();
                 if (user != null) {
-                    if (!TextUtils.isEmpty(user.getCashTicketAmount())) {
-                        tvExangeMoney.setText(user.getCashTicketAmount());
+                    if(!TextUtils.isEmpty(user.getCashTicketAmount())){
+                        double dCashA=Double.valueOf(user.getCashTicketAmount());
+                        tvExangeMoney.setText((long)dCashA+"");
                     }
-                    if (!TextUtils.isEmpty(user.getUnCashTicketAmount())) {
-                        tvWeitGetMoney.setText(user.getUnCashTicketAmount());
+                    if(!TextUtils.isEmpty(user.getUnCashTicketAmount())){
+                        double unCashA=Double.valueOf(user.getUnCashTicketAmount());
+                        tvWeitGetMoney.setText((long)unCashA+"");
                     }
-                    if (!TextUtils.isEmpty(user.getDeductionTicketAmount())) {
-                        tvDikouMoney.setText(user.getDeductionTicketAmount());
+                    if(!TextUtils.isEmpty(user.getDeductionTicketAmount())){
+                        double deductionA=Double.valueOf(user.getDeductionTicketAmount());
+                        tvDikouMoney.setText((long)deductionA+"");
                     }
                 }
             }
