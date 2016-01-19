@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.beyonditsm.financial.AppManager;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -32,6 +33,8 @@ public class OrderCommitSusAct extends BaseActivity{
             @Override
             public void onClick(View v) {
                 finish();
+                AppManager.getAppManager().finishActivity(CashExchange.class);
+                AppManager.getAppManager().finishActivity(InterestDeduction.class);
             }
         });
     }

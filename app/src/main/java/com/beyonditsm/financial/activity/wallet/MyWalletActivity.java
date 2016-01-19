@@ -1,6 +1,7 @@
 package com.beyonditsm.financial.activity.wallet;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -9,14 +10,22 @@ import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
+import com.beyonditsm.financial.db.FriendDao;
+import com.beyonditsm.financial.entity.FriendBean;
+import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.entity.UserLoginEntity;
 import com.beyonditsm.financial.http.IFinancialUrl;
+import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.widget.ScaleAllImageView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
 import com.tandong.sa.zUImageLoader.core.ImageLoader;
+
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.UserInfo;
 
 /**
  * Created by wangbin on 16/1/14.
@@ -118,4 +127,41 @@ public class MyWalletActivity extends BaseActivity{
                 break;
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getUserInfo();
+    }
+
+    /**
+     * 获取用户信息
+     */
+    private void getUserInfo() {
+
+        RequestManager.getCommManager().findUserInfo(new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) {
+                ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
+                user = rd.getData();
+                if (user != null) {
+                    if(!TextUtils.isEmpty(user.getCashTicketAmount())){
+                        tvExangeMoney.setText(user.getCashTicketAmount());
+                    }
+                    if(!TextUtils.isEmpty(user.getUnCashTicketAmount())){
+                        tvWeitGetMoney.setText(user.getUnCashTicketAmount());
+                    }
+                    if(!TextUtils.isEmpty(user.getDeductionTicketAmount())){
+                        tvDikouMoney.setText(user.getDeductionTicketAmount());
+                    }
+                }
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
+            }
+        });
+    }
+
 }

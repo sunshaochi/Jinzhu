@@ -90,5 +90,13 @@ public class WalletManager extends RequestManager{
         doPost(IFinancialUrl.ORDER_LIST, queryParams, callBack);
     }
 
+    /**
+     * 通过username查询订单编号集合
+     * @param callBack
+     */
+    public void findOrderNoListByUserName(CallBack callBack){
+        doPost(IFinancialUrl.ORDER_NO_LIST,null,callBack);
+    }
 
+//    public void findInterestByOrderNo()
 }
