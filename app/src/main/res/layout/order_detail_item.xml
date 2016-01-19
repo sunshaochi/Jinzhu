@@ -15,7 +15,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:text="订单号：xjddxxxxxxxxxxxxxxxxx"
             android:textColor="#666666"
             android:textSize="14sp" />
 
@@ -26,7 +25,6 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
-            android:text="审批中"
             android:textColor="#ff6633"
             android:textSize="16sp" />
     </RelativeLayout>
@@ -63,7 +61,6 @@
                     android:id="@+id/order_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="100"
                     android:textColor="#ff6633"
                     android:textSize="22sp" />
 
@@ -94,7 +91,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="现金兑换"
                 android:textColor="#333333"
                 android:textSize="14sp" />
 
@@ -119,11 +115,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="2016/01/14 14:32"
                 android:textColor="#333333"
                 android:textSize="14sp" />
 
 
         </LinearLayout>
+
     </LinearLayout>
+    <View style="@style/view_line"></View>
 </LinearLayout>

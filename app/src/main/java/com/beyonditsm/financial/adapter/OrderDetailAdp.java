@@ -5,10 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.entity.OrderListEntity;
+import com.beyonditsm.financial.util.FinancialUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,12 +34,12 @@ public class OrderDetailAdp extends BaseAdapter {
     }
     @Override
     public int getCount() {
-        return list.size();
+        return list!=null?list.size():0;
     }
 
     @Override
     public Object getItem(int position) {
-        return list.get(position);
+        return list!=null?list.get(position):null;
     }
 
     @Override
@@ -61,34 +63,23 @@ public class OrderDetailAdp extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         OrderListEntity.RowsEntity rowsEntity = list.get(position);
-        holder.orderNo.setText(rowsEntity.getORDER_ID());
-        holder.orderStatus.setText(rowsEntity.getORDER_STS());
+        holder.orderNo.setText("订单号:"+rowsEntity.getORDER_ID());
+        if (rowsEntity.getORDER_STS().equals("WAIT_APPROVAL")){
+            holder.orderStatus.setText("审批中");
+            holder.orderStatus.setTextColor(convertView.getResources().getColor(R.color.tv_price_color));
+        }else if (rowsEntity.getORDER_STS().equals("APPROVAL_NO_PASS")){
+            holder.orderStatus.setText("已驳回");
+            holder.orderStatus.setTextColor(convertView.getResources().getColor(R.color.backed));
+        }else if (rowsEntity.getORDER_STS().equals("APPROVAL_PASS")){
+            holder.orderStatus.setText("已通过");
+            holder.orderStatus.setTextColor(convertView.getResources().getColor(R.color.green_order));
+        }else if (rowsEntity.getORDER_STS().equals("FINISHED")){
+            holder.orderStatus.setText("已完成");
+            holder.orderStatus.setTextColor(convertView.getResources().getColor(R.color.green_order));
+        }
         holder.orderAmount.setText(rowsEntity.getCASH_OUT_AMOUNT());
         holder.orderType.setText(rowsEntity.getO_TYPE());
-        Date date = new Date(rowsEntity.getCREATE_TIME());
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        holder.orderTime.setText(sdf.format(date));
-//        if (position==0){
-//            holder.orderNo.setText("订单号：11111111111");
-//            holder.orderStatus.setText("审批中");
-//            holder.orderStatus.setTextColor(convertView.getResources().getColor(R.color.tv_price_color));
-//        }
-//        if (position==1){
-//            holder.orderNo.setText("订单号：22222222222");
-//            holder.orderStatus.setText("已通过");
-//            holder.orderStatus.setTextColor(convertView.getResources().getColor(R.color.green_order));
-//        }
-//        if (position==2){
-//            holder.orderNo.setText("订单号：33333333333");
-//            holder.orderStatus.setText("已完成");
-//            holder.orderStatus.setTextColor(convertView.getResources().getColor(R.color.green_order));
-//        }
-//        if (position==3){
-//            holder.orderNo.setText("订单号：444444444444");
-//            holder.orderStatus.setText("已驳回");
-//            holder.orderStatus.setTextColor(convertView.getResources().getColor(R.color.backed));
-//        }
+        holder.orderTime.setText(FinancialUtil.timeToDate(Long.valueOf(rowsEntity.getCREATE_TIME())));
         return convertView;
     }
     class  ViewHolder{
