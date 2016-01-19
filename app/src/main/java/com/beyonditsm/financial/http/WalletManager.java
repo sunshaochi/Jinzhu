@@ -89,4 +89,6 @@ public class WalletManager extends RequestManager{
         queryParams.add(new BasicNameValuePair("rows", rows + ""));
         doPost(IFinancialUrl.ORDER_LIST, queryParams, callBack);
     }
+
+
 }

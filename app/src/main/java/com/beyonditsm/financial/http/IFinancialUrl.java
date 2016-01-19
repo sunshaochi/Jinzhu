@@ -184,4 +184,9 @@ public interface IFinancialUrl {
     String DEDUCTION_ORDER_DETAIL = BASE_URL+API_VERSION+"/wallet/login/deductionTOrderDetail.do";
     /*订单明细*/
     String ORDER_LIST = BASE_URL+API_VERSION+"/wallet/login/tOrderList.do";
+
+    /*用户的订单编号集合*/
+    String ORDER_NO_LIST=BASE_URL+API_VERSION+"/platform/login/findOrderNoListByUserName.do";
+    /*总利息、可抵扣利息*/
+    String LIXI=BASE_URL+API_VERSION+"/platform/login/findInterestByOrderNo.do";
 }
