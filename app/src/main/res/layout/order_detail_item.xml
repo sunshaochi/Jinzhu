@@ -122,5 +122,4 @@
         </LinearLayout>
 
     </LinearLayout>
-    <View style="@style/view_line"></View>
 </LinearLayout>
