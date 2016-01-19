@@ -1,7 +1,6 @@
 package com.beyonditsm.financial.activity.wallet;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -10,8 +9,6 @@ import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
-import com.beyonditsm.financial.db.FriendDao;
-import com.beyonditsm.financial.entity.FriendBean;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.entity.UserLoginEntity;
@@ -23,9 +20,6 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
 import com.tandong.sa.zUImageLoader.core.ImageLoader;
-
-import io.rong.imkit.RongIM;
-import io.rong.imlib.model.UserInfo;
 
 /**
  * Created by wangbin on 16/1/14.
@@ -90,13 +84,16 @@ public class MyWalletActivity extends BaseActivity{
     private void setUserInfo(){
         if(user!=null){
             if(!TextUtils.isEmpty(user.getCashTicketAmount())){
-                tvExangeMoney.setText(user.getCashTicketAmount());
+                double dCashA=Double.valueOf(user.getCashTicketAmount());
+                tvExangeMoney.setText((long)dCashA+"");
             }
             if(!TextUtils.isEmpty(user.getUnCashTicketAmount())){
-                tvWeitGetMoney.setText(user.getUnCashTicketAmount());
+                double unCashA=Double.valueOf(user.getUnCashTicketAmount());
+                tvWeitGetMoney.setText((long)unCashA+"");
             }
             if(!TextUtils.isEmpty(user.getDeductionTicketAmount())){
-                tvDikouMoney.setText(user.getDeductionTicketAmount());
+                double deductionA=Double.valueOf(user.getDeductionTicketAmount());
+                tvDikouMoney.setText((long)deductionA+"");
             }
             ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon(), civHead, options);
 
@@ -146,14 +143,18 @@ public class MyWalletActivity extends BaseActivity{
                 user = rd.getData();
                 if (user != null) {
                     if(!TextUtils.isEmpty(user.getCashTicketAmount())){
-                        tvExangeMoney.setText(user.getCashTicketAmount());
+                        double dCashA=Double.valueOf(user.getCashTicketAmount());
+                        tvExangeMoney.setText((long)dCashA+"");
                     }
                     if(!TextUtils.isEmpty(user.getUnCashTicketAmount())){
-                        tvWeitGetMoney.setText(user.getUnCashTicketAmount());
+                        double unCashA=Double.valueOf(user.getUnCashTicketAmount());
+                        tvWeitGetMoney.setText((long)unCashA+"");
                     }
                     if(!TextUtils.isEmpty(user.getDeductionTicketAmount())){
-                        tvDikouMoney.setText(user.getDeductionTicketAmount());
+                        double deductionA=Double.valueOf(user.getDeductionTicketAmount());
+                        tvDikouMoney.setText((long)deductionA+"");
                     }
+
                 }
             }
 
