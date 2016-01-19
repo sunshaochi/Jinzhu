@@ -31,6 +31,15 @@ public class OrderBean implements Parcelable{
     private String bankName;//银行名称
     private String bankCardNo;//银行卡号
     private Double cashOutAmount;//现金兑换数量
+    private String deductionTOrderId;//贷款订单id
+
+    public String getDeductionTOrderId() {
+        return deductionTOrderId;
+    }
+
+    public void setDeductionTOrderId(String deductionTOrderId) {
+        this.deductionTOrderId = deductionTOrderId;
+    }
 
     public Double getCashOutAmount() {
         return cashOutAmount;
@@ -237,6 +246,7 @@ public class OrderBean implements Parcelable{
         dest.writeString(this.bankName);
         dest.writeString(this.bankCardNo);
         dest.writeValue(this.cashOutAmount);
+        dest.writeString(this.deductionTOrderId);
     }
 
     public OrderBean() {
@@ -265,6 +275,7 @@ public class OrderBean implements Parcelable{
         this.bankName=in.readString();
         this.bankCardNo=in.readString();
         this.cashOutAmount= (Double) in.readValue(Double.class.getClassLoader());
+        this.deductionTOrderId=in.readString();
     }
 
     public static final Creator<OrderBean> CREATOR = new Creator<OrderBean>() {

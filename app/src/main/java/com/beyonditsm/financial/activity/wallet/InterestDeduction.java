@@ -17,6 +17,8 @@ import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.entity.OrderBean;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.MyLogUtils;
+import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.widget.DialogChooseProvince;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
@@ -78,6 +80,7 @@ public class InterestDeduction extends BaseActivity {
 //                tvlixixianjin.setText(Double.parseDouble(user.getDeductionTicketAmount())/10+"");
             }
         }
+        getOrderNoList();
         tvlixifen.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -97,7 +100,7 @@ public class InterestDeduction extends BaseActivity {
                         tvlixixianjin.setText("");
                     }
                     if (!TextUtils.isEmpty(tvlixifen.getText().toString().trim())) {
-                        tvlixixianjin.setText(Double.parseDouble(s.toString()) / 10 + "");
+                        tvlixixianjin.setText(Double.parseDouble(s.toString()) / 100 + "");
 
                     }
 
@@ -108,10 +111,20 @@ public class InterestDeduction extends BaseActivity {
             }
         });
     }
-    @OnClick({R.id.btn_ok,R.id.lldiqu,R.id.tvset,R.id.tv_creName})
+    @OnClick({R.id.lldk,R.id.btn_ok,R.id.lldiqu,R.id.tvset,R.id.tv_creName})
     public void toClick(View v){
         Intent intent=null;
         switch (v.getId()){
+            case R.id.lldk:
+                MySelfSheetDialog dialog=new MySelfSheetDialog(InterestDeduction.this).builder();
+                dialog.addSheetItem("", null, new MySelfSheetDialog.OnSheetItemClickListener() {
+                    @Override
+                    public void onClick(int which) {
+                        creName.setText("");
+                    }
+                });
+                dialog.show();
+                break;
             //确认
             case R.id.btn_ok:
                 setOrderBean();
@@ -171,6 +184,9 @@ public class InterestDeduction extends BaseActivity {
         }
     }
 
+    /**
+     * 给订单实体赋值
+     */
     private void setOrderBean(){
         orderBean=new OrderBean();
         if(!TextUtils.isEmpty(name.getText().toString())){
@@ -182,11 +198,28 @@ public class InterestDeduction extends BaseActivity {
         if(!TextUtils.isEmpty(bankCount.getText().toString())){
             orderBean.setBankCardNo(bankCount.getText().toString());
         }
-        if(!TextUtils.isEmpty(tvDikouMoney.getText().toString())){
-            orderBean.setCashOutAmount(Double.parseDouble(tvDikouMoney.getText().toString()));
+        if(!TextUtils.isEmpty(tvlixifen.getText().toString())){
+            orderBean.setCashOutAmount(Double.parseDouble(tvlixifen.getText().toString()));
         }else {
             orderBean.setCashOutAmount(0.0);
         }
+    }
+
+    /**
+     * 获取个人贷款订单编号列表
+     */
+    private void getOrderNoList(){
+        RequestManager.getWalletManager().findOrderNoListByUserName(new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                MyLogUtils.degug(result);
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
+            }
+        });
     }
 
 }
