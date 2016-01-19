@@ -91,7 +91,7 @@ public class CashExchange extends BaseActivity {
                         tvgetxianjin.setText("");
                     }
                     if (!TextUtils.isEmpty(tvxianjinfen.getText().toString().trim())) {
-                        tvgetxianjin.setText(Double.parseDouble(s.toString())/10+"");
+                        tvgetxianjin.setText(Double.parseDouble(s.toString())/100+"");
 
                     }
 
@@ -174,7 +174,7 @@ public class CashExchange extends BaseActivity {
             orderBean.setBankCardNo(bankCount.getText().toString());
         }
         if(!TextUtils.isEmpty(tvxianjin.getText().toString())){
-            orderBean.setCashOutAmount(Double.parseDouble(tvxianjin.getText().toString()));
+            orderBean.setCashOutAmount(Double.parseDouble(tvxianjinfen.getText().toString()));
         }else {
             orderBean.setCashOutAmount(0.0);
         }

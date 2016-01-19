@@ -72,10 +72,10 @@
                     android:id="@+id/tvxianjinfen"
                     style="@style/cre_et"
                     android:cursorVisible="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="150dp"
+                    android:layout_height="40dp"
                     android:textSize="24sp"
-                    android:inputType="numberDecimal"
+                    android:inputType="number"
                     android:textColor="@color/tv_money_color"
                     android:layout_centerInParent="true"
                     />

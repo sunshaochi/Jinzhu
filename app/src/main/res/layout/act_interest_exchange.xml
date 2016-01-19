@@ -51,6 +51,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/item_back">
                 <LinearLayout
+                    android:id="@+id/lldk"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:orientation="horizontal">
@@ -164,9 +165,9 @@
                         android:layout_marginLeft="15dp">
                         <EditText
                             android:id="@+id/tvlixifen"
-                            android:background="@null"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/cre_et"
+                            android:layout_width="150dp"
+                            android:layout_height="40dp"
                             android:textSize="24sp"
                             android:inputType="numberDecimal"
                             android:cursorVisible="true"
