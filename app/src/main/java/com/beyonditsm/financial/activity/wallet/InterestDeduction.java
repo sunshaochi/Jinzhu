@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.beyonditsm.financial.AppManager;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.entity.OrderBean;
@@ -69,6 +70,7 @@ public class InterestDeduction extends BaseActivity {
 
     @Override
     public void init(Bundle savedInstanceState) {
+        AppManager.getAppManager().addActivity(InterestDeduction.this);
         setLeftTv("返回");
         setTopTitle("抵扣利息");
 
@@ -198,8 +200,8 @@ public class InterestDeduction extends BaseActivity {
         if(!TextUtils.isEmpty(bankCount.getText().toString())){
             orderBean.setBankCardNo(bankCount.getText().toString());
         }
-        if(!TextUtils.isEmpty(tvlixifen.getText().toString())){
-            orderBean.setCashOutAmount(Double.parseDouble(tvlixifen.getText().toString()));
+        if(!TextUtils.isEmpty(tvlixixianjin.getText().toString())){
+            orderBean.setCashOutAmount(Double.parseDouble(tvlixixianjin.getText().toString()));
         }else {
             orderBean.setCashOutAmount(0.0);
         }

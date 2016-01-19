@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.beyonditsm.financial.AppManager;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.entity.OrderBean;
@@ -63,6 +64,7 @@ public class CashExchange extends BaseActivity {
 
     @Override
     public void init(Bundle savedInstanceState) {
+        AppManager.getAppManager().addActivity(CashExchange.this);
         setLeftTv("返回");
         setTopTitle("现金兑换");
         user=getIntent().getParcelableExtra("userInfo");
@@ -126,6 +128,9 @@ public class CashExchange extends BaseActivity {
                                 public void onSucess(String result) throws JSONException {
                                     Intent intent = new Intent(CashExchange.this, OrderCommitSusAct.class);
                                     startActivity(intent);
+                                    MyLogUtils.degug(orderBean.getUserName() + ">" + orderBean.getBankName() + ">" + orderBean.getBankCardNo()
+                                            + ">" + orderBean.getCashOutAmount() + ">" + zjPassword.getText().toString());
+
                                 }
 
                                 @Override
@@ -173,8 +178,8 @@ public class CashExchange extends BaseActivity {
         if(!TextUtils.isEmpty(bankCount.getText().toString())){
             orderBean.setBankCardNo(bankCount.getText().toString());
         }
-        if(!TextUtils.isEmpty(tvxianjin.getText().toString())){
-            orderBean.setCashOutAmount(Double.parseDouble(tvxianjinfen.getText().toString()));
+        if(!TextUtils.isEmpty(tvgetxianjin.getText().toString())){
+            orderBean.setCashOutAmount(Double.parseDouble(tvgetxianjin.getText().toString()));
         }else {
             orderBean.setCashOutAmount(0.0);
         }
