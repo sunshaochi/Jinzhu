@@ -18,11 +18,14 @@ import com.beyonditsm.financial.entity.UserLoginEntity;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.GsonUtils;
+import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.widget.ScaleAllImageView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
 import com.tandong.sa.zUImageLoader.core.ImageLoader;
+
+import org.json.JSONException;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.UserInfo;
@@ -72,8 +75,25 @@ public class MyWalletActivity extends BaseActivity{
         setTopTitle("我的钱包");
         ule=getIntent().getParcelableExtra("userLogin");
         user=getIntent().getParcelableExtra("userInfo");
-        setUserLogin();
-        setUserInfo();
+        if(ule==null){
+            getUserLoginInfo();
+            setUserLogin();
+        }else {
+            setUserLogin();
+        }
+        if(user==null){
+            if(ule!=null){
+                if(ule.getDescription().contains("用户")){
+                    getUserInfo();
+                    setUserInfo();
+                }if(ule.getDescription().contains("服务者")){
+                    findServantInfo();
+                    setUserInfo();
+                }
+            }
+        }else {
+            setUserInfo();
+        }
     }
 
     private void setUserLogin(){
@@ -107,19 +127,23 @@ public class MyWalletActivity extends BaseActivity{
     public void toClick(View v){
         Intent intent=null;
         switch (v.getId()){
+            //收支明细
             case R.id.rlMyPayments:
                 intent=new Intent(MyWalletActivity.this,BalancePaymentsAct.class);
                 startActivity(intent);
                 break;
+            //订单明细
             case R.id.rlMyOrder:
                 intent=new Intent(MyWalletActivity.this,OrderDetailAct.class);
                 startActivity(intent);
                 break;
+            //现金券兑换
             case R.id.rlxianjin:
                 intent=new Intent(MyWalletActivity.this,CashExchange.class);
                 intent.putExtra("userInfo",user);
                 startActivity(intent);
                 break;
+            //抵扣券
             case R.id.rldikou:
                 intent=new Intent(MyWalletActivity.this,InterestDeduction.class);
                 intent.putExtra("userInfo",user);
@@ -131,7 +155,30 @@ public class MyWalletActivity extends BaseActivity{
     @Override
     protected void onResume() {
         super.onResume();
-        getUserInfo();
+        if(ule.getDescription().contains("服务者")){
+            findServantInfo();
+        }
+        if(ule.getDescription().contains("用户")) {
+            getUserInfo();
+        }
+    }
+
+    /**
+     * 获取用户的角色信息
+     */
+    private void getUserLoginInfo() {
+        RequestManager.getUserManager().findUserLoginInfo(new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                ResultData<UserLoginEntity> rd = (ResultData<UserLoginEntity>) GsonUtils.json(result, UserLoginEntity.class);
+                ule = rd.getData();
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
+            }
+        });
     }
 
     /**
@@ -145,13 +192,13 @@ public class MyWalletActivity extends BaseActivity{
                 ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
                 user = rd.getData();
                 if (user != null) {
-                    if(!TextUtils.isEmpty(user.getCashTicketAmount())){
+                    if (!TextUtils.isEmpty(user.getCashTicketAmount())) {
                         tvExangeMoney.setText(user.getCashTicketAmount());
                     }
-                    if(!TextUtils.isEmpty(user.getUnCashTicketAmount())){
+                    if (!TextUtils.isEmpty(user.getUnCashTicketAmount())) {
                         tvWeitGetMoney.setText(user.getUnCashTicketAmount());
                     }
-                    if(!TextUtils.isEmpty(user.getDeductionTicketAmount())){
+                    if (!TextUtils.isEmpty(user.getDeductionTicketAmount())) {
                         tvDikouMoney.setText(user.getDeductionTicketAmount());
                     }
                 }
@@ -160,6 +207,35 @@ public class MyWalletActivity extends BaseActivity{
             @Override
             public void onError(int status, String msg) {
 
+            }
+        });
+    }
+
+    /**
+     * 获取服务者信息
+     */
+    private void findServantInfo() {
+
+        RequestManager.getServicerManager().findServantDetail(new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
+                user = rd.getData();
+                if (user != null) {
+                    if (!TextUtils.isEmpty(user.getCashTicketAmount())) {
+                        tvExangeMoney.setText(user.getCashTicketAmount());
+                    }
+                    if (!TextUtils.isEmpty(user.getUnCashTicketAmount())) {
+                        tvWeitGetMoney.setText(user.getUnCashTicketAmount());
+                    }
+                    if (!TextUtils.isEmpty(user.getDeductionTicketAmount())) {
+                        tvDikouMoney.setText(user.getDeductionTicketAmount());
+                    }
+                }
+            }
+
+            @Override
+            public void onError(int status, String msg) {
             }
         });
     }

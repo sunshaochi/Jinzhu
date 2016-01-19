@@ -57,6 +57,9 @@ public class CashExchange extends BaseActivity {
 
     private OrderBean orderBean;//订单实体
     private UserEntity user;//用户实体
+
+    private double MIN_MARK = 0.0;
+    private double MAX_MARK = 0.0;
     @Override
     public void setLayout() {
         setContentView(R.layout.act_cash_exchange);
@@ -71,7 +74,7 @@ public class CashExchange extends BaseActivity {
         if(user!=null){
             if(!TextUtils.isEmpty(user.getCashTicketAmount())){
                 tvxianjin.setText(user.getCashTicketAmount());
-//                tvxianjinfen.setText(user.getCashTicketAmount());
+                MAX_MARK=Double.parseDouble(user.getCashTicketAmount());
             }
         }
         tvxianjinfen.addTextChangedListener(new TextWatcher() {
@@ -82,25 +85,86 @@ public class CashExchange extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+/*
+                if (start > 1) {
+                    if (MIN_MARK != -1 && MAX_MARK != -1) {
+                        double num = Double.parseDouble(s.toString());
+                        if (num > MAX_MARK) {
+                            s = String.valueOf(MAX_MARK);
+                            tvxianjinfen.setText(s);
+                        } else if (num < MIN_MARK) {
+                            s = String.valueOf(MIN_MARK);
+                        } else {
+                            if (!s.toString().startsWith(".")) {
 
+                                if (s.toString().trim().length() == 0) {
+                                    tvgetxianjin.setText("");
+                                }
+                                if (!TextUtils.isEmpty(tvxianjinfen.getText().toString().trim())) {
+                                    tvgetxianjin.setText(Double.parseDouble(s.toString()) / 100 + "");
+
+                                }
+
+                            } else if (s.toString().startsWith(".")) {
+                                Toast.makeText(CashExchange.this, "不能以小数点开头", Toast.LENGTH_SHORT).show();
+                                tvxianjinfen.setText("");
+                            }
+                        }
+                        return;
+                    }
+                }
+*/
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!s.toString().startsWith(".")) {
 
-                    if(s.toString().trim().length()==0){
+               /* if (s != null && !s.equals("")) {
+                    if (MIN_MARK != -1 && MAX_MARK != -1) {
+                        double markVal = 0;
+                        try {
+                            markVal = Double.parseDouble(s.toString());
+                        } catch (NumberFormatException e) {
+                            markVal = 0;
+                        }
+                        if (markVal > MAX_MARK) {
+                            Toast.makeText(getBaseContext(), "不能超过指定数字", Toast.LENGTH_SHORT).show();
+                            tvxianjinfen.setText(String.valueOf(MAX_MARK));
+                        }else {
+                            if (!s.toString().startsWith(".")) {
+
+                                if (s.toString().trim().length() == 0) {
+                                    tvgetxianjin.setText("");
+                                }
+                                if (!TextUtils.isEmpty(tvxianjinfen.getText().toString().trim())) {
+                                    tvgetxianjin.setText(Double.parseDouble(s.toString()) / 100 + "");
+
+                                }
+
+                            } else if (s.toString().startsWith(".")) {
+                                Toast.makeText(CashExchange.this, "不能以小数点开头", Toast.LENGTH_SHORT).show();
+                                tvxianjinfen.setText("");
+                            }
+                        }
+                        return;
+                    }
+                }*/
+                if (!s.toString().startsWith(".")) {
+
+                    if (s.toString().trim().length() == 0) {
                         tvgetxianjin.setText("");
                     }
                     if (!TextUtils.isEmpty(tvxianjinfen.getText().toString().trim())) {
-                        tvgetxianjin.setText(Double.parseDouble(s.toString())/100+"");
+                        tvgetxianjin.setText(Double.parseDouble(s.toString()) / 100 + "");
 
                     }
 
-                }else if(s.toString().startsWith(".")){
-                    Toast.makeText(CashExchange.this,"不能以小数点开头",Toast.LENGTH_SHORT).show();
+                } else if (s.toString().startsWith(".")) {
+                    Toast.makeText(CashExchange.this, "不能以小数点开头", Toast.LENGTH_SHORT).show();
                     tvxianjinfen.setText("");
                 }
+
+
             }
         });
     }
@@ -135,6 +199,7 @@ public class CashExchange extends BaseActivity {
 
                                 @Override
                                 public void onError(int status, String msg) {
+                                    Toast.makeText(CashExchange.this,msg,Toast.LENGTH_SHORT).show();
                                     MyLogUtils.degug(msg);
                                     MyLogUtils.degug(orderBean.getUserName()+">"+orderBean.getBankName()+">"+orderBean.getBankCardNo()
                                     +">"+orderBean.getCashOutAmount()+">"+zjPassword.getText().toString());

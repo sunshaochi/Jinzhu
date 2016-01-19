@@ -16,15 +16,26 @@ import com.beyonditsm.financial.AppManager;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.entity.OrderBean;
+import com.beyonditsm.financial.entity.ResultData;
+import com.beyonditsm.financial.entity.TaskEntity;
 import com.beyonditsm.financial.entity.UserEntity;
+import com.beyonditsm.financial.entity.UserLoginEntity;
 import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.widget.DialogChooseProvince;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.tandong.sa.json.Gson;
+import com.tandong.sa.json.reflect.TypeToken;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by gxy on 2016/1/14.
@@ -61,8 +72,11 @@ public class InterestDeduction extends BaseActivity {
     @ViewInject(R.id.tvset)
     private TextView tvset;//设置资金密码
 
-    private OrderBean orderBean;//订单实体
+    private OrderBean orderBean,orderBeanLixi;//订单实体
     private UserEntity user;//用户实体
+
+    private List<OrderBean> list;
+    private int position;//选择订单号的位置
     @Override
     public void setLayout() {
         setContentView(R.layout.act_interest_exchange);
@@ -78,11 +92,10 @@ public class InterestDeduction extends BaseActivity {
         if(user!=null){
             if(!TextUtils.isEmpty(user.getDeductionTicketAmount())){
                 tvDikouMoney.setText(user.getDeductionTicketAmount());
-//                tvlixifen.setText(user.getDeductionTicketAmount());
-//                tvlixixianjin.setText(Double.parseDouble(user.getDeductionTicketAmount())/10+"");
             }
         }
         getOrderNoList();
+
         tvlixifen.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -118,14 +131,20 @@ public class InterestDeduction extends BaseActivity {
         Intent intent=null;
         switch (v.getId()){
             case R.id.lldk:
-                MySelfSheetDialog dialog=new MySelfSheetDialog(InterestDeduction.this).builder();
-                dialog.addSheetItem("", null, new MySelfSheetDialog.OnSheetItemClickListener() {
-                    @Override
-                    public void onClick(int which) {
-                        creName.setText("");
+                if(list.size()!=0) {
+                    MySelfSheetDialog dialog = new MySelfSheetDialog(InterestDeduction.this).builder();
+                    for(int i=0;i<list.size();i++) {
+                        dialog.addSheetItem(list.get(i).getOrderNo(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which) {
+                                creName.setText(list.get(which-1).getOrderNo());
+                                position=which-1;
+                                getLiXiByOrder(creName.getText().toString());
+                            }
+                        });
                     }
-                });
-                dialog.show();
+                    dialog.show();
+                }
                 break;
             //确认
             case R.id.btn_ok:
@@ -153,6 +172,8 @@ public class InterestDeduction extends BaseActivity {
 
                                 @Override
                                 public void onError(int status, String msg) {
+                                    MyLogUtils.degug(orderBean.getUserName()+">"+orderBean.getBankName()+">"+orderBean.getBankCardNo()
+                                            +">"+orderBean.getCashOutAmount()+">"+orderBean.getOrderNo()+">"+zjPassword.getText().toString());
 
                                 }
                             });
@@ -180,9 +201,7 @@ public class InterestDeduction extends BaseActivity {
                 intent.putExtra("userPhone",user.getAccountName());
                 startActivity(intent);
                 break;
-            case R.id.tv_creName:
 
-                break;
         }
     }
 
@@ -205,6 +224,10 @@ public class InterestDeduction extends BaseActivity {
         }else {
             orderBean.setCashOutAmount(0.0);
         }
+        if(!TextUtils.isEmpty(creName.getText().toString())){
+            orderBean.setOrderNo(creName.getText().toString());
+            orderBean.setOrderId(list.get(position).getOrderId());
+        }
     }
 
     /**
@@ -214,7 +237,42 @@ public class InterestDeduction extends BaseActivity {
         RequestManager.getWalletManager().findOrderNoListByUserName(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-                MyLogUtils.degug(result);
+                list=new ArrayList<OrderBean>();
+
+                JSONObject jsonObject = new JSONObject(result);
+                JSONArray dataArr = jsonObject.getJSONArray("data");
+                Gson gson = new Gson();
+                list = gson.fromJson(dataArr.toString(), new TypeToken<List<OrderBean>>() {
+                }.getType());
+
+
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
+            }
+        });
+    }
+
+    private void getLiXiByOrder(String order){
+        RequestManager.getWalletManager().findInterestByOrderNo(order, new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                ResultData<OrderBean> rd = (ResultData<OrderBean>) GsonUtils.json(result, OrderBean.class);
+                orderBeanLixi = rd.getData();
+                if(orderBeanLixi!=null){
+                    if(!TextUtils.isEmpty(orderBeanLixi.getTotalLoanInterest())){
+                        deductionAll.setText(orderBeanLixi.getTotalLoanInterest()+"元");
+                    }else {
+                        deductionAll.setText("0.0元");
+                    }
+                    if(!TextUtils.isEmpty(orderBeanLixi.getDeductibleInterest())){
+                        deductionDebit.setText(orderBeanLixi.getDeductibleInterest()+"元");
+                    }else {
+                        deductionDebit.setText("0.0元");
+                    }
+                }
             }
 
             @Override

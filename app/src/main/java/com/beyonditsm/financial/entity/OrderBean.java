@@ -31,14 +31,32 @@ public class OrderBean implements Parcelable{
     private String bankName;//银行名称
     private String bankCardNo;//银行卡号
     private Double cashOutAmount;//现金兑换数量
-    private String deductionTOrderId;//贷款订单id
+    private String deductibleInterest;//可抵扣利息
+    private String totalLoanInterest;//总贷款利息
+    private String orderId;//订单Id
 
-    public String getDeductionTOrderId() {
-        return deductionTOrderId;
+    public String getOrderId() {
+        return orderId;
     }
 
-    public void setDeductionTOrderId(String deductionTOrderId) {
-        this.deductionTOrderId = deductionTOrderId;
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getDeductibleInterest() {
+        return deductibleInterest;
+    }
+
+    public void setDeductibleInterest(String deductibleInterest) {
+        this.deductibleInterest = deductibleInterest;
+    }
+
+    public String getTotalLoanInterest() {
+        return totalLoanInterest;
+    }
+
+    public void setTotalLoanInterest(String totalLoanInterest) {
+        this.totalLoanInterest = totalLoanInterest;
     }
 
     public Double getCashOutAmount() {
@@ -246,7 +264,9 @@ public class OrderBean implements Parcelable{
         dest.writeString(this.bankName);
         dest.writeString(this.bankCardNo);
         dest.writeValue(this.cashOutAmount);
-        dest.writeString(this.deductionTOrderId);
+        dest.writeString(this.deductibleInterest);
+        dest.writeString(this.totalLoanInterest);
+        dest.writeString(this.orderId);
     }
 
     public OrderBean() {
@@ -275,7 +295,9 @@ public class OrderBean implements Parcelable{
         this.bankName=in.readString();
         this.bankCardNo=in.readString();
         this.cashOutAmount= (Double) in.readValue(Double.class.getClassLoader());
-        this.deductionTOrderId=in.readString();
+        this.deductibleInterest=in.readString();
+        this.totalLoanInterest=in.readString();
+        this.orderId=in.readString();
     }
 
     public static final Creator<OrderBean> CREATOR = new Creator<OrderBean>() {

@@ -26,7 +26,12 @@ public class WalletManager extends RequestManager{
      * @param callBack
      */
     public void submitDeductionTOrder(OrderBean orderBean,String fundPassword,CallBack callBack){
-        List<NameValuePair> queryParams= ParamsUtil.getInstance().BeanToForm(GsonUtils.bean2Json(orderBean));
+        List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
+        queryParams.add(new BasicNameValuePair("bankCardNo",orderBean.getBankCardNo()));
+        queryParams.add(new BasicNameValuePair("bankName",orderBean.getBankName()));
+        queryParams.add(new BasicNameValuePair("cashOutAmount",orderBean.getCashOutAmount()+""));
+        queryParams.add(new BasicNameValuePair("userName",orderBean.getUserName()));
+        queryParams.add(new BasicNameValuePair("orderId",orderBean.getOrderId()));
         queryParams.add(new BasicNameValuePair("fundPassword",fundPassword));
         doPost(IFinancialUrl.SUBMIT_DEDUCTION_ORDER,queryParams,callBack);
     }
@@ -98,5 +103,14 @@ public class WalletManager extends RequestManager{
         doPost(IFinancialUrl.ORDER_NO_LIST,null,callBack);
     }
 
-//    public void findInterestByOrderNo()
+    /**
+     * 通过订单编号查看总利息和可抵扣利息
+     * @param orderNo
+     * @param callBack
+     */
+    public void findInterestByOrderNo(String orderNo,CallBack callBack){
+        List<NameValuePair> queryParams=new ArrayList<NameValuePair>();
+        queryParams.add(new BasicNameValuePair("orderNo",orderNo));
+        doPost(IFinancialUrl.LIXI,queryParams,callBack);
+    }
 }

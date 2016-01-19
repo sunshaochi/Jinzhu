@@ -209,6 +209,8 @@ public class HomeCreditDetailAct extends BaseActivity {
         /*把回车键换成搜索*/
 //        etAmount.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
         etAmount.addTextChangedListener(textWatcher);
+
+
     }
 
     private TextWatcher textWatcher=new TextWatcher() {
@@ -219,31 +221,7 @@ public class HomeCreditDetailAct extends BaseActivity {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            //如果用户输入的以小数点开头
-//            if(s.toString().startsWith(".")){
-//                int length=s.toString().length();
-//                etAmount.setText(s.toString().substring(1,length-1));
-//            }
-//            //如果用户输入的以小数点结尾
-//            if(s.toString().endsWith(".")){
-//                int length=s.toString().length();
-//                etAmount.setText(s.toString().substring(0,length-1));
-//            }
 
-       /*     //如果用户输入的数值比额度范围最小值小则计算最小的，比额度范围值最大的大计算最大的
-            if(!s.toString().startsWith(".")) {
-                if (!TextUtils.isEmpty(etAmount.getText().toString().trim())) {
-                    creditMoney = etAmount.getText().toString().trim();
-                }
-                final double minVal = Double.valueOf(productEntity.getMinVal());
-                double maxVal = Double.valueOf(productEntity.getMaxVal());
-                double curVal = Double.valueOf(creditMoney.toString()) * 10000;
-                creditMonth = tvM.getText().toString();
-                validateCredit(minVal, maxVal, curVal, creditMonth);
-            }else if(s.toString().startsWith(".")){
-                Toast.makeText(HomeCreditDetailAct.this,"不能以小数点开头",Toast.LENGTH_SHORT).show();
-                etAmount.setText("");
-            }*/
         }
 
         @Override
