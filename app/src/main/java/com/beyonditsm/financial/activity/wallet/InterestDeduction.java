@@ -91,7 +91,8 @@ public class InterestDeduction extends BaseActivity {
         user=getIntent().getParcelableExtra("userInfo");
         if(user!=null){
             if(!TextUtils.isEmpty(user.getDeductionTicketAmount())){
-                tvDikouMoney.setText(user.getDeductionTicketAmount());
+                double dCashA=Double.valueOf(user.getDeductionTicketAmount());
+                tvDikouMoney.setText((long)dCashA+"");
             }
         }
         getOrderNoList();
@@ -151,11 +152,14 @@ public class InterestDeduction extends BaseActivity {
                 setOrderBean();
                 double d=0.0;
                 if(tvlixifen.getText().toString().trim().length()==0){
-                    d=0.0;
+                    d=-1;
                 }else {
                     d=Double.parseDouble(tvlixifen.getText().toString());
+                    if(d==0){
+                        d=-1;
+                    }
                 }
-                    if (d <= Double.parseDouble(user.getDeductionTicketAmount())) {
+                    if ((d!=0)&&(d!=-1)&&(d <= Double.parseDouble(user.getDeductionTicketAmount()))) {
 
                         if (orderBean != null && !TextUtils.isEmpty(zjPassword.getText().toString())
                                 && !TextUtils.isEmpty(orderBean.getUserName())
@@ -221,8 +225,6 @@ public class InterestDeduction extends BaseActivity {
         }
         if(!TextUtils.isEmpty(tvlixixianjin.getText().toString())){
             orderBean.setCashOutAmount(Double.parseDouble(tvlixixianjin.getText().toString()));
-        }else {
-            orderBean.setCashOutAmount(0.0);
         }
         if(!TextUtils.isEmpty(creName.getText().toString())){
             orderBean.setOrderNo(creName.getText().toString());

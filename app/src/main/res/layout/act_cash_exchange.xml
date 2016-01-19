@@ -76,6 +76,7 @@
                     android:layout_height="40dp"
                     android:textSize="24sp"
                     android:inputType="number"
+                    android:numeric="integer"
                     android:textColor="@color/tv_money_color"
                     android:layout_centerInParent="true"
                     />
