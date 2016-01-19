@@ -77,6 +77,9 @@ public class InterestDeduction extends BaseActivity {
 
     private List<OrderBean> list;
     private int position;//选择订单号的位置
+
+    private double MIN_MARK = 0.0;
+    private double MAX_MARK = 0.0;
     @Override
     public void setLayout() {
         setContentView(R.layout.act_interest_exchange);
@@ -93,6 +96,8 @@ public class InterestDeduction extends BaseActivity {
             if(!TextUtils.isEmpty(user.getDeductionTicketAmount())){
                 double dCashA=Double.valueOf(user.getDeductionTicketAmount());
                 tvDikouMoney.setText((long)dCashA+"");
+                MAX_MARK=Double.parseDouble(user.getDeductionTicketAmount());
+
             }
         }
         getOrderNoList();
@@ -105,12 +110,57 @@ public class InterestDeduction extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                if (start > 1) {
+                    if (MIN_MARK != -1 && MAX_MARK != -1) {
+                        double num = Double.parseDouble(s.toString());
+                        if (num > MAX_MARK) {
+                            s = String.valueOf(MAX_MARK);
+                            double dMAX=Double.valueOf(s.toString());
+                            tvlixifen.setText((long) dMAX + "");
+                        } else if (num < MIN_MARK) {
+                            s = String.valueOf(MIN_MARK);
+                            double dMIN=Double.valueOf(s.toString());
+                            tvlixifen.setText((long)dMIN+"");
+                        } else {
+                            if (s.toString().trim().length() == 0) {
+                                tvlixixianjin.setText("");
+                            }
+                            if (!TextUtils.isEmpty(tvlixifen.getText().toString().trim())) {
+                                tvlixixianjin.setText(Double.parseDouble(s.toString()) / 100 + "");
+                            }
+                        }
+                        return;
+                    }
+                }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (!s.toString().startsWith(".")) {
+                if (s != null && !s.equals("")) {
+                    if (MIN_MARK != -1 && MAX_MARK != -1) {
+                        double markVal = 0;
+                        try {
+                            markVal = Double.parseDouble(s.toString());
+                        } catch (NumberFormatException e) {
+                            markVal = 0;
+                        }
+                        if (markVal > MAX_MARK) {
+                            Toast.makeText(getBaseContext(), "不能超过指定数字", Toast.LENGTH_SHORT).show();
+                            double dMAX=Double.valueOf(MAX_MARK);
+                            tvlixifen.setText((long)dMAX+"");
+                        } else {
+                            if (s.toString().trim().length() == 0) {
+                                tvlixixianjin.setText("");
+                            }
+                            if (!TextUtils.isEmpty(tvlixifen.getText().toString().trim())) {
+                                tvlixixianjin.setText(Double.parseDouble(s.toString()) / 100 + "");
+
+                            }
+                        }
+                        return;
+                    }
+                }
+              /*  if (!s.toString().startsWith(".")) {
 
                     if (s.toString().trim().length() == 0) {
                         tvlixixianjin.setText("");
@@ -123,7 +173,7 @@ public class InterestDeduction extends BaseActivity {
                 } else if (s.toString().startsWith(".")) {
                     Toast.makeText(InterestDeduction.this, "不能以小数点开头", Toast.LENGTH_SHORT).show();
                     tvlixifen.setText("");
-                }
+                }*/
             }
         });
     }
@@ -172,6 +222,9 @@ public class InterestDeduction extends BaseActivity {
                                 public void onSucess(String result) throws JSONException {
                                     Intent intent = new Intent(InterestDeduction.this, OrderCommitSusAct.class);
                                     startActivity(intent);
+                                    MyLogUtils.degug(orderBean.getUserName() + ">" + orderBean.getBankName() + ">" + orderBean.getBankCardNo()
+                                            + ">" + orderBean.getCashOutAmount() + ">" + orderBean.getOrderNo() + ">" + zjPassword.getText().toString());
+
                                 }
 
                                 @Override
