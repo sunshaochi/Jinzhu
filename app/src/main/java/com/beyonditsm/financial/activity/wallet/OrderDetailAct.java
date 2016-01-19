@@ -53,6 +53,7 @@ public class OrderDetailAct extends BaseActivity {
         lvOrderDetail.setPullLoadEnabled(false);
         lvOrderDetail.setHasMoreData(true);
         lvOrderDetail.getRefreshableView().setDivider(null);
+        lvOrderDetail.getRefreshableView().setDividerHeight(20);
         lvOrderDetail.getRefreshableView().setVerticalScrollBarEnabled(false);
         lvOrderDetail.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
         lvOrderDetail.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
