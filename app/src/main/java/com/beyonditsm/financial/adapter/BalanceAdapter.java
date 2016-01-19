@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.entity.BalanceEntity;
+import com.beyonditsm.financial.util.FinancialUtil;
 
 import java.util.List;
 
@@ -57,6 +58,10 @@ public class BalanceAdapter extends BaseAdapter {
         }else{
             holder = (ViewHolder) convertView.getTag();
         }
+        BalanceEntity.RowsEntity rowsEntity = list.get(position);
+        holder.name.setText(rowsEntity.getBusinessSubject());
+        holder.time.setText(FinancialUtil.timeToDate(rowsEntity.getCreateTime()));
+        holder.balance.setText("余额："+String.valueOf(rowsEntity.getDeductionAmount()));
         return convertView;
     }
     class ViewHolder{
