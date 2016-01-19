@@ -229,6 +229,7 @@ public class InterestDeduction extends BaseActivity {
 
                                 @Override
                                 public void onError(int status, String msg) {
+                                    Toast.makeText(InterestDeduction.this,msg,Toast.LENGTH_SHORT).show();
                                     MyLogUtils.degug(orderBean.getUserName()+">"+orderBean.getBankName()+">"+orderBean.getBankCardNo()
                                             +">"+orderBean.getCashOutAmount()+">"+orderBean.getOrderNo()+">"+zjPassword.getText().toString());
 
@@ -238,7 +239,7 @@ public class InterestDeduction extends BaseActivity {
                             Toast.makeText(InterestDeduction.this, "请检查您的输入是否有误", Toast.LENGTH_SHORT).show();
                         }
                     }else {
-                        Toast.makeText(InterestDeduction.this,"您的抵扣券没有这么多哦",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(InterestDeduction.this,"您的抵扣券暂不能抵扣",Toast.LENGTH_SHORT).show();
                         tvlixifen.requestFocus();
                     }
                 break;
