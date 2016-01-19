@@ -38,7 +38,7 @@
                     android:id="@+id/tv_DikouMoney"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="32sp"
+                    android:textSize="24sp"
                     android:textColor="@color/tv_money_color"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="20dp"
