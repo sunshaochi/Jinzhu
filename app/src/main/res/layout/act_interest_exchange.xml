@@ -166,6 +166,8 @@
                             android:layout_width="150dp"
                             android:layout_height="40dp"
                             android:textSize="24sp"
+                            android:maxWidth="150dp"
+                            android:background="@null"
                             android:inputType="number"
                             android:numeric="integer"
                             android:cursorVisible="true"
@@ -179,22 +181,23 @@
                         android:layout_height="wrap_content"
                         android:textSize="24sp"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginLeft="5dp"
                         android:text="="/>
                     <TextView
                         android:id="@+id/tvlixixianjin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="24sp"
+                        android:textSize="14sp"
+                        android:singleLine="true"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginLeft="5dp"
                         />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="5dp"
                         android:text="元"/>
                 </LinearLayout>
                 <View

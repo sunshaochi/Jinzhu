@@ -199,7 +199,7 @@ public class CashExchange extends BaseActivity {
                             Toast.makeText(CashExchange.this, "请检查您的输入是否有误", Toast.LENGTH_SHORT).show();
                         }
                     }else {
-                        Toast.makeText(CashExchange.this,"您的现金券不可兑现",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CashExchange.this,"暂无可兑现的现金券",Toast.LENGTH_SHORT).show();
                         tvxianjinfen.requestFocus();
                     }
 
