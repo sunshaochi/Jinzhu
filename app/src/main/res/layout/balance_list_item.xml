@@ -26,6 +26,7 @@
             android:layout_alignParentRight="true"
             android:text="+100"
             android:textSize="22sp"
+            android:maxLength="10"
             android:textColor="@color/main_color"/>
     </RelativeLayout>
     <RelativeLayout
@@ -47,6 +48,7 @@
             android:layout_alignParentRight="true"
             android:text="余额:200"
             android:textSize="14sp"
-            android:textColor="#333333"/>
+            android:textColor="#333333"
+            android:visibility="gone"/>
     </RelativeLayout>
 </LinearLayout>

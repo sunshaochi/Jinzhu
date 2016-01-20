@@ -45,6 +45,15 @@ public class BalanceEntity {
         private String orderId;
         private String remark;
         private String userId;
+        /**
+         * unCashAmount : 2.4839999999999997E-4
+         * cashAmount : 5.795999999999999E-4
+         * cashTHistoryId : 2c908c6d5259c5be015259c86e7b0001
+         */
+
+        private Double unCashAmount;
+        private Double cashAmount;
+        private String cashTHistoryId;
 
         protected RowsEntity(Parcel in) {
             deductionTHistoryId = in.readString();
@@ -148,6 +157,30 @@ public class BalanceEntity {
             dest.writeString(orderId);
             dest.writeString(remark);
             dest.writeString(userId);
+        }
+
+        public void setUnCashAmount(Double unCashAmount) {
+            this.unCashAmount = unCashAmount;
+        }
+
+        public void setCashAmount(Double cashAmount) {
+            this.cashAmount = cashAmount;
+        }
+
+        public void setCashTHistoryId(String cashTHistoryId) {
+            this.cashTHistoryId = cashTHistoryId;
+        }
+
+        public Double getUnCashAmount() {
+            return unCashAmount;
+        }
+
+        public Double getCashAmount() {
+            return cashAmount;
+        }
+
+        public String getCashTHistoryId() {
+            return cashTHistoryId;
         }
     }
 }
