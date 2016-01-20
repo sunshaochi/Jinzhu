@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.beyonditsm.financial.R;
-import com.beyonditsm.financial.adapter.BalanceAdapter;
+import com.beyonditsm.financial.adapter.RebateAdapter;
 import com.beyonditsm.financial.entity.BalanceEntity;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.http.RequestManager;
@@ -36,7 +36,7 @@ public class RebateFragment extends BaseFragment{
     @ViewInject(R.id.lv)
     private ListView lv;
     //    private List<OrderDealEntity> orderList;
-    private BalanceAdapter balanceAdapter;
+    private RebateAdapter rebateAdapter;
     private int page;
     @Override
     public View initView(LayoutInflater inflater) {
@@ -107,11 +107,11 @@ public class RebateFragment extends BaseFragment{
                     datas.clear();
                 }
                 datas.addAll(list);
-                if (balanceAdapter == null) {
-                    balanceAdapter = new BalanceAdapter(context,datas);
-                    plv.getRefreshableView().setAdapter(balanceAdapter);
+                if (rebateAdapter == null) {
+                    rebateAdapter = new RebateAdapter(context,datas);
+                    plv.getRefreshableView().setAdapter(rebateAdapter);
                 }else{
-                    balanceAdapter.setDatas(datas);
+                    rebateAdapter.setDatas(datas);
                 }
             }
 
