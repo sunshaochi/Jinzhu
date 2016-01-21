@@ -239,7 +239,7 @@ public class InterestDeduction extends BaseActivity {
                             Toast.makeText(InterestDeduction.this, "请检查您的输入是否有误", Toast.LENGTH_SHORT).show();
                         }
                     }else {
-                        Toast.makeText(InterestDeduction.this,"您的抵扣券暂不能抵扣",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(InterestDeduction.this,"暂无可抵扣利息的抵扣券",Toast.LENGTH_SHORT).show();
                         tvlixifen.requestFocus();
                     }
                 break;
