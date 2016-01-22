@@ -107,7 +107,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="6dp"
                         android:layout_gravity="center_vertical"
-                        android:maxLength="18" />
+                        />
                 </LinearLayout>
                 <View
                     android:layout_width="match_parent"
@@ -133,7 +133,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="17dp"
-                        android:maxLength="18" />
+                        />
                 </LinearLayout>
                 <View
                     android:layout_width="match_parent"
