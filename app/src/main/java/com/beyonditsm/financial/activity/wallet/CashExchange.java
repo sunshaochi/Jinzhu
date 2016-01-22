@@ -248,6 +248,10 @@ public class CashExchange extends BaseActivity {
             Toast.makeText(CashExchange.this,"未输入兑换金额",Toast.LENGTH_SHORT).show();
             tvxianjinfen.requestFocus();
             return false;
+        }else if(!TextUtils.isEmpty(tvxianjinfen.getText().toString())&&((Double.parseDouble(tvxianjinfen.getText().toString())==0))){
+            Toast.makeText(CashExchange.this,"输入的兑换金额无效",Toast.LENGTH_SHORT).show();
+            tvxianjinfen.requestFocus();
+            return false;
         }
 
         return true;

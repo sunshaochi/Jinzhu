@@ -304,6 +304,11 @@ public class InterestDeduction extends BaseActivity {
 
             return false;
         }
+        else if(!TextUtils.isEmpty(tvlixixianjin.getText().toString())&&((Double.parseDouble(tvlixixianjin.getText().toString())==0))){
+            Toast.makeText(InterestDeduction.this,"输入的抵扣金额无效",Toast.LENGTH_SHORT).show();
+            tvlixifen.requestFocus();
+            return false;
+        }
         else if(TextUtils.isEmpty(creName.getText().toString())){
             Toast.makeText(InterestDeduction.this,"贷款产品不能为空",Toast.LENGTH_SHORT).show();
             return false;
