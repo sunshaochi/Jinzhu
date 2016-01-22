@@ -289,8 +289,7 @@ public class InterestDeduction extends BaseActivity {
             return false;
         }
         else if(!TextUtils.isEmpty(bankCount.getText().toString())&&(!FinancialUtil.checkBankCard(bankCount.getText().toString()))){
-            Toast.makeText(InterestDeduction.this,"请重新输入银行卡号",Toast.LENGTH_SHORT).show();
-            bankCount.setText("");
+            Toast.makeText(InterestDeduction.this,"请输入正确的银行卡号",Toast.LENGTH_SHORT).show();
             bankCount.requestFocus();
             return false;
         }
