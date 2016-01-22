@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.activity.user;
 
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.AppManager;
@@ -60,6 +64,13 @@ public class RegisterAct extends BaseActivity {
     @ViewInject(R.id.intro)
     private TextView intro;//金蛛条款说明
 
+    @ViewInject(R.id.llYqm)
+    private LinearLayout llYqm;
+    @ViewInject(R.id.rlSlide)
+    private RelativeLayout rlSlide;
+    @ViewInject(R.id.ivSlide)
+    private ImageView ivSlide;
+
     private String phone;
     private String pwd;
     private String yzm;
@@ -71,6 +82,11 @@ public class RegisterAct extends BaseActivity {
     private MyTimerTask myTask;
 
     private GeneralUtils generalUtil;
+
+    private boolean isShowYqm=false;
+
+    private ObjectAnimator  obaDownts;
+    private ObjectAnimator  obaOnts;
 
     private void assignViews() {
         regPhone = (EditText) findViewById(R.id.reg_phone);
@@ -93,9 +109,16 @@ public class RegisterAct extends BaseActivity {
         assignViews();
         setLeftTv("返回");
         generalUtil = new GeneralUtils();
+        obaDownts = ObjectAnimator.ofFloat(ivSlide, "rotation", 0,
+                180);
+        obaDownts.setDuration(100);
+        obaOnts = ObjectAnimator.ofFloat(ivSlide, "rotation", -180,
+                0);
+        obaOnts.setDuration(100);
+
     }
 
-    @OnClick({R.id.reg_yzm_btn, R.id.reg_btn,R.id.intro})
+    @OnClick({R.id.reg_yzm_btn, R.id.reg_btn,R.id.intro,R.id.rlSlide})
     public void todo(View v) {
         switch (v.getId()) {
             //金蛛条款说明
@@ -137,7 +160,7 @@ public class RegisterAct extends BaseActivity {
                     if(cb.isChecked()){
                         UserEntity ue = new UserEntity();
                         ue.setUsername(phone);
-                        ue.setPassword(pwd);
+//                        ue.setPassword(pwd);
                         ue.setCaptcha(yzm);
                         if (!TextUtils.isEmpty(yqm))
                             ue.setReferralCode(yqm);
@@ -146,6 +169,17 @@ public class RegisterAct extends BaseActivity {
                         MyToastUtils.showShortToast(getApplicationContext(),"请首先同意金蛛条款！");
                     }
 
+                }
+                break;
+            case R.id.rlSlide:
+                if(!isShowYqm){
+                    obaDownts.start();
+                    llYqm.setVisibility(View.VISIBLE);
+                    isShowYqm=true;
+                }else{
+                    obaOnts.start();
+                    llYqm.setVisibility(View.GONE);
+                    isShowYqm=false;
                 }
                 break;
         }
@@ -248,11 +282,11 @@ public class RegisterAct extends BaseActivity {
             regYzm.requestFocus();
             return false;
         }
-        if (TextUtils.isEmpty(pwd)) {
-            MyToastUtils.showShortDebugToast(getApplicationContext(), "请输入密码");
-            regPwd.requestFocus();
-            return false;
-        }
+//        if (TextUtils.isEmpty(pwd)) {
+//            MyToastUtils.showShortDebugToast(getApplicationContext(), "请输入密码");
+//            regPwd.requestFocus();
+//            return false;
+//        }
 //        if (TextUtils.isEmpty(pwd2)) {
 //            MyToastUtils.showShortDebugToast(getApplicationContext(), "请再次输入密码");
 //            regPwd2.requestFocus();
