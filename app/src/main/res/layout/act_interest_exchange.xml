@@ -100,12 +100,12 @@
                         android:textColor="#333333"
                         android:layout_gravity="center_vertical"
                         android:textSize="14sp"
-                        android:text="总贷款利息"/>
+                        android:text="剩余贷款利息"/>
                     <TextView
                         android:id="@+id/deductionAll"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="6dp"
                         android:layout_gravity="center_vertical"
                         android:maxLength="18" />
                 </LinearLayout>
@@ -132,7 +132,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="17dp"
                         android:maxLength="18" />
                 </LinearLayout>
                 <View

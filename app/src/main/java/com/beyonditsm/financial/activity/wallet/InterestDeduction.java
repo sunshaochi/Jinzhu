@@ -145,7 +145,7 @@ public class InterestDeduction extends BaseActivity {
                             markVal = 0;
                         }
                         if (markVal > MAX_MARK) {
-                            Toast.makeText(getBaseContext(), "不能超过指定数字", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getBaseContext(), "不能超过最大可抵扣数字", Toast.LENGTH_SHORT).show();
                             double dMAX=Double.valueOf(MAX_MARK);
                             tvlixifen.setText((long)dMAX+"");
                         } else {
@@ -209,13 +209,14 @@ public class InterestDeduction extends BaseActivity {
                         d=-1;
                     }
                 }
-                    if ((d!=0)&&(d!=-1)&&(d <= Double.parseDouble(user.getDeductionTicketAmount()))) {
+                if(orderBeanLixi!=null) {
+                    if ((d != 0) && (d != -1) && (d <= Double.parseDouble(user.getDeductionTicketAmount())) && d <= Double.parseDouble(orderBeanLixi.getDeductibleInterest())) {
 
                         if (orderBean != null && !TextUtils.isEmpty(zjPassword.getText().toString())
                                 && !TextUtils.isEmpty(orderBean.getUserName())
                                 && !TextUtils.isEmpty(orderBean.getBankName())
                                 && !TextUtils.isEmpty(orderBean.getBankCardNo())
-                                && !TextUtils.isEmpty(orderBean.getCashOutAmount()+"")
+                                && !TextUtils.isEmpty(orderBean.getCashOutAmount() + "")
                                 ) {
                             RequestManager.getWalletManager().submitDeductionTOrder(orderBean, zjPassword.getText().toString(), new RequestManager.CallBack() {
                                 @Override
@@ -229,19 +230,41 @@ public class InterestDeduction extends BaseActivity {
 
                                 @Override
                                 public void onError(int status, String msg) {
-                                    Toast.makeText(InterestDeduction.this,msg,Toast.LENGTH_SHORT).show();
-                                    MyLogUtils.degug(orderBean.getUserName()+">"+orderBean.getBankName()+">"+orderBean.getBankCardNo()
-                                            +">"+orderBean.getCashOutAmount()+">"+orderBean.getOrderNo()+">"+zjPassword.getText().toString());
+                                    Toast.makeText(InterestDeduction.this, msg, Toast.LENGTH_SHORT).show();
+                                    MyLogUtils.degug(orderBean.getUserName() + ">" + orderBean.getBankName() + ">" + orderBean.getBankCardNo()
+                                            + ">" + orderBean.getCashOutAmount() + ">" + orderBean.getOrderNo() + ">" + zjPassword.getText().toString());
 
                                 }
                             });
                         } else {
-                            Toast.makeText(InterestDeduction.this, "请检查您的输入是否有误", Toast.LENGTH_SHORT).show();
+                            if (TextUtils.isEmpty(orderBean.getUserName())) {
+                                Toast.makeText(InterestDeduction.this, "请输入您的姓名", Toast.LENGTH_SHORT).show();
+                                name.requestFocus();
+                            }
+                            else if (TextUtils.isEmpty(orderBean.getBankName())) {
+                                Toast.makeText(InterestDeduction.this, "请输入银行名称", Toast.LENGTH_SHORT).show();
+                                bankName.requestFocus();
+                            }
+                            else if (TextUtils.isEmpty(orderBean.getBankCardNo())) {
+                                Toast.makeText(InterestDeduction.this, "请输入银行卡号", Toast.LENGTH_SHORT).show();
+                                bankCount.requestFocus();
+                            }
+                            else if (TextUtils.isEmpty(zjPassword.getText().toString().trim())) {
+                                Toast.makeText(InterestDeduction.this, "请输入资金密码", Toast.LENGTH_SHORT).show();
+                                zjPassword.requestFocus();
+                            }
                         }
-                    }else {
-                        Toast.makeText(InterestDeduction.this,"暂无可抵扣利息的抵扣券",Toast.LENGTH_SHORT).show();
+                    } else {
+                        if(!(d <= Double.parseDouble(orderBeanLixi.getDeductibleInterest()))){
+                            Toast.makeText(InterestDeduction.this,"抵扣利息金额超过最大可抵扣利息",Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(InterestDeduction.this, "未输入抵扣金额或抵扣券暂不可用", Toast.LENGTH_SHORT).show();
+                        }
                         tvlixifen.requestFocus();
                     }
+                }else {
+                    Toast.makeText(InterestDeduction.this,"请查看您的贷款产品及利息",Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.lldiqu:
                 DialogChooseProvince dialogChooseProvince = new DialogChooseProvince(this).builder();

@@ -122,7 +122,7 @@ public class CashExchange extends BaseActivity {
                             markVal = 0;
                         }
                         if (markVal > MAX_MARK) {
-                            Toast.makeText(getBaseContext(), "不能超过指定数字", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getBaseContext(), "不能超过最大可兑换数字", Toast.LENGTH_SHORT).show();
                             double dMAX=Double.valueOf(MAX_MARK);
                             tvxianjinfen.setText((long)dMAX+"");
                         } else {
@@ -196,10 +196,25 @@ public class CashExchange extends BaseActivity {
                                 }
                             });
                         } else {
-                            Toast.makeText(CashExchange.this, "请检查您的输入是否有误", Toast.LENGTH_SHORT).show();
+                            if (TextUtils.isEmpty(orderBean.getUserName())) {
+                                Toast.makeText(CashExchange.this, "请输入您的姓名", Toast.LENGTH_SHORT).show();
+                                name.requestFocus();
+                            }
+                            else if (TextUtils.isEmpty(orderBean.getBankName())) {
+                                Toast.makeText(CashExchange.this, "请输入银行名称", Toast.LENGTH_SHORT).show();
+                                bankName.requestFocus();
+                            }
+                            else if (TextUtils.isEmpty(orderBean.getBankCardNo())) {
+                                Toast.makeText(CashExchange.this, "请输入银行卡号", Toast.LENGTH_SHORT).show();
+                                bankCount.requestFocus();
+                            }
+                            else if (TextUtils.isEmpty(zjPassword.getText().toString().trim())) {
+                                Toast.makeText(CashExchange.this, "请输入资金密码", Toast.LENGTH_SHORT).show();
+                                zjPassword.requestFocus();
+                            }
                         }
                     }else {
-                        Toast.makeText(CashExchange.this,"暂无可兑现的现金券",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CashExchange.this,"未输入兑换金额或暂无可兑现的现金券",Toast.LENGTH_SHORT).show();
                         tvxianjinfen.requestFocus();
                     }
 
