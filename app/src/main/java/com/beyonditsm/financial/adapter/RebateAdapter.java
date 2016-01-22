@@ -61,7 +61,7 @@ public class RebateAdapter extends BaseAdapter {
         BalanceEntity.RowsEntity rowsEntity = list.get(position);
         holder.name.setText(rowsEntity.getBusinessSubject());
         holder.time.setText(FinancialUtil.timeToDate(rowsEntity.getCreateTime()));
-//        holder.balance.setText("余额："+String.valueOf(rowsEntity.getDeductionAmount()));
+        holder.balance.setText("余额："+String.valueOf(rowsEntity.getRemainingSum()));
         if (rowsEntity.getDeductionAmount()>0) {
             holder.pay.setText("+"+rowsEntity.getDeductionAmount());
         }else{

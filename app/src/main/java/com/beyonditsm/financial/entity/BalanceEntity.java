@@ -54,6 +54,12 @@ public class BalanceEntity {
         private Double unCashAmount;
         private Double cashAmount;
         private String cashTHistoryId;
+        /**
+         * remainingSum : 0
+         */
+
+        private Double remainingSum;
+
 
         protected RowsEntity(Parcel in) {
             deductionTHistoryId = in.readString();
@@ -181,6 +187,14 @@ public class BalanceEntity {
 
         public String getCashTHistoryId() {
             return cashTHistoryId;
+        }
+
+        public void setRemainingSum(Double remainingSum) {
+            this.remainingSum = remainingSum;
+        }
+
+        public Double getRemainingSum() {
+            return remainingSum;
         }
     }
 }

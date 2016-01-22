@@ -48,9 +48,9 @@ public class CouponsFragment extends BaseFragment{
     @Override
     public void initData(Bundle savedInstanceState) {
         page=1;
-        findOrderDealHisory();
+
         plv.setPullRefreshEnabled(true);
-        plv.setScrollLoadEnabled(false);
+        plv.setScrollLoadEnabled(true);
         plv.setPullLoadEnabled(false);
         plv.setHasMoreData(true);
         plv.getRefreshableView().setDivider(null);
@@ -58,7 +58,7 @@ public class CouponsFragment extends BaseFragment{
         plv.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
         plv.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
 
-
+        findOrderDealHisory();
     }
 
     @Override
@@ -91,9 +91,9 @@ public class CouponsFragment extends BaseFragment{
         RequestManager.getWalletManager().findCashHistory(page, rows, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
+                loadingView.loadComplete();
                 plv.onPullDownRefreshComplete();
                 plv.onPullUpRefreshComplete();
-                loadingView.loadComplete();
                 ResultData<BalanceEntity> rd = (ResultData<BalanceEntity>) GsonUtils.json(result, BalanceEntity.class);
                 BalanceEntity balanceEntity = rd.getData();
                 List<BalanceEntity.RowsEntity> list = balanceEntity.getRows();
