@@ -19,6 +19,7 @@ import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.entity.OrderBean;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.widget.DialogChooseProvince;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -246,7 +247,11 @@ public class CashExchange extends BaseActivity {
             orderBean.setBankName(bankName.getText().toString());
         }
         if(!TextUtils.isEmpty(bankCount.getText().toString())){
-            orderBean.setBankCardNo(bankCount.getText().toString());
+            if(FinancialUtil.checkBankCard(bankCount.getText().toString())) {
+                orderBean.setBankCardNo(bankCount.getText().toString());
+            }else {
+                bankCount.setText("");
+            }
         }
         if(!TextUtils.isEmpty(tvgetxianjin.getText().toString())){
             orderBean.setCashOutAmount(Double.parseDouble(tvgetxianjin.getText().toString()));

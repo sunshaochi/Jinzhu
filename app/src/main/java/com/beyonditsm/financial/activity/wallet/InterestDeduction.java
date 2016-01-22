@@ -21,6 +21,7 @@ import com.beyonditsm.financial.entity.TaskEntity;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.entity.UserLoginEntity;
 import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
@@ -298,7 +299,11 @@ public class InterestDeduction extends BaseActivity {
             orderBean.setBankName(bankName.getText().toString());
         }
         if(!TextUtils.isEmpty(bankCount.getText().toString())){
-            orderBean.setBankCardNo(bankCount.getText().toString());
+            if(FinancialUtil.checkBankCard(bankCount.getText().toString())) {
+                orderBean.setBankCardNo(bankCount.getText().toString());
+            }else {
+                bankCount.setText("");
+            }
         }
         if(!TextUtils.isEmpty(tvlixixianjin.getText().toString())){
             orderBean.setCashOutAmount(Double.parseDouble(tvlixixianjin.getText().toString()));

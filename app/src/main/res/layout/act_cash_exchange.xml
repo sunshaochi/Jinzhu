@@ -175,6 +175,8 @@
             <EditText
                 android:id="@+id/bankCount"
                 style="@style/cre_et"
+                android:inputType="number"
+                android:numeric="integer"
                 android:layout_marginLeft="15dp"
                 android:hint="请输入银行卡号"
                 android:maxLength="19" />
