@@ -70,7 +70,7 @@ public class CommManager extends RequestManager {
     public void toRegister(UserEntity ue, String phoneNumber, String captcha, CallBack callBack) {
         List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
         queryParams.add(new BasicNameValuePair("username", ue.getUsername()));
-        queryParams.add(new BasicNameValuePair("password", ue.getPassword()));
+//        queryParams.add(new BasicNameValuePair("password", ue.getPassword()));
         queryParams.add(new BasicNameValuePair("phoneNumber", phoneNumber));
         queryParams.add(new BasicNameValuePair("captcha", captcha));
         if (!TextUtils.isEmpty(ue.getReferralCode())) {
