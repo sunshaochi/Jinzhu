@@ -161,23 +161,9 @@ public class CashExchange extends BaseActivity {
         Intent intent=null;
         switch (v.getId()){
             case R.id.btn_ok:
-                setOrderBean();
-                double d=0.0;
-                if(tvxianjinfen.getText().toString().trim().length()==0){
-                    d=-1;
-                }else {
-                    d=Double.parseDouble(tvxianjinfen.getText().toString());
-                    if(d==0){
-                        d=-1;
-                    }
-                }
-                    if ((d!=0)&&(d!=-1)&&(d<=Double.parseDouble(user.getCashTicketAmount()))) {
-                        if (orderBean != null
-                                && !TextUtils.isEmpty(zjPassword.getText().toString())
-                                && !TextUtils.isEmpty(orderBean.getUserName())
-                                && !TextUtils.isEmpty(orderBean.getBankName())
-                                && !TextUtils.isEmpty(orderBean.getBankCardNo())
-                                && !TextUtils.isEmpty(orderBean.getCashOutAmount()+"")) {
+                if(isValidate()){
+                    setOrderBean();
+                        if(!TextUtils.isEmpty(zjPassword.getText().toString().trim())){
                             RequestManager.getWalletManager().submitCashTOrder(orderBean, zjPassword.getText().toString(), new RequestManager.CallBack() {
                                 @Override
                                 public void onSucess(String result) throws JSONException {
@@ -193,32 +179,14 @@ public class CashExchange extends BaseActivity {
                                     Toast.makeText(CashExchange.this,msg,Toast.LENGTH_SHORT).show();
                                     MyLogUtils.degug(msg);
                                     MyLogUtils.degug(orderBean.getUserName()+">"+orderBean.getBankName()+">"+orderBean.getBankCardNo()
-                                    +">"+orderBean.getCashOutAmount()+">"+zjPassword.getText().toString());
+                                            +">"+orderBean.getCashOutAmount()+">"+zjPassword.getText().toString());
                                 }
                             });
-                        } else {
-                            if (TextUtils.isEmpty(orderBean.getUserName())) {
-                                Toast.makeText(CashExchange.this, "请输入您的姓名", Toast.LENGTH_SHORT).show();
-                                name.requestFocus();
-                            }
-                            else if (TextUtils.isEmpty(orderBean.getBankName())) {
-                                Toast.makeText(CashExchange.this, "请输入银行名称", Toast.LENGTH_SHORT).show();
-                                bankName.requestFocus();
-                            }
-                            else if (TextUtils.isEmpty(orderBean.getBankCardNo())) {
-                                Toast.makeText(CashExchange.this, "请输入银行卡号", Toast.LENGTH_SHORT).show();
-                                bankCount.requestFocus();
-                            }
-                            else if (TextUtils.isEmpty(zjPassword.getText().toString().trim())) {
-                                Toast.makeText(CashExchange.this, "请输入资金密码", Toast.LENGTH_SHORT).show();
-                                zjPassword.requestFocus();
-                            }
+                        }else {
+                            Toast.makeText(CashExchange.this,"请输入资金密码",Toast.LENGTH_SHORT).show();
+                            zjPassword.requestFocus();
                         }
-                    }else {
-                        Toast.makeText(CashExchange.this,"未输入兑换金额或暂无可兑现的现金券",Toast.LENGTH_SHORT).show();
-                        tvxianjinfen.requestFocus();
-                    }
-
+                }
                 break;
             case R.id.lldiqu:
                 DialogChooseProvince dialogChooseProvince = new DialogChooseProvince(this).builder();
@@ -247,14 +215,42 @@ public class CashExchange extends BaseActivity {
             orderBean.setBankName(bankName.getText().toString());
         }
         if(!TextUtils.isEmpty(bankCount.getText().toString())){
-            if(FinancialUtil.checkBankCard(bankCount.getText().toString())) {
-                orderBean.setBankCardNo(bankCount.getText().toString());
-            }else {
-                bankCount.setText("");
-            }
+            orderBean.setBankCardNo(bankCount.getText().toString());
+
         }
         if(!TextUtils.isEmpty(tvgetxianjin.getText().toString())){
             orderBean.setCashOutAmount(Double.parseDouble(tvgetxianjin.getText().toString()));
         }
+    }
+
+    private boolean isValidate(){
+        if(TextUtils.isEmpty(name.getText().toString())){
+            Toast.makeText(CashExchange.this, "请输入您的姓名", Toast.LENGTH_SHORT).show();
+            name.requestFocus();
+            return false;
+        }
+        else if(TextUtils.isEmpty(bankName.getText().toString())){
+            Toast.makeText(CashExchange.this, "请输入银行名称", Toast.LENGTH_SHORT).show();
+            bankName.requestFocus();
+            return false;
+        }
+        else if(TextUtils.isEmpty(bankCount.getText().toString())){
+            Toast.makeText(CashExchange.this, "请输入银行卡号", Toast.LENGTH_SHORT).show();
+            bankCount.requestFocus();
+            return false;
+        }
+        else if(!TextUtils.isEmpty(bankCount.getText().toString())&&(!FinancialUtil.checkBankCard(bankCount.getText().toString()))){
+            Toast.makeText(CashExchange.this,"请重新输入银行卡号",Toast.LENGTH_SHORT).show();
+            bankCount.setText("");
+            bankCount.requestFocus();
+            return false;
+        }
+        else if(TextUtils.isEmpty(tvgetxianjin.getText().toString())){
+            Toast.makeText(CashExchange.this,"未输入兑换金额",Toast.LENGTH_SHORT).show();
+            tvxianjinfen.requestFocus();
+            return false;
+        }
+
+        return true;
     }
 }

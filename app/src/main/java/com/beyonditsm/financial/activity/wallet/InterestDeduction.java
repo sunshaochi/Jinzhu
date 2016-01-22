@@ -116,12 +116,12 @@ public class InterestDeduction extends BaseActivity {
                         double num = Double.parseDouble(s.toString());
                         if (num > MAX_MARK) {
                             s = String.valueOf(MAX_MARK);
-                            double dMAX=Double.valueOf(s.toString());
+                            double dMAX = Double.valueOf(s.toString());
                             tvlixifen.setText((long) dMAX + "");
                         } else if (num < MIN_MARK) {
                             s = String.valueOf(MIN_MARK);
-                            double dMIN=Double.valueOf(s.toString());
-                            tvlixifen.setText((long)dMIN+"");
+                            double dMIN = Double.valueOf(s.toString());
+                            tvlixifen.setText((long) dMIN + "");
                         } else {
                             if (s.toString().trim().length() == 0) {
                                 tvlixixianjin.setText("");
@@ -147,8 +147,8 @@ public class InterestDeduction extends BaseActivity {
                         }
                         if (markVal > MAX_MARK) {
                             Toast.makeText(getBaseContext(), "不能超过最大可抵扣数字", Toast.LENGTH_SHORT).show();
-                            double dMAX=Double.valueOf(MAX_MARK);
-                            tvlixifen.setText((long)dMAX+"");
+                            double dMAX = Double.valueOf(MAX_MARK);
+                            tvlixifen.setText((long) dMAX + "");
                         } else {
                             if (s.toString().trim().length() == 0) {
                                 tvlixixianjin.setText("");
@@ -200,25 +200,9 @@ public class InterestDeduction extends BaseActivity {
                 break;
             //确认
             case R.id.btn_ok:
-                setOrderBean();
-                double d=0.0;
-                if(tvlixifen.getText().toString().trim().length()==0){
-                    d=-1;
-                }else {
-                    d=Double.parseDouble(tvlixifen.getText().toString());
-                    if(d==0){
-                        d=-1;
-                    }
-                }
-                if(orderBeanLixi!=null) {
-                    if ((d != 0) && (d != -1) && (d <= Double.parseDouble(user.getDeductionTicketAmount())) && d <= Double.parseDouble(orderBeanLixi.getDeductibleInterest())) {
-
-                        if (orderBean != null && !TextUtils.isEmpty(zjPassword.getText().toString())
-                                && !TextUtils.isEmpty(orderBean.getUserName())
-                                && !TextUtils.isEmpty(orderBean.getBankName())
-                                && !TextUtils.isEmpty(orderBean.getBankCardNo())
-                                && !TextUtils.isEmpty(orderBean.getCashOutAmount() + "")
-                                ) {
+                if(isValidate()){
+                    setOrderBean();
+                        if (!TextUtils.isEmpty(zjPassword.getText().toString().trim())) {
                             RequestManager.getWalletManager().submitDeductionTOrder(orderBean, zjPassword.getText().toString(), new RequestManager.CallBack() {
                                 @Override
                                 public void onSucess(String result) throws JSONException {
@@ -238,33 +222,10 @@ public class InterestDeduction extends BaseActivity {
                                 }
                             });
                         } else {
-                            if (TextUtils.isEmpty(orderBean.getUserName())) {
-                                Toast.makeText(InterestDeduction.this, "请输入您的姓名", Toast.LENGTH_SHORT).show();
-                                name.requestFocus();
-                            }
-                            else if (TextUtils.isEmpty(orderBean.getBankName())) {
-                                Toast.makeText(InterestDeduction.this, "请输入银行名称", Toast.LENGTH_SHORT).show();
-                                bankName.requestFocus();
-                            }
-                            else if (TextUtils.isEmpty(orderBean.getBankCardNo())) {
-                                Toast.makeText(InterestDeduction.this, "请输入银行卡号", Toast.LENGTH_SHORT).show();
-                                bankCount.requestFocus();
-                            }
-                            else if (TextUtils.isEmpty(zjPassword.getText().toString().trim())) {
-                                Toast.makeText(InterestDeduction.this, "请输入资金密码", Toast.LENGTH_SHORT).show();
-                                zjPassword.requestFocus();
-                            }
+                            Toast.makeText(InterestDeduction.this, "请输入资金密码", Toast.LENGTH_SHORT).show();
+                            zjPassword.requestFocus();
                         }
-                    } else {
-                        if(!(d <= Double.parseDouble(orderBeanLixi.getDeductibleInterest()))){
-                            Toast.makeText(InterestDeduction.this,"抵扣利息金额超过最大可抵扣利息",Toast.LENGTH_SHORT).show();
-                        }else {
-                            Toast.makeText(InterestDeduction.this, "未输入抵扣金额或抵扣券暂不可用", Toast.LENGTH_SHORT).show();
-                        }
-                        tvlixifen.requestFocus();
-                    }
-                }else {
-                    Toast.makeText(InterestDeduction.this,"请查看您的贷款产品及利息",Toast.LENGTH_SHORT).show();
+
                 }
                 break;
             case R.id.lldiqu:
@@ -303,6 +264,8 @@ public class InterestDeduction extends BaseActivity {
                 orderBean.setBankCardNo(bankCount.getText().toString());
             }else {
                 bankCount.setText("");
+                Toast.makeText(InterestDeduction.this,"请输入正确的银行卡号",Toast.LENGTH_SHORT).show();
+                bankCount.requestFocus();
             }
         }
         if(!TextUtils.isEmpty(tvlixixianjin.getText().toString())){
@@ -312,6 +275,53 @@ public class InterestDeduction extends BaseActivity {
             orderBean.setOrderNo(creName.getText().toString());
             orderBean.setOrderId(list.get(position).getOrderId());
         }
+    }
+
+    private boolean isValidate(){
+        if(TextUtils.isEmpty(name.getText().toString())){
+            Toast.makeText(InterestDeduction.this, "请输入您的姓名", Toast.LENGTH_SHORT).show();
+            name.requestFocus();
+            return false;
+        }
+        else if(TextUtils.isEmpty(bankName.getText().toString())){
+            Toast.makeText(InterestDeduction.this, "请输入银行名称", Toast.LENGTH_SHORT).show();
+            bankName.requestFocus();
+            return false;
+        }
+        else if(!TextUtils.isEmpty(bankCount.getText().toString())&&(!FinancialUtil.checkBankCard(bankCount.getText().toString()))){
+            Toast.makeText(InterestDeduction.this,"请重新输入银行卡号",Toast.LENGTH_SHORT).show();
+            bankCount.setText("");
+            bankCount.requestFocus();
+            return false;
+        }
+        else if(TextUtils.isEmpty(bankCount.getText().toString())){
+            Toast.makeText(InterestDeduction.this, "请输入银行卡号", Toast.LENGTH_SHORT).show();
+            bankCount.requestFocus();
+            return false;
+        }
+        else if(TextUtils.isEmpty(tvlixixianjin.getText().toString())){
+            Toast.makeText(InterestDeduction.this, "未输入抵扣金额", Toast.LENGTH_SHORT).show();
+            tvlixifen.requestFocus();
+
+            return false;
+        }
+        else if(TextUtils.isEmpty(creName.getText().toString())){
+            Toast.makeText(InterestDeduction.this,"贷款产品不能为空",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if(!TextUtils.isEmpty(tvlixixianjin.getText().toString())&&orderBeanLixi==null){
+            Toast.makeText(InterestDeduction.this, "请查看贷款产品及利息相关信息", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if(!TextUtils.isEmpty(tvlixixianjin.getText().toString())&&orderBeanLixi!=null){
+            if (!(Double.parseDouble(tvlixifen.getText().toString()) <= Double.parseDouble(orderBeanLixi.getDeductibleInterest()))) {
+                Toast.makeText(InterestDeduction.this, "抵扣利息金额超过最大可抵扣利息", Toast.LENGTH_SHORT).show();
+                tvlixifen.setText("");
+                tvlixifen.requestFocus();
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
