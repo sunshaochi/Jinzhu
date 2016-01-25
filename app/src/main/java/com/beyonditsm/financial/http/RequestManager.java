@@ -142,7 +142,7 @@ public class RequestManager {
     }
 
     public  void doGet(String url, List<NameValuePair> queryParams, final CallBack callback){
-        HttpUtils httpUtils = new HttpUtils();
+        final HttpUtils httpUtils = new HttpUtils();
         httpUtils.configCurrentHttpCacheExpiry(0);
         MyLogUtils.info("地址:" + url);
         MyLogUtils.degug("cookie:" + SpUtils.getCookie(MyApplication.getInstance()));
@@ -161,7 +161,8 @@ public class RequestManager {
         httpUtils.send(HttpRequest.HttpMethod.GET, url, params, new RequestCallBack() {
             @Override
             public void onSuccess(ResponseInfo responseInfo) {
-
+                if(!TextUtils.isEmpty(getCoolie(httpUtils)))
+                    SpUtils.setCooike(MyApplication.getInstance(),getCoolie(httpUtils));
                 String result=responseInfo.result.toString();
                 MyLogUtils.info(result);
                 try {
@@ -332,14 +333,15 @@ public class RequestManager {
      * @param fileMaps
      * @param callBack
      */
-    public void submitFujian(final String url ,final String orderNo,final Map<String, List<FileBody>> fileMaps,final CallBack callBack){
+    public void submitFujian(final String url ,final String orderNo,final String isSupplementFile,final Map<String, List<FileBody>> fileMaps,final CallBack callBack){
         final HttpManager manager=new HttpManager();
         final  Map<String, String> par=new HashMap<String,String>();
-        MyLogUtils.info("地址："+url);
+        MyLogUtils.info("地址：" + url);
         par.put("type","img");
         par.put("uploadLableName","file");
         if(orderNo!=null)
         par.put("orderNo",orderNo);
+        par.put("isSupplementFile",isSupplementFile);
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... params) {

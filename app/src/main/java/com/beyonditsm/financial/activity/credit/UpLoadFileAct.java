@@ -129,7 +129,7 @@ public class UpLoadFileAct extends BaseActivity {
         }
         fileMaps.put("myfiles",lists);
 
-        RequestManager.getCommManager().submitFujian(null, fileMaps, new RequestManager.CallBack() {
+        RequestManager.getCommManager().submitFujian(null,"0",fileMaps, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
                 try {

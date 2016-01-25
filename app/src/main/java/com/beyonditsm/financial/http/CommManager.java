@@ -404,8 +404,8 @@ public class CommManager extends RequestManager {
      * @param fileMaps
      * @param callBack
      */
-    public void submitFujian(String orderNo, Map<String, List<FileBody>> fileMaps, CallBack callBack) {
-        submitFujian(IFinancialUrl.SUBMIT_FUJIAN_URL, orderNo, fileMaps, callBack);
+    public void submitFujian(String orderNo,String isSupplementFile,Map<String, List<FileBody>> fileMaps, CallBack callBack) {
+        submitFujian(IFinancialUrl.SUBMIT_FUJIAN_URL, orderNo,isSupplementFile, fileMaps, callBack);
     }
 
     /**
