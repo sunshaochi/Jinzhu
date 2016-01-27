@@ -78,7 +78,7 @@
                 android:textSize="15sp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="30dp"
-                android:text="现金券"/>
+                android:text="现金券(元)"/>
             <LinearLayout
                 android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
@@ -149,7 +149,7 @@
                 android:textSize="15sp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="30dp"
-                android:text="抵扣券"/>
+                android:text="抵扣券(元)"/>
             <TextView
                 android:id="@+id/tv_DikouMoney"
                 android:layout_width="wrap_content"

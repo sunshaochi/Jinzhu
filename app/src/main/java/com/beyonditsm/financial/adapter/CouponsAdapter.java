@@ -63,7 +63,7 @@ public class CouponsAdapter extends BaseAdapter {
         BalanceEntity.RowsEntity rowsEntity = list.get(position);
         holder.name.setText(rowsEntity.getBusinessSubject());
         holder.time.setText(FinancialUtil.timeToDate(rowsEntity.getCreateTime()));
-        holder.balance.setText("余额："+String.valueOf(rowsEntity.getRemainingSum()));
+        holder.balance.setText("余额："+rowsEntity.getRemainingSum().intValue());
 //        BigDecimal bigDecimal = new BigDecimal(String.valueOf(rowsEntity.getCashAmount()));
 //        BigDecimal one = BigDecimal.ONE;
 //        MathContext mc = new MathContext(2);
@@ -74,9 +74,9 @@ public class CouponsAdapter extends BaseAdapter {
 //            holder.pay.setText(divide+"");
 //        }
         if (rowsEntity.getCashAmount()>0) {
-            holder.pay.setText("+"+rowsEntity.getCashAmount());
+            holder.pay.setText("+"+rowsEntity.getCashAmount().intValue());
         }else{
-            holder.pay.setText(rowsEntity.getCashAmount()+"");
+            holder.pay.setText(rowsEntity.getCashAmount().intValue()+"");
         }
         return convertView;
     }

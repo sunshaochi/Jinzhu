@@ -61,11 +61,11 @@ public class RebateAdapter extends BaseAdapter {
         BalanceEntity.RowsEntity rowsEntity = list.get(position);
         holder.name.setText(rowsEntity.getBusinessSubject());
         holder.time.setText(FinancialUtil.timeToDate(rowsEntity.getCreateTime()));
-        holder.balance.setText("余额："+String.valueOf(rowsEntity.getRemainingSum()));
+        holder.balance.setText("余额："+rowsEntity.getRemainingSum().intValue());
         if (rowsEntity.getDeductionAmount()>0) {
-            holder.pay.setText("+"+rowsEntity.getDeductionAmount());
+            holder.pay.setText("+"+rowsEntity.getDeductionAmount().intValue());
         }else{
-            holder.pay.setText(rowsEntity.getDeductionAmount()+"");
+            holder.pay.setText(rowsEntity.getDeductionAmount().intValue()+"");
         }
         return convertView;
     }

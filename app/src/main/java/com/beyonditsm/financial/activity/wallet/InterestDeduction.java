@@ -127,7 +127,8 @@ public class InterestDeduction extends BaseActivity {
                                 tvlixixianjin.setText("");
                             }
                             if (!TextUtils.isEmpty(tvlixifen.getText().toString().trim())) {
-                                tvlixixianjin.setText(Double.parseDouble(s.toString()) / 100 + "");
+//                                tvlixixianjin.setText(Double.parseDouble(s.toString()) / 100 + "");
+                                tvlixixianjin.setText(Integer.parseInt(s.toString())  + "");
                             }
                         }
                         return;
@@ -154,7 +155,8 @@ public class InterestDeduction extends BaseActivity {
                                 tvlixixianjin.setText("");
                             }
                             if (!TextUtils.isEmpty(tvlixifen.getText().toString().trim())) {
-                                tvlixixianjin.setText(Double.parseDouble(s.toString()) / 100 + "");
+//                                tvlixixianjin.setText(Double.parseDouble(s.toString()) / 100 + "");
+                                tvlixixianjin.setText(Integer.parseInt(s.toString()) + "");
 
                             }
                         }

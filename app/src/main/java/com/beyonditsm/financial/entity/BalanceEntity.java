@@ -132,7 +132,7 @@ public class BalanceEntity {
             return createTime;
         }
 
-        public double getDeductionAmount() {
+        public Double getDeductionAmount() {
             return deductionAmount;
         }
 

@@ -103,7 +103,7 @@ public class CashExchange extends BaseActivity {
                                 tvgetxianjin.setText("");
                             }
                             if (!TextUtils.isEmpty(tvxianjinfen.getText().toString().trim())) {
-                                tvgetxianjin.setText(Double.parseDouble(s.toString()) / 100 + "");
+                                tvgetxianjin.setText(Integer.parseInt(s.toString()) + "");
                             }
                         }
                         return;
@@ -131,7 +131,7 @@ public class CashExchange extends BaseActivity {
                                 tvgetxianjin.setText("");
                             }
                             if (!TextUtils.isEmpty(tvxianjinfen.getText().toString().trim())) {
-                                tvgetxianjin.setText(Double.valueOf(s.toString()) / 100 + "");
+                                tvgetxianjin.setText(Integer.valueOf(s.toString()) + "");
                             }
                         }
                         return;
