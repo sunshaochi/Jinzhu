@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -144,7 +145,7 @@ public class MySelfSheetDialog {
 
 			TextView textView = new TextView(context);
 			textView.setText(strItem);
-			textView.setTextSize(18);
+			textView.setTextSize(14);
 			textView.setGravity(Gravity.CENTER);
 
 			// 背景图片
