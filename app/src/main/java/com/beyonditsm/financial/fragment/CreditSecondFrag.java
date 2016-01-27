@@ -27,6 +27,7 @@ import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.credit.CreditDetailAct;
 import com.beyonditsm.financial.activity.credit.CreditStepAct;
 import com.beyonditsm.financial.activity.credit.UpLoadFileAct;
+import com.beyonditsm.financial.activity.photo.PicSelectActivity;
 import com.beyonditsm.financial.activity.user.DoTaskPicture;
 import com.beyonditsm.financial.activity.user.DoTaskPlaceAct;
 import com.beyonditsm.financial.activity.user.FinishTaskPicture;
@@ -1102,7 +1103,7 @@ public class CreditSecondFrag extends BaseFragment {
     public class MyReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-//            orderNo = intent.getStringExtra(PicSelectActivity.IMAGES);
+            orderNo = intent.getStringExtra(PicSelectActivity.IMAGES);
         }
     }
 
@@ -1112,6 +1113,7 @@ public class CreditSecondFrag extends BaseFragment {
      */
     private void toSubmitOrder() {
         OrderBean orderBean = new OrderBean();
+//        MyLogUtils.info("order_no:"+orderNo);
         if(!TextUtils.isEmpty(orderNo))
             orderBean.setOrderNo(orderNo);
         orderBean.setProductId(productInfo.getProductId());
