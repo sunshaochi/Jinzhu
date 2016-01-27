@@ -99,7 +99,7 @@ public class TiJiaoFuJianAct extends BaseActivity {
             lists.add(fb);
         }
         fileMaps.put("myfiles",lists);
-        RequestManager.getCommManager().submitFujian(orderNo,fileMaps, new RequestManager.CallBack() {
+        RequestManager.getCommManager().submitFujian(orderNo,"1",fileMaps, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
 //                try {

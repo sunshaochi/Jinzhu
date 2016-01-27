@@ -47,7 +47,7 @@ public class GameActivity extends BaseActivity {
         setConfigCallback((WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE));
         String cookie[]=SpUtils.getCookie(this).split("=");
          gUrl= IFinancialUrl.GAME_URL+"?JSESSIONID="+cookie[1].substring(0,cookie[1].length()-1);
-        MyLogUtils.info("cooike:"+cookie[1].substring(0,cookie[1].length()-1));
+        MyLogUtils.info(gUrl);
 
         // 设置可以访问文件
         wvGame.getSettings().setAllowFileAccess(true);

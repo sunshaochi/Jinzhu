@@ -41,7 +41,6 @@
 
         <EditText
             android:id="@+id/findetpwd"
-            android:inputType="textPassword"
             android:maxLength="20"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

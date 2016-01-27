@@ -30,7 +30,6 @@ import com.umeng.socialize.controller.listener.SocializeListeners;
 import com.umeng.socialize.media.QQShareContent;
 import com.umeng.socialize.media.SinaShareContent;
 import com.umeng.socialize.media.UMImage;
-import com.umeng.socialize.sso.QZoneSsoHandler;
 import com.umeng.socialize.sso.UMQQSsoHandler;
 import com.umeng.socialize.sso.UMSsoHandler;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
@@ -64,9 +63,9 @@ public class MyRecommAct extends BaseActivity {
     private String content = "金蛛金服－－圆你土豪梦想";
     private FrAdapter frAdapter;
 
-//    String codeUrl = "http://m.myjinzhu.com/#/tab/home?redirctUrl=/register/";
-    String codeUrl = "http://www.myjinzhu.com/#/activity/spring-festival";
-
+    String yqUrl = "http://m.myjinzhu.com/#/tab/home?redirctUrl=/register/";
+//    String codeUrl = "http://www.myjinzhu.com/#/activity/spring-festival";
+      String codeUrl="http://m.myjinzhu.com/#/tab/home?redirctUrl=%2Ftab%2Fhome%2Factivity%2Ffestival";
     @Override
     public void setLayout() {
         setContentView(R.layout.activity_myrecomm);
@@ -343,9 +342,9 @@ public class MyRecommAct extends BaseActivity {
                 vh.ll.setVisibility(View.VISIBLE);
                 Bitmap bitmap = null;
                 if (ule != null)
-                    bitmap = FinancialUtil.createQRImage(codeUrl + ule.getMyReferralCode());
+                    bitmap = FinancialUtil.createQRImage(yqUrl + ule.getMyReferralCode());
                 else
-                    bitmap = FinancialUtil.createQRImage(codeUrl);
+                    bitmap = FinancialUtil.createQRImage(yqUrl);
                 vh.iv_ewm.setScaleType(ImageView.ScaleType.FIT_XY);
                 vh.iv_ewm.setImageBitmap(bitmap);
                 if (ule != null)
