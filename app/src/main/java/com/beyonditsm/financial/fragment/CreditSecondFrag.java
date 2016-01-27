@@ -202,7 +202,7 @@ public class CreditSecondFrag extends BaseFragment {
         getDictionaryContent(0,"job_identity");//职业身份
         getDictionaryContent(1,"under_own_car");//名下车产
         getDictionaryContent(2,"under_own_hour");//名下房产
-        getDictionaryContent(3,"ep_credit_conditions");//信用状况
+        getDictionaryContent(3,"two_year_credit");//信用状况
 
         obaDown = ObjectAnimator.ofFloat(ivSlide, "rotation", 0,
                 180);

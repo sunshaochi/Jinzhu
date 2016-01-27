@@ -260,6 +260,7 @@ public class MyRecommAct extends BaseActivity {
         qqContent.setShareContent(content);
 //        qqContent.setShareContent(content+codeUrl+ule.getMyReferralCode());
 //        qqContent.setTargetUrl(codeUrl + ule.getMyReferralCode());
+//        qqContent.setAppWebSite(codeUrl);
         qqContent.setTargetUrl(codeUrl);
         qqContent.setShareImage(new UMImage(MyRecommAct.this, R.mipmap.logo));
 

@@ -43,8 +43,8 @@
         android:background="@drawable/my_self_single_selector"
         android:gravity="center"
         android:text="取消"
-        android:textColor="@color/tv_gray"
-        android:textSize="18sp"
+        android:textColor="@color/blue_color"
+        android:textSize="16sp"
         />
 
 </LinearLayout>
