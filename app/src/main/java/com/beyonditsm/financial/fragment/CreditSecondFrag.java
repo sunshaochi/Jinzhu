@@ -131,6 +131,8 @@ public class CreditSecondFrag extends BaseFragment {
     @ViewInject(R.id.loadView)
     private LoadingView loadView;
     private AddressUtil addressUtil;
+    private Button commit_report;
+    private Button commit_idCard;
 
 
     private void assignViews() {
@@ -167,6 +169,8 @@ public class CreditSecondFrag extends BaseFragment {
         tvts = (TextView) view.findViewById(R.id.ts);
         secondBtnNext = (Button) view.findViewById(R.id.second_btn_next);
         commit_file = (Button) view.findViewById(R.id.commit_file);
+        commit_report = (Button) view.findViewById(R.id.commit_report);
+        commit_idCard = (Button) view.findViewById(R.id.commit_idCard);
     }
 
     @ViewInject(R.id.zz_ll)
@@ -444,8 +448,10 @@ public class CreditSecondFrag extends BaseFragment {
     }
 
     @OnClick({R.id.second_btn_next, R.id.zz_tv, R.id.rlNative, R.id.rl_marrayed, R.id.rl_sb, R.id.rl_gjj, R.id.rl_work
-            , R.id.rl_home, R.id.rl_car, R.id.rl_xy, R.id.rlAddress, R.id.rlPosition, R.id.ts_tv, R.id.commit_file})
+            , R.id.rl_home, R.id.rl_car, R.id.rl_xy, R.id.rlAddress, R.id.rlPosition, R.id.ts_tv, R.id.commit_file,R.id.commit_idCard})
+//    R.id.commit_report,R.id.commit_idCard
     public void todo(View v) {
+        Intent intent = null;
         switch (v.getId()) {
             case R.id.second_btn_next://下一步
 //                toSubmitOrder();
@@ -759,7 +765,20 @@ public class CreditSecondFrag extends BaseFragment {
                 dialog.show();
                 break;
             case R.id.commit_file:
-                Intent intent = new Intent(context, UpLoadFileAct.class);
+                intent = new Intent(context, UpLoadFileAct.class);
+                intent.putExtra("isSupplementFile","0");
+                getActivity().startActivity(intent);
+                break;
+            case R.id.commit_report:
+//                intent = new Intent(context,UpLoadFileAct.class);
+//                intent.putExtra("isSupplementFile","1");
+//                intent.putExtra("type","report");
+//                getActivity().startActivity(intent);
+                break;
+            case R.id.commit_idCard:
+                intent = new Intent(context,UpLoadFileAct.class);
+                intent.putExtra("isSupplementFile","idCard");
+//                intent.putExtra("type","card");
                 getActivity().startActivity(intent);
                 break;
         }

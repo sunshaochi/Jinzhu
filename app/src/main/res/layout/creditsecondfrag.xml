@@ -530,13 +530,32 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/commit_report"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_gen"
+                android:text="上传征信报告照片"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:visibility="gone"/>
+            <Button
+                android:id="@+id/commit_idCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/button_gen"
+                android:text="上传身份证照片"
+                android:textColor="@color/white"
+                android:textSize="16sp"/>
+            <Button
                 android:id="@+id/commit_file"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:layout_marginBottom="15dp"
                 android:background="@drawable/button_gen"
-                android:text="上传附件"
+                android:text="上传其他附件照片"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 
