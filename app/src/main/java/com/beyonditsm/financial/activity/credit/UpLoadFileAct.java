@@ -14,6 +14,7 @@ import com.beyonditsm.financial.fragment.CreditSecondFrag;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.widget.FinalLoadDialog;
 import com.leaf.library.widget.MyGridView;
 import com.lidroid.xutils.http.client.multipart.content.FileBody;
 import com.lidroid.xutils.util.LogUtils;
@@ -46,6 +47,8 @@ public class UpLoadFileAct extends BaseActivity {
     private String uploadStr = null;
     private String orderNo = null;
 
+    private FinalLoadDialog dialog;
+
     @Override
     public void setLayout() {
         setContentView(R.layout.uploadfile);
@@ -55,6 +58,9 @@ public class UpLoadFileAct extends BaseActivity {
     public void init(Bundle savedInstanceState) {
         setTopTitle("上传附件");
         setLeftTv("返回");
+        dialog=new FinalLoadDialog(this);
+        dialog.setTitle("上传附件中");
+        dialog.setCancelable(false);
         final String isSupplementFile = getIntent().getStringExtra("isSupplementFile");
         orderNo = getIntent().getStringExtra("orderNo");
         if (orderNo==null){
@@ -140,6 +146,7 @@ public class UpLoadFileAct extends BaseActivity {
      * @param
      */
     private void uploadFile(String isSupplementFile) {
+        dialog.show();
         Map<String, List<FileBody>> fileMaps = new HashMap<String, List<FileBody>>();
         List<FileBody> lists = new ArrayList<FileBody>();
         for (int i = 0; i < selecteds.size(); i++) {
@@ -151,6 +158,7 @@ public class UpLoadFileAct extends BaseActivity {
         RequestManager.getCommManager().submitFujian(orderNo, isSupplementFile, fileMaps, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
+                dialog.cancel();
                 try {
                     JSONObject data = new JSONObject(result);
 
@@ -168,6 +176,7 @@ public class UpLoadFileAct extends BaseActivity {
 
             @Override
             public void onError(int status, String msg) {
+                dialog.cancel();
                 MyLogUtils.info(msg);
                 return;
             }
