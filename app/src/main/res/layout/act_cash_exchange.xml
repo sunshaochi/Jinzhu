@@ -241,7 +241,8 @@
                 android:layout_marginLeft="15dp"
                 android:password="true"
                 android:hint="请输入6位数资金密码"
-                android:maxLength="6" />
+                android:maxLength="6"
+                android:inputType="number"/>
         </LinearLayout>
         <View
             android:layout_width="match_parent"
