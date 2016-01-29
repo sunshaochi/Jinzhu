@@ -491,7 +491,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginTop="10dp"
                         android:drawablePadding="6dp"
-                        android:text="贷款提速"
+                        android:text="所需材料"
                         android:textColor="#446ebc" />
 
                     <ImageView
