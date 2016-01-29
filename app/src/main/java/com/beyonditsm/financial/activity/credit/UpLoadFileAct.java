@@ -45,7 +45,7 @@ public class UpLoadFileAct extends BaseActivity {
     private List<String> imageList = new ArrayList<String>();
     private GvPhotoAdapter adapter;
     private String uploadStr = null;
-    String order =null;
+    private String orderNo = null;
 
     @Override
     public void setLayout() {
@@ -57,6 +57,12 @@ public class UpLoadFileAct extends BaseActivity {
         setTopTitle("上传附件");
         setLeftTv("返回");
         final String isSupplementFile = getIntent().getStringExtra("isSupplementFile");
+        orderNo = getIntent().getStringExtra("orderNo");
+        if (orderNo==null){
+            orderNo=null;
+        }else{
+            orderNo = orderNo;
+        }
         adapter = new GvPhotoAdapter(selecteds, 9, UpLoadFileAct.this);
         gvPhoto.setAdapter(adapter);
         commit_file.setOnClickListener(new View.OnClickListener() {
@@ -143,14 +149,13 @@ public class UpLoadFileAct extends BaseActivity {
         }
         fileMaps.put("myfiles", lists);
 
-        RequestManager.getCommManager().submitFujian(order, isSupplementFile, fileMaps, new RequestManager.CallBack() {
+        RequestManager.getCommManager().submitFujian(orderNo, isSupplementFile, fileMaps, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
                 try {
                     JSONObject data = new JSONObject(result);
 
                     String orderNo = data.optString("orderNo");
-                    order = orderNo;
                     Intent intent = new Intent(CreditSecondFrag.IMAGE);
                     intent.putExtra(PicSelectActivity.IMAGES, orderNo);
                     sendBroadcast(intent);

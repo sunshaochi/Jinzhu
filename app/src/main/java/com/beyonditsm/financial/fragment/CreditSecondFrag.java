@@ -767,6 +767,7 @@ public class CreditSecondFrag extends BaseFragment {
             case R.id.commit_file:
                 intent = new Intent(context, UpLoadFileAct.class);
                 intent.putExtra("isSupplementFile","0");
+                intent.putExtra("orderNo",orderNo);
                 getActivity().startActivity(intent);
                 break;
             case R.id.commit_report:
@@ -778,6 +779,7 @@ public class CreditSecondFrag extends BaseFragment {
             case R.id.commit_idCard:
                 intent = new Intent(context,UpLoadFileAct.class);
                 intent.putExtra("isSupplementFile","idCard");
+                intent.putExtra("orderNo",orderNo);
 //                intent.putExtra("type","card");
                 getActivity().startActivity(intent);
                 break;
