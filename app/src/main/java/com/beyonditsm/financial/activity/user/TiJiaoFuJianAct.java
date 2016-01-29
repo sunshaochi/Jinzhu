@@ -61,9 +61,10 @@ public class TiJiaoFuJianAct extends BaseActivity {
         setTopTitle("提交附件");
         dialog=new FinalLoadDialog(this);
         dialog.setTitle("上传附件中");
+        dialog.setCancelable(false);
         orderNo=getIntent().getStringExtra("orderNo");
         orderId=getIntent().getStringExtra("orderId");
-        adapter=new GvPhotoAdapter(selecteds,9,this);
+        adapter=new GvPhotoAdapter(selecteds,500,this);
         gvPhoto.setAdapter(adapter);
 
     }

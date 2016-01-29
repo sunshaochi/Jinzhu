@@ -14,9 +14,9 @@
         android:text="@string/submit_image"/>
     <GridView
         android:id="@+id/gv_pic"
-        android:layout_width="280dp"
+        android:layout_width="290dp"
         android:layout_height="wrap_content"
-        android:columnWidth="90dp"
+        android:columnWidth="70dp"
         android:layout_marginTop="10dp"
         android:numColumns="3"
         android:verticalSpacing="2.5dp"
