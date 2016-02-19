@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -96,6 +97,8 @@ public class RegisterAct extends BaseActivity {
 //        regPwd2 = (EditText) findViewById(R.id.reg_pwd2);
         regYqm = (EditText) findViewById(R.id.reg_yqm);
         regBtn = (Button) findViewById(R.id.reg_btn);
+        TextView intro = (TextView) findViewById(R.id.intro);
+        intro.setText(Html.fromHtml("<u>"+"《金蛛条款说明》"+"</u>"));
     }
 
     @Override

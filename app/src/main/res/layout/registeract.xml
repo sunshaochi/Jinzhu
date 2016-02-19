@@ -195,7 +195,7 @@
             android:checked="true"
             android:gravity="center_vertical"
             android:paddingStart="4dp"
-            android:text="同意金蛛条款"
+            android:text="同意"
             android:textColor="#333333"
             android:textSize="14sp" />
         <TextView
