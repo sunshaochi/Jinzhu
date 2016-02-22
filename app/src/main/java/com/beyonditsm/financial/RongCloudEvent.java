@@ -11,7 +11,6 @@ import com.beyonditsm.financial.activity.PhotoActivity;
 import com.beyonditsm.financial.db.FriendDao;
 import com.beyonditsm.financial.entity.FriendBean;
 import com.beyonditsm.financial.entity.FriendEntity;
-import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.SpUtils;

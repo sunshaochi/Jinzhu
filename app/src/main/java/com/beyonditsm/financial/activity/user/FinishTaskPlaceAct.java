@@ -1,20 +1,12 @@
 package com.beyonditsm.financial.activity.user;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.entity.TaskEntity;
-import com.beyonditsm.financial.http.RequestManager;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.lidroid.xutils.view.annotation.event.OnClick;
-
-import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;

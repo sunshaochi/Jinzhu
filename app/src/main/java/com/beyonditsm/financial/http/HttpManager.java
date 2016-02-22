@@ -2,6 +2,7 @@ package com.beyonditsm.financial.http;
 
 import com.beyonditsm.financial.ConstantValue;
 import com.beyonditsm.financial.MyApplication;
+import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.lidroid.xutils.http.client.multipart.MultipartEntity;
@@ -40,9 +41,9 @@ public class HttpManager {
 	private static Header[] headers;
 
 	static {
-		headers = new Header[1];
+		headers = new Header[2];
 		headers[0] = new BasicHeader("cookie",SpUtils.getCookie(MyApplication.getInstance()));
-
+		headers[1] = new BasicHeader("User-Agent","Jinzhu Android Client "+ FinancialUtil.getAppVer(MyApplication.getInstance()));
 	}
 
 	public HttpManager() {

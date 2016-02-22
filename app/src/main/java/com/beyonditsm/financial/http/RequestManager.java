@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.text.TextUtils;
 
 import com.beyonditsm.financial.MyApplication;
+import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.lidroid.xutils.HttpUtils;
@@ -109,6 +110,10 @@ public class RequestManager {
 
             }
 
+            if(params==null){
+                params=new RequestParams();
+                params.addHeader("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance()));
+            }
             httpUtils.send(HttpRequest.HttpMethod.POST, url, params, new RequestCallBack() {
                 @Override
                 public void onSuccess(ResponseInfo responseInfo) {
@@ -158,6 +163,10 @@ public class RequestManager {
             }
             params.addBodyParameter(queryParams);
         }
+        if(params==null){
+            params=new RequestParams();
+            params.addHeader("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance()));
+        }
         httpUtils.send(HttpRequest.HttpMethod.GET, url, params, new RequestCallBack() {
             @Override
             public void onSuccess(ResponseInfo responseInfo) {
@@ -203,6 +212,10 @@ public class RequestManager {
                 params = new RequestParams();
             }
             params.addBodyParameter(queryParams);
+        }
+        if(params==null){
+            params=new RequestParams();
+            params.addHeader("User-Agent","Jinzhu Android Client "+ FinancialUtil.getAppVer(MyApplication.getInstance()));
         }
 
         httpUtils.send(HttpRequest.HttpMethod.POST, url, params, new RequestCallBack() {

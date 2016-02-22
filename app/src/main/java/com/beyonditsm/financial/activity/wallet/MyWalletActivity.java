@@ -15,7 +15,6 @@ import com.beyonditsm.financial.entity.UserLoginEntity;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.GsonUtils;
-import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.widget.ScaleAllImageView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
@@ -23,9 +22,6 @@ import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
 import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
 import org.json.JSONException;
-
-import io.rong.imkit.RongIM;
-import io.rong.imlib.model.UserInfo;
 
 /**
  * Created by wangbin on 16/1/14.
@@ -155,11 +151,13 @@ public class MyWalletActivity extends BaseActivity{
     @Override
     protected void onResume() {
         super.onResume();
-        if(ule.getDescription().contains("服务者")){
-            findServantInfo();
-        }
-        if(ule.getDescription().contains("用户")) {
-            getUserInfo();
+        if(ule!=null) {
+            if (ule.getDescription().contains("服务者")) {
+                findServantInfo();
+            }
+            if (ule.getDescription().contains("用户")) {
+                getUserInfo();
+            }
         }
     }
 

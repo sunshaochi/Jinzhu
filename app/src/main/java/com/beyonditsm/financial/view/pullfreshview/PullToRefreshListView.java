@@ -1,8 +1,6 @@
 package com.beyonditsm.financial.view.pullfreshview;
 
 
-import com.beyonditsm.financial.view.pullfreshview.ILoadingLayout.State;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
@@ -10,6 +8,8 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.Adapter;
 import android.widget.ListView;
+
+import com.beyonditsm.financial.view.pullfreshview.ILoadingLayout.State;
 
 /**
  * 这个类实现了ListView下拉刷新，上加载更多和滑到底部自动加载

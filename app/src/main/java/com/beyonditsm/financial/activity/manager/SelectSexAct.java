@@ -7,7 +7,6 @@ import android.widget.RadioGroup;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
-import com.beyonditsm.financial.entity.ServantEntity;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.entity.UserEvent;
 import com.beyonditsm.financial.fragment.MineFragment;
