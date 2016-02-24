@@ -219,6 +219,7 @@ public class ServiceMineFrg extends BaseFragment {
 //                        FriendDao.deleteAllMes();
                         SpUtils.clearSp(getContext());
                         Intent intent = new Intent(getActivity(), LoginAct.class);
+                        intent.putExtra(LoginAct.LOGIN_TYPE,1);
                         getActivity().startActivity(intent);
                         getActivity().finish();
 //                        isLogin = false;

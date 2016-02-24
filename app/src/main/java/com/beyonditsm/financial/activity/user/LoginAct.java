@@ -1,10 +1,12 @@
 package com.beyonditsm.financial.activity.user;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -22,6 +24,7 @@ import com.beyonditsm.financial.activity.servicer.ServiceMainAct;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.fragment.MineFragment;
 import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.AutoAnimImageView;
@@ -56,7 +59,8 @@ public class LoginAct extends BaseActivity{
 
     private String phone, pwd;
 
-
+    public static final String LOGIN_TYPE="login_type";
+    private int LTYPE;
     private void assignViews() {
         rlBack = (RelativeLayout) findViewById(R.id.rl_back);
         tvTitle = (TextView) findViewById(R.id.tv_title);
@@ -78,8 +82,15 @@ public class LoginAct extends BaseActivity{
     public void init(Bundle savedInstanceState) {
         setLeftTv("返回");
         setTopTitle("用户登录");
+        LTYPE=getIntent().getIntExtra(LOGIN_TYPE,0);
         AppManager.getAppManager().addActivity(this);
         assignViews();
+        int flag = getIntent().getIntExtra("FLAG", 1);
+        if (flag == 0){
+            login_zc.setVisibility(View.INVISIBLE);
+        }else{
+            login_zc.setVisibility(View.VISIBLE);
+        }
     }
 
     @OnClick({R.id.login_btn, R.id.login_lost_pwd, R.id.tvRight,R.id.login_zc,R.id.rl_back})
@@ -88,6 +99,8 @@ public class LoginAct extends BaseActivity{
             /*登录*/
             case R.id.login_btn:
                 if (isValidate()) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(loginBtn.getWindowToken(), 0);
                     loginBtn.setEnabled(false);
                     progressBar1.setVisibility(View.VISIBLE);
                     UserEntity ue = new UserEntity();
@@ -105,9 +118,28 @@ public class LoginAct extends BaseActivity{
                 gotoActivity(RegisterAct.class, false);
                 break;
             case R.id.rl_back:
-                sendBroadcast(new Intent(MainActivity.UPDATATAB));
-                finish();
+                if(LTYPE==1){
+                    Intent intent=new Intent(LoginAct.this,MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }else {
+                    sendBroadcast(new Intent(MainActivity.UPDATATAB));
+                    finish();
+                }
                 break;
+        }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if(LTYPE==1){
+            Intent intent=new Intent(LoginAct.this,MainActivity.class);
+            startActivity(intent);
+            finish();
+        }else {
+            sendBroadcast(new Intent(MainActivity.UPDATATAB));
+            finish();
         }
     }
 
@@ -142,87 +174,86 @@ public class LoginAct extends BaseActivity{
                     JSONObject datas = objects.getJSONObject("data");
                     String token = datas.optString("rcToken");
 
-                    loginBtn.setEnabled(true);
-                    progressBar1.setVisibility(View.GONE);
-                    if (ConstantValue.STEP == 10) {
-                        sendBroadcast(new Intent(CreditStepAct.UPDATA));
-                        JSONObject jsonObject = null;
-                        try {
-                            jsonObject = new JSONObject(result);
-                            JSONObject data = jsonObject.getJSONObject("data");
-                            String roleName = data.getString("roleName");
-                            String accountId=data.optString("accountAlias");
-                            String agencyIdTag=data.optString("agencyIdTag");
-                            SpUtils.setRoleName(getApplicationContext(), roleName);
-                            SpUtils.setToken(getApplicationContext(), token);
+//                    loginBtn.setEnabled(true);
+//                    progressBar1.setVisibility(View.GONE);
+//                    if (ConstantValue.STEP == 10) {
+//                        sendBroadcast(new Intent(CreditStepAct.UPDATA));
+//                        JSONObject jsonObject = null;
+//                        try {
+//                            jsonObject = new JSONObject(result);
+//                            JSONObject data = jsonObject.getJSONObject("data");
+//                            String roleName = data.getString("roleName");
+//                            String accountId=data.optString("accountAlias");
+//                            String agencyIdTag=data.optString("agencyIdTag");
+//                            SpUtils.setRoleName(getApplicationContext(), roleName);
+//                            SpUtils.setToken(getApplicationContext(), token);
+//
+//                            if(JPushInterface.isPushStopped(getApplicationContext())){
+//                                JPushInterface.resumePush(getApplicationContext());
+//                            }
+//                            Set<String> set=new HashSet<String>();
+//                            if(!TextUtils.isEmpty(agencyIdTag)){
+//                                set.add(agencyIdTag);
+//                            }
+//
+//                            JPushInterface.setAliasAndTags(getApplicationContext(),accountId, set, new TagAliasCallback() {
+//                                @Override
+//                                public void gotResult(int arg0, String arg1, Set<String> arg2) {
+//                                    // TODO Auto-generated method stub
+//
+//                                }
+//                            });
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//
+//                        finish();
+//                        ConstantValue.STEP = 0;
+//                    } else {
+//                        EventBus.getDefault().post(new LoginEvent(1));
+//                        try {
+//                            JSONObject jsonObject = new JSONObject(result);
+//                            JSONObject data = jsonObject.getJSONObject("data");
+//                            String roleName = data.getString("roleName");
+//                            String accountId=data.optString("accountAlias");
+//                            String agencyIdTag=data.optString("agencyIdTag");
+//                            SpUtils.setRoleName(getApplicationContext(), roleName);
+//                            SpUtils.setToken(getApplicationContext(), token);
+//
+//                            if(JPushInterface.isPushStopped(getApplicationContext())){
+//                                JPushInterface.resumePush(getApplicationContext());
+//                            }
+//                            Set<String> set=new HashSet<String>();
+//                            if(!TextUtils.isEmpty(agencyIdTag)){
+//                                set.add(agencyIdTag);
+//                            }
+//                            JPushInterface.setAliasAndTags(getApplicationContext(),accountId, set, new TagAliasCallback() {
+//                                @Override
+//                                public void gotResult(int arg0, String arg1, Set<String> arg2) {
+//                                    // TODO Auto-generated method stub
+//
+//                                }
+//                            });
+//
+//                            if ("ROLE_CREDIT_MANAGER".equals(roleName)) {
+//                                sendBroadcast(new Intent(ManagerMainAct.UPDATATAB));
+//                                gotoActivity(ManagerMainAct.class, true);
+//                            } else if (roleName.equals("ROLE_COMMON_CLIENT")) {
+//                                sendBroadcast(new Intent(MainActivity.UPDATATAB));
+//                                sendBroadcast(new Intent(MineFragment.UPDATE_USER));
+//                                gotoActivity(MainActivity.class, true);
+//                            } else {
+//                                sendBroadcast(new Intent(ServiceMainAct.UPDATATAB));
+//                                gotoActivity(ServiceMainAct.class, true);
+//                            }
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//
+//                    }
 
-                            if(JPushInterface.isPushStopped(getApplicationContext())){
-                                JPushInterface.resumePush(getApplicationContext());
-                            }
-                            Set<String> set=new HashSet<String>();
-                            if(!TextUtils.isEmpty(agencyIdTag)){
-                                set.add(agencyIdTag);
-                            }
 
-                            JPushInterface.setAliasAndTags(getApplicationContext(),accountId, set, new TagAliasCallback() {
-                                @Override
-                                public void gotResult(int arg0, String arg1, Set<String> arg2) {
-                                    // TODO Auto-generated method stub
-
-                                }
-                            });
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        finish();
-                        ConstantValue.STEP = 0;
-                    } else {
-                        EventBus.getDefault().post(new LoginEvent(1));
-                        try {
-                            JSONObject jsonObject = new JSONObject(result);
-                            JSONObject data = jsonObject.getJSONObject("data");
-                            String roleName = data.getString("roleName");
-                            String accountId=data.optString("accountAlias");
-                            String agencyIdTag=data.optString("agencyIdTag");
-                            SpUtils.setRoleName(getApplicationContext(), roleName);
-                            SpUtils.setToken(getApplicationContext(), token);
-
-                            if(JPushInterface.isPushStopped(getApplicationContext())){
-                                JPushInterface.resumePush(getApplicationContext());
-                            }
-                            Set<String> set=new HashSet<String>();
-                            if(!TextUtils.isEmpty(agencyIdTag)){
-                                set.add(agencyIdTag);
-                            }
-                            JPushInterface.setAliasAndTags(getApplicationContext(),accountId, set, new TagAliasCallback() {
-                                @Override
-                                public void gotResult(int arg0, String arg1, Set<String> arg2) {
-                                    // TODO Auto-generated method stub
-
-                                }
-                            });
-
-                            if ("ROLE_CREDIT_MANAGER".equals(roleName)) {
-                                sendBroadcast(new Intent(ManagerMainAct.UPDATATAB));
-                                gotoActivity(ManagerMainAct.class, true);
-                            } else if (roleName.equals("ROLE_COMMON_CLIENT")) {
-                                sendBroadcast(new Intent(MainActivity.UPDATATAB));
-                                sendBroadcast(new Intent(MineFragment.UPDATE_USER));
-                                gotoActivity(MainActivity.class, true);
-                            } else {
-                                sendBroadcast(new Intent(ServiceMainAct.UPDATATAB));
-                                gotoActivity(ServiceMainAct.class, true);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-
-
-
-//                    connect(token,result);
+                    connect(token,result);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
