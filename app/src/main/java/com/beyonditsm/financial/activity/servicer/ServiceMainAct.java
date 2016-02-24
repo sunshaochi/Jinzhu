@@ -288,7 +288,7 @@ public class ServiceMainAct extends BaseActivity{
      * 底部全部切换普通
      */
     private void setAllTabNor() {
-        ivMyWallet.setBackgroundResource(R.mipmap.tab_package_nor);
+        ivMyWallet.setBackgroundResource(R.drawable.tab_home_nor);
         tvMyWallet.setTextColor(Color.parseColor("#666666"));
         ivCredit.setBackgroundResource(R.mipmap.tab_credit_nor);
         tvCredit.setTextColor(Color.parseColor("#666666"));
@@ -405,9 +405,9 @@ public class ServiceMainAct extends BaseActivity{
     }
 
     private void hideFragment(FragmentTransaction transaction) {
-//        if (myWalletfrg != null) {
-//            transaction.hide(myWalletfrg);
-//        }
+        if (myWalletfrg != null) {
+            transaction.hide(myWalletfrg);
+        }
         if (listFragment != null) {
             transaction.hide(listFragment);
         }
@@ -424,10 +424,10 @@ public class ServiceMainAct extends BaseActivity{
 
     private void setCheckItem(int position) {
         switch (position) {
-//            case 0:
-//                ivMyWallet.setBackgroundResource(R.mipmap.tab_package_h);
-//                tvMyWallet.setTextColor(Color.parseColor("#f49626"));
-//                break;
+            case 0:
+                ivMyWallet.setBackgroundResource(R.drawable.tab_home_h);
+                tvMyWallet.setTextColor(Color.parseColor("#f49626"));
+                break;
             case 1:
                 ivMes.setBackgroundResource(R.mipmap.tab_chat_h);
                 tvMes.setTextColor(Color.parseColor("#f49626"));

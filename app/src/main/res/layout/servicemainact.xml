@@ -36,7 +36,7 @@
             <TextView
                 android:id="@+id/tvMyWallet"
                 style="@style/main_btm_tv"
-                android:text="钱包"
+                android:text="首页"
                />
         </LinearLayout>
 
