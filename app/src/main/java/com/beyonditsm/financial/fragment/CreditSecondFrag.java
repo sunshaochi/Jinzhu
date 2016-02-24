@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -48,6 +50,7 @@ import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.AddressUtil;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.IdcardUtils;
+import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.LoadingView;
@@ -133,6 +136,7 @@ public class CreditSecondFrag extends BaseFragment {
     private AddressUtil addressUtil;
     private Button commit_report;
     private Button commit_idCard;
+    private CheckBox cbSelectSex;
 
 
     private void assignViews() {
@@ -171,6 +175,7 @@ public class CreditSecondFrag extends BaseFragment {
         commit_file = (Button) view.findViewById(R.id.commit_file);
         commit_report = (Button) view.findViewById(R.id.commit_report);
         commit_idCard = (Button) view.findViewById(R.id.commit_idCard);
+        cbSelectSex = (CheckBox) view.findViewById(R.id.cb_select_sex);
     }
 
     @ViewInject(R.id.zz_ll)
@@ -253,6 +258,7 @@ public class CreditSecondFrag extends BaseFragment {
                 getData();
             }
         });
+
     }
 
     /**
@@ -421,13 +427,25 @@ public class CreditSecondFrag extends BaseFragment {
 
     @Override
     public void setListener() {
-        tbSex.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
+//        tbSex.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
+//            @Override
+//            public void onToggle(boolean on) {
+//                if (on) {
+//                    user.setUserSex(1);
+//                } else {
+//                    user.setUserSex(0);
+//                }
+//            }
+//        });
+        cbSelectSex.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onToggle(boolean on) {
-                if (on) {
-                    user.setUserSex(1);
-                } else {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
                     user.setUserSex(0);
+                    MyLogUtils.info("选择了女");
+                } else {
+                    user.setUserSex(1);
+                    MyLogUtils.info("选择了男");
                 }
             }
         });
@@ -447,12 +465,15 @@ public class CreditSecondFrag extends BaseFragment {
 //        sexRg.check(R.id.sex_man);
     }
 
-    @OnClick({R.id.second_btn_next, R.id.zz_tv, R.id.rlNative, R.id.rl_marrayed, R.id.rl_sb, R.id.rl_gjj, R.id.rl_work
+    @OnClick({R.id.cb_select_sex,R.id.second_btn_next, R.id.zz_tv, R.id.rlNative, R.id.rl_marrayed, R.id.rl_sb, R.id.rl_gjj, R.id.rl_work
             , R.id.rl_home, R.id.rl_car, R.id.rl_xy, R.id.rlAddress, R.id.rlPosition, R.id.ts_tv, R.id.commit_file,R.id.commit_idCard})
 //    R.id.commit_report,R.id.commit_idCard
     public void todo(View v) {
         Intent intent = null;
         switch (v.getId()) {
+            case R.id.cb_select_sex:
+
+                break;
             case R.id.second_btn_next://下一步
 //                toSubmitOrder();
                 upData();
@@ -844,11 +865,13 @@ public class CreditSecondFrag extends BaseFragment {
                     //判断男女
                     if (user.getUserSex() != null) {
                         if (user.getUserSex() == 1) {
-                            tbSex.setIsSwitch(true);
+                            cbSelectSex.setChecked(false);
+//                            tbSex.setIsSwitch(true);
 //                            sexRg.check(R.id.sex_man);
 //                            sexMan.setTextColor(Color.WHITE);
                         } else if (user.getUserSex() == 0) {
-                            tbSex.setIsSwitch(false);
+                            cbSelectSex.setChecked(true);
+//                            tbSex.setIsSwitch(false);
 //                            sexRg.check(R.id.sex_woman);
 //                            sexWoman.setTextColor(Color.WHITE);
                         }

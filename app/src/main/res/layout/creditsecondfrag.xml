@@ -18,9 +18,9 @@
             android:src="@mipmap/progress_02" />
     </RelativeLayout>
 
-    <FrameLayout
+    <!--<FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent">-->
 
     <ScrollView
         android:id="@+id/criSv"
@@ -75,12 +75,21 @@
                         android:layout_centerVertical="true"
                         android:text="性别" />
 
+                    <CheckBox
+                        android:id="@+id/cb_select_sex"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="75dp"
+                        android:button="@null"
+                        android:background="@drawable/select_sex"
+                        android:layout_centerVertical="true"/>
 
                     <RelativeLayout
                         android:layout_width="65dp"
                         android:layout_height="31dp"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="95dp">
+                        android:layout_marginLeft="95dp"
+                        android:visibility="gone">
 
                         <com.beyonditsm.financial.widget.ToggleButton
                             android:id="@+id/tbSex"
@@ -91,7 +100,8 @@
                             app:borderWidth="1px"
                             app:offColor="#f76e95"
                             app:onColor="#6ca9ee"
-                            app:spotColor="#fff" />
+                            app:spotColor="#fff"
+                            android:visibility="gone"/>
 
                         <ImageView
                             android:layout_width="15dp"
@@ -578,7 +588,8 @@
 <com.beyonditsm.financial.view.LoadingView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/loadView"></com.beyonditsm.financial.view.LoadingView>
+    android:id="@+id/loadView"
+    android:visibility="gone"></com.beyonditsm.financial.view.LoadingView>
 
-    </FrameLayout>
+    <!--</FrameLayout>-->
 </LinearLayout>
