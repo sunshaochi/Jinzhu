@@ -113,6 +113,8 @@ public class RequestManager {
             if(params==null){
                 params=new RequestParams();
                 params.addHeader("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance()));
+            }else {
+                params.addHeader("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance()));
             }
             httpUtils.send(HttpRequest.HttpMethod.POST, url, params, new RequestCallBack() {
                 @Override
@@ -166,6 +168,8 @@ public class RequestManager {
         if(params==null){
             params=new RequestParams();
             params.addHeader("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance()));
+        }else{
+            params.addHeader("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance()));
         }
         httpUtils.send(HttpRequest.HttpMethod.GET, url, params, new RequestCallBack() {
             @Override
@@ -216,6 +220,8 @@ public class RequestManager {
         if(params==null){
             params=new RequestParams();
             params.addHeader("User-Agent","Jinzhu Android Client "+ FinancialUtil.getAppVer(MyApplication.getInstance()));
+        }else{
+            params.addHeader("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance()));
         }
 
         httpUtils.send(HttpRequest.HttpMethod.POST, url, params, new RequestCallBack() {

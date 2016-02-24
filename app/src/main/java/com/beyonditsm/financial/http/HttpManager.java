@@ -195,7 +195,6 @@ public class HttpManager {
 			Map<String, FileBody> fileMaps) {
 		post = new HttpPost(uri);
 
-//		post.setHeader("cookie", SpUtils.getCookie(MyApplication.getInstance()));
 		post.setHeaders(headers);
 		try {
 			MultipartEntity mpEntity = new MultipartEntity();
