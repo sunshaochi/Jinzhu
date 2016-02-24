@@ -21,18 +21,17 @@
         android:layout_height="48dp"
         android:background="@color/bg_color"
         android:orientation="horizontal">
-        <!--钱包-->
+        <!--钱包->首页-->
         <LinearLayout
             android:id="@+id/llMyWallet"
             style="@style/main_btm_ll"
-            android:visibility="gone"
             >
 
             <ImageView
                 android:id="@+id/ivMyWallet"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:background="@mipmap/tab_package_nor"/>
+                android:background="@drawable/tab_home_nor"/>
 
             <TextView
                 android:id="@+id/tvMyWallet"

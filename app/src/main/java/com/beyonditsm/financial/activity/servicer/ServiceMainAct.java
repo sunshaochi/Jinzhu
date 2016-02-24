@@ -27,6 +27,7 @@ import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.fragment.CreditFragment;
 import com.beyonditsm.financial.fragment.FriendFrg;
+import com.beyonditsm.financial.fragment.HomeFragment;
 import com.beyonditsm.financial.fragment.ServiceMineFrg;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
@@ -105,8 +106,8 @@ public class ServiceMainAct extends BaseActivity{
     public void init(Bundle savedInstanceState) {
         assignViews();
         manager = getSupportFragmentManager();
-        setTabSelection(3);
-        setCheckItem(3);
+        setTabSelection(0);
+        setCheckItem(0);
 //        RongIM.setUserInfoProvider(this, true);
         String token = SpUtils.getToken(ServiceMainAct.this);
         if (!TextUtils.isEmpty(token)) {
@@ -190,16 +191,16 @@ public class ServiceMainAct extends BaseActivity{
      *
      * @param
      */
-    @OnClick({ R.id.llCredit, R.id.llChat, R.id.llMine, R.id.add_friend, R.id.title_chat,
+    @OnClick({ R.id.llMyWallet,R.id.llCredit, R.id.llChat, R.id.llMine, R.id.add_friend, R.id.title_chat,
             R.id.title_friend})
     public void toClick(View v) {
         switch (v.getId()) {
-//            //钱包
-//            case R.id.llMyWallet:
-//                setAllTabNor();
-//                setTabSelection(0);
-//                setCheckItem(0);
-//                break;
+//            //首页
+            case R.id.llMyWallet:
+                setAllTabNor();
+                setTabSelection(0);
+                setCheckItem(0);
+                break;
             //贷款
             case R.id.llCredit:
                 setAllTabNor();
@@ -344,15 +345,15 @@ public class ServiceMainAct extends BaseActivity{
         FragmentTransaction transaction = manager.beginTransaction();
         hideFragment(transaction);
         switch (position) {
-//            case 0:
-//                main_title.setVisibility(View.GONE);
-//                if (myWalletfrg == null) {
-//                    myWalletfrg = new MyWalletFrg();
-//                    transaction.add(R.id.main_frame, myWalletfrg);
-//                } else {
-//                    transaction.show(myWalletfrg);
-//                }
-//                break;
+            case 0:
+                main_title.setVisibility(View.GONE);
+                if (myWalletfrg == null) {
+                    myWalletfrg = new HomeFragment();
+                    transaction.add(R.id.main_frame, myWalletfrg);
+                } else {
+                    transaction.show(myWalletfrg);
+                }
+                break;
             case 1:
                 main_title.setVisibility(View.VISIBLE);
 //                if (chatFrg == null) {

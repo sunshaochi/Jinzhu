@@ -82,6 +82,12 @@ public class LoginAct extends BaseActivity{
         LTYPE=getIntent().getIntExtra(LOGIN_TYPE,0);
         AppManager.getAppManager().addActivity(this);
         assignViews();
+        int flag = getIntent().getIntExtra("FLAG", 1);
+        if (flag == 0){
+            login_zc.setVisibility(View.INVISIBLE);
+        }else{
+            login_zc.setVisibility(View.VISIBLE);
+        }
     }
 
     @OnClick({R.id.login_btn, R.id.login_lost_pwd, R.id.tvRight,R.id.login_zc,R.id.rl_back})

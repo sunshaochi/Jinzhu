@@ -108,14 +108,14 @@ public class MessageActivity extends BaseActivity {
 
     }
 
-    @OnClick(R.id.rl_back)
-    public void toClick(View v) {
-        switch (v.getId()) {
-            case R.id.rl_back:
-                gotoActivity(MainActivity.class, true);
-                break;
-        }
-    }
+//    @OnClick(R.id.rl_back)
+//    public void toClick(View v) {
+//        switch (v.getId()) {
+//            case R.id.rl_back:
+//                gotoActivity(MainActivity.class, true);
+//                break;
+//        }
+//    }
 
     private void setDatas() {
         loadView.loadComplete();
