@@ -18,9 +18,9 @@
             android:src="@mipmap/progress_02" />
     </RelativeLayout>
 
-    <!--<FrameLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">-->
+        android:layout_height="match_parent">
 
     <ScrollView
         android:id="@+id/criSv"
@@ -588,8 +588,7 @@
 <com.beyonditsm.financial.view.LoadingView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/loadView"
-    android:visibility="gone"></com.beyonditsm.financial.view.LoadingView>
+    android:id="@+id/loadView"></com.beyonditsm.financial.view.LoadingView>
 
-    <!--</FrameLayout>-->
+    </FrameLayout>
 </LinearLayout>

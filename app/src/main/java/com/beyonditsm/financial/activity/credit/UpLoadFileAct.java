@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -56,12 +57,18 @@ public class UpLoadFileAct extends BaseActivity {
 
     @Override
     public void init(Bundle savedInstanceState) {
-        setTopTitle("上传附件");
         setLeftTv("返回");
         dialog=new FinalLoadDialog(this);
         dialog.setTitle("上传附件中");
         dialog.setCancelable(false);
         final String isSupplementFile = getIntent().getStringExtra("isSupplementFile");
+        if ("idCard".equals(isSupplementFile)){
+            setTopTitle("上传身份证");
+            commit_file.setText("上传身份证照片");
+        }else{
+            setTopTitle("上传附件");
+            commit_file.setText("上传附件");
+        }
         orderNo = getIntent().getStringExtra("orderNo");
         if (orderNo==null){
             orderNo=null;
@@ -139,6 +146,7 @@ public class UpLoadFileAct extends BaseActivity {
         }
 
     }
+
 
     /**
      * 上传图片
