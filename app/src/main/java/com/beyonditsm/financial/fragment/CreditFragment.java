@@ -26,6 +26,7 @@ import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GsonUtils;
+import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
@@ -143,6 +144,7 @@ public class CreditFragment extends BaseFragment {
 
                     cMoney=etAmount.getText().toString().trim();
                     cTime=tvM.getText().toString().trim();
+                    currentP=1;
                     getCredit(currentP, cMoney, cTime);
                     return true;
                 }
@@ -249,7 +251,7 @@ public class CreditFragment extends BaseFragment {
                 if(TextUtils.isEmpty(tvM.getText().toString().trim())){
                     tvM.setText(ConstantValue.CREDIT_MONTH+"");
                 }
-
+                currentP=1;
                 cMoney=etAmount.getText().toString().trim();
                 cTime=tvM.getText().toString().trim();
                 getCredit(currentP,cMoney,cTime);
@@ -294,7 +296,7 @@ public class CreditFragment extends BaseFragment {
         FindProductListEntity entity = new FindProductListEntity();
         entity.setPage(currentPage);
         entity.setRows(pageSize);
-
+        MyLogUtils.info("金额："+creditMoney);
         RequestManager.getMangManger().findProductList(entity,Double.valueOf(creditMoney)*10000+"",creditTime,new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
