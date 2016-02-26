@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.beyonditsm.financial.ConstantValue;
 import com.beyonditsm.financial.R;
+import com.beyonditsm.financial.activity.credit.CreditGuideAct;
 import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
 import com.beyonditsm.financial.adapter.CreditAdapter;
 import com.beyonditsm.financial.entity.FindProductListEntity;
@@ -208,7 +209,7 @@ public class CreditFragment extends BaseFragment {
 //        });
     }
 
-    @OnClick({R.id.tvSearch,R.id.rlMonth})
+    @OnClick({R.id.tvSearch,R.id.rlMonth,R.id.ivSuspen})
     public void toClick(View v) {
         switch (v.getId()) {
 //            case R.id.rlMoney:
@@ -255,6 +256,10 @@ public class CreditFragment extends BaseFragment {
                 cMoney=etAmount.getText().toString().trim();
                 cTime=tvM.getText().toString().trim();
                 getCredit(currentP,cMoney,cTime);
+                break;
+            case R.id.ivSuspen:
+                Intent intent=new Intent(getContext(), CreditGuideAct.class);
+                startActivity(intent);
                 break;
         }
     }

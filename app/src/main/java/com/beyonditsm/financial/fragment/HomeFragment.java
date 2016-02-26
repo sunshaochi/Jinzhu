@@ -13,6 +13,7 @@ import android.widget.ListView;
 
 import com.beyonditsm.financial.ConstantValue;
 import com.beyonditsm.financial.R;
+import com.beyonditsm.financial.activity.credit.CreditGuideAct;
 import com.beyonditsm.financial.activity.user.GameActivity;
 import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
 import com.beyonditsm.financial.activity.user.LoginAct;
@@ -130,7 +131,7 @@ public class HomeFragment extends BaseFragment {
         });
     }
 
-    @OnClick({R.id.ll_credit, R.id.ll_tillage, R.id.ll_work})
+    @OnClick({R.id.ll_credit, R.id.ll_tillage, R.id.ll_work,R.id.ivSuspen})
     public void toClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
@@ -154,6 +155,10 @@ public class HomeFragment extends BaseFragment {
                     Intent goLog = new Intent(context,LoginAct.class);
                     context.startActivity(goLog);
                 }
+                break;
+            case R.id.ivSuspen:
+                intent=new Intent(getContext(), CreditGuideAct.class);
+                startActivity(intent);
                 break;
         }
     }

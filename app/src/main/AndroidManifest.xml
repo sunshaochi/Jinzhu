@@ -332,6 +332,9 @@
         <!--订单提交成功-->
         <activity android:name=".activity.wallet.OrderCommitSusAct"
             android:screenOrientation="portrait"></activity>
+        <!-- 贷款引导-->
+        <activity android:name=".activity.credit.CreditGuideAct"
+            android:screenOrientation="portrait"></activity>
         <!-- 扫描二维码结果展示界面 -->
 
         <!-- ###################注册SDK使用的Activity###################### -->
