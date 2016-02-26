@@ -70,7 +70,7 @@ public class CreditFirstFrag extends BaseFragment {
     private MyTimerTask myTask;
     private TextView intro;//金蛛条款说明
 
-
+    private int FLAG = 0;//设置跳转登陆标签，0为贷款第一步，1为其他
 
     private void assignViews() {
         creName = (EditText) view.findViewById(R.id.cre_name);
@@ -158,6 +158,7 @@ public class CreditFirstFrag extends BaseFragment {
             case R.id.cre_tv_login:
                 ConstantValue.STEP = 10;
                 intent = new Intent(context, LoginAct.class);
+                intent.putExtra("FLAG",FLAG);
                 startActivity(intent);
                 break;
         }

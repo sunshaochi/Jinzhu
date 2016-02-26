@@ -167,6 +167,8 @@ public class ServiceEditAct extends BaseActivity {
             case 8:
                 setTopTitle("年龄");
                 etM.setHint("请输入年龄");
+                etM.setFilters(new InputFilter[]{new InputFilter.LengthFilter(3)});
+                etM.setInputType(InputType.TYPE_CLASS_NUMBER);
                 if (userInfo.getUserAge() != null) {
                     etM.setText(userInfo.getUserAge() + "");
                 }

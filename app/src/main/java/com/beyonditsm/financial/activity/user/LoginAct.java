@@ -1,10 +1,12 @@
 package com.beyonditsm.financial.activity.user;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -22,6 +24,7 @@ import com.beyonditsm.financial.activity.servicer.ServiceMainAct;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.fragment.MineFragment;
 import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.AutoAnimImageView;
@@ -82,6 +85,12 @@ public class LoginAct extends BaseActivity{
         LTYPE=getIntent().getIntExtra(LOGIN_TYPE,0);
         AppManager.getAppManager().addActivity(this);
         assignViews();
+        int flag = getIntent().getIntExtra("FLAG", 1);
+        if (flag == 0){
+            login_zc.setVisibility(View.INVISIBLE);
+        }else{
+            login_zc.setVisibility(View.VISIBLE);
+        }
     }
 
     @OnClick({R.id.login_btn, R.id.login_lost_pwd, R.id.tvRight,R.id.login_zc,R.id.rl_back})
@@ -90,6 +99,8 @@ public class LoginAct extends BaseActivity{
             /*登录*/
             case R.id.login_btn:
                 if (isValidate()) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(loginBtn.getWindowToken(), 0);
                     loginBtn.setEnabled(false);
                     progressBar1.setVisibility(View.VISIBLE);
                     UserEntity ue = new UserEntity();
@@ -118,6 +129,7 @@ public class LoginAct extends BaseActivity{
                 break;
         }
     }
+
 
     @Override
     public void onBackPressed() {

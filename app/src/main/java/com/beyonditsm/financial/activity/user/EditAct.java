@@ -2,6 +2,7 @@ package com.beyonditsm.financial.activity.user;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
@@ -143,6 +144,7 @@ public class EditAct extends BaseActivity {
             case 8:
                 setTopTitle("年龄");
                 etM.setInputType(InputType.TYPE_CLASS_NUMBER);
+                etM.setFilters(new InputFilter[]{new InputFilter.LengthFilter(3)});
                 etM.setHint("请输入年龄");
                 if(userInfo!=null&&userInfo.getUserAge()!=null){
                     etM.setText(userInfo.getUserAge()+"");
