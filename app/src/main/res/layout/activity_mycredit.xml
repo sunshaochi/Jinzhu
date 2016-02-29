@@ -33,8 +33,7 @@
             android:paddingLeft="15dp"
             android:textSize="14sp"
             android:gravity="center"
-
-            android:text="总金额"/>
+            android:text="申请金额"/>
 
         <TextView
             style="@style/tv_second_style"

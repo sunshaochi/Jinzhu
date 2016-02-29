@@ -142,6 +142,10 @@ public class MyCreditDetailFragment extends BaseFragment {
     private RelativeLayout start_rl;//联系信贷经理点击框
     @ViewInject(R.id.onpay)
     private TextView onpay;
+    @ViewInject(R.id.total)
+    private TextView total;
+    @ViewInject(R.id.time)
+    private TextView time;
 
     @ViewInject(R.id.start_bj)
     private RelativeLayout rlbj;//补件
@@ -151,6 +155,8 @@ public class MyCreditDetailFragment extends BaseFragment {
     private Map<Integer, Boolean> map = new HashMap<>();
     private String accountId;
     private String creditName;
+    public static String monthlyPayments;//月供
+    private String totalRath;
 
     OrderDetailInfo.DataEntity data;
 
@@ -165,6 +171,7 @@ public class MyCreditDetailFragment extends BaseFragment {
     private TextView tvRemarks;//备注
     private TextView tvCreditAmount;//sh
     private LinearLayout llCreditRemark;
+    private Intent intent;
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -349,6 +356,8 @@ public class MyCreditDetailFragment extends BaseFragment {
                         if (!TextUtils.isEmpty(accountId))
                             start_rl.setVisibility(View.VISIBLE);
                         ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + data.getImageLogoPath(), ivBank, options);
+                        total.setText("贷款金额：");
+                        time.setText("贷款期限：");
                         tvTotal.setText("¥" + df.format(data.getTotalAmount() / 10000) + "万");
                         tvLimit.setText("额度范围：" + df.format(Double.valueOf(data.getMinVal()) / 10000) + "~" + df.format(Double.valueOf(data.getMaxVal()) / 10000) + "万");
                         tvL.setText("期限范围：" + data.getTimeMinVal() + "~" + data.getTimeMaxVal() + "月");
@@ -449,7 +458,10 @@ public class MyCreditDetailFragment extends BaseFragment {
                             tvStatus.setText("审批中");
                         } else if ("PASS".equals(status)) {
                             tvStatus.setText("审批通过");
+                            tvStatus.setBackgroundResource(R.drawable.cre_btn_green);
                             llCreditRemark.setVisibility(View.GONE);
+                            total.setText("放款金额：");
+                            time.setText("还款期限：");
                             if (!TextUtils.isEmpty(data.getPracticalLoan()))
                                 tvTotal.setText("¥" + df.format(Double.valueOf(data.getPracticalLoan()) / 10000) + "万");
                             if (!TextUtils.isEmpty(data.getRealMonthlyInterestRate()))
@@ -458,6 +470,15 @@ public class MyCreditDetailFragment extends BaseFragment {
                                 onpay.setText("一次性收费：" + data.getRealOneTimeRate() + "%");
                             if (!TextUtils.isEmpty(data.getCreditAmount())){
                                 tvCreditAmount.setText("¥"+df.format(Double.valueOf(data.getCreditAmount())/10000)+"万");
+                            }
+                            if (!TextUtils.isEmpty(data.getBankPracticalPeriods())){
+                                tvTime.setText(data.getBankPracticalPeriods());
+                            }
+                            if (!TextUtils.isEmpty(data.getPracticalLoan())&&!TextUtils.isEmpty(data.getBankPracticalPeriods())&&!TextUtils.isEmpty(data.getRealMonthlyInterestRate())){
+                                String loan = data.getPracticalLoan();
+                                String rate = data.getRealMonthlyInterestRate();
+                                String periods = data.getBankPracticalPeriods();
+                                getMOnthPay(loan,rate , periods);
                             }
                         } else if ("WAIT_BACKGROUND_APPROVAL".equals(status)
                                 ) {
@@ -486,6 +507,33 @@ public class MyCreditDetailFragment extends BaseFragment {
         });
     }
 
+    /**
+     * 计算月供
+     *
+     * @param repaymentMoney 贷款金额
+     * @param rate           月利率
+     * @param month          月份
+     */
+    private void getMOnthPay(String repaymentMoney, String rate, String month) {
+
+        RequestManager.getUserManager().getMonthPay(Double.valueOf(repaymentMoney) + "",
+                Double.valueOf(rate) / 100 + "", month, new RequestManager.CallBack() {
+                    @Override
+                    public void onSucess(String result) throws JSONException {
+                        JSONObject json = new JSONObject(result);
+                        JSONObject jsonData = json.getJSONObject("data");
+                        monthlyPayments = jsonData.getDouble("monthlyPayments") + "";
+                        totalRath = jsonData.getDouble("totalRath") + "";
+                        tvT.setText("￥" + totalRath);
+                        tvYueG.setText("￥" + monthlyPayments);
+                    }
+
+                    @Override
+                    public void onError(int status, String msg) {
+                        MyToastUtils.showShortToast(getActivity(), msg);
+                    }
+                });
+    }
     public static final String UPDATE_ORDER = "com.update.order";
     private OrderBroadCastReceiver order_receiver;
 

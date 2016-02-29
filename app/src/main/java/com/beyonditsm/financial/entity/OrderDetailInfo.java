@@ -156,6 +156,7 @@ public class OrderDetailInfo implements Parcelable {
         private String propertyType;
         private String applyMaterial;
         private String practicalLoan;//实际放款金额
+        private String bankPracticalPeriods;//实际放款期限
         private String productNo;
         private String costDescribe;
         private String clientId;
@@ -279,6 +280,14 @@ public class OrderDetailInfo implements Parcelable {
 
         public void setDisposableRateMax(String disposableRateMax) {
             this.disposableRateMax = disposableRateMax;
+        }
+
+        public String getBankPracticalPeriods() {
+            return bankPracticalPeriods;
+        }
+
+        public void setBankPracticalPeriods(String bankPracticalPeriods) {
+            this.bankPracticalPeriods = bankPracticalPeriods;
         }
 
         public String getCreditAccountId() {
@@ -966,6 +975,7 @@ public class OrderDetailInfo implements Parcelable {
             dest.writeString(this.city);
             dest.writeString(this.district);
             dest.writeList(this.tasks);
+            dest.writeString(this.bankPracticalPeriods);
         }
 
         protected DataEntity(Parcel in) {
@@ -1045,6 +1055,7 @@ public class OrderDetailInfo implements Parcelable {
             this.province = in.readString();
             this.city = in.readString();
             this.district = in.readString();
+            this.bankPracticalPeriods = in.readString();
             this.tasks = new ArrayList<TasksEntity>();
             in.readList(this.tasks, List.class.getClassLoader());
         }
