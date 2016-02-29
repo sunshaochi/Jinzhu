@@ -191,6 +191,7 @@ public class CreditSecondFrag extends BaseFragment {
     private List<DictionaryType> carList,jobList,hourseList,creditList;//车产，职业，房产，信用
     private int jobPos,carPos,hoursePos,creditPos;
 
+    private boolean isLoadIdCard=false;
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -1104,6 +1105,10 @@ public class CreditSecondFrag extends BaseFragment {
             MyToastUtils.showShortToast(context, "请输入合法的身份证号码");
             return false;
         }
+        if(!isLoadIdCard){
+            MyToastUtils.showShortToast(context, "请上传身份证照片");
+            return false;
+        }
         return true;
     }
 
@@ -1147,6 +1152,7 @@ public class CreditSecondFrag extends BaseFragment {
     public class MyReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
+            isLoadIdCard=intent.getBooleanExtra("isLoadCard",false);
             orderNo = intent.getStringExtra(PicSelectActivity.IMAGES);
         }
     }

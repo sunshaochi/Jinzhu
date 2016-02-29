@@ -27,7 +27,6 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -49,7 +48,6 @@ public class UpLoadFileAct extends BaseActivity {
     private String orderNo = null;
 
     private FinalLoadDialog dialog;
-
     @Override
     public void setLayout() {
         setContentView(R.layout.uploadfile);
@@ -153,7 +151,7 @@ public class UpLoadFileAct extends BaseActivity {
      *
      * @param
      */
-    private void uploadFile(String isSupplementFile) {
+    private void uploadFile(final String isSupplementFile) {
         dialog.show();
         Map<String, List<FileBody>> fileMaps = new HashMap<String, List<FileBody>>();
         List<FileBody> lists = new ArrayList<FileBody>();
@@ -173,6 +171,9 @@ public class UpLoadFileAct extends BaseActivity {
                     String orderNo = data.optString("orderNo");
                     Intent intent = new Intent(CreditSecondFrag.IMAGE);
                     intent.putExtra(PicSelectActivity.IMAGES, orderNo);
+                    if ("idCard".equals(isSupplementFile)){
+                        intent.putExtra("isLoadCard",true);
+                    }
                     sendBroadcast(intent);
                     LogUtils.i("orderNo:" + orderNo);
                     MyToastUtils.showShortToast(UpLoadFileAct.this, "上传成功");

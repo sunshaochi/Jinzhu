@@ -78,6 +78,7 @@ public class HomeCreditAdapter extends BaseAdapter {
             holder.fast = (TextView) convertView.findViewById(R.id.fast);
             holder.sd = (TextView) convertView.findViewById(R.id.sd);
             holder.down = (TextView) convertView.findViewById(R.id.rate_down);
+            holder.tvSymbol= (TextView) convertView.findViewById(R.id.tvSymbol);
             convertView.setTag(holder);
         }else{
             holder = (ViewHolder) convertView.getTag();
@@ -111,11 +112,20 @@ public class HomeCreditAdapter extends BaseAdapter {
         }
 
          HomeHotProductEntity hotProductEntity =  list.get(position);
-        ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + hotProductEntity.getImageLogoPath(), holder.ivProductLogo, options);
+         ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + hotProductEntity.getImageLogoPath(), holder.ivProductLogo, options);
 
-        if (hotProductEntity.getCompositiveRate()!=null) {
-            holder.tvRate.setText(hotProductEntity.getCompositiveRate()+"");
+        if(hotProductEntity.getMonthlyRateMin()==hotProductEntity.getMonthlyRateMax()){
+            holder.tvRate.setText(hotProductEntity.getMonthlyRateMin()+"");
+            holder.tvRate.setTextSize(28);
+            holder.tvSymbol.setVisibility(View.VISIBLE);
+            holder.tvSymbol.setTextSize(18);
+
+        }else{
+            holder.tvRate.setText(hotProductEntity.getMonthlyRateMin() + "%~" + hotProductEntity.getMonthlyRateMax()+"%");
+            holder.tvRate.setTextSize(14);
+            holder.tvSymbol.setVisibility(View.GONE);
         }
+
         if (!TextUtils.isEmpty(hotProductEntity.getProductName())) {
             holder.tvCreditName.setText(hotProductEntity.getProductName());
         }
@@ -125,7 +135,7 @@ public class HomeCreditAdapter extends BaseAdapter {
         return convertView;
     }
     class ViewHolder{
-         TextView tvRate,tvCreditName,tvCycle;
+         TextView tvRate,tvCreditName,tvCycle,tvSymbol;
         ImageView ivProductLogo;
         TextView fast,sd,down;
     }

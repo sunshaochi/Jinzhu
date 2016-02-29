@@ -47,6 +47,24 @@ public class HomeHotProductEntity implements Parcelable{
     private String compositiveRate;
     private String productName;
     private String loanPeriod;
+    private double monthlyRateMax;//月利率最大值
+    private double monthlyRateMin;//月利率最小值
+
+    public double getMonthlyRateMax() {
+        return monthlyRateMax;
+    }
+
+    public void setMonthlyRateMax(double monthlyRateMax) {
+        this.monthlyRateMax = monthlyRateMax;
+    }
+
+    public double getMonthlyRateMin() {
+        return monthlyRateMin;
+    }
+
+    public void setMonthlyRateMin(double monthlyRateMin) {
+        this.monthlyRateMin = monthlyRateMin;
+    }
 
     public int getAvgSucRate() {
         return avgSucRate;
@@ -129,6 +147,9 @@ public class HomeHotProductEntity implements Parcelable{
     }
 
 
+    public HomeHotProductEntity() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -146,9 +167,8 @@ public class HomeHotProductEntity implements Parcelable{
         dest.writeString(this.compositiveRate);
         dest.writeString(this.productName);
         dest.writeString(this.loanPeriod);
-    }
-
-    public HomeHotProductEntity() {
+        dest.writeDouble(this.monthlyRateMax);
+        dest.writeDouble(this.monthlyRateMin);
     }
 
     protected HomeHotProductEntity(Parcel in) {
@@ -161,6 +181,8 @@ public class HomeHotProductEntity implements Parcelable{
         this.compositiveRate = in.readString();
         this.productName = in.readString();
         this.loanPeriod = in.readString();
+        this.monthlyRateMax = in.readDouble();
+        this.monthlyRateMin = in.readDouble();
     }
 
     public static final Creator<HomeHotProductEntity> CREATOR = new Creator<HomeHotProductEntity>() {
