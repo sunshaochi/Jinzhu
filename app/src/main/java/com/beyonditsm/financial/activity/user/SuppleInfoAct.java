@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -22,6 +24,7 @@ import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.AddressUtil;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.IdcardUtils;
+import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.widget.DialogChooseAdress;
@@ -52,6 +55,9 @@ public class SuppleInfoAct extends BaseActivity {
     private RadioButton sexWoman;//女
     @ViewInject(R.id.tbSex)
     private ToggleButton tbSex;//设置男女
+
+    @ViewInject(R.id.cb_select_sex)
+    private CheckBox cbSelectSex;//选择性别
 
     @ViewInject(R.id.age)
     private EditText age;//年龄
@@ -145,6 +151,18 @@ public class SuppleInfoAct extends BaseActivity {
                 });
             }
         });
+        cbSelectSex.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    userinfo.setUserSex(0);
+                    MyLogUtils.info("选择了女");
+                } else {
+                    userinfo.setUserSex(1);
+                    MyLogUtils.info("选择了男");
+                }
+            }
+        });
     }
 
 
@@ -217,11 +235,13 @@ public class SuppleInfoAct extends BaseActivity {
         }
         if(userinfo.getUserSex()!=null){
             if (userinfo.getUserSex() == 0) {//女
-                tbSex.setIsSwitch(false);
+//                tbSex.setIsSwitch(false);
+                cbSelectSex.setChecked(true);
 //                sexWoman.setChecked(true);
 //                sexMan.setClickable(false);
             } else if(userinfo.getUserSex()==1){
-                tbSex.setIsSwitch(true);
+//                tbSex.setIsSwitch(true);
+                cbSelectSex.setChecked(false);
 //                sexMan.setChecked(true);
 //                sexWoman.setClickable(false);
             }
@@ -338,16 +358,16 @@ public class SuppleInfoAct extends BaseActivity {
                 userinfo.setUserSex(1);
             }
 */
-            tbSex.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
-                @Override
-                public void onToggle(boolean on) {
-                    if(on){
-                        userinfo.setUserSex(1);
-                    }else{
-                        userinfo.setUserSex(0);
-                    }
-                }
-            });
+//            tbSex.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
+//                @Override
+//                public void onToggle(boolean on) {
+//                    if(on){
+//                        userinfo.setUserSex(1);
+//                    }else{
+//                        userinfo.setUserSex(0);
+//                    }
+//                }
+//            });
 
         }
 
