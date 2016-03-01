@@ -27,7 +27,6 @@
         android:hint="请输入新密码"
         android:id="@+id/new_pwd"
         style="@style/update_et"
-        android:inputType="textPassword"
         android:maxLength="20" />
     <View style="@style/view_line"></View>
 
@@ -35,7 +34,6 @@
         android:hint="确认新密码"
         android:id="@+id/new_pwd2"
         style="@style/update_et"
-        android:inputType="textPassword"
         android:maxLength="20"
         android:layout_marginBottom="6dp"/>
     </LinearLayout>
