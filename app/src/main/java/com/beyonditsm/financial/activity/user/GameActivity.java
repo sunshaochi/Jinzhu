@@ -155,7 +155,6 @@ public class GameActivity extends BaseActivity {
         });
 
 
-
     }
 
     protected void onDestroy() {
@@ -194,22 +193,20 @@ public class GameActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==FILECHOOSER_RESULTCODE)
-        {
+        if (requestCode == FILECHOOSER_RESULTCODE) {
             if (null == mUploadMessage && null == mUploadCallbackAboveL) return;
             Uri result = data == null || resultCode != RESULT_OK ? null : data.getData();
             if (mUploadCallbackAboveL != null) {
                 onActivityResultAboveL(requestCode, resultCode, data);
-            }
-            else  if (mUploadMessage != null) {
+            } else if (mUploadMessage != null) {
 //                MyLogUtils.info(;"result + "");
-                if(result==null){
+                if (result == null) {
 //	            		mUploadMessage.onReceiveValue(imageUri);
                     mUploadMessage.onReceiveValue(imageUri);
                     mUploadMessage = null;
- MyLogUtils.error(imageUri+"");
+                    MyLogUtils.error(imageUri + "");
 //                    Log.e("imageUri",imageUri+"");
-                }else {
+                } else {
                     mUploadMessage.onReceiveValue(result);
                     mUploadMessage = null;
                 }
@@ -218,7 +215,6 @@ public class GameActivity extends BaseActivity {
             }
         }
     }
-
 
 
     @SuppressWarnings("null")
@@ -249,10 +245,10 @@ public class GameActivity extends BaseActivity {
                     results = new Uri[]{Uri.parse(dataString)};
             }
         }
-        if(results!=null){
+        if (results != null) {
             mUploadCallbackAboveL.onReceiveValue(results);
             mUploadCallbackAboveL = null;
-        }else{
+        } else {
             results = new Uri[]{imageUri};
             mUploadCallbackAboveL.onReceiveValue(results);
             mUploadCallbackAboveL = null;
@@ -261,10 +257,10 @@ public class GameActivity extends BaseActivity {
         return;
     }
 
-    private void take(){
+    private void take() {
         File imageStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "MyApp");
         // Create the storage directory if it does not exist
-        if (! imageStorageDir.exists()){
+        if (!imageStorageDir.exists()) {
             imageStorageDir.mkdirs();
         }
         File file = new File(imageStorageDir + File.separator + "IMG_" + String.valueOf(System.currentTimeMillis()) + ".jpg");
@@ -274,7 +270,7 @@ public class GameActivity extends BaseActivity {
         final Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         final PackageManager packageManager = getPackageManager();
         final List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
-        for(ResolveInfo res : listCam) {
+        for (ResolveInfo res : listCam) {
             final String packageName = res.activityInfo.packageName;
             final Intent i = new Intent(captureIntent);
             i.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
@@ -286,9 +282,9 @@ public class GameActivity extends BaseActivity {
         Intent i = new Intent(Intent.ACTION_GET_CONTENT);
         i.addCategory(Intent.CATEGORY_OPENABLE);
         i.setType("image/*");
-        Intent chooserIntent = Intent.createChooser(i,"Image Chooser");
+        Intent chooserIntent = Intent.createChooser(i, "Image Chooser");
         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, cameraIntents.toArray(new Parcelable[]{}));
-        startActivityForResult(chooserIntent,  FILECHOOSER_RESULTCODE);
+        startActivityForResult(chooserIntent, FILECHOOSER_RESULTCODE);
     }
 
 }
