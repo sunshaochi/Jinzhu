@@ -23,6 +23,7 @@ import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.GsonUtils;
+import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.widget.DialogChooseMonth;
@@ -114,6 +115,7 @@ public class HomeCreditDetailAct extends BaseActivity {
     private ProductInfo productEntity;
     private TextView tvOnePay;
 
+
     private void assignViews() {
         svCridet = (ScrollView) findViewById(R.id.svCridet);
         ivBank = (ImageView) findViewById(R.id.ivBank);
@@ -196,6 +198,7 @@ public class HomeCreditDetailAct extends BaseActivity {
         final String productId = getIntent().getStringExtra(PRODUCTINFO);
         creditMoney = getIntent().getStringExtra(CREDIT_AMOUNT);
         creditMonth = getIntent().getStringExtra(CREDIT_TIME);
+        MyLogUtils.info("creditMoney+"+creditMoney+",,,,,,creditMonth+"+creditMonth);
         tvM.setText(creditMonth);
         findOrderDetail(productId);
 
@@ -213,7 +216,7 @@ public class HomeCreditDetailAct extends BaseActivity {
 
     }
 
-    private TextWatcher textWatcher=new TextWatcher() {
+    private TextWatcher textWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -228,10 +231,10 @@ public class HomeCreditDetailAct extends BaseActivity {
         public void afterTextChanged(Editable s) {
 
             //如果用户输入的数值比额度范围最小值小则计算最小的，比额度范围值最大的大计算最大的
-            if(!s.toString().startsWith(".")) {
+            if (!s.toString().startsWith(".")) {
 
-                if(s.toString().trim().length()==0){
-                    creditMoney="0.0";
+                if (s.toString().trim().length() == 0) {
+                    creditMoney = "0.0";
                 }
                 if (!TextUtils.isEmpty(etAmount.getText().toString().trim())) {
                     creditMoney = etAmount.getText().toString().trim();
@@ -239,10 +242,15 @@ public class HomeCreditDetailAct extends BaseActivity {
                 final double minVal = Double.valueOf(productEntity.getMinVal());
                 double maxVal = Double.valueOf(productEntity.getMaxVal());
                 double curVal = Double.valueOf(creditMoney.toString()) * 10000;
-                creditMonth = tvM.getText().toString();
+                if (TextUtils.isEmpty(creditMonth)){
+                    double minTimeVal = Double.valueOf(productEntity.getTimeMinVal());
+                    creditMonth = minTimeVal+"";
+                }else{
+                    creditMonth = tvM.getText().toString();
+                }
                 validateCredit(minVal, maxVal, curVal, creditMonth);
-            }else if(s.toString().startsWith(".")){
-                Toast.makeText(HomeCreditDetailAct.this,"不能以小数点开头",Toast.LENGTH_SHORT).show();
+            } else if (s.toString().startsWith(".")) {
+                Toast.makeText(HomeCreditDetailAct.this, "不能以小数点开头", Toast.LENGTH_SHORT).show();
                 etAmount.setText("");
             }
         }
@@ -253,7 +261,7 @@ public class HomeCreditDetailAct extends BaseActivity {
      *
      * @param v
      */
-    @OnClick({R.id.rlRequire, R.id.rlMaterial, R.id.rlDetail, R.id.tvApplay, R.id.rlMonth, R.id.tvCal,R.id.etAmount})
+    @OnClick({R.id.rlRequire, R.id.rlMaterial, R.id.rlDetail, R.id.tvApplay, R.id.rlMonth, R.id.tvCal, R.id.etAmount})
     public void toClick(View v) {
         switch (v.getId()) {
             //搜索
@@ -333,7 +341,7 @@ public class HomeCreditDetailAct extends BaseActivity {
                 break;
             //免费申请
             case R.id.tvApplay:
-                if(productEntity!=null) {
+                if (productEntity != null) {
                     final double minVal = Double.valueOf(productEntity.getMinVal());
                     double maxVal = Double.valueOf(productEntity.getMaxVal());
                     double curVal = Double.valueOf(creditMoney.toString()) * 10000;
@@ -362,12 +370,15 @@ public class HomeCreditDetailAct extends BaseActivity {
                     public void getAdress(String adress) {
                         tvM.setText(adress.substring(0, adress.length() - 2));
                         if (TextUtils.isEmpty(etAmount.getText().toString().trim())) {
-                            etAmount.setText("5");
-                            creditMoney = "5";
+//                            etAmount.setText("5");
+                            Double minVal = Double.valueOf(productEntity.getMinVal());
+                            creditMoney = df.format(minVal/10000)+"";
                         } else {
                             creditMoney = etAmount.getText().toString().trim();
                         }
-                        creditMonth = tvM.getText().toString();
+
+                            creditMonth = tvM.getText().toString();
+
                         final double minVal = Double.valueOf(productEntity.getMinVal());
                         double maxVal = Double.valueOf(productEntity.getMaxVal());
                         double curVal = Double.valueOf(creditMoney.toString()) * 10000;
@@ -378,20 +389,20 @@ public class HomeCreditDetailAct extends BaseActivity {
                 break;
             //计算
             case R.id.tvCal:
-                if (TextUtils.isEmpty(etAmount.getText().toString().trim())) {
-                    etAmount.setText("5");
-                    creditMoney = "5";
-                } else {
-                    if(etAmount.getText().toString().trim().endsWith(".")){
-                        int length=etAmount.getText().toString().length();
-                        etAmount.setText(etAmount.getText().toString().substring(0,length-1));
+                if (TextUtils.isEmpty(etAmount.getText().toString().trim())&&TextUtils.isEmpty(tvM.getText().toString().trim())){
+                    MyToastUtils.showShortToast(HomeCreditDetailAct.this,"贷款金额和贷款期限不能为空");
+                    return;
+                }else {
+                    if (etAmount.getText().toString().trim().endsWith(".")) {
+                        int length = etAmount.getText().toString().length();
+                        etAmount.setText(etAmount.getText().toString().substring(0, length - 1));
                     }
                     creditMoney = etAmount.getText().toString().trim();
+                    creditMonth = tvM.getText().toString();
                 }
                 final double minVal = Double.valueOf(productEntity.getMinVal());
                 double maxVal = Double.valueOf(productEntity.getMaxVal());
                 double curVal = Double.valueOf(creditMoney.toString()) * 10000;
-                creditMonth = tvM.getText().toString();
                 validateCredit(minVal, maxVal, curVal, creditMonth);
 
 
@@ -503,27 +514,45 @@ public class HomeCreditDetailAct extends BaseActivity {
                     Double maxMone = Double.valueOf(productEntity.getMaxVal());
                     Double minMont = Double.valueOf(productEntity.getTimeMinVal());
                     Double maxMont = Double.valueOf(productEntity.getTimeMaxVal());
-                    if (Double.valueOf(creditMoney) * 10000 < minMone || Double.valueOf(creditMoney) * 10000 > maxMone) {
-                        creditMoney = df.format(maxMone / 10000) + "";
+
+                    if (TextUtils.isEmpty(creditMonth)&&TextUtils.isEmpty(creditMoney)) {
+                        creditMoney = df.format(minMone / 10000) + "";
+                        creditMonth = productEntity.getTimeMinVal();
+                        tvM.setText(creditMonth);
+                    }else{
+                        if (Double.valueOf(creditMoney)*10000>maxMone){
+                            creditMoney = df.format(maxMone/10000)+"";
+                        }
+                        if (Double.valueOf(creditMoney)*10000<minMone){
+                            creditMoney = df.format(minMone/10000)+"";
+                        }
+//                        if (Double.valueOf(creditMoney) * 10000 < minMone || Double.valueOf(creditMoney) * 10000 > maxMone) {
+//                            creditMoney = df.format(maxMone / 10000) + "";
+//                        }
+                        if (Double.valueOf(creditMonth)>maxMont){
+                            creditMonth = productEntity.getTimeMaxVal();
+                            tvM.setText(creditMonth);
+                            MyLogUtils.info("比最大值还大");
+                        }
+                        if (Double.valueOf(creditMonth)<minMont){
+                            creditMonth = productEntity.getTimeMinVal();
+                            tvM.setText(creditMonth);
+                            MyLogUtils.info("比最小值还小");
+                        }
+//                        if (Double.valueOf(creditMonth) < minMont || Double.valueOf(creditMonth) > maxMont) {
+//                            creditMonth = maxMont + "";
+//                        }
                     }
 
-                    if (Double.valueOf(creditMonth) < minMont || Double.valueOf(creditMonth) > maxMont) {
-                        creditMonth = maxMont + "";
-                    }
                     etAmount.setText(creditMoney);
 //                    tvM.setText(creditMonth);
-
                     etAmount.setSelection(etAmount.getText().length());
-
-
                     minMon = Integer.valueOf(productEntity.getTimeMinVal());
-
 
                     int maxMon = Integer.valueOf(productEntity.getTimeMaxVal());
                     for (int j = minMon; j <= maxMon; j++) {
                         tList.add(j + "个月");
                     }
-
 
                     setTopTitle(productEntity.getProductName());
                     setLeftTv("返回");
@@ -535,7 +564,6 @@ public class HomeCreditDetailAct extends BaseActivity {
                     tvProName.setText(productEntity.getProductName());
 //            tvMount.setText(productEntity.getProductAmount());
 //            tvMount.setText(getIntent().getStringExtra(CREDIT_AMOUNT));
-
 
                     double minVal = Double.valueOf(productEntity.getMinVal());
                     double maxVal = Double.valueOf(productEntity.getMaxVal());
@@ -555,13 +583,14 @@ public class HomeCreditDetailAct extends BaseActivity {
                     tvCon.setText(productEntity.getApplyCondition());
                     tvNeed.setText(productEntity.getApplyMaterial());
                     tvDetail.setText(productEntity.getDetailDescribe());
-                    if (Double.valueOf(productEntity.getDisposableRateMax())-Double.valueOf(productEntity.getDisposableRateMin())==0){
+                    if (Double.valueOf(productEntity.getDisposableRateMax()) - Double.valueOf(productEntity.getDisposableRateMin()) == 0) {
                         tvOnePay.setText("一次性收费：" + productEntity.getDisposableRateMax() + "%");
-                    }else {
+                    } else {
                         tvOnePay.setText("一次性收费：" + productEntity.getDisposableRateMin() + "%" + "~" + productEntity.getDisposableRateMax() + "%");
                     }
 
                     String monthRath = (Double.valueOf(productEntity.getMonthlyRathMin()) + Double.valueOf(productEntity.getMonthlyRathMax())) / 2 + "";
+                    MyLogUtils.info("ccccccccc+"+creditMoney+"+zzzzzzzz+"+creditMonth);
                     getMOnthPay(creditMoney, monthRath, creditMonth);
                 }
             }

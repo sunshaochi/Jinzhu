@@ -8,7 +8,7 @@
     android:padding="15dp">
 
     <RelativeLayout
-        android:layout_width="115dp"
+        android:layout_width="130dp"
         android:layout_height="33dp"
         android:background="@drawable/et_back"
         android:paddingLeft="10dp"
@@ -42,15 +42,16 @@
             android:gravity="center"
             android:background="@null"
             android:textColor="#ff6633"
-            android:layout_marginRight="3dp"
+            android:layout_marginRight="1dp"
             android:inputType="numberDecimal"
             android:textSize="14sp"
+            android:hint="-请输入-"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/rlMonth"
-        android:layout_width="115dp"
+        android:layout_width="135dp"
         android:layout_height="33dp"
         android:background="@drawable/et_back"
         android:paddingLeft="10dp"
@@ -82,10 +83,13 @@
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@id/tvMonth"
             android:layout_toRightOf="@id/tvLimit"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
             android:gravity="center"
             android:maxLength="3"
             android:textSize="14sp"
             android:textColor="#ff6633"
+            android:hint="-请选择-"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
 

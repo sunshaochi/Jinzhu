@@ -337,6 +337,10 @@
             android:screenOrientation="portrait"></activity>
         <!-- 扫描二维码结果展示界面 -->
 
+        <!--上传身份证照片-->
+        <activity android:name=".activity.credit.UpIdCardAct"
+            android:screenOrientation="portrait"></activity>
+
         <!-- ###################注册SDK使用的Activity###################### -->
         <!--分享编辑页-->
         <activity
