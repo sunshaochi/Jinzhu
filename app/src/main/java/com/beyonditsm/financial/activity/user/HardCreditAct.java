@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 任务
  * Created by gxy on 2015/11/26.
  */
 public class HardCreditAct extends BaseActivity {
