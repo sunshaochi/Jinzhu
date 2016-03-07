@@ -1,24 +1,35 @@
 package com.beyonditsm.financial.activity.credit;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
+import com.beyonditsm.financial.activity.photo.ImageBrowserActivity;
 import com.beyonditsm.financial.activity.photo.PicSelectActivity;
+import com.beyonditsm.financial.adapter.GvPhotoAdapter;
 import com.beyonditsm.financial.entity.ImageBean;
 import com.beyonditsm.financial.fragment.CreditSecondFrag;
+import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.widget.FinalLoadDialog;
+import com.leaf.library.widget.MyGridView;
 import com.lidroid.xutils.http.client.multipart.content.FileBody;
 import com.lidroid.xutils.util.LogUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,7 +45,7 @@ import java.util.Map;
  * 上传身份证照片
  * Created by Administrator on 2016/3/2.
  */
-public class UpIdCardAct extends BaseActivity{
+public class UpIdCardAct extends BaseActivity {
     @ViewInject(R.id.iv_positive)
     private ImageView ivPositive;
     @ViewInject(R.id.iv_negative)
@@ -47,6 +58,7 @@ public class UpIdCardAct extends BaseActivity{
 
     private List<ImageBean> selecteds = new ArrayList<ImageBean>();
     private List<String> list = new ArrayList<>();
+    private Map<String, List<String>> map = new HashMap<>();
     private String orderNo;
 
     private String path;// 图片全路径
@@ -70,9 +82,9 @@ public class UpIdCardAct extends BaseActivity{
         dialog.setCancelable(false);
         final String isSupplementFile = getIntent().getStringExtra("isSupplementFile");
         orderNo = getIntent().getStringExtra("orderNo");
-        if (orderNo==null){
-            orderNo= null;
-        }else{
+        if (orderNo == null) {
+            orderNo = null;
+        } else {
             orderNo = orderNo;
         }
         commitIDCard.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +92,7 @@ public class UpIdCardAct extends BaseActivity{
             public void onClick(View v) {
                 if ("idCard".equals(isSupplementFile)) {
                     if (list.size() > 0) {
+                        MyLogUtils.info("list.size()+" + list.size());
                         if (list.size() > 2) {
                             uploadFile(isSupplementFile);
                         } else {
@@ -93,29 +106,29 @@ public class UpIdCardAct extends BaseActivity{
         });
     }
 
-    public void upIdCard(View view){
-        switch (view.getId()){
+    public void upIdCard(View view) {
+        switch (view.getId()) {
             case R.id.iv_positive://正面
                 flag = 0;
-                    Intent intent1 = new Intent(this, PicSelectActivity.class);
-                    intent1.putExtra(PicSelectActivity.SELECT_COUNT, selectCount);
-                    intent1.putExtra(PicSelectActivity.TOTAL_COUNT, maxCount);
-                    startActivityForResult(intent1, ADD_PHOTO_CODE);
+                Intent intent1 = new Intent(this, PicSelectActivity.class);
+                intent1.putExtra(PicSelectActivity.SELECT_COUNT, selecteds.size());
+                intent1.putExtra(PicSelectActivity.TOTAL_COUNT, maxCount);
+                startActivityForResult(intent1, ADD_PHOTO_CODE);
 
                 break;
             case R.id.iv_negative://反面
                 flag = 1;
-                Intent intent2 = new Intent(this,PicSelectActivity.class);
-                intent2.putExtra(PicSelectActivity.SELECT_COUNT,selectCount);
-                intent2.putExtra(PicSelectActivity.TOTAL_COUNT,maxCount);
-                startActivityForResult(intent2,ADD_PHOTO_CODE);
+                Intent intent2 = new Intent(this, PicSelectActivity.class);
+                intent2.putExtra(PicSelectActivity.SELECT_COUNT, selecteds.size());
+                intent2.putExtra(PicSelectActivity.TOTAL_COUNT, maxCount);
+                startActivityForResult(intent2, ADD_PHOTO_CODE);
                 break;
             case R.id.iv_hold://手持
-                flag =2;
-                Intent intent3 = new Intent(this,PicSelectActivity.class);
-                intent3.putExtra(PicSelectActivity.SELECT_COUNT,selectCount);
-                intent3.putExtra(PicSelectActivity.TOTAL_COUNT,maxCount);
-                startActivityForResult(intent3,ADD_PHOTO_CODE);
+                flag = 2;
+                Intent intent3 = new Intent(this, PicSelectActivity.class);
+                intent3.putExtra(PicSelectActivity.SELECT_COUNT, selecteds.size());
+                intent3.putExtra(PicSelectActivity.TOTAL_COUNT, maxCount);
+                startActivityForResult(intent3, ADD_PHOTO_CODE);
                 break;
         }
     }
@@ -130,17 +143,22 @@ public class UpIdCardAct extends BaseActivity{
 //                gvPhoto.setVisibility(View.VISIBLE);
                 selecteds = (List<ImageBean>) data.getSerializableExtra(PicSelectActivity.IMAGES);
                 path = selecteds.get(0).getPath();
-                switch (flag){
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = 2;
+                Bitmap bitmap = BitmapFactory.decodeFile(path, options);
+                switch (flag) {
                     case 0:
-                        ivPositive.setImageBitmap(BitmapFactory.decodeFile(path));
+                        ivPositive.setImageBitmap(bitmap);
                         list.add(path);
                         break;
                     case 1:
-                        ivNegative.setImageBitmap(BitmapFactory.decodeFile(path));
+//                            path = selecteds.get(0).getPath();
+                        ivNegative.setImageBitmap(bitmap);
                         list.add(path);
                         break;
                     case 2:
-                        ivHold.setImageBitmap(BitmapFactory.decodeFile(path));
+//                            path = selecteds.get(0).getPath();
+                        ivHold.setImageBitmap(bitmap);
                         list.add(path);
                         break;
                 }
