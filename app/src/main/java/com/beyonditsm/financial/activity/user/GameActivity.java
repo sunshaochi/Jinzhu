@@ -40,10 +40,6 @@ import java.util.List;
 public class GameActivity extends BaseActivity {
     @ViewInject(R.id.wvGame)
     private WebView wvGame;
-//    @ViewInject(R.id.llGame)
-//    private LinearLayout llGame;
-
-//    private String game_url="http://139.196.111.82:5011/";
 
     private String gUrl;
     private Intent intent;
@@ -67,7 +63,7 @@ public class GameActivity extends BaseActivity {
 //        setConfigCallback((WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE));
         String cookie[] = SpUtils.getCookie(this).split("=");
         gUrl = IFinancialUrl.GAME_URL + "?JSESSIONID=" + cookie[1].substring(0, cookie[1].length() - 1);
-        MyLogUtils.info(gUrl);
+//        MyLogUtils.info(gUrl);
         wvGame.loadUrl(gUrl);
         wvGame.getSettings().setJavaScriptEnabled(true);
         wvGame.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
@@ -76,6 +72,8 @@ public class GameActivity extends BaseActivity {
         settings.setLoadWithOverviewMode(true);
         settings.setJavaScriptEnabled(true);
         settings.setSupportZoom(true);
+        settings.setAllowFileAccess(true);
+        settings.setAllowFileAccessFromFileURLs(true);
 
         wvGame.setWebViewClient(new WebViewClient() {
             @Override
@@ -138,8 +136,8 @@ public class GameActivity extends BaseActivity {
                     sendBroadcast(intentBroad);
                     startActivity(intent);
                 } else if (url.endsWith("task")) {
-                    intent = new Intent(GameActivity.this, HardCreditAct.class);
-                    startActivity(intent);
+//                    intent = new Intent(GameActivity.this, HardCreditAct.class);
+//                    startActivity(intent);
                 } else if (url.endsWith("friend")) {
                     intent = new Intent(GameActivity.this, AddressBookAct.class);
                     startActivity(intent);
@@ -147,7 +145,6 @@ public class GameActivity extends BaseActivity {
                     intent = new Intent(GameActivity.this, HardCreditAct.class);
                     startActivity(intent);
                 }
-
 
                 return true;
             }

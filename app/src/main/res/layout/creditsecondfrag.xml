@@ -22,490 +22,278 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <ScrollView
-        android:id="@+id/criSv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none">
-
-        <LinearLayout
+        <ScrollView
+            android:id="@+id/criSv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp">
+            android:layout_height="match_parent"
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
 
-                <TextView
-                    style="@style/tv_primary_style"
-                    android:layout_centerInParent="true"
-                    android:layout_marginTop="30dp"
-                    android:text="您的基本信息"
-                    android:textColor="#446ebc" />
-
-                <RelativeLayout
-                    android:layout_marginTop="20dp"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
                     <TextView
                         style="@style/tv_primary_style"
-                        android:layout_centerVertical="true"
-                        android:text="姓名" />
-
-                    <EditText
-                        android:id="@+id/name"
-                        style="@style/cre_et"
-                        android:hint="请输入姓名"
-                        android:maxLength="18" />
-                </RelativeLayout>
-
-                <View style="@style/view_line"></View>
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    >
-
-                    <TextView
-                        style="@style/tv_primary_style"
-                        android:layout_centerVertical="true"
-                        android:text="性别" />
-
-                    <CheckBox
-                        android:id="@+id/cb_select_sex"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="75dp"
-                        android:button="@null"
-                        android:background="@drawable/select_sex"
-                        android:layout_centerVertical="true"/>
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="30dp"
+                        android:text="您的基本信息"
+                        android:textColor="#446ebc" />
 
                     <RelativeLayout
-                        android:layout_width="65dp"
-                        android:layout_height="31dp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="95dp"
-                        android:visibility="gone">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp">
 
-                        <com.beyonditsm.financial.widget.ToggleButton
-                            android:id="@+id/tbSex"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_alignParentRight="true"
+                        <TextView
+                            style="@style/tv_primary_style"
                             android:layout_centerVertical="true"
-                            app:borderWidth="1px"
-                            app:offColor="#f76e95"
-                            app:onColor="#6ca9ee"
-                            app:spotColor="#fff"
-                            android:visibility="gone"/>
+                            android:text="姓名" />
 
-                        <ImageView
-                            android:layout_width="15dp"
-                            android:layout_height="18dp"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="11dp"
-                            android:src="@mipmap/male" />
+                        <EditText
+                            android:id="@+id/name"
+                            style="@style/cre_et"
+                            android:hint="请输入姓名"
+                            android:maxLength="18" />
+                    </RelativeLayout>
 
-                        <ImageView
-                            android:layout_width="15dp"
-                            android:layout_height="18dp"
-                            android:layout_alignParentRight="true"
+                    <View style="@style/view_line"></View>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp">
+
+                        <TextView
+                            style="@style/tv_primary_style"
                             android:layout_centerVertical="true"
-                            android:layout_marginRight="11dp"
-                            android:src="@mipmap/femlae" />
+                            android:text="性别" />
+
+                        <CheckBox
+                            android:id="@+id/cb_select_sex"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="75dp"
+                            android:background="@drawable/select_sex"
+                            android:button="@null" />
+
+                        <RelativeLayout
+                            android:layout_width="65dp"
+                            android:layout_height="31dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="95dp"
+                            android:visibility="gone">
+
+                            <com.beyonditsm.financial.widget.ToggleButton
+                                android:id="@+id/tbSex"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:visibility="gone"
+                                app:borderWidth="1px"
+                                app:offColor="#f76e95"
+                                app:onColor="#6ca9ee"
+                                app:spotColor="#fff" />
+
+                            <ImageView
+                                android:layout_width="15dp"
+                                android:layout_height="18dp"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="11dp"
+                                android:src="@mipmap/male" />
+
+                            <ImageView
+                                android:layout_width="15dp"
+                                android:layout_height="18dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="11dp"
+                                android:src="@mipmap/femlae" />
+
+                        </RelativeLayout>
+
+                        <RadioGroup
+                            android:id="@+id/sex_rg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="95dp"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <RadioButton
+                                android:id="@+id/sex_man"
+                                android:layout_width="50dp"
+                                android:layout_height="32dp"
+                                android:layout_marginRight="5dp"
+                                android:background="@drawable/man_rb_select"
+                                android:button="@null"
+                                android:gravity="center"
+                                android:text="男"
+                                android:textColor="@color/tv_gray" />
+
+                            <RadioButton
+                                android:id="@+id/sex_woman"
+                                android:layout_width="50dp"
+                                android:layout_height="32dp"
+                                android:layout_marginLeft="5dp"
+                                android:background="@drawable/woman_rb_select"
+                                android:button="@null"
+                                android:gravity="center"
+                                android:text="女"
+                                android:textColor="@color/tv_gray" />
+
+                        </RadioGroup>
 
                     </RelativeLayout>
 
-                    <RadioGroup
-                        android:id="@+id/sex_rg"
-                        android:layout_width="wrap_content"
+                    <View style="@style/view_line"></View>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            style="@style/tv_primary_style"
+                            android:layout_centerVertical="true"
+                            android:text="身份证号" />
+
+                        <EditText
+                            android:id="@+id/IdCard"
+                            style="@style/cre_et"
+                            android:hint="请输入身份证号码"
+                            android:maxLength="18" />
+                    </RelativeLayout>
+
+                    <View style="@style/view_line"></View>
+
+                    <RelativeLayout
+                        android:id="@+id/rlPosition"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="95dp"
-                        android:orientation="horizontal"
-                        android:visibility="gone">
+                        android:visibility="visible">
 
-                        <RadioButton
-                            android:id="@+id/sex_man"
-                            android:layout_width="50dp"
-                            android:layout_height="32dp"
-                            android:layout_marginRight="5dp"
-                            android:background="@drawable/man_rb_select"
-                            android:button="@null"
-                            android:gravity="center"
-                            android:text="男"
-                            android:textColor="@color/tv_gray" />
+                        <TextView
+                            style="@style/tv_primary_style"
+                            android:layout_centerVertical="true"
+                            android:text="常住地" />
 
-                        <RadioButton
-                            android:id="@+id/sex_woman"
-                            android:layout_width="50dp"
-                            android:layout_height="32dp"
-                            android:layout_marginLeft="5dp"
-                            android:background="@drawable/woman_rb_select"
-                            android:button="@null"
-                            android:gravity="center"
-                            android:text="女"
-                            android:textColor="@color/tv_gray" />
+                        <TextView
+                            android:id="@+id/position"
+                            style="@style/cre_et"
+                            android:gravity="center_vertical"
+                            android:hint="请选择常住地"
+                            android:textColor="#333333" />
+                    </RelativeLayout>
 
-                    </RadioGroup>
+                    <View style="@style/view_line"></View>
 
-                </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                <View style="@style/view_line"></View>
+                        <TextView
+                            style="@style/tv_primary_style"
+                            android:layout_centerVertical="true"
+                            android:text="详细地址" />
+
+                        <EditText
+                            android:id="@+id/address"
+                            style="@style/cre_et"
+                            android:hint="请输入详细地址"
+                            android:maxLength="20" />
+                    </RelativeLayout>
+
+                    <View style="@style/view_line"></View>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_marrayed"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp">
+
+                        <TextView
+                            style="@style/tv_primary_style"
+                            android:layout_centerVertical="true"
+                            android:text="婚姻状况" />
+
+                        <TextView
+                            android:id="@+id/tv_marrayed"
+                            style="@style/tv_select_style"
+                            android:drawableRight="@mipmap/button_select"
+                            android:textColor="#f63" />
+                    </RelativeLayout>
+
+                    <View style="@style/view_line"></View>
+
+                    <RelativeLayout
+                        android:id="@+id/rlNative"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            style="@style/tv_primary_style"
+                            android:layout_centerVertical="true"
+                            android:text="籍贯" />
+
+
+                        <TextView
+                            android:id="@+id/tv_jiguan"
+                            style="@style/cre_et"
+                            android:gravity="center_vertical"
+                            android:hint="请选择籍贯"
+                            android:maxLength="20"
+                            android:textColor="#333333" />
+                    </RelativeLayout>
+
+                    <View style="@style/view_line"></View>
+
+                    <RelativeLayout
+                        android:id="@+id/rlAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            style="@style/tv_primary_style"
+                            android:layout_centerVertical="true"
+                            android:text="户籍地址" />
+
+                        <TextView
+                            android:id="@+id/tv_address"
+                            style="@style/cre_et"
+                            android:gravity="center_vertical"
+                            android:hint="请选择户籍地址"
+                            android:maxLength="20"
+                            android:textColor="#333333" />
+                    </RelativeLayout>
+
+                    <View style="@style/view_line"></View>
+                </LinearLayout>
 
                 <RelativeLayout
+                    android:id="@+id/zz_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <TextView
-                        style="@style/tv_primary_style"
-                        android:layout_centerVertical="true"
-                        android:text="身份证号" />
-
-                    <EditText
-                        android:id="@+id/IdCard"
-                        style="@style/cre_et"
-                        android:hint="请输入身份证号码"
-                        android:maxLength="18" />
-                </RelativeLayout>
-
-                <View style="@style/view_line"></View>
-
-                <RelativeLayout
-                    android:id="@+id/rlPosition"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="visible">
-
-                    <TextView
-                        style="@style/tv_primary_style"
-                        android:layout_centerVertical="true"
-                        android:text="常住地" />
-
-                    <TextView
-                        android:id="@+id/position"
-                        style="@style/cre_et"
-                        android:hint="请选择常住地"
-                        android:gravity="center_vertical"
-                        android:textColor="#333333"
-                        />
-                </RelativeLayout>
-
-                <View style="@style/view_line"></View>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        style="@style/tv_primary_style"
-                        android:layout_centerVertical="true"
-                        android:text="详细地址" />
-
-                    <EditText
-                        android:id="@+id/address"
-                        style="@style/cre_et"
-                        android:hint="请输入详细地址"
-                        android:maxLength="20" />
-                </RelativeLayout>
-
-                <View style="@style/view_line"></View>
-
-                <RelativeLayout
-                    android:id="@+id/rl_marrayed"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp">
-
-                    <TextView
-                        style="@style/tv_primary_style"
-                        android:layout_centerVertical="true"
-                        android:text="婚姻状况" />
-
-                    <TextView
-                        android:id="@+id/tv_marrayed"
-                        style="@style/tv_select_style"
-                        android:drawableRight="@mipmap/button_select"
-                        android:textColor="#f63" />
-                </RelativeLayout>
-
-                <View style="@style/view_line"></View>
-
-                <RelativeLayout
-                    android:id="@+id/rlNative"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        style="@style/tv_primary_style"
-                        android:layout_centerVertical="true"
-                        android:text="籍贯" />
-
-
-                    <TextView
-                        android:id="@+id/tv_jiguan"
-                        style="@style/cre_et"
-                        android:gravity="center_vertical"
-                        android:hint="请选择籍贯"
-                        android:maxLength="20"
-                        android:textColor="#333333" />
-                </RelativeLayout>
-
-                <View style="@style/view_line"></View>
-
-                <RelativeLayout
-                    android:id="@+id/rlAddress"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        style="@style/tv_primary_style"
-                        android:layout_centerVertical="true"
-                        android:text="户籍地址" />
-
-                    <TextView
-                        android:id="@+id/tv_address"
-                        style="@style/cre_et"
-                        android:gravity="center_vertical"
-                        android:hint="请选择户籍地址"
-                        android:maxLength="20"
-                        android:textColor="#333333" />
-                </RelativeLayout>
-
-                <View style="@style/view_line"></View>
-            </LinearLayout>
-
-            <RelativeLayout
-                android:id="@+id/zz_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/zz"
-                    style="@style/tv_primary_style"
-                    android:layout_width="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="30dp"
-                    android:drawablePadding="6dp"
-                    android:text="您的资质"
-                    android:textColor="#446ebc" />
-
-                <ImageView
-                    android:id="@+id/ivSlide"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@mipmap/slide" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_toLeftOf="@id/ivSlide"
-                    android:layout_toRightOf="@id/zz"
-                    android:background="#dfdfdf"></View>
-            </RelativeLayout>
-
-
-            <LinearLayout
-                android:id="@+id/zz_ll"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <RelativeLayout
-                    android:id="@+id/rl_work"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:visibility="visible">
-
-                    <TextView
-                        style="@style/tv_primary_style"
-                        android:layout_centerVertical="true"
-                        android:text="职业身份" />
-
-                    <TextView
-                        android:id="@+id/tv_work"
-                        style="@style/tv_select_style" />
-
-                </RelativeLayout>
-
-                <!--<View style="@style/view_line"></View>-->
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
-
-                    <TextView
-                        style="@style/tv_primary_style"
-                        android:layout_centerVertical="true"
-                        android:text="公司名称" />
-
-                    <EditText
-                        android:id="@+id/company_name"
-                        style="@style/cre_et"
-                        android:hint="请输入公司名称"
-                        android:maxLength="20" />
-                </RelativeLayout>
-
-                <View style="@style/view_line"></View>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        style="@style/tv_primary_style"
-                        android:layout_centerVertical="true"
-                        android:text="职务" />
-
-                    <EditText
-                        android:id="@+id/zhiwu"
-                        style="@style/cre_et"
-                        android:hint="请输入职务"
-                        android:maxLength="20" />
-                </RelativeLayout>
-
-                <View style="@style/view_line"></View>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        style="@style/tv_primary_style"
-                        android:layout_centerVertical="true"
-                        android:text="年龄" />
-
-                    <EditText
-                        android:id="@+id/age"
-                        style="@style/cre_et"
-                        android:hint="请输入年龄"
-                        android:inputType="number"
-                        android:maxLength="3" />
-                </RelativeLayout>
-
-                <View style="@style/view_line"></View>
-
-                <RelativeLayout
-                    android:id="@+id/rl_sb"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp">
-
-                    <TextView
-                        style="@style/tv_primary_style"
-                        android:layout_centerVertical="true"
-                        android:text="是否有本地社保" />
-
-                    <TextView
-                        android:id="@+id/tv_sb"
-                        style="@style/tv_select_style" />
-                </RelativeLayout>
-
-                <View style="@style/view_line"></View>
-
-                <RelativeLayout
-                    android:id="@+id/rl_gjj"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp">
-
-                    <TextView
-                        style="@style/tv_primary_style"
-                        android:layout_centerVertical="true"
-                        android:text="是否有本地公积金" />
-
-                    <TextView
-                        android:id="@+id/tv_gjj"
-                        style="@style/tv_select_style" />
-                </RelativeLayout>
-
-                <View style="@style/view_line"></View>
-
-                <RelativeLayout
-                    android:id="@+id/rl_home"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp">
-
-                    <TextView
-                        style="@style/tv_primary_style"
-                        android:layout_centerVertical="true"
-                        android:text="名下房产类型" />
-
-                    <TextView
-                        android:id="@+id/tv_home"
-                        style="@style/tv_select_style" />
-                </RelativeLayout>
-
-                <View style="@style/view_line"></View>
-
-                <RelativeLayout
-                    android:id="@+id/rl_car"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp">
-
-                    <TextView
-                        style="@style/tv_primary_style"
-                        android:layout_centerVertical="true"
-                        android:text="名下车产类型" />
-
-                    <TextView
-                        android:id="@+id/tv_car"
-                        style="@style/tv_select_style" />
-                </RelativeLayout>
-
-                <View style="@style/view_line"></View>
-
-                <RelativeLayout
-                    android:id="@+id/rl_xy"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp">
-
-                    <TextView
-                        style="@style/tv_primary_style"
-                        android:layout_centerVertical="true"
-                        android:text="您的信用状况" />
-
-                    <TextView
-                        android:id="@+id/tv_xy"
-                        style="@style/tv_select_style" />
-                </RelativeLayout>
-
-                <View style="@style/view_line"></View>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/llts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="visible">
-
-                <RelativeLayout
-                    android:id="@+id/ts_tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/ts"
+                        android:id="@+id/zz"
                         style="@style/tv_primary_style"
                         android:layout_width="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="30dp"
                         android:drawablePadding="6dp"
-                        android:text="所需材料"
+                        android:text="您的资质"
                         android:textColor="#446ebc" />
 
                     <ImageView
-                        android:id="@+id/tsivSlide"
+                        android:id="@+id/ivSlide"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -518,77 +306,289 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="30dp"
                         android:layout_marginRight="30dp"
-                        android:layout_toLeftOf="@id/tsivSlide"
-                        android:layout_toRightOf="@id/ts"
+                        android:layout_toLeftOf="@id/ivSlide"
+                        android:layout_toRightOf="@id/zz"
                         android:background="#dfdfdf"></View>
                 </RelativeLayout>
 
+
                 <LinearLayout
-                    android:id="@+id/tsll"
+                    android:id="@+id/zz_ll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
-                    <com.leaf.library.widget.MyListView
-                        android:id="@+id/mlv"
+                    <RelativeLayout
+                        android:id="@+id/rl_work"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:visibility="visible">
+
+                        <TextView
+                            style="@style/tv_primary_style"
+                            android:layout_centerVertical="true"
+                            android:text="职业身份" />
+
+                        <TextView
+                            android:id="@+id/tv_work"
+                            style="@style/tv_select_style" />
+
+                    </RelativeLayout>
+
+                    <!--<View style="@style/view_line"></View>-->
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            style="@style/tv_primary_style"
+                            android:layout_centerVertical="true"
+                            android:text="公司名称" />
+
+                        <EditText
+                            android:id="@+id/company_name"
+                            style="@style/cre_et"
+                            android:hint="请输入公司名称"
+                            android:maxLength="20" />
+                    </RelativeLayout>
+
+                    <View style="@style/view_line"></View>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            style="@style/tv_primary_style"
+                            android:layout_centerVertical="true"
+                            android:text="职务" />
+
+                        <EditText
+                            android:id="@+id/zhiwu"
+                            style="@style/cre_et"
+                            android:hint="请输入职务"
+                            android:maxLength="20" />
+                    </RelativeLayout>
+
+                    <View style="@style/view_line"></View>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            style="@style/tv_primary_style"
+                            android:layout_centerVertical="true"
+                            android:text="年龄" />
+
+                        <EditText
+                            android:id="@+id/age"
+                            style="@style/cre_et"
+                            android:hint="请输入年龄"
+                            android:inputType="number"
+                            android:maxLength="3" />
+                    </RelativeLayout>
+
+                    <View style="@style/view_line"></View>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_sb"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp">
+
+                        <TextView
+                            style="@style/tv_primary_style"
+                            android:layout_centerVertical="true"
+                            android:text="是否有本地社保" />
+
+                        <TextView
+                            android:id="@+id/tv_sb"
+                            style="@style/tv_select_style" />
+                    </RelativeLayout>
+
+                    <View style="@style/view_line"></View>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_gjj"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp">
+
+                        <TextView
+                            style="@style/tv_primary_style"
+                            android:layout_centerVertical="true"
+                            android:text="是否有本地公积金" />
+
+                        <TextView
+                            android:id="@+id/tv_gjj"
+                            style="@style/tv_select_style" />
+                    </RelativeLayout>
+
+                    <View style="@style/view_line"></View>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_home"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp">
+
+                        <TextView
+                            style="@style/tv_primary_style"
+                            android:layout_centerVertical="true"
+                            android:text="名下房产类型" />
+
+                        <TextView
+                            android:id="@+id/tv_home"
+                            style="@style/tv_select_style" />
+                    </RelativeLayout>
+
+                    <View style="@style/view_line"></View>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_car"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp">
+
+                        <TextView
+                            style="@style/tv_primary_style"
+                            android:layout_centerVertical="true"
+                            android:text="名下车产类型" />
+
+                        <TextView
+                            android:id="@+id/tv_car"
+                            style="@style/tv_select_style" />
+                    </RelativeLayout>
+
+                    <View style="@style/view_line"></View>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_xy"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp">
+
+                        <TextView
+                            style="@style/tv_primary_style"
+                            android:layout_centerVertical="true"
+                            android:text="您的信用状况" />
+
+                        <TextView
+                            android:id="@+id/tv_xy"
+                            style="@style/tv_select_style" />
+                    </RelativeLayout>
+
+                    <View style="@style/view_line"></View>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <RelativeLayout
+                        android:id="@+id/ts_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/ts"
+                            style="@style/tv_primary_style"
+                            android:layout_width="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginTop="10dp"
+                            android:drawablePadding="6dp"
+                            android:text="所需材料"
+                            android:textColor="#446ebc" />
+
+                        <ImageView
+                            android:id="@+id/tsivSlide"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/slide" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginRight="30dp"
+                            android:layout_toLeftOf="@id/tsivSlide"
+                            android:layout_toRightOf="@id/ts"
+                            android:background="#dfdfdf"></View>
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:id="@+id/tsll"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="-15dp"
-                        android:layout_marginRight="-15dp"/>
+                        android:orientation="vertical">
+
+                        <com.leaf.library.widget.MyListView
+                            android:id="@+id/mlv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="-15dp"
+                            android:layout_marginRight="-15dp" />
+                    </LinearLayout>
+
                 </LinearLayout>
+
+                <Button
+                    android:id="@+id/commit_report"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/button_gen"
+                    android:text="上传征信报告照片"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/commit_idCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/button_gen"
+                    android:text="上传身份证照片"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/commit_file"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/button_gen"
+                    android:text="上传其他附件照片"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/second_btn_next"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/button_gen"
+                    android:text="下一步"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/commit_report"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/button_gen"
-                android:text="上传征信报告照片"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:visibility="gone"/>
-            <Button
-                android:id="@+id/commit_idCard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/button_gen"
-                android:text="上传身份证照片"
-                android:textColor="@color/white"
-                android:textSize="16sp"/>
-            <Button
-                android:id="@+id/commit_file"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/button_gen"
-                android:text="上传其他附件照片"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
 
-            <Button
-                android:id="@+id/second_btn_next"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/button_gen"
-                android:text="下一步"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
+        </ScrollView>
 
-        </LinearLayout>
-
-
-    </ScrollView>
-
-<com.beyonditsm.financial.view.LoadingView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/loadView"></com.beyonditsm.financial.view.LoadingView>
+        <com.beyonditsm.financial.view.LoadingView
+            android:id="@+id/loadView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     </FrameLayout>
 </LinearLayout>

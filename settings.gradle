@@ -1,1 +1,1 @@
-include ':app', ':IMKit', ':jpush'
+include ':app', ':IMKit'
