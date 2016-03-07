@@ -800,8 +800,8 @@ public class CreditSecondFrag extends BaseFragment {
 //                getActivity().startActivity(intent);
                 break;
             case R.id.commit_idCard:
-                intent = new Intent(context,UpLoadFileAct.class);
-//                intent = new Intent(context,UpIdCardAct.class);
+//                intent = new Intent(context,UpLoadFileAct.class);
+                intent = new Intent(context,UpIdCardAct.class);
                 intent.putExtra("isSupplementFile","idCard");
                 intent.putExtra("orderNo",orderNo);
 //                intent.putExtra("type","card");
