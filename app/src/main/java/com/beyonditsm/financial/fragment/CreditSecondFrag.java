@@ -28,7 +28,6 @@ import android.widget.Toast;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.credit.CreditDetailAct;
 import com.beyonditsm.financial.activity.credit.CreditStepAct;
-import com.beyonditsm.financial.activity.credit.UpIdCardAct;
 import com.beyonditsm.financial.activity.credit.UpLoadFileAct;
 import com.beyonditsm.financial.activity.photo.PicSelectActivity;
 import com.beyonditsm.financial.activity.user.DoTaskPicture;
