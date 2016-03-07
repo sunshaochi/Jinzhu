@@ -530,12 +530,10 @@ public class HomeCreditDetailAct extends BaseActivity {
                         if (Double.valueOf(creditMonth)>maxMont){
                             creditMonth = productEntity.getTimeMaxVal();
                             tvM.setText(creditMonth);
-                            MyLogUtils.info("比最大值还大");
                         }
                         if (Double.valueOf(creditMonth)<minMont){
                             creditMonth = productEntity.getTimeMinVal();
                             tvM.setText(creditMonth);
-                            MyLogUtils.info("比最小值还小");
                         }
 //                        if (Double.valueOf(creditMonth) < minMont || Double.valueOf(creditMonth) > maxMont) {
 //                            creditMonth = maxMont + "";
@@ -588,7 +586,6 @@ public class HomeCreditDetailAct extends BaseActivity {
                     }
 
                     String monthRath = (Double.valueOf(productEntity.getMonthlyRathMin()) + Double.valueOf(productEntity.getMonthlyRathMax())) / 2 + "";
-                    MyLogUtils.info("ccccccccc+"+creditMoney+"+zzzzzzzz+"+creditMonth);
                     getMOnthPay(creditMoney, monthRath, creditMonth);
                 }
             }
