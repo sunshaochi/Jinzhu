@@ -170,7 +170,7 @@
                 android:layout_marginTop="10dp"
                 android:button="@drawable/checkbox"
                 android:paddingStart="4dp"
-                android:text="同意金蛛条款"
+                android:text="同意"
                 android:textColor="#333333"
                 android:checked="true"
                 android:textSize="14sp" />

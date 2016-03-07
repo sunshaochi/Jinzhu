@@ -2,9 +2,11 @@ package com.beyonditsm.financial.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -84,6 +86,8 @@ public class CreditFirstFrag extends BaseFragment {
         firstBtnNext = (Button) view.findViewById(R.id.first_btn_next);
         creTvLogin = (TextView) view.findViewById(R.id.cre_tv_login);
         intro= (TextView) view.findViewById(R.id.intro);
+        intro.setText(Html.fromHtml("<u>" + "《金蛛条款说明》" + "</u>"));
+        intro.setTextColor(getResources().getColor(R.color.blue_color));
     }
 
 

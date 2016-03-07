@@ -3,6 +3,7 @@ package com.beyonditsm.financial.activity.user;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -99,6 +100,7 @@ public class RegisterAct extends BaseActivity {
         regBtn = (Button) findViewById(R.id.reg_btn);
         TextView intro = (TextView) findViewById(R.id.intro);
         intro.setText(Html.fromHtml("<u>"+"《金蛛条款说明》"+"</u>"));
+        intro.setTextColor(getResources().getColor(R.color.blue_color));
     }
 
     @Override
