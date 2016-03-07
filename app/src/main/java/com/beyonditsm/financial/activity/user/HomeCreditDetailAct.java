@@ -198,7 +198,6 @@ public class HomeCreditDetailAct extends BaseActivity {
         final String productId = getIntent().getStringExtra(PRODUCTINFO);
         creditMoney = getIntent().getStringExtra(CREDIT_AMOUNT);
         creditMonth = getIntent().getStringExtra(CREDIT_TIME);
-        MyLogUtils.info("creditMoney+"+creditMoney+",,,,,,creditMonth+"+creditMonth);
         tvM.setText(creditMonth);
         findOrderDetail(productId);
 
@@ -232,6 +231,7 @@ public class HomeCreditDetailAct extends BaseActivity {
 
             //如果用户输入的数值比额度范围最小值小则计算最小的，比额度范围值最大的大计算最大的
             if (!s.toString().startsWith(".")) {
+
 
                 if (s.toString().trim().length() == 0) {
                     creditMoney = "0.0";
@@ -370,9 +370,7 @@ public class HomeCreditDetailAct extends BaseActivity {
                     public void getAdress(String adress) {
                         tvM.setText(adress.substring(0, adress.length() - 2));
                         if (TextUtils.isEmpty(etAmount.getText().toString().trim())) {
-//                            etAmount.setText("5");
-                            Double minVal = Double.valueOf(productEntity.getMinVal());
-                            creditMoney = df.format(minVal/10000)+"";
+                            MyToastUtils.showShortToast(getApplicationContext(),"金额不能为空！");
                         } else {
                             creditMoney = etAmount.getText().toString().trim();
                         }
@@ -389,7 +387,7 @@ public class HomeCreditDetailAct extends BaseActivity {
                 break;
             //计算
             case R.id.tvCal:
-                if (TextUtils.isEmpty(etAmount.getText().toString().trim())&&TextUtils.isEmpty(tvM.getText().toString().trim())){
+                if (TextUtils.isEmpty(etAmount.getText().toString().trim())||TextUtils.isEmpty(tvM.getText().toString().trim())){
                     MyToastUtils.showShortToast(HomeCreditDetailAct.this,"贷款金额和贷款期限不能为空");
                     return;
                 }else {

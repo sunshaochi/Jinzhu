@@ -194,16 +194,18 @@ public class CreditFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), HomeCreditDetailAct.class);
 //                intent.putExtra(CreditDetailAct.PRODUCTINFO,datas.get(position));
-                if(TextUtils.isEmpty(cMoney)){
-                    cMoney= ConstantValue.CREDIT_MONEY+"";
+                if(TextUtils.isEmpty(etAmount.getText().toString().trim())&&TextUtils.isEmpty(tvM.getText().toString().trim())){
+//                    cMoney= ConstantValue.CREDIT_MONEY+"";
+                    intent.putExtra(HomeCreditDetailAct.PRODUCTINFO, datas.get(position).getProductId());
+                    intent.putExtra(HomeCreditDetailAct.CREDIT_AMOUNT,ConstantValue.CREDIT_MONEY+"");
+                    intent.putExtra(HomeCreditDetailAct.CREDIT_TIME,ConstantValue.CREDIT_MONTH+"");
+                    intent.putExtra(HomeCreditDetailAct.CREDIT_NAME, datas.get(position).getProductName());
+                }else{
+                    intent.putExtra(HomeCreditDetailAct.PRODUCTINFO, datas.get(position).getProductId());
+                    intent.putExtra(HomeCreditDetailAct.CREDIT_AMOUNT, cMoney);
+                    intent.putExtra(HomeCreditDetailAct.CREDIT_TIME, cTime);
+                    intent.putExtra(HomeCreditDetailAct.CREDIT_NAME, datas.get(position).getProductName());
                 }
-                if(TextUtils.isEmpty(cTime)){
-                    cTime=ConstantValue.CREDIT_MONTH+"";
-                }
-                intent.putExtra(HomeCreditDetailAct.PRODUCTINFO, datas.get(position).getProductId());
-                intent.putExtra(HomeCreditDetailAct.CREDIT_AMOUNT, cMoney);
-                intent.putExtra(HomeCreditDetailAct.CREDIT_TIME, cTime);
-                intent.putExtra(HomeCreditDetailAct.CREDIT_NAME, datas.get(position).getProductName());
                 getActivity().startActivity(intent);
             }
         });
@@ -355,7 +357,7 @@ public class CreditFragment extends BaseFragment {
                 }
                 datas.addAll(list);
 
-                if (TextUtils.isEmpty(cMoney) && TextUtils.isEmpty(tvM.getText().toString().trim())) {
+                if (TextUtils.isEmpty(etAmount.getText().toString().trim()) && TextUtils.isEmpty(tvM.getText().toString().trim())) {
                     String creditTotal = "";
 
                     String creditTime = "";
