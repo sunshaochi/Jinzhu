@@ -80,11 +80,11 @@ public class ServicerManager extends RequestManager{
      * @param callBack
      */
     public void findServantWithdraw(ServantWithdrawEntity swe,CallBack callBack){
-        List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
-        queryParams.add(new BasicNameValuePair("startTime",swe.getStartTime()+""));
-        queryParams.add(new BasicNameValuePair("endTime",swe.getEndTime()+""));
-        queryParams.add(new BasicNameValuePair("page",swe.getPage()+""));
-        queryParams.add(new BasicNameValuePair("rows", swe.getRows() + ""));
-        doGet(IFinancialUrl.FIND_SERVANT_WITHDRAW+"?page="+swe.getPage()+"&rows="+swe.getRows(), queryParams, callBack);
+//        List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
+//        queryParams.add(new BasicNameValuePair("startTime",swe.getStartTime()+""));
+//        queryParams.add(new BasicNameValuePair("endTime",swe.getEndTime()+""));
+//        queryParams.add(new BasicNameValuePair("page",swe.getPage()+""));
+//        queryParams.add(new BasicNameValuePair("rows", swe.getRows() + ""));
+        doGet(IFinancialUrl.FIND_SERVANT_WITHDRAW+"?page="+swe.getPage()+"&rows="+swe.getRows(), callBack);
     }
 }

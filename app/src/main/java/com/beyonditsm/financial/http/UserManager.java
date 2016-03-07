@@ -21,14 +21,14 @@ public class UserManager extends RequestManager{
      * @param callBack
      */
     public void findTaskList(final CallBack callBack){
-        doGet(IFinancialUrl.TASK_LIST, null, callBack);
+        doGet(IFinancialUrl.TASK_LIST, callBack);
     }
     /**
      * 查询用户的所有任务列表（未完成，审核中，已完成）
      * @param callBack
      */
     public void findAllTask(final CallBack callBack){
-        doGet(IFinancialUrl.ALLTASK_URL, null, callBack);
+        doGet(IFinancialUrl.ALLTASK_URL, callBack);
     }
 
     /**
@@ -37,9 +37,9 @@ public class UserManager extends RequestManager{
      * @param callBack
      */
     public void findTaskDetail(TaskEntity taskEntity,CallBack callBack){
-        List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
-        queryParams.add(new BasicNameValuePair("taskId", taskEntity.getId()));
-        doGet(IFinancialUrl.FINISH_DO_URL+"?taskId="+taskEntity.getId(),queryParams,callBack);
+//        List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
+//        queryParams.add(new BasicNameValuePair("taskId", taskEntity.getId()));
+        doGet(IFinancialUrl.FINISH_DO_URL+"?taskId="+taskEntity.getId(),callBack);
     }
 
     /**
@@ -48,7 +48,7 @@ public class UserManager extends RequestManager{
      * @param callBack
      */
     public void findProTaskDetail(TaskEntity taskEntity,CallBack callBack){
-        doGet(IFinancialUrl.FINISH_DO_URL+"?taskId="+taskEntity.getTaskId(),null,callBack);
+        doGet(IFinancialUrl.FINISH_DO_URL+"?taskId="+taskEntity.getTaskId(),callBack);
     }
 
     /**
@@ -59,7 +59,7 @@ public class UserManager extends RequestManager{
     public void findTaskStrategy(TaskEntity taskEntity,CallBack callBack){
         List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
         queryParams.add(new BasicNameValuePair("taskId", taskEntity.getId()));
-        doGet(IFinancialUrl.TASK_STRATEGY+"?taskId="+taskEntity.getId(),queryParams,callBack);
+        doGet(IFinancialUrl.TASK_STRATEGY+"?taskId="+taskEntity.getId(),callBack);
     }
 
     /**
@@ -68,13 +68,13 @@ public class UserManager extends RequestManager{
      * @param callBack
      */
     public void findProTaskStrategy(TaskEntity taskEntity,CallBack callBack){
-        doGet(IFinancialUrl.TASK_STRATEGY+"?taskId="+taskEntity.getTaskId(),null,callBack);
+        doGet(IFinancialUrl.TASK_STRATEGY+"?taskId="+taskEntity.getTaskId(),callBack);
     }
 
     public void findTaskBytaskIds(String taskId,CallBack callBack){
-        List<NameValuePair> queryParams=new ArrayList<>();
-        queryParams.add(new BasicNameValuePair("taskManageIds",taskId));
-        doGet(IFinancialUrl.FINDTASK_BY_TASKID_URL+"?taskManageIds="+taskId,queryParams,callBack);
+//        List<NameValuePair> queryParams=new ArrayList<>();
+//        queryParams.add(new BasicNameValuePair("taskManageIds",taskId));
+        doGet(IFinancialUrl.FINDTASK_BY_TASKID_URL+"?taskManageIds="+taskId,callBack);
     }
 
     /**
@@ -93,7 +93,7 @@ public class UserManager extends RequestManager{
      * @param callBack
      */
     public void findFinishTaskByAccount(CallBack callBack){
-        doGet(IFinancialUrl.TASK_FINISH_URL, null, callBack);
+        doGet(IFinancialUrl.TASK_FINISH_URL, callBack);
     }
 
     /**

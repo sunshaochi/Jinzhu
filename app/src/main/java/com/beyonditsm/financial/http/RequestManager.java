@@ -4,6 +4,14 @@ package com.beyonditsm.financial.http;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.StringRequest;
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.MyLogUtils;
@@ -22,6 +30,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -82,124 +91,123 @@ public class RequestManager {
     }
 
 
-
     /**
-     * 登录、注册 保存Cookie
+     * Volley get请求
      * @param url
-     * @param queryParams
-     * @param callBack
+     * @param callback
      */
-    public void doUser(String url, List<NameValuePair> queryParams, final CallBack callBack){
-        {
-           final  HttpUtils httpUtils = new HttpUtils();
-            httpUtils.configCurrentHttpCacheExpiry(0);
-            MyLogUtils.info("地址:" + url);
+    public void doGet(String url,final  CallBack callback){
+        StringRequest request = new StringRequest(url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        String result=response.toString();
+                        MyLogUtils.info(result);
+                        try {
+                            JSONObject obj=new JSONObject(result);
+                            int status= obj.getInt("status");
+                            if(status==200){
+                                callback.onSucess(result);
+                            }else{
+                                callback.onError(obj.getInt("status"),obj.getString("message"));
 
-            RequestParams params = null;
-            if(!TextUtils.isEmpty(SpUtils.getCookie(MyApplication.getInstance()))){
-                params=new RequestParams();
-                params.addHeader("cookie",SpUtils.getCookie(MyApplication.getInstance()));
-            }
-            if(queryParams != null && queryParams.size() > 0){
-                if(params==null) {
-                    params = new RequestParams();
-                }
-            }
-            if(params!=null){
-                params.addBodyParameter(queryParams);
-
-            }
-
-            if(params==null){
-                params=new RequestParams();
-                params.addHeader("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance()));
-            }else {
-                params.addHeader("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance()));
-            }
-            httpUtils.send(HttpRequest.HttpMethod.POST, url, params, new RequestCallBack() {
-                @Override
-                public void onSuccess(ResponseInfo responseInfo) {
-                    String result=responseInfo.result.toString();
-                    MyLogUtils.info(result);
-                    MyLogUtils.info("请求返回的cookie："+getCoolie(httpUtils));
-                    try {
-                        JSONObject obj=new JSONObject(result);
-                        int status= obj.getInt("status");
-                        if(status==200){
-
-                            SpUtils.setCooike(MyApplication.getInstance(),getCoolie(httpUtils));
-                            callBack.onSucess(result);
-                        }else {
-                            callBack.onError(obj.getInt("status"),obj.getString("message"));
-
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
                     }
-                }
-
-                @Override
-                public void onFailure(HttpException e, String s) {
-                    callBack.onError(no_net,"亲，网络不给力");
-                }
 
 
-            });
-        }
-    }
-
-    public  void doGet(String url, List<NameValuePair> queryParams, final CallBack callback){
-        final HttpUtils httpUtils = new HttpUtils();
-        httpUtils.configCurrentHttpCacheExpiry(0);
-        MyLogUtils.info("地址:" + url);
-        MyLogUtils.degug("cookie:" + SpUtils.getCookie(MyApplication.getInstance()));
-
-        RequestParams params = null;
-        if(!"".equals(SpUtils.getCookie(MyApplication.getInstance()))){
-            params=new RequestParams();
-            params.addHeader("cookie",SpUtils.getCookie(MyApplication.getInstance()));
-        }
-        if(queryParams != null && queryParams.size() > 0){
-            if(params==null) {
-                params = new RequestParams();
-            }
-            params.addBodyParameter(queryParams);
-        }
-        if(params==null){
-            params=new RequestParams();
-            params.addHeader("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance()));
-        }else{
-            params.addHeader("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance()));
-        }
-        httpUtils.send(HttpRequest.HttpMethod.GET, url, params, new RequestCallBack() {
+                }, new Response.ErrorListener() {
             @Override
-            public void onSuccess(ResponseInfo responseInfo) {
-                if(!TextUtils.isEmpty(getCoolie(httpUtils)))
-                    SpUtils.setCooike(MyApplication.getInstance(),getCoolie(httpUtils));
-                String result=responseInfo.result.toString();
-                MyLogUtils.info(result);
-                try {
-                    JSONObject obj=new JSONObject(result);
-                    int status= obj.getInt("status");
-                    if(status==200){
-                        callback.onSucess(result);
-                    }else{
-                        callback.onError(obj.getInt("status"),obj.getString("message"));
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(HttpException e, String s) {
+            public void onErrorResponse(VolleyError error) {
                 callback.onError(no_net,"亲，网络不给力");
             }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap localHashMap = new HashMap();
+                localHashMap.put("Cookie", SpUtils.getCookie(MyApplication.getInstance()));
+                localHashMap.put("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance()));
+                return localHashMap;
+            }
 
+            @Override
+            protected Response<String> parseNetworkResponse(
+                    NetworkResponse response) {
+                // TODO Auto-generated method stub
+                try {
 
-        });
+                    Map<String, String> responseHeaders = response.headers;
+                    String rawCookies = responseHeaders.get("Set-Cookie");
+                    String dataString = new String(response.data, "UTF-8");
+                    if(!TextUtils.isEmpty(rawCookies))
+                        SpUtils.setCooike(MyApplication.getInstance(),rawCookies);
+                    return Response.success(dataString, HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    return Response.error(new ParseError(e));
+                }
+            }
+        };
+        // 设定超时时间
+        request.setRetryPolicy(new DefaultRetryPolicy(5000, 1, 1.0f));
+        MyApplication.getInstance().addToRequestQueue(request);
+        MyApplication.getInstance().getRequestQueue().start();
+
     }
+
+//    public  void doGet(String url, List<NameValuePair> queryParams, final CallBack callback){
+//        final HttpUtils httpUtils = new HttpUtils();
+//        httpUtils.configCurrentHttpCacheExpiry(0);
+//        MyLogUtils.info("地址:" + url);
+//        MyLogUtils.degug("cookie:" + SpUtils.getCookie(MyApplication.getInstance()));
+//
+//        RequestParams params = null;
+//        if(!"".equals(SpUtils.getCookie(MyApplication.getInstance()))){
+//            params=new RequestParams();
+//            params.addHeader("cookie",SpUtils.getCookie(MyApplication.getInstance()));
+//        }
+//        if(queryParams != null && queryParams.size() > 0){
+//            if(params==null) {
+//                params = new RequestParams();
+//            }
+//            params.addBodyParameter(queryParams);
+//        }
+//        if(params==null){
+//            params=new RequestParams();
+//            params.addHeader("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance()));
+//        }else{
+//            params.addHeader("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance()));
+//        }
+//        httpUtils.send(HttpRequest.HttpMethod.GET, url, params, new RequestCallBack() {
+//            @Override
+//            public void onSuccess(ResponseInfo responseInfo) {
+//                if(!TextUtils.isEmpty(getCoolie(httpUtils)))
+//                    SpUtils.setCooike(MyApplication.getInstance(),getCoolie(httpUtils));
+//                String result=responseInfo.result.toString();
+//                MyLogUtils.info(result);
+//                try {
+//                    JSONObject obj=new JSONObject(result);
+//                    int status= obj.getInt("status");
+//                    if(status==200){
+//                        callback.onSucess(result);
+//                    }else{
+//                        callback.onError(obj.getInt("status"),obj.getString("message"));
+//
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(HttpException e, String s) {
+//                callback.onError(no_net,"亲，网络不给力");
+//            }
+//
+//
+//        });
+//    }
 
 
     public void doPost(String url, List<NameValuePair> queryParams,final CallBack callBack){
