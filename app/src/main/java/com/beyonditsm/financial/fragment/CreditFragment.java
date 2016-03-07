@@ -135,10 +135,10 @@ public class CreditFragment extends BaseFragment {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
-                    if (TextUtils.isEmpty(etAmount.getText().toString().trim())||TextUtils.isEmpty(tvM.getText().toString().trim())){
+                    if (TextUtils.isEmpty(etAmount.getText().toString().trim()) || TextUtils.isEmpty(tvM.getText().toString().trim())) {
                         MyToastUtils.showShortToast(getActivity(), "请检查贷款金额和贷款期限是否输入完整");
-                        return  false;
-                    }else{
+                        return false;
+                    } else {
                         cTime = tvM.getText().toString().trim();
                         cMoney = etAmount.getText().toString().trim();
                     }
@@ -152,26 +152,27 @@ public class CreditFragment extends BaseFragment {
                 return false;
             }
         });
-//        etAmount.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                EditText et = (EditText) v;
-//                et.setHint(null);
-//            }
-//        });
-        etAmount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        etAmount.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
+            public void onClick(View v) {
                 EditText et = (EditText) v;
-                if (!hasFocus) {
-                    et.setHint(et.getText().toString());
-                } else {
-                    String hint = et.getHint().toString();
-                    et.setTag(hint);
-                    et.setHint(null);
-                }
+                et.setHint(null);
+                et.setCursorVisible(true);
             }
         });
+//        etAmount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                EditText et = (EditText) v;
+//                if (!hasFocus) {
+//                    et.setHint(et.getText().toString());
+//                } else {
+//                    String hint = et.getHint().toString();
+//                    et.setTag(hint);
+//                    et.setHint(null);
+//                }
+//            }
+//        });
 //        String[] moneys = getResources().getStringArray(R.array.money);
 //        for (int i = 0; i < moneys.length; i++) {
 //            CustemObject object = new CustemObject();
@@ -201,13 +202,13 @@ public class CreditFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), HomeCreditDetailAct.class);
 //                intent.putExtra(CreditDetailAct.PRODUCTINFO,datas.get(position));
-                if(TextUtils.isEmpty(etAmount.getText().toString().trim())&&TextUtils.isEmpty(tvM.getText().toString().trim())){
+                if (TextUtils.isEmpty(etAmount.getText().toString().trim()) && TextUtils.isEmpty(tvM.getText().toString().trim())) {
 //                    cMoney= ConstantValue.CREDIT_MONEY+"";
                     intent.putExtra(HomeCreditDetailAct.PRODUCTINFO, datas.get(position).getProductId());
-                    intent.putExtra(HomeCreditDetailAct.CREDIT_AMOUNT,ConstantValue.CREDIT_MONEY+"");
-                    intent.putExtra(HomeCreditDetailAct.CREDIT_TIME,ConstantValue.CREDIT_MONTH+"");
+                    intent.putExtra(HomeCreditDetailAct.CREDIT_AMOUNT, ConstantValue.CREDIT_MONEY + "");
+                    intent.putExtra(HomeCreditDetailAct.CREDIT_TIME, ConstantValue.CREDIT_MONTH + "");
                     intent.putExtra(HomeCreditDetailAct.CREDIT_NAME, datas.get(position).getProductName());
-                }else{
+                } else {
                     intent.putExtra(HomeCreditDetailAct.PRODUCTINFO, datas.get(position).getProductId());
                     intent.putExtra(HomeCreditDetailAct.CREDIT_AMOUNT, cMoney);
                     intent.putExtra(HomeCreditDetailAct.CREDIT_TIME, cTime);
@@ -257,7 +258,7 @@ public class CreditFragment extends BaseFragment {
                         if (TextUtils.isEmpty(etAmount.getText().toString().trim())) {
 //                            cMoney = ConstantValue.CREDIT_MONEY + "";
 //                            etAmount.setText(ConstantValue.CREDIT_MONEY + "");
-                            MyToastUtils.showShortToast(getActivity(),"请输入金额");
+                            MyToastUtils.showShortToast(getActivity(), "请输入金额");
                             return;
                         } else {
                             cMoney = etAmount.getText().toString().trim();
@@ -274,11 +275,11 @@ public class CreditFragment extends BaseFragment {
                 }
                 FinancialUtil.closeIM(getActivity(), etAmount);
                 loadView.loading();
-                if(TextUtils.isEmpty(etAmount.getText().toString().trim())){
-                    etAmount.setText(ConstantValue.CREDIT_MONEY+"");
+                if (TextUtils.isEmpty(etAmount.getText().toString().trim())) {
+                    etAmount.setText(ConstantValue.CREDIT_MONEY + "");
                 }
-                if(TextUtils.isEmpty(tvM.getText().toString().trim())){
-                    tvM.setText(ConstantValue.CREDIT_MONTH+"");
+                if (TextUtils.isEmpty(tvM.getText().toString().trim())) {
+                    tvM.setText(ConstantValue.CREDIT_MONTH + "");
                 }
 
                 currentP = 1;

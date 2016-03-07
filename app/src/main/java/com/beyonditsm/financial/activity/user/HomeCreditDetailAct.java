@@ -28,6 +28,7 @@ import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.widget.DialogChooseMonth;
 import com.beyonditsm.financial.widget.MyAlertDialog;
+import com.leaf.library.widget.MarqueeTextView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
@@ -56,6 +57,8 @@ public class HomeCreditDetailAct extends BaseActivity {
     private EditText etAmount;//输入金额
     @ViewInject(R.id.tvM)
     private TextView tvM;//月份
+    @ViewInject(R.id.tv_title)
+    private TextView tvTitle;
 
 
     private Map<Integer, Boolean> map = new HashMap<Integer, Boolean>();
@@ -194,7 +197,12 @@ public class HomeCreditDetailAct extends BaseActivity {
     public void init(Bundle savedInstanceState) {
         assignViews();
         initAnim();
-        setTopTitle(getIntent().getStringExtra(CREDIT_NAME));
+        String creditName = getIntent().getStringExtra(CREDIT_NAME);
+        setTopTitle(creditName);
+        if (creditName.length()>14){
+            tvTitle.setTextSize(14);
+        }
+
         final String productId = getIntent().getStringExtra(PRODUCTINFO);
         creditMoney = getIntent().getStringExtra(CREDIT_AMOUNT);
         creditMonth = getIntent().getStringExtra(CREDIT_TIME);

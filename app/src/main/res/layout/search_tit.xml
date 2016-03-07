@@ -44,6 +44,7 @@
             android:textColor="#ff6633"
             android:layout_marginRight="1dp"
             android:inputType="numberDecimal"
+            android:cursorVisible="false"
             android:textSize="14sp"
             android:hint="-请输入-"
             android:layout_centerVertical="true"/>
