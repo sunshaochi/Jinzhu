@@ -36,6 +36,7 @@ public class MangManger extends RequestManager {
 //        queryParams.add(new BasicNameValuePair("status", "PUBLISHED"));
 //        doPost(IFinancialUrl.FIND_PRODUCT_LIST_URL, queryParams, callBack);
         doGet(IFinancialUrl.FIND_PRODUCT_LIST_URL+"?creditMoney="+creditMoney+"&creditTime="+creditTime+"&orderByOfType="+""+"&page="+fpe.getPage()+"&rows="+fpe.getRows(),callBack);
+//        doPost(IFinancialUrl.FIND_PRODUCT_LIST_URL+"?creditMoney="+creditMoney+"&creditTime="+creditTime+"&orderByOfType="+""+"&page="+fpe.getPage()+"&rows="+fpe.getRows(),queryParams,callBack);
     }
 
     /**

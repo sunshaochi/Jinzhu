@@ -152,6 +152,13 @@ public class CreditFragment extends BaseFragment {
                 return false;
             }
         });
+//        etAmount.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                EditText et = (EditText) v;
+//                et.setHint(null);
+//            }
+//        });
         etAmount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
