@@ -3,6 +3,7 @@ package com.beyonditsm.financial.activity.user;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
@@ -27,6 +28,9 @@ public class SettingAct extends BaseActivity {
     private ToggleButton tb_msg;//消息提醒
     @ViewInject(R.id.tb_sleep)
     private ToggleButton tb_sleep;//消息免打扰
+    @ViewInject(R.id.tvVersion)
+    private TextView tvVersion;
+
 
     private GeneralUtils gUtils;
 //    private UserEntity userInfo;
@@ -41,6 +45,7 @@ public class SettingAct extends BaseActivity {
         setLeftTv("返回");
         setTopTitle("设置");
         gUtils = new GeneralUtils();
+        tvVersion.setText(FinancialUtil.getAppVersion(this));
 //        userInfo=getIntent().getParcelableExtra("user_info");
         tb_msg.setIsSwitch(SpUtils.getMsg(SettingAct.this));
         tb_sleep.setIsSwitch(SpUtils.getSleep(SettingAct.this));
