@@ -86,7 +86,7 @@ public class CreditFirstFrag extends BaseFragment {
         firstBtnNext = (Button) view.findViewById(R.id.first_btn_next);
         creTvLogin = (TextView) view.findViewById(R.id.cre_tv_login);
         intro= (TextView) view.findViewById(R.id.intro);
-        intro.setText(Html.fromHtml("<u>" + "《金蛛条款说明》" + "</u>"));
+        intro.setText(Html.fromHtml("<u>" + "《金蛛服务条款》" + "</u>"));
         intro.setTextColor(getResources().getColor(R.color.blue_color));
     }
 

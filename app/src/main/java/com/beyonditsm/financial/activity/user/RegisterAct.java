@@ -99,7 +99,7 @@ public class RegisterAct extends BaseActivity {
         regYqm = (EditText) findViewById(R.id.reg_yqm);
         regBtn = (Button) findViewById(R.id.reg_btn);
         TextView intro = (TextView) findViewById(R.id.intro);
-        intro.setText(Html.fromHtml("<u>"+"《金蛛条款说明》"+"</u>"));
+        intro.setText(Html.fromHtml("<u>"+"《金蛛服务条款》"+"</u>"));
         intro.setTextColor(getResources().getColor(R.color.blue_color));
     }
 
