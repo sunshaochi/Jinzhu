@@ -15,6 +15,7 @@ import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserEvent;
 import com.beyonditsm.financial.fragment.ManagerMineFrg;
 import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.AddressUtil;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.widget.DialogChooseAdress;
@@ -64,6 +65,7 @@ public class ManagerUpdateAct extends BaseActivity {
     private RelativeLayout rlWork;
     @ViewInject(R.id.tv_Work)
     private TextView tvWork;
+    private AddressUtil addressUtil;
 
     @Override
     public void setLayout() {
@@ -74,6 +76,7 @@ public class ManagerUpdateAct extends BaseActivity {
     public void init(Bundle savedInstanceState) {
         setLeftTv("返回");
         setTopTitle("我的资料");
+        addressUtil = new AddressUtil(this);
         creditManager = getIntent().getParcelableExtra(ManagerMineFrg.CREDIT_DATAS);
         if (creditManager != null) {
             setCreditManagerDetails(creditManager);
@@ -103,12 +106,14 @@ public class ManagerUpdateAct extends BaseActivity {
 //            tvJobName.setText(cm.getEmail());
 //        }
         //所属机构
-//        if (!TextUtils.isEmpty(cm.get())) {
-//            tvWork.setText(cm.getEmail());
-//        }
+        if (!TextUtils.isEmpty(cm.getBranchName())) {
+            tvWork.setText(cm.getBranchName());
+        }
         //地址
         if (cm.getCity()!=null) {
-            tvAddress.setText(cm.getCity());
+            tvAddress.setText(addressUtil.getProName(cm.getProvince())
+                    +addressUtil.getCityName(cm.getProvince(),cm.getCity())
+                    +addressUtil.getCountryName(cm.getCity(),cm.getDistrict()));
         }
     }
 
@@ -129,6 +134,9 @@ public class ManagerUpdateAct extends BaseActivity {
                 break;
             case 11:
                 tvManaTel.setText(creditManager.getManaTel());
+                break;
+            case 9:
+                tvWork.setText(creditManager.getBranchName());
                 break;
         }
     }
@@ -164,7 +172,7 @@ public class ManagerUpdateAct extends BaseActivity {
             case R.id.rl_work://所在机构
                 intent = new Intent(this, ManagerEditAct.class);
                 intent.putExtra(ManagerEditAct.TYPE, 9);
-//                intent.putExtra(ManagerMineFrg.CREDIT_DATAS, cme);
+                intent.putExtra(ManagerMineFrg.CREDIT_DATAS, creditManager);
                 startActivity(intent);
                 break;
             case R.id.rl_jobName://职位名称

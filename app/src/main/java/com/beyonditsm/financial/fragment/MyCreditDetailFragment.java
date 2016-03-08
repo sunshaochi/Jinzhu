@@ -248,7 +248,8 @@ public class MyCreditDetailFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 if (taskEntityList.get(position).getTaskStatus() == -1) {
-                    findTaskStrategy(taskEntityList.get(position), position);
+//                    findTaskStrategy(taskEntityList.get(position), position);
+                    return;
                 } else if ((taskEntityList.get(position).getTaskStatus() == 0) || (taskEntityList.get(position).getTaskStatus() == 1)) {
                     findTaskDetail(taskEntityList.get(position), position);
 

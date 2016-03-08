@@ -99,6 +99,7 @@ public class RequestManager {
      * @param callback
      */
     public void doGet(String url, final CallBack callback) {
+        MyLogUtils.info("地址:" + url);
         StringRequest request = new StringRequest(url,
                 new Response.Listener<String>() {
                     @Override
@@ -218,6 +219,7 @@ public class RequestManager {
      * @param callback
      */
     public void doPost(final String url, final Map<String, String> params, final CallBack callback) {
+        MyLogUtils.info("地址:" + url);
         StringRequest request = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -341,6 +343,7 @@ public class RequestManager {
      */
     public void getCode(String url, List<NameValuePair> queryParams, final CallBack callBack) {
         {
+            MyLogUtils.info("地址:" + url);
             final HttpUtils httpUtils = new HttpUtils();
             httpUtils.configCurrentHttpCacheExpiry(0);
 
@@ -390,6 +393,7 @@ public class RequestManager {
      * @param callBack
      */
     public void loadImage(final String url, final Map<String, FileBody> fileMaps, final CallBack callBack) {
+        MyLogUtils.info("地址:" + url);
         final HttpManager manager = new HttpManager();
         final Map<String, String> par = new HashMap<String, String>();
         par.put("type", "img");
