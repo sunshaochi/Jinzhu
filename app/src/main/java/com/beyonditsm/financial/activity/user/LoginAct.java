@@ -24,7 +24,6 @@ import com.beyonditsm.financial.activity.servicer.ServiceMainAct;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.fragment.MineFragment;
 import com.beyonditsm.financial.http.RequestManager;
-import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.AutoAnimImageView;

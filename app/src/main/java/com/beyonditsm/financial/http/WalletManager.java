@@ -1,17 +1,14 @@
 package com.beyonditsm.financial.http;
 
-import org.apache.http.message.BasicNameValuePair;
-
-
 import com.beyonditsm.financial.entity.OrderBean;
-import com.beyonditsm.financial.util.GsonUtils;
-import com.beyonditsm.financial.util.ParamsUtil;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 钱包manager
@@ -26,6 +23,13 @@ public class WalletManager extends RequestManager{
      * @param callBack
      */
     public void submitDeductionTOrder(OrderBean orderBean,String fundPassword,CallBack callBack){
+//        Map<String,String> params=new HashMap<String,String>();
+//        params.put("bankCardNo", orderBean.getBankCardNo());
+//        params.put("bankName", orderBean.getBankName());
+//        params.put("cashOutAmount", orderBean.getCashOutAmount()+"");
+//        params.put("userName", orderBean.getUserName());
+//        params.put("orderId", orderBean.getOrderId());
+//        params.put("fundPassword", fundPassword);
         List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
         queryParams.add(new BasicNameValuePair("bankCardNo",orderBean.getBankCardNo()));
         queryParams.add(new BasicNameValuePair("bankName",orderBean.getBankName()));
@@ -100,7 +104,8 @@ public class WalletManager extends RequestManager{
      * @param callBack
      */
     public void findOrderNoListByUserName(CallBack callBack){
-        doPost(IFinancialUrl.ORDER_NO_LIST,null,callBack);
+        Map<String,String> params=new HashMap<String,String>();
+        doPost(IFinancialUrl.ORDER_NO_LIST,params,callBack);
     }
 
     /**

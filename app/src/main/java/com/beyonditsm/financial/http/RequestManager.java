@@ -8,6 +8,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
@@ -48,30 +49,30 @@ public class RequestManager {
 
     private static RequestManager manager;
 
-    public static CommManager getCommManager(){
-        if(commManager==null){
-            commManager=new CommManager();
+    public static CommManager getCommManager() {
+        if (commManager == null) {
+            commManager = new CommManager();
         }
         return commManager;
     }
 
-    public static UserManager getUserManager(){
-        if(userManager==null){
-            userManager=new UserManager();
+    public static UserManager getUserManager() {
+        if (userManager == null) {
+            userManager = new UserManager();
         }
         return userManager;
     }
 
-    public  static ServicerManager getServicerManager(){
-        if(servicerManager==null){
-            servicerManager=new ServicerManager();
+    public static ServicerManager getServicerManager() {
+        if (servicerManager == null) {
+            servicerManager = new ServicerManager();
         }
         return servicerManager;
     }
 
-    public static MangManger getMangManger(){
-        if(mangManger==null){
-            mangManger=new MangManger();
+    public static MangManger getMangManger() {
+        if (mangManger == null) {
+            mangManger = new MangManger();
         }
         return mangManger;
     }
@@ -93,23 +94,24 @@ public class RequestManager {
 
     /**
      * Volley get请求
+     *
      * @param url
      * @param callback
      */
-    public void doGet(String url,final  CallBack callback){
+    public void doGet(String url, final CallBack callback) {
         StringRequest request = new StringRequest(url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        String result=response.toString();
+                        String result = response.toString();
                         MyLogUtils.info(result);
                         try {
-                            JSONObject obj=new JSONObject(result);
-                            int status= obj.getInt("status");
-                            if(status==200){
+                            JSONObject obj = new JSONObject(result);
+                            int status = obj.getInt("status");
+                            if (status == 200) {
                                 callback.onSucess(result);
-                            }else{
-                                callback.onError(obj.getInt("status"),obj.getString("message"));
+                            } else {
+                                callback.onError(obj.getInt("status"), obj.getString("message"));
 
                             }
                         } catch (JSONException e) {
@@ -121,9 +123,9 @@ public class RequestManager {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                callback.onError(no_net,"亲，网络不给力");
+                callback.onError(no_net, "亲，网络不给力");
             }
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap localHashMap = new HashMap();
@@ -141,8 +143,8 @@ public class RequestManager {
                     Map<String, String> responseHeaders = response.headers;
                     String rawCookies = responseHeaders.get("Set-Cookie");
                     String dataString = new String(response.data, "UTF-8");
-                    if(!TextUtils.isEmpty(rawCookies))
-                        SpUtils.setCooike(MyApplication.getInstance(),rawCookies);
+                    if (!TextUtils.isEmpty(rawCookies))
+                        SpUtils.setCooike(MyApplication.getInstance(), rawCookies);
                     return Response.success(dataString, HttpHeaderParser.parseCacheHeaders(response));
                 } catch (UnsupportedEncodingException e) {
                     return Response.error(new ParseError(e));
@@ -209,44 +211,111 @@ public class RequestManager {
 //        });
 //    }
 
+    /**
+     * Volley Post请求
+     *
+     * @param url
+     * @param callback
+     */
+    public void doPost(final String url, final Map<String, String> params, final CallBack callback) {
+        StringRequest request = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        String result = response.toString();
+                        MyLogUtils.info(result);
+                        try {
+                            JSONObject obj = new JSONObject(result);
+                            int status = obj.getInt("status");
+                            if (status == 200) {
+                                callback.onSucess(result);
+                            } else {
+                                callback.onError(obj.getInt("status"), obj.getString("message"));
 
-    public void doPost(String url, List<NameValuePair> queryParams,final CallBack callBack){
-       final  HttpUtils httpUtils = new HttpUtils();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onError(no_net, "亲，网络不给力");
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap localHashMap = new HashMap();
+                localHashMap.put("Cookie", SpUtils.getCookie(MyApplication.getInstance()));
+                localHashMap.put("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance()));
+                return localHashMap;
+            }
+
+            @Override
+            protected Response<String> parseNetworkResponse(
+                    NetworkResponse response) {
+                // TODO Auto-generated method stub
+                try {
+                    Map<String, String> responseHeaders = response.headers;
+                    String rawCookies = responseHeaders.get("Set-Cookie");
+                    String dataString = new String(response.data, "UTF-8");
+                    if (!TextUtils.isEmpty(rawCookies))
+                        SpUtils.setCooike(MyApplication.getInstance(), rawCookies);
+                    return Response.success(dataString, HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    return Response.error(new ParseError(e));
+                }
+            }
+        };
+        // 设定超时时间
+        request.setRetryPolicy(new DefaultRetryPolicy(5000, 1, 1.0f));
+        MyApplication.getInstance().addToRequestQueue(request);
+        MyApplication.getInstance().getRequestQueue().start();
+    }
+
+    public void doPost(String url, List<NameValuePair> queryParams, final CallBack callBack) {
+        final HttpUtils httpUtils = new HttpUtils();
         httpUtils.configCurrentHttpCacheExpiry(0);
         MyLogUtils.info("地址:" + url);
         RequestParams params = null;
-        if(!"".equals(SpUtils.getCookie(MyApplication.getInstance()))){
-            params=new RequestParams();
-            params.addHeader("cookie",SpUtils.getCookie(MyApplication.getInstance()));
+        if (!"".equals(SpUtils.getCookie(MyApplication.getInstance()))) {
+            params = new RequestParams();
+            params.addHeader("cookie", SpUtils.getCookie(MyApplication.getInstance()));
         }
-        if(queryParams != null && queryParams.size() > 0){
-            if(params==null) {
+        if (queryParams != null && queryParams.size() > 0) {
+            if (params == null) {
                 params = new RequestParams();
             }
             params.addBodyParameter(queryParams);
         }
-        if(params==null){
-            params=new RequestParams();
-            params.addHeader("User-Agent","Jinzhu Android Client "+ FinancialUtil.getAppVer(MyApplication.getInstance()));
-        }else{
+        if (params == null) {
+            params = new RequestParams();
+            params.addHeader("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance()));
+        } else {
             params.addHeader("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance()));
         }
 
         httpUtils.send(HttpRequest.HttpMethod.POST, url, params, new RequestCallBack() {
             @Override
             public void onSuccess(ResponseInfo responseInfo) {
-                if(!TextUtils.isEmpty(getCoolie(httpUtils)))
-                SpUtils.setCooike(MyApplication.getInstance(),getCoolie(httpUtils));
-                String result=responseInfo.result.toString();
+                if (!TextUtils.isEmpty(getCoolie(httpUtils)))
+                    SpUtils.setCooike(MyApplication.getInstance(), getCoolie(httpUtils));
+                String result = responseInfo.result.toString();
                 MyLogUtils.info(result);
                 try {
-                    JSONObject obj=new JSONObject(result);
-                    int status= obj.getInt("status");
-                    if(status==200){
+                    JSONObject obj = new JSONObject(result);
+                    int status = obj.getInt("status");
+                    if (status == 200) {
 
                         callBack.onSucess(result);
-                    }else{
-                        callBack.onError(obj.getInt("status"),obj.getString("message"));
+                    } else {
+                        callBack.onError(obj.getInt("status"), obj.getString("message"));
 
                     }
                 } catch (JSONException e) {
@@ -256,7 +325,7 @@ public class RequestManager {
 
             @Override
             public void onFailure(HttpException e, String s) {
-                   callBack.onError(no_net,"亲，网络不给力");
+                callBack.onError(no_net, "亲，网络不给力");
             }
 
 
@@ -265,17 +334,18 @@ public class RequestManager {
 
     /**
      * 获取验证码保存cookie
+     *
      * @param url
      * @param queryParams
      * @param callBack
      */
-    public void getCode(String url,List<NameValuePair> queryParams,final CallBack callBack){
+    public void getCode(String url, List<NameValuePair> queryParams, final CallBack callBack) {
         {
-            final  HttpUtils httpUtils = new HttpUtils();
+            final HttpUtils httpUtils = new HttpUtils();
             httpUtils.configCurrentHttpCacheExpiry(0);
 
             RequestParams params = null;
-            if(queryParams != null && queryParams.size() > 0){
+            if (queryParams != null && queryParams.size() > 0) {
                 params = new RequestParams();
                 params.addBodyParameter(queryParams);
             }
@@ -283,16 +353,16 @@ public class RequestManager {
             httpUtils.send(HttpRequest.HttpMethod.POST, url, params, new RequestCallBack() {
                 @Override
                 public void onSuccess(ResponseInfo responseInfo) {
-                    String result=responseInfo.result.toString();
+                    String result = responseInfo.result.toString();
                     MyLogUtils.info(result);
                     try {
-                        JSONObject obj=new JSONObject(result);
-                        int status= obj.getInt("status");
-                        if(status==200){
+                        JSONObject obj = new JSONObject(result);
+                        int status = obj.getInt("status");
+                        if (status == 200) {
 //                            MyApplication.code_cookie=getCoolie(httpUtils);
                             callBack.onSucess(result);
-                        }else {
-                            callBack.onError(obj.getInt("status"),obj.getString("message"));
+                        } else {
+                            callBack.onError(obj.getInt("status"), obj.getString("message"));
 
                         }
                     } catch (JSONException e) {
@@ -302,7 +372,7 @@ public class RequestManager {
 
                 @Override
                 public void onFailure(HttpException e, String s) {
-                    callBack.onError(no_net,"亲，网络不给力");
+                    callBack.onError(no_net, "亲，网络不给力");
                 }
 
 
@@ -313,20 +383,21 @@ public class RequestManager {
 
     /**
      * 上传图片
+     *
      * @param url
      * @param
      * @param fileMaps
      * @param callBack
      */
-    public void loadImage(final String url ,final Map<String, FileBody> fileMaps,final CallBack callBack){
-       final HttpManager manager=new HttpManager();
-       final  Map<String, String> par=new HashMap<String,String>();
-        par.put("type","img");
-        par.put("uploadLableName","file");
+    public void loadImage(final String url, final Map<String, FileBody> fileMaps, final CallBack callBack) {
+        final HttpManager manager = new HttpManager();
+        final Map<String, String> par = new HashMap<String, String>();
+        par.put("type", "img");
+        par.put("uploadLableName", "file");
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... params) {
-                return  manager.upLoadFile(url,par,fileMaps);
+                return manager.upLoadFile(url, par, fileMaps);
             }
 
             @Override
@@ -336,15 +407,15 @@ public class RequestManager {
 
             @Override
             protected void onPostExecute(String result) {
-               MyLogUtils.info("上传图片："+result);
-                JSONObject obj= null;
+                MyLogUtils.info("上传图片：" + result);
+                JSONObject obj = null;
                 try {
                     obj = new JSONObject(result);
-                    int status= obj.getInt("status");
-                    if(status==200){
+                    int status = obj.getInt("status");
+                    if (status == 200) {
                         callBack.onSucess(obj.getString("data"));
-                    }else{
-                        callBack.onError(obj.getInt("status"),obj.getString("message"));
+                    } else {
+                        callBack.onError(obj.getInt("status"), obj.getString("message"));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -355,24 +426,25 @@ public class RequestManager {
 
     /**
      * 上传图片
+     *
      * @param url
      * @param
      * @param fileMaps
      * @param callBack
      */
-    public void submitFujian(final String url ,final String orderNo,final String isSupplementFile,final Map<String, List<FileBody>> fileMaps,final CallBack callBack){
-        final HttpManager manager=new HttpManager();
-        final  Map<String, String> par=new HashMap<String,String>();
+    public void submitFujian(final String url, final String orderNo, final String isSupplementFile, final Map<String, List<FileBody>> fileMaps, final CallBack callBack) {
+        final HttpManager manager = new HttpManager();
+        final Map<String, String> par = new HashMap<String, String>();
         MyLogUtils.info("地址：" + url);
-        par.put("type","img");
-        par.put("uploadLableName","file");
-        if(orderNo!=null)
-        par.put("orderNo",orderNo);
-        par.put("isSupplementFile",isSupplementFile);
+        par.put("type", "img");
+        par.put("uploadLableName", "file");
+        if (orderNo != null)
+            par.put("orderNo", orderNo);
+        par.put("isSupplementFile", isSupplementFile);
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... params) {
-                return  manager.upListFile(url,par,fileMaps);
+                return manager.upListFile(url, par, fileMaps);
             }
 
             @Override
@@ -382,8 +454,8 @@ public class RequestManager {
 
             @Override
             protected void onPostExecute(String result) {
-                MyLogUtils.info("上传图片："+result);
-                if(result!=null) {
+                MyLogUtils.info("上传图片：" + result);
+                if (result != null) {
                     JSONObject obj = null;
                     try {
                         obj = new JSONObject(result);
@@ -396,8 +468,8 @@ public class RequestManager {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }else{
-                    callBack.onError(no_net,"亲，网络不给力");
+                } else {
+                    callBack.onError(no_net, "亲，网络不给力");
 
                 }
 
@@ -407,10 +479,9 @@ public class RequestManager {
     }
 
 
-
-    private String getCoolie(HttpUtils httpUtils){
-        DefaultHttpClient dh= (DefaultHttpClient) httpUtils.getHttpClient();
-        List<Cookie> cookies=dh.getCookieStore().getCookies();
+    private String getCoolie(HttpUtils httpUtils) {
+        DefaultHttpClient dh = (DefaultHttpClient) httpUtils.getHttpClient();
+        List<Cookie> cookies = dh.getCookieStore().getCookies();
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < cookies.size(); i++) {
             Cookie cookie = cookies.get(i);
@@ -419,23 +490,20 @@ public class RequestManager {
             if (!TextUtils.isEmpty(cookieName)
                     && !TextUtils.isEmpty(cookieValue)) {
                 sb.append(cookieName + "=");
-                sb.append(cookieValue+";");
+                sb.append(cookieValue + ";");
             }
         }
         return sb.toString();
     }
 
 
+    public interface CallBack {
+        public void onSucess(String result) throws JSONException;
 
-
-
-    public interface CallBack{
-        public  void onSucess(String result) throws JSONException;
-
-        public void onError(int status,String msg);
+        public void onError(int status, String msg);
     }
 
 
-    private  int no_net=-1;
+    private int no_net = -1;
 
 }

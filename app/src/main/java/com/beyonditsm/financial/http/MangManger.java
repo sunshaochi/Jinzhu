@@ -3,16 +3,13 @@ package com.beyonditsm.financial.http;
 import com.beyonditsm.financial.entity.CreditManager;
 import com.beyonditsm.financial.entity.FindProductListEntity;
 import com.beyonditsm.financial.util.GsonUtils;
-import com.lidroid.xutils.util.LogUtils;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Map;
 
 /**
  * 信贷经理人接口调用
@@ -35,7 +32,7 @@ public class MangManger extends RequestManager {
 //        queryParams.add(new BasicNameValuePair("rows", fpe.getRows() + ""));
 //        queryParams.add(new BasicNameValuePair("status", "PUBLISHED"));
 //        doPost(IFinancialUrl.FIND_PRODUCT_LIST_URL, queryParams, callBack);
-        doGet(IFinancialUrl.FIND_PRODUCT_LIST_URL+"?creditMoney="+creditMoney+"&creditTime="+creditTime+"&orderByOfType="+""+"&page="+fpe.getPage()+"&rows="+fpe.getRows(),callBack);
+        doGet(IFinancialUrl.FIND_PRODUCT_LIST_URL + "?creditMoney=" + creditMoney + "&creditTime=" + creditTime + "&orderByOfType=" + "" + "&page=" + fpe.getPage() + "&rows=" + fpe.getRows(), callBack);
 //        doPost(IFinancialUrl.FIND_PRODUCT_LIST_URL+"?creditMoney="+creditMoney+"&creditTime="+creditTime+"&orderByOfType="+""+"&page="+fpe.getPage()+"&rows="+fpe.getRows(),queryParams,callBack);
     }
 
@@ -45,10 +42,10 @@ public class MangManger extends RequestManager {
      * @param callBack
      */
     public void getGrabOeder(int page, int rows, final CallBack callBack) {
-        List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
-        queryParams.add(new BasicNameValuePair("page", page + ""));
-        queryParams.add(new BasicNameValuePair("rows", rows + ""));
-        doPost(IFinancialUrl.GRAB_ORDER_URL, queryParams, callBack);
+        Map<String,String> params=new HashMap<String,String>();
+        params.put("page", page + "");
+        params.put("rows", rows + "");
+        doPost(IFinancialUrl.GRAB_ORDER_URL, params, callBack);
     }
 
     /**
@@ -57,10 +54,9 @@ public class MangManger extends RequestManager {
      * @param callBack
      */
     public void GrabOrder(String orderId, final CallBack callBack) {
-        LogUtils.i(orderId);
-        List<NameValuePair> queryParams = new ArrayList<>();
-        queryParams.add(new BasicNameValuePair("orderId", orderId));
-        doPost(IFinancialUrl.ORDER_GRAB_URL, queryParams, callBack);
+        Map<String,String> params=new HashMap<String,String>();
+        params.put("orderId", orderId);
+        doPost(IFinancialUrl.ORDER_GRAB_URL, params, callBack);
     }
 
     /**
@@ -71,10 +67,10 @@ public class MangManger extends RequestManager {
      * @param callBack
      */
     public void findHasOrder(int page, int rows, CallBack callBack) {
-        List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
-        queryParams.add(new BasicNameValuePair("page", page + ""));
-        queryParams.add(new BasicNameValuePair("rows", rows + ""));
-        doPost(IFinancialUrl.CM_ORDER_URL, queryParams, callBack);
+        Map<String,String> params=new HashMap<String,String>();
+        params.put("page", page + "");
+        params.put("rows", rows + "");
+        doPost(IFinancialUrl.CM_ORDER_URL, params, callBack);
     }
 
     /**
@@ -84,10 +80,9 @@ public class MangManger extends RequestManager {
      * @param callBack
      */
     public void checkOrderDetail(String orderId, CallBack callBack) {
-        LogUtils.i(orderId);
-        List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
-        queryParams.add(new BasicNameValuePair("orderId", orderId));
-        doPost(IFinancialUrl.ORDER_DETAIL_URL, queryParams, callBack);
+        Map<String,String> params=new HashMap<String,String>();
+        params.put("orderId", orderId);
+        doPost(IFinancialUrl.ORDER_DETAIL_URL, params, callBack);
     }
     /**
      * 提交已抢订单
@@ -96,20 +91,22 @@ public class MangManger extends RequestManager {
      * @param callBack
      */
     public void commitOrder(String orderId ,CallBack callBack) {
-        List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
-        queryParams.add(new BasicNameValuePair("orderId", orderId));
-        doPost(IFinancialUrl.COMMIT_ORDER_URL, queryParams, callBack);
+        Map<String,String> params=new HashMap<String,String>();
+        params.put("orderId", orderId);
+        doPost(IFinancialUrl.COMMIT_ORDER_URL, params, callBack);
     }
 
     public void findCreditManagerDetail(CallBack callBack) {
-        doPost(IFinancialUrl.FIND_CREDIT_MANAGER_DETAIL, null, callBack);
+        Map<String,String> params=new HashMap<String,String>();
+        doPost(IFinancialUrl.FIND_CREDIT_MANAGER_DETAIL, params, callBack);
     }
 
     /**
      * 查看当前信贷经理登陆详情
      */
     public void currentCreditManagerDetail(CallBack callBack) {
-        doPost(IFinancialUrl.CURR_CREDIT_MANGER_DETAIL, null, callBack);
+        Map<String,String> params=new HashMap<String,String>();
+        doPost(IFinancialUrl.CURR_CREDIT_MANGER_DETAIL, params, callBack);
     }
 
     /**
@@ -118,7 +115,7 @@ public class MangManger extends RequestManager {
      * @param callBack
      */
     public void modifyCreditManager(CreditManager cm, CallBack callBack) {
-        List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
+        Map<String,String> params=new HashMap<String,String>();
 //        CreditManager cm = cme.getCreditManager();
         String json = GsonUtils.bean2Json(cm);
         try {
@@ -138,13 +135,12 @@ public class MangManger extends RequestManager {
             Iterator<String> it = obj.keys();
             while (it.hasNext()) {
                 String keys = it.next();
-                queryParams.add(new BasicNameValuePair(keys, String.valueOf(obj.get(keys))));
-                LogUtils.i(keys+":"+String.valueOf(obj.get(keys))+"\n");
+                params.put(keys, String.valueOf(obj.get(keys)));
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        doPost(IFinancialUrl.UPDATE_CREDIT_DATAS, queryParams, callBack);
+        doPost(IFinancialUrl.UPDATE_CREDIT_DATAS, params, callBack);
     }
 
 //    /**
@@ -166,10 +162,10 @@ public class MangManger extends RequestManager {
      * @param callBack
      */
     public void orderbj(String orderId,String remark, CallBack callBack) {
-        List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
-        queryParams.add(new BasicNameValuePair("orderId", orderId));
-        queryParams.add(new BasicNameValuePair("remark", remark));
-        doPost(IFinancialUrl.BJ_ORDER_URL, queryParams, callBack);
+        Map<String,String> params=new HashMap<String,String>();
+        params.put("orderId", orderId);
+        params.put("remark", remark);
+        doPost(IFinancialUrl.BJ_ORDER_URL, params, callBack);
     }
 
     /**
@@ -180,11 +176,11 @@ public class MangManger extends RequestManager {
      * @param callBack
      */
     public void findCommitOrder(String orderSts ,int page, int rows, CallBack callBack) {
-        List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
-        queryParams.add(new BasicNameValuePair("orderSts",orderSts));
-        queryParams.add(new BasicNameValuePair("page", page + ""));
-        queryParams.add(new BasicNameValuePair("rows", rows + ""));
-        doPost(IFinancialUrl.CM_COMMIT_ORDER_URL, queryParams, callBack);
+        Map<String,String> params=new HashMap<String,String>();
+        params.put("orderSts", orderSts);
+        params.put("page", page+"");
+        params.put("rows", rows+"");
+        doPost(IFinancialUrl.CM_COMMIT_ORDER_URL, params, callBack);
     }
 
     /**

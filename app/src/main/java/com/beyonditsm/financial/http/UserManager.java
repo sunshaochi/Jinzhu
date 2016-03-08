@@ -4,11 +4,8 @@ import com.beyonditsm.financial.entity.HotProduct;
 import com.beyonditsm.financial.entity.MyRecommeEntity;
 import com.beyonditsm.financial.entity.TaskEntity;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 用户接口
@@ -57,8 +54,6 @@ public class UserManager extends RequestManager{
      * @param callBack
      */
     public void findTaskStrategy(TaskEntity taskEntity,CallBack callBack){
-        List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
-        queryParams.add(new BasicNameValuePair("taskId", taskEntity.getId()));
         doGet(IFinancialUrl.TASK_STRATEGY+"?taskId="+taskEntity.getId(),callBack);
     }
 
@@ -83,9 +78,9 @@ public class UserManager extends RequestManager{
      * @param callBack
      */
     public void addTaskAnswer(String json,CallBack callBack){
-        List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
-        queryParams.add(new BasicNameValuePair("answerJsonStr",json));
-        doPost(IFinancialUrl.DOTASK, queryParams, callBack);
+        Map<String,String> params=new HashMap<String,String>();
+        params.put("answerJsonStr", json);
+        doPost(IFinancialUrl.DOTASK, params, callBack);
     }
 
     /**
@@ -102,10 +97,10 @@ public class UserManager extends RequestManager{
      * @param callBack
      */
     public void findFriendList(MyRecommeEntity fre,final CallBack callBack){
-        List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
-        queryParams.add(new BasicNameValuePair("page", fre.getPage()+""));
-        queryParams.add(new BasicNameValuePair("rows", fre.getRows()+""));
-        doPost(IFinancialUrl.FIND_MY_FRIEND_LIST_URL, queryParams, callBack);
+        Map<String,String> params=new HashMap<String,String>();
+        params.put("page", fre.getPage() + "");
+        params.put("rows", fre.getRows() + "");
+        doPost(IFinancialUrl.FIND_MY_FRIEND_LIST_URL, params, callBack);
     }
 
     /**
@@ -113,11 +108,11 @@ public class UserManager extends RequestManager{
      * @param callBack
      */
     public void getMonthPay(String repaymentMoney,String rate,String month,CallBack callBack){
-        List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
-        queryParams.add(new BasicNameValuePair("repaymentMoney", repaymentMoney));
-        queryParams.add(new BasicNameValuePair("month", month));
-        queryParams.add(new BasicNameValuePair("rate", rate));
-        doPost(IFinancialUrl.MONTH_PAY_URL,queryParams, callBack);
+        Map<String,String> params=new HashMap<String,String>();
+        params.put("repaymentMoney", repaymentMoney);
+        params.put("month", month);
+        params.put("rate", rate);
+        doPost(IFinancialUrl.MONTH_PAY_URL,params, callBack);
     }
 
     /**
@@ -128,9 +123,9 @@ public class UserManager extends RequestManager{
      * @param callBack
      */
     public void uptoServant(String servantRoleType,CallBack callBack){
-        List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
-        queryParams.add(new BasicNameValuePair("servantRoleType", servantRoleType));
-        doPost(IFinancialUrl.UPTOSERVANT_URL,queryParams, callBack);
+        Map<String,String> params=new HashMap<String,String>();
+        params.put("servantRoleType", servantRoleType);
+        doPost(IFinancialUrl.UPTOSERVANT_URL,params, callBack);
 
     }
 
@@ -141,10 +136,10 @@ public class UserManager extends RequestManager{
      * @param callBack
      */
     public void findHotProductList(HotProduct hp,CallBack callBack){
-        List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
-        queryParams.add(new BasicNameValuePair("page", hp.getPage()+""));
-        queryParams.add(new BasicNameValuePair("rows", hp.getRows()+""));
-        doPost(IFinancialUrl.FIND_HOT_PRODUCT_LIST,queryParams, callBack);
+        Map<String,String> params=new HashMap<String,String>();
+        params.put("page", hp.getPage() + "");
+        params.put("rows", hp.getRows() + "");
+        doPost(IFinancialUrl.FIND_HOT_PRODUCT_LIST,params, callBack);
     }
 
 
@@ -154,9 +149,9 @@ public class UserManager extends RequestManager{
      * @param callBack
      */
     public  void getScorePer(String creditScore,CallBack callBack){
-        List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
-        queryParams.add(new BasicNameValuePair("creditScore", creditScore));
-        doPost(IFinancialUrl.GET_SCORE_PER_URL,queryParams, callBack);
+        Map<String,String> params=new HashMap<String,String>();
+        params.put("creditScore", creditScore);
+        doPost(IFinancialUrl.GET_SCORE_PER_URL,params, callBack);
     }
 
     /**
@@ -164,13 +159,14 @@ public class UserManager extends RequestManager{
      * @param callBack
      */
     public void findUserLoginInfo(CallBack callBack){
-        doPost(IFinancialUrl.USER_LOGIN_URL,null,callBack);
+        Map<String,String> params=new HashMap<String,String>();
+        doPost(IFinancialUrl.USER_LOGIN_URL,params,callBack);
     }
 
     public void findOrderDealHistory(String orderId,CallBack callBack){
-        List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
-        queryParams.add(new BasicNameValuePair("orderId", orderId));
-        doPost(IFinancialUrl.FIND_ORDER_DEAL_HISTORY, queryParams, callBack);
+        Map<String,String> params=new HashMap<String,String>();
+        params.put("orderId", orderId);
+        doPost(IFinancialUrl.FIND_ORDER_DEAL_HISTORY, params, callBack);
     }
 
     /**
@@ -179,15 +175,15 @@ public class UserManager extends RequestManager{
      * @param callBack
      */
     public void uploadOtherAccessory(String orderNo,CallBack callBack){
-        List<NameValuePair> queryParams=new ArrayList<NameValuePair>();
-        queryParams.add(new BasicNameValuePair("orderNo",orderNo));
-        doPost(IFinancialUrl.OTHER_FILE_URL,queryParams,callBack);
+        Map<String,String> params=new HashMap<String,String>();
+        params.put("orderNo", orderNo);
+        doPost(IFinancialUrl.OTHER_FILE_URL,params,callBack);
     }
 
     public void findOrderDetailById(String productId,CallBack callBack){
-        List<NameValuePair> queryParams=new ArrayList<NameValuePair>();
-        queryParams.add(new BasicNameValuePair("productId",productId));
-        doPost(IFinancialUrl.FIND_ORDER_DETAIL,queryParams,callBack);
+        Map<String,String> params=new HashMap<String,String>();
+        params.put("productId", productId);
+            doPost(IFinancialUrl.FIND_ORDER_DETAIL,params,callBack);
     }
 
     /**
@@ -196,9 +192,9 @@ public class UserManager extends RequestManager{
      * @param callBack
      */
     public void updateOrder(String orderId,CallBack callBack){
-        List<NameValuePair> queryParams=new ArrayList<NameValuePair>();
-        queryParams.add(new BasicNameValuePair("orderId",orderId));
-        doPost(IFinancialUrl.UPDATE_ORDER,queryParams,callBack);
+        Map<String,String> params=new HashMap<String,String>();
+        params.put("orderId", orderId);
+        doPost(IFinancialUrl.UPDATE_ORDER,params,callBack);
     }
 
     /**
@@ -207,9 +203,9 @@ public class UserManager extends RequestManager{
      * @param callBack
      */
     public  void cancelOrder(String orderId,CallBack callBack){
-        List<NameValuePair> queryParams=new ArrayList<NameValuePair>();
-        queryParams.add(new BasicNameValuePair("orderId",orderId));
-        doPost(IFinancialUrl.CANCEL_ORDER,queryParams,callBack);
+        Map<String,String> params=new HashMap<String,String>();
+        params.put("orderId", orderId);
+        doPost(IFinancialUrl.CANCEL_ORDER,params,callBack);
     }
 }
 

@@ -13,7 +13,7 @@ public interface IFinancialUrl {
 //    String BASE_URL = "http://172.16.12.237:8080";
 /*调试用户端好友显示地址*/
 //String BASE_URL = "http://172.16.12.238:8080";
-    
+
     /*正式游戏地址*/
 //    String GAME_URL = "http://m.farm.myjinzhu.com/";
     /*测试游戏地址*/
@@ -164,29 +164,29 @@ public interface IFinancialUrl {
     /*取消订单*/
     String CANCEL_ORDER = BASE_URL + API_VERSION + "/platform/login/modifyToCancelOrderById.do";
     /*根据key查找各种特点*/
-    String DIC_MAP_URL=BASE_URL+API_VERSION+"/manager/unLogin/findDictMap.do";
+    String DIC_MAP_URL = BASE_URL + API_VERSION + "/manager/unLogin/findDictMap.do";
 
     /*抵扣券兑现提交订单*/
-    String SUBMIT_DEDUCTION_ORDER=BASE_URL+API_VERSION+"/wallet/login/submitDeductionTOrder.do";
+    String SUBMIT_DEDUCTION_ORDER = BASE_URL + API_VERSION + "/wallet/login/submitDeductionTOrder.do";
     /*抵扣券兑现提交订单*/
-    String SUBMIT_Cash_ORDER=BASE_URL+API_VERSION+"/wallet/login/submitCashTOrder.do";
+    String SUBMIT_Cash_ORDER = BASE_URL + API_VERSION + "/wallet/login/submitCashTOrder.do";
 
 
     /*设置资金密码*/
-    String SET_PWD_URL=BASE_URL+API_VERSION+"/wallet/login/setFundPassword.do";
+    String SET_PWD_URL = BASE_URL + API_VERSION + "/wallet/login/setFundPassword.do";
     /*现金券收支明细*/
-    String CASH_HISTORY = BASE_URL+API_VERSION+"/wallet/login/cashTHistory.do";
+    String CASH_HISTORY = BASE_URL + API_VERSION + "/wallet/login/cashTHistory.do";
     /*抵扣券收支明细*/
-    String DEDUCTION_HISTORY = BASE_URL+API_VERSION+"/wallet/login/deductionTHistory.do";
+    String DEDUCTION_HISTORY = BASE_URL + API_VERSION + "/wallet/login/deductionTHistory.do";
     /*订单明细（现金券）*/
-    String CASH_ORDER_DETAIL =BASE_URL+API_VERSION+"/wallet/login/cashTOrderDetail.do";
+    String CASH_ORDER_DETAIL = BASE_URL + API_VERSION + "/wallet/login/cashTOrderDetail.do";
     /*订单明细（折扣券）*/
-    String DEDUCTION_ORDER_DETAIL = BASE_URL+API_VERSION+"/wallet/login/deductionTOrderDetail.do";
+    String DEDUCTION_ORDER_DETAIL = BASE_URL + API_VERSION + "/wallet/login/deductionTOrderDetail.do";
     /*订单明细*/
-    String ORDER_LIST = BASE_URL+API_VERSION+"/wallet/login/tOrderList.do";
+    String ORDER_LIST = BASE_URL + API_VERSION + "/wallet/login/tOrderList.do";
 
     /*用户的订单编号集合*/
-    String ORDER_NO_LIST=BASE_URL+API_VERSION+"/platform/login/findOrderNoListByUserName.do";
+    String ORDER_NO_LIST = BASE_URL + API_VERSION + "/platform/login/findOrderNoListByUserName.do";
     /*总利息、可抵扣利息*/
-    String LIXI=BASE_URL+API_VERSION+"/platform/login/findInterestByOrderNo.do";
+    String LIXI = BASE_URL + API_VERSION + "/platform/login/findInterestByOrderNo.do";
 }

@@ -3,16 +3,13 @@ package com.beyonditsm.financial.http;
 import com.beyonditsm.financial.entity.ServantWithdrawEntity;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.util.GsonUtils;
-import com.lidroid.xutils.util.LogUtils;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Map;
 
 /**
  * 服务者接口
@@ -25,8 +22,8 @@ public class ServicerManager extends RequestManager{
      * @param callBack
      */
     public void findServantDetail(CallBack callBack){
-
-        doPost(IFinancialUrl.SERVANT_URL, null, callBack);
+        Map<String,String> params=new HashMap<String,String>();
+        doPost(IFinancialUrl.SERVANT_URL, params, callBack);
     }
 
     /**
@@ -34,9 +31,7 @@ public class ServicerManager extends RequestManager{
      * @param callBack
      */
     public void UpadateServantData(UserEntity userEntity,CallBack callBack){
-        List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
-//        Gson gson = new GsonBuilder().serializeNulls().create();
-//        String json = gson.toJson(servantEntity);
+        Map<String,String> params=new HashMap<String,String>();
         String json= GsonUtils.bean2Json(userEntity);
         try {
             JSONObject obj=new JSONObject(json);
@@ -55,13 +50,12 @@ public class ServicerManager extends RequestManager{
             Iterator<String> it=obj.keys();
             while (it.hasNext()){
                 String key=it.next();
-                queryParams.add(new BasicNameValuePair(key,String.valueOf(obj.get(key))));
+                params.put(key,String.valueOf(obj.get(key)));
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        LogUtils.i(queryParams.toString());
-        doPost(IFinancialUrl.UPDATE_SERVANT_URL, queryParams, callBack);
+        doPost(IFinancialUrl.UPDATE_SERVANT_URL, params, callBack);
     }
 
     /**
@@ -69,9 +63,9 @@ public class ServicerManager extends RequestManager{
      * @param amount
      */
     public void serviceWithDraw(String amount,CallBack callBack){
-        List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
-        queryParams.add(new BasicNameValuePair("amount",amount));
-        doPost(IFinancialUrl.SERVICE_WITH_DRAW_URL, queryParams, callBack);
+        Map<String,String> params=new HashMap<String,String>();
+        params.put("amount", amount);
+        doPost(IFinancialUrl.SERVICE_WITH_DRAW_URL, params, callBack);
     }
 
     /**
