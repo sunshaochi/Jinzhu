@@ -430,12 +430,14 @@ public class UpdateAct extends BaseActivity {
             return;
         }
         Uri imageUri = CameraUtils.getBitmapUri(null, this, requestCode, resultCode, data);
+        MyLogUtils.info("imageUri+"+imageUri);
         if (imageUri != null) {
             /**
              * 上传头像
              */
             Bitmap bitmap = MyBitmapUtils.decodeUriAsBitmap(UpdateAct.this, imageUri);
             File userbanner = MyBitmapUtils.saveBitmap(bitmap, "userhead.png");
+            MyLogUtils.info("userbanner.getPath+"+userbanner.getPath());
             uploadFile(userbanner.getPath());
         }
 

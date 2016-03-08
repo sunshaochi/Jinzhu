@@ -74,7 +74,8 @@
                         android:gravity="center"
                         android:inputType="numberDecimal"
                         android:textColor="#ff6633"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:cursorVisible="false"/>
                 </RelativeLayout>
 
                 <RelativeLayout

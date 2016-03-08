@@ -10,7 +10,6 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="10dp"
         android:scrollbars="none">
 
         <LinearLayout
@@ -380,8 +379,10 @@
                 android:textSize="16sp"
                 android:visibility="gone"/>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp"/>
         </LinearLayout>
-
     </ScrollView>
 
 </LinearLayout>

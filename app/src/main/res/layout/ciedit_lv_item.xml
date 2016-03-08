@@ -87,7 +87,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="14:29"
                 android:textColor="@color/tv_second_color" />
         </LinearLayout>
 
