@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,6 +16,7 @@ import com.beyonditsm.financial.AppManager;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
@@ -55,6 +58,49 @@ public class FindPwdAct extends BaseActivity {
         setTopTitle("找回密码");
         setLeftTv("返回");
         setView();
+        findetphone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s == null || s.length() == 0) return;
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < s.length(); i++) {
+                    if (i != 3 && i != 8 && s.charAt(i) == ' ') {
+                        continue;
+                    } else {
+                        sb.append(s.charAt(i));
+                        if ((sb.length() == 4 || sb.length() == 9) && sb.charAt(sb.length() - 1) != ' ') {
+                            sb.insert(sb.length() - 1, ' ');
+                        }
+                    }
+                }
+                if (!sb.toString().equals(s.toString())) {
+                    int index = start + 1;
+                    if (sb.charAt(start) == ' ') {
+                        if (before == 0) {
+                            index++;
+                        } else {
+                            index--;
+                        }
+                    } else {
+                        if (before == 1) {
+                            index--;
+                        }
+                    }
+                    findetphone.setText(sb.toString());
+                    findetphone.setSelection(index);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void setView() {
@@ -69,7 +115,7 @@ public class FindPwdAct extends BaseActivity {
         switch (v.getId()) {
             //获取验证码
             case R.id.gettv:
-                name = findetphone.getText().toString().trim();
+                name = findetphone.getText().toString().replaceAll(" +","");
                 if (TextUtils.isEmpty(name)) {
                     MyToastUtils.showShortToast(getApplicationContext(), "请输入手机号");
                     return;

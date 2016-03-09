@@ -21,7 +21,7 @@
             android:background="@color/white"
             android:hint="请输入手机号"
             android:inputType="phone"
-            android:maxLength="11"
+            android:maxLength="13"
             android:textSize="15sp" />
 
         <View android:layout_marginLeft="15dp"

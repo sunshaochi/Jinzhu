@@ -3,7 +3,9 @@ package com.beyonditsm.financial.activity.user;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -24,6 +26,7 @@ import com.beyonditsm.financial.activity.servicer.ServiceMainAct;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.fragment.MineFragment;
 import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.AutoAnimImageView;
@@ -90,6 +93,49 @@ public class LoginAct extends BaseActivity{
         }else{
             login_zc.setVisibility(View.VISIBLE);
         }
+        loginPhone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s == null || s.length() == 0) return;
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < s.length(); i++) {
+                    if (i != 3 && i != 8 && s.charAt(i) == ' ') {
+                        continue;
+                    } else {
+                        sb.append(s.charAt(i));
+                        if ((sb.length() == 4 || sb.length() == 9) && sb.charAt(sb.length() - 1) != ' ') {
+                            sb.insert(sb.length() - 1, ' ');
+                        }
+                    }
+                }
+                if (!sb.toString().equals(s.toString())) {
+                    int index = start + 1;
+                    if (sb.charAt(start) == ' ') {
+                        if (before == 0) {
+                            index++;
+                        } else {
+                            index--;
+                        }
+                    } else {
+                        if (before == 1) {
+                            index--;
+                        }
+                    }
+                    loginPhone.setText(sb.toString());
+                    loginPhone.setSelection(index);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @OnClick({R.id.login_btn, R.id.login_lost_pwd, R.id.tvRight,R.id.login_zc,R.id.rl_back})
@@ -143,7 +189,8 @@ public class LoginAct extends BaseActivity{
     }
 
     private boolean isValidate() {
-        phone = loginPhone.getText().toString().trim();
+        String s = loginPhone.getText().toString();
+        phone = s.replaceAll(" +", "");
         pwd = loginPwd.getText().toString().trim();
         if (TextUtils.isEmpty(phone)) {
             MyToastUtils.showShortToast(getApplicationContext(), "请输入手机号");

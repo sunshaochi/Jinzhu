@@ -74,7 +74,7 @@
                 android:layout_toRightOf="@+id/phone"
                 android:hint="请输入手机号"
                 android:inputType="number"
-                android:maxLength="11"
+                android:maxLength="13"
                 android:textSize="15sp" />
         </RelativeLayout>
 
