@@ -16,7 +16,6 @@ import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.VersionInfo;
-import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.widget.MyAlertDialog;
 import com.lidroid.xutils.HttpUtils;
@@ -65,6 +64,7 @@ public class GeneralUtils {
 
 
     public void toVersion(final Context context, final int currentVersion,final int type){
+        MyLogUtils.info("当前版本："+currentVersion+"");
         RequestManager.getCommManager().toVersion(currentVersion, "ANDROID", new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
@@ -75,7 +75,7 @@ public class GeneralUtils {
 
                 }else{
                     String path = rd.getData().getVersion().getPackagePath();
-                    showIsDownLoad(context, IFinancialUrl.BASE_URL+path);
+                    showIsDownLoad(context,path);
 //                MyToastUtils.showShortToast(MyApplication.getInstance(),rd.getData().getMessage());
                 }
             }
