@@ -433,8 +433,8 @@ public class OrderDetailAct extends BaseActivity {
                             commit.setVisibility(View.GONE);
                             bujian_btn.setVisibility(View.GONE);
                         }
-                        if (!TextUtils.isEmpty(datas.getExpectedFrequency()))
-                            //    tvWyl.setText(bean.getExpectedFrequency() + "%");//用户违约率
+//                        if (!TextUtils.isEmpty(datas.getExpectedFrequency()))
+//                            //    tvWyl.setText(bean.getExpectedFrequency() + "%");//用户违约率
                             ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + datas.getImageLogoPath(), ivBank, options);
                         tvProName.setText(datas.getProductName());
                         if(!"PASS".equals(orderSts)) {

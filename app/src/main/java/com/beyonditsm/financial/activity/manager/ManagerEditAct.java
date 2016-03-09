@@ -72,7 +72,7 @@ public class ManagerEditAct extends BaseActivity {
                         cm.setManaTel(content);
                         break;
                     case 9://修改所在机构
-
+                        cm.setBranchName(content);
                         break;
                     case 10://修改职位名称
 
@@ -108,6 +108,9 @@ public class ManagerEditAct extends BaseActivity {
             case 9:
                 setTopTitle("所在机构");
                 et.setHint("请输入所在机构");
+                if (!TextUtils.isEmpty(cm.getBranchName())){
+                    et.setText(cm.getBranchName());
+                }
                 break;
             case 10://职级
                 setTopTitle("职位名称");

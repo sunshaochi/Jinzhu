@@ -66,7 +66,7 @@ public class GrabOrderBean {
         private String haveCar;//名下是否有车产
         private String district;//区县
         private String nativePlace;//籍贯
-        private String expectedFrequency;//预期违约率 单位百分比 1 代表 1%'
+        private String badPercent;//预期违约率 单位百分比 1 代表 1%'
         private String modifyPersonId;//修改人
         private String accountBalance;//账户余额
         private String productName;//产品名称
@@ -525,12 +525,12 @@ public class GrabOrderBean {
             this.nativePlace = nativePlace;
         }
 
-        public String getExpectedFrequency() {
-            return expectedFrequency;
+        public String getBadPercent() {
+            return badPercent;
         }
 
-        public void setExpectedFrequency(String expectedFrequency) {
-            this.expectedFrequency = expectedFrequency;
+        public void setBadPercent(String expectedFrequency) {
+            this.badPercent = expectedFrequency;
         }
 
         public String getModifyPersonId() {
@@ -599,7 +599,7 @@ public class GrabOrderBean {
             dest.writeString(this.haveCar);
             dest.writeString(this.district);
             dest.writeString(this.nativePlace);
-            dest.writeString(this.expectedFrequency);
+            dest.writeString(this.badPercent);
             dest.writeString(this.modifyPersonId);
             dest.writeString(this.accountBalance);
             dest.writeString(this.productName);
@@ -663,7 +663,7 @@ public class GrabOrderBean {
             this.haveCar = in.readString();
             this.district = in.readString();
             this.nativePlace = in.readString();
-            this.expectedFrequency = in.readString();
+            this.badPercent = in.readString();
             this.modifyPersonId = in.readString();
             this.accountBalance = in.readString();
             this.productName = in.readString();

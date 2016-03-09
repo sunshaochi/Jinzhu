@@ -17,7 +17,7 @@ public class CreditManager implements Parcelable {
 
     private String accountId ;//关联账号
     private String accountNo;//银行账号
-    private String branchName;//分行名称
+    private String branchName;//所属机构
     private String createPersonId;//创建人
     private String createTime;//创建时间
     private String creditManagerId;

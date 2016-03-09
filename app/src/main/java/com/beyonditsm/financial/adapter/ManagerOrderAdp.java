@@ -94,8 +94,8 @@ public class ManagerOrderAdp extends BaseAdapter {
             if (!TextUtils.isEmpty(datas.get(i).getProductName())) {
                 holder.tvmoney.setText(datas.get(i).getProductName());
             }
-            if (!TextUtils.isEmpty(datas.get(i).getExpectedFrequency())) {
-                holder.tvdefaultrate.setText("预测违约率：" + datas.get(i).getExpectedFrequency() + "%");
+            if (!TextUtils.isEmpty(datas.get(i).getBadPercent())) {
+                holder.tvdefaultrate.setText("预测违约率：" + datas.get(i).getBadPercent() + "%");
             }
             if (!TextUtils.isEmpty(datas.get(i).getTotalAmount())) {
                 Double totalMPay = Arith.sub(Double.valueOf(datas.get(i).getPeriodsAmount()) * Double.valueOf(datas.get(i).getTotalPeriods()), Double.valueOf(datas.get(i).getTotalAmount()));
