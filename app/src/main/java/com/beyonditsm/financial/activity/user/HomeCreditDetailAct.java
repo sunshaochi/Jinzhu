@@ -231,7 +231,29 @@ public class HomeCreditDetailAct extends BaseActivity {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
+            etAmount.setCursorVisible(true);
+            if (s.toString().contains(".")) {
+                if (s.length() - 1 - s.toString().indexOf(".") > 2) {
+                    s = s.toString().subSequence(0,
+                            s.toString().indexOf(".") + 3);
+                    etAmount.setText(s);
+                    etAmount.setSelection(s.length());
+                }
+            }
+            if (s.toString().trim().substring(0).equals(".")) {
+                s = "0" + s;
+                etAmount.setText(s);
+                etAmount.setSelection(2);
+            }
 
+            if (s.toString().startsWith("0")
+                    && s.toString().trim().length() > 1) {
+                if (!s.toString().substring(1, 2).equals(".")) {
+                    etAmount.setText(s.subSequence(0, 1));
+                    etAmount.setSelection(1);
+                    return;
+                }
+            }
         }
 
         @Override

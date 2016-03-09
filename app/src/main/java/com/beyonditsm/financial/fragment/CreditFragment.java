@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -160,6 +162,47 @@ public class CreditFragment extends BaseFragment {
                 et.setCursorVisible(true);
             }
         });
+        etAmount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //小数点后只能输入两位数
+                if (s.toString().contains(".")) {
+                    if (s.length() - 1 - s.toString().indexOf(".") > 2) {
+                        s = s.toString().subSequence(0,
+                                s.toString().indexOf(".") + 3);
+                        etAmount.setText(s);
+                        etAmount.setSelection(s.length());
+                    }
+                }
+                if (s.toString().trim().substring(0).equals(".")) {
+                    s = "0" + s;
+                    etAmount.setText(s);
+                    etAmount.setSelection(2);
+                }
+
+                if (s.toString().startsWith("0")
+                        && s.toString().trim().length() > 1) {
+                    if (!s.toString().substring(1, 2).equals(".")) {
+                        etAmount.setText(s.subSequence(0, 1));
+                        etAmount.setSelection(1);
+                        return;
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().startsWith(".")){
+                    MyToastUtils.showShortToast(getActivity(),"不能以小数点开头");
+                    etAmount.setText("");
+                }
+            }
+        });
 //        etAmount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 //            @Override
 //            public void onFocusChange(View v, boolean hasFocus) {
@@ -202,6 +245,14 @@ public class CreditFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), HomeCreditDetailAct.class);
 //                intent.putExtra(CreditDetailAct.PRODUCTINFO,datas.get(position));
+                if (TextUtils.isEmpty(etAmount.getText().toString().trim())&&!TextUtils.isEmpty(tvM.getText().toString().trim())){
+                    MyToastUtils.showShortToast(getActivity(), "请输入金额");
+                    etAmount.requestFocus();
+                    return;
+                }else if (!TextUtils.isEmpty(etAmount.getText().toString().trim())&&TextUtils.isEmpty(tvM.getText().toString().trim())){
+                    MyToastUtils.showShortToast(getActivity(),"请选择月份");
+                    return;
+                }
                 if (TextUtils.isEmpty(etAmount.getText().toString().trim()) && TextUtils.isEmpty(tvM.getText().toString().trim())) {
 //                    cMoney= ConstantValue.CREDIT_MONEY+"";
                     intent.putExtra(HomeCreditDetailAct.PRODUCTINFO, datas.get(position).getProductId());
