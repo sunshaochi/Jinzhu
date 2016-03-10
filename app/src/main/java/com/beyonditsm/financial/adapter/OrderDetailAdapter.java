@@ -101,6 +101,10 @@ public class OrderDetailAdapter extends BaseAdapter implements View.OnClickListe
             if ("PLATFORM_PASS".equals(ode.getOrderFlowStatus())) {//平台审批通过
                 holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_f);
             }
+            if ("PLATFORM_REJECT".equals(ode.getOrderFlowStatus())){//平台审批不通过
+                holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_failed);
+                holder.tvCreditStatus.setText("平台审批不通过");
+            }
             if ("CREDITMANAGER_CATCH_ORDER".equals(ode.getOrderFlowStatus())) {//信贷经理已抢单
                 holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_sec);
                 holder.ivConnection.setVisibility(View.VISIBLE);

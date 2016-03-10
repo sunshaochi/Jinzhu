@@ -315,6 +315,7 @@ public class CreditFragment extends BaseFragment {
                             cMoney = etAmount.getText().toString().trim();
                         }
 
+                        MyLogUtils.info("cccccccmoney+"+cMoney+"+cccccccTime+"+cTime);
                         getCredit(currentP, cMoney, cTime);
                     }
                 });
@@ -383,7 +384,7 @@ public class CreditFragment extends BaseFragment {
         FindProductListEntity entity = new FindProductListEntity();
         entity.setPage(currentPage);
         entity.setRows(pageSize);
-        MyLogUtils.info("金额：" + creditMoney);
+        MyLogUtils.info("金额：" + creditMoney+"期限："+creditTime);
         if (TextUtils.isEmpty(creditMoney)) {
             creditMoney = "";
         } else {

@@ -98,7 +98,7 @@ public class UpIdCardAct extends BaseActivity {
                     if (list.size() > 0) {
                         MyLogUtils.info("list.size()+" + list.size());
                         if (list.size() > 2) {
-                            uploadFile(isSupplementFile,"");
+                            uploadFile(isSupplementFile);
                         } else {
                             MyToastUtils.showShortToast(UpIdCardAct.this, "请选择至少三张照片！");
                         }
@@ -209,9 +209,6 @@ public class UpIdCardAct extends BaseActivity {
                     list.add(idcardHold.getPath());
                     break;
             }
-//            Bitmap bitmap = MyBitmapUtils.decodeUriAsBitmap(UpIdCardAct.this, imageUri);
-//            File userbanner = MyBitmapUtils.saveBitmap(bitmap, "userhead.png");
-//            uploadFile(userbanner.getPath());
         }
         /*上传附件样式选择图片*/
 //        Intent intent = new Intent(CreditSecondFrag.IMAGE);
@@ -264,12 +261,13 @@ public class UpIdCardAct extends BaseActivity {
      *
      * @param
      */
-    private void uploadFile(final String isSupplementFile,String file) {
+    private void uploadFile(final String isSupplementFile) {
         dialog.show();
         Map<String, List<FileBody>> fileMaps = new HashMap<String, List<FileBody>>();
         List<FileBody> lists = new ArrayList<FileBody>();
-        for (int i = 0; i < selecteds.size(); i++) {
-            FileBody fb = new FileBody(new File(selecteds.get(i).getPath()));
+        for (int i = 0; i < list.size(); i++) {
+            MyLogUtils.info("取出list里的值："+list.get(i));
+            FileBody fb = new FileBody(new File(list.get(i)));
             lists.add(fb);
         }
         fileMaps.put("myfiles", lists);

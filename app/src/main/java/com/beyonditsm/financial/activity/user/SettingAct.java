@@ -1,8 +1,12 @@
 package com.beyonditsm.financial.activity.user;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
@@ -10,6 +14,7 @@ import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.servicer.ChangePwdAct;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GeneralUtils;
+import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.widget.ToggleButton;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -30,10 +35,15 @@ public class SettingAct extends BaseActivity {
     private ToggleButton tb_sleep;//消息免打扰
     @ViewInject(R.id.tvVersion)
     private TextView tvVersion;
+    @ViewInject(R.id.rlcheck)
+    private RelativeLayout rlCheck;
 
 
     private GeneralUtils gUtils;
-//    private UserEntity userInfo;
+    //    private UserEntity userInfo;
+    public static final String ISLOADING = "com.settingAct.isloading";
+    private boolean isStart = false;
+    private boolean isUploading = false;
 
     @Override
     public void setLayout() {
@@ -104,7 +114,7 @@ public class SettingAct extends BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if(!tb_msg.IsSwitch()){
+        if (!tb_msg.IsSwitch()) {
             SpUtils.setMsg(getApplicationContext(), false);
             JPushInterface.stopPush(getApplicationContext());
         }
@@ -133,12 +143,17 @@ public class SettingAct extends BaseActivity {
                 break;
             //检测新版本
             case R.id.rlcheck:
-                gUtils.toVersion(SettingAct.this, FinancialUtil.getAppVer(SettingAct.this),0);
 
+                if (isStart||isUploading){
+                    rlCheck.setClickable(false);
+                    MyToastUtils.showShortToast(getApplicationContext(),"正在努力升级新版本，请稍等...");
+                }else{
+                    gUtils.toVersion(SettingAct.this, FinancialUtil.getAppVer(SettingAct.this), 0);
+                }
                 break;
             //关于
             case R.id.rlAbout:
-                intent=new Intent(this,AboutOurs.class);
+                intent = new Intent(this, AboutOurs.class);
                 startActivity(intent);
                 break;
         }
@@ -147,23 +162,23 @@ public class SettingAct extends BaseActivity {
     }
 
 
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        if(receiver==null){
-//            receiver=new UpdateReceiver();
-//        }
-//       registerReceiver(receiver, new IntentFilter(UPDATE_USER));
-//
-//    }
-//
-//    @Override
-//    public void onDestroy() {
-//        super.onDestroy();
-//        if(receiver!=null){
-//           unregisterReceiver(receiver);
-//        }
-//    }
+        @Override
+    public void onStart() {
+        super.onStart();
+        if(receiver==null){
+            receiver=new MyBroadCastReceiver();
+        }
+       registerReceiver(receiver, new IntentFilter(ISLOADING));
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(receiver!=null){
+           unregisterReceiver(receiver);
+        }
+    }
 //    private UpdateReceiver receiver;
 //
 //    public static final String UPDATE_USER="com.set.update.user";
@@ -174,4 +189,13 @@ public class SettingAct extends BaseActivity {
 ////            userInfo=intent.getParcelableExtra(MineFragment.USER_KEY);
 //        }
 //    }
+    private MyBroadCastReceiver receiver;
+    public class MyBroadCastReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            isStart = intent.getBooleanExtra("isStart", true);
+            isUploading = intent.getBooleanExtra("isUploading", true);
+        }
+    }
 }

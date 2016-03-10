@@ -14,6 +14,7 @@ import android.widget.RemoteViews;
 
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
+import com.beyonditsm.financial.activity.user.SettingAct;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.VersionInfo;
 import com.beyonditsm.financial.http.RequestManager;
@@ -23,6 +24,7 @@ import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.HttpHandler;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.tandong.sa.eventbus.EventBus;
 
 import org.json.JSONException;
 
@@ -92,6 +94,7 @@ public class GeneralUtils {
     private Notification mNotification;
     private String fileName = "/sdcard/jinzhu_.apk";
     private int result, fileSize, downLoadFileSize;
+    private boolean isStart;
 
     /**
      * 是否下载
@@ -121,9 +124,13 @@ public class GeneralUtils {
         HttpUtils http = new HttpUtils();
         HttpHandler handler = http.download(path, fileName, true, true,
                 new RequestCallBack<File>() {
+                    Intent intent = new Intent(SettingAct.ISLOADING);
                     @Override
                     public void onLoading(long total, long current,
                                           boolean isUploading) {
+                        isUploading = true;
+                        intent.putExtra("isUploading",isUploading);
+                        context.sendBroadcast(intent);
                         fileSize = (int) total;
                         downLoadFileSize = (int) current;
                         result = (int) (current * 100 / total);
@@ -132,10 +139,14 @@ public class GeneralUtils {
 
                     @Override
                     public void onStart() {
+                        isStart =true;
+                        intent.putExtra("isStart",isStart);
+                        context.sendBroadcast(intent);
                         Message message=myhandler.obtainMessage();
                         message.obj=context;
                         message.what=0;
                         myhandler.sendMessage(message);
+                        MyToastUtils.showShortToast(context,"开始升级新版本");
                     }
 
                     @SuppressLint("SdCardPath")
