@@ -27,9 +27,13 @@
         android:layout_marginTop="15dp"
         android:gravity="center"
         android:textColor="#333333"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:visibility="gone"/>
     
 
+    <include
+        android:id="@+id/ll_msg"
+        layout="@layout/layout_versionupload"/>
 
     <ImageView
         android:layout_width="match_parent"

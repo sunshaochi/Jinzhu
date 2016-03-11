@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Layout;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -101,17 +102,27 @@ public class GeneralUtils {
      */
     private void showIsDownLoad(final Context context,final String path) {
         MyAlertDialog dialog = new MyAlertDialog(context).builder();
-        dialog.setTitle("提示").setMsg("检测到最新版本，是否现在下载？").setCancelable(false)
-                .setPositiveButton("确定", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        File file = new File(fileName);
+//        dialog.setTitle("提示").setMsg("检测到最新版本，是否现在下载？").setCancelable(false)
+//                .setPositiveButton("确定", new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        File file = new File(fileName);
+//                        if (file.exists()) {
+//                            file.delete();
+//                        }
+//                        downLoad(context,path);
+//                    }
+//                }).setNegativeButton("取消", null).show();
+        dialog.setTitle("发现新版本").setMsgLayout(R.layout.layout_versionupload).setCancelable(false).setPositiveButton("立即更新", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                File file = new File(fileName);
                         if (file.exists()) {
                             file.delete();
                         }
                         downLoad(context,path);
-                    }
-                }).setNegativeButton("取消", null).show();
+            }
+        }).setNegativeButton("稍后再说", null).show();
     }
 
     /**
