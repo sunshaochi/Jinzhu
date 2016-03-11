@@ -294,4 +294,12 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">#333333</item>
     </style>
+    <!--版本更新字体样式-->
+    <style name="tv_version_upload">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/tv_black</item>
+        <item name="android:textSize">14sp</item>
+
+    </style>
 </resources>

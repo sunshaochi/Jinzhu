@@ -4,6 +4,7 @@ package com.beyonditsm.financial.widget;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.text.Layout;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,8 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
+
+import org.w3c.dom.Text;
 
 /**
  * 仿ios提示框
@@ -36,8 +39,14 @@ public class MyAlertDialog {
 	private Display display;
 	private boolean showTitle = false;
 	private boolean showMsg = false;
+	private boolean showMsgLayout = false;
 	private boolean showPosBtn = false;
 	private boolean showNegBtn = false;
+	private LinearLayout llMsg;
+	private TextView tvVersionName;
+	private TextView tvVersionSize;
+	private TextView tvVersionContent;
+
 	public MyAlertDialog(Context context) {
 		this.context = context;
 		WindowManager windowManager = (WindowManager) context
@@ -64,6 +73,11 @@ public class MyAlertDialog {
 		btn_pos.setVisibility(View.GONE);
 		img_line = (ImageView) view.findViewById(R.id.img_line);
 		img_line.setVisibility(View.GONE);
+		llMsg = (LinearLayout) view.findViewById(R.id.ll_msg);
+		llMsg.setVisibility(View.GONE);
+		tvVersionName = (TextView) view.findViewById(R.id.tv_versionName);
+		tvVersionSize = (TextView) view.findViewById(R.id.tv_versionSize);
+		tvVersionContent = (TextView) view.findViewById(R.id.tv_versionContent);
 		// 定义Dialog布局和参数
 		dialog = new Dialog(context, R.style.AlertDialogStyle);
 		dialog.setContentView(view);
@@ -96,7 +110,29 @@ public class MyAlertDialog {
 		return this;
 	}
 	
-
+	public MyAlertDialog setMsgLayout(int msg){
+		showMsgLayout = true;
+		return this;
+	}
+	public MyAlertDialog setMsgLayout(int msgLayout,String versionName,String versionSize,String versionContent){
+		showMsgLayout = true;
+		if ("".equals(versionName)){
+			tvVersionName.setText("v1.0.0");
+		}else{
+			tvVersionName.setText(versionName);
+		}
+		if ("".equals(versionSize)){
+			tvVersionSize.setText("10.0M");
+		}else{
+			tvVersionSize.setText(versionSize);
+		}
+		if ("".equals(versionContent)){
+			tvVersionContent.setText("修改了部分BUG");
+		}else{
+			tvVersionContent.setText(versionContent);
+		}
+		return this;
+	}
 	public MyAlertDialog setCancelable(boolean cancel) {
 		dialog.setCancelable(cancel);
 		return this;
@@ -155,6 +191,9 @@ public class MyAlertDialog {
 			txt_msg.setVisibility(View.VISIBLE);
 		}
 
+		if (showMsgLayout){
+			llMsg.setVisibility(View.VISIBLE);
+		}
 		if (!showPosBtn && !showNegBtn) {
 			btn_pos.setText("确定");
 			btn_pos.setVisibility(View.VISIBLE);
