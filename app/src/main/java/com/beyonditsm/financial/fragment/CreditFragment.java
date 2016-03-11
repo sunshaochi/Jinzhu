@@ -314,8 +314,8 @@ public class CreditFragment extends BaseFragment {
                         } else {
                             cMoney = etAmount.getText().toString().trim();
                         }
-
-                        MyLogUtils.info("cccccccmoney+"+cMoney+"+cccccccTime+"+cTime);
+                        currentP=1;
+//                        MyLogUtils.info("cccccccmoney+"+cMoney+"+cccccccTime+"+cTime);
                         getCredit(currentP, cMoney, cTime);
                     }
                 });

@@ -32,7 +32,6 @@ import com.beyonditsm.financial.fragment.FriendFrg;
 import com.beyonditsm.financial.fragment.HomeFragment;
 import com.beyonditsm.financial.fragment.MineFragment;
 import com.beyonditsm.financial.http.IFinancialUrl;
-import com.beyonditsm.financial.http.NetUtil;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GeneralUtils;
@@ -137,9 +136,9 @@ public class MainActivity extends BaseActivity{
             }
         }
 
-        if(NetUtil.isWifiConnection(getApplicationContext())){
+//        if(NetUtil.isWifiConnection(getApplicationContext())){
             gUtils.toVersion(MainActivity.this, FinancialUtil.getAppVer(MainActivity.this),1);
-        }
+//        }
 
     }
 
