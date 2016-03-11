@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -11,6 +12,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
@@ -24,7 +26,6 @@ import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.HttpHandler;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
-import com.tandong.sa.eventbus.EventBus;
 
 import org.json.JSONException;
 
@@ -77,7 +78,7 @@ public class GeneralUtils {
 
                 }else{
                     String path = rd.getData().getVersion().getPackagePath();
-                    showIsDownLoad(context,path);
+                    showIsDownLoad(context, path);
 //                MyToastUtils.showShortToast(MyApplication.getInstance(),rd.getData().getMessage());
                 }
             }
@@ -88,6 +89,64 @@ public class GeneralUtils {
             }
         });
     }
+
+
+    /*
+ * 从服务器中下载APK
+ */
+    protected void downLoadApk(final Context context,final String url) {
+        final ProgressDialog pd;    //进度条对话框
+        pd = new  ProgressDialog(context);
+        pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        pd.setMax(100);
+        pd.setProgress(0);
+        pd.setMessage("正在下载更新");
+        pd.show();
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    File file = DownLoadManager.getFileFromServer(url, pd);
+                    sleep(500);
+                    installApk(context,file);
+                    pd.dismiss(); //结束掉进度条对话框
+                } catch (Exception e) {
+                    Message msg = new Message();
+                    msg.what = DOWN_ERROR;
+                    msg.obj=context;
+                    handler.sendMessage(msg);
+                    e.printStackTrace();
+                }
+            }}.start();
+    }
+
+    private final int DOWN_ERROR=1;
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            // TODO Auto-generated method stub
+            super.handleMessage(msg);
+            switch (msg.what) {
+
+                case DOWN_ERROR:
+                    Context context= (Context) msg.obj;
+                    //下载apk失败
+                    Toast.makeText(context, "下载新版本失败",Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    };
+
+    //安装apk
+    protected void installApk(Context context,File file) {
+        Intent intent = new Intent();
+        //执行动作
+        intent.setAction(Intent.ACTION_VIEW);
+        //执行的数据类型
+        intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");//编者按：此处Android应为android，否则造成安装不了
+        context.startActivity(intent);
+    }
+
 
 
     private NotificationManager mNotificationManager = null;
@@ -102,16 +161,17 @@ public class GeneralUtils {
     private void showIsDownLoad(final Context context,final String path) {
         MyAlertDialog dialog = new MyAlertDialog(context).builder();
         dialog.setTitle("提示").setMsg("检测到最新版本，是否现在下载？").setCancelable(false)
-                .setPositiveButton("确定", new View.OnClickListener() {
+                .setPositiveButton("立即更新", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        File file = new File(fileName);
-                        if (file.exists()) {
-                            file.delete();
-                        }
-                        downLoad(context,path);
+//                        File file = new File(fileName);
+//                        if (file.exists()) {
+//                            file.delete();
+//                        }
+//                        downLoad(context,path);
+                        downLoadApk(context, path);
                     }
-                }).setNegativeButton("取消", null).show();
+                }).setNegativeButton("稍后再说", null).show();
     }
 
     /**
@@ -146,7 +206,7 @@ public class GeneralUtils {
                         message.obj=context;
                         message.what=0;
                         myhandler.sendMessage(message);
-                        MyToastUtils.showShortToast(context,"开始升级新版本");
+                        MyToastUtils.showShortToast(context, "开始升级新版本");
                     }
 
                     @SuppressLint("SdCardPath")

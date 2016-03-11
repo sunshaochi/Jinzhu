@@ -21,13 +21,16 @@ import io.rong.imlib.ipc.RongExceptionHandler;
 /**
  * Created by wangbin on 15/11/11.
  */
-public class MyApplication extends Application{
+public class MyApplication extends Application {
     private static MyApplication instance;
 
     public static int screenWith;
     public static int screenHeight;
 
-//    public static String code_cookie;
+    //    public static String code_cookie;
+    private boolean isDownload;
+
+    public static String downloadApkUrl;
 
     private RequestQueue mRequestQueue;
     public static final String TAG = "VolleyPatterns";
@@ -43,6 +46,7 @@ public class MyApplication extends Application{
     public void onCreate() {
         super.onCreate();
         instance = this;
+        isDownload = false;
         /**
          * OnCreate 会被多个进程重入，这段保护代码，确保只有您需要使用 RongIM 的进程和 Push 进程执行了 init。
          * io.rong.push 为融云 push 进程名称，不可修改。
@@ -59,6 +63,14 @@ public class MyApplication extends Application{
         JPushInterface.setDebugMode(false);    // 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);            // 初始化 JPush
         initImageLoader(this);
+    }
+
+    public boolean isDownload() {
+        return isDownload;
+    }
+
+    public void setDownload(boolean isDownload) {
+        this.isDownload = isDownload;
     }
 
     /**
@@ -111,10 +123,9 @@ public class MyApplication extends Application{
     }
 
 
-
     //Volley请求数据
+
     /**
-     *
      * @return 获取RequestQueue
      */
     public RequestQueue getRequestQueue() {
@@ -136,6 +147,7 @@ public class MyApplication extends Application{
     /**
      * Adds the specified request to the global queue, if tag is specified then
      * it is used else Default TAG is used.
+     *
      * @param req
      * @param tag
      */
