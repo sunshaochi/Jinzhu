@@ -145,7 +145,7 @@ public class FindPwdAct extends BaseActivity {
                 break;
             //下一步
             case R.id.nexttv:
-                name = findetphone.getText().toString().trim();
+                name = findetphone.getText().toString().replaceAll(" +","");
                 authcode = findetpwd.getText().toString().trim();
                 if (TextUtils.isEmpty(name)) {
                     MyToastUtils.showShortToast(getApplicationContext(), "请输入手机号");
