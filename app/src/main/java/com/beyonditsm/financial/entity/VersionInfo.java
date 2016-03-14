@@ -94,8 +94,8 @@ public class VersionInfo implements Parcelable {
         private String platform;
         private String packagePath;
         private String updrageLog;
-        private Object remark;
-        private Object createTime;
+        private String remark;
+        private String createTime;
         private String createPersonId;
 
         public void setId(String id) {
@@ -118,11 +118,11 @@ public class VersionInfo implements Parcelable {
             this.updrageLog = updrageLog;
         }
 
-        public void setRemark(Object remark) {
+        public void setRemark(String remark) {
             this.remark = remark;
         }
 
-        public void setCreateTime(Object createTime) {
+        public void setCreateTime(String createTime) {
             this.createTime = createTime;
         }
 
@@ -150,11 +150,11 @@ public class VersionInfo implements Parcelable {
             return updrageLog;
         }
 
-        public Object getRemark() {
+        public String getRemark() {
             return remark;
         }
 
-        public Object getCreateTime() {
+        public String getCreateTime() {
             return createTime;
         }
 
