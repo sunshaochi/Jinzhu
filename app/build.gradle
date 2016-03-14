@@ -7,8 +7,8 @@ android {
         applicationId "com.beyonditsm.financial"
         minSdkVersion 17
         targetSdkVersion 23
-        versionCode 1
-        versionName "v1.0.2"
+        versionCode 4
+        versionName "v1.0.3"
     }
 //
 //    signingConfigs {
@@ -80,4 +80,5 @@ dependencies {
     compile files('libs/core-3.1.1-SNAPSHOT.jar')
     compile files('libs/Volley.jar')
     compile files('libs/xUtils-2.4.7.jar')
+    compile files('libs/jpush-android-2.1.0.jar')
 }
