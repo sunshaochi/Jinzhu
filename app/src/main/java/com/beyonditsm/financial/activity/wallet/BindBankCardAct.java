@@ -39,7 +39,8 @@ public class BindBankCardAct extends BaseActivity {
         Intent intent=null;
         switch (view.getId()){
             case R.id.ll_addBankCard:
-
+                intent = new Intent(BindBankCardAct.this,AddBankCardAct.class);
+                startActivity(intent);
                 break;
             case R.id.tv_setzjpassword:
                 intent=new Intent(BindBankCardAct.this,SetPwdActivity.class);
