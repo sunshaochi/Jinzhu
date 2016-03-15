@@ -219,8 +219,10 @@
         android:layout_width="match_parent"
         android:layout_height="41dp"
         android:layout_marginTop="20dp"
-        android:background="@color/address_color"
+        android:background="@drawable/item_back"
         android:text="绑定银行卡"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:textColor="@color/tv_second_color"
+        android:textSize="14sp"/>
 
 </LinearLayout>

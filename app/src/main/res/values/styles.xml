@@ -303,11 +303,21 @@
 
     </style>
 
+    <!--添加银行卡布局样式-->
     <style name="ll_addbankcard">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">40dp</item>
         <item name="android:orientation">horizontal</item>
         <item name="android:gravity">center_vertical</item>
-
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:background">@drawable/item_back</item>
+    </style>
+    <!--添加银行卡输入框样式-->
+    <style name="et_addbankcard">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/et_witchdraw</item>
+        <item name="android:layout_marginLeft">10dp</item>
     </style>
 </resources>

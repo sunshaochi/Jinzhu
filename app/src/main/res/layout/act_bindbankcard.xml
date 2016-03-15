@@ -2,15 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/bg_color">
 
     <include layout="@layout/title_act_layout"/>
+
+
     <ListView
         android:id="@+id/lv_bankcard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="@null"
         android:dividerHeight="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:visibility="gone"></ListView>
     <LinearLayout
         android:id="@+id/ll_addBankCard"
@@ -18,12 +23,13 @@
         android:layout_height="30dp"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp"
+        android:background="@drawable/item_back">
         <ImageView
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:src="@mipmap/add_image"/>
+            android:src="@mipmap/add_image"
+            android:layout_marginLeft="10dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,16 +40,17 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:orientation="horizontal"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="15dp">
+        android:layout_marginTop="15dp"
+        android:background="@drawable/item_back"
+        android:gravity="center_vertical">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="输入资金密码"/>
+            android:text="输入资金密码"
+            android:layout_marginLeft="10dp"/>
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@null"/>
+            android:id="@+id/et_set"
+            style="@style/et_addbankcard"/>
     </LinearLayout>
     <TextView
         android:id="@+id/tv_surebind"
