@@ -21,13 +21,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
-            android:text="v1.0.2" />
+             />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:visibility="gone"
         android:orientation="horizontal">
 
         <TextView
@@ -39,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
-            android:text="10.4M" />
+             />
     </LinearLayout>
 
     <LinearLayout
@@ -58,6 +59,6 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="5dp"
             android:lineSpacingExtra="3dp"
-            android:text="1.修复了部分问题\n2.更改了部分BUG"></TextView>
+            android:text=""></TextView>
     </LinearLayout>
 </LinearLayout>
