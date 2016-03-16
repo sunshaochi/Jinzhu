@@ -129,12 +129,36 @@ public class WalletManager extends RequestManager{
         doPost(IFinancialUrl.QUERY_BANK_CARD,queryParams,callBack);
     }
 
+    /**
+     * 添加银行卡
+     * @param abce
+     * @param callBack
+     */
     public void addBankCard(AddBankCardEntity abce,CallBack callBack){
         List<NameValuePair> queryParams=new ArrayList<NameValuePair>();
         queryParams.add(new BasicNameValuePair("cardNo",abce.getCardNo()));
         queryParams.add(new BasicNameValuePair("bankName",abce.getBankName()));
         queryParams.add(new BasicNameValuePair("branchBankName",abce.getBranchBankName()));
         queryParams.add(new BasicNameValuePair("fundPassword",abce.getFundPassword()));
-        doPost(IFinancialUrl.ADD_BANK_CARD,queryParams,callBack);
+        queryParams.add(new BasicNameValuePair("accountName",abce.getAccountName()));
+        doPost(IFinancialUrl.ADD_BANK_CARD, queryParams, callBack);
+    }
+
+    /**
+     * 修改银行卡状态
+     * @param cardNo
+     * @param status
+     * @param callBack
+     */
+    public void modifyBankCard(String cardNo,int status,CallBack callBack){
+        List<NameValuePair> queryParams=new ArrayList<NameValuePair>();
+        queryParams.add(new BasicNameValuePair("cardNo",cardNo));
+        queryParams.add(new BasicNameValuePair("status",status+""));
+        doPost(IFinancialUrl.MODIFY_BANK_CARD_STATUS,queryParams,callBack);
+    }
+
+    public void getBank(CallBack callBack){
+        List<NameValuePair> queryParams=new ArrayList<NameValuePair>();
+        doPost(IFinancialUrl.QUERY_BANK,queryParams,callBack);
     }
 }

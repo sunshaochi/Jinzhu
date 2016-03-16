@@ -7,12 +7,22 @@ import android.os.Parcelable;
  * Created by Administrator on 2016/3/15.
  */
 public class AddBankCardEntity implements Parcelable{
+    private String accountName;//开户姓名
     private String cardNo;//银行卡号
     private String bankName;//银行名称
     private String branchBankName;//支行名称
     private String fundPassword;//资金密码
 
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+    }
+
     public AddBankCardEntity() {
+
     }
 
     protected AddBankCardEntity(Parcel in) {
@@ -20,6 +30,7 @@ public class AddBankCardEntity implements Parcelable{
         bankName = in.readString();
         branchBankName = in.readString();
         fundPassword = in.readString();
+        accountName = in.readString();
     }
 
     public static final Creator<AddBankCardEntity> CREATOR = new Creator<AddBankCardEntity>() {
@@ -77,5 +88,6 @@ public class AddBankCardEntity implements Parcelable{
         parcel.writeString(bankName);
         parcel.writeString(branchBankName);
         parcel.writeString(fundPassword);
+        parcel.writeString(accountName);
     }
 }
