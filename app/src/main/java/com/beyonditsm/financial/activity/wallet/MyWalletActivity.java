@@ -119,7 +119,7 @@ public class MyWalletActivity extends BaseActivity{
         }
     }
 
-    @OnClick({R.id.rlMyPayments,R.id.rlMyOrder,R.id.rlxianjin,R.id.rldikou})
+    @OnClick({R.id.rlMyPayments,R.id.rlMyOrder,R.id.rlxianjin,R.id.rldikou,R.id.tv_bindBankCard})
     public void toClick(View v){
         Intent intent=null;
         switch (v.getId()){
@@ -143,6 +143,11 @@ public class MyWalletActivity extends BaseActivity{
             case R.id.rldikou:
                 intent=new Intent(MyWalletActivity.this,InterestDeduction.class);
                 intent.putExtra("userInfo",user);
+                startActivity(intent);
+                break;
+            case R.id.tv_bindBankCard:
+                intent = new Intent(MyWalletActivity.this,BindBankCardAct.class);
+                intent.putExtra("userinfo",user);
                 startActivity(intent);
                 break;
         }

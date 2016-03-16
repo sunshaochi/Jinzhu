@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.http;
 
+import com.beyonditsm.financial.entity.AddBankCardEntity;
 import com.beyonditsm.financial.entity.OrderBean;
 
 import org.apache.http.NameValuePair;
@@ -117,5 +118,23 @@ public class WalletManager extends RequestManager{
         List<NameValuePair> queryParams=new ArrayList<NameValuePair>();
         queryParams.add(new BasicNameValuePair("orderNo",orderNo));
         doPost(IFinancialUrl.LIXI,queryParams,callBack);
+    }
+
+    /**
+     * 查询用户已绑定的银行卡
+     * @param callBack
+     */
+    public void findBankCard(CallBack callBack){
+        List<NameValuePair> queryParams=new ArrayList<NameValuePair>();
+        doPost(IFinancialUrl.QUERY_BANK_CARD,queryParams,callBack);
+    }
+
+    public void addBankCard(AddBankCardEntity abce,CallBack callBack){
+        List<NameValuePair> queryParams=new ArrayList<NameValuePair>();
+        queryParams.add(new BasicNameValuePair("cardNo",abce.getCardNo()));
+        queryParams.add(new BasicNameValuePair("bankName",abce.getBankName()));
+        queryParams.add(new BasicNameValuePair("branchBankName",abce.getBranchBankName()));
+        queryParams.add(new BasicNameValuePair("fundPassword",abce.getFundPassword()));
+        doPost(IFinancialUrl.ADD_BANK_CARD,queryParams,callBack);
     }
 }

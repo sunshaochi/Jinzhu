@@ -8,8 +8,12 @@ package com.beyonditsm.financial.http;
 public interface IFinancialUrl {
 
     /*test地址*/
-    String BASE_URL = "http://139.196.111.82:5018";
+//    String BASE_URL = "http://139.196.111.82:5018";
 //    String BASE_URL = "http://option.myjinzhu.com";
+//    String BASE_URL = "http://139.196.111.82:5018";
+    String BASE_URL = "http://test.myjinzhu.com:8082";
+//    String BASE_URL = "http://option.myjinzhu.com";
+//    String BASE_URL = "http://172.16.12.237:8080";
 /*调试用户端好友显示地址*/
 //String BASE_URL = "http://172.16.12.238:8080";
 
@@ -188,4 +192,11 @@ public interface IFinancialUrl {
     String ORDER_NO_LIST = BASE_URL + API_VERSION + "/platform/login/findOrderNoListByUserName.do";
     /*总利息、可抵扣利息*/
     String LIXI = BASE_URL + API_VERSION + "/platform/login/findInterestByOrderNo.do";
+
+    /*获取用户绑定的银行卡*/
+    String QUERY_BANK_CARD = BASE_URL+API_VERSION+"/wallet/login/queryBankCard.do";
+    /*获取支持的银行列表*/
+    String QUERY_BANK = BASE_URL+API_VERSION+"/wallet/login/queryBanK.do";
+    /*添加银行卡*/
+    String ADD_BANK_CARD = BASE_URL+API_VERSION+"/wallet/login/addBankCard.do";
 }

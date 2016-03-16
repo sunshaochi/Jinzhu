@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/title_act_layout" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            style="@style/ll_addbankcard"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="开户姓名：" />
+
+            <EditText
+                android:id="@+id/et_cardName"
+                style="@style/et_addbankcard" />
+        </LinearLayout>
+
+        <View
+            style="@style/view_line"/>
+        <LinearLayout
+            style="@style/ll_addbankcard">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="银行卡号：" />
+
+            <EditText
+                android:id="@+id/et_cardNo"
+                style="@style/et_addbankcard" />
+        </LinearLayout>
+
+        <View
+            style="@style/view_line"/>
+        <LinearLayout
+            style="@style/ll_addbankcard">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="银行名称：" />
+
+            <EditText
+                android:id="@+id/et_bankName"
+                style="@style/et_addbankcard" />
+        </LinearLayout>
+        <View
+            style="@style/view_line"/>
+        <LinearLayout
+            style="@style/ll_addbankcard">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="支行名称：" />
+
+            <EditText
+                android:id="@+id/et_branchName"
+                style="@style/et_addbankcard" />
+        </LinearLayout>
+        <View
+            style="@style/view_line"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/item_back"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="输入资金密码"/>
+            <EditText
+                android:id="@+id/et_fundPassword"
+                style="@style/et_addbankcard"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_sureAdd"
+            android:text="确定"
+            style="@style/zc_btn"
+            android:gravity="center" />
+        <TextView
+            android:id="@+id/tv_setzjpassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="25dp"
+            android:layout_marginTop="20dp"
+            android:drawablePadding="5dp"
+            android:drawableRight="@mipmap/arrow_inner"
+            android:text="设置资金密码"
+            android:textColor="@color/tv_price_color"
+            android:textSize="14sp" />
+    </LinearLayout>
+</LinearLayout>

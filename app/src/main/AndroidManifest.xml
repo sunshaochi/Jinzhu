@@ -333,6 +333,12 @@
         <!--抵扣利息-->
         <activity android:name=".activity.wallet.InterestDeduction"
             android:screenOrientation="portrait"></activity>
+        <!--绑定银行卡-->
+        <activity android:name=".activity.wallet.BindBankCardAct"
+            android:screenOrientation="portrait"></activity>
+        <!--添加银行卡-->
+        <activity android:name=".activity.wallet.AddBankCardAct"
+            android:screenOrientation="portrait"></activity>
         <!--订单提交成功-->
         <activity android:name=".activity.wallet.OrderCommitSusAct"
             android:screenOrientation="portrait"></activity>

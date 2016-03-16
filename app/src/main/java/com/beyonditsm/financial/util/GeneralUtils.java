@@ -78,7 +78,9 @@ public class GeneralUtils {
 
                 }else{
                     String path = rd.getData().getVersion().getPackagePath();
-                    showIsDownLoad(context, path);
+                    String updrageLog = rd.getData().getVersion().getUpdrageLog();//新版本更新内容
+                    String remark = rd.getData().getVersion().getRemark();//新版本大小
+                    showIsDownLoad(context, path,"",remark,updrageLog);
 //                MyToastUtils.showShortToast(MyApplication.getInstance(),rd.getData().getMessage());
                 }
             }
@@ -158,7 +160,7 @@ public class GeneralUtils {
     /**
      * 是否下载
      */
-    private void showIsDownLoad(final Context context,final String path) {
+    private void showIsDownLoad(final Context context,final String path,String versionName,String versionSize,String versionContent) {
         MyAlertDialog dialog = new MyAlertDialog(context).builder();
         dialog.setTitle("提示").setMsg("检测到最新版本，是否现在下载？").setCancelable(false)
                 .setPositiveButton("立即更新", new View.OnClickListener() {
@@ -178,14 +180,15 @@ public class GeneralUtils {
                 }).setNegativeButton("稍后再说", null).show();
 //                    }
 //                }).setNegativeButton("取消", null).show();
-//        dialog.setTitle("发现新版本").setMsgLayout(R.layout.layout_versionupload).setCancelable(false).setPositiveButton("立即更新", new View.OnClickListener() {
+//        dialog.setTitle("发现新版本").setMsgLayout(R.layout.layout_versionupload,"",versionSize,versionContent).setCancelable(false).setPositiveButton("立即更新", new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                File file = new File(fileName);
-//                        if (file.exists()) {
-//                            file.delete();
-//                        }
-//                        downLoad(context,path);
+////                File file = new File(fileName);
+////                        if (file.exists()) {
+////                            file.delete();
+////                        }
+////                        downLoad(context,path);
+//                downLoadApk(context,path);
 //            }
 //        }).setNegativeButton("稍后再说", null).show();
     }
