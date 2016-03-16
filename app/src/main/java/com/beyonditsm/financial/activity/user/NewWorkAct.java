@@ -271,6 +271,7 @@ public class NewWorkAct extends BaseActivity {
                 datas.put(2, list3);
                 adapter = new WorkAdapter(getSupportFragmentManager(), datas);
                 viewPager.setAdapter(adapter);
+                viewPager.setOffscreenPageLimit(3);
                 viewPager.setCurrentItem(0);
                 indicator.setViewPager(viewPager);
 //                adapter = new MyViewPager();
