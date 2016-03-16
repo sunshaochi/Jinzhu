@@ -5,9 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
@@ -17,6 +23,8 @@ import com.beyonditsm.financial.entity.QueryBankCardEntity;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.widget.MyScrollListView;
+import com.leaf.library.widget.MyListView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.json.Gson;
@@ -27,6 +35,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -35,15 +44,22 @@ import java.util.List;
  */
 public class BindBankCardAct extends BaseActivity {
     @ViewInject(R.id.lv_bankcard)
-    private ListView lvBankCard;
+    private MyListView lvBankCard;
+//    private MyScrollListView lvBankCard;
     @ViewInject(R.id.ll_addBankCard)
     private LinearLayout llAddBankCard;
     @ViewInject(R.id.tv_setzjpassword)
     private TextView tvSetzjPassword;
+    @ViewInject(R.id.tv_surebind)
+    private TextView tvSureBind;
+    @ViewInject(R.id.sv_bindBankCard)
+    private ScrollView svBindBankCard;
     private UserEntity user;//用户实体
     private List<QueryBankCardEntity> bankCardList = new ArrayList<>();
     private BindBankCardAdp adapter;
     private MyBroadcastReceiver receiver;
+    private int status = 1;
+    private String cardNo;
 
     @Override
     public void setLayout() {
@@ -54,10 +70,11 @@ public class BindBankCardAct extends BaseActivity {
     public void init(Bundle savedInstanceState) {
         setTopTitle("绑定银行卡");
         user=getIntent().getParcelableExtra("userInfo");
+        svBindBankCard.smoothScrollTo(0,0);
         findBankCard();
 
     }
-    @OnClick({R.id.ll_addBankCard,R.id.tv_setzjpassword})
+    @OnClick({R.id.ll_addBankCard,R.id.tv_setzjpassword,R.id.tv_surebind})
     public void todo(View view){
         Intent intent=null;
         switch (view.getId()){
@@ -69,6 +86,8 @@ public class BindBankCardAct extends BaseActivity {
                 intent=new Intent(BindBankCardAct.this,SetPwdActivity.class);
                 intent.putExtra("userPhone",user.getAccountName());
                 startActivity(intent);
+                break;
+            case R.id.tv_surebind:
                 break;
         }
     }
@@ -85,12 +104,12 @@ public class BindBankCardAct extends BaseActivity {
                 if (list.size()==0&&list==null) {
                     lvBankCard.setVisibility(View.GONE);
                 }
-                bankCardList.addAll(list);
+
                 if (adapter==null){
-                    adapter = new BindBankCardAdp(BindBankCardAct.this,bankCardList);
+                    adapter = new BindBankCardAdp(BindBankCardAct.this,list);
                     lvBankCard.setAdapter(adapter);
                 }else{
-                    adapter.setNotifyChange(bankCardList);
+                    adapter.setNotifyChange(list);
                 }
 
 
@@ -125,7 +144,8 @@ public class BindBankCardAct extends BaseActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            adapter.setNotifyChange(bankCardList);
+            findBankCard();
         }
     }
+
 }

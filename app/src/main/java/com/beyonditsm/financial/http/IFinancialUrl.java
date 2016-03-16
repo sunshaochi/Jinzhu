@@ -199,4 +199,7 @@ public interface IFinancialUrl {
     String QUERY_BANK = BASE_URL+API_VERSION+"/wallet/login/queryBanK.do";
     /*添加银行卡*/
     String ADD_BANK_CARD = BASE_URL+API_VERSION+"/wallet/login/addBankCard.do";
+    /*修改银行卡状态*/
+    String MODIFY_BANK_CARD_STATUS = BASE_URL+API_VERSION+"/wallet/login/modifyBankCard.do";
+
 }

@@ -23,6 +23,11 @@ public class QueryBankCardEntity implements Parcelable {
     private String bankName;//银行名称
     private String cardNo;//卡号
     private String cardId;//银行卡ID
+    /**
+     * status : 1
+     */
+
+    private int status;
 
     protected QueryBankCardEntity(Parcel in) {
         cardType = in.readString();
@@ -31,6 +36,7 @@ public class QueryBankCardEntity implements Parcelable {
         bankName = in.readString();
         cardNo = in.readString();
         cardId = in.readString();
+        status = in.readInt();
     }
 
     public static final Creator<QueryBankCardEntity> CREATOR = new Creator<QueryBankCardEntity>() {
@@ -106,5 +112,14 @@ public class QueryBankCardEntity implements Parcelable {
         parcel.writeString(bankName);
         parcel.writeString(cardNo);
         parcel.writeString(cardId);
+        parcel.writeInt(status);
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public int getStatus() {
+        return status;
     }
 }
