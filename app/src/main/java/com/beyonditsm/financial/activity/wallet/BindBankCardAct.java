@@ -69,6 +69,7 @@ public class BindBankCardAct extends BaseActivity {
     @Override
     public void init(Bundle savedInstanceState) {
         setTopTitle("绑定银行卡");
+        setLeftTv("返回");
         user=getIntent().getParcelableExtra("userInfo");
         svBindBankCard.smoothScrollTo(0,0);
         findBankCard();
@@ -88,6 +89,7 @@ public class BindBankCardAct extends BaseActivity {
                 startActivity(intent);
                 break;
             case R.id.tv_surebind:
+                finish();
                 break;
         }
     }
@@ -101,9 +103,9 @@ public class BindBankCardAct extends BaseActivity {
                 Gson gson = new Gson();
                 List<QueryBankCardEntity> list = gson.fromJson(data.toString(), new TypeToken<List<QueryBankCardEntity>>() {
                 }.getType());
-                if (list.size()==0&&list==null) {
-                    lvBankCard.setVisibility(View.GONE);
-                }
+//                if (list==null) {
+//                    lvBankCard.setVisibility(View.GONE);
+//                }
 
                 if (adapter==null){
                     adapter = new BindBankCardAdp(BindBankCardAct.this,list);
