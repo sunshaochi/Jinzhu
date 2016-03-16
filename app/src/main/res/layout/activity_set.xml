@@ -121,6 +121,13 @@
             android:layout_centerVertical="true"
             android:text="检测新版本"
             />
+
+
+        <ImageView
+            android:id="@+id/iv"
+            style="@style/arrow_right_style"
+            android:layout_alignParentRight="true" />
+
         <TextView
             android:id="@+id/tvVersion"
             android:layout_width="wrap_content"
@@ -131,11 +138,6 @@
             android:layout_marginRight="10dp"
             android:layout_centerVertical="true"
             android:text=""
-            android:layout_toStartOf="@+id/iv" />
-
-        <ImageView
-            android:id="@+id/iv"
-            style="@style/arrow_right_style"
-            android:layout_alignParentRight="true" />
+            android:layout_toLeftOf="@+id/iv" />
     </RelativeLayout>
 </LinearLayout>

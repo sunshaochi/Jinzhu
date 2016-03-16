@@ -88,7 +88,7 @@ public class VersionInfo implements Parcelable {
         return version;
     }
 
-    public static class VersionEntity {
+    public static class VersionEntity implements Parcelable {
         private String id;
         private int version;
         private String platform;
@@ -97,6 +97,15 @@ public class VersionInfo implements Parcelable {
         private String remark;
         private String createTime;
         private String createPersonId;
+        private String versionName;
+
+        public String getVersionName() {
+            return versionName;
+        }
+
+        public void setVersionName(String versionName) {
+            this.versionName = versionName;
+        }
 
         public void setId(String id) {
             this.id = id;
@@ -161,5 +170,48 @@ public class VersionInfo implements Parcelable {
         public String getCreatePersonId() {
             return createPersonId;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.id);
+            dest.writeInt(this.version);
+            dest.writeString(this.platform);
+            dest.writeString(this.packagePath);
+            dest.writeString(this.updrageLog);
+            dest.writeString(this.remark);
+            dest.writeString(this.createTime);
+            dest.writeString(this.createPersonId);
+            dest.writeString(this.versionName);
+        }
+
+        public VersionEntity() {
+        }
+
+        protected VersionEntity(Parcel in) {
+            this.id = in.readString();
+            this.version = in.readInt();
+            this.platform = in.readString();
+            this.packagePath = in.readString();
+            this.updrageLog = in.readString();
+            this.remark = in.readString();
+            this.createTime = in.readString();
+            this.createPersonId = in.readString();
+            this.versionName = in.readString();
+        }
+
+        public static final Creator<VersionEntity> CREATOR = new Creator<VersionEntity>() {
+            public VersionEntity createFromParcel(Parcel source) {
+                return new VersionEntity(source);
+            }
+
+            public VersionEntity[] newArray(int size) {
+                return new VersionEntity[size];
+            }
+        };
     }
 }

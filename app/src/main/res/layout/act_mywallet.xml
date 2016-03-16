@@ -223,6 +223,7 @@
         android:text="绑定银行卡"
         android:gravity="center"
         android:textColor="@color/tv_second_color"
-        android:textSize="14sp"/>
+        android:textSize="14sp"
+        android:visibility="gone"/>
 
 </LinearLayout>

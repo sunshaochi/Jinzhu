@@ -27,6 +27,7 @@ import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.SpUtils;
+import com.beyonditsm.financial.util.UriToPath;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 import java.io.File;
@@ -60,7 +61,6 @@ public class GameActivity extends BaseActivity {
     public void init(Bundle savedInstanceState) {
         setTopTitle("信用耕耘");
         setLeftTv("返回");
-//        setConfigCallback((WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE));
         String cookie[] = SpUtils.getCookie(this).split("=");
         gUrl = IFinancialUrl.GAME_URL + "?JSESSIONID=" + cookie[1].substring(0, cookie[1].length() - 1);
 //        MyLogUtils.info(gUrl);
@@ -73,7 +73,6 @@ public class GameActivity extends BaseActivity {
         settings.setJavaScriptEnabled(true);
         settings.setSupportZoom(true);
         settings.setAllowFileAccess(true);
-        settings.setAllowFileAccessFromFileURLs(true);
 
         wvGame.setWebViewClient(new WebViewClient() {
             @Override
@@ -114,6 +113,16 @@ public class GameActivity extends BaseActivity {
                 mUploadMessage = uploadMsg;
                 take();
             }
+
+            // Android > 4.1.1 调用这个方法
+//            public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType, String capture) {
+//                mUploadMessage = uploadMsg;
+//                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//                intent.addCategory(Intent.CATEGORY_OPENABLE);
+//                intent.setType("image/*");
+//               startActivityForResult(
+//                        Intent.createChooser(intent, "Image Chooser"), FILECHOOSER_RESULTCODE);
+//            }
 
             public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType, String capture) {
                 mUploadMessage = uploadMsg;
@@ -204,8 +213,11 @@ public class GameActivity extends BaseActivity {
                     MyLogUtils.error(imageUri + "");
 //                    Log.e("imageUri",imageUri+"");
                 } else {
-                    mUploadMessage.onReceiveValue(result);
-                    mUploadMessage = null;
+                    String path = UriToPath.getImageAbsolutePath(this, result);
+                    Uri uri = Uri.fromFile(new File(path));
+                    mUploadMessage.onReceiveValue(uri);
+//                    mUploadMessage.onReceiveValue(result);
+//                    mUploadMessage = null;
                 }
 
 

@@ -10,6 +10,9 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 
+/**
+ * 解决android4.4图片上传问题
+ */
 public class UriToPath {
 
     /**

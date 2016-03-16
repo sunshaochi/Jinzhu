@@ -4,7 +4,7 @@ package com.beyonditsm.financial.widget;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
-import android.text.Layout;
+import android.text.TextUtils;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +18,6 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
-
-import org.w3c.dom.Text;
 
 /**
  * 仿ios提示框
@@ -116,13 +114,13 @@ public class MyAlertDialog {
 	}
 	public MyAlertDialog setMsgLayout(int msgLayout,String versionName,String versionSize,String versionContent){
 		showMsgLayout = true;
-		if ("".equals(versionName)){
-			tvVersionName.setText("v1.0.0");
+		if (TextUtils.isEmpty(versionName)){
+			tvVersionName.setText("");
 		}else{
 			tvVersionName.setText(versionName);
 		}
 		if ("".equals(versionSize)){
-			tvVersionSize.setText("10.0M");
+			tvVersionSize.setText("");
 		}else{
 			tvVersionSize.setText(versionSize);
 		}

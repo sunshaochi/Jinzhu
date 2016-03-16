@@ -93,7 +93,7 @@ public class MyCreditStatusFragment extends BaseFragment {
                 Gson gson =new Gson();
                 orderList = gson.fromJson(data.toString(), new TypeToken<List<OrderDealEntity>>() {
                 }.getType());
-//                Collections.reverse(orderList);
+                Collections.reverse(orderList);
                 if (detailAdapter==null) {
                     detailAdapter = new OrderDetailAdapter(getContext(), orderList);
                     plvCreditStatus.getRefreshableView().setAdapter(detailAdapter);
