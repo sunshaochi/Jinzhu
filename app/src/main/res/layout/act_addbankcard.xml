@@ -40,7 +40,9 @@
 
             <EditText
                 android:id="@+id/et_cardNo"
-                style="@style/et_addbankcard" />
+                style="@style/et_addbankcard"
+                android:inputType="number"
+                />
         </LinearLayout>
 
         <View
@@ -97,7 +99,10 @@
             <EditText
                 android:id="@+id/et_fundPassword"
                 style="@style/et_addbankcard"
-                android:layout_marginLeft="10dp"/>
+                android:layout_marginLeft="10dp"
+                android:inputType="numberPassword"
+                android:maxLength="6"
+                android:hint="请输入资金密码(6位数字)"/>
         </LinearLayout>
         <TextView
             android:id="@+id/tv_sureAdd"

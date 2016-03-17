@@ -60,17 +60,11 @@ public class UpIdCardAct extends BaseActivity {
     private Button commitIDCard;
     private FinalLoadDialog dialog;
 
-    private List<ImageBean> selecteds = new ArrayList<ImageBean>();
     private List<String> list = new ArrayList<>();
     private Map<String, List<String>> map = new HashMap<>();
     private String orderNo;
 
-    private String path;// 图片全路径
-    public static final int ADD_PHOTO_CODE = 0x300;
-    public static final int PHOTO_CODE0 = 0x456;
     public static int flag;
-    private int maxCount = 2;
-    private int selectCount = 1;
 
     @Override
     public void setLayout() {
@@ -128,10 +122,6 @@ public class UpIdCardAct extends BaseActivity {
                         Crop.pickAlbumsImage(null,UpIdCardAct.this);
                     }
                 }).show();
-//                Intent intent1 = new Intent(this, PicSelectActivity.class);
-//                intent1.putExtra(PicSelectActivity.SELECT_COUNT, selecteds.size());
-//                intent1.putExtra(PicSelectActivity.TOTAL_COUNT, maxCount);
-//                startActivityForResult(intent1, ADD_PHOTO_CODE);
 
                 break;
             case R.id.iv_negative://反面
@@ -147,10 +137,6 @@ public class UpIdCardAct extends BaseActivity {
                         Crop.pickAlbumsImage(null,UpIdCardAct.this);
                     }
                 }).show();
-//                Intent intent2 = new Intent(this, PicSelectActivity.class);
-//                intent2.putExtra(PicSelectActivity.SELECT_COUNT, selecteds.size());
-//                intent2.putExtra(PicSelectActivity.TOTAL_COUNT, maxCount);
-//                startActivityForResult(intent2, ADD_PHOTO_CODE);
                 break;
             case R.id.iv_hold://手持
                 flag = 2;
@@ -165,10 +151,6 @@ public class UpIdCardAct extends BaseActivity {
                         Crop.pickAlbumsImage(null,UpIdCardAct.this);
                     }
                 }).show();
-//                Intent intent3 = new Intent(this, PicSelectActivity.class);
-//                intent3.putExtra(PicSelectActivity.SELECT_COUNT, selecteds.size());
-//                intent3.putExtra(PicSelectActivity.TOTAL_COUNT, maxCount);
-//                startActivityForResult(intent3, ADD_PHOTO_CODE);
                 break;
         }
     }

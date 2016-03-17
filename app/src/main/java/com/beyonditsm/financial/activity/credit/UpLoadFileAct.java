@@ -42,12 +42,11 @@ public class UpLoadFileAct extends BaseActivity {
      * 照片List
      */
     private List<ImageBean> selecteds = new ArrayList<ImageBean>();
-    private List<String> imageList = new ArrayList<String>();
     private GvPhotoAdapter adapter;
-    private String uploadStr = null;
     private String orderNo = null;
 
     private FinalLoadDialog dialog;
+
     @Override
     public void setLayout() {
         setContentView(R.layout.uploadfile);
@@ -56,21 +55,18 @@ public class UpLoadFileAct extends BaseActivity {
     @Override
     public void init(Bundle savedInstanceState) {
         setLeftTv("返回");
-        dialog=new FinalLoadDialog(this);
+        dialog = new FinalLoadDialog(this);
         dialog.setTitle("上传附件中");
         dialog.setCancelable(false);
         final String isSupplementFile = getIntent().getStringExtra("isSupplementFile");
-        if ("idCard".equals(isSupplementFile)){
-            setTopTitle("上传身份证");
-            commit_file.setText("上传身份证照片");
-        }else{
-            setTopTitle("上传附件");
-            commit_file.setText("上传附件");
-        }
+
+        setTopTitle("上传附件");
+        commit_file.setText("上传附件");
+
         orderNo = getIntent().getStringExtra("orderNo");
-        if (orderNo==null){
-            orderNo=null;
-        }else{
+        if (orderNo == null) {
+            orderNo = null;
+        } else {
             orderNo = orderNo;
         }
         adapter = new GvPhotoAdapter(selecteds, 9, UpLoadFileAct.this);
@@ -83,16 +79,6 @@ public class UpLoadFileAct extends BaseActivity {
                         uploadFile(isSupplementFile);
                     } else {
                         MyToastUtils.showShortToast(UpLoadFileAct.this, "请选择附件照片！");
-                    }
-                } else if ("idCard".equals(isSupplementFile)) {
-                    if (selecteds.size() > 0) {
-                        if (selecteds.size() > 2) {
-                            uploadFile(isSupplementFile);
-                        } else {
-                            MyToastUtils.showShortToast(UpLoadFileAct.this, "请选择至少三张照片！");
-                        }
-                    } else {
-                        MyToastUtils.showShortToast(UpLoadFileAct.this, "请选择身份证照片！");
                     }
                 }
             }
@@ -171,9 +157,6 @@ public class UpLoadFileAct extends BaseActivity {
                     String orderNo = data.optString("orderNo");
                     Intent intent = new Intent(CreditSecondFrag.IMAGE);
                     intent.putExtra(PicSelectActivity.IMAGES, orderNo);
-                    if ("idCard".equals(isSupplementFile)){
-                        intent.putExtra("isLoadCard",true);
-                    }
                     sendBroadcast(intent);
                     LogUtils.i("orderNo:" + orderNo);
                     MyToastUtils.showShortToast(UpLoadFileAct.this, "上传成功");

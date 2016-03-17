@@ -12,9 +12,11 @@ import android.widget.TextView;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.entity.AddBankCardEntity;
+import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
 
 import org.json.JSONException;
 
@@ -43,6 +45,7 @@ public class AddBankCardAct  extends BaseActivity{
     @ViewInject(R.id.sp_bankList)
     private Spinner spBankList;
     private ArrayAdapter<String> adapter;
+    private UserEntity user;//用户实体
 
     @Override
     public void setLayout() {
@@ -53,26 +56,22 @@ public class AddBankCardAct  extends BaseActivity{
     public void init(Bundle savedInstanceState) {
         setTopTitle("添加银行卡");
         setLeftTv("返回");
+        user=getIntent().getParcelableExtra("userinfo");
 //        getBankList();
-//        List<String> dataList = new ArrayList<>();
-//        dataList.add("");
-//        dataList.add("招商银行");
-//        dataList.add("浦发银行");
-//        dataList.add("工商银行");
-//        dataList.add("中国银行");
-//        dataList.add("华夏银行");
-//        dataList.add("建设银行");
-//        dataList.add("交通银行");
-//        dataList.add("农业银行");
-//        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dataList);
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spBankList.setAdapter(adapter);
         tvSureAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isInputEmpty()) {
                     addBankCard();
                 }
+            }
+        });
+        tvSetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddBankCardAct.this,SetPwdActivity.class);
+                intent.putExtra("userPhone",user.getAccountName());
+                startActivity(intent);
             }
         });
     }

@@ -147,7 +147,7 @@ public class MyWalletActivity extends BaseActivity{
                 break;
             case R.id.tv_bindBankCard:
                 intent = new Intent(MyWalletActivity.this,BindBankCardAct.class);
-                intent.putExtra("userinfo",user);
+                intent.putExtra("userInfo",user);
                 startActivity(intent);
                 break;
         }
