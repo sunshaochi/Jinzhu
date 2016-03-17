@@ -17,7 +17,6 @@ import com.beyonditsm.financial.entity.QueryBankCardEntity;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.MyToastUtils;
-import com.leaf.library.widget.MyListView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.json.Gson;
@@ -36,7 +35,7 @@ import java.util.List;
  */
 public class BindBankCardAct extends BaseActivity {
     @ViewInject(R.id.lv_bankcard)
-    private MyListView lvBankCard;
+    private ListViewForScrollView lvBankCard;
 //    private MyScrollListView lvBankCard;
     @ViewInject(R.id.ll_addBankCard)
     private LinearLayout llAddBankCard;
@@ -63,7 +62,7 @@ public class BindBankCardAct extends BaseActivity {
         setTopTitle("绑定银行卡");
         setLeftTv("返回");
         user=getIntent().getParcelableExtra("userInfo");
-        svBindBankCard.smoothScrollTo(0,0);
+        svBindBankCard.smoothScrollTo(0, 0);
         findBankCard();
 
     }

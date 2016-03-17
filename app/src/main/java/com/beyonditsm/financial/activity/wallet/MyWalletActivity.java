@@ -119,7 +119,7 @@ public class MyWalletActivity extends BaseActivity{
         }
     }
 
-    @OnClick({R.id.rlMyPayments,R.id.rlMyOrder,R.id.rlxianjin,R.id.rldikou,R.id.tv_bindBankCard})
+    @OnClick({R.id.rlMyPayments,R.id.rlMyOrder,R.id.rlxianjin,R.id.rldikou,R.id.rlBindBankCard})
     public void toClick(View v){
         Intent intent=null;
         switch (v.getId()){
@@ -145,7 +145,8 @@ public class MyWalletActivity extends BaseActivity{
                 intent.putExtra("userInfo",user);
                 startActivity(intent);
                 break;
-            case R.id.tv_bindBankCard:
+            //绑定银行卡
+            case R.id.rlBindBankCard:
                 intent = new Intent(MyWalletActivity.this,BindBankCardAct.class);
                 intent.putExtra("userInfo",user);
                 startActivity(intent);

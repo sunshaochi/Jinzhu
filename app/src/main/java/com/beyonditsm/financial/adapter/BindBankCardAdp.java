@@ -82,8 +82,9 @@ public class BindBankCardAdp extends BaseAdapter {
         final QueryBankCardEntity queryBankCardEntity = list.get(position);
         holder.tvBankName.setText(queryBankCardEntity.getBankName());
         final String cardNo = queryBankCardEntity.getCardNo();
+
         status = queryBankCardEntity.getStatus();
-        holder.tvCardNo.setText(cardNo);
+        holder.tvCardNo.setText("**** "+"**** "+"**** "+cardNo.substring(cardNo.length()-4,cardNo.length()));
 
         holder.tvStatus.setOnClickListener(new View.OnClickListener() {
             @Override

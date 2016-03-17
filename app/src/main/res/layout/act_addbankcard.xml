@@ -42,6 +42,7 @@
                 android:id="@+id/et_cardNo"
                 style="@style/et_addbankcard"
                 android:inputType="number"
+                android:maxLength="19"
                 />
         </LinearLayout>
 
@@ -56,15 +57,9 @@
                 android:gravity="center"
                 android:text="银行名称：" />
 
-            <EditText
+            <TextView
                 android:id="@+id/et_bankName"
                 style="@style/et_addbankcard" />
-            <Spinner
-                android:id="@+id/sp_bankList"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginLeft="10dp"
-                android:visibility="gone"></Spinner>
         </LinearLayout>
         <View
             style="@style/view_line"/>
