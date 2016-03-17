@@ -52,20 +52,21 @@ public class AddBankCardAct  extends BaseActivity{
     @Override
     public void init(Bundle savedInstanceState) {
         setTopTitle("添加银行卡");
-        getBankList();
-        List<String> dataList = new ArrayList<>();
-        dataList.add("");
-        dataList.add("招商银行");
-        dataList.add("浦发银行");
-        dataList.add("工商银行");
-        dataList.add("中国银行");
-        dataList.add("华夏银行");
-        dataList.add("建设银行");
-        dataList.add("交通银行");
-        dataList.add("农业银行");
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dataList);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spBankList.setAdapter(adapter);
+        setLeftTv("返回");
+//        getBankList();
+//        List<String> dataList = new ArrayList<>();
+//        dataList.add("");
+//        dataList.add("招商银行");
+//        dataList.add("浦发银行");
+//        dataList.add("工商银行");
+//        dataList.add("中国银行");
+//        dataList.add("华夏银行");
+//        dataList.add("建设银行");
+//        dataList.add("交通银行");
+//        dataList.add("农业银行");
+//        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dataList);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spBankList.setAdapter(adapter);
         tvSureAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
