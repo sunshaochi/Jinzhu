@@ -2,9 +2,11 @@ package com.beyonditsm.financial.activity.user;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 
 import com.beyonditsm.financial.R;
@@ -13,6 +15,7 @@ import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.entity.UserEvent;
 import com.beyonditsm.financial.fragment.MineFragment;
 import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.IdcardUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.widget.ClearEditText;
@@ -58,7 +61,13 @@ public class EditAct extends BaseActivity {
 
                 switch (TYPE){
                     case 0://真实姓名
-                        userInfo.setUserName(content);
+                        if (!FinancialUtil.isInputChinese(content)){
+                            MyToastUtils.showShortToast(getApplicationContext(),"真实姓名必须为中文！");
+                            return;
+                        }else{
+                            userInfo.setUserName(content);
+                        }
+
                         break;
                     case 1://身份证号
                         if(!IdcardUtils.validateCard(content)){
@@ -105,6 +114,23 @@ public class EditAct extends BaseActivity {
                 if(userInfo!=null&&!TextUtils.isEmpty(userInfo.getUserName())){
                     etM.setText(userInfo.getUserName());
                 }
+                etM.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        if (!FinancialUtil.isInputChinese(etM.getText().toString())){
+                            etM.setError("真实姓名必须为中文！");
+                        }
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                    }
+                });
                 break;
             case 1:
                 setTopTitle("身份证号");

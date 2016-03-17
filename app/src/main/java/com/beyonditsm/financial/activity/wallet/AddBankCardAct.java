@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
@@ -15,10 +14,14 @@ import com.beyonditsm.financial.entity.AddBankCardEntity;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.tandong.sa.json.Gson;
+import com.tandong.sa.json.reflect.TypeToken;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +36,7 @@ public class AddBankCardAct  extends BaseActivity{
     @ViewInject(R.id.et_cardNo)
     private EditText etCardNo;
     @ViewInject(R.id.et_bankName)
-    private EditText etBankName;
+    private TextView tvBankName;
     @ViewInject(R.id.et_branchName)
     private EditText etBranchName;
     @ViewInject(R.id.et_fundPassword)
@@ -42,10 +45,10 @@ public class AddBankCardAct  extends BaseActivity{
     private TextView tvSetPassword;
     @ViewInject(R.id.tv_sureAdd)
     private TextView tvSureAdd;
-    @ViewInject(R.id.sp_bankList)
-    private Spinner spBankList;
     private ArrayAdapter<String> adapter;
     private UserEntity user;//用户实体
+    private List<BankListEntity> bankList;
+    private int bankNamePos;
 
     @Override
     public void setLayout() {
@@ -57,7 +60,8 @@ public class AddBankCardAct  extends BaseActivity{
         setTopTitle("添加银行卡");
         setLeftTv("返回");
         user=getIntent().getParcelableExtra("userinfo");
-//        getBankList();
+        getBankList();
+        bankList = new ArrayList<>();
         tvSureAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,6 +78,25 @@ public class AddBankCardAct  extends BaseActivity{
                 startActivity(intent);
             }
         });
+        tvBankName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MySelfSheetDialog dialog = new MySelfSheetDialog(AddBankCardAct.this).builder();
+                if (bankList.size()!=0){
+                    for (int i=0;i<bankList.size();i++){
+                        dialog.addSheetItem(bankList.get(i).getBankName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which) {
+                                tvBankName.setText(bankList.get(which - 1).getBankName());
+                                bankNamePos = which - 1;
+                            }
+                        });
+                    }
+                }
+                dialog.show();
+
+            }
+        });
     }
 
     /*获取支持的银行列表*/
@@ -81,12 +104,16 @@ public class AddBankCardAct  extends BaseActivity{
         RequestManager.getWalletManager().getBank(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-
+                JSONObject jsonObject = new JSONObject(result);
+                JSONArray dataArr = jsonObject.getJSONArray("data");
+                Gson gson = new Gson();
+                bankList = gson.fromJson(dataArr.toString(), new TypeToken<List<BankListEntity>>() {
+                }.getType());
             }
 
             @Override
             public void onError(int status, String msg) {
-
+                MyToastUtils.showShortToast(getApplicationContext(),msg);
             }
         });
     }
@@ -100,12 +127,16 @@ public class AddBankCardAct  extends BaseActivity{
             MyToastUtils.showShortToast(AddBankCardAct.this,"请输入银行卡号");
             return  false;
         }
-        if (TextUtils.isEmpty(etBankName.getText().toString())){
-            MyToastUtils.showShortToast(AddBankCardAct.this,"请输入银行名称");
+        if (TextUtils.isEmpty(tvBankName.getText().toString())){
+            MyToastUtils.showShortToast(AddBankCardAct.this,"请选择支持银行");
             return  false;
         }
         if (TextUtils.isEmpty(etFundPassword.getText().toString())){
             MyToastUtils.showShortToast(AddBankCardAct.this,"请输入资金密码");
+            return  false;
+        }
+        if (etCardNo.length()<16){
+            MyToastUtils.showShortToast(AddBankCardAct.this,"请输入正确的银行卡号");
             return  false;
         }
         return true;
@@ -114,7 +145,7 @@ public class AddBankCardAct  extends BaseActivity{
         AddBankCardEntity abce = new AddBankCardEntity();
         abce.setAccountName(etAccountName.getText().toString().trim());
         abce.setCardNo(etCardNo.getText().toString().trim());
-        abce.setBankName(etBankName.getText().toString().trim());
+        abce.setBankName(bankList.get(bankNamePos).getBankName());
         abce.setBranchBankName(etBranchName.getText().toString().trim());
         abce.setFundPassword(etFundPassword.getText().toString().trim());
         RequestManager.getWalletManager().addBankCard(abce, new RequestManager.CallBack() {

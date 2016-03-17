@@ -56,6 +56,7 @@
             <EditText
                 android:id="@+id/etAPwd"
                 style="@style/tv_wallet_black"
+                android:layout_width="match_parent"
                 android:background="@null"
                 android:hint="请输入账户密码"
                 android:inputType="textPassword"
@@ -86,6 +87,7 @@
                 style="@style/tv_wallet_black"
                 android:background="@null"
                 android:hint="请输入资金密码(6位数字)"
+                android:layout_width="match_parent"
                 android:inputType="numberPassword"
                 android:layout_marginLeft="10dp"
                 android:singleLine="true"
@@ -112,6 +114,7 @@
             <EditText
                 android:id="@+id/etSurePwd"
                 style="@style/tv_wallet_black"
+                android:layout_width="match_parent"
                 android:background="@null"
                 android:hint="请输入资金密码(6位数字)"
                 android:inputType="numberPassword"

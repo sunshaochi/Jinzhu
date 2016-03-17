@@ -45,6 +45,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 工具类
@@ -706,36 +708,34 @@ public class FinancialUtil {
 
     /**
      * 打开输入法
-     *
      * @param context
      * @param editText
      */
-    public static void openIM(Context context, View editText) {
+    public static  void openIM(Context context, View editText){
         InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.showSoftInput(editText, 0);
     }
 
     /**
      * 关闭输入法
-     *
      * @param context
      * @param editText
      */
-    public static void closeIM(Context context, View editText) {
+    public static void closeIM(Context context, View editText){
         InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
     }
 
 
+
     /**
      * 校验银行卡卡号
-     *
      * @param cardId
      * @return
      */
     public static boolean checkBankCard(String cardId) {
         char bit = getBankCardCheckCode(cardId.substring(0, cardId.length() - 1));
-        if (bit == 'N') {
+        if(bit == 'N'){
             return false;
         }
         return cardId.charAt(cardId.length() - 1) == bit;
@@ -743,74 +743,36 @@ public class FinancialUtil {
 
     /**
      * 从不含校验位的银行卡卡号采用 Luhm 校验算法获得校验位
-     *
      * @param nonCheckCodeCardId
      * @return
      */
-    public static char getBankCardCheckCode(String nonCheckCodeCardId) {
-        if (nonCheckCodeCardId == null || nonCheckCodeCardId.trim().length() == 0
+    public static char getBankCardCheckCode(String nonCheckCodeCardId){
+        if(nonCheckCodeCardId == null || nonCheckCodeCardId.trim().length() == 0
                 || !nonCheckCodeCardId.matches("\\d+")) {
             //如果传的不是数据返回N
             return 'N';
         }
         char[] chs = nonCheckCodeCardId.trim().toCharArray();
         int luhmSum = 0;
-        for (int i = chs.length - 1, j = 0; i >= 0; i--, j++) {
+        for(int i = chs.length - 1, j = 0; i >= 0; i--, j++) {
             int k = chs[i] - '0';
-            if (j % 2 == 0) {
+            if(j % 2 == 0) {
                 k *= 2;
                 k = k / 10 + k % 10;
             }
             luhmSum += k;
         }
-        return (luhmSum % 10 == 0) ? '0' : (char) ((10 - luhmSum % 10) + '0');
-    }
-
-    /*判定汉字输入*/
-    public boolean isChinese(char c) {
-        Character.UnicodeBlock ub = Character.UnicodeBlock.of(c);
-        if (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS
-                || ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS
-                || ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A
-                || ub == Character.UnicodeBlock.GENERAL_PUNCTUATION
-                || ub == Character.UnicodeBlock.CJK_SYMBOLS_AND_PUNCTUATION
-                || ub == Character.UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS) {
-            return true;
-        }
-        return false;
+        return (luhmSum % 10 == 0) ? '0' : (char)((10 - luhmSum % 10) + '0');
     }
 
     /**
-     * 检测String是否全是中文
-     *
+     * 判断输入是否是中文
      * @param input
      * @return
      */
-    public boolean checkInputChinese(String input) {
-        boolean res = true;
-        char[] cTemp = input.toCharArray();
-        for (int i = 0; i < input.length(); i++) {
-            if (!isChinese(cTemp[i])) {
-                res = false;
-                break;
-            }
-        }
-        return res;
-    }
-
-
-    /**
-     * 判断是否为中文
-     *
-     * @param chinese
-     * @return true是中文 false不是中文
-     */
-    public static boolean verifName(String chinese) {
-        String regEx = "[\u4e00-\u9fa5]";
-        if (chinese.matches(regEx)) {
-            return true;
-        } else {
-            return false;
-        }
+    public static boolean isInputChinese(String input){
+        Pattern pattern = Pattern.compile("^[\u4e00-\u9fa5]*$");
+        Matcher matcher = pattern.matcher(input);
+        return  matcher.matches();//true全部为汉字，否则是false
     }
 }
