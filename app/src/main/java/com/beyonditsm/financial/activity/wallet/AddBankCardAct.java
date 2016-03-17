@@ -2,7 +2,9 @@ package com.beyonditsm.financial.activity.wallet;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -14,6 +16,7 @@ import com.beyonditsm.financial.entity.AddBankCardEntity;
 import com.beyonditsm.financial.entity.BankListEntity;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -98,6 +101,24 @@ public class AddBankCardAct  extends BaseActivity{
 
             }
         });
+        etAccountName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!FinancialUtil.isInputChinese(etAccountName.getText().toString())){
+                    etAccountName.setError("开户姓名必须为中文！");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     /*获取支持的银行列表*/
@@ -120,6 +141,10 @@ public class AddBankCardAct  extends BaseActivity{
     }
 
     private boolean isInputEmpty(){
+        if (!FinancialUtil.isInputChinese(etAccountName.getText().toString())){
+            MyToastUtils.showShortToast(getApplicationContext(),"开户姓名必须为中文！");
+            return false;
+        }
         if (TextUtils.isEmpty(etAccountName.getText().toString())){
             MyToastUtils.showShortToast(AddBankCardAct.this,"请输入开户姓名");
             return  false;
