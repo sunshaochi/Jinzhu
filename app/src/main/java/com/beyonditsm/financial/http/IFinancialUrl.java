@@ -7,21 +7,22 @@ package com.beyonditsm.financial.http;
  */
 public interface IFinancialUrl {
 
-    /*test地址*/
+    /*test1地址*/
 //    String BASE_URL = "http://139.196.111.82:5018";
+    /*正式地址*/
 //    String BASE_URL = "http://option.myjinzhu.com";
-//    String BASE_URL = "http://139.196.111.82:5018";
+
+    /*测试地址2*/
     String BASE_URL = "http://test.myjinzhu.com:8082";
 //    String BASE_URL = "http://option.myjinzhu.com";
-//    String BASE_URL = "http://172.16.12.237:8080";
-/*调试用户端好友显示地址*/
-//String BASE_URL = "http://172.16.12.238:8080";
 
     /*正式游戏地址*/
 //    String GAME_URL = "http://m.farm.myjinzhu.com/";
-    /*测试游戏地址*/
-    String GAME_URL = "http://myjinzhu.com:5011/";
 
+    /*测试游戏地址1*/
+//    String GAME_URL = "http://myjinzhu.com:5011/";
+    /*测试游戏地址2*/
+    String GAME_URL = "http://test.myjinzhu.com:63";
     String API_VERSION = "/easyplay";
 
     String BASE_IMAGE_URL = BASE_URL + API_VERSION + "/";
@@ -194,12 +195,12 @@ public interface IFinancialUrl {
     String LIXI = BASE_URL + API_VERSION + "/platform/login/findInterestByOrderNo.do";
 
     /*获取用户绑定的银行卡*/
-    String QUERY_BANK_CARD = BASE_URL+API_VERSION+"/wallet/login/queryBankCard.do";
+    String QUERY_BANK_CARD = BASE_URL + API_VERSION + "/wallet/login/queryBankCard.do";
     /*获取支持的银行列表*/
-    String QUERY_BANK = BASE_URL+API_VERSION+"/wallet/login/queryBanK.do";
+    String QUERY_BANK = BASE_URL + API_VERSION + "/wallet/login/queryBanK.do";
     /*添加银行卡*/
-    String ADD_BANK_CARD = BASE_URL+API_VERSION+"/wallet/login/addBankCard.do";
+    String ADD_BANK_CARD = BASE_URL + API_VERSION + "/wallet/login/addBankCard.do";
     /*修改银行卡状态*/
-    String MODIFY_BANK_CARD_STATUS = BASE_URL+API_VERSION+"/wallet/login/modifyBankCard.do";
+    String MODIFY_BANK_CARD_STATUS = BASE_URL + API_VERSION + "/wallet/login/modifyBankCard.do";
 
 }
