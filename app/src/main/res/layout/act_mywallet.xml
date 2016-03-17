@@ -224,6 +224,6 @@
         android:gravity="center"
         android:textColor="@color/tv_second_color"
         android:textSize="14sp"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
 
 </LinearLayout>

@@ -5,14 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -23,7 +17,6 @@ import com.beyonditsm.financial.entity.QueryBankCardEntity;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.MyToastUtils;
-import com.beyonditsm.financial.widget.MyScrollListView;
 import com.leaf.library.widget.MyListView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
@@ -35,7 +28,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**

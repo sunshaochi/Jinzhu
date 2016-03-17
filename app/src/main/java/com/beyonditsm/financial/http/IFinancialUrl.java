@@ -9,9 +9,9 @@ public interface IFinancialUrl {
 
     /*test地址*/
 //    String BASE_URL = "http://139.196.111.82:5018";
-    String BASE_URL = "http://option.myjinzhu.com";
+//    String BASE_URL = "http://option.myjinzhu.com";
 //    String BASE_URL = "http://139.196.111.82:5018";
-//    String BASE_URL = "http://test.myjinzhu.com:8082";
+    String BASE_URL = "http://test.myjinzhu.com:8082";
 //    String BASE_URL = "http://option.myjinzhu.com";
 //    String BASE_URL = "http://172.16.12.237:8080";
 /*调试用户端好友显示地址*/

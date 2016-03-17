@@ -12,7 +12,7 @@ public class ConstantValue {
     /**
      * &#x6b63;&#x5f0f;&#x4e0a;&#x7ebf;&#x540e;&#xff0c;&#x5173;&#x95ed;log&#xff0c;&#x6539;&#x4e3a;false
      */
-    public final static boolean IS_SHOW_DEBUG = false;
+    public final static boolean IS_SHOW_DEBUG = true;
 
     public static int STEP = 0;
     public static int IMAGE = 0;
