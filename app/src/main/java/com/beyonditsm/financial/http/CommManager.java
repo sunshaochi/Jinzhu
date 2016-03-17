@@ -37,9 +37,9 @@ public class CommManager extends RequestManager {
      * @param callBack
      */
     public void toLogin(UserEntity ue, CallBack callBack) {
-        Map<String,String> params=new HashMap<String,String>();
-        params.put("username",ue.getUsername());
-        params.put("password",ue.getPassword());
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("username", ue.getUsername());
+        params.put("password", ue.getPassword());
         doPost(IFinancialUrl.LOGIN_URL, params, callBack);
     }
 
@@ -49,13 +49,13 @@ public class CommManager extends RequestManager {
      * @param ue
      * @param callBack
      */
-    public void toRegister(UserEntity ue, CallBack callBack) {
-        Map<String,String> params=new HashMap<String,String>();
-        params.put("username", ue.getUsername());
-        params.put("password", ue.getPassword());
-        params.put("captcha", ue.getCaptcha());
-        doPost(IFinancialUrl.REGISTER_URL, params, callBack);
-    }
+//    public void toRegister(UserEntity ue, CallBack callBack) {
+//        Map<String, String> params = new HashMap<String, String>();
+//        params.put("username", ue.getUsername());
+//        params.put("password", ue.getPassword());
+//        params.put("captcha", ue.getCaptcha());
+//        doPost(IFinancialUrl.REGISTER_URL, params, callBack);
+//    }
 
     /**
      * 注册
@@ -64,10 +64,11 @@ public class CommManager extends RequestManager {
      * @param callBack
      */
     public void toRegister(UserEntity ue, String phoneNumber, String captcha, CallBack callBack) {
-        Map<String,String> params=new HashMap<String,String>();
-        params.put("username", ue.getUsername());
-        params.put("password", ue.getPassword());
-        params.put("captcha", ue.getCaptcha());
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("phoneNumber", phoneNumber);
+//        params.put("password", ue.getPassword());
+        MyLogUtils.info("手机号："+phoneNumber+",验证码："+captcha);
+        params.put("captcha", captcha);
         if (!TextUtils.isEmpty(ue.getReferralCode())) {
             params.put("referralCode", ue.getReferralCode());
 
@@ -82,7 +83,7 @@ public class CommManager extends RequestManager {
      * @param callBack
      */
     public void getCode(String phoneNumber, CallBack callBack) {
-        Map<String,String> params=new HashMap<String,String>();
+        Map<String, String> params = new HashMap<String, String>();
         params.put("phoneNumber", phoneNumber);
         doPost(IFinancialUrl.GET_CODE, params, callBack);
     }
@@ -93,7 +94,7 @@ public class CommManager extends RequestManager {
      * @param callBack
      */
     public void findUserInfo(final CallBack callBack) {
-        Map<String,String> params=new HashMap<String,String>();
+        Map<String, String> params = new HashMap<String, String>();
         doPost(IFinancialUrl.USERINFO_URL, params, callBack);
     }
 
@@ -104,7 +105,7 @@ public class CommManager extends RequestManager {
      * @param callBack
      */
     public void toChangePwd(ChangePwdEntity cpe, final CallBack callBack) {
-        Map<String,String> params=new HashMap<String,String>();
+        Map<String, String> params = new HashMap<String, String>();
         params.put("password", cpe.getPassword());
         params.put("newPassword", cpe.getNewPassword());
         doPost(IFinancialUrl.UPDATE_PWD_URL, params, callBack);
@@ -116,7 +117,7 @@ public class CommManager extends RequestManager {
      * @param callBack
      */
     public void toLoginOut(final CallBack callBack) {
-        Map<String,String> params=new HashMap<String,String>();
+        Map<String, String> params = new HashMap<String, String>();
         doPost(IFinancialUrl.LOGINOUT_URL, params, callBack);
     }
 
@@ -127,10 +128,10 @@ public class CommManager extends RequestManager {
      * @param callBack
      */
     public void myCredit(MyCreditEntity mce, final CallBack callBack) {
-        Map<String,String> params=new HashMap<String,String>();
-        params.put("page", mce.getPage()+"");
-        params.put("rows", mce.getRows()+"");
-        doPost(IFinancialUrl.USERCREDIT_URL,params, callBack);
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("page", mce.getPage() + "");
+        params.put("rows", mce.getRows() + "");
+        doPost(IFinancialUrl.USERCREDIT_URL, params, callBack);
     }
 
 //    /**
@@ -177,7 +178,7 @@ public class CommManager extends RequestManager {
      * @param callBack
      */
     public void updateData(UserEntity ue, CallBack callBack) {
-        Map<String,String> params=new HashMap<String,String>();
+        Map<String, String> params = new HashMap<String, String>();
 //        MyLogUtils.info("客户信息：" + GsonUtils.bean2Json(ue));
         String json = GsonUtils.bean2Json(ue);
         try {
@@ -217,7 +218,7 @@ public class CommManager extends RequestManager {
      * @param callBack
      */
     public void submitOrder(OrderBean orderBean, final CallBack callBack) {
-        Map<String,String> params=new HashMap<String,String>();
+        Map<String, String> params = new HashMap<String, String>();
         params.put("orderNo", orderBean.getOrderNo());
         params.put("productId", orderBean.getProductId());
         params.put("totalAmount", orderBean.getTotalAmount());
@@ -238,7 +239,7 @@ public class CommManager extends RequestManager {
      * @param callBack
      */
     public void fogetPwd(String phoneNumber, String captcha, String newPassword, CallBack callBack) {
-        Map<String,String> params=new HashMap<String,String>();
+        Map<String, String> params = new HashMap<String, String>();
         params.put("phoneNumber", phoneNumber);
         params.put("captcha", captcha);
         params.put("newPassword", newPassword);
@@ -252,7 +253,7 @@ public class CommManager extends RequestManager {
      * @param callBack
      */
     public void isPhoneValidate(String phoneNumber, CallBack callBack) {
-        Map<String,String> params=new HashMap<String,String>();
+        Map<String, String> params = new HashMap<String, String>();
         params.put("username", phoneNumber);
         doPost(IFinancialUrl.ISVALIDATE_URL, params, callBack);
     }
@@ -264,7 +265,7 @@ public class CommManager extends RequestManager {
      * @param callBack
      */
     public void findpwbyCode(String phoneNumber, CallBack callBack) {
-        Map<String,String> params=new HashMap<String,String>();
+        Map<String, String> params = new HashMap<String, String>();
         params.put("phoneNumber", phoneNumber);
         doPost(IFinancialUrl.FPRGET_PWD_SMSCAPTCHA, params, callBack);
     }
@@ -275,7 +276,7 @@ public class CommManager extends RequestManager {
      * @param callBack
      */
     public void allow(CallBack callBack) {
-        Map<String,String> params=new HashMap<String,String>();
+        Map<String, String> params = new HashMap<String, String>();
         doPost(IFinancialUrl.ISALLOW_UPGRADE_URL, params, callBack);
     }
 
@@ -285,7 +286,7 @@ public class CommManager extends RequestManager {
      * @param callBack
      */
     public void isup(CallBack callBack) {
-        Map<String,String> params=new HashMap<String,String>();
+        Map<String, String> params = new HashMap<String, String>();
         doPost(IFinancialUrl.ISSUBMIT_UP_URL, params, callBack);
     }
 
@@ -310,7 +311,7 @@ public class CommManager extends RequestManager {
      * @param callBack
      */
     public void checkMyOrderDetail(String orderId, CallBack callBack) {
-        Map<String,String> params=new HashMap<String,String>();
+        Map<String, String> params = new HashMap<String, String>();
         params.put("orderId", orderId);
         doPost(IFinancialUrl.ORDER_DETAIL_URL, params, callBack);
     }
@@ -322,7 +323,7 @@ public class CommManager extends RequestManager {
      * @param callBack
      */
     public void myReferralCode(String myReferralCode, final CallBack callBack) {
-        Map<String,String> params=new HashMap<String,String>();
+        Map<String, String> params = new HashMap<String, String>();
         params.put("myReferralCode", myReferralCode);
         doPost(IFinancialUrl.MYREFERRALCODE_URL, params, callBack);
     }
@@ -333,7 +334,7 @@ public class CommManager extends RequestManager {
      * @param callBack
      */
     public void getFriendList(final CallBack callBack) {
-        Map<String,String> params=new HashMap<String,String>();
+        Map<String, String> params = new HashMap<String, String>();
         doPost(IFinancialUrl.FRIENDLIST_URL, params, callBack);
     }
 
@@ -344,9 +345,9 @@ public class CommManager extends RequestManager {
      * @param callBack
      */
     public void addFriendAboutOrder(String clientId, final CallBack callBack) {
-        Map<String,String> params=new HashMap<String,String>();
+        Map<String, String> params = new HashMap<String, String>();
         params.put("clientId", clientId);
-        doPost(IFinancialUrl.ADDFRIENDABOUTORDER_URL,params, callBack);
+        doPost(IFinancialUrl.ADDFRIENDABOUTORDER_URL, params, callBack);
     }
 
     /**
@@ -396,8 +397,8 @@ public class CommManager extends RequestManager {
      * @param fileMaps
      * @param callBack
      */
-    public void submitFujian(String orderNo,String isSupplementFile,Map<String, List<FileBody>> fileMaps, CallBack callBack) {
-        submitFujian(IFinancialUrl.SUBMIT_FUJIAN_URL, orderNo,isSupplementFile, fileMaps, callBack);
+    public void submitFujian(String orderNo, String isSupplementFile, Map<String, List<FileBody>> fileMaps, CallBack callBack) {
+        submitFujian(IFinancialUrl.SUBMIT_FUJIAN_URL, orderNo, isSupplementFile, fileMaps, callBack);
     }
 
     /**
@@ -407,8 +408,8 @@ public class CommManager extends RequestManager {
      * @param callBack
      */
     public void addFriend(String phone, CallBack callBack) {
-        Map<String,String> params=new HashMap<String,String>();
-        params.put("phone",phone);
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("phone", phone);
         doPost(IFinancialUrl.ADD_FRIEND_URL, params, callBack);
     }
 
@@ -420,7 +421,7 @@ public class CommManager extends RequestManager {
      * @param callBack
      */
     public void toVersion(int currentVersion, String platform, CallBack callBack) {
-        Map<String,String> params=new HashMap<String,String>();
+        Map<String, String> params = new HashMap<String, String>();
         params.put("currentVersion", currentVersion + "");
         params.put("platform", platform);
         doPost(IFinancialUrl.VERSION_URL, params, callBack);
@@ -442,8 +443,8 @@ public class CommManager extends RequestManager {
      * @return Map&lt;字典ID, 字典名称&gt;
      */
     public void getDicMap(String key, CallBack callBack) {
-        Map<String,String> params=new HashMap<String,String>();
-        params.put("key",key);
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("key", key);
         doPost(IFinancialUrl.DIC_MAP_URL, params, callBack);
     }
 }
