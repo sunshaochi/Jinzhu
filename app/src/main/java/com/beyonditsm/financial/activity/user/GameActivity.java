@@ -138,11 +138,13 @@ public class GameActivity extends BaseActivity {
                 view.loadUrl(url);
                 MyLogUtils.info(url);
                 if (url.endsWith("order")) {
-                    intent = new Intent(GameActivity.this, MainActivity.class);
-
-                    Intent intentBroad = new Intent(MainActivity.UPDATATAB);
-                    intentBroad.putExtra(GAME_TYPE, 1);
-                    sendBroadcast(intentBroad);
+//                    intent = new Intent(GameActivity.this, MainActivity.class);
+//
+//                    Intent intentBroad = new Intent(MainActivity.UPDATATAB);
+//                    intentBroad.putExtra(GAME_TYPE, 1);
+//                    sendBroadcast(intentBroad);
+//                    startActivity(intent);
+                    intent = new Intent(GameActivity.this,MyCreditAct.class);
                     startActivity(intent);
                 } else if (url.endsWith("task")) {
 //                    intent = new Intent(GameActivity.this, HardCreditAct.class);

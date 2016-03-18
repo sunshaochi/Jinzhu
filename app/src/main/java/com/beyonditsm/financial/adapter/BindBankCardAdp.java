@@ -36,19 +36,20 @@ public class BindBankCardAdp extends BaseAdapter {
     private int index = -1;
     private int status;
 
-    HashMap<String,Boolean> isSelecteds = new HashMap<>();
+    HashMap<String, Boolean> isSelecteds = new HashMap<>();
     private TextView tvStatus;
 
-    public BindBankCardAdp(Context context,List<QueryBankCardEntity> list) {
-        this.context =context;
+    public BindBankCardAdp(Context context, List<QueryBankCardEntity> list) {
+        this.context = context;
         this.list = list;
         inflater = LayoutInflater.from(context);
     }
 
-    public void setNotifyChange(List<QueryBankCardEntity> list){
+    public void setNotifyChange(List<QueryBankCardEntity> list) {
         this.list = list;
         notifyDataSetChanged();
     }
+
     @Override
     public int getCount() {
         return list.size();
@@ -67,7 +68,7 @@ public class BindBankCardAdp extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
-        if (convertView==null) {
+        if (convertView == null) {
             holder = new ViewHolder();
             convertView = inflater.inflate(R.layout.lv_bindcard_item, null);
             holder.tvBankName = (TextView) convertView.findViewById(R.id.tv_bankName);
@@ -76,7 +77,7 @@ public class BindBankCardAdp extends BaseAdapter {
             tvStatus = (TextView) convertView.findViewById(R.id.tv_status);
             holder.tvStatus = tvStatus;
             convertView.setTag(holder);
-        }else{
+        } else {
             holder = (ViewHolder) convertView.getTag();
         }
         final QueryBankCardEntity queryBankCardEntity = list.get(position);
@@ -84,33 +85,34 @@ public class BindBankCardAdp extends BaseAdapter {
         final String cardNo = queryBankCardEntity.getCardNo();
 
         status = queryBankCardEntity.getStatus();
-        holder.tvCardNo.setText("**** "+"**** "+"**** "+cardNo.substring(cardNo.length()-4,cardNo.length()));
+        holder.tvCardNo.setText("**** " + "**** " + "**** " + cardNo.substring(cardNo.length() - 4, cardNo.length()));
 
         holder.tvStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 status = 2;
-                modifyBankCardStatus(cardNo,status);
+                modifyBankCardStatus(cardNo, status);
             }
         });
         holder.jiebang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                list.remove(position);
+
                 status = 0;
                 modifyBankCardStatus(cardNo, status);
+                list.remove(position);
 
             }
         });
-        if (status==1){
+        if (status == 1) {
             holder.tvStatus.setText("设为默认");
-        }else if (status ==2){
+        } else if (status == 2) {
             holder.tvStatus.setText("默认");
         }
         return convertView;
     }
 
-    private void modifyBankCardStatus(String cardNo,int status) {
+    private void modifyBankCardStatus(String cardNo, int status) {
         RequestManager.getWalletManager().modifyBankCard(cardNo, status, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
@@ -126,7 +128,7 @@ public class BindBankCardAdp extends BaseAdapter {
         });
     }
 
-    class ViewHolder{
-        TextView tvBankName,tvCardNo,jiebang,tvStatus;
+    class ViewHolder {
+        TextView tvBankName, tvCardNo, jiebang, tvStatus;
     }
 }

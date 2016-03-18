@@ -19,7 +19,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -65,25 +64,17 @@ public class CommManager extends RequestManager {
      * @param callBack
      */
     public void toRegister(UserEntity ue, String phoneNumber, String captcha, CallBack callBack) {
-//        Map<String, String> params = new HashMap<String, String>();
-//        params.put("username", phoneNumber);
-//        params.put("phoneNumber", phoneNumber);
-////        params.put("password", ue.getPassword());
-//        MyLogUtils.info("手机号：" + phoneNumber + ",验证码：" + captcha);
-//        params.put("captcha", captcha);
-//        if (!TextUtils.isEmpty(ue.getReferralCode())) {
-//            params.put("referralCode", ue.getReferralCode());
-//
-//        }
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("phoneNumber", phoneNumber);
+        params.put("username",ue.getUsername());
+//        params.put("password", ue.getPassword());
+        MyLogUtils.info("手机号："+phoneNumber+",验证码："+captcha);
+        params.put("captcha", captcha);
+        if (!TextUtils.isEmpty(ue.getReferralCode())) {
+            params.put("referralCode", ue.getReferralCode());
 
-        List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
-        queryParams.add(new BasicNameValuePair("username", phoneNumber));
-        queryParams.add(new BasicNameValuePair("phoneNumber", phoneNumber));
-        queryParams.add(new BasicNameValuePair("captcha", captcha));
-        if(TextUtils.isEmpty(ue.getReferralCode())){
-            queryParams.add(new BasicNameValuePair("referralCode", ue.getReferralCode()));
         }
-        doPost(IFinancialUrl.REGISTER_URL, queryParams, callBack);
+        doPost(IFinancialUrl.REGISTER_URL, params, callBack);
     }
 
     /**

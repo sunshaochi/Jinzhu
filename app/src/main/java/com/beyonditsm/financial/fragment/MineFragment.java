@@ -251,7 +251,11 @@ public class MineFragment extends BaseFragment {
                 ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
                 user = rd.getData();
                 if (user != null) {
-                    tvName.setText(user.getUserName());
+                    if (TextUtils.isEmpty(user.getUserName())){
+                        tvName.setText(user.getAccountName());
+                    }else{
+                        tvName.setText(user.getUserName());
+                    }
                     tv_score.setText(user.getCreditScore());
 //                    tvGrade.setText(user.getCreditGrade());
                     if (!TextUtils.isEmpty(user.getCreditScore())) {
