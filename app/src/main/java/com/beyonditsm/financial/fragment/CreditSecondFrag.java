@@ -8,7 +8,9 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -49,6 +51,7 @@ import com.beyonditsm.financial.entity.TaskStrategyEntity;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.AddressUtil;
+import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.IdcardUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
@@ -439,6 +442,24 @@ public class CreditSecondFrag extends BaseFragment {
 //                }
 //            }
 //        });
+        name.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!FinancialUtil.isInputChinese(name.getText().toString())){
+                    name.setError("真实姓名必须为中文！");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         cbSelectSex.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -1035,6 +1056,11 @@ public class CreditSecondFrag extends BaseFragment {
     }
 
     private boolean isHaveData() {
+        if (!FinancialUtil.isInputChinese(name.getText().toString())){
+            MyToastUtils.showShortToast(getActivity(),"真实姓名必须为中文！");
+            name.requestFocus();
+            return false;
+        }
         if(TextUtils.isEmpty(name.getText().toString())){
             MyToastUtils.showShortToast(context, "请输入真实姓名");
             name.requestFocus();

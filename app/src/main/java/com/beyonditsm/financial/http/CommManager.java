@@ -66,6 +66,7 @@ public class CommManager extends RequestManager {
     public void toRegister(UserEntity ue, String phoneNumber, String captcha, CallBack callBack) {
         Map<String, String> params = new HashMap<String, String>();
         params.put("phoneNumber", phoneNumber);
+        params.put("username",ue.getUsername());
 //        params.put("password", ue.getPassword());
         MyLogUtils.info("手机号："+phoneNumber+",验证码："+captcha);
         params.put("captcha", captcha);
