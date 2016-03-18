@@ -64,7 +64,7 @@ public class TiJiaoFuJianAct extends BaseActivity {
         dialog.setCancelable(false);
         orderNo=getIntent().getStringExtra("orderNo");
         orderId=getIntent().getStringExtra("orderId");
-        adapter=new GvPhotoAdapter(selecteds,500,this);
+        adapter=new GvPhotoAdapter(selecteds,20,this);
         gvPhoto.setAdapter(adapter);
 
     }
