@@ -191,7 +191,7 @@ public class MangManger extends RequestManager {
      */
     public void getFujianPic(String accountId,String orderNo,CallBack callBack){
 //        List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
-        doGet(IFinancialUrl.GET_SUBMIT_FUJIAN_URL + "?accountId="+accountId+"&orderNo="+orderNo, callBack);
+        doGet(IFinancialUrl.GET_SUBMIT_FUJIAN_URL + "?accountId="+accountId+"&orderNo="+orderNo+"&isSupplementFile=1", callBack);
 
     }
 }

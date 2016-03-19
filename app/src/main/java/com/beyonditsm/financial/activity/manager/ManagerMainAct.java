@@ -340,7 +340,7 @@ public class ManagerMainAct extends BaseActivity{
                 }
                 break;
         }
-        fragmentTransaction.commit();
+        fragmentTransaction.commitAllowingStateLoss();
     }
 
     /**

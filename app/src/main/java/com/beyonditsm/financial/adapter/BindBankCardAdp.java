@@ -1,23 +1,17 @@
 package com.beyonditsm.financial.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.wallet.BindBankCardAct;
 import com.beyonditsm.financial.entity.QueryBankCardEntity;
 import com.beyonditsm.financial.http.RequestManager;
-import com.beyonditsm.financial.util.MyLogUtils;
-import com.beyonditsm.financial.util.MyToastUtils;
 
 import org.json.JSONException;
 
