@@ -120,6 +120,12 @@ public class ManagerMainAct extends BaseActivity{
     public void init(Bundle savedInstanceState) {
         assignViews();
         fragmentManager = getSupportFragmentManager();
+        int position = getIntent().getIntExtra("position", 0);
+        if (position==1){
+            setAllTabNor();
+            setTabSelection(position);
+            setCheckItem(position);
+        }
         setTabSelection(0);
         setCheckItem(0);
 //        RongIM.setUserInfoProvider(this, true);
@@ -334,7 +340,7 @@ public class ManagerMainAct extends BaseActivity{
                 main_title.setVisibility(View.VISIBLE);
                 if (friendFgt == null) {
                     friendFgt = new FriendFrg();
-                    fragmentTransaction.add(R.id.managermain_fl, friendFgt);
+                    fragmentTransaction.add(R.id.managermain_fl, friendFgt,"mana");
                 } else {
                     fragmentTransaction.show(friendFgt);
                 }

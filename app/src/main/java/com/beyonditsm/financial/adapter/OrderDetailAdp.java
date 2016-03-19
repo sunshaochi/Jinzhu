@@ -70,7 +70,7 @@ public class OrderDetailAdp extends BaseAdapter {
         }else if (rowsEntity.getORDER_STS().equals("APPROVAL_NO_PASS")){
             holder.orderStatus.setText("已驳回");
             holder.orderStatus.setTextColor(convertView.getResources().getColor(R.color.backed));
-        }else if (rowsEntity.getORDER_STS().equals("APPROVAL_PASS")){
+        }else if (rowsEntity.getORDER_STS().equals("APPROVAL_PASS")||rowsEntity.getORDER_STS().equals("PAY_SUCCESS")){
             holder.orderStatus.setText("已通过");
             holder.orderStatus.setTextColor(convertView.getResources().getColor(R.color.green_order));
         }else if (rowsEntity.getORDER_STS().equals("FINISHED")){

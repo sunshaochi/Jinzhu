@@ -62,11 +62,15 @@ public class DribblewareAct extends BaseActivity {
                     RequestManager.getMangManger().orderbj(orderId, content, new RequestManager.CallBack() {
                         @Override
                         public void onSucess(String result) throws JSONException {
-                            MyToastUtils.showShortToast(DribblewareAct.this, "提交成功");
+
                             Intent intent = new Intent(ManagerOrderFragment.UPDATA);
                             intent.putExtra("orderSts", "SUPPLEMENT_DATA");
                             sendBroadcast(intent);
-                            finish();
+                            Intent intent1 = new Intent(DribblewareAct.this, ManagerMainAct.class);
+                            intent1.putExtra("position",1);
+                            startActivity(intent1);
+                            MyToastUtils.showShortToast(DribblewareAct.this, "提交成功");
+//                            finish();
                         }
 
                         @Override

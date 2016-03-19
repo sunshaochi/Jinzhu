@@ -197,8 +197,8 @@ public class CreditFragment extends BaseFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString().startsWith(".")){
-                    MyToastUtils.showShortToast(getActivity(),"不能以小数点开头");
+                if (s.toString().startsWith(".")) {
+                    MyToastUtils.showShortToast(getActivity(), "不能以小数点开头");
                     etAmount.setText("");
                 }
             }
@@ -245,12 +245,12 @@ public class CreditFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), HomeCreditDetailAct.class);
 //                intent.putExtra(CreditDetailAct.PRODUCTINFO,datas.get(position));
-                if (TextUtils.isEmpty(etAmount.getText().toString().trim())&&!TextUtils.isEmpty(tvM.getText().toString().trim())){
+                if (TextUtils.isEmpty(etAmount.getText().toString().trim()) && !TextUtils.isEmpty(tvM.getText().toString().trim())) {
                     MyToastUtils.showShortToast(getActivity(), "请输入金额");
                     etAmount.requestFocus();
                     return;
-                }else if (!TextUtils.isEmpty(etAmount.getText().toString().trim())&&TextUtils.isEmpty(tvM.getText().toString().trim())){
-                    MyToastUtils.showShortToast(getActivity(),"请选择月份");
+                } else if (!TextUtils.isEmpty(etAmount.getText().toString().trim()) && TextUtils.isEmpty(tvM.getText().toString().trim())) {
+                    MyToastUtils.showShortToast(getActivity(), "请选择月份");
                     return;
                 }
                 if (TextUtils.isEmpty(etAmount.getText().toString().trim()) && TextUtils.isEmpty(tvM.getText().toString().trim())) {
@@ -314,7 +314,7 @@ public class CreditFragment extends BaseFragment {
                         } else {
                             cMoney = etAmount.getText().toString().trim();
                         }
-                        currentP=1;
+                        currentP = 1;
 //                        MyLogUtils.info("cccccccmoney+"+cMoney+"+cccccccTime+"+cTime);
                         getCredit(currentP, cMoney, cTime);
                     }
@@ -384,7 +384,7 @@ public class CreditFragment extends BaseFragment {
         FindProductListEntity entity = new FindProductListEntity();
         entity.setPage(currentPage);
         entity.setRows(pageSize);
-        MyLogUtils.info("金额：" + creditMoney+"期限："+creditTime);
+        MyLogUtils.info("金额：" + creditMoney + "期限：" + creditTime);
         if (TextUtils.isEmpty(creditMoney)) {
             creditMoney = "";
         } else {
