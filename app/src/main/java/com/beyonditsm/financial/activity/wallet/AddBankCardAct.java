@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
@@ -34,7 +35,7 @@ import java.util.List;
  * 添加银行卡
  * Created by Administrator on 2016/3/15.
  */
-public class AddBankCardAct  extends BaseActivity{
+public class AddBankCardAct extends BaseActivity {
     @ViewInject(R.id.et_cardName)
     private TextView etAccountName;
     @ViewInject(R.id.et_cardNo)
@@ -63,7 +64,7 @@ public class AddBankCardAct  extends BaseActivity{
     public void init(Bundle savedInstanceState) {
         setTopTitle("添加银行卡");
         setLeftTv("返回");
-        user=getIntent().getParcelableExtra("userinfo");
+        user = getIntent().getParcelableExtra("userinfo");
         getBankList();
         bankList = new ArrayList<>();
         tvSureAdd.setOnClickListener(new View.OnClickListener() {
@@ -77,8 +78,8 @@ public class AddBankCardAct  extends BaseActivity{
         tvSetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AddBankCardAct.this,SetPwdActivity.class);
-                intent.putExtra("userPhone",user.getAccountName());
+                Intent intent = new Intent(AddBankCardAct.this, SetPwdActivity.class);
+                intent.putExtra("userPhone", user.getAccountName());
                 startActivity(intent);
             }
         });
@@ -86,8 +87,8 @@ public class AddBankCardAct  extends BaseActivity{
             @Override
             public void onClick(View v) {
                 MySelfSheetDialog dialog = new MySelfSheetDialog(AddBankCardAct.this).builder();
-                if (bankList.size()!=0){
-                    for (int i=0;i<bankList.size();i++){
+                if (bankList.size() != 0) {
+                    for (int i = 0; i < bankList.size(); i++) {
                         dialog.addSheetItem(bankList.get(i).getBankName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
@@ -109,7 +110,7 @@ public class AddBankCardAct  extends BaseActivity{
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!FinancialUtil.isInputChinese(etAccountName.getText().toString())){
+                if (!FinancialUtil.isInputChinese(etAccountName.getText().toString())) {
                     etAccountName.setError("开户姓名必须为中文！");
                 }
             }
@@ -135,39 +136,42 @@ public class AddBankCardAct  extends BaseActivity{
 
             @Override
             public void onError(int status, String msg) {
-                MyToastUtils.showShortToast(getApplicationContext(),msg);
+                MyToastUtils.showShortToast(getApplicationContext(), msg);
             }
         });
     }
 
-    private boolean isInputEmpty(){
-        if (!FinancialUtil.isInputChinese(etAccountName.getText().toString())){
-            MyToastUtils.showShortToast(getApplicationContext(),"开户姓名必须为中文！");
+    private boolean isInputEmpty() {
+        if (!FinancialUtil.isInputChinese(etAccountName.getText().toString())) {
+            MyToastUtils.showShortToast(getApplicationContext(), "开户姓名必须为中文！");
             return false;
         }
-        if (TextUtils.isEmpty(etAccountName.getText().toString())){
-            MyToastUtils.showShortToast(AddBankCardAct.this,"请输入开户姓名");
-            return  false;
+        if (TextUtils.isEmpty(etAccountName.getText().toString())) {
+            MyToastUtils.showShortToast(AddBankCardAct.this, "请输入开户姓名");
+            return false;
         }
-        if (TextUtils.isEmpty(etCardNo.getText().toString())){
-            MyToastUtils.showShortToast(AddBankCardAct.this,"请输入银行卡号");
-            return  false;
+        if (TextUtils.isEmpty(etCardNo.getText().toString())) {
+            MyToastUtils.showShortToast(AddBankCardAct.this, "请输入银行卡号");
+            return false;
         }
-        if (TextUtils.isEmpty(tvBankName.getText().toString())){
-            MyToastUtils.showShortToast(AddBankCardAct.this,"请选择支持银行");
-            return  false;
+        if (TextUtils.isEmpty(tvBankName.getText().toString())) {
+            MyToastUtils.showShortToast(AddBankCardAct.this, "请选择支持银行");
+            return false;
         }
-        if (TextUtils.isEmpty(etFundPassword.getText().toString())){
-            MyToastUtils.showShortToast(AddBankCardAct.this,"请输入资金密码");
-            return  false;
+        if (TextUtils.isEmpty(etFundPassword.getText().toString())) {
+            MyToastUtils.showShortToast(AddBankCardAct.this, "请输入资金密码");
+            return false;
         }
-        if (etCardNo.length()<16){
-            MyToastUtils.showShortToast(AddBankCardAct.this,"请输入正确的银行卡号");
-            return  false;
+        if (!FinancialUtil.checkBankCard(etCardNo.getText().toString())) {
+            MyToastUtils.showShortToast(getApplicationContext(), "请输入正确的银行卡号");
+            etCardNo.requestFocus();
+            return false;
         }
+
         return true;
     }
-    private void addBankCard(){
+
+    private void addBankCard() {
         AddBankCardEntity abce = new AddBankCardEntity();
         abce.setAccountName(etAccountName.getText().toString().trim());
         abce.setCardNo(etCardNo.getText().toString().trim());
@@ -177,7 +181,7 @@ public class AddBankCardAct  extends BaseActivity{
         RequestManager.getWalletManager().addBankCard(abce, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-                Intent intent  = new Intent(BindBankCardAct.ADDBANKCARD);
+                Intent intent = new Intent(BindBankCardAct.ADDBANKCARD);
                 sendBroadcast(intent);
                 MyToastUtils.showShortToast(AddBankCardAct.this, "已添加银行卡");
                 finish();
@@ -185,7 +189,7 @@ public class AddBankCardAct  extends BaseActivity{
 
             @Override
             public void onError(int status, String msg) {
-                MyToastUtils.showShortToast(AddBankCardAct.this,msg);
+                MyToastUtils.showShortToast(AddBankCardAct.this, msg);
             }
         });
     }
