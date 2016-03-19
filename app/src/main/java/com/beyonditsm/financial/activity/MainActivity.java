@@ -388,7 +388,7 @@ public class MainActivity extends BaseActivity{
                 main_title.setVisibility(View.VISIBLE);
                 if (friendFgt == null) {
                     friendFgt = new FriendFrg();
-                    transaction.add(R.id.main_frame, friendFgt);
+                    transaction.add(R.id.main_frame, friendFgt,"common");
                 } else {
                     transaction.show(friendFgt);
                 }

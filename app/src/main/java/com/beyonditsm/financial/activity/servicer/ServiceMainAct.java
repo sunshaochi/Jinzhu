@@ -35,6 +35,7 @@ import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.lidroid.xutils.util.LogUtils;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.tandong.sa.eventbus.EventBus;
 import com.tandong.sa.json.Gson;
 
 import org.json.JSONException;
@@ -104,6 +105,8 @@ public class ServiceMainAct extends BaseActivity{
 
     @Override
     public void init(Bundle savedInstanceState) {
+        //注册EventBus
+        EventBus.getDefault().register(this);
         assignViews();
         manager = getSupportFragmentManager();
         setTabSelection(0);
@@ -261,6 +264,11 @@ public class ServiceMainAct extends BaseActivity{
         }
     }
 
+    public void onEvent(HomeFragment.ToSwitchEvent event) {
+        setAllTabNor();
+        setTabSelection(3);
+        setCheckItem(3);
+    }
     /**
      * 标题tab全部切换普通
      */
@@ -394,7 +402,7 @@ public class ServiceMainAct extends BaseActivity{
                 main_title.setVisibility(View.VISIBLE);
                 if (friendFgt == null) {
                     friendFgt = new FriendFrg();
-                    transaction.add(R.id.main_frame, friendFgt);
+                    transaction.add(R.id.main_frame, friendFgt,"servent");
                 } else {
                     transaction.show(friendFgt);
                 }
@@ -455,7 +463,7 @@ public class ServiceMainAct extends BaseActivity{
 
     @Override
     protected void onDestroy() {
-//        EventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister(this);
         this.unregisterReceiver(myReceiver);
         myReceiver = null;
         super.onDestroy();

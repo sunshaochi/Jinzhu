@@ -26,6 +26,8 @@ import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
+import com.beyonditsm.financial.util.GsonUtils;
+import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -57,8 +59,10 @@ public class FriendFrg extends BaseFragment {
     private NewFriendAdapter newFriendAdapter;
     private MyFriendAdapter myFriendAdapter;
 
-    private List<UserEntity> friends = new ArrayList<>();
-//        private List<FriendEntity> friends = new ArrayList<>();
+    //信贷经理好友列表集合
+    private List<UserEntity> mfriends = new ArrayList<>();
+    //用户和服务者列表集合
+    private List<FriendEntity> friends = new ArrayList<>();
     private Gson gson = new Gson();
     @SuppressWarnings("deprecation")
     private DisplayImageOptions options = new DisplayImageOptions.Builder()
@@ -68,6 +72,9 @@ public class FriendFrg extends BaseFragment {
             .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
             .cacheOnDisc(true) // 设置下载的图片是否缓存在SD卡中
             .build(); // 创建配置过得DisplayImageOption对象
+    private String roleName;
+    private MyFriendsAdapter myFriendsAdapter;
+    private String tag;
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -80,7 +87,17 @@ public class FriendFrg extends BaseFragment {
         mylv.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
         newFriendAdapter = new NewFriendAdapter();
         newlv.setAdapter(newFriendAdapter);
-        getFriendList();
+        tag = getTag();
+        MyLogUtils.info("获得的标签：" + tag);
+        if (tag.equals("mana")) {
+            getManaFriendList();
+        } else {
+            getFriendList();
+        }
+//            getManaFriendList();
+//            getFriendList();
+
+//        getFriendList();
         initFriendList();
     }
 
@@ -91,7 +108,17 @@ public class FriendFrg extends BaseFragment {
         mylv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-                getFriendList();
+//                getFriendList();
+//                if ("ROLE_CREDIT_MANAGER".equals(roleName)){
+//                    getManaFriendList();
+//                }else if ("ROLE_COMMON_CLIENT".equals(roleName)||"ROLE_SERVANT_PRIMARY".equals(roleName)){
+//                    getFriendList();
+//                }
+                if (tag.equals("mana")) {
+                    getManaFriendList();
+                } else {
+                    getFriendList();
+                }
             }
 
             @Override
@@ -102,30 +129,96 @@ public class FriendFrg extends BaseFragment {
         mylv.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                FriendEntity friend = (FriendEntity) myFriendAdapter.getItem(i);
-                UserEntity user = (UserEntity) myFriendAdapter.getItem(i);
-                if (RongIM.getInstance() != null) {
-                    if (TextUtils.isEmpty(user.getUserName())){
-                        RongIM.getInstance().startPrivateChat(context,user.getAccountId(),user.getAccountName());
-                        RongIM.getInstance().refreshUserInfoCache(new UserInfo(user.getAccountId(),user.getAccountName(),Uri.parse(IFinancialUrl.BASE_IMAGE_URL+user.getHeadIcon())));
-                    }else{
-                        RongIM.getInstance().startPrivateChat(context,user.getAccountId(),user.getUserName());
-                        RongIM.getInstance().refreshUserInfoCache(new UserInfo(user.getAccountId(),user.getUserName(),Uri.parse(IFinancialUrl.BASE_IMAGE_URL+user.getHeadIcon())));
+                if (tag.equals("mana")){
+                    UserEntity user = (UserEntity) myFriendAdapter.getItem(i);
+                    if (RongIM.getInstance() != null) {
+                        if (TextUtils.isEmpty(user.getUserName())) {
+                            RongIM.getInstance().startPrivateChat(context, user.getAccountId(), user.getAccountName());
+                            RongIM.getInstance().refreshUserInfoCache(new UserInfo(user.getAccountId(), user.getAccountName(), Uri.parse(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon())));
+                        } else {
+                            RongIM.getInstance().startPrivateChat(context, user.getAccountId(), user.getUserName());
+                            RongIM.getInstance().refreshUserInfoCache(new UserInfo(user.getAccountId(), user.getUserName(), Uri.parse(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon())));
+                        }
+
+//                        if (TextUtils.isEmpty(friend.getManaName())) {
+//                            RongIM.getInstance().startPrivateChat(context, user.getAccountId(), friend.getTel());
+//                            RongIM.getInstance().refreshUserInfoCache(new UserInfo(user.getAccountId(), friend.getTel(),
+//                                    Uri.parse(friend.getRcHendPic())));
+//                        } else {
+//                            RongIM.getInstance().startPrivateChat(context, user.getAccountId(), friend.getManaName());
+//                            RongIM.getInstance().refreshUserInfoCache(new UserInfo(user.getAccountId(), friend.getManaName(),
+//                                    Uri.parse(friend.getRcHendPic())));
+//                        }
                     }
-//                    if (TextUtils.isEmpty(friend.getManaName())) {
-//                        RongIM.getInstance().startPrivateChat(context, friend.getAccountId(), friend.getTel());
-//                        RongIM.getInstance().refreshUserInfoCache(new UserInfo(friend.getAccountId(), friend.getTel(),
-//                                Uri.parse(IFinancialUrl.BASE_IMAGE_URL + friend.getWkCardPic())));
-//                    } else {
-//                        RongIM.getInstance().startPrivateChat(context, friend.getAccountId(), friend.getManaName());
-//                        RongIM.getInstance().refreshUserInfoCache(new UserInfo(friend.getAccountId(), friend.getManaName(),
-//                                Uri.parse(IFinancialUrl.BASE_IMAGE_URL + friend.getWkCardPic())));
-//                    }
+                }else{
+                    FriendEntity friend = (FriendEntity) myFriendsAdapter.getItem(i);
+                    if (RongIM.getInstance() != null) {
+//                        if (TextUtils.isEmpty(user.getUserName())) {
+//                            RongIM.getInstance().startPrivateChat(context, user.getAccountId(), user.getAccountName());
+//                            RongIM.getInstance().refreshUserInfoCache(new UserInfo(user.getAccountId(), user.getAccountName(), Uri.parse(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon())));
+//                        } else {
+//                            RongIM.getInstance().startPrivateChat(context, user.getAccountId(), user.getUserName());
+//                            RongIM.getInstance().refreshUserInfoCache(new UserInfo(user.getAccountId(), user.getUserName(), Uri.parse(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon())));
+//                        }
+
+                        if (TextUtils.isEmpty(friend.getManaName())) {
+                            RongIM.getInstance().startPrivateChat(context, friend.getAccountId(), friend.getTel());
+                            RongIM.getInstance().refreshUserInfoCache(new UserInfo(friend.getAccountId(), friend.getTel(),
+                                    Uri.parse(friend.getRcHendPic())));
+                        } else {
+                            RongIM.getInstance().startPrivateChat(context, friend.getAccountId(), friend.getManaName());
+                            RongIM.getInstance().refreshUserInfoCache(new UserInfo(friend.getAccountId(), friend.getManaName(),
+                                    Uri.parse(friend.getRcHendPic())));
+                        }
+                    }
                 }
+
+
             }
         });
     }
 
+    //获取信贷经理好友列表
+    private void getManaFriendList() {
+        RequestManager.getCommManager().getFriendList(new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                mylv.onPullDownRefreshComplete();
+                JSONObject obj = new JSONObject(result);
+                JSONArray array = obj.getJSONArray("data");
+                mfriends = gson.fromJson(array.toString(), new TypeToken<List<UserEntity>>() {
+                }.getType());
+                if (mfriends != null && mfriends.size() > 0) {
+                    for (int i = 1; i < mfriends.size(); i++) {
+                        FriendBean friendBean = new FriendBean();
+                        friendBean.setUserId(mfriends.get(i).getAccountId());
+
+                        friendBean.setUserHead(IFinancialUrl.BASE_IMAGE_URL + mfriends.get(i).getHeadIcon());
+                        if (TextUtils.isEmpty(mfriends.get(i).getUserName()))
+                            friendBean.setUserName(mfriends.get(i).getAccountName());
+                        else
+                            friendBean.setUserName(mfriends.get(i).getUserName());
+
+
+//                        friendBean.setUserId(friends.get(i).getAccountId());
+//                        friendBean.setUserHead( friends.get(i).getRcHendPic());
+//                        if (!TextUtils.isEmpty(friends.get(i).getManaName()))
+//                            friendBean.setUserName(friends.get(i).getManaName());
+                        FriendDao.saveMes(friendBean);
+                    }
+                }
+                myFriendAdapter = new MyFriendAdapter();
+                mylv.getRefreshableView().setAdapter(myFriendAdapter);
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
+            }
+        });
+    }
+
+    //获取用户和服务者好友列表
     private void getFriendList() {
         RequestManager.getCommManager().getFriendList(new RequestManager.CallBack() {
             @Override
@@ -133,34 +226,28 @@ public class FriendFrg extends BaseFragment {
                 mylv.onPullDownRefreshComplete();
                 JSONObject obj = new JSONObject(result);
                 JSONArray array = obj.getJSONArray("data");
-                friends = gson.fromJson(array.toString(), new TypeToken<List<UserEntity>>() {
+
+                friends = gson.fromJson(array.toString(), new TypeToken<List<FriendEntity>>() {
                 }.getType());
-//                friends = gson.fromJson(array.toString(), new TypeToken<List<FriendEntity>>() {
-//                }.getType());
                 if (friends != null && friends.size() > 0) {
                     for (int i = 1; i < friends.size(); i++) {
                         FriendBean friendBean = new FriendBean();
                         friendBean.setUserId(friends.get(i).getAccountId());
 
-                        friendBean.setUserHead(IFinancialUrl.BASE_IMAGE_URL + friends.get(i).getHeadIcon());
-                        if (TextUtils.isEmpty(friends.get(i).getUserName()))
-                            friendBean.setUserName(friends.get(i).getAccountName());
-                        else
-                            friendBean.setUserName(friends.get(i).getUserName());
 
-//                        friendBean.setUserId(friends.get(i).getAccountId());
-//                        friendBean.setUserHead(IFinancialUrl.BASE_IMAGE_URL + friends.get(i).getRcHendPic());
-//                        if (!TextUtils.isEmpty(friends.get(i).getManaName()))
-//                            friendBean.setUserName(friends.get(i).getManaName());
+                        friendBean.setUserId(friends.get(i).getAccountId());
+                        friendBean.setUserHead(friends.get(i).getRcHendPic());
+                        if (!TextUtils.isEmpty(friends.get(i).getManaName()))
+                            friendBean.setUserName(friends.get(i).getManaName());
 
                         FriendDao.saveMes(friendBean);
                     }
                 }
 
-//                    ResultData<UserEntity> rds = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
-//                    friends = (List<UserEntity>) rds.getData();
-                myFriendAdapter = new MyFriendAdapter();
-                mylv.getRefreshableView().setAdapter(myFriendAdapter);
+//                ResultData<UserEntity> rds = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
+//                friends = (List<UserEntity>) rds.getData();
+                myFriendsAdapter = new MyFriendsAdapter();
+                mylv.getRefreshableView().setAdapter(myFriendsAdapter);
             }
 
             @Override
@@ -200,7 +287,64 @@ public class FriendFrg extends BaseFragment {
     }
 
 
+    //信贷经理我的好友列表适配器
     private class MyFriendAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return mfriends.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return mfriends.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            ViewHolder holder;
+            if (view == null) {
+                holder = new ViewHolder();
+                view = View.inflate(context, R.layout.my_friend_item, null);
+                holder.headicon = (ImageView) view.findViewById(R.id.headicon);
+                holder.username = (TextView) view.findViewById(R.id.username);
+                view.setTag(holder);
+            } else {
+                holder = (ViewHolder) view.getTag();
+            }
+
+            ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL +
+                    mfriends.get(i).getHeadIcon(), holder.headicon, options);
+            if (TextUtils.isEmpty(mfriends.get(i).getUserName())) {
+                if (TextUtils.isEmpty(mfriends.get(i).getAccountName())) {
+                    holder.username.setText("" + "(手机号：" + ")");
+                } else {
+                    holder.username.setText("" + "(手机号：" + mfriends.get(i).getAccountName() + ")");
+                }
+            } else {
+                if (TextUtils.isEmpty(mfriends.get(i).getAccountName())) {
+                    holder.username.setText(mfriends.get(i).getUserName() + "(手机号：" + ")");
+                } else {
+                    holder.username.setText(mfriends.get(i).getUserName() + "(手机号：" + mfriends.get(i).getAccountName() + ")");
+                }
+            }
+
+            return view;
+        }
+
+        class ViewHolder {
+            TextView username;
+            ImageView headicon;
+        }
+    }
+
+    //用户和服务者我的好友列表适配器
+    private class MyFriendsAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
@@ -230,37 +374,22 @@ public class FriendFrg extends BaseFragment {
                 holder = (ViewHolder) view.getTag();
             }
 
-            ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL +
-                    friends.get(i).getHeadIcon(), holder.headicon, options);
-            if (TextUtils.isEmpty(friends.get(i).getUserName())) {
-                if (TextUtils.isEmpty(friends.get(i).getAccountName())) {
+
+            ImageLoader.getInstance().displayImage(
+                    friends.get(i).getRcHendPic(), holder.headicon, options);
+            if (TextUtils.isEmpty(friends.get(i).getManaName())) {
+                if (TextUtils.isEmpty(friends.get(i).getTel())) {
                     holder.username.setText("" + "(手机号：" + ")");
                 } else {
-                    holder.username.setText("" + "(手机号：" + friends.get(i).getAccountName() + ")");
+                    holder.username.setText("" + "(手机号：" + friends.get(i).getTel() + ")");
                 }
             } else {
-                if (TextUtils.isEmpty(friends.get(i).getAccountName())) {
-                    holder.username.setText(friends.get(i).getUserName() + "(手机号：" + ")");
+                if (TextUtils.isEmpty(friends.get(i).getTel())) {
+                    holder.username.setText(friends.get(i).getManaName() + "(手机号：" + ")");
                 } else {
-                    holder.username.setText(friends.get(i).getUserName() + "(手机号：" + friends.get(i).getAccountName() + ")");
+                    holder.username.setText(friends.get(i).getManaName() + "(手机号：" + friends.get(i).getTel() + ")");
                 }
             }
-
-//            ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL +
-//                    friends.get(i).getWkCardPic(), holder.headicon, options);
-//            if (TextUtils.isEmpty(friends.get(i).getManaName())) {
-//                if (TextUtils.isEmpty(friends.get(i).getTel())) {
-//                    holder.username.setText("" + "(手机号：" + ")");
-//                } else {
-//                    holder.username.setText("" + "(手机号：" + friends.get(i).getTel() + ")");
-//                }
-//            } else {
-//                if (TextUtils.isEmpty(friends.get(i).getTel())) {
-//                    holder.username.setText(friends.get(i).getManaName() + "(手机号：" + ")");
-//                } else {
-//                    holder.username.setText(friends.get(i).getManaName() + "(手机号：" + friends.get(i).getTel() + ")");
-//                }
-//            }
             return view;
         }
 
@@ -284,7 +413,9 @@ public class FriendFrg extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        context.unregisterReceiver(myRevice);
+        if (myRevice != null) {
+            context.unregisterReceiver(myRevice);
+        }
         myRevice = null;
     }
 
@@ -295,7 +426,8 @@ public class FriendFrg extends BaseFragment {
     public class MyRevice extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            getFriendList();
+            getManaFriendList();
+//            getFriendList();
         }
     }
 }
