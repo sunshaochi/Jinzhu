@@ -218,7 +218,8 @@
             android:background="@color/line_color"/>
         <RelativeLayout
             android:id="@+id/rlBindBankCard"
-            style="@style/rl_mine_style">
+            style="@style/rl_mine_style"
+            android:visibility="gone">
 
             <TextView
                 style="@style/tv_second_style"
