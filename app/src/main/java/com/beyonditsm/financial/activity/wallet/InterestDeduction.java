@@ -94,6 +94,12 @@ public class InterestDeduction extends BaseActivity {
 
         user=getIntent().getParcelableExtra("userInfo");
         if(user!=null){
+            if (!TextUtils.isEmpty(user.getUserName())){
+                name.setText(user.getUserName());
+                name.setEnabled(false);
+            }else{
+                user.setUserName(name.getText().toString().trim());
+            }
             if(!TextUtils.isEmpty(user.getDeductionTicketAmount())){
                 double dCashA=Double.valueOf(user.getDeductionTicketAmount());
                 tvDikouMoney.setText((long)dCashA+"");
@@ -128,7 +134,7 @@ public class InterestDeduction extends BaseActivity {
                             }
                             if (!TextUtils.isEmpty(tvlixifen.getText().toString().trim())) {
 //                                tvlixixianjin.setText(Double.parseDouble(s.toString()) / 100 + "");
-                                tvlixixianjin.setText(Integer.parseInt(s.toString())  + "");
+                                tvlixixianjin.setText(Integer.parseInt(s.toString()) + "");
                             }
                         }
                         return;

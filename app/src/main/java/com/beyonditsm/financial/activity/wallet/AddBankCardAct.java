@@ -65,6 +65,14 @@ public class AddBankCardAct extends BaseActivity {
         setTopTitle("添加银行卡");
         setLeftTv("返回");
         user = getIntent().getParcelableExtra("userinfo");
+//        if (user!=null){
+//            if (!TextUtils.isEmpty(user.getUserName())){
+//                etAccountName.setText(user.getUserName());
+//                etAccountName.setEnabled(false);
+//            }else{
+//                user.setUserName(etAccountName.getText().toString().trim());
+//            }
+//        }
         getBankList();
         bankList = new ArrayList<>();
         tvSureAdd.setOnClickListener(new View.OnClickListener() {

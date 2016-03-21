@@ -73,6 +73,12 @@ public class CashExchange extends BaseActivity {
         setTopTitle("现金兑换");
         user=getIntent().getParcelableExtra("userInfo");
         if(user!=null){
+            if (!TextUtils.isEmpty(user.getUserName())){
+                name.setText(user.getUserName());
+                name.setEnabled(false);
+            }else{
+                user.setUserName(name.getText().toString().trim());
+            }
             if(!TextUtils.isEmpty(user.getCashTicketAmount())){
                 double dCashA=Double.valueOf(user.getCashTicketAmount());
                 tvxianjin.setText((long)dCashA+"");
