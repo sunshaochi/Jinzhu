@@ -315,7 +315,15 @@ public class CashExchange extends BaseActivity {
                 Gson gson = new Gson();
                 bindList = gson.fromJson(data.toString(), new TypeToken<List<QueryBankCardEntity>>() {
                 }.getType());
-
+                if (bindList!=null) {
+                    for (int i = 0; i < bindList.size(); i++) {
+                        int status = bindList.get(i).getStatus();
+                        if (status == 2) {
+                            bankName.setText(bindList.get(i).getBankName());
+                            bankCount.setText(bindList.get(i).getCardNo());
+                        }
+                    }
+                }
             }
 
             @Override
