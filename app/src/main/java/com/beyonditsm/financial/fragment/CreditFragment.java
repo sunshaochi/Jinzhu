@@ -110,13 +110,15 @@ public class CreditFragment extends BaseFragment {
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 plv.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
                 currentP = 1;
-                getCredit(currentP, cMoney, cTime);
+//                getCredit(currentP, cMoney, cTime);
+                getCredit(currentP, etAmount.getText().toString(), tvM.getText().toString());
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 currentP++;
-                getCredit(currentP, cMoney, cTime);
+//                getCredit(currentP, cMoney, cTime);
+                getCredit(currentP, etAmount.getText().toString(), tvM.getText().toString());
             }
         });
         getCredit(currentP, cMoney, cTime);
@@ -261,8 +263,10 @@ public class CreditFragment extends BaseFragment {
                     intent.putExtra(HomeCreditDetailAct.CREDIT_NAME, datas.get(position).getProductName());
                 } else {
                     intent.putExtra(HomeCreditDetailAct.PRODUCTINFO, datas.get(position).getProductId());
-                    intent.putExtra(HomeCreditDetailAct.CREDIT_AMOUNT, cMoney);
-                    intent.putExtra(HomeCreditDetailAct.CREDIT_TIME, cTime);
+//                    intent.putExtra(HomeCreditDetailAct.CREDIT_AMOUNT, cMoney);
+//                    intent.putExtra(HomeCreditDetailAct.CREDIT_TIME, cTime);
+                    intent.putExtra(HomeCreditDetailAct.CREDIT_AMOUNT, etAmount.getText().toString());
+                    intent.putExtra(HomeCreditDetailAct.CREDIT_TIME, tvM.getText().toString());
                     intent.putExtra(HomeCreditDetailAct.CREDIT_NAME, datas.get(position).getProductName());
                 }
                 getActivity().startActivity(intent);

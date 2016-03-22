@@ -135,6 +135,7 @@ public class EditAct extends BaseActivity {
             case 1:
                 setTopTitle("身份证号");
                 etM.setHint("请输入身份证号");
+                etM.setFilters(new InputFilter[]{new InputFilter.LengthFilter(18)});
 //                etM.setKeyListener(new DigitsKeyListener(false,true));
                 if(userInfo!=null&&!TextUtils.isEmpty(userInfo.getIdentCard())){
                     etM.setText(userInfo.getIdentCard());

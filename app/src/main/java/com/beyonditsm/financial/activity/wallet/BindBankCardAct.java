@@ -101,12 +101,11 @@ public class BindBankCardAct extends BaseActivity {
 //                }
 
                 if (adapter==null){
-                    adapter = new BindBankCardAdp(BindBankCardAct.this,list);
+                    adapter = new BindBankCardAdp(BindBankCardAct.this, list);
                     lvBankCard.setAdapter(adapter);
                 }else{
                     adapter.setNotifyChange(list);
                 }
-
 
             }
 

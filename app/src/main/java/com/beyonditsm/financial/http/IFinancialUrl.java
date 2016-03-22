@@ -14,7 +14,6 @@ public interface IFinancialUrl {
 
     /*测试地址2*/
     String BASE_URL = "http://test.myjinzhu.com:8082";
-//    String BASE_URL = "http://option.myjinzhu.com";
 
     /*正式游戏地址*/
 //    String GAME_URL = "http://m.farm.myjinzhu.com/";

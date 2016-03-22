@@ -17,15 +17,24 @@ import com.beyonditsm.financial.AppManager;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.entity.OrderBean;
+import com.beyonditsm.financial.entity.QueryBankCardEntity;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.MyLogUtils;
+import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.widget.DialogChooseProvince;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.tandong.sa.json.Gson;
+import com.tandong.sa.json.reflect.TypeToken;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * Created by gxy on 2016/1/14.
@@ -44,6 +53,10 @@ public class CashExchange extends BaseActivity {
     private EditText bankName;//银行名称
     @ViewInject(R.id.bankCount)
     private EditText bankCount;//银行卡号
+    @ViewInject(R.id.tvBankCount)
+    private TextView tvBankCount;//选择银行卡
+    @ViewInject(R.id.tvBankName)
+    private TextView tvBankName;//选择银行
     @ViewInject(R.id.lldiqu)
     private LinearLayout lldiqu;//选择地区
     @ViewInject(R.id.tvdiqu)
@@ -61,6 +74,9 @@ public class CashExchange extends BaseActivity {
 
     private double MIN_MARK = 0.0;
     private double MAX_MARK = 0.0;
+    private List<QueryBankCardEntity> bindList;
+    private int bankNamePos;
+
     @Override
     public void setLayout() {
         setContentView(R.layout.act_cash_exchange);
@@ -71,18 +87,20 @@ public class CashExchange extends BaseActivity {
         AppManager.getAppManager().addActivity(CashExchange.this);
         setLeftTv("返回");
         setTopTitle("现金兑换");
-        user=getIntent().getParcelableExtra("userInfo");
-        if(user!=null){
-            if (!TextUtils.isEmpty(user.getUserName())){
+        user = getIntent().getParcelableExtra("userInfo");
+        findBankCard();
+        if (user != null) {
+            if (!TextUtils.isEmpty(user.getUserName())) {
                 name.setText(user.getUserName());
                 name.setEnabled(false);
-            }else{
+                name.setTextColor(getResources().getColor(R.color.tv_primary_color));
+            } else {
                 user.setUserName(name.getText().toString().trim());
             }
-            if(!TextUtils.isEmpty(user.getCashTicketAmount())){
-                double dCashA=Double.valueOf(user.getCashTicketAmount());
-                tvxianjin.setText((long)dCashA+"");
-                MAX_MARK=Double.parseDouble(user.getCashTicketAmount());
+            if (!TextUtils.isEmpty(user.getCashTicketAmount())) {
+                double dCashA = Double.valueOf(user.getCashTicketAmount());
+                tvxianjin.setText((long) dCashA + "");
+                MAX_MARK = Double.parseDouble(user.getCashTicketAmount());
             }
         }
         tvxianjinfen.addTextChangedListener(new TextWatcher() {
@@ -98,12 +116,12 @@ public class CashExchange extends BaseActivity {
                         double num = Double.parseDouble(s.toString());
                         if (num > MAX_MARK) {
                             s = String.valueOf(MAX_MARK);
-                            double dMAX=Double.valueOf(s.toString());
-                            tvxianjinfen.setText((long)dMAX+"");
+                            double dMAX = Double.valueOf(s.toString());
+                            tvxianjinfen.setText((long) dMAX + "");
                         } else if (num < MIN_MARK) {
                             s = String.valueOf(MIN_MARK);
-                            double dMIN=Double.valueOf(s.toString());
-                            tvxianjinfen.setText((long)dMIN+"");
+                            double dMIN = Double.valueOf(s.toString());
+                            tvxianjinfen.setText((long) dMIN + "");
                         } else {
                             if (s.toString().trim().length() == 0) {
                                 tvgetxianjin.setText("");
@@ -130,8 +148,8 @@ public class CashExchange extends BaseActivity {
                         }
                         if (markVal > MAX_MARK) {
                             Toast.makeText(getBaseContext(), "不能超过最大可兑换数字", Toast.LENGTH_SHORT).show();
-                            double dMAX=Double.valueOf(MAX_MARK);
-                            tvxianjinfen.setText((long)dMAX+"");
+                            double dMAX = Double.valueOf(MAX_MARK);
+                            tvxianjinfen.setText((long) dMAX + "");
                         } else {
                             if (s.toString().trim().length() == 0) {
                                 tvgetxianjin.setText("");
@@ -161,37 +179,67 @@ public class CashExchange extends BaseActivity {
 
             }
         });
+        tvxianjinfen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tvxianjinfen.setCursorVisible(true);
+                tvxianjinfen.requestFocus();
+            }
+        });
+        tvBankCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (bindList!=null) {
+                    MySelfSheetDialog dialog = new MySelfSheetDialog(CashExchange.this).builder();
+                    for (int i = 0; i < bindList.size(); i++) {
+                        dialog.addSheetItem(bindList.get(i).getCardNo(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which) {
+                                bankName.setText(bindList.get(which - 1).getBankName());
+                                bankCount.setText(bindList.get(which - 1).getCardNo());
+                                bankNamePos = which - 1;
+                                tvBankName.setClickable(false);
+                                bankName.setEnabled(false);
+                                bankName.setTextColor(getResources().getColor(R.color.tv_primary_color));
+                            }
+                        });
+                    }
+                    dialog.show();
+                }
+            }
+        });
     }
-    @OnClick({R.id.btn_ok,R.id.lldiqu,R.id.rlset})
-    public void toClick(View v){
-        Intent intent=null;
-        switch (v.getId()){
+
+    @OnClick({R.id.btn_ok, R.id.lldiqu, R.id.rlset})
+    public void toClick(View v) {
+        Intent intent = null;
+        switch (v.getId()) {
             case R.id.btn_ok:
-                if(isValidate()){
+                if (isValidate()) {
                     setOrderBean();
-                        if(!TextUtils.isEmpty(zjPassword.getText().toString().trim())){
-                            RequestManager.getWalletManager().submitCashTOrder(orderBean, zjPassword.getText().toString(), new RequestManager.CallBack() {
-                                @Override
-                                public void onSucess(String result) throws JSONException {
-                                    Intent intent = new Intent(CashExchange.this, OrderCommitSusAct.class);
-                                    startActivity(intent);
-                                    MyLogUtils.degug(orderBean.getUserName() + ">" + orderBean.getBankName() + ">" + orderBean.getBankCardNo()
-                                            + ">" + orderBean.getCashOutAmount() + ">" + zjPassword.getText().toString());
+                    if (!TextUtils.isEmpty(zjPassword.getText().toString().trim())) {
+                        RequestManager.getWalletManager().submitCashTOrder(orderBean, zjPassword.getText().toString(), new RequestManager.CallBack() {
+                            @Override
+                            public void onSucess(String result) throws JSONException {
+                                Intent intent = new Intent(CashExchange.this, OrderCommitSusAct.class);
+                                startActivity(intent);
+                                MyLogUtils.degug(orderBean.getUserName() + ">" + orderBean.getBankName() + ">" + orderBean.getBankCardNo()
+                                        + ">" + orderBean.getCashOutAmount() + ">" + zjPassword.getText().toString());
 
-                                }
+                            }
 
-                                @Override
-                                public void onError(int status, String msg) {
-                                    Toast.makeText(CashExchange.this,msg,Toast.LENGTH_SHORT).show();
-                                    MyLogUtils.degug(msg);
-                                    MyLogUtils.degug(orderBean.getUserName()+">"+orderBean.getBankName()+">"+orderBean.getBankCardNo()
-                                            +">"+orderBean.getCashOutAmount()+">"+zjPassword.getText().toString());
-                                }
-                            });
-                        }else {
-                            Toast.makeText(CashExchange.this,"请输入资金密码",Toast.LENGTH_SHORT).show();
-                            zjPassword.requestFocus();
-                        }
+                            @Override
+                            public void onError(int status, String msg) {
+                                Toast.makeText(CashExchange.this, msg, Toast.LENGTH_SHORT).show();
+                                MyLogUtils.degug(msg);
+                                MyLogUtils.degug(orderBean.getUserName() + ">" + orderBean.getBankName() + ">" + orderBean.getBankCardNo()
+                                        + ">" + orderBean.getCashOutAmount() + ">" + zjPassword.getText().toString());
+                            }
+                        });
+                    } else {
+                        Toast.makeText(CashExchange.this, "请输入资金密码", Toast.LENGTH_SHORT).show();
+                        zjPassword.requestFocus();
+                    }
                 }
                 break;
             case R.id.lldiqu:
@@ -205,32 +253,32 @@ public class CashExchange extends BaseActivity {
                 });
                 break;
             case R.id.rlset:
-                intent=new Intent(CashExchange.this,SetPwdActivity.class);
-                intent.putExtra("userPhone",user.getAccountName());
+                intent = new Intent(CashExchange.this, SetPwdActivity.class);
+                intent.putExtra("userPhone", user.getAccountName());
                 startActivity(intent);
                 break;
         }
     }
 
-    private void setOrderBean(){
-        orderBean=new OrderBean();
-        if(!TextUtils.isEmpty(name.getText().toString())){
+    private void setOrderBean() {
+        orderBean = new OrderBean();
+        if (!TextUtils.isEmpty(name.getText().toString())) {
             orderBean.setUserName(name.getText().toString());
         }
-        if(!TextUtils.isEmpty(bankName.getText().toString())){
+        if (!TextUtils.isEmpty(bankName.getText().toString())) {
             orderBean.setBankName(bankName.getText().toString());
         }
-        if(!TextUtils.isEmpty(bankCount.getText().toString())){
+        if (!TextUtils.isEmpty(bankCount.getText().toString())) {
             orderBean.setBankCardNo(bankCount.getText().toString());
 
         }
-        if(!TextUtils.isEmpty(tvgetxianjin.getText().toString())){
+        if (!TextUtils.isEmpty(tvgetxianjin.getText().toString())) {
             orderBean.setCashOutAmount(Double.parseDouble(tvgetxianjin.getText().toString()));
         }
     }
 
-    private boolean isValidate(){
-        if(TextUtils.isEmpty(name.getText().toString())){
+    private boolean isValidate() {
+        if (TextUtils.isEmpty(name.getText().toString())) {
             Toast.makeText(CashExchange.this, "请输入您的姓名", Toast.LENGTH_SHORT).show();
             name.requestFocus();
             return false;
@@ -240,26 +288,40 @@ public class CashExchange extends BaseActivity {
             bankName.requestFocus();
             return false;
         }
-        else if(TextUtils.isEmpty(bankCount.getText().toString())){
-            Toast.makeText(CashExchange.this, "请输入银行卡号", Toast.LENGTH_SHORT).show();
+        else if (!TextUtils.isEmpty(bankCount.getText().toString()) && (!FinancialUtil.checkBankCard(bankCount.getText().toString()))) {
+            Toast.makeText(CashExchange.this, "请输入正确的银行卡号", Toast.LENGTH_SHORT).show();
             bankCount.requestFocus();
             return false;
-        }
-        else if(!TextUtils.isEmpty(bankCount.getText().toString())&&(!FinancialUtil.checkBankCard(bankCount.getText().toString()))){
-            Toast.makeText(CashExchange.this,"请输入正确的银行卡号",Toast.LENGTH_SHORT).show();
-            bankCount.requestFocus();
-            return false;
-        }
-        else if(TextUtils.isEmpty(tvgetxianjin.getText().toString())){
-            Toast.makeText(CashExchange.this,"未输入兑换金额",Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(tvgetxianjin.getText().toString())) {
+            Toast.makeText(CashExchange.this, "未输入兑换金额", Toast.LENGTH_SHORT).show();
             tvxianjinfen.requestFocus();
             return false;
-        }else if(!TextUtils.isEmpty(tvxianjinfen.getText().toString())&&((Double.parseDouble(tvxianjinfen.getText().toString())==0))){
-            Toast.makeText(CashExchange.this,"输入的兑换金额无效",Toast.LENGTH_SHORT).show();
+        } else if (!TextUtils.isEmpty(tvxianjinfen.getText().toString()) && ((Double.parseDouble(tvxianjinfen.getText().toString()) == 0))) {
+            Toast.makeText(CashExchange.this, "输入的兑换金额无效", Toast.LENGTH_SHORT).show();
             tvxianjinfen.requestFocus();
             return false;
         }
 
         return true;
+    }
+
+    /*查询绑定银行卡*/
+    private void findBankCard() {
+        RequestManager.getWalletManager().findBankCard(new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                JSONObject object = new JSONObject(result);
+                JSONArray data = object.getJSONArray("data");
+                Gson gson = new Gson();
+                bindList = gson.fromJson(data.toString(), new TypeToken<List<QueryBankCardEntity>>() {
+                }.getType());
+
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+                MyToastUtils.showShortToast(CashExchange.this, msg);
+            }
+        });
     }
 }
