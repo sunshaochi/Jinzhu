@@ -220,7 +220,7 @@ public class CommManager extends RequestManager {
      */
     public void submitOrder(OrderBean orderBean, final CallBack callBack) {
         Map<String, String> params = new HashMap<String, String>();
-        params.put("orderNo", orderBean.getOrderNo());
+//        params.put("orderNo", orderBean.getOrderNo());
         params.put("productId", orderBean.getProductId());
         params.put("totalAmount", orderBean.getTotalAmount());
         params.put("totalPeriods", orderBean.getTotalPeriods());

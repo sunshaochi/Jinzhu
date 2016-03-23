@@ -2,7 +2,6 @@ package com.beyonditsm.financial.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;

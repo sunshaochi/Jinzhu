@@ -15,7 +15,7 @@ import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
  * 贷款第三步
  * Created by Yang on 2015/11/12 0012.
  */
-public class CreditThrFrag extends BaseFragment implements View.OnClickListener {
+public class CreditFourthFrag extends BaseFragment implements View.OnClickListener {
     private Button crethrBtn1;
     private Button crethrBtn2;
 

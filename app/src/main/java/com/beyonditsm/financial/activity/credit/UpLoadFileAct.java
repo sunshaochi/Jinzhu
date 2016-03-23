@@ -10,7 +10,6 @@ import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.photo.PicSelectActivity;
 import com.beyonditsm.financial.adapter.GvPhotoAdapter;
 import com.beyonditsm.financial.entity.ImageBean;
-import com.beyonditsm.financial.fragment.CreditSecondFrag;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
@@ -24,7 +23,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -89,7 +87,7 @@ public class UpLoadFileAct extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Intent intent = new Intent(CreditSecondFrag.IMAGE);
+//        Intent intent = new Intent(CreditSecondFrag.IMAGE);
         /**第一次添加照片 */
         if (requestCode == 0x123 && resultCode == RESULT_OK) {
             if (data != null) {
@@ -101,8 +99,8 @@ public class UpLoadFileAct extends BaseActivity {
                 } else {
                     adapter.notifyDataSetChanged();
                 }
-                intent.putExtra(PicSelectActivity.IMAGES, (Serializable) selecteds);
-                sendBroadcast(intent);
+//                intent.putExtra(PicSelectActivity.IMAGES, (Serializable) selecteds);
+//                sendBroadcast(intent);
 //                tvSelect.setVisibility(View.GONE);
             }
         }
@@ -113,8 +111,8 @@ public class UpLoadFileAct extends BaseActivity {
                 List<ImageBean> addSelect = (List<ImageBean>) data.getSerializableExtra(PicSelectActivity.IMAGES);
                 selecteds.addAll(addSelect);
                 adapter.notifyDataSetChanged();
-                intent.putExtra(PicSelectActivity.IMAGES, (Serializable) selecteds);
-                sendBroadcast(intent);
+//                intent.putExtra(PicSelectActivity.IMAGES, (Serializable) selecteds);
+//                sendBroadcast(intent);
             }
         }
         /**预览删除照片*/
@@ -123,8 +121,8 @@ public class UpLoadFileAct extends BaseActivity {
                 if (selecteds.size() > 0) {
                     selecteds = (List<ImageBean>) data.getSerializableExtra("M_LIST");
                     adapter.notifyDataChange(selecteds);
-                    intent.putExtra(PicSelectActivity.IMAGES, (Serializable) selecteds);
-                    sendBroadcast(intent);
+//                    intent.putExtra(PicSelectActivity.IMAGES, (Serializable) selecteds);
+//                    sendBroadcast(intent);
                 }
             }
         }
@@ -155,9 +153,9 @@ public class UpLoadFileAct extends BaseActivity {
                     JSONObject data = new JSONObject(result);
 
                     String orderNo = data.optString("orderNo");
-                    Intent intent = new Intent(CreditSecondFrag.IMAGE);
-                    intent.putExtra(PicSelectActivity.IMAGES, orderNo);
-                    sendBroadcast(intent);
+//                    Intent intent = new Intent(CreditSecondFrag.IMAGE);
+//                    intent.putExtra(PicSelectActivity.IMAGES, orderNo);
+//                    sendBroadcast(intent);
                     LogUtils.i("orderNo:" + orderNo);
                     MyToastUtils.showShortToast(UpLoadFileAct.this, "上传成功");
                     finish();

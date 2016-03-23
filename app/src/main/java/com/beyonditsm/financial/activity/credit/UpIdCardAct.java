@@ -1,25 +1,16 @@
 package com.beyonditsm.financial.activity.credit;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
-import com.beyonditsm.financial.activity.photo.ImageBrowserActivity;
-import com.beyonditsm.financial.activity.photo.PicSelectActivity;
-import com.beyonditsm.financial.adapter.GvPhotoAdapter;
-import com.beyonditsm.financial.entity.ImageBean;
-import com.beyonditsm.financial.fragment.CreditSecondFrag;
-import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.MyBitmapUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
@@ -28,18 +19,14 @@ import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.view.crop.square.CameraUtils;
 import com.beyonditsm.financial.view.crop.square.Crop;
 import com.beyonditsm.financial.widget.FinalLoadDialog;
-import com.leaf.library.widget.MyGridView;
 import com.lidroid.xutils.http.client.multipart.content.FileBody;
 import com.lidroid.xutils.util.LogUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.lidroid.xutils.view.annotation.event.OnClick;
-import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -262,12 +249,12 @@ public class UpIdCardAct extends BaseActivity {
                     JSONObject data = new JSONObject(result);
 
                     String orderNo = data.optString("orderNo");
-                    Intent intent = new Intent(CreditSecondFrag.IMAGE);
-                    intent.putExtra(PicSelectActivity.IMAGES, orderNo);
-                    if ("idCard".equals(isSupplementFile)) {
-                        intent.putExtra("isLoadCard", true);
-                    }
-                    sendBroadcast(intent);
+//                    Intent intent = new Intent(CreditSecondFrag.IMAGE);
+//                    intent.putExtra(PicSelectActivity.IMAGES, orderNo);
+//                    if ("idCard".equals(isSupplementFile)) {
+//                        intent.putExtra("isLoadCard", true);
+//                    }
+//                    sendBroadcast(intent);
                     LogUtils.i("orderNo:" + orderNo);
                     MyToastUtils.showShortToast(UpIdCardAct.this, "上传成功");
                     finish();

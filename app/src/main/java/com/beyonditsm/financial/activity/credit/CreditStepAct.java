@@ -16,7 +16,8 @@ import com.beyonditsm.financial.activity.user.HotCreditDetailAct;
 import com.beyonditsm.financial.entity.ProductInfo;
 import com.beyonditsm.financial.fragment.CreditFirstFrag;
 import com.beyonditsm.financial.fragment.CreditSecondFrag;
-import com.beyonditsm.financial.fragment.CreditThrFrag;
+import com.beyonditsm.financial.fragment.CreditFourthFrag;
+import com.beyonditsm.financial.fragment.CreditThirFrag;
 import com.beyonditsm.financial.util.SpUtils;
 import com.tandong.sa.eventbus.EventBus;
 
@@ -29,7 +30,8 @@ public class CreditStepAct extends BaseActivity {
 
     private CreditFirstFrag firstFrag;//第一步
     private CreditSecondFrag secondFrag;//第二步
-    private CreditThrFrag thrFrag;//第三步
+    private CreditThirFrag thrFrag;//第三步
+    private CreditFourthFrag fourthFrag;//第四步
     private ProductInfo hotProductInfo;
 
     private void assignViews() {
@@ -108,12 +110,21 @@ public class CreditStepAct extends BaseActivity {
 
                 break;
             case 2:
-                setTopTitle("申请完毕");
+                setTopTitle("上传资质图片");
                 if (thrFrag == null) {
-                    thrFrag = new CreditThrFrag();
+                    thrFrag = new CreditThirFrag();
                     fragmentTransaction.add(R.id.credit_fl, thrFrag);
                 } else {
                     fragmentTransaction.show(thrFrag);
+                }
+                break;
+            case 3:
+                setTopTitle("申请完毕");
+                if (fourthFrag == null) {
+                    fourthFrag = new CreditFourthFrag();
+                    fragmentTransaction.add(R.id.credit_fl, fourthFrag);
+                } else {
+                    fragmentTransaction.show(fourthFrag);
                 }
                 break;
         }
@@ -132,6 +143,9 @@ public class CreditStepAct extends BaseActivity {
         }
         if (thrFrag != null) {
             transaction.hide(thrFrag);
+        }
+        if (fourthFrag != null) {
+            transaction.hide(fourthFrag);
         }
     }
 
