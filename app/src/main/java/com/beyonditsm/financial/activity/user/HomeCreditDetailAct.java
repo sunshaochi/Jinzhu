@@ -23,12 +23,10 @@ import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.GsonUtils;
-import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.widget.DialogChooseMonth;
 import com.beyonditsm.financial.widget.MyAlertDialog;
-import com.leaf.library.widget.MarqueeTextView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
@@ -405,7 +403,7 @@ public class HomeCreditDetailAct extends BaseActivity {
                             creditMoney = etAmount.getText().toString().trim();
                         }
 
-                            creditMonth = tvM.getText().toString();
+                        creditMonth = tvM.getText().toString();
 
                         final double minVal = Double.valueOf(productEntity.getMinVal());
                         double maxVal = Double.valueOf(productEntity.getMaxVal());
@@ -598,23 +596,37 @@ public class HomeCreditDetailAct extends BaseActivity {
 //            tvLimit.setText(getIntent().getStringExtra(CREDIT_TIME));
                     tvLim.setText("期限范围：" + productEntity.getTimeMinVal() + "~" + productEntity.getTimeMaxVal() + "月");
 //            tvMonthPay.setText("¥" + productInfo.getMonthlyPay());
-                    tvPaytype.setText("还款方式：" + productEntity.getPayTypeName());
+                    if (!TextUtils.isEmpty(productEntity.getPayTypeName())) {
+                        tvPaytype.setText("还款方式：" + productEntity.getPayTypeName());
+                    }
 //            tvTotal.setText(productInfo.getTotalInterest());
-                    tvLoan.setText(productEntity.getLoanPeriod() + "个工作日");
-                    if (Double.valueOf(productEntity.getMonthlyRathMin()) - Double.valueOf(productEntity.getMonthlyRathMax()) == 0) {
-                        tvRate.setText("月利率：" + productEntity.getMonthlyRathMin() + "%");
-                    } else {
-                        tvRate.setText("月利率：" + productEntity.getMonthlyRathMin() + "%~" + productEntity.getMonthlyRathMax() + "%");
+                    if (!TextUtils.isEmpty(productEntity.getLoanPeriod())) {
+                        tvLoan.setText(productEntity.getLoanPeriod() + "个工作日");
                     }
-                    tvCon.setText(productEntity.getApplyCondition());
-                    tvNeed.setText(productEntity.getApplyMaterial());
-                    tvDetail.setText(productEntity.getDetailDescribe());
-                    if (Double.valueOf(productEntity.getDisposableRateMax()) - Double.valueOf(productEntity.getDisposableRateMin()) == 0) {
-                        tvOnePay.setText("一次性收费：" + productEntity.getDisposableRateMax() + "%");
-                    } else {
-                        tvOnePay.setText("一次性收费：" + productEntity.getDisposableRateMin() + "%" + "~" + productEntity.getDisposableRateMax() + "%");
+                    if (!TextUtils.isEmpty(productEntity.getMonthlyRathMin())||!TextUtils.isEmpty(productEntity.getMonthlyRathMax())) {
+                        if (Double.valueOf(productEntity.getMonthlyRathMin()) - Double.valueOf(productEntity.getMonthlyRathMax()) == 0) {
+                            tvRate.setText("月利率：" + productEntity.getMonthlyRathMin() + "%");
+                        } else {
+                            tvRate.setText("月利率：" + productEntity.getMonthlyRathMin() + "%~" + productEntity.getMonthlyRathMax() + "%");
+                        }
                     }
+                    if (!TextUtils.isEmpty(productEntity.getApplyCondition())) {
+                        tvCon.setText(productEntity.getApplyCondition());
+                    }
+                    if (!TextUtils.isEmpty(productEntity.getApplyMaterial())) {
+                        tvNeed.setText(productEntity.getApplyMaterial());
+                    }
+                    if (!TextUtils.isEmpty(productEntity.getDetailDescribe())) {
+                        tvDetail.setText(productEntity.getDetailDescribe());
+                    }
+                    if (!TextUtils.isEmpty(productEntity.getDisposableRateMax())||!TextUtils.isEmpty(productEntity.getDisposableRateMin())) {
+                        if (Double.valueOf(productEntity.getDisposableRateMax()) - Double.valueOf(productEntity.getDisposableRateMin()) == 0) {
+                            tvOnePay.setText("一次性收费：" + productEntity.getDisposableRateMax() + "%");
+                        } else {
+                            tvOnePay.setText("一次性收费：" + productEntity.getDisposableRateMin() + "%" + "~" + productEntity.getDisposableRateMax() + "%");
+                        }
 
+                    }
                     String monthRath = (Double.valueOf(productEntity.getMonthlyRathMin()) + Double.valueOf(productEntity.getMonthlyRathMax())) / 2 + "";
                     getMOnthPay(creditMoney, monthRath, creditMonth);
                 }

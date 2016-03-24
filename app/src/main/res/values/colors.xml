@@ -61,4 +61,5 @@
     <color name="dialog_bg">#77000000</color>
     <color name="green_order">#64cd6a</color>
     <color name="backed">#ff000c</color>
+    <color name="delete_red">#FF3a31</color>
 </resources>
