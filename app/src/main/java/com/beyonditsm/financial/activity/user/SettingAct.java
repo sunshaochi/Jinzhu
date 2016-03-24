@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -14,11 +15,15 @@ import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.servicer.ChangePwdAct;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GeneralUtils;
+import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.SpUtils;
+import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.widget.ToggleButton;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+
+import java.io.File;
 
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
@@ -37,11 +42,16 @@ public class SettingAct extends BaseActivity {
     private TextView tvVersion;
     @ViewInject(R.id.rlcheck)
     private RelativeLayout rlCheck;
+    @ViewInject(R.id.tvCacheSize)
+    private TextView tvCacheSize;
+    @ViewInject(R.id.pb_clearCache)
+    private ProgressBar pbClearCache;
 
 
     private GeneralUtils gUtils;
     //    private UserEntity userInfo;
     public static final String ISLOADING = "com.settingAct.isloading";
+    private static final String APP_CACAHE_DIRNAME = "/gamecache";
     private boolean isStart = false;
     private boolean isUploading = false;
 
@@ -55,6 +65,15 @@ public class SettingAct extends BaseActivity {
         setLeftTv("返回");
         setTopTitle("设置");
         gUtils = new GeneralUtils();
+        try {
+            String totalCacheSize = FinancialUtil.getTotalCacheSize(getApplicationContext());
+            tvCacheSize.setText(totalCacheSize);
+            if (totalCacheSize.equals("0K")){
+                pbClearCache.setVisibility(View.GONE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         tvVersion.setText(FinancialUtil.getAppVersion(this));
 //        userInfo=getIntent().getParcelableExtra("user_info");
         tb_msg.setIsSwitch(SpUtils.getMsg(SettingAct.this));
@@ -125,7 +144,7 @@ public class SettingAct extends BaseActivity {
      *
      * @param v
      */
-    @OnClick({R.id.rlUpdate, R.id.rlUpdatePwd, R.id.rlcheck, R.id.rlAbout})
+    @OnClick({R.id.rlUpdate, R.id.rlUpdatePwd, R.id.rlcheck, R.id.rlAbout,R.id.rlClearChche})
     public void toClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
@@ -155,6 +174,19 @@ public class SettingAct extends BaseActivity {
             case R.id.rlAbout:
                 intent = new Intent(this, AboutOurs.class);
                 startActivity(intent);
+                break;
+            case R.id.rlClearChche:
+//                clearWebViewCache();
+                MySelfSheetDialog dialog = new MySelfSheetDialog(this);
+                dialog.builder().addSheetItem("确定清除缓存？", MySelfSheetDialog.SheetItemColor.Red, new MySelfSheetDialog.OnSheetItemClickListener() {
+                    @Override
+                    public void onClick(int which) {
+//                        pbClearCache.setVisibility(View.VISIBLE);
+                        FinancialUtil.clearAllCache(getApplicationContext());
+                        MyToastUtils.showShortToast(SettingAct.this,"已清除缓存");
+                    }
+                }).show();
+
                 break;
         }
 
@@ -196,6 +228,62 @@ public class SettingAct extends BaseActivity {
         public void onReceive(Context context, Intent intent) {
             isStart = intent.getBooleanExtra("isStart", true);
             isUploading = intent.getBooleanExtra("isUploading", true);
+        }
+    }
+
+    /**
+     * 清除WebView缓存
+     */
+    public void clearWebViewCache(){
+
+        //清理Webview缓存数据库
+        try {
+            deleteDatabase("webview.db");
+            deleteDatabase("webviewCache.db");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //WebView 缓存文件
+        File appCacheDir = new File(getFilesDir().getAbsolutePath()+APP_CACAHE_DIRNAME);
+//        Log.e(TAG, "appCacheDir path="+appCacheDir.getAbsolutePath());
+        MyLogUtils.info("appCacheDir path="+appCacheDir.getAbsolutePath());
+
+        File webviewCacheDir = new File(getCacheDir().getAbsolutePath()+"/webviewCache");
+//        Log.e(TAG, "webviewCacheDir path="+webviewCacheDir.getAbsolutePath());
+        MyLogUtils.info("webviewCacheDir path="+webviewCacheDir.getAbsolutePath());
+        //删除webview 缓存目录
+        if(webviewCacheDir.exists()){
+            deleteFile(webviewCacheDir);
+        }
+        //删除webview 缓存 缓存目录
+        if(appCacheDir.exists()){
+            deleteFile(appCacheDir);
+        }
+    }
+
+    /**
+     * 递归删除 文件/文件夹
+     *
+     * @param file
+     */
+    public void deleteFile(File file) {
+
+//        Log.i(TAG, "delete file path=" + file.getAbsolutePath());
+        MyLogUtils.info("delete file path=" + file.getAbsolutePath());
+        if (file.exists()) {
+            if (file.isFile()) {
+                file.delete();
+            } else if (file.isDirectory()) {
+                File files[] = file.listFiles();
+                for (int i = 0; i < files.length; i++) {
+                    deleteFile(files[i]);
+                }
+            }
+            file.delete();
+        } else {
+//            Log.e(TAG, "delete file no exists " + file.getAbsolutePath());
+            MyLogUtils.info("delete file no exists " + file.getAbsolutePath());
         }
     }
 }

@@ -1195,13 +1195,16 @@ public class CreditSecondFrag extends BaseFragment {
         if(!TextUtils.isEmpty(orderNo))
             orderBean.setOrderNo(orderNo);
         orderBean.setProductId(productInfo.getProductId());
-        orderBean.setTotalAmount(Double.parseDouble(HomeCreditDetailAct.creditMoney) * 10000 + "");//总金额
+        if (!TextUtils.isEmpty(HomeCreditDetailAct.creditMoney)) {
+            orderBean.setTotalAmount(Double.parseDouble(HomeCreditDetailAct.creditMoney) * 10000 + "");//总金额
+        }
         orderBean.setTotalPeriods(HomeCreditDetailAct.creditMonth);//总期数
         orderBean.setPeriodsAmount(HomeCreditDetailAct.monthlyPayments);//单期还款金额
+        MyLogUtils.info("home_creditmoney:" + HomeCreditDetailAct.creditMoney + "home_creditmonth:" + HomeCreditDetailAct.creditMonth + "home_monthlypayments:" + HomeCreditDetailAct.monthlyPayments);
         if(orderBean!=null) {
             RequestManager.getCommManager().submitOrder(orderBean, new RequestManager.CallBack() {
                 @Override
-                public void onSucess(String result)  {
+                public void onSucess(String result) {
                     EventBus.getDefault().post(new CreditStepAct.FirstEvent(2));
                 }
 

@@ -101,6 +101,8 @@ public class UpdateAct extends BaseActivity {
     private TextView tvHouseHold;//户籍地址
     @ViewInject(R.id.tvLocal)
     private TextView tvLocal;
+//    @ViewInject(R.id.loadingView)
+//    private LoadingView loadingView;
 
     private AddressUtil addressUtil;
 
@@ -128,6 +130,13 @@ public class UpdateAct extends BaseActivity {
 //        if (!tempFile.exists()) {
 //            tempFile.mkdirs();
 //        }
+
+//        loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
+//            @Override
+//            public void OnRetry() {
+//                getUserInfo();
+//            }
+//        });
     }
 
     @Override
@@ -402,6 +411,7 @@ public class UpdateAct extends BaseActivity {
         RequestManager.getCommManager().findUserInfo(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
+//                loadingView.loadComplete();
                 ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
                 userInfo = rd.getData();
                 if (userInfo != null) {
@@ -414,6 +424,7 @@ public class UpdateAct extends BaseActivity {
 
             @Override
             public void onError(int status,String msg) {
+//                loadingView.loadError();
                 MyToastUtils.showShortToast(UpdateAct.this, msg);
             }
         });

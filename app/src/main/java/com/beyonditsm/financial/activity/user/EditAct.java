@@ -74,7 +74,9 @@ public class EditAct extends BaseActivity {
                             MyToastUtils.showShortToast(getApplicationContext(),"请输入合法的身份证号");
                             return;
                         }
-                        userInfo.setIdentCard(content);
+                        if (!TextUtils.isEmpty(content)) {
+                            userInfo.setIdentCard(content);
+                        }
                         if(userInfo.getUserAge()==null)
                         userInfo.setUserAge(IdcardUtils.getAgeByIdCard(content));
 
@@ -89,7 +91,9 @@ public class EditAct extends BaseActivity {
                         userInfo.setNativePlace(IdcardUtils.getProvinceByIdCard(content));
                         break;
                     case 8:
-                        userInfo.setUserAge(Integer.valueOf(content));
+                        if (!TextUtils.isEmpty(content)) {
+                            userInfo.setUserAge(Integer.valueOf(content));
+                        }
                         break;
                 }
                 updateData(userInfo);

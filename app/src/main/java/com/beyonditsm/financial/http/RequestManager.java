@@ -413,16 +413,18 @@ public class RequestManager {
             protected void onPostExecute(String result) {
                 MyLogUtils.info("上传图片：" + result);
                 JSONObject obj = null;
-                try {
-                    obj = new JSONObject(result);
-                    int status = obj.getInt("status");
-                    if (status == 200) {
-                        callBack.onSucess(obj.getString("data"));
-                    } else {
-                        callBack.onError(obj.getInt("status"), obj.getString("message"));
+                if (!TextUtils.isEmpty(result)) {
+                    try {
+                        obj = new JSONObject(result);
+                        int status = obj.getInt("status");
+                        if (status == 200) {
+                            callBack.onSucess(obj.getString("data"));
+                        } else {
+                            callBack.onError(obj.getInt("status"), obj.getString("message"));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
             }
         }.execute();

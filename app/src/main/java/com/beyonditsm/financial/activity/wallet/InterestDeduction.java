@@ -117,7 +117,7 @@ public class InterestDeduction extends BaseActivity {
         }
 
         getOrderNoList();
-        findBankCard();
+//        findBankCard();
 
         tvlixifen.addTextChangedListener(new TextWatcher() {
             @Override

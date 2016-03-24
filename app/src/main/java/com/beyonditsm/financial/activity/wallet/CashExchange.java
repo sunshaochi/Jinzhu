@@ -88,7 +88,7 @@ public class CashExchange extends BaseActivity {
         setLeftTv("返回");
         setTopTitle("现金兑换");
         user = getIntent().getParcelableExtra("userInfo");
-        findBankCard();
+//        findBankCard();
         if (user != null) {
             if (!TextUtils.isEmpty(user.getUserName())) {
                 name.setText(user.getUserName());

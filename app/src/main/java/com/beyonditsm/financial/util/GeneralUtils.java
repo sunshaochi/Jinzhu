@@ -144,6 +144,8 @@ public class GeneralUtils {
         Intent intent = new Intent();
         //执行动作
         intent.setAction(Intent.ACTION_VIEW);
+        //安装完成后可选择打开或者完成
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         //执行的数据类型
         intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");//编者按：此处Android应为android，否则造成安装不了
         context.startActivity(intent);

@@ -8,9 +8,9 @@ package com.beyonditsm.financial.http;
 public interface IFinancialUrl {
 
     /*test1地址*/
-    String BASE_URL = "http://139.196.111.82:5018";
+//    String BASE_URL = "http://139.196.111.82:5018";
     /*正式地址*/
-//    String BASE_URL = "http://option.myjinzhu.com";
+    String BASE_URL = "http://option.myjinzhu.com";
 
     /*测试地址2*/
 //    String BASE_URL = "http://test.myjinzhu.com:8082";

@@ -81,6 +81,7 @@ public class MineFragment extends BaseFragment {
      @ViewInject(R.id.msg_top_point)
     private ImageView msg_top_point;//右上角消息图标小红点
 
+
     private UserEntity user;//用户信息
     public static final String USER_KEY = "user_info";
     private boolean isLogin;
@@ -117,10 +118,12 @@ public class MineFragment extends BaseFragment {
 //            getUserInfo();
             getUserLoginInfo();
         }
+
     }
 
     @Override
     public void setListener() {
+
     }
 
     @OnClick({R.id.rlMyCode, R.id.rlRecomm, R.id.rlLines, R.id.rlMyCredit, R.id.rlSet, R.id.tvExit,
@@ -284,7 +287,6 @@ public class MineFragment extends BaseFragment {
 
             @Override
             public void onError(int status, String msg) {
-
             }
         });
     }

@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.WrapperListAdapter;
-import com.baoyz.swipemenulistview.SwipeMenuView.OnSwipeItemClickListener;
 
 /**
  * 
@@ -17,7 +16,7 @@ import com.baoyz.swipemenulistview.SwipeMenuView.OnSwipeItemClickListener;
  * 
  */
 public class SwipeMenuAdapter implements WrapperListAdapter,
-		OnSwipeItemClickListener {
+        SwipeMenuView.OnSwipeItemClickListener {
 
     private ListAdapter mAdapter;
     private Context mContext;

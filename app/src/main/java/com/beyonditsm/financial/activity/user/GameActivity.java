@@ -23,7 +23,6 @@ import android.webkit.WebViewClient;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
-import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.SpUtils;
@@ -46,6 +45,7 @@ public class GameActivity extends BaseActivity {
     private Intent intent;
 
     public static final String GAME_TYPE = "game_type";
+    private static final String APP_CACAHE_DIRNAME = "/gamecache";
 
     private ValueCallback<Uri> mUploadMessage;// 表单的数据信息
     private ValueCallback<Uri[]> mUploadCallbackAboveL;
@@ -73,6 +73,23 @@ public class GameActivity extends BaseActivity {
         settings.setJavaScriptEnabled(true);
         settings.setSupportZoom(true);
         settings.setAllowFileAccess(true);
+        //设置缓存模式
+        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        // 开启 DOM storage API 功能
+        settings.setDomStorageEnabled(true);
+        //开启 database storage API 功能
+        settings.setDatabaseEnabled(true);
+//        String cacheDirPath = getApplicationContext().getDir("gameCache", Context.MODE_PRIVATE).getPath();
+
+        String cacheDirPath = getFilesDir().getAbsolutePath()+APP_CACAHE_DIRNAME;
+        MyLogUtils.info("cacheDirPath+"+cacheDirPath);
+        //设置数据库缓存路径
+        settings.setDatabasePath(cacheDirPath);
+        //设置  Application Caches 缓存目录
+        settings.setAppCachePath(cacheDirPath);
+        settings.setAllowFileAccess(true);
+        //开启 Application Caches 功能
+        settings.setAppCacheEnabled(true);
 
         wvGame.setWebViewClient(new WebViewClient() {
             @Override
