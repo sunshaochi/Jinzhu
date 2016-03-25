@@ -144,7 +144,6 @@ public class ServiceDataAct extends BaseActivity {
         setTopTitle("我的资料");
         addressUtil = new AddressUtil(this);
         servantInfo = getIntent().getParcelableExtra(ServiceMineFrg.SERVANT_INFO);
-        MyLogUtils.error("收款支行"+servantInfo.getBankName()+"银行账号"+servantInfo.getBankAccNo());
 //        userInfo = getIntent().getParcelableExtra(ServiceMineFrg.USER_INFO);
 //        MyLogUtils.info("------------------------"+userInfo);
         if (servantInfo != null) {

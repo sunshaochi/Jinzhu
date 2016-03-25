@@ -54,6 +54,8 @@ public class SettingAct extends BaseActivity {
     private static final String APP_CACAHE_DIRNAME = "/gamecache";
     private boolean isStart = false;
     private boolean isUploading = false;
+    private boolean isFirstClick = false;
+    private String totalCacheSize;
 
     @Override
     public void setLayout() {
@@ -66,11 +68,8 @@ public class SettingAct extends BaseActivity {
         setTopTitle("设置");
         gUtils = new GeneralUtils();
         try {
-            String totalCacheSize = FinancialUtil.getTotalCacheSize(getApplicationContext());
+            totalCacheSize = FinancialUtil.getTotalCacheSize(getApplicationContext());
             tvCacheSize.setText(totalCacheSize);
-            if (totalCacheSize.equals("0K")){
-                pbClearCache.setVisibility(View.GONE);
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -175,26 +174,48 @@ public class SettingAct extends BaseActivity {
                 intent = new Intent(this, AboutOurs.class);
                 startActivity(intent);
                 break;
+            //清除缓存
             case R.id.rlClearChche:
 //                clearWebViewCache();
-                MySelfSheetDialog dialog = new MySelfSheetDialog(this);
-                dialog.builder().addSheetItem("确定清除缓存？", MySelfSheetDialog.SheetItemColor.Red, new MySelfSheetDialog.OnSheetItemClickListener() {
-                    @Override
-                    public void onClick(int which) {
-//                        pbClearCache.setVisibility(View.VISIBLE);
-                        FinancialUtil.clearAllCache(getApplicationContext());
-                        MyToastUtils.showShortToast(SettingAct.this,"已清除缓存");
-                    }
-                }).show();
+//                if (isFirstClick) {
+//                    MyToastUtils.showShortToast(SettingAct.this, "已清除缓存!");
+//                    isFirstClick = false;
+//                }else{
 
+//                    isFirstClick = true;
+//                }
+                if (!totalCacheSize.equals("0K")){
+                    MySelfSheetDialog dialog = new MySelfSheetDialog(this);
+                    dialog.builder().addSheetItem("确定清除缓存？", MySelfSheetDialog.SheetItemColor.Red, new MySelfSheetDialog.OnSheetItemClickListener() {
+                        @Override
+                        public void onClick(int which) {
+//                        pbClearCache.setVisibility(View.VISIBLE);
+                            ClearCache();
+                        }
+                    }).show();
+                }else{
+                    MyToastUtils.showShortToast(SettingAct.this, "已清除缓存!");
+                    return;
+                }
                 break;
         }
 
 
     }
 
+    private void ClearCache() {
+        FinancialUtil.clearAllCache(getApplicationContext());
+        try {
+            totalCacheSize = FinancialUtil.getTotalCacheSize(getApplicationContext());
+            tvCacheSize.setText(totalCacheSize);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        MyToastUtils.showShortToast(SettingAct.this, "已清除缓存");
+    }
 
-        @Override
+
+    @Override
     public void onStart() {
         super.onStart();
         if(receiver==null){
