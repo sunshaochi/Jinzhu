@@ -482,62 +482,6 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/llts"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="visible">
-
-                    <RelativeLayout
-                        android:id="@+id/ts_tv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/ts"
-                            style="@style/tv_primary_style"
-                            android:layout_width="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginTop="10dp"
-                            android:drawablePadding="6dp"
-                            android:text="所需材料"
-                            android:textColor="#446ebc" />
-
-                        <ImageView
-                            android:id="@+id/tsivSlide"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:src="@mipmap/slide" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1px"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="30dp"
-                            android:layout_marginRight="30dp"
-                            android:layout_toLeftOf="@id/tsivSlide"
-                            android:layout_toRightOf="@id/ts"
-                            android:background="#dfdfdf"></View>
-                    </RelativeLayout>
-
-                    <LinearLayout
-                        android:id="@+id/tsll"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <com.leaf.library.widget.MyListView
-                            android:id="@+id/mlv"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="-15dp"
-                            android:layout_marginRight="-15dp" />
-                    </LinearLayout>
-
-                </LinearLayout>
 
                
 

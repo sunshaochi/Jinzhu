@@ -19,6 +19,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -64,17 +65,26 @@ public class CommManager extends RequestManager {
      * @param callBack
      */
     public void toRegister(UserEntity ue, String phoneNumber, String captcha, CallBack callBack) {
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("phoneNumber", phoneNumber);
-        params.put("username",ue.getUsername());
-//        params.put("password", ue.getPassword());
-        MyLogUtils.info("手机号："+phoneNumber+",验证码："+captcha);
-        params.put("captcha", captcha);
+        List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
+        queryParams.add(new BasicNameValuePair("phoneNumber",phoneNumber));
+        queryParams.add(new BasicNameValuePair("username",ue.getUsername()));
+        queryParams.add(new BasicNameValuePair("captcha",captcha));
         if (!TextUtils.isEmpty(ue.getReferralCode())) {
-            params.put("referralCode", ue.getReferralCode());
+            queryParams.add(new BasicNameValuePair("referralCode", ue.getReferralCode()));
 
         }
-        doPost(IFinancialUrl.REGISTER_URL, params, callBack);
+
+//        Map<String, String> params = new HashMap<String, String>();
+//        params.put("phoneNumber", phoneNumber);
+//        params.put("username",ue.getUsername());
+////        params.put("password", ue.getPassword());
+//        MyLogUtils.info("手机号："+phoneNumber+",验证码："+captcha);
+//        params.put("captcha", captcha);
+//        if (!TextUtils.isEmpty(ue.getReferralCode())) {
+//            params.put("referralCode", ue.getReferralCode());
+//
+//        }
+        doPost(IFinancialUrl.REGISTER_URL, queryParams, callBack);
     }
 
     /**
@@ -447,5 +457,29 @@ public class CommManager extends RequestManager {
         Map<String, String> params = new HashMap<String, String>();
         params.put("key", key);
         doPost(IFinancialUrl.DIC_MAP_URL, params, callBack);
+    }
+
+
+    /**
+     * 获取上传资料列表
+     * @param orderId
+     */
+    public void getUpLoadList(String orderId,CallBack callBack){
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("orderId", orderId);
+        doPost(IFinancialUrl.UPLOAD_LIST_URL, params, callBack);
+    }
+
+    /**
+     * 获取需要上传图片详情
+     * @param orderId
+     * @param flowId
+     * @param callBack
+     */
+    public void findFlowDetail(String orderId,String flowId,CallBack callBack){
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("orderId", orderId);
+        params.put("flowId", flowId);
+        doPost(IFinancialUrl.FIND_FLOW_DETAIL_URL, params, callBack);
     }
 }

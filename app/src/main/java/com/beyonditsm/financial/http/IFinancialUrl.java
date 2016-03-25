@@ -8,13 +8,14 @@ package com.beyonditsm.financial.http;
 public interface IFinancialUrl {
 
     /*test1地址*/
-    String BASE_URL = "http://139.196.111.82:5018";
+//    String BASE_URL = "http://139.196.111.82:5018";
     /*正式地址*/
 //    String BASE_URL = "http://option.myjinzhu.com";
 
     /*测试地址2*/
-//    String BASE_URL = "http://test.myjinzhu.com:8082";
-//    String BASE_URL = "http://option.myjinzhu.com";
+    String BASE_URL = "http://test.myjinzhu.com:8082";
+    /*测试地址3*/
+//    String BASE_URL="http://test.myjinzhu.com:60";
 
     /*正式游戏地址*/
     String GAME_URL = "http://m.farm.myjinzhu.com/";
@@ -203,4 +204,8 @@ public interface IFinancialUrl {
     /*修改银行卡状态*/
     String MODIFY_BANK_CARD_STATUS = BASE_URL + API_VERSION + "/wallet/login/modifyBankCard.do";
 
+    /*上传资料列表*/
+    String UPLOAD_LIST_URL=BASE_URL+API_VERSION+"/platform/login/findOrderFlow.do";
+    /*查找上传详情*/
+    String FIND_FLOW_DETAIL_URL=BASE_URL+API_VERSION+"/platform/login/findFlowDetail.do";
 }

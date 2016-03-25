@@ -1,20 +1,15 @@
 package com.beyonditsm.financial.fragment;
 
 import android.animation.ObjectAnimator;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -31,15 +26,7 @@ import android.widget.Toast;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.credit.CreditDetailAct;
 import com.beyonditsm.financial.activity.credit.CreditStepAct;
-import com.beyonditsm.financial.activity.credit.UpIdCardAct;
-import com.beyonditsm.financial.activity.credit.UpLoadFileAct;
-import com.beyonditsm.financial.activity.user.DoTaskPicture;
-import com.beyonditsm.financial.activity.user.DoTaskPlaceAct;
-import com.beyonditsm.financial.activity.user.FinishTaskPicture;
-import com.beyonditsm.financial.activity.user.FinishTaskPlaceAct;
 import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
-import com.beyonditsm.financial.activity.user.TaskDetail;
-import com.beyonditsm.financial.activity.user.TaskLevelAct;
 import com.beyonditsm.financial.adapter.PrimaryTaskAdapter;
 import com.beyonditsm.financial.entity.DictionaryType;
 import com.beyonditsm.financial.entity.ImageBean;
@@ -62,7 +49,6 @@ import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.widget.DialogChooseAdress;
 import com.beyonditsm.financial.widget.DialogChooseProvince;
 import com.beyonditsm.financial.widget.ToggleButton;
-import com.leaf.library.widget.MyListView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.eventbus.EventBus;
@@ -117,10 +103,8 @@ public class CreditSecondFrag extends BaseFragment {
     private Button secondBtnNext;//下一步
     private RelativeLayout rsts;//贷款提速
     private TextView tvts;//提速
-    @ViewInject(R.id.tsivSlide)
-    private ImageView tsivSlide;//提速右边按钮旋转
-    @ViewInject(R.id.mlv)
-    private MyListView mlv;
+
+
 
     //订单成功
     @ViewInject(R.id.llSucess)
@@ -179,18 +163,16 @@ public class CreditSecondFrag extends BaseFragment {
         tvCar = (TextView) view.findViewById(R.id.tv_car);
         rlXy = (RelativeLayout) view.findViewById(R.id.rl_xy);
         tvXy = (TextView) view.findViewById(R.id.tv_xy);
-        rsts = (RelativeLayout) view.findViewById(R.id.ts_tv);
-        tvts = (TextView) view.findViewById(R.id.ts);
         secondBtnNext = (Button) view.findViewById(R.id.second_btn_next);
         cbSelectSex = (CheckBox) view.findViewById(R.id.cb_select_sex);
     }
 
     @ViewInject(R.id.zz_ll)
     private LinearLayout zz_ll;//资质扩展区域
-    @ViewInject(R.id.llts)
-    private LinearLayout ts_ll;//贷款提速
-    @ViewInject(R.id.tsll)
-    private LinearLayout tsll;//贷款提速扩展区
+//    @ViewInject(R.id.llts)
+//    private LinearLayout ts_ll;//贷款提速
+//    @ViewInject(R.id.tsll)
+//    private LinearLayout tsll;//贷款提速扩展区
 
     private Map<Integer, Boolean> map = new HashMap<>();
     private MySelfSheetDialog dialog;
@@ -228,38 +210,33 @@ public class CreditSecondFrag extends BaseFragment {
         obaOn = ObjectAnimator.ofFloat(ivSlide, "rotation", -180,
                 0);
         obaOn.setDuration(300);
-        obaDownts = ObjectAnimator.ofFloat(tsivSlide, "rotation", 0,
-                180);
-        obaDownts.setDuration(300);
-        obaOnts = ObjectAnimator.ofFloat(tsivSlide, "rotation", -180,
-                0);
-        obaOnts.setDuration(300);
+
 
         map.put(1, false);
         map.put(2, false);
         productInfo = getArguments().getParcelable(CreditDetailAct.PRODUCTINFO);
         getData();
-        //如果taskManageId为空则不显示贷款提速
-        if (TextUtils.isEmpty(productInfo.getTaskManageId())) {
-            ts_ll.setVisibility(View.GONE);
-        } else {
-            ts_ll.setVisibility(View.VISIBLE);
-            mlv.setVisibility(View.GONE);
-            findTaskBytaskIds(productInfo.getTaskManageId());
-        }
-
-
-        mlv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                if (taskEntityList.get(position).getTaskStatus() == -1) {
-                    findTaskStrategy(taskEntityList.get(position), position);
-                } else if ((taskEntityList.get(position).getTaskStatus() == 0) || (taskEntityList.get(position).getTaskStatus() == 1)) {
-                    findTaskDetail(taskEntityList.get(position), position);
-
-                }
-            }
-        });
+//        //如果taskManageId为空则不显示贷款提速
+//        if (TextUtils.isEmpty(productInfo.getTaskManageId())) {
+//            ts_ll.setVisibility(View.GONE);
+//        } else {
+//            ts_ll.setVisibility(View.VISIBLE);
+//            mlv.setVisibility(View.GONE);
+//            findTaskBytaskIds(productInfo.getTaskManageId());
+//        }
+//
+//
+//        mlv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+//                if (taskEntityList.get(position).getTaskStatus() == -1) {
+//                    findTaskStrategy(taskEntityList.get(position), position);
+//                } else if ((taskEntityList.get(position).getTaskStatus() == 0) || (taskEntityList.get(position).getTaskStatus() == 1)) {
+//                    findTaskDetail(taskEntityList.get(position), position);
+//
+//                }
+//            }
+//        });
         loadView.setOnRetryListener(new LoadingView.OnRetryListener() {
             @Override
             public void OnRetry() {
@@ -269,159 +246,6 @@ public class CreditSecondFrag extends BaseFragment {
 
     }
 
-    /**
-     * 跳转到对应的已做过任务的activity
-     *
-     * @param list     任务列表
-     * @param position 点击的位置
-     */
-    private void selectToFinishAct(List<TaskEntity> list, int position) {
-        Intent intent = null;
-        intent = new Intent();
-        intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) list);
-        intent.putExtra("position", position);
-        if (list.get(0).getValueType() == 0) {
-            intent.setClass(getContext(), FinishTaskPlaceAct.class);
-        } else if (list.get(0).getValueType() == 1) {
-            intent.setClass(getContext(), FinishTaskPicture.class);
-        }
-        startActivity(intent);
-    }
-
-    /**
-     * 跳转到对应的做任务的界面
-     *
-     * @param listTask 任务列表
-     * @param list     任务策略列表
-     * @param position 点击的位置
-     */
-    private void selectToAct(List<TaskEntity> listTask, List<TaskStrategyEntity> list, int position) {
-        Intent intent = null;
-        intent = new Intent();
-        if (list.size() != 0) {
-            //根据任务策略的第一条数据中任务组件跳转
-            if (list.get(0).getModelType() == 5) {//上传
-                //判断是否已经完成任务，如果完成任务则显示任务详情（FinishTaskPicture只能看不能修改）否则进去能够执行的界面
-                intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) listTask);
-                intent.putExtra("position", position);
-                intent.putParcelableArrayListExtra("listStrategey", (ArrayList<? extends Parcelable>) list);
-                intent.setClass(getActivity(), DoTaskPicture.class);
-
-
-            } else if (list.get(0).getModelType() == 1) {//输入
-                //判断是否已经完成任务，如果完成任务则显示任务详情（FinishTaskPlaceAct只能看不能修改）否则进去能够执行的界面
-                intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) listTask);
-                intent.putExtra("position", position);
-                intent.putParcelableArrayListExtra("listStrategey", (ArrayList<? extends Parcelable>) list);
-                intent.setClass(getActivity(), DoTaskPlaceAct.class);
-
-            } else if (list.get(0).getModelType() == 3) {//单选
-                //判断是否已经完成任务，如果完成任务则显示任务详情（FinishTaskDetial只能看不能修改）否则进去能够执行的界面
-                intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) listTask);
-                intent.putParcelableArrayListExtra("listStrategey", (ArrayList<? extends Parcelable>) list);
-                intent.putExtra("position", position);
-                intent.setClass(getActivity(), TaskDetail.class);
-
-            } else if (list.get(0).getModelType() == 2) {//下拉
-                //判断是否已经完成任务，如果完成任务则显示任务详情（FinishTaskDetial只能看不能修改）否则进去能够执行的界面
-                intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) listTask);
-                intent.putParcelableArrayListExtra("listStrategey", (ArrayList<? extends Parcelable>) list);
-                intent.putExtra("position", position);
-                intent.setClass(getActivity(), TaskDetail.class);
-
-            } else if (list.get(0).getModelType() == 4) {//多选
-                //判断是否已经完成任务，如果完成任务则显示任务详情（FinishTaskDetial只能看不能修改）否则进去能够执行的界面
-                intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) listTask);
-                intent.putParcelableArrayListExtra("listStrategey", (ArrayList<? extends Parcelable>) list);
-                intent.putExtra("position", position);
-                intent.setClass(getActivity(), TaskDetail.class);
-
-            }
-            startActivity(intent);
-        }
-    }
-
-    /**
-     * 根据任务查询任务详情（审核中，已完成）
-     *
-     * @param taskEntity
-     */
-    private void findTaskDetail(TaskEntity taskEntity, final int position) {
-        RequestManager.getUserManager().findProTaskDetail(taskEntity, new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
-                JSONObject jsonObject = new JSONObject(result);
-                JSONArray dataArr = jsonObject.getJSONArray("data");
-                Gson gson = new Gson();
-                finishList = gson.fromJson(dataArr.toString(), new TypeToken<List<TaskEntity>>() {
-                }.getType());
-                selectToFinishAct(finishList, position);
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-
-            }
-        });
-    }
-
-    /**
-     * 根据任务查询任务策略
-     *
-     * @param taskEntity
-     */
-    private void findTaskStrategy(TaskEntity taskEntity, final int position) {
-        RequestManager.getUserManager().findProTaskStrategy(taskEntity, new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
-                JSONObject jsonObject = new JSONObject(result);
-                JSONArray dataArr = jsonObject.getJSONArray("data");
-                Gson gson = new Gson();
-                taskStrategyEntityList = gson.fromJson(dataArr.toString(), new TypeToken<List<TaskStrategyEntity>>() {
-                }.getType());
-
-                selectToAct(taskEntityList, taskStrategyEntityList, position);
-
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-
-            }
-        });
-    }
-
-    /**
-     * 根据任务id查询任务列表内容
-     *
-     * @param taskId
-     */
-    private void findTaskBytaskIds(String taskId) {
-        RequestManager.getUserManager().findTaskBytaskIds(taskId, new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
-                JSONObject jsonObject = new JSONObject(result);
-                JSONArray dataArr = jsonObject.getJSONArray("data");
-                Gson gson = new Gson();
-                taskEntityList = gson.fromJson(dataArr.toString(), new TypeToken<List<TaskEntity>>() {
-                }.getType());
-
-                if (taskEntityList.size() != 0 && adapter == null) {
-                    adapter = new PrimaryTaskAdapter(taskEntityList, context);
-                    mlv.setAdapter(adapter);
-                } else {
-                    if (taskEntityList.size() != 0) {
-                        adapter.notifyChange(taskEntityList);
-                    }
-                }
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-                Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     private void scrollDown() {
         new Handler().post(new Runnable() {
@@ -467,7 +291,7 @@ public class CreditSecondFrag extends BaseFragment {
     }
 
     @OnClick({R.id.cb_select_sex, R.id.second_btn_next, R.id.zz_tv, R.id.rlNative, R.id.rl_marrayed, R.id.rl_sb, R.id.rl_gjj, R.id.rl_work
-            , R.id.rl_home, R.id.rl_car, R.id.rl_xy, R.id.rlAddress, R.id.rlPosition, R.id.ts_tv, R.id.commit_file, R.id.commit_idCard,R.id.tvSure})
+            , R.id.rl_home, R.id.rl_car, R.id.rl_xy, R.id.rlAddress, R.id.rlPosition, R.id.commit_file, R.id.commit_idCard,R.id.tvSure})
     public void todo(View v) {
         Intent intent = null;
         switch (v.getId()) {
@@ -527,23 +351,23 @@ public class CreditSecondFrag extends BaseFragment {
                     map.put(1, false);
                 }
                 break;
-            case R.id.ts_tv://贷款提速显示与否
-                //给 mlv适配任务内容
-                if (!map.get(2)) {
-                    obaDownts.start();
-                    mlv.setVisibility(View.VISIBLE);
-                    tsll.setVisibility(View.VISIBLE);
+//            case R.id.ts_tv://贷款提速显示与否
+//                //给 mlv适配任务内容
+//                if (!map.get(2)) {
+//                    obaDownts.start();
+//                    mlv.setVisibility(View.VISIBLE);
+//                    tsll.setVisibility(View.VISIBLE);
+//
+//                    map.put(2, true);
+//                    scrollDown();
+//                } else {
+//                    obaOnts.start();
+//                    mlv.setVisibility(View.GONE);
+//                    tsll.setVisibility(View.GONE);
+//                    map.put(2, false);
+//                }
 
-                    map.put(2, true);
-                    scrollDown();
-                } else {
-                    obaOnts.start();
-                    mlv.setVisibility(View.GONE);
-                    tsll.setVisibility(View.GONE);
-                    map.put(2, false);
-                }
-
-                break;
+//                break;
             case R.id.rl_marrayed://是否结婚
                 dialog = new MySelfSheetDialog(getActivity()).builder();
                 dialog.addSheetItem("已婚", null, new MySelfSheetDialog.OnSheetItemClickListener() {
@@ -663,20 +487,7 @@ public class CreditSecondFrag extends BaseFragment {
                 }
                 dialog.show();
                 break;
-            case R.id.commit_file:
-                intent = new Intent(context, UpLoadFileAct.class);
-                intent.putExtra("isSupplementFile", "0");
-                intent.putExtra("orderNo", orderNo);
-                getActivity().startActivity(intent);
-                break;
 
-            case R.id.commit_idCard:
-                intent = new Intent(context, UpIdCardAct.class);
-                intent.putExtra("isSupplementFile", "idCard");
-                intent.putExtra("orderNo", orderNo);
-//                intent.putExtra("type","card");
-                getActivity().startActivity(intent);
-                break;
             case R.id.tvSure://确定
                 i=-1;
                 EventBus.getDefault().post(new CreditStepAct.FirstEvent(2));
@@ -976,50 +787,10 @@ public class CreditSecondFrag extends BaseFragment {
             MyToastUtils.showShortToast(context, "请输入合法的身份证号码");
             return false;
         }
-//        if (!isLoadIdCard) {
-//            MyToastUtils.showShortToast(context, "请上传身份证照片");
-//            return false;
-//        }
         return true;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (receiver == null) {
-            receiver = new MyBroadCastReceiver();
-        }
-        getActivity().registerReceiver(receiver, new IntentFilter(TaskLevelAct.UPDATE_LIST));
 
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (receiver != null) {
-            getActivity().unregisterReceiver(receiver);
-        }
-    }
-
-    private MyBroadCastReceiver receiver;
-
-    public class MyBroadCastReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            findTaskBytaskIds(productInfo.getTaskManageId());
-        }
-    }
-
-//    private MyReceiver myreceiver;
-//    public static String IMAGE = "com.boyuan.image";
-//
-//    public class MyReceiver extends BroadcastReceiver {
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//            isLoadIdCard = intent.getBooleanExtra("isLoadCard", false);
-//            orderNo = intent.getStringExtra(PicSelectActivity.IMAGES);
-//        }
-//    }
 
     private int i = 5;
 

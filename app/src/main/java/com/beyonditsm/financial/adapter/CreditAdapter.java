@@ -1,6 +1,7 @@
 package com.beyonditsm.financial.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -90,19 +91,31 @@ public class CreditAdapter extends BaseAdapter {
         }
         ProductInfo productEntity = list.get(position);
         ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + productEntity.getImageLogoPath(), viewHolder.ivBanl, options);
-        viewHolder.tvBank.setText(productEntity.getProductName());
-        viewHolder.tvTime.setText("放款周期:"+productEntity.getLoanPeriod()+"个工作日");
-        if (Double.valueOf(productEntity.getMonthlyRathMin())-Double.valueOf(productEntity.getMonthlyRathMax())==0){
-            viewHolder.tvRate.setText("月利率:"+productEntity.getMonthlyRathMin()+"%");
-        }else {
-            viewHolder.tvRate.setText("月利率:" + productEntity.getMonthlyRathMin() + "%~" + productEntity.getMonthlyRathMax() + "%");
+        if (!TextUtils.isEmpty(productEntity.getProductName())) {
+            viewHolder.tvBank.setText(productEntity.getProductName());
         }
-        viewHolder.tvTotal.setText("¥"+productEntity.get_totalRath());
-        viewHolder.tvReim.setText("¥"+productEntity.get_monthlyPayment());
-        if (Double.valueOf(productEntity.getDisposableRateMax())-Double.valueOf(productEntity.getDisposableRateMin())==0){
-            viewHolder.onepay.setText("一次性收费:"+productEntity.getDisposableRateMax()+"%");
-        }else {
-            viewHolder.onepay.setText("一次性收费:" + productEntity.getDisposableRateMin() + "%~" + productEntity.getDisposableRateMax() + "%");
+        if (!TextUtils.isEmpty(productEntity.getLoanPeriod())) {
+            viewHolder.tvTime.setText("放款周期:" + productEntity.getLoanPeriod() + "个工作日");
+        }
+        if (!TextUtils.isEmpty(productEntity.getMonthlyRathMax())||!TextUtils.isEmpty(productEntity.getMonthlyRathMin())) {
+            if (Double.valueOf(productEntity.getMonthlyRathMin()) - Double.valueOf(productEntity.getMonthlyRathMax()) == 0) {
+                viewHolder.tvRate.setText("月利率:" + productEntity.getMonthlyRathMin() + "%");
+            } else {
+                viewHolder.tvRate.setText("月利率:" + productEntity.getMonthlyRathMin() + "%~" + productEntity.getMonthlyRathMax() + "%");
+            }
+        }
+        if (!TextUtils.isEmpty(productEntity.get_totalRath())) {
+            viewHolder.tvTotal.setText("¥" + productEntity.get_totalRath());
+        }
+        if (!TextUtils.isEmpty(productEntity.get_monthlyPayment())) {
+            viewHolder.tvReim.setText("¥" + productEntity.get_monthlyPayment());
+        }
+        if (!TextUtils.isEmpty(productEntity.getDisposableRateMax())||!TextUtils.isEmpty(productEntity.getDisposableRateMin())) {
+            if (Double.valueOf(productEntity.getDisposableRateMax()) - Double.valueOf(productEntity.getDisposableRateMin()) == 0) {
+                viewHolder.onepay.setText("一次性收费:" + productEntity.getDisposableRateMax() + "%");
+            } else {
+                viewHolder.onepay.setText("一次性收费:" + productEntity.getDisposableRateMin() + "%~" + productEntity.getDisposableRateMax() + "%");
+            }
         }
         return convertView;
     }
