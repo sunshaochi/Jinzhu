@@ -107,8 +107,7 @@
 
             <RelativeLayout
                 android:id="@+id/rlClearChche"
-                style="@style/rl_mine_style"
-                android:visibility="gone">
+                style="@style/rl_mine_style">
 
 
                 <TextView

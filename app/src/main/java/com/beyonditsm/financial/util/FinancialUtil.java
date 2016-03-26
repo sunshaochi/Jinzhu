@@ -875,7 +875,7 @@ public class FinancialUtil {
     public static String getTotalCacheSize(Context context) throws Exception {
         long cacheSize = getFolderSize(context.getFilesDir().getAbsoluteFile());
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            cacheSize += getFolderSize(context.getExternalCacheDir());
+            cacheSize += getFolderSize(context.getFilesDir().getAbsoluteFile());
         }
         return getFormatSize(cacheSize);
     }
@@ -901,7 +901,7 @@ public class FinancialUtil {
     public static void clearAllCache(Context context) {
         deleteDir(context.getFilesDir().getAbsoluteFile());
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            deleteDir(context.getExternalCacheDir());
+            deleteDir(context.getFilesDir().getAbsoluteFile());
         }
     }
 
