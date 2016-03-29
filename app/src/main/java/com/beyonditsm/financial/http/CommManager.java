@@ -7,6 +7,7 @@ import com.beyonditsm.financial.entity.ChangePwdEntity;
 import com.beyonditsm.financial.entity.MyCreditEntity;
 import com.beyonditsm.financial.entity.OrderBean;
 import com.beyonditsm.financial.entity.ServantEntity;
+import com.beyonditsm.financial.entity.SumLoadEntity;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
@@ -481,5 +482,27 @@ public class CommManager extends RequestManager {
         params.put("orderId", orderId);
         params.put("flowId", flowId);
         doPost(IFinancialUrl.FIND_FLOW_DETAIL_URL, params, callBack);
+    }
+
+    /**
+     * 提交上传图片
+     * @param data
+     * @param callBack
+     */
+    public void submitOrderFlow(SumLoadEntity data,CallBack callBack){
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("json", GsonUtils.bean2Json(data));
+        doPost(IFinancialUrl.SUBIT_ORDER_FLOW_URL, params, callBack);
+    }
+
+    /**
+     * 提交审核
+     * @param orderId
+     * @param callBack
+     */
+    public void applyCredit(String orderId,CallBack callBack){
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("orderId",orderId);
+        doPost(IFinancialUrl.APPLAY_CREDIT_URL, params, callBack);
     }
 }

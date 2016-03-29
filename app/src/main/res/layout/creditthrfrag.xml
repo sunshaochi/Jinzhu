@@ -24,7 +24,18 @@
         android:layout_marginTop="70dp"
         android:textColor="#333333"
         android:textSize="21sp"
-        android:text="恭喜，您已经成功申请了贷款！"
+        android:text="恭喜您审贷资料上传完毕"
+        />
+
+    <TextView
+        android:drawablePadding="15dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textColor="#333333"
+        android:textSize="21sp"
+        android:text="我们会以最快速度进行审核"
         />
 
     <LinearLayout

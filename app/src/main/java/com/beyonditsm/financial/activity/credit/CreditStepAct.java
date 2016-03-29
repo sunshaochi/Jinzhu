@@ -71,6 +71,9 @@ public class CreditStepAct extends BaseActivity {
             case 2:
                 setTabSelection(2);
                 break;
+            case 3:
+                setTabSelection(3);
+                break;
         }
     }
 

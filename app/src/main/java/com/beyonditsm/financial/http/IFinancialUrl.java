@@ -18,10 +18,10 @@ public interface IFinancialUrl {
 //    String BASE_URL="http://test.myjinzhu.com:60";
 
     /*正式游戏地址*/
-    String GAME_URL = "http://m.farm.myjinzhu.com/";
+//    String GAME_URL = "http://m.farm.myjinzhu.com/";
 
     /*测试游戏地址1*/
-//    String GAME_URL = "http://myjinzhu.com:5011/";
+    String GAME_URL = "http://myjinzhu.com:5011/";
     /*测试游戏地址2*/
 //    String GAME_URL = "http://test.myjinzhu.com:63";
     String API_VERSION = "/easyplay";
@@ -208,4 +208,8 @@ public interface IFinancialUrl {
     String UPLOAD_LIST_URL=BASE_URL+API_VERSION+"/platform/login/findOrderFlow.do";
     /*查找上传详情*/
     String FIND_FLOW_DETAIL_URL=BASE_URL+API_VERSION+"/platform/login/findFlowDetail.do";
+    /*提交图片*/
+    String SUBIT_ORDER_FLOW_URL=BASE_URL+API_VERSION+"/platform/login/submitOrderFlow.do";
+    /*提交审核*/
+    String APPLAY_CREDIT_URL=BASE_URL+API_VERSION+"/platform/login/applyCredit.do";
 }

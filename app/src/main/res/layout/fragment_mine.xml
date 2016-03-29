@@ -234,12 +234,26 @@
                         style="@style/iv_mine"
                         android:src="@mipmap/ico_loan" />
 
-                    <TextView
-                        style="@style/tv_second_style"
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
                         android:layout_toRightOf="@id/ivCredit"
-                        android:text="我的贷款" />
+                        >
+                        <TextView
+                            style="@style/tv_second_style"
+                            android:layout_centerVertical="true"
+                            android:text="我的贷款" />
+
+                        <ImageView
+                            android:id="@+id/ivMs"
+                            style="@style/red_oval_style"
+                            android:layout_marginLeft="5dp"
+                            />
+                    </LinearLayout>
+
 
                     <ImageView
                         style="@style/arrow_right_style"

@@ -7,15 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
+import com.beyonditsm.financial.activity.credit.CreditStepAct;
 import com.beyonditsm.financial.activity.credit.CreditUploadAct;
+import com.beyonditsm.financial.entity.CreditEvent;
 import com.beyonditsm.financial.entity.UpLoadEntity;
 import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.MyToastUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.tandong.sa.eventbus.EventBus;
 import com.tandong.sa.json.Gson;
 import com.tandong.sa.json.reflect.TypeToken;
 
@@ -38,6 +41,7 @@ public class CreditThirFrag extends BaseFragment {
     private MyAdapter adapter;
 
     List<UpLoadEntity> datas;
+
     @Override
     public View initView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.credit_third_frg, null);
@@ -45,24 +49,42 @@ public class CreditThirFrag extends BaseFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        EventBus.getDefault().register(this);
         getUploadList("09401072b5b011e580cf00163e0e011c");
         lvCredit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getContext(), CreditUploadAct.class);
-                intent.putExtra("orderId","09401072b5b011e580cf00163e0e011c");
-                intent.putExtra("flowId",datas.get(position).getFlowId());
+                intent.putExtra("orderId", "09401072b5b011e580cf00163e0e011c");
+                intent.putExtra("flowId", datas.get(position).getFlowId());
                 getActivity().startActivity(intent);
             }
         });
     }
+
+    /**
+     * 提交成功，刷新
+     */
+    public void onEvent(CreditEvent event) {
+        getUploadList("09401072b5b011e580cf00163e0e011c");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
 
     @Override
     public void setListener() {
 
     }
 
-
+    /**
+     * 获取上传资料列表
+     * @param orderId
+     */
     private void getUploadList(final String orderId) {
         RequestManager.getCommManager().getUpLoadList(orderId, new RequestManager.CallBack() {
             @Override
@@ -71,6 +93,7 @@ public class CreditThirFrag extends BaseFragment {
                 JSONArray array = jsonObject.getJSONArray("data");
                 datas = gson.fromJson(array.toString(), new TypeToken<List<UpLoadEntity>>() {
                 }.getType());
+                setIsTvClick(datas);
                 if (adapter == null) {
                     adapter = new MyAdapter(datas);
                     lvCredit.setAdapter(adapter);
@@ -84,6 +107,46 @@ public class CreditThirFrag extends BaseFragment {
 
             }
         });
+    }
+
+    /**
+     * 提交审核
+     * @param orderId
+     */
+    private void applayCredit(String orderId){
+        RequestManager.getCommManager().applyCredit(orderId, new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                EventBus.getDefault().post(new CreditStepAct.FirstEvent(3));
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+                MyToastUtils.showShortToast(getContext(),msg);
+            }
+        });
+    }
+
+    private void setIsTvClick(List<UpLoadEntity> list){
+        boolean isClick = true;
+        if(list!=null&&list.size()>0){
+            for(int i=0;i<list.size();i++){
+                isClick=isClick&&("1".equals(list.get(i).getIsComplete()));
+            }
+        }
+        if(isClick){
+            tvCredit.setBackgroundResource(R.drawable.button_gen);
+            tvCredit.setEnabled(true);
+            tvCredit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    applayCredit("09401072b5b011e580cf00163e0e011c");
+                }
+            });
+        }else{
+            tvCredit.setBackgroundResource(R.drawable.button_grey);
+            tvCredit.setEnabled(false);
+        }
     }
 
     /**
@@ -129,21 +192,25 @@ public class CreditThirFrag extends BaseFragment {
             }
             holder.tvContent.setText(list.get(position).getDisplayName());
             if ("0".equals(list.get(position).getIsComplete())) {
-                holder.ivUpload.setImageResource(R.mipmap.cm_btn_more_nor);
+//                holder.ivUpload.setImageResource(R.mipmap.cm_btn_more_nor);
+                holder.tvIsLoad.setText("未上传");
             } else {
-                holder.ivUpload.setImageResource(R.mipmap.load_sucess);
+//                holder.ivUpload.setImageResource(R.mipmap.load_sucess);
+                holder.tvIsLoad.setText("已上传");
             }
             return convertView;
         }
 
         public class ViewHolder {
-            public final ImageView ivUpload;
             public final View root;
             public final TextView tvContent;
+            public final TextView tvIsLoad;
+            public final TextView tvState;
 
             public ViewHolder(View root) {
-                ivUpload = (ImageView) root.findViewById(R.id.ivUpload);
                 tvContent = (TextView) root.findViewById(R.id.tvContent);
+                tvIsLoad = (TextView) root.findViewById(R.id.tvIsLoad);
+                tvState = (TextView) root.findViewById(R.id.tvState);
                 this.root = root;
             }
         }
