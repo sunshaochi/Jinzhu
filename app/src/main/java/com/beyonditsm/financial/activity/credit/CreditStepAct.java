@@ -34,6 +34,7 @@ public class CreditStepAct extends BaseActivity {
     private CreditFourthFrag fourthFrag;//第四步
     private ProductInfo hotProductInfo;
 
+    public static String orderId;//订单id
     private void assignViews() {
         creditFl = (FrameLayout) findViewById(R.id.credit_fl);
     }
@@ -53,6 +54,7 @@ public class CreditStepAct extends BaseActivity {
     public void init(Bundle savedInstanceState) {
         setLeftTv("返回");
         assignViews();
+        orderId=getIntent().getStringExtra("orderId");
         productInfo = getIntent().getParcelableExtra(CreditDetailAct.PRODUCTINFO);
         hotProductInfo = getIntent().getParcelableExtra(HotCreditDetailAct.HOTPRODUCTINFO);
         EventBus.getDefault().register(this);
@@ -61,9 +63,15 @@ public class CreditStepAct extends BaseActivity {
             setTabSelection(0);
         else
             setTabSelection(1);
+
+        if(getIntent().getIntExtra("credit_upload",0)==1){
+            setTabSelection(2);
+        }
     }
 
+
     public void onEventMainThread(FirstEvent event) {
+        orderId=event.orderId;
         switch (event.flag) {
             case 1:
                 setTabSelection(1);
@@ -79,8 +87,9 @@ public class CreditStepAct extends BaseActivity {
 
     public static class FirstEvent {
         public int flag;
-
-        public FirstEvent(int change) {
+        public String orderId;
+        public FirstEvent(int change,String orderId) {
+            this.orderId=orderId;
             flag = change;
         }
     }
@@ -114,8 +123,11 @@ public class CreditStepAct extends BaseActivity {
                 break;
             case 2:
                 setTopTitle("上传资质图片");
+                Bundle bundle=new Bundle();
+                bundle.putInt("act_type",getIntent().getIntExtra("credit_upload",0));
                 if (thrFrag == null) {
                     thrFrag = new CreditThirFrag();
+                    thrFrag.setArguments(bundle);
                     fragmentTransaction.add(R.id.credit_fl, thrFrag);
                 } else {
                     fragmentTransaction.show(thrFrag);
@@ -170,6 +182,7 @@ public class CreditStepAct extends BaseActivity {
         EventBus.getDefault().unregister(this);//反注册EventBus
         unregisterReceiver(myRevice);
         myRevice = null;
+        orderId=null;
     }
 
 

@@ -80,6 +80,7 @@ public class CreditUploadAct extends BaseActivity {
 
     private String uploadItemId;//记录itemId
     private String imageId = "";//记录图片id
+    private String imageIsPass;
     private int imagePosi;//记录位置
     //    private int imageLimit;//记录每次的限制
 //    private String creUpName;
@@ -107,7 +108,7 @@ public class CreditUploadAct extends BaseActivity {
 
         photoSavePath = Environment.getExternalStorageDirectory() + "/upload/cache/";
 
-        findFlowDetail(orderId, "c897fa09f2224325af532dab81a0d7da");
+        findFlowDetail(orderId, flowId);
     }
 
     @OnClick({R.id.tvSave})
@@ -118,6 +119,7 @@ public class CreditUploadAct extends BaseActivity {
                     MyToastUtils.showShortToast(getApplicationContext(), "您没有做任何操作");
                     return;
                 }
+                MyLogUtils.info("提交信息：" + GsonUtils.bean2Json(resultData));
                 toSubmit(getSubEntity(resultData));
                 break;
         }
@@ -129,7 +131,7 @@ public class CreditUploadAct extends BaseActivity {
     private SumLoadEntity getSubEntity(List<CreditUplEntity> getList) {
         SumLoadEntity sue = new SumLoadEntity();
         sue.setOrderId(orderId);
-        sue.setFlowId("c897fa09f2224325af532dab81a0d7da");
+        sue.setFlowId(flowId);
         List<SubUplEntity> list = new ArrayList<>();
         for (int i = 0; i < getList.size(); i++) {
             SubUplEntity se = new SubUplEntity();
@@ -220,14 +222,15 @@ public class CreditUploadAct extends BaseActivity {
                 }
                 uri = data.getData();
                 Bitmap userbitmap = MyBitmapUtils.decodeUriAsBitmap(CreditUploadAct.this, uri);
-                MyBitmapUtils.saveBitmap(userbitmap, "upload/cache/credit_upload.png");
-
-                path = Environment.getExternalStorageDirectory() + "/upload/cache/credit_upload.png";
+                Bitmap compressB = MyBitmapUtils.zoomImgKeepWH(userbitmap, 100, 100, true);
+                MyBitmapUtils.saveBitmap(compressB, "upload/cache/credit_upload.png");
                 break;
             case PHOTOTAKE:// 拍照
                 path = photoSavePath + photoSaveName;
+                MyBitmapUtils.saveBitmap(MyBitmapUtils.LoadBigImg(path, 100, 100), "upload/cache/credit_upload.png");
                 break;
         }
+        path = Environment.getExternalStorageDirectory() + "/upload/cache/credit_upload.png";
         uploadFile(path);
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -252,10 +255,14 @@ public class CreditUploadAct extends BaseActivity {
                     imageMap.get(uploadItemId).add(cib);
                 } else if (imageMap.get(uploadItemId).size() <= imagePosi) {
                     cib.setImageUrl(result);
+                    if (imageIsPass != null)
+                        cib.setIsPass(imageIsPass);
                     cib.setId(imageId);
                     imageMap.get(uploadItemId).add(cib);
                 } else {
                     cib.setImageUrl(result);
+                    if (imageIsPass != null)
+                        cib.setIsPass(imageIsPass);
                     cib.setId(imageId);
                     if (imageMap.get(uploadItemId).size() - 1 == imagePosi) {
                         imageMap.get(uploadItemId).remove(imagePosi);
@@ -267,7 +274,7 @@ public class CreditUploadAct extends BaseActivity {
                 }
                 resultData = new ArrayList<CreditUplEntity>();
                 int i = 0;
-                for (LinkedHashMap.Entry<String,List<CreditImageBean>> entry : imageMap.entrySet()) {
+                for (LinkedHashMap.Entry<String, List<CreditImageBean>> entry : imageMap.entrySet()) {
                     CreditUplEntity ce = new CreditUplEntity();
                     ce.setLimit(creDatas.get(i).getLimit());
                     ce.setUploadItemId(entry.getKey());
@@ -388,50 +395,62 @@ public class CreditUploadAct extends BaseActivity {
             if (list != null && list.size() > 0) {
                 if (position < list.size() && list.get(position) != null) {
                     ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + list.get(position).getImageUrl(), holder.ivPhoto, options);
-
+                    if ("0".equals(list.get(position).getIsPass())) {
+                        holder.tvStatus.setText("已驳回");
+                    } else if ("1".equals(list.get(position).getIsPass())) {
+                        holder.tvStatus.setText("通过");
+                    } else if ("2".equals(list.get(position).getIsPass())) {
+                        holder.tvStatus.setText("待审核");
+                    }
                 }
             }
+
             holder.ivPhoto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MySelfSheetDialog dialog = new MySelfSheetDialog(CreditUploadAct.this);
-                    dialog.builder().addSheetItem("拍照", null, new MySelfSheetDialog.OnSheetItemClickListener() {
-                        @Override
-                        public void onClick(int which) {
-                            uploadItemId = uItemId;
-                            if (list.size() > position) {
-                                if (!TextUtils.isEmpty(list.get(position).getId())) {
-                                    imageId = list.get(position).getId();
+                    imageId = "";
+                    imageIsPass = null;
+                    if ((position < list.size() && !"1".equals(list.get(position).getIsPass())) || position >= list.size()) {
+                        MySelfSheetDialog dialog = new MySelfSheetDialog(CreditUploadAct.this);
+                        dialog.builder().addSheetItem("拍照", null, new MySelfSheetDialog.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which) {
+                                uploadItemId = uItemId;
+                                if (list.size() > position) {
+                                    if (!TextUtils.isEmpty(list.get(position).getId())) {
+                                        imageId = list.get(position).getId();
+                                        imageIsPass = list.get(position).getIsPass();
+                                    }
                                 }
-                            }
-                            imagePosi = position;
+                                imagePosi = position;
 
-                            photoSaveName = String.valueOf(System.currentTimeMillis()) + ".png";
-                            Uri imageUri = null;
-                            Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                            imageUri = Uri.fromFile(new File(photoSavePath, photoSaveName));
-                            openCameraIntent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
-                            openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                            startActivityForResult(openCameraIntent, PHOTOTAKE);
-                        }
-                    }).addSheetItem("从相册选取", null, new MySelfSheetDialog.OnSheetItemClickListener() {
-                        @Override
-                        public void onClick(int which) {
-                            uploadItemId = uItemId;
-                            if (list.size() > position) {
-                                if (!TextUtils.isEmpty(list.get(position).getId())) {
-                                    imageId = list.get(position).getId();
+                                photoSaveName = String.valueOf(System.currentTimeMillis()) + ".png";
+                                Uri imageUri = null;
+                                Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                imageUri = Uri.fromFile(new File(photoSavePath, photoSaveName));
+                                openCameraIntent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
+                                openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                                startActivityForResult(openCameraIntent, PHOTOTAKE);
+                            }
+                        }).addSheetItem("从相册选取", null, new MySelfSheetDialog.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which) {
+                                uploadItemId = uItemId;
+                                if (list.size() > position) {
+                                    if (!TextUtils.isEmpty(list.get(position).getId())) {
+                                        imageId = list.get(position).getId();
+                                        imageIsPass = list.get(position).getIsPass();
+                                    }
                                 }
-                            }
-                            imagePosi = position;
-//                            imageLimit=limit;
-//                            creUpName=creditUpName;
+                                imagePosi = position;
 
-                            Intent openAlbumIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                            openAlbumIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                            startActivityForResult(openAlbumIntent, PHOTOZOOM);
-                        }
-                    }).show();
+                                Intent openAlbumIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                                openAlbumIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                                startActivityForResult(openAlbumIntent, PHOTOZOOM);
+                            }
+                        }).show();
+
+                    }
                 }
             });
             return convertView;
@@ -439,10 +458,12 @@ public class CreditUploadAct extends BaseActivity {
 
         public class ViewHolder {
             public final ImageView ivPhoto;
+            public final TextView tvStatus;
             public final View root;
 
             public ViewHolder(View root) {
                 ivPhoto = (ImageView) root.findViewById(R.id.ivPhoto);
+                tvStatus = (TextView) root.findViewById(R.id.tvStatus);
                 this.root = root;
             }
         }

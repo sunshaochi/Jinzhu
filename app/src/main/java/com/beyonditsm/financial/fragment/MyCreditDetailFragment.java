@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.beyonditsm.financial.R;
+import com.beyonditsm.financial.activity.credit.CreditStepAct;
 import com.beyonditsm.financial.activity.user.DoTaskPicture;
 import com.beyonditsm.financial.activity.user.DoTaskPlaceAct;
 import com.beyonditsm.financial.activity.user.FinishTaskPicture;
@@ -258,7 +259,7 @@ public class MyCreditDetailFragment extends BaseFragment {
         });
     }
 
-    @OnClick({R.id.rlzl, R.id.rlzz, R.id.rlts, R.id.bj})
+    @OnClick({R.id.rlzl, R.id.rlzz, R.id.rlts, R.id.bj,R.id.tvUpload})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rlzl://用户基本资料
@@ -309,13 +310,19 @@ public class MyCreditDetailFragment extends BaseFragment {
                     map.put(2, false);
                 }
                 break;
-            case R.id.bj://提交其它附件
+            case R.id.bj://提交其它附件(补件)
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), TiJiaoFuJianAct.class);
                 intent.putExtra("orderNo", rowe.getOrderNo());
                 intent.putExtra("orderId",rowe.getId());
                 getActivity().startActivity(intent);
 
+                break;
+            case R.id.tvUpload://上传
+                Intent intent2=new Intent(getContext(), CreditStepAct.class);
+                intent2.putExtra("credit_upload",1);
+                intent2.putExtra("orderId",rowe.getId());
+                getActivity().startActivity(intent2);
                 break;
         }
     }

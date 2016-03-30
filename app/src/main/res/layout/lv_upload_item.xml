@@ -27,6 +27,7 @@
             android:id="@+id/tvState"
             style="@style/tv_upload_style"
             android:text="审核中"
+            android:visibility="gone"
             android:layout_marginLeft="10dp"
             />
 

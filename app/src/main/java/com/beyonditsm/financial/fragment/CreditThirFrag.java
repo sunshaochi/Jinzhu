@@ -41,6 +41,9 @@ public class CreditThirFrag extends BaseFragment {
     private MyAdapter adapter;
 
     List<UpLoadEntity> datas;
+    private String orderId;
+
+    private int act_type;
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -50,12 +53,14 @@ public class CreditThirFrag extends BaseFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         EventBus.getDefault().register(this);
-        getUploadList("09401072b5b011e580cf00163e0e011c");
+        act_type = getArguments().getInt("act_type", 0);
+        orderId = CreditStepAct.orderId;
+        getUploadList(orderId);
         lvCredit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getContext(), CreditUploadAct.class);
-                intent.putExtra("orderId", "09401072b5b011e580cf00163e0e011c");
+                intent.putExtra("orderId", orderId);
                 intent.putExtra("flowId", datas.get(position).getFlowId());
                 getActivity().startActivity(intent);
             }
@@ -66,7 +71,7 @@ public class CreditThirFrag extends BaseFragment {
      * 提交成功，刷新
      */
     public void onEvent(CreditEvent event) {
-        getUploadList("09401072b5b011e580cf00163e0e011c");
+        getUploadList(orderId);
     }
 
     @Override
@@ -83,6 +88,7 @@ public class CreditThirFrag extends BaseFragment {
 
     /**
      * 获取上传资料列表
+     *
      * @param orderId
      */
     private void getUploadList(final String orderId) {
@@ -111,39 +117,43 @@ public class CreditThirFrag extends BaseFragment {
 
     /**
      * 提交审核
+     *
      * @param orderId
      */
-    private void applayCredit(String orderId){
+    private void applayCredit(String orderId) {
         RequestManager.getCommManager().applyCredit(orderId, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-                EventBus.getDefault().post(new CreditStepAct.FirstEvent(3));
+                if (act_type == 0)
+                    EventBus.getDefault().post(new CreditStepAct.FirstEvent(3, null));
+                else
+                    getActivity().finish();
             }
 
             @Override
             public void onError(int status, String msg) {
-                MyToastUtils.showShortToast(getContext(),msg);
+                MyToastUtils.showShortToast(getContext(), msg);
             }
         });
     }
 
-    private void setIsTvClick(List<UpLoadEntity> list){
+    private void setIsTvClick(List<UpLoadEntity> list) {
         boolean isClick = true;
-        if(list!=null&&list.size()>0){
-            for(int i=0;i<list.size();i++){
-                isClick=isClick&&("1".equals(list.get(i).getIsComplete()));
+        if (list != null && list.size() > 0) {
+            for (int i = 0; i < list.size(); i++) {
+                isClick = isClick && ("1".equals(list.get(i).getIsComplete()));
             }
         }
-        if(isClick){
+        if (isClick) {
             tvCredit.setBackgroundResource(R.drawable.button_gen);
             tvCredit.setEnabled(true);
             tvCredit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    applayCredit("09401072b5b011e580cf00163e0e011c");
+                    applayCredit(orderId);
                 }
             });
-        }else{
+        } else {
             tvCredit.setBackgroundResource(R.drawable.button_grey);
             tvCredit.setEnabled(false);
         }
@@ -194,9 +204,20 @@ public class CreditThirFrag extends BaseFragment {
             if ("0".equals(list.get(position).getIsComplete())) {
 //                holder.ivUpload.setImageResource(R.mipmap.cm_btn_more_nor);
                 holder.tvIsLoad.setText("未上传");
+                holder.tvState.setVisibility(View.GONE);
             } else {
 //                holder.ivUpload.setImageResource(R.mipmap.load_sucess);
+                holder.tvState.setVisibility(View.VISIBLE);
                 holder.tvIsLoad.setText("已上传");
+            }
+            if (list.get(position).getStatus() != null) {
+                if (list.get(position).getStatus() == 0) {
+                    holder.tvState.setText("驳回");
+                } else if (list.get(position).getStatus() == 1) {
+                    holder.tvState.setText("通过");
+                } else if (list.get(position).getStatus() == 2) {
+                    holder.tvState.setText("审核中");
+                }
             }
             return convertView;
         }

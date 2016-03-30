@@ -490,7 +490,7 @@ public class CreditSecondFrag extends BaseFragment {
 
             case R.id.tvSure://确定
                 i=-1;
-                EventBus.getDefault().post(new CreditStepAct.FirstEvent(2));
+                EventBus.getDefault().post(new CreditStepAct.FirstEvent(2,reOrderId));
                 break;
         }
     }
@@ -793,7 +793,7 @@ public class CreditSecondFrag extends BaseFragment {
 
 
     private int i = 5;
-
+    private String reOrderId;
     /**
      * 提交订单
      */
@@ -811,6 +811,12 @@ public class CreditSecondFrag extends BaseFragment {
                 public void onSucess(String result) {
                     llSucess.setVisibility(View.VISIBLE);
                     criSv.setVisibility(View.GONE);
+                    try {
+                        JSONObject jsonObject=new JSONObject(result);
+                        reOrderId=jsonObject.getString("data");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -848,7 +854,7 @@ public class CreditSecondFrag extends BaseFragment {
             if(msg.what>0) {
                 tvSecond.setText(msg.what + "");
             }else {
-                EventBus.getDefault().post(new CreditStepAct.FirstEvent(2));
+                EventBus.getDefault().post(new CreditStepAct.FirstEvent(2,reOrderId));
             }
         }
     };

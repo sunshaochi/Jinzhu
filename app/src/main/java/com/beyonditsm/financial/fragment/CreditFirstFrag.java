@@ -240,7 +240,7 @@ public class CreditFirstFrag extends BaseFragment {
                         public void gotResult(int arg0, String arg1, Set<String> arg2) {
                         }
                     });
-                    EventBus.getDefault().post(new CreditStepAct.FirstEvent(1));
+                    EventBus.getDefault().post(new CreditStepAct.FirstEvent(1,null));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
