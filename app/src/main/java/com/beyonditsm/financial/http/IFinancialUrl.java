@@ -13,8 +13,8 @@ public interface IFinancialUrl {
 //    String BASE_URL = "http://option.myjinzhu.com";
 
     /*测试地址2*/
-    String BASE_URL="http://172.16.6.216:8080";
-//    String BASE_URL = "http://test.myjinzhu.com:8082";
+//    String BASE_URL="http://172.16.6.216:8080";
+    String BASE_URL = "http://test.myjinzhu.com:8082";
     /*测试地址3*/
 //    String BASE_URL="http://test.myjinzhu.com:60";
 
