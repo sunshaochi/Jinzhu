@@ -22,9 +22,9 @@ public interface IFinancialUrl {
 //    String GAME_URL = "http://m.farm.myjinzhu.com/";
 
     /*测试游戏地址1*/
-    String GAME_URL = "http://myjinzhu.com:5011/";
+//    String GAME_URL = "http://myjinzhu.com:5011/";
     /*测试游戏地址2*/
-//    String GAME_URL = "http://test.myjinzhu.com:63";
+    String GAME_URL = "http://test.myjinzhu.com:63";
     String API_VERSION = "/easyplay";
 
     String BASE_IMAGE_URL = BASE_URL + API_VERSION + "/";

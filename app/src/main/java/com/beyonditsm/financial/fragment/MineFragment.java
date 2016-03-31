@@ -33,6 +33,7 @@ import com.beyonditsm.financial.entity.UserLoginEntity;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.GsonUtils;
+import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.widget.MyAlertDialog;
 import com.beyonditsm.financial.widget.ScaleAllImageView;
@@ -80,6 +81,8 @@ public class MineFragment extends BaseFragment {
     private RelativeLayout msg_top;//右上角消息图标
      @ViewInject(R.id.msg_top_point)
     private ImageView msg_top_point;//右上角消息图标小红点
+    @ViewInject(R.id.ivMs)
+    private ImageView ivRedPoint;
 
     private UserEntity user;//用户信息
     public static final String USER_KEY = "user_info";
@@ -96,6 +99,8 @@ public class MineFragment extends BaseFragment {
             .cacheOnDisc(true) // 设置下载的图片是否缓存在SD卡中
             .build(); // 创建配置过得DisplayImageOption对象
     private UserLoginEntity ule;
+    private DisplayRedReceiver displayRedReceiver;
+    private HideRedReceiver hideRedReceiver;
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -327,9 +332,17 @@ public class MineFragment extends BaseFragment {
         if(messageReceiver==null){
             messageReceiver=new MessageBroadCastReceiver();
         }
+        if (displayRedReceiver==null) {
+            displayRedReceiver = new DisplayRedReceiver();
+        }
+        if (hideRedReceiver==null) {
+            hideRedReceiver = new HideRedReceiver();
+        }
         getActivity().registerReceiver(receiver, new IntentFilter(UPDATE_USER));
         getActivity().registerReceiver(scoreReceiver,new IntentFilter(UPDATE_SCORE));
         getActivity().registerReceiver(messageReceiver,new IntentFilter(UPDATE_MESSAGE));
+        getActivity().registerReceiver(displayRedReceiver,new IntentFilter(DISPLAY_POINT));
+        getActivity().registerReceiver(hideRedReceiver,new IntentFilter(HIDE_POINT));
     }
 
     @Override
@@ -343,6 +356,12 @@ public class MineFragment extends BaseFragment {
         }
         if(messageReceiver!=null){
             getActivity().unregisterReceiver(messageReceiver);
+        }
+        if (displayRedReceiver!=null) {
+            getActivity().unregisterReceiver(displayRedReceiver);
+        }
+        if (hideRedReceiver!=null){
+            getActivity().unregisterReceiver(hideRedReceiver);
         }
     }
 
@@ -409,5 +428,22 @@ public class MineFragment extends BaseFragment {
         super.onResume();
         getUserInfo();
 
+    }
+    public static final String DISPLAY_POINT = "com.display.point";
+    private class DisplayRedReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ivRedPoint.setVisibility(View.VISIBLE);
+        }
+    }
+    public static final String HIDE_POINT = "com.hide.point";
+    private class HideRedReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ivRedPoint.setVisibility(View.GONE);
+            MyLogUtils.info("MineFragment:红点隐藏");
+        }
     }
 }

@@ -251,7 +251,7 @@
                             android:id="@+id/ivMs"
                             style="@style/red_oval_style"
                             android:layout_marginLeft="5dp"
-                            />
+                            android:visibility="gone"/>
                     </LinearLayout>
 
 
