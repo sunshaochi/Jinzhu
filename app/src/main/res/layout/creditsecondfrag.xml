@@ -493,7 +493,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
                     android:background="@drawable/button_gen"
-                    android:text="快速审贷"
+                    android:text="快速申贷"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 

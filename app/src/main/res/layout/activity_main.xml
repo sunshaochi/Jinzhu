@@ -110,7 +110,7 @@
                     android:id="@+id/ivMs"
                     style="@style/red_oval_style"
                     android:layout_alignParentRight="true"
-                    />
+                    android:visibility="gone"/>
             </RelativeLayout>
 
 

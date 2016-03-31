@@ -10,6 +10,7 @@ import android.util.Log;
 import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.MessageActivity;
 import com.beyonditsm.financial.activity.manager.ManagerMainAct;
+import com.beyonditsm.financial.activity.user.MyCreditAct;
 import com.beyonditsm.financial.db.MessageDao;
 import com.beyonditsm.financial.entity.MessageBean;
 import com.beyonditsm.financial.fragment.MineFragment;
@@ -53,6 +54,7 @@ public class MyReceiver extends BroadcastReceiver {
             String jsonType = bundle.getString(JPushInterface.EXTRA_EXTRA);
             MyLogUtils.info("推送数据：" +jsonType);
             context.sendBroadcast(new Intent(MineFragment.UPDATE_MESSAGE));
+            context.sendBroadcast(new Intent(MyCreditAct.JPUSH_MESSAGE));
             if(!TextUtils.isEmpty(jsonType)) {
                 MessageBean mb = GsonUtils.json2Bean(jsonType, MessageBean.class);
                 mb.setTime(FinancialUtil.getCurrentTime());

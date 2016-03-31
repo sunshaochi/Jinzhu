@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
@@ -21,7 +23,6 @@ public class MyCreditAdapter extends BaseAdapter{
     private List<MyCreditBean.RowsEntity> list;
 
     java.text.DecimalFormat   df   =new   java.text.DecimalFormat("#0.00");//保留小数
-
 
     public void setDatas(List<MyCreditBean.RowsEntity> list){
         this.list = list;
@@ -48,8 +49,8 @@ public class MyCreditAdapter extends BaseAdapter{
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        final ViewHolder holder;
         if (convertView==null){
             holder = new ViewHolder();
             convertView=View.inflate(context, R.layout.lv_mycredit_item,null);
@@ -57,6 +58,8 @@ public class MyCreditAdapter extends BaseAdapter{
             holder.tvTotalAmount = (TextView) convertView.findViewById(R.id.tv_totalAmount);
             holder.tvPeriodsAmount = (TextView) convertView.findViewById(R.id.tv_periodsAmount);
             holder.tvName = (TextView) convertView.findViewById(R.id.tv_name);
+            holder.ivRedPoint  = (ImageView) convertView.findViewById(R.id.ivMs);
+            holder.rlCreditList = (RelativeLayout) convertView.findViewById(R.id.rl_creditList);
             convertView.setTag(holder);
         }else{
             holder = (ViewHolder) convertView.getTag();
@@ -95,5 +98,8 @@ public class MyCreditAdapter extends BaseAdapter{
     }
     class ViewHolder{
         TextView tvProductName,tvTotalAmount,tvPeriodsAmount,tvName;
+        ImageView ivRedPoint;//推送红点
+        RelativeLayout rlCreditList;
     }
+
 }

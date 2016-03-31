@@ -36,6 +36,7 @@ import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GeneralUtils;
 import com.beyonditsm.financial.util.GsonUtils;
+import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.lidroid.xutils.util.LogUtils;
 import com.lidroid.xutils.view.annotation.event.OnClick;
@@ -90,6 +91,9 @@ public class MainActivity extends BaseActivity{
     private int game_type;
 
     private GeneralUtils gUtils;
+    private ImageView ivRedPoint;
+    private DisplayRedPointReceiver displayRedReceiver;
+    private HideRedPointReceiver hideRedPointReceiver;
 
     /**/
     private void assignViews() {
@@ -106,6 +110,7 @@ public class MainActivity extends BaseActivity{
         title_friend = (TextView) findViewById(R.id.title_friend);
         main_title = (RelativeLayout) findViewById(R.id.main_title);
         add_friend = (RelativeLayout) findViewById(R.id.add_friend);
+        ivRedPoint = (ImageView) findViewById(R.id.ivMs);
     }
 
     @Override
@@ -488,6 +493,14 @@ public class MainActivity extends BaseActivity{
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(UPDATATAB);
         this.registerReceiver(myReceiver, intentFilter);
+        if (displayRedReceiver==null){
+            displayRedReceiver = new DisplayRedPointReceiver();
+        }
+        if (hideRedPointReceiver==null) {
+            hideRedPointReceiver = new HideRedPointReceiver();
+        }
+        registerReceiver(hideRedPointReceiver,new IntentFilter(HIDE_REDPOINT));
+        registerReceiver(displayRedReceiver,new IntentFilter(DISPLAY_REDPOINT));
         super.onStart();
     }
 
@@ -496,6 +509,12 @@ public class MainActivity extends BaseActivity{
         EventBus.getDefault().unregister(this);
         this.unregisterReceiver(myReceiver);
         myReceiver = null;
+        if (displayRedReceiver!=null){
+            unregisterReceiver(displayRedReceiver);
+        }
+        if (hideRedPointReceiver!=null){
+            unregisterReceiver(hideRedPointReceiver);
+        }
         super.onDestroy();
     }
 
@@ -524,6 +543,24 @@ public class MainActivity extends BaseActivity{
                 setCheckItem(1);
             }
 
+        }
+    }
+    public static final String DISPLAY_REDPOINT = "com.push.message";
+    private class DisplayRedPointReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ivRedPoint.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public static final String HIDE_REDPOINT = "com.hide.redpoint";
+    private class HideRedPointReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ivRedPoint.setVisibility(View.GONE);
+            MyLogUtils.info("MainActivity:红点隐藏");
         }
     }
 
