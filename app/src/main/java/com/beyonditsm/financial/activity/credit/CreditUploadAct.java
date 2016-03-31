@@ -111,9 +111,12 @@ public class CreditUploadAct extends BaseActivity {
         findFlowDetail(orderId, flowId);
     }
 
-    @OnClick({R.id.tvSave})
+    @OnClick({R.id.tvBack,R.id.tvSave})
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.tvBack:
+                finish();
+                break;
             case R.id.tvSave:
                 if (resultData == null || resultData.size() == 0) {
                     MyToastUtils.showShortToast(getApplicationContext(), "您没有做任何操作");

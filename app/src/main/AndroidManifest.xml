@@ -348,6 +348,10 @@
         <!--上传-->
         <activity android:name=".activity.credit.CreditUploadAct"
             android:screenOrientation="portrait"></activity>
+        <!-- 提交增信材料-->
+        <activity android:name=".activity.credit.SubFlowAct"
+            android:screenOrientation="portrait"
+            ></activity>
         <!-- 扫描二维码结果展示界面 -->
 
         <!--上传身份证照片-->

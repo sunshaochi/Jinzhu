@@ -1,8 +1,7 @@
-package com.beyonditsm.financial.fragment;
+package com.beyonditsm.financial.activity.credit;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -11,12 +10,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
-import com.beyonditsm.financial.activity.credit.CreditStepAct;
-import com.beyonditsm.financial.activity.credit.CreditUploadAct;
+import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.entity.CreditEvent;
 import com.beyonditsm.financial.entity.UpLoadEntity;
 import com.beyonditsm.financial.http.RequestManager;
-import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.view.LoadingView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.tandong.sa.eventbus.EventBus;
 import com.tandong.sa.json.Gson;
@@ -29,43 +27,52 @@ import org.json.JSONObject;
 import java.util.List;
 
 /**
- * 贷款第三步
- * Created by wangbin on 16/3/21.
+ * 提交增信材料
+ * Created by wangbin on 16/3/31.
  */
-public class CreditThirFrag extends BaseFragment {
+public class SubFlowAct extends BaseActivity {
     @ViewInject(R.id.lvCredit)
     private ListView lvCredit;
-    @ViewInject(R.id.tvCredit)
-    private TextView tvCredit;
+    @ViewInject(R.id.loadView)
+    private LoadingView loadView;
     private Gson gson = new Gson();
-    private MyAdapter adapter;
-
     List<UpLoadEntity> datas;
     private String orderId;
 
-    private int act_type;
-
+    private MyAdapter adapter;
     @Override
-    public View initView(LayoutInflater inflater) {
-        return inflater.inflate(R.layout.credit_third_frg, null);
+    public void setLayout() {
+        setContentView(R.layout.act_sub_flow);
     }
 
     @Override
-    public void initData(Bundle savedInstanceState) {
+    public void init(Bundle savedInstanceState) {
         EventBus.getDefault().register(this);
-        act_type = getArguments().getInt("act_type", 0);
-        orderId = CreditStepAct.orderId;
-        if(act_type==1){
-            tvCredit.setVisibility(View.GONE);
+        setTopTitle("提交增信资料");
+        orderId=getIntent().getStringExtra("order_id");
+        datas=getIntent().getParcelableArrayListExtra("sub_list");
+        loadView.setNoContentTxt("暂无增信资料需要上传");
+        if(datas!=null&&datas.size()>0) {
+            loadView.loadComplete();
+            adapter = new MyAdapter(datas);
+            lvCredit.setAdapter(adapter);
+        }else{
+            findOrderFlow(orderId);
         }
-        getUploadList(orderId);
         lvCredit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getContext(), CreditUploadAct.class);
+                Intent intent = new Intent(SubFlowAct.this, CreditUploadAct.class);
                 intent.putExtra("orderId", orderId);
                 intent.putExtra("flowId", datas.get(position).getFlowId());
-                getActivity().startActivity(intent);
+                startActivity(intent);
+            }
+        });
+
+        loadView.setOnRetryListener(new LoadingView.OnRetryListener() {
+            @Override
+            public void OnRetry() {
+                findOrderFlow(orderId);
             }
         });
     }
@@ -74,7 +81,7 @@ public class CreditThirFrag extends BaseFragment {
      * 提交成功，刷新
      */
     public void onEvent(CreditEvent event) {
-        getUploadList(orderId);
+        findOrderFlow(orderId);
     }
 
     @Override
@@ -83,108 +90,37 @@ public class CreditThirFrag extends BaseFragment {
         EventBus.getDefault().unregister(this);
     }
 
-
-    @Override
-    public void setListener() {
-
-    }
-
     /**
-     * 获取上传资料列表
-     *
+     * 是否需要增信资料
      * @param orderId
      */
-    private void getUploadList(final String orderId) {
-        RequestManager.getCommManager().getUpLoadList(orderId, new RequestManager.CallBack() {
+    private void findOrderFlow(String orderId){
+        RequestManager.getCommManager().findOrderFlow(orderId, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
+                loadView.loadComplete();
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray array = jsonObject.getJSONArray("data");
+//                List<UpLoadEntity> datas = gson.fromJson(array.toString(), new TypeToken<List<UpLoadEntity>>() {
+//                }.getType());
                 datas = gson.fromJson(array.toString(), new TypeToken<List<UpLoadEntity>>() {
                 }.getType());
-                setIsTvClick(datas);
                 if (adapter == null) {
                     adapter = new MyAdapter(datas);
                     lvCredit.setAdapter(adapter);
                 } else {
                     adapter.notifyChange(datas);
                 }
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-
-            }
-        });
-    }
-
-    /**
-     * 提交审核
-     *
-     * @param orderId
-     */
-    private void applayCredit(final String orderId) {
-        RequestManager.getCommManager().applyCredit(orderId, new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
-                findOrderFlow(orderId);
 
             }
 
             @Override
             public void onError(int status, String msg) {
-                MyToastUtils.showShortToast(getContext(), msg);
+                loadView.loadError();
             }
         });
     }
 
-    private void setIsTvClick(List<UpLoadEntity> list) {
-        boolean isClick = true;
-        if (list != null && list.size() > 0) {
-            for (int i = 0; i < list.size(); i++) {
-                isClick = isClick && ("1".equals(list.get(i).getIsComplete()));
-            }
-        }
-        if (isClick) {
-            tvCredit.setBackgroundResource(R.drawable.button_gen);
-            tvCredit.setEnabled(true);
-            tvCredit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    applayCredit(orderId);
-                }
-            });
-        } else {
-            tvCredit.setBackgroundResource(R.drawable.button_grey);
-            tvCredit.setEnabled(false);
-        }
-    }
-
-    /**
-     * 是否需要增信资料
-     * @param orderId
-     */
-    private void findOrderFlow(final String orderId){
-        RequestManager.getCommManager().findOrderFlow(orderId, new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
-                JSONObject jsonObject = new JSONObject(result);
-                JSONArray array = jsonObject.getJSONArray("data");
-                List<UpLoadEntity> datas = gson.fromJson(array.toString(), new TypeToken<List<UpLoadEntity>>() {
-               }.getType());
-                CreditStepAct.upList=datas;
-                    if (act_type == 0)
-                        EventBus.getDefault().post(new CreditStepAct.FirstEvent(3, orderId));
-                    else
-                        getActivity().finish();
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-
-            }
-        });
-    }
 
     /**
      * 适配器
@@ -221,7 +157,7 @@ public class CreditThirFrag extends BaseFragment {
         public View getView(int position, View convertView, ViewGroup parent) {
             ViewHolder holder;
             if (convertView == null) {
-                convertView = View.inflate(getContext(), R.layout.lv_upload_item, null);
+                convertView = View.inflate(SubFlowAct.this, R.layout.lv_upload_item, null);
                 holder = new ViewHolder(convertView);
                 convertView.setTag(holder);
             } else {

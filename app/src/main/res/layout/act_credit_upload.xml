@@ -11,26 +11,40 @@
         android:id="@+id/tvDes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textColor="#333333"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        />
+        android:textColor="#333333"
+        android:textSize="16sp" />
 
     <ListView
         android:id="@+id/lvUpLoad"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
         android:layout_marginTop="20dp"
-        android:divider="@null"
-        ></ListView>
+        android:layout_weight="1"
+        android:divider="@null"></ListView>
 
-    <TextView
-        android:id="@+id/tvSave"
-        style="@style/common_btn"
-        android:layout_marginBottom="20dp"
-        android:gravity="center"
-        android:text="保存"
-        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/tvBack"
+            style="@style/common_btn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="返回列表" />
+
+        <TextView
+            android:id="@+id/tvSave"
+            style="@style/common_btn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="保存" />
+
+    </LinearLayout>
 </LinearLayout>

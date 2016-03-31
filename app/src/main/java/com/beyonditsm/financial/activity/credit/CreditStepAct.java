@@ -14,12 +14,15 @@ import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.user.HotCreditDetailAct;
 import com.beyonditsm.financial.entity.ProductInfo;
+import com.beyonditsm.financial.entity.UpLoadEntity;
 import com.beyonditsm.financial.fragment.CreditFirstFrag;
 import com.beyonditsm.financial.fragment.CreditSecondFrag;
 import com.beyonditsm.financial.fragment.CreditFourthFrag;
 import com.beyonditsm.financial.fragment.CreditThirFrag;
 import com.beyonditsm.financial.util.SpUtils;
 import com.tandong.sa.eventbus.EventBus;
+
+import java.util.List;
 
 /**
  * 贷款流程主act
@@ -35,6 +38,7 @@ public class CreditStepAct extends BaseActivity {
     private ProductInfo hotProductInfo;
 
     public static String orderId;//订单id
+    public static List<UpLoadEntity> upList;
     private void assignViews() {
         creditFl = (FrameLayout) findViewById(R.id.credit_fl);
     }
@@ -183,6 +187,7 @@ public class CreditStepAct extends BaseActivity {
         unregisterReceiver(myRevice);
         myRevice = null;
         orderId=null;
+        upList=null;
     }
 
 
