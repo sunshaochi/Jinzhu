@@ -435,6 +435,7 @@ public class MineFragment extends BaseFragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             ivRedPoint.setVisibility(View.VISIBLE);
+            MyLogUtils.info("MineFragment:红点显示");
         }
     }
     public static final String HIDE_POINT = "com.hide.point";

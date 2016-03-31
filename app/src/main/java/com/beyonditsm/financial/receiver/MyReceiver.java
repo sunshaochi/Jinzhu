@@ -46,15 +46,18 @@ public class MyReceiver extends BroadcastReceiver {
         } else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
 //        	processCustomMessage(context, bundle);
-
+            int massageId = bundle.getInt(JPushInterface.EXTRA_MSG_ID);
+            Log.d(TAG,"[MyReceiver] 接收到推送下来的自定义消息的ID: "+massageId);
+            String jsonMsg = bundle.getString(JPushInterface.EXTRA_EXTRA);//消息附加字段
+            Log.d(TAG,"[MyReceiver] 接收到推送下来的自定义消息附加字段: "+jsonMsg);
+            context.sendBroadcast(new Intent(MyCreditAct.JPUSH_MESSAGE));
         } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 接收到推送下来的通知");
             int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
             Log.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
             String jsonType = bundle.getString(JPushInterface.EXTRA_EXTRA);
-            MyLogUtils.info("推送数据：" +jsonType);
+            MyLogUtils.info("推送数据：" + jsonType);
             context.sendBroadcast(new Intent(MineFragment.UPDATE_MESSAGE));
-            context.sendBroadcast(new Intent(MyCreditAct.JPUSH_MESSAGE));
             if(!TextUtils.isEmpty(jsonType)) {
                 MessageBean mb = GsonUtils.json2Bean(jsonType, MessageBean.class);
                 mb.setTime(FinancialUtil.getCurrentTime());

@@ -53,6 +53,7 @@ public class MyCreditAct extends BaseActivity {
     public static String CREDIT = "credit";
     private PushBroadReceiver pushBroadReceiver;
     private ImageView ivRedPoint;
+    private boolean isRedPointVisible = false;
 
     @Override
     public void setLayout() {
@@ -91,14 +92,17 @@ public class MyCreditAct extends BaseActivity {
         plv.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ivRedPoint.setVisibility(View.GONE);
                 Intent intent = new Intent(MyCreditAct.this, MyCreditDAct.class);
                 MyCreditBean.RowsEntity credit = (MyCreditBean.RowsEntity) datas.get(position);
                 intent.putExtra(CREDIT, credit);
                 intent.putExtra("position", position);
                 startActivity(intent);
-                sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
-                sendBroadcast(new Intent(MineFragment.HIDE_POINT));
+                if (isRedPointVisible){
+                    ivRedPoint.setVisibility(View.GONE);
+                    isRedPointVisible = false;
+                    sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
+                    sendBroadcast(new Intent(MineFragment.HIDE_POINT));
+                }
             }
         });
         loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
@@ -195,6 +199,9 @@ public class MyCreditAct extends BaseActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             ivRedPoint.setVisibility(View.VISIBLE);
+            isRedPointVisible = true;
+            sendBroadcast(new Intent(MainActivity.DISPLAY_REDPOINT));
+            sendBroadcast(new Intent(MineFragment.DISPLAY_POINT));
         }
     }
     class MyCreditAdapter extends BaseAdapter {
@@ -273,6 +280,9 @@ public class MyCreditAct extends BaseActivity {
             }else if ("CANCEL_REQUET".equals(status)){
                 holder.tvName.setText("已取消");
                 holder.tvName.setTextColor(Color.parseColor("#ff8383"));
+            }else if ("DRAFT".equals(status)){
+                holder.tvName.setText("草稿");
+                holder.tvName.setTextColor(Color.parseColor("#ff6633"));
             }
             return convertView;
         }

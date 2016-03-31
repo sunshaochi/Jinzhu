@@ -551,6 +551,7 @@ public class MainActivity extends BaseActivity{
         @Override
         public void onReceive(Context context, Intent intent) {
             ivRedPoint.setVisibility(View.VISIBLE);
+            MyLogUtils.info("MainActivity:红点显示");
         }
     }
 

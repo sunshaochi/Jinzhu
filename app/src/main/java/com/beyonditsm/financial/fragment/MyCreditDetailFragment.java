@@ -202,7 +202,7 @@ public class MyCreditDetailFragment extends BaseFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        addressUtil=new AddressUtil(getActivity());
+        addressUtil = new AddressUtil(getActivity());
         rowe = getArguments().getParcelable("rowe");
         tvName.setText(rowe.getProductName());
         dialog = new FinalLoadDialog(getActivity());
@@ -259,7 +259,7 @@ public class MyCreditDetailFragment extends BaseFragment {
         });
     }
 
-    @OnClick({R.id.rlzl, R.id.rlzz, R.id.rlts, R.id.bj,R.id.tvUpload})
+    @OnClick({R.id.rlzl, R.id.rlzz, R.id.rlts, R.id.bj, R.id.tvUpload})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rlzl://用户基本资料
@@ -314,14 +314,14 @@ public class MyCreditDetailFragment extends BaseFragment {
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), TiJiaoFuJianAct.class);
                 intent.putExtra("orderNo", rowe.getOrderNo());
-                intent.putExtra("orderId",rowe.getId());
+                intent.putExtra("orderId", rowe.getId());
                 getActivity().startActivity(intent);
 
                 break;
             case R.id.tvUpload://上传
-                Intent intent2=new Intent(getContext(), CreditStepAct.class);
-                intent2.putExtra("credit_upload",1);
-                intent2.putExtra("orderId",rowe.getId());
+                Intent intent2 = new Intent(getContext(), CreditStepAct.class);
+                intent2.putExtra("credit_upload", 1);
+                intent2.putExtra("orderId", rowe.getId());
                 getActivity().startActivity(intent2);
                 break;
         }
@@ -382,9 +382,9 @@ public class MyCreditDetailFragment extends BaseFragment {
                         } else {
                             tvRate.setText("利率：" + data.getMonthlyRateMin() + "%" + "~" + data.getMonthlyRateMax() + "%");
                         }
-                        if (Double.valueOf(data.getDisposableRateMax())-Double.valueOf(data.getDisposableRateMin())==0){
+                        if (Double.valueOf(data.getDisposableRateMax()) - Double.valueOf(data.getDisposableRateMin()) == 0) {
                             onpay.setText("一次性收费：" + data.getDisposableRateMin() + "%");
-                        }else {
+                        } else {
                             onpay.setText("一次性收费：" + data.getDisposableRateMin() + "%" + "~" + data.getDisposableRateMax() + "%");
                         }
                         if (!TextUtils.isEmpty(data.getUserName()))
@@ -398,11 +398,11 @@ public class MyCreditDetailFragment extends BaseFragment {
                             IdCard.setText(data.getIdentCard());
                         }
 
-                        if (!TextUtils.isEmpty(data.getProvince())&&!TextUtils.isEmpty(data.getCity())
-                                &&!TextUtils.isEmpty(data.getDistrict())) {
-                            alwaysaddress.setText(addressUtil.getProName(data.getProvince())+
-                            addressUtil.getCityName(data.getProvince(),data.getCity())+
-                            addressUtil.getCountryName(data.getCity(),data.getDistrict()));
+                        if (!TextUtils.isEmpty(data.getProvince()) && !TextUtils.isEmpty(data.getCity())
+                                && !TextUtils.isEmpty(data.getDistrict())) {
+                            alwaysaddress.setText(addressUtil.getProName(data.getProvince()) +
+                                    addressUtil.getCityName(data.getProvince(), data.getCity()) +
+                                    addressUtil.getCountryName(data.getCity(), data.getDistrict()));
                         }
                         if (!TextUtils.isEmpty(data.getDetailAddress())) {
                             address.setText(data.getDetailAddress());
@@ -476,17 +476,17 @@ public class MyCreditDetailFragment extends BaseFragment {
                                 tvRate.setText("利率：" + data.getRealMonthlyInterestRate() + "%");
                             if (!TextUtils.isEmpty(data.getRealOneTimeRate()))
                                 onpay.setText("一次性收费：" + data.getRealOneTimeRate() + "%");
-                            if (!TextUtils.isEmpty(data.getCreditAmount())){
-                                tvCreditAmount.setText("¥"+df.format(Double.valueOf(data.getCreditAmount())/10000)+"万");
+                            if (!TextUtils.isEmpty(data.getCreditAmount())) {
+                                tvCreditAmount.setText("¥" + df.format(Double.valueOf(data.getCreditAmount()) / 10000) + "万");
                             }
-                            if (!TextUtils.isEmpty(data.getBankPracticalPeriods())){
+                            if (!TextUtils.isEmpty(data.getBankPracticalPeriods())) {
                                 tvTime.setText(data.getBankPracticalPeriods());
                             }
-                            if (!TextUtils.isEmpty(data.getPracticalLoan())&&!TextUtils.isEmpty(data.getBankPracticalPeriods())&&!TextUtils.isEmpty(data.getRealMonthlyInterestRate())){
+                            if (!TextUtils.isEmpty(data.getPracticalLoan()) && !TextUtils.isEmpty(data.getBankPracticalPeriods()) && !TextUtils.isEmpty(data.getRealMonthlyInterestRate())) {
                                 String loan = data.getPracticalLoan();
                                 String rate = data.getRealMonthlyInterestRate();
                                 String periods = data.getBankPracticalPeriods();
-                                getMOnthPay(loan,rate , periods);
+                                getMOnthPay(loan, rate, periods);
                             }
                         } else if ("WAIT_BACKGROUND_APPROVAL".equals(status)
                                 ) {
@@ -496,8 +496,10 @@ public class MyCreditDetailFragment extends BaseFragment {
                             rlbj.setVisibility(View.VISIBLE);
                         } else if ("NO_PASS".equals(status)) {
                             tvStatus.setText("审批不通过");
-                        }else if ("CANCEL_REQUET".equals(status)){
+                        } else if ("CANCEL_REQUET".equals(status)) {
                             tvStatus.setText("已取消");
+                        }else if ("DRAFT".equals(status)){
+                            tvStatus.setText("草稿");
                         }
 
                         if (!"SUPPLEMENT_DATA".equals(status)) {
@@ -542,6 +544,7 @@ public class MyCreditDetailFragment extends BaseFragment {
                     }
                 });
     }
+
     public static final String UPDATE_ORDER = "com.update.order";
     private OrderBroadCastReceiver order_receiver;
 
