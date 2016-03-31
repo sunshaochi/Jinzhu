@@ -505,4 +505,15 @@ public class CommManager extends RequestManager {
         params.put("orderId",orderId);
         doPost(IFinancialUrl.APPLAY_CREDIT_URL, params, callBack);
     }
+
+    /**
+     * 查看是否需要增信资料
+     * @param orderId
+     * @param callBack
+     */
+    public  void findOrderFlow(String orderId,CallBack callBack){
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("orderId",orderId);
+        doPost(IFinancialUrl.FIND_EXTRA_FlOW_URL, params, callBack);
+    }
 }

@@ -3,17 +3,8 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@color/bg_color">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:src="@mipmap/progress_03" />
-    </RelativeLayout>
+    <include layout="@layout/title_act_layout"></include>
 
 
     <FrameLayout
@@ -28,31 +19,31 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="申请贷款资料列表"
+                android:text="增信资料"
                 android:textColor="#333333"
                 android:textSize="14sp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
                 />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp">
             <ListView
                 android:id="@+id/lvCredit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
                 android:dividerHeight="1px"
 
                 ></ListView>
+
+                <com.beyonditsm.financial.view.LoadingView
+                    android:id="@+id/loadView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"></com.beyonditsm.financial.view.LoadingView>
+            </FrameLayout>
         </LinearLayout>
     </FrameLayout>
 
-
-    <TextView
-        android:id="@+id/tvCredit"
-        style="@style/common_btn"
-        android:text="申请贷款"
-        android:gravity="center"
-        android:background="@drawable/button_grey"
-        android:layout_marginBottom="20dp"
-        android:enabled="false"
-        />
 </LinearLayout>

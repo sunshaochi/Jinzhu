@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.credit.CreditStepAct;
+import com.beyonditsm.financial.activity.credit.SubFlowAct;
 import com.beyonditsm.financial.activity.user.DoTaskPicture;
 import com.beyonditsm.financial.activity.user.DoTaskPlaceAct;
 import com.beyonditsm.financial.activity.user.FinishTaskPicture;
@@ -150,6 +151,10 @@ public class MyCreditDetailFragment extends BaseFragment {
 
     @ViewInject(R.id.start_bj)
     private RelativeLayout rlbj;//补件
+    @ViewInject(R.id.rlUpload)
+    private RelativeLayout rlUpload;
+    @ViewInject(R.id.rlUpCredit)
+    private RelativeLayout rlUpCredit;
 
     private MyCreditBean.RowsEntity rowe;
 
@@ -259,7 +264,7 @@ public class MyCreditDetailFragment extends BaseFragment {
         });
     }
 
-    @OnClick({R.id.rlzl, R.id.rlzz, R.id.rlts, R.id.bj, R.id.tvUpload})
+    @OnClick({R.id.rlzl, R.id.rlzz, R.id.rlts, R.id.bj,R.id.tvUpload,R.id.tvUpCredit})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rlzl://用户基本资料
@@ -323,6 +328,11 @@ public class MyCreditDetailFragment extends BaseFragment {
                 intent2.putExtra("credit_upload", 1);
                 intent2.putExtra("orderId", rowe.getId());
                 getActivity().startActivity(intent2);
+                break;
+            case R.id.tvUpCredit://增信上传
+                Intent intent3=new Intent(getContext(), SubFlowAct.class);
+                intent3.putExtra("order_id",rowe.getId());
+                getActivity().startActivity(intent3);
                 break;
         }
     }
