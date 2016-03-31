@@ -209,6 +209,8 @@ public interface IFinancialUrl {
     String UPLOAD_LIST_URL=BASE_URL+API_VERSION+"/platform/login/findOrderFlow.do";
     /*查找上传详情*/
     String FIND_FLOW_DETAIL_URL=BASE_URL+API_VERSION+"/platform/login/findFlowDetail.do";
+    /*查看是否有增信资料*/
+    String FIND_EXTRA_FlOW_URL=BASE_URL+API_VERSION+"/platform/login/findExtraOrderFlow.do";
     /*提交图片*/
     String SUBIT_ORDER_FLOW_URL=BASE_URL+API_VERSION+"/platform/login/submitOrderFlow.do";
     /*提交审核*/

@@ -120,14 +120,12 @@ public class CreditThirFrag extends BaseFragment {
      *
      * @param orderId
      */
-    private void applayCredit(String orderId) {
+    private void applayCredit(final String orderId) {
         RequestManager.getCommManager().applyCredit(orderId, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-                if (act_type == 0)
-                    EventBus.getDefault().post(new CreditStepAct.FirstEvent(3, null));
-                else
-                    getActivity().finish();
+                findOrderFlow(orderId);
+
             }
 
             @Override
@@ -157,6 +155,35 @@ public class CreditThirFrag extends BaseFragment {
             tvCredit.setBackgroundResource(R.drawable.button_grey);
             tvCredit.setEnabled(false);
         }
+    }
+
+    /**
+     * 是否需要增信资料
+     * @param orderId
+     */
+    private void findOrderFlow(String orderId){
+        RequestManager.getCommManager().findOrderFlow(orderId, new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                JSONObject jsonObject = new JSONObject(result);
+                JSONArray array = jsonObject.getJSONArray("data");
+                List<UpLoadEntity> datas = gson.fromJson(array.toString(), new TypeToken<List<UpLoadEntity>>() {
+               }.getType());
+                if(datas.size()==0){//无需增信资料
+                    if (act_type == 0)
+                        EventBus.getDefault().post(new CreditStepAct.FirstEvent(3, null));
+                    else
+                        getActivity().finish();
+                }else{//需要增信资料
+
+                }
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
+            }
+        });
     }
 
     /**
