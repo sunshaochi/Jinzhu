@@ -413,7 +413,7 @@ public class CreditUploadAct extends BaseActivity {
                 public void onClick(View v) {
                     imageId = "";
                     imageIsPass = null;
-                    if ((position < list.size() && !"1".equals(list.get(position).getIsPass())) || position >= list.size()) {
+                    if ((position < list.size() &&"0".equals(list.get(position).getIsPass())) || position >= list.size()) {
                         MySelfSheetDialog dialog = new MySelfSheetDialog(CreditUploadAct.this);
                         dialog.builder().addSheetItem("拍照", null, new MySelfSheetDialog.OnSheetItemClickListener() {
                             @Override
