@@ -19,13 +19,17 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
+import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.credit.CreditStepAct;
+import com.beyonditsm.financial.activity.credit.MyCreditDAct;
 import com.beyonditsm.financial.activity.credit.SubFlowAct;
 import com.beyonditsm.financial.activity.user.DoTaskPicture;
 import com.beyonditsm.financial.activity.user.DoTaskPlaceAct;
 import com.beyonditsm.financial.activity.user.FinishTaskPicture;
 import com.beyonditsm.financial.activity.user.FinishTaskPlaceAct;
+import com.beyonditsm.financial.activity.user.MyCreditAct;
 import com.beyonditsm.financial.activity.user.TaskDetail;
 import com.beyonditsm.financial.activity.user.TaskLevelAct;
 import com.beyonditsm.financial.activity.user.TiJiaoFuJianAct;
@@ -41,7 +45,9 @@ import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.AddressUtil;
 import com.beyonditsm.financial.util.Arith;
 import com.beyonditsm.financial.util.GsonUtils;
+import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.widget.FinalLoadDialog;
 import com.leaf.library.widget.MyListView;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -178,6 +184,7 @@ public class MyCreditDetailFragment extends BaseFragment {
     private TextView tvCreditAmount;//sh
     private LinearLayout llCreditRemark;
     private Intent intent;
+    private MyMessageReceiver messageReceiver;
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -324,6 +331,11 @@ public class MyCreditDetailFragment extends BaseFragment {
 
                 break;
             case R.id.tvUpload://上传
+                SpUtils.clearOrderId(MyApplication.getInstance());
+                getActivity().sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
+                getActivity().sendBroadcast(new Intent(MyCreditDAct.HIDE_RED));
+                getActivity().sendBroadcast(new Intent(MyCreditAct.HIDE_MESSAGE));
+                getActivity().sendBroadcast(new Intent(MineFragment.HIDE_POINT));
                 Intent intent2 = new Intent(getContext(), CreditStepAct.class);
                 intent2.putExtra("credit_upload", 1);
                 intent2.putExtra("orderId", rowe.getId());
@@ -767,9 +779,12 @@ public class MyCreditDetailFragment extends BaseFragment {
         if (order_receiver == null) {
             order_receiver = new OrderBroadCastReceiver();
         }
+        if (messageReceiver==null) {
+            messageReceiver = new MyMessageReceiver();
+        }
         getActivity().registerReceiver(order_receiver, new IntentFilter(UPDATE_ORDER));
         getActivity().registerReceiver(receiver, new IntentFilter(TaskLevelAct.UPDATE_LIST));
-
+        getActivity().registerReceiver(messageReceiver,new IntentFilter(PUSH_MESSAGE));
     }
 
     @Override
@@ -781,6 +796,9 @@ public class MyCreditDetailFragment extends BaseFragment {
         if (order_receiver != null) {
             getActivity().unregisterReceiver(order_receiver);
         }
+        if (messageReceiver!=null){
+            getActivity().unregisterReceiver(messageReceiver);
+        }
     }
 
     private MyBroadCastReceiver receiver;
@@ -789,6 +807,17 @@ public class MyCreditDetailFragment extends BaseFragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             findTaskBytaskIds(data.getTaskManageId());
+        }
+    }
+
+    public static final String PUSH_MESSAGE = "com.push.message";
+    public class MyMessageReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String id = intent.getStringExtra("id");
+            MyLogUtils.info("返回的ID：；；；"+id);
+            getOrderDetail(id);
         }
     }
 

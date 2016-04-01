@@ -57,6 +57,14 @@ public class MessageBean implements Parcelable {
 		this.msg_id = msg_id;
 	}
 
+	public String getOrderId() {
+		return orderid;
+	}
+
+	public void setOrderId(String orderId) {
+		this.orderid = orderId;
+	}
+
 	/**
 	 * 
 	 */
@@ -71,6 +79,8 @@ public class MessageBean implements Parcelable {
     private String time;
 	@Column
 	private String msg_id;
+	@Column
+	private String orderid;
 
 
 	@Override
@@ -85,6 +95,7 @@ public class MessageBean implements Parcelable {
 		dest.writeString(this.type);
 		dest.writeString(this.time);
 		dest.writeString(this.msg_id);
+		dest.writeString(this.orderid);
 	}
 
 	public MessageBean() {
@@ -96,6 +107,7 @@ public class MessageBean implements Parcelable {
 		this.type = in.readString();
 		this.time = in.readString();
 		this.msg_id = in.readString();
+		this.orderid = in.readString();
 	}
 
 	public static final Parcelable.Creator<MessageBean> CREATOR = new Parcelable.Creator<MessageBean>() {

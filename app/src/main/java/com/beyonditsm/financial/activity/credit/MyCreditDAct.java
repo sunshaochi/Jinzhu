@@ -1,18 +1,23 @@
 package com.beyonditsm.financial.activity.credit;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.user.MyCreditAct;
@@ -20,7 +25,9 @@ import com.beyonditsm.financial.entity.MyCreditBean;
 import com.beyonditsm.financial.fragment.MyCreditDetailFragment;
 import com.beyonditsm.financial.fragment.MyCreditStatusFragment;
 import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.widget.DialogHint;
 import com.beyonditsm.financial.widget.MyAlertDialog;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -42,11 +49,17 @@ public class MyCreditDAct extends BaseActivity {
 
     @ViewInject(R.id.mycredit_viewpager)
     private ViewPager myCreditViewpager;
+    @ViewInject(R.id.iv_statusRedPoint)
+    private ImageView ivStatusRedPoint;
+    @ViewInject(R.id.iv_detailRedPoint)
+    private ImageView ivDetailRedPoint;
 
     private ImageView[] imageArras;
     private TextView[] textArras;
+    private LinearLayout[] linearArras;
     private MyCreditBean.RowsEntity rowe;
     private int position;
+    private HideBoradcastReceiver hideReceiver;
 
 
     @Override
@@ -60,6 +73,17 @@ public class MyCreditDAct extends BaseActivity {
         setLeftTv("返回");
         setTopTitle("贷款详情");
         rowe = getIntent().getParcelableExtra(MyCreditAct.CREDIT);
+        String orderId = SpUtils.getOrderId(MyApplication.getInstance());
+        MyLogUtils.info("获取到已保存的orderID+"+orderId);
+        if (!TextUtils.isEmpty(orderId)){
+            if (orderId.equals(rowe.getId())){
+                ivDetailRedPoint.setVisibility(View.VISIBLE);
+                ivStatusRedPoint.setVisibility(View.VISIBLE);
+            }
+        }else{
+            ivDetailRedPoint.setVisibility(View.INVISIBLE);
+            ivStatusRedPoint.setVisibility(View.INVISIBLE);
+        }
         position = getIntent().getIntExtra("position", 0);
 
         initTextView();
@@ -68,13 +92,25 @@ public class MyCreditDAct extends BaseActivity {
 
 
 
-        textArras[0].setTextColor(getResources().getColor(R.color.main_color));
+//        textArras[0].setTextColor(getResources().getColor(R.color.main_color));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (hideReceiver==null) {
+            hideReceiver = new HideBoradcastReceiver();
+        }
+        registerReceiver(hideReceiver,new IntentFilter(HIDE_RED));
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        if (hideReceiver!=null){
+            unregisterReceiver(hideReceiver);
+        }
     }
 
     public void onEvent(final MyCreditDetailFragment.PatchEvent event){
@@ -82,6 +118,12 @@ public class MyCreditDAct extends BaseActivity {
             setRightBtn("补件说明", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+//                    SpUtils.clearOrderId(MyApplication.getInstance());
+//                    ivDetailRedPoint.setVisibility(View.INVISIBLE);
+//                    ivStatusRedPoint.setVisibility(View.INVISIBLE);
+//                    sendBroadcast(new Intent(MyCreditAct.CREDIT_RECEIVER));
+//                    sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
+//                    sendBroadcast(new Intent(MineFragment.HIDE_POINT));
                     DialogHint dialogHint = new DialogHint(MyCreditDAct.this, event._remark).builder();
                     dialogHint.show();
                 }
@@ -109,6 +151,9 @@ public class MyCreditDAct extends BaseActivity {
                                             Intent intent = new Intent(MyCreditAct.CREDIT_RECEIVER);
                                             intent.putExtra("position", position);
                                             sendBroadcast(intent);
+//                                            SpUtils.clearOrderId(MyApplication.getInstance());
+//                                            sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
+//                                            sendBroadcast(new Intent(MineFragment.HIDE_POINT));
                                             finish();
                                         }
                                     }
@@ -146,11 +191,11 @@ public class MyCreditDAct extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                for (int i=0;i<textArras.length;i++){
-                    textArras[i].setTextColor(getResources().getColor(R.color.tv_second_color));
+                for (int i=0;i<linearArras.length;i++){
+//                    textArras[i].setTextColor(getResources().getColor(R.color.tv_second_color));
                     imageArras[i].setBackgroundColor(Color.TRANSPARENT);
                 }
-                textArras[position].setTextColor(getResources().getColor(R.color.main_color));
+//                textArras[position].setTextColor(getResources().getColor(R.color.main_color));
                 imageArras[position].setBackgroundColor(getResources().getColor(R.color.main_color));
             }
 
@@ -176,13 +221,24 @@ public class MyCreditDAct extends BaseActivity {
 
     private void initTextView() {
         LinearLayout tabTextLayout = (LinearLayout) findViewById(R.id.tabTextLayout);
-        textArras = new TextView[2];
-        for (int i =0;i< textArras.length;i++){
-            TextView textView = (TextView) tabTextLayout.getChildAt(i);
-            textArras[i] = textView;
-            textArras[i].setEnabled(true);
-            textArras[i].setTag(i);
-            textArras[i].setOnClickListener(new View.OnClickListener() {
+//        textArras = new TextView[2];
+        linearArras = new LinearLayout[2];
+        for (int i =0;i< linearArras.length;i++){
+//            TextView textView = (TextView) tabTextLayout.getChildAt(i);
+            LinearLayout linearLayout = (LinearLayout) tabTextLayout.getChildAt(i);
+//            textArras[i] = textView;
+            linearArras[i] = linearLayout;
+//            textArras[i].setTag(i);
+//            textArras[i].setEnabled(true);
+//            textArras[i].setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    myCreditViewpager.setCurrentItem((Integer) v.getTag());
+//                }
+//            });
+            linearArras[i].setEnabled(true);
+            linearArras[i].setTag(i);
+            linearArras[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     myCreditViewpager.setCurrentItem((Integer) v.getTag());
@@ -225,6 +281,15 @@ public class MyCreditDAct extends BaseActivity {
 //            super.destroyItem(container, position, object);
             Fragment fragment = fragmentList.get(position);
             fm.beginTransaction().hide(fragment).commit();
+        }
+    }
+    public static final String HIDE_RED = "hide_redpoint";
+    private class HideBoradcastReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ivStatusRedPoint.setVisibility(View.INVISIBLE);
+            ivDetailRedPoint.setVisibility(View.INVISIBLE);
         }
     }
 }

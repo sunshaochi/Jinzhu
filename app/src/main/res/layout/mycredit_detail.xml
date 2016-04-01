@@ -19,7 +19,41 @@
             android:layout_height="40dp"
             android:orientation="horizontal">
 
-            <TextView
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="贷款状态"
+                    android:textSize="16sp"/>
+                <ImageView
+                    android:id="@+id/iv_statusRedPoint"
+                    style="@style/red_oval_style"
+                    android:layout_marginRight="5dp"
+                    android:visibility="invisible"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="贷款详情"
+                    android:textSize="16sp"/>
+                <ImageView
+                    android:id="@+id/iv_detailRedPoint"
+                    style="@style/red_oval_style"
+                    android:layout_marginRight="5dp"
+                    android:visibility="invisible"/>
+            </LinearLayout>
+            <!--<TextView
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_weight="1"
@@ -33,7 +67,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="贷款详情"
-                android:textSize="16sp" />
+                android:textSize="16sp" />-->
         </LinearLayout>
 
         <LinearLayout
