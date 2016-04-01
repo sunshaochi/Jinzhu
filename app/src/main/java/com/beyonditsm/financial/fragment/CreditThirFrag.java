@@ -55,9 +55,9 @@ public class CreditThirFrag extends BaseFragment {
         EventBus.getDefault().register(this);
         act_type = getArguments().getInt("act_type", 0);
         orderId = CreditStepAct.orderId;
-        if(act_type==1){
-            tvCredit.setVisibility(View.GONE);
-        }
+//        if(act_type==1){
+//            tvCredit.setVisibility(View.GONE);
+//        }
         getUploadList(orderId);
         lvCredit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

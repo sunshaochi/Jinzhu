@@ -370,18 +370,18 @@ public class CreditSecondFrag extends BaseFragment {
 //                break;
             case R.id.rl_marrayed://是否结婚
                 dialog = new MySelfSheetDialog(getActivity()).builder();
-                dialog.addSheetItem("已婚", null, new MySelfSheetDialog.OnSheetItemClickListener() {
-                    @Override
-                    public void onClick(int which) {
-                        tvMarrayed.setText("已婚");
-                        user.setMarrySts(1);
-                    }
-                });
                 dialog.addSheetItem("未婚", null, new MySelfSheetDialog.OnSheetItemClickListener() {
                     @Override
                     public void onClick(int which) {
                         tvMarrayed.setText("未婚");
                         user.setMarrySts(0);
+                    }
+                });
+                dialog.addSheetItem("已婚", null, new MySelfSheetDialog.OnSheetItemClickListener() {
+                    @Override
+                    public void onClick(int which) {
+                        tvMarrayed.setText("已婚");
+                        user.setMarrySts(1);
                     }
                 });
                 dialog.show();

@@ -21,6 +21,9 @@ public class SpUtils {
     private static final String NEW_MESSAGE="new_message";//接收新消息
     private static final String IGNORE_MESSAGE="ignore_message";//消息免打扰
 
+    private static final String ORDERID = "orderId";
+    private static final String SP_ORDERNAME = "sp_ordername";
+
     public SpUtils(){
 
     }
@@ -29,6 +32,9 @@ public class SpUtils {
         return context.getSharedPreferences(SP_NAME,Context.MODE_PRIVATE);
     }
 
+    public static SharedPreferences getOrdeIdSp(Context context){
+        return context.getSharedPreferences(SP_ORDERNAME,Context.MODE_PRIVATE);
+    }
     public static SharedPreferences getFinancialSp(Context context){
         return context.getSharedPreferences(FINANCIAL_SP,Context.MODE_PRIVATE);
     }
@@ -126,4 +132,25 @@ public class SpUtils {
         getSp(context).edit().clear().commit();
     }
 
+    /**
+     * 保存orderId
+     * @param context
+     * @param orderId
+     */
+    public static void setOrderId(Context context,String orderId){
+        getOrdeIdSp(context).edit().putString(ORDERID, orderId).commit();
+    }
+
+    /**
+     * 获取orderId
+     * @param context
+     * @return
+     */
+    public static String getOrderId(Context context){
+        return getOrdeIdSp(context).getString(ORDERID,"");
+    }
+
+    public static void clearOrderId(Context context){
+        getOrdeIdSp(context).edit().clear().commit();
+    }
 }

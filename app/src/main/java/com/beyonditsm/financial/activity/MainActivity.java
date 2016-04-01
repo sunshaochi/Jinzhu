@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.RongCloudEvent;
 import com.beyonditsm.financial.activity.user.AddressBookAct;
@@ -124,9 +125,16 @@ public class MainActivity extends BaseActivity{
 //        RongIM.setUserInfoProvider(this, true);
         gUtils = new GeneralUtils();
 
+
         //注册EventBus
         EventBus.getDefault().register(this);
         assignViews();
+        String orderId = SpUtils.getOrderId(MyApplication.getInstance());
+        if ("".equals(orderId)){
+            ivRedPoint.setVisibility(View.GONE);
+        }else{
+            ivRedPoint.setVisibility(View.VISIBLE);
+        }
         manager = getSupportFragmentManager();
         setTabSelection(0);
         setCheckItem(0);
@@ -551,6 +559,7 @@ public class MainActivity extends BaseActivity{
         @Override
         public void onReceive(Context context, Intent intent) {
             ivRedPoint.setVisibility(View.VISIBLE);
+            MyLogUtils.info("MainActivity:红点显示");
         }
     }
 

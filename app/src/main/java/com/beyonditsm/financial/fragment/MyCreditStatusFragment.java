@@ -1,5 +1,9 @@
 package com.beyonditsm.financial.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -13,6 +17,7 @@ import com.beyonditsm.financial.entity.MyCreditBean;
 import com.beyonditsm.financial.entity.OrderDealEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
+import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
@@ -42,6 +47,7 @@ public class MyCreditStatusFragment extends BaseFragment {
     private String roleName;//角色名字
     private String userId;//用户id
     private OrderDetailAdapter detailAdapter;
+    private MyBroadCastReceiver receiver;
 
 
     @Override
@@ -108,5 +114,33 @@ public class MyCreditStatusFragment extends BaseFragment {
                 loadingView.loadError();
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (receiver==null) {
+            receiver = new MyBroadCastReceiver();
+        }
+        getActivity().registerReceiver(receiver,new IntentFilter(PUSH_MESSAGE));
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (receiver!=null){
+            getActivity().unregisterReceiver(receiver);
+        }
+    }
+
+    public static final String PUSH_MESSAGE = "com.push.message";
+    private class MyBroadCastReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String id = intent.getStringExtra("id");
+            MyLogUtils.info("返回的ID："+id);
+            findOrderDealHisory(id);
+        }
     }
 }
