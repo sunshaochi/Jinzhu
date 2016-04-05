@@ -2,6 +2,7 @@ package com.beyonditsm.financial.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +14,11 @@ import android.widget.TextView;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.credit.CreditStepAct;
 import com.beyonditsm.financial.activity.credit.CreditUploadAct;
+import com.beyonditsm.financial.activity.user.MyCreditAct;
 import com.beyonditsm.financial.entity.CreditEvent;
 import com.beyonditsm.financial.entity.UpLoadEntity;
 import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.tandong.sa.eventbus.EventBus;
@@ -44,6 +47,7 @@ public class CreditThirFrag extends BaseFragment {
     private String orderId;
 
     private int act_type;
+    private String orderStatus;
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -54,6 +58,7 @@ public class CreditThirFrag extends BaseFragment {
     public void initData(Bundle savedInstanceState) {
         EventBus.getDefault().register(this);
         act_type = getArguments().getInt("act_type", 0);
+        orderStatus = getArguments().getString("orderStatus");
         orderId = CreditStepAct.orderId;
 //        if(act_type==1){
 //            tvCredit.setVisibility(View.GONE);
@@ -145,6 +150,17 @@ public class CreditThirFrag extends BaseFragment {
                 isClick = isClick && ("1".equals(list.get(i).getIsComplete()));
             }
         }
+        if (!TextUtils.isEmpty(orderStatus)) {
+            MyLogUtils.info("订单状态：" + orderStatus);
+            if ("CREDIT_MANAGER_APPROVAL".equals(orderStatus)||
+                    "CREDIT_MANAGER_GRAB".equals(orderStatus) ||
+                    "ORGANIZATION_APPROVAL".equals(orderStatus) ||
+                    "WAIT_BACKGROUND_APPROVAL".equals(orderStatus)) {//审批中状态
+                isClick = false;
+            } else if ("SUPPLEMENT_DATA".equals(orderStatus)) {//补件中
+                isClick =true;
+            }
+        }
         if (isClick) {
             tvCredit.setBackgroundResource(R.drawable.button_gen);
             tvCredit.setEnabled(true);
@@ -162,21 +178,26 @@ public class CreditThirFrag extends BaseFragment {
 
     /**
      * 是否需要增信资料
+     *
      * @param orderId
      */
-    private void findOrderFlow(final String orderId){
+    private void findOrderFlow(final String orderId) {
         RequestManager.getCommManager().findOrderFlow(orderId, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray array = jsonObject.getJSONArray("data");
                 List<UpLoadEntity> datas = gson.fromJson(array.toString(), new TypeToken<List<UpLoadEntity>>() {
-               }.getType());
-                CreditStepAct.upList=datas;
-                    if (act_type == 0)
-                        EventBus.getDefault().post(new CreditStepAct.FirstEvent(3, orderId));
-                    else
-                        getActivity().finish();
+                }.getType());
+                CreditStepAct.upList = datas;
+                if (act_type == 0) {
+                    EventBus.getDefault().post(new CreditStepAct.FirstEvent(3, orderId));
+                }else {
+                    MyToastUtils.showShortToast(getContext(),"订单已提交，请耐心等待审批");
+                    getActivity().sendBroadcast(new Intent(MyCreditAct.CREDIT_RECEIVER));
+                    getActivity().sendBroadcast(new Intent(MyCreditDetailFragment.UPDATE_ORDER));
+                    getActivity().finish();
+                }
             }
 
             @Override

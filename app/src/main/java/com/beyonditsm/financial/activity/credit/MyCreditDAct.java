@@ -101,7 +101,23 @@ public class MyCreditDAct extends BaseActivity {
         if (hideReceiver==null) {
             hideReceiver = new HideBoradcastReceiver();
         }
-        registerReceiver(hideReceiver,new IntentFilter(HIDE_RED));
+        registerReceiver(hideReceiver, new IntentFilter(HIDE_RED));
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        String orderId = SpUtils.getOrderId(MyApplication.getInstance());
+        MyLogUtils.info("重新获取到已保存的orderID+" + orderId);
+        if (!TextUtils.isEmpty(orderId)){
+            if (orderId.equals(rowe.getId())){
+                ivDetailRedPoint.setVisibility(View.VISIBLE);
+                ivStatusRedPoint.setVisibility(View.VISIBLE);
+            }
+        }else{
+            ivDetailRedPoint.setVisibility(View.INVISIBLE);
+            ivStatusRedPoint.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override

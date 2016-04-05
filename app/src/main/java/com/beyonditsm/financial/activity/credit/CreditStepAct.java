@@ -129,6 +129,10 @@ public class CreditStepAct extends BaseActivity {
                 setTopTitle("上传资质图片");
                 Bundle bundle=new Bundle();
                 bundle.putInt("act_type",getIntent().getIntExtra("credit_upload",0));
+                String orderStatus = getIntent().getStringExtra("orderStatus");
+                if (!TextUtils.isEmpty(orderStatus)) {
+                    bundle.putString("orderStatus", orderStatus);
+                }
                 if (thrFrag == null) {
                     thrFrag = new CreditThirFrag();
                     thrFrag.setArguments(bundle);

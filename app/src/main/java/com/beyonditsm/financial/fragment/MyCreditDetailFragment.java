@@ -45,7 +45,6 @@ import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.AddressUtil;
 import com.beyonditsm.financial.util.Arith;
 import com.beyonditsm.financial.util.GsonUtils;
-import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.widget.FinalLoadDialog;
@@ -184,7 +183,6 @@ public class MyCreditDetailFragment extends BaseFragment {
     private TextView tvCreditAmount;//sh
     private LinearLayout llCreditRemark;
     private Intent intent;
-    private MyMessageReceiver messageReceiver;
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -339,6 +337,7 @@ public class MyCreditDetailFragment extends BaseFragment {
                 Intent intent2 = new Intent(getContext(), CreditStepAct.class);
                 intent2.putExtra("credit_upload", 1);
                 intent2.putExtra("orderId", rowe.getId());
+                intent2.putExtra("orderStatus",data.getOrderSts());
                 getActivity().startActivity(intent2);
                 break;
             case R.id.tvUpCredit://增信上传
@@ -779,12 +778,8 @@ public class MyCreditDetailFragment extends BaseFragment {
         if (order_receiver == null) {
             order_receiver = new OrderBroadCastReceiver();
         }
-        if (messageReceiver==null) {
-            messageReceiver = new MyMessageReceiver();
-        }
         getActivity().registerReceiver(order_receiver, new IntentFilter(UPDATE_ORDER));
         getActivity().registerReceiver(receiver, new IntentFilter(TaskLevelAct.UPDATE_LIST));
-        getActivity().registerReceiver(messageReceiver,new IntentFilter(PUSH_MESSAGE));
     }
 
     @Override
@@ -796,9 +791,6 @@ public class MyCreditDetailFragment extends BaseFragment {
         if (order_receiver != null) {
             getActivity().unregisterReceiver(order_receiver);
         }
-        if (messageReceiver!=null){
-            getActivity().unregisterReceiver(messageReceiver);
-        }
     }
 
     private MyBroadCastReceiver receiver;
@@ -809,16 +801,4 @@ public class MyCreditDetailFragment extends BaseFragment {
             findTaskBytaskIds(data.getTaskManageId());
         }
     }
-
-    public static final String PUSH_MESSAGE = "com.push.message";
-    public class MyMessageReceiver extends BroadcastReceiver{
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String id = intent.getStringExtra("id");
-            MyLogUtils.info("返回的ID：；；；"+id);
-            getOrderDetail(id);
-        }
-    }
-
 }

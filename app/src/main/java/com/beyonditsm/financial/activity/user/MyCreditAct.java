@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -165,6 +166,14 @@ public class MyCreditAct extends BaseActivity {
 
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        String orderId = SpUtils.getOrderId(MyApplication.getInstance());
+        if (!TextUtils.isEmpty(orderId)){
+            getMycreditList(currentPage,orderId);
+        }
+    }
 
     @Override
     public void onDestroy() {
