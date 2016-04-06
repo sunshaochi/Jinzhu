@@ -1,9 +1,6 @@
 package com.beyonditsm.financial.activity.credit;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,8 +17,10 @@ import android.widget.TextView;
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
+import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.user.MyCreditAct;
 import com.beyonditsm.financial.entity.MyCreditBean;
+import com.beyonditsm.financial.fragment.MineFragment;
 import com.beyonditsm.financial.fragment.MyCreditDetailFragment;
 import com.beyonditsm.financial.fragment.MyCreditStatusFragment;
 import com.beyonditsm.financial.http.RequestManager;
@@ -59,7 +58,6 @@ public class MyCreditDAct extends BaseActivity {
     private LinearLayout[] linearArras;
     private MyCreditBean.RowsEntity rowe;
     private int position;
-    private HideBoradcastReceiver hideReceiver;
 
 
     @Override
@@ -74,13 +72,14 @@ public class MyCreditDAct extends BaseActivity {
         setTopTitle("贷款详情");
         rowe = getIntent().getParcelableExtra(MyCreditAct.CREDIT);
         String orderId = SpUtils.getOrderId(MyApplication.getInstance());
-        MyLogUtils.info("获取到已保存的orderID+"+orderId);
-        if (!TextUtils.isEmpty(orderId)){
-            if (orderId.equals(rowe.getId())){
+        MyLogUtils.info("获取到已保存的orderID+" + orderId);
+        if (!TextUtils.isEmpty(orderId)) {
+            if (orderId.equals(rowe.getId())) {
                 ivDetailRedPoint.setVisibility(View.VISIBLE);
                 ivStatusRedPoint.setVisibility(View.VISIBLE);
+                ivStatusRedPoint.setVisibility(View.INVISIBLE);
             }
-        }else{
+        } else {
             ivDetailRedPoint.setVisibility(View.INVISIBLE);
             ivStatusRedPoint.setVisibility(View.INVISIBLE);
         }
@@ -91,30 +90,22 @@ public class MyCreditDAct extends BaseActivity {
         initViewpager();
 
 
-
 //        textArras[0].setTextColor(getResources().getColor(R.color.main_color));
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (hideReceiver==null) {
-            hideReceiver = new HideBoradcastReceiver();
-        }
-        registerReceiver(hideReceiver, new IntentFilter(HIDE_RED));
-    }
 
     @Override
     protected void onRestart() {
         super.onRestart();
         String orderId = SpUtils.getOrderId(MyApplication.getInstance());
         MyLogUtils.info("重新获取到已保存的orderID+" + orderId);
-        if (!TextUtils.isEmpty(orderId)){
-            if (orderId.equals(rowe.getId())){
+        if (!TextUtils.isEmpty(orderId)) {
+            if (orderId.equals(rowe.getId())) {
                 ivDetailRedPoint.setVisibility(View.VISIBLE);
                 ivStatusRedPoint.setVisibility(View.VISIBLE);
+                ivDetailRedPoint.setVisibility(View.INVISIBLE);
             }
-        }else{
+        } else {
             ivDetailRedPoint.setVisibility(View.INVISIBLE);
             ivStatusRedPoint.setVisibility(View.INVISIBLE);
         }
@@ -124,13 +115,10 @@ public class MyCreditDAct extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-        if (hideReceiver!=null){
-            unregisterReceiver(hideReceiver);
-        }
     }
 
-    public void onEvent(final MyCreditDetailFragment.PatchEvent event){
-        if(event._type==1) {
+    public void onEvent(final MyCreditDetailFragment.PatchEvent event) {
+        if (event._type == 1) {
             setRightBtn("补件说明", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -144,10 +132,10 @@ public class MyCreditDAct extends BaseActivity {
                     dialogHint.show();
                 }
             });
-        }else {
-            if ("CANCEL_REQUET".equals(rowe.getOrderSts())){
+        } else {
+            if ("CANCEL_REQUET".equals(rowe.getOrderSts())) {
                 setRightVG(false);
-            }else if ("WAIT_BACKGROUND_APPROVAL".equals(rowe.getOrderSts())||"CREDIT_MANAGER_GRAB".equals(rowe.getOrderSts())){
+            } else if ("WAIT_BACKGROUND_APPROVAL".equals(rowe.getOrderSts()) || "CREDIT_MANAGER_GRAB".equals(rowe.getOrderSts())) {
                 setRightBtn("取消订单", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -193,7 +181,7 @@ public class MyCreditDAct extends BaseActivity {
         Bundle bundle = new Bundle();
         bundle.putParcelable("rowe", rowe);
         MyCreditStatusFragment statusFragment = new MyCreditStatusFragment();
-        MyCreditDetailFragment detailFragment =new MyCreditDetailFragment();
+        MyCreditDetailFragment detailFragment = new MyCreditDetailFragment();
         statusFragment.setArguments(bundle);
         detailFragment.setArguments(bundle);
         fragmentList.add(statusFragment);
@@ -207,12 +195,14 @@ public class MyCreditDAct extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                for (int i=0;i<linearArras.length;i++){
+                for (int i = 0; i < linearArras.length; i++) {
 //                    textArras[i].setTextColor(getResources().getColor(R.color.tv_second_color));
                     imageArras[i].setBackgroundColor(Color.TRANSPARENT);
+                    clearRedPoint();
                 }
 //                textArras[position].setTextColor(getResources().getColor(R.color.main_color));
                 imageArras[position].setBackgroundColor(getResources().getColor(R.color.main_color));
+                clearRedPoint();
             }
 
             @Override
@@ -223,10 +213,19 @@ public class MyCreditDAct extends BaseActivity {
         myCreditViewpager.setCurrentItem(0);
     }
 
+    private void clearRedPoint() {
+        SpUtils.clearOrderId(MyApplication.getInstance());
+        ivDetailRedPoint.setVisibility(View.INVISIBLE);
+        ivStatusRedPoint.setVisibility(View.INVISIBLE);
+        sendBroadcast(new Intent(MyCreditAct.HIDE_MESSAGE));
+        sendBroadcast(new Intent(MineFragment.HIDE_POINT));
+        sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
+    }
+
     private void initImageView() {
         LinearLayout tabTextLayout = (LinearLayout) findViewById(R.id.tabImageLayout);
         imageArras = new ImageView[2];
-        for (int i =0;i< imageArras.length;i++){
+        for (int i = 0; i < imageArras.length; i++) {
             ImageView imageView = (ImageView) tabTextLayout.getChildAt(i);
             imageArras[i] = imageView;
             imageArras[i].setTag(i);
@@ -239,7 +238,7 @@ public class MyCreditDAct extends BaseActivity {
         LinearLayout tabTextLayout = (LinearLayout) findViewById(R.id.tabTextLayout);
 //        textArras = new TextView[2];
         linearArras = new LinearLayout[2];
-        for (int i =0;i< linearArras.length;i++){
+        for (int i = 0; i < linearArras.length; i++) {
 //            TextView textView = (TextView) tabTextLayout.getChildAt(i);
             LinearLayout linearLayout = (LinearLayout) tabTextLayout.getChildAt(i);
 //            textArras[i] = textView;
@@ -262,19 +261,22 @@ public class MyCreditDAct extends BaseActivity {
             });
         }
     }
-    class  MyAdapter extends FragmentStatePagerAdapter{
+
+    class MyAdapter extends FragmentStatePagerAdapter {
 
         private FragmentManager fm;
-        private List<Fragment> fragmentList =null;
+        private List<Fragment> fragmentList = null;
+
         public MyAdapter(FragmentManager fm) {
             super(fm);
         }
 
-        public MyAdapter(FragmentManager fm,List<Fragment> fragmentList){
+        public MyAdapter(FragmentManager fm, List<Fragment> fragmentList) {
             super(fm);
             this.fm = fm;
             this.fragmentList = fragmentList;
         }
+
         @Override
         public Fragment getItem(int position) {
             return fragmentList.get(position);
@@ -299,13 +301,5 @@ public class MyCreditDAct extends BaseActivity {
             fm.beginTransaction().hide(fragment).commit();
         }
     }
-    public static final String HIDE_RED = "hide_redpoint";
-    private class HideBoradcastReceiver extends BroadcastReceiver{
 
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            ivStatusRedPoint.setVisibility(View.INVISIBLE);
-            ivDetailRedPoint.setVisibility(View.INVISIBLE);
-        }
-    }
 }

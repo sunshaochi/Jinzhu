@@ -48,6 +48,7 @@ public class CreditThirFrag extends BaseFragment {
 
     private int act_type;
     private String orderStatus;
+    private String isCommit =null;
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -133,7 +134,9 @@ public class CreditThirFrag extends BaseFragment {
             @Override
             public void onSucess(String result) throws JSONException {
                 findOrderFlow(orderId);
-
+//                isCommit ="isClick";
+//                SpUtils.setIsCommit(MyApplication.getInstance(), isCommit,orderId);
+//                MyLogUtils.info("保存的orderId+"+orderId);
             }
 
             @Override
@@ -257,16 +260,30 @@ public class CreditThirFrag extends BaseFragment {
 //                holder.ivUpload.setImageResource(R.mipmap.load_sucess);
                 holder.tvState.setVisibility(View.VISIBLE);
                 holder.tvIsLoad.setText("已上传");
+                holder.tvIsLoad.setBackgroundResource(R.drawable.btn_bg_green);
             }
+//            String isClickCommit = SpUtils.getIsCommit(MyApplication.getInstance());
+//            String orderId =SpUtils.getIsCommitOrderId(MyApplication.getInstance());
+//            MyLogUtils.info("是否点击了申贷：" + isClickCommit + "点击了申贷的orderId+" + orderId);
+//            if (!TextUtils.isEmpty(isClickCommit)&&!TextUtils.isEmpty(orderId)){
+//                holder.tvState.setVisibility(View.VISIBLE);
+//            }else{
+//                holder.tvState.setVisibility(View.GONE);
+//            }
+
             if (list.get(position).getStatus() != null) {
                 if (list.get(position).getStatus() == 0) {
                     holder.tvState.setText("驳回");
+                    holder.tvState.setBackgroundResource(R.drawable.btn_bg_false);
                 } else if (list.get(position).getStatus() == 1) {
                     holder.tvState.setText("通过");
+                    holder.tvState.setBackgroundResource(R.drawable.btn_bg_green);
                 } else if (list.get(position).getStatus() == 2) {
                     holder.tvState.setText("审核中");
                 }
             }
+
+//            SpUtils.clearIsCommit(MyApplication.getInstance());
             return convertView;
         }
 

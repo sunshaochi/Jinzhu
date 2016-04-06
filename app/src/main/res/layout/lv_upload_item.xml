@@ -15,6 +15,7 @@
         android:orientation="horizontal"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
+        android:layout_marginLeft="10dp"
         >
 
         <TextView

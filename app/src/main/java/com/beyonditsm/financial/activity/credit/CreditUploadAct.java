@@ -29,6 +29,7 @@ import com.beyonditsm.financial.util.MyBitmapUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
+import com.beyonditsm.financial.widget.FinalLoadDialog;
 import com.leaf.library.widget.MyListView;
 import com.lidroid.xutils.http.client.multipart.content.FileBody;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -89,6 +90,7 @@ public class CreditUploadAct extends BaseActivity {
     private List<CreditUplEntity> creDatas;//请求结果data；
     private List<CreditUplEntity> resultData;//最终生成的data
     private MyAdapter myAdapter;
+    private FinalLoadDialog dialog;
 
     @Override
     public void setLayout() {
@@ -101,6 +103,9 @@ public class CreditUploadAct extends BaseActivity {
         orderId = getIntent().getStringExtra("orderId");
         flowId = getIntent().getStringExtra("flowId");
 
+        dialog = new FinalLoadDialog(this);
+        dialog.setTitle("努力上传中");
+        dialog.setCancelable(false);
         File file = new File(Environment.getExternalStorageDirectory(), "upload/cache");
 
         if (!file.exists())
@@ -244,6 +249,7 @@ public class CreditUploadAct extends BaseActivity {
      * @param file
      */
     private void uploadFile(final String file) {
+        dialog.show();
         Map<String, FileBody> fileMaps = new HashMap<String, FileBody>();
         FileBody fb = new FileBody(new File(file));
         fileMaps.put("file", fb);
@@ -251,7 +257,7 @@ public class CreditUploadAct extends BaseActivity {
         RequestManager.getCommManager().toUpLoadFile(fileMaps, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
-
+                dialog.cancel();
                 CreditImageBean cib = new CreditImageBean();
                 if (imageMap.get(uploadItemId).size() == 0) {
                     cib.setImageUrl(result);
@@ -293,7 +299,9 @@ public class CreditUploadAct extends BaseActivity {
 
             @Override
             public void onError(int status, String msg) {
+                dialog.cancel();
                 MyLogUtils.info(msg);
+                return;
             }
         });
     }
@@ -413,7 +421,7 @@ public class CreditUploadAct extends BaseActivity {
                 public void onClick(View v) {
                     imageId = "";
                     imageIsPass = null;
-                    if ((position < list.size() &&"0".equals(list.get(position).getIsPass())) || position >= list.size()) {
+                    if ((position < list.size() &&("0".equals(list.get(position).getIsPass())||TextUtils.isEmpty(list.get(position).getIsPass())))||position >= list.size()) {
                         MySelfSheetDialog dialog = new MySelfSheetDialog(CreditUploadAct.this);
                         dialog.builder().addSheetItem("拍照", null, new MySelfSheetDialog.OnSheetItemClickListener() {
                             @Override

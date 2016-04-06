@@ -105,7 +105,7 @@ public  class MyCreditAdapter extends BaseAdapter {
             holder.tvName.setText("已取消");
             holder.tvName.setTextColor(Color.parseColor("#ff8383"));
         } else if ("DRAFT".equals(status)) {
-            holder.tvName.setText("草稿");
+            holder.tvName.setText("资料待上传");
             holder.tvName.setTextColor(Color.parseColor("#ff6633"));
         }
 

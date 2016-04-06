@@ -19,17 +19,13 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
-import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.credit.CreditStepAct;
-import com.beyonditsm.financial.activity.credit.MyCreditDAct;
 import com.beyonditsm.financial.activity.credit.SubFlowAct;
 import com.beyonditsm.financial.activity.user.DoTaskPicture;
 import com.beyonditsm.financial.activity.user.DoTaskPlaceAct;
 import com.beyonditsm.financial.activity.user.FinishTaskPicture;
 import com.beyonditsm.financial.activity.user.FinishTaskPlaceAct;
-import com.beyonditsm.financial.activity.user.MyCreditAct;
 import com.beyonditsm.financial.activity.user.TaskDetail;
 import com.beyonditsm.financial.activity.user.TaskLevelAct;
 import com.beyonditsm.financial.activity.user.TiJiaoFuJianAct;
@@ -46,7 +42,6 @@ import com.beyonditsm.financial.util.AddressUtil;
 import com.beyonditsm.financial.util.Arith;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
-import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.widget.FinalLoadDialog;
 import com.leaf.library.widget.MyListView;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -329,11 +324,11 @@ public class MyCreditDetailFragment extends BaseFragment {
 
                 break;
             case R.id.tvUpload://上传
-                SpUtils.clearOrderId(MyApplication.getInstance());
-                getActivity().sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
-                getActivity().sendBroadcast(new Intent(MyCreditDAct.HIDE_RED));
-                getActivity().sendBroadcast(new Intent(MyCreditAct.HIDE_MESSAGE));
-                getActivity().sendBroadcast(new Intent(MineFragment.HIDE_POINT));
+//                SpUtils.clearOrderId(MyApplication.getInstance());
+//                getActivity().sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
+//                getActivity().sendBroadcast(new Intent(MyCreditDAct.HIDE_RED));
+//                getActivity().sendBroadcast(new Intent(MyCreditAct.HIDE_MESSAGE));
+//                getActivity().sendBroadcast(new Intent(MineFragment.HIDE_POINT));
                 Intent intent2 = new Intent(getContext(), CreditStepAct.class);
                 intent2.putExtra("credit_upload", 1);
                 intent2.putExtra("orderId", rowe.getId());
@@ -397,16 +392,22 @@ public class MyCreditDetailFragment extends BaseFragment {
 
                         Double totalMPay = Arith.sub(Double.valueOf(data.getPeriodsAmount()) * data.getTotalPeriods(), Double.valueOf(data.getTotalAmount()));
                         tvT.setText("¥" + df.format(totalMPay));
-                        tvFTime.setText(data.getLoanPeriod() + "个工作日");
-                        if (Double.valueOf(data.getMonthlyRateMin()) - Double.valueOf(data.getMonthlyRateMax()) == 0) {
-                            tvRate.setText("利率:" + data.getMonthlyRateMin() + "%");
-                        } else {
-                            tvRate.setText("利率：" + data.getMonthlyRateMin() + "%" + "~" + data.getMonthlyRateMax() + "%");
+                        if (!TextUtils.isEmpty(String.valueOf(data.getLoanPeriod()))) {
+                            tvFTime.setText(data.getLoanPeriod() + "个工作日");
                         }
-                        if (Double.valueOf(data.getDisposableRateMax()) - Double.valueOf(data.getDisposableRateMin()) == 0) {
-                            onpay.setText("一次性收费：" + data.getDisposableRateMin() + "%");
-                        } else {
-                            onpay.setText("一次性收费：" + data.getDisposableRateMin() + "%" + "~" + data.getDisposableRateMax() + "%");
+                        if (!TextUtils.isEmpty(data.getMonthlyRateMin())&&!TextUtils.isEmpty(data.getMonthlyRateMax())) {
+                            if (Double.valueOf(data.getMonthlyRateMin()) - Double.valueOf(data.getMonthlyRateMax()) == 0) {
+                                tvRate.setText("利率:" + data.getMonthlyRateMin() + "%");
+                            } else {
+                                tvRate.setText("利率：" + data.getMonthlyRateMin() + "%" + "~" + data.getMonthlyRateMax() + "%");
+                            }
+                        }
+                        if (!TextUtils.isEmpty(data.getDisposableRateMax())&&!TextUtils.isEmpty(data.getDisposableRateMin())) {
+                            if (Double.valueOf(data.getDisposableRateMax()) - Double.valueOf(data.getDisposableRateMin()) == 0) {
+                                onpay.setText("一次性收费：" + data.getDisposableRateMin() + "%");
+                            } else {
+                                onpay.setText("一次性收费：" + data.getDisposableRateMin() + "%" + "~" + data.getDisposableRateMax() + "%");
+                            }
                         }
                         if (!TextUtils.isEmpty(data.getUserName()))
                             tv_tochat.setText(data.getUserName());
@@ -520,7 +521,7 @@ public class MyCreditDetailFragment extends BaseFragment {
                         } else if ("CANCEL_REQUET".equals(status)) {
                             tvStatus.setText("已取消");
                         }else if ("DRAFT".equals(status)){
-                            tvStatus.setText("草稿");
+                            tvStatus.setText("资料待上传");
                         }
 
                         if (!"SUPPLEMENT_DATA".equals(status)) {

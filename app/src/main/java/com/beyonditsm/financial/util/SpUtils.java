@@ -24,6 +24,10 @@ public class SpUtils {
     private static final String ORDERID = "orderId";
     private static final String SP_ORDERNAME = "sp_ordername";
 
+    private static final String ISCOMMIT = "iscommit";
+    private static final String ISCOMMITORDERID = "iscommitorderid";
+    private static final String SP_ISCOMMIT = "sp_iscommit";
+
     public SpUtils(){
 
     }
@@ -39,6 +43,9 @@ public class SpUtils {
         return context.getSharedPreferences(FINANCIAL_SP,Context.MODE_PRIVATE);
     }
 
+    public static SharedPreferences getIsCommitSp(Context context){
+        return context.getSharedPreferences(SP_ISCOMMIT,Context.MODE_PRIVATE);
+    }
     /**
      * 是否第一次进入app
      *
@@ -152,5 +159,25 @@ public class SpUtils {
 
     public static void clearOrderId(Context context){
         getOrdeIdSp(context).edit().clear().commit();
+    }
+
+    /**
+     * 设置是否点击提交
+     * @param context
+     * @param isCommit
+     */
+    public static void setIsCommit(Context context,String isCommit,String orderId){
+        getIsCommitSp(context).edit().putString(ISCOMMIT, isCommit).commit();
+        getIsCommitSp(context).edit().putString(ISCOMMITORDERID, orderId).commit();
+    }
+
+    public static String getIsCommit(Context context){
+        return getIsCommitSp(context).getString(ISCOMMIT, "");
+    }
+    public static String getIsCommitOrderId(Context context){
+        return getIsCommitSp(context).getString(ISCOMMITORDERID,"");
+    }
+    public static void clearIsCommit(Context context){
+        getIsCommitSp(context).edit().clear().commit();
     }
 }

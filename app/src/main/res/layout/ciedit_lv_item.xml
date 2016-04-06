@@ -12,10 +12,8 @@
         layout="@layout/list_head" />
 
     <RelativeLayout
-
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        >
+        android:layout_height="80dp">
 
         <View
             android:id="@+id/top_lines"
@@ -30,9 +28,7 @@
             android:layout_width="26dp"
             android:layout_height="80dp"
             android:layout_marginLeft="15dp"
-            android:orientation="vertical"
-
-            >
+            android:orientation="vertical">
 
             <ImageView
                 android:layout_width="4px"
@@ -67,7 +63,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
             android:layout_alignLeft="@+id/top_lines"
@@ -76,17 +72,23 @@
 
             <TextView
                 android:id="@+id/tv_credit_status"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:textColor="@color/tv_primary_color"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                android:text="status"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"/>
 
             <TextView
                 android:id="@+id/tv_credit_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:text="time"
                 android:textColor="@color/tv_second_color" />
         </LinearLayout>
 
