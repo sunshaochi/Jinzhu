@@ -57,6 +57,8 @@ public class CreditUploadAct extends BaseActivity {
     private TextView tvDes;
     @ViewInject(R.id.lvUpLoad)
     private ListView lvUpLoad;
+    @ViewInject(R.id.tvSkip)
+    private TextView tvSkip;
     private String orderId;
     private String flowId;
 
@@ -103,6 +105,9 @@ public class CreditUploadAct extends BaseActivity {
         orderId = getIntent().getStringExtra("orderId");
         flowId = getIntent().getStringExtra("flowId");
 
+        if ("7930d49af22a4a8eae5fe22f7dcde252".equals(flowId)) {//园区公积金显示
+            tvSkip.setVisibility(View.VISIBLE);
+        }
         dialog = new FinalLoadDialog(this);
         dialog.setTitle("努力上传中");
         dialog.setCancelable(false);
@@ -116,7 +121,7 @@ public class CreditUploadAct extends BaseActivity {
         findFlowDetail(orderId, flowId);
     }
 
-    @OnClick({R.id.tvBack,R.id.tvSave})
+    @OnClick({R.id.tvBack, R.id.tvSave,R.id.tvSkip})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tvBack:
@@ -129,6 +134,9 @@ public class CreditUploadAct extends BaseActivity {
                 }
                 MyLogUtils.info("提交信息：" + GsonUtils.bean2Json(resultData));
                 toSubmit(getSubEntity(resultData));
+                break;
+            case R.id.tvSkip://跳过
+                skipFlow(orderId,flowId);
                 break;
         }
     }
@@ -257,6 +265,7 @@ public class CreditUploadAct extends BaseActivity {
         RequestManager.getCommManager().toUpLoadFile(fileMaps, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
+                MyLogUtils.info("imageUrl=" + result);
                 dialog.cancel();
                 CreditImageBean cib = new CreditImageBean();
                 if (imageMap.get(uploadItemId).size() == 0) {
@@ -307,6 +316,21 @@ public class CreditUploadAct extends BaseActivity {
     }
 
 
+    private  void skipFlow(String orderId,String flowId){
+        RequestManager.getCommManager().skipFlow(orderId, flowId, new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                MyToastUtils.showShortToast(getApplicationContext(),"已跳过园区公积金截图");
+                EventBus.getDefault().post(new CreditEvent());
+                finish();
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+                MyToastUtils.showShortToast(getApplicationContext(),msg);
+            }
+        });
+    }
     private class MyAdapter extends BaseAdapter {
         private List<CreditUplEntity> list;
 
@@ -421,7 +445,7 @@ public class CreditUploadAct extends BaseActivity {
                 public void onClick(View v) {
                     imageId = "";
                     imageIsPass = null;
-                    if ((position < list.size() &&("0".equals(list.get(position).getIsPass())||TextUtils.isEmpty(list.get(position).getIsPass())))||position >= list.size()) {
+                    if ((position < list.size() && (("0".equals(list.get(position).getIsPass()) || "3".equals(list.get(position).getIsPass())) || TextUtils.isEmpty(list.get(position).getIsPass()))) || position >= list.size()) {
                         MySelfSheetDialog dialog = new MySelfSheetDialog(CreditUploadAct.this);
                         dialog.builder().addSheetItem("拍照", null, new MySelfSheetDialog.OnSheetItemClickListener() {
                             @Override

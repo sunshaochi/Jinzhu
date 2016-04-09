@@ -166,13 +166,13 @@ public class SpUtils {
      * @param context
      * @param isCommit
      */
-    public static void setIsCommit(Context context,String isCommit,String orderId){
-        getIsCommitSp(context).edit().putString(ISCOMMIT, isCommit).commit();
+    public static void setIsCommit(Context context,boolean isCommit,String orderId){
+        getIsCommitSp(context).edit().putBoolean(ISCOMMIT, isCommit).commit();
         getIsCommitSp(context).edit().putString(ISCOMMITORDERID, orderId).commit();
     }
 
-    public static String getIsCommit(Context context){
-        return getIsCommitSp(context).getString(ISCOMMIT, "");
+    public static boolean getIsCommit(Context context){
+        return getIsCommitSp(context).getBoolean(ISCOMMIT, true);
     }
     public static String getIsCommitOrderId(Context context){
         return getIsCommitSp(context).getString(ISCOMMITORDERID,"");

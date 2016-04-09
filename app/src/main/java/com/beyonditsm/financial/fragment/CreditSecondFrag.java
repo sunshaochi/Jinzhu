@@ -27,9 +27,7 @@ import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.credit.CreditDetailAct;
 import com.beyonditsm.financial.activity.credit.CreditStepAct;
 import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
-import com.beyonditsm.financial.adapter.PrimaryTaskAdapter;
 import com.beyonditsm.financial.entity.DictionaryType;
-import com.beyonditsm.financial.entity.ImageBean;
 import com.beyonditsm.financial.entity.OrderBean;
 import com.beyonditsm.financial.entity.ProductInfo;
 import com.beyonditsm.financial.entity.ResultData;
@@ -103,8 +101,8 @@ public class CreditSecondFrag extends BaseFragment {
     private Button secondBtnNext;//下一步
     private RelativeLayout rsts;//贷款提速
     private TextView tvts;//提速
-
-
+    private CheckBox cbSelectSex;
+    private AddressUtil addressUtil;
 
     //订单成功
     @ViewInject(R.id.llSucess)
@@ -113,74 +111,22 @@ public class CreditSecondFrag extends BaseFragment {
     private TextView tvSecond;
     @ViewInject(R.id.tvSure)
     private TextView tvSure;
+    @ViewInject(R.id.loadView)
+    private LoadingView loadView;
+    @ViewInject(R.id.zz_ll)
+    private LinearLayout zz_ll;//资质扩展区域
 
-    private List<ImageBean> selecteds = new ArrayList<ImageBean>();
-    private String orderNo;
-
-    private ProductInfo productInfo;//产品信息
-    private UserEntity user = new UserEntity();//用户信息
-
-    private ObjectAnimator obaDown, obaDownts;
-    private ObjectAnimator obaOn, obaOnts;
 
     private List<TaskEntity> taskEntityList, finishList;//任务列表
     private List<TaskStrategyEntity> taskStrategyEntityList;//任务策略列表
-    private PrimaryTaskAdapter adapter;
-
-    @ViewInject(R.id.loadView)
-    private LoadingView loadView;
-    private AddressUtil addressUtil;
-    private CheckBox cbSelectSex;
-
-
-    private void assignViews() {
-        ivSlide = (ImageView) view.findViewById(R.id.ivSlide);
-        tbSex = (ToggleButton) view.findViewById(R.id.tbSex);
-        criSv = (ScrollView) view.findViewById(R.id.criSv);
-        sexRg = (RadioGroup) view.findViewById(R.id.sex_rg);
-        sexMan = (RadioButton) view.findViewById(R.id.sex_man);
-        sexWoman = (RadioButton) view.findViewById(R.id.sex_woman);
-        name = (EditText) view.findViewById(R.id.name);
-        IdCard = (EditText) view.findViewById(R.id.IdCard);
-        position = (TextView) view.findViewById(R.id.position);
-        address = (EditText) view.findViewById(R.id.address);
-        rlMarrayed = (RelativeLayout) view.findViewById(R.id.rl_marrayed);
-        tvMarrayed = (TextView) view.findViewById(R.id.tv_marrayed);
-        tvJiguan = (TextView) view.findViewById(R.id.tv_jiguan);
-        tvAddress = (TextView) view.findViewById(R.id.tv_address);
-        rlWork = (RelativeLayout) view.findViewById(R.id.rl_work);
-        tvWork = (TextView) view.findViewById(R.id.tv_work);
-        companyName = (EditText) view.findViewById(R.id.company_name);
-        zhiwu = (EditText) view.findViewById(R.id.zhiwu);
-        age = (EditText) view.findViewById(R.id.age);
-        rlSb = (RelativeLayout) view.findViewById(R.id.rl_sb);
-        tvSb = (TextView) view.findViewById(R.id.tv_sb);
-        rlGjj = (RelativeLayout) view.findViewById(R.id.rl_gjj);
-        tvGjj = (TextView) view.findViewById(R.id.tv_gjj);
-        rlHome = (RelativeLayout) view.findViewById(R.id.rl_home);
-        tvHome = (TextView) view.findViewById(R.id.tv_home);
-        rlCar = (RelativeLayout) view.findViewById(R.id.rl_car);
-        tvCar = (TextView) view.findViewById(R.id.tv_car);
-        rlXy = (RelativeLayout) view.findViewById(R.id.rl_xy);
-        tvXy = (TextView) view.findViewById(R.id.tv_xy);
-        secondBtnNext = (Button) view.findViewById(R.id.second_btn_next);
-        cbSelectSex = (CheckBox) view.findViewById(R.id.cb_select_sex);
-    }
-
-    @ViewInject(R.id.zz_ll)
-    private LinearLayout zz_ll;//资质扩展区域
-//    @ViewInject(R.id.llts)
-//    private LinearLayout ts_ll;//贷款提速
-//    @ViewInject(R.id.tsll)
-//    private LinearLayout tsll;//贷款提速扩展区
-
-    private Map<Integer, Boolean> map = new HashMap<>();
-    private MySelfSheetDialog dialog;
-
     private List<DictionaryType> carList, jobList, hourseList, creditList;//车产，职业，房产，信用
     private int jobPos, carPos, hoursePos, creditPos;
+    private ProductInfo productInfo;//产品信息
 
-//    private boolean isLoadIdCard = false;
+    private ObjectAnimator obaDown, obaDownts,obaOn, obaOnts;
+    private Map<Integer, Boolean> map = new HashMap<>();
+    private UserEntity user;
+    private MySelfSheetDialog dialog;
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -195,10 +141,6 @@ public class CreditSecondFrag extends BaseFragment {
         finishList = new ArrayList<TaskEntity>();
         taskStrategyEntityList = new ArrayList<TaskStrategyEntity>();
         taskEntityList = new ArrayList<TaskEntity>();
-        carList = new ArrayList<DictionaryType>();
-        jobList = new ArrayList<DictionaryType>();
-        hourseList = new ArrayList<DictionaryType>();
-        creditList = new ArrayList<DictionaryType>();
         getDictionaryContent(0, "job_identity");//职业身份
         getDictionaryContent(1, "under_own_car");//名下车产
         getDictionaryContent(2, "under_own_hour");//名下房产
@@ -216,42 +158,10 @@ public class CreditSecondFrag extends BaseFragment {
         map.put(2, false);
         productInfo = getArguments().getParcelable(CreditDetailAct.PRODUCTINFO);
         getData();
-//        //如果taskManageId为空则不显示贷款提速
-//        if (TextUtils.isEmpty(productInfo.getTaskManageId())) {
-//            ts_ll.setVisibility(View.GONE);
-//        } else {
-//            ts_ll.setVisibility(View.VISIBLE);
-//            mlv.setVisibility(View.GONE);
-//            findTaskBytaskIds(productInfo.getTaskManageId());
-//        }
-//
-//
-//        mlv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-//                if (taskEntityList.get(position).getTaskStatus() == -1) {
-//                    findTaskStrategy(taskEntityList.get(position), position);
-//                } else if ((taskEntityList.get(position).getTaskStatus() == 0) || (taskEntityList.get(position).getTaskStatus() == 1)) {
-//                    findTaskDetail(taskEntityList.get(position), position);
-//
-//                }
-//            }
-//        });
         loadView.setOnRetryListener(new LoadingView.OnRetryListener() {
             @Override
             public void OnRetry() {
                 getData();
-            }
-        });
-
-    }
-
-
-    private void scrollDown() {
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                criSv.fullScroll(ScrollView.FOCUS_DOWN);
             }
         });
     }
@@ -289,12 +199,44 @@ public class CreditSecondFrag extends BaseFragment {
             }
         });
     }
-
+    private void assignViews() {
+        ivSlide = (ImageView) view.findViewById(R.id.ivSlide);
+        tbSex = (ToggleButton) view.findViewById(R.id.tbSex);
+        criSv = (ScrollView) view.findViewById(R.id.criSv);
+        sexRg = (RadioGroup) view.findViewById(R.id.sex_rg);
+        sexMan = (RadioButton) view.findViewById(R.id.sex_man);
+        sexWoman = (RadioButton) view.findViewById(R.id.sex_woman);
+        name = (EditText) view.findViewById(R.id.name);
+        IdCard = (EditText) view.findViewById(R.id.IdCard);
+        position = (TextView) view.findViewById(R.id.position);
+        address = (EditText) view.findViewById(R.id.address);
+        rlMarrayed = (RelativeLayout) view.findViewById(R.id.rl_marrayed);
+        tvMarrayed = (TextView) view.findViewById(R.id.tv_marrayed);
+        tvJiguan = (TextView) view.findViewById(R.id.tv_jiguan);
+        tvAddress = (TextView) view.findViewById(R.id.tv_address);
+        rlWork = (RelativeLayout) view.findViewById(R.id.rl_work);
+        tvWork = (TextView) view.findViewById(R.id.tv_work);
+        companyName = (EditText) view.findViewById(R.id.company_name);
+        zhiwu = (EditText) view.findViewById(R.id.zhiwu);
+        age = (EditText) view.findViewById(R.id.age);
+        rlSb = (RelativeLayout) view.findViewById(R.id.rl_sb);
+        tvSb = (TextView) view.findViewById(R.id.tv_sb);
+        rlGjj = (RelativeLayout) view.findViewById(R.id.rl_gjj);
+        tvGjj = (TextView) view.findViewById(R.id.tv_gjj);
+        rlHome = (RelativeLayout) view.findViewById(R.id.rl_home);
+        tvHome = (TextView) view.findViewById(R.id.tv_home);
+        rlCar = (RelativeLayout) view.findViewById(R.id.rl_car);
+        tvCar = (TextView) view.findViewById(R.id.tv_car);
+        rlXy = (RelativeLayout) view.findViewById(R.id.rl_xy);
+        tvXy = (TextView) view.findViewById(R.id.tv_xy);
+        secondBtnNext = (Button) view.findViewById(R.id.second_btn_next);
+        cbSelectSex = (CheckBox) view.findViewById(R.id.cb_select_sex);
+    }
     @OnClick({R.id.cb_select_sex, R.id.second_btn_next, R.id.zz_tv, R.id.rlNative, R.id.rl_marrayed, R.id.rl_sb, R.id.rl_gjj, R.id.rl_work
             , R.id.rl_home, R.id.rl_car, R.id.rl_xy, R.id.rlAddress, R.id.rlPosition, R.id.commit_file, R.id.commit_idCard,R.id.tvSure})
-    public void todo(View v) {
+    public void todo(View v){
         Intent intent = null;
-        switch (v.getId()) {
+        switch (v.getId()){
             case R.id.cb_select_sex:
 
                 break;
@@ -351,23 +293,6 @@ public class CreditSecondFrag extends BaseFragment {
                     map.put(1, false);
                 }
                 break;
-//            case R.id.ts_tv://贷款提速显示与否
-//                //给 mlv适配任务内容
-//                if (!map.get(2)) {
-//                    obaDownts.start();
-//                    mlv.setVisibility(View.VISIBLE);
-//                    tsll.setVisibility(View.VISIBLE);
-//
-//                    map.put(2, true);
-//                    scrollDown();
-//                } else {
-//                    obaOnts.start();
-//                    mlv.setVisibility(View.GONE);
-//                    tsll.setVisibility(View.GONE);
-//                    map.put(2, false);
-//                }
-
-//                break;
             case R.id.rl_marrayed://是否结婚
                 dialog = new MySelfSheetDialog(getActivity()).builder();
                 dialog.addSheetItem("未婚", null, new MySelfSheetDialog.OnSheetItemClickListener() {
@@ -430,6 +355,7 @@ public class CreditSecondFrag extends BaseFragment {
                         dialog.addSheetItem(jobList.get(i).getName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
+                                MyLogUtils.info("职业身份which="+which);
                                 tvWork.setText(jobList.get(which - 1).getName());
                                 jobPos = which - 1;
                             }
@@ -446,6 +372,7 @@ public class CreditSecondFrag extends BaseFragment {
                         dialog.addSheetItem(hourseList.get(i).getName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
+                                MyLogUtils.info("房产which="+which);
                                 tvHome.setText(hourseList.get(which - 1).getName());
                                 hoursePos = which - 1;
                             }
@@ -463,6 +390,7 @@ public class CreditSecondFrag extends BaseFragment {
                         dialog.addSheetItem(carList.get(i).getName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
+                                MyLogUtils.info("车产which="+which);
                                 tvCar.setText(carList.get(which - 1).getName());
                                 carPos = which - 1;
                             }
@@ -479,6 +407,7 @@ public class CreditSecondFrag extends BaseFragment {
                         dialog.addSheetItem(creditList.get(i).getName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
+                                MyLogUtils.info("信用状况which="+which);
                                 tvXy.setText(creditList.get(which - 1).getName());
                                 creditPos = which - 1;
                             }
@@ -494,7 +423,6 @@ public class CreditSecondFrag extends BaseFragment {
                 break;
         }
     }
-
     private void getDictionaryContent(final int pos, String key) {
 
         RequestManager.getCommManager().getDicMap(key, new RequestManager.CallBack() {
@@ -530,14 +458,13 @@ public class CreditSecondFrag extends BaseFragment {
             }
         });
     }
-
     /**
      * 获取个人资料
      */
-    private void getData() {
+    private void getData(){
         RequestManager.getCommManager().findUserInfo(new RequestManager.CallBack() {
             @Override
-            public void onSucess(String result) {
+            public void onSucess(String result) throws JSONException {
                 loadView.loadComplete();
                 ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
                 user = rd.getData();
@@ -546,101 +473,87 @@ public class CreditSecondFrag extends BaseFragment {
                         name.setText(user.getUserName());
                         name.setSelection(user.getUserName().length());
                     }
+
                     if (!TextUtils.isEmpty(user.getIdentCard())) {
                         IdCard.setText(user.getIdentCard());//身份证
                         IdCard.setSelection(user.getIdentCard().length());
                     }
+
                     //判断男女
                     if (user.getUserSex() != null) {
                         if (user.getUserSex() == 1) {
                             cbSelectSex.setChecked(false);
-//                            tbSex.setIsSwitch(true);
-//                            sexRg.check(R.id.sex_man);
-//                            sexMan.setTextColor(Color.WHITE);
                         } else if (user.getUserSex() == 0) {
                             cbSelectSex.setChecked(true);
-//                            tbSex.setIsSwitch(false);
-//                            sexRg.check(R.id.sex_woman);
-//                            sexWoman.setTextColor(Color.WHITE);
                         }
                     }
-                   /* if(!TextUtils.isEmpty(user.getJobId())){//职业身份
-                        for (int i=0;i<jobList.size();i++){
-                            if(jobList.get(i).getId().equals(user.getJobId())){
-                                tvWork.setText(jobList.get(i).getName());
-                                break;
-                            }
-                        }
-                    }*/
+
                     if (!TextUtils.isEmpty(user.getHavaJobName())) {//职业身份
                         tvWork.setText(user.getHavaJobName());
                     }
-//                    tvWork.setText(user.getJobName());//职务
-                    if (user.getUserAge() != null)
+
+                    if (user.getUserAge() != null) {
                         age.setText(user.getUserAge() + "");//年龄
-                    if (user.getProFund() != null) {
-                        if (user.getProFund() == 0)
-                            tvGjj.setText("是，有本地公积金");
-                        else
-                            tvGjj.setText("否，没有");
                     }
+
+                    if (user.getProFund() != null) {
+                        if (user.getProFund() == 0) {
+                            tvGjj.setText("是，有本地公积金");
+                        } else {
+                            tvGjj.setText("否，没有");
+                        }
+                    }
+
                     if (!TextUtils.isEmpty(user.getProvince()) && !TextUtils.isEmpty(user.getCity()) && !TextUtils.isEmpty(user.getDistrict())) {
                         position.setText(addressUtil.getProName(user.getProvince())
                                 + addressUtil.getCityName(user.getProvince(), user.getCity())
                                 + addressUtil.getCountryName(user.getCity(), user.getDistrict()));//常住地
                     }
+
                     if (!TextUtils.isEmpty(user.getDetailAddr())) {
                         address.setText(user.getDetailAddr());//详细地址
                     }
+
                     if (!TextUtils.isEmpty(user.getNativePlace())) {
                         tvJiguan.setText(user.getNativePlace());//籍贯
                     }
+
                     if (!TextUtils.isEmpty(user.getNativePlaceAddr())) {
                         tvAddress.setText(user.getNativePlaceAddr());//户籍地址
                     }
+
                     if (user.getMarrySts() != null) {
                         if (user.getMarrySts() == 0)
                             tvMarrayed.setText("未婚");
                         else
                             tvMarrayed.setText("已婚");
                     }
+
                     if (user.getSecailSecurity() != null) {
                         if (user.getSecailSecurity() == 0)
                             tvSb.setText("否，没有");
                         else
                             tvSb.setText("是，有本地社保");
                     }
-                /*    if (!TextUtils.isEmpty(user.getHaveHours())) {//房产类型
-                        for (int i=0;i<hourseList.size();i++){
-                            if(hourseList.get(i).getId().equals(user.getHaveHours())){
-                                tvHome.setText(hourseList.get(i).getName());
-                                break;
-                            }
-                        }
-                    }*/
+
                     if (!TextUtils.isEmpty(user.getHaveHoursName())) {//房产类型
                         tvHome.setText(user.getHaveHoursName());
                     }
-                   /* if (!TextUtils.isEmpty(user.getHaveCar())) {//车产
-                        for (int i=0;i<carList.size();i++){
-                            if(carList.get(i).getId().equals(user.getHaveCar())){
-                                tvCar.setText(carList.get(i).getName());
-                                break;
-                            }
-                        }
-                    }*/
+
                     if (!TextUtils.isEmpty(user.getHaveCarName())) {//车产
                         tvCar.setText(user.getHaveCarName());
                     }
+
                     if (!TextUtils.isEmpty(user.getCompanyName())) {
                         companyName.setText(user.getCompanyName());
                     }
+
                     if (!TextUtils.isEmpty(user.getBusiness())) {
                         zhiwu.setText(user.getBusiness());
                     }
+
                     if (!TextUtils.isEmpty(user.getNativePlaceAddr())) {
                     }
-
 
                     if (!TextUtils.isEmpty(user.getTowYearCredName())) {//信用
                         tvXy.setText(user.getTowYearCredName());
@@ -655,33 +568,27 @@ public class CreditSecondFrag extends BaseFragment {
             }
         });
     }
-
     /**
      * 更新个人资料
      */
-    private void upData() {
-        if (isHaveData()) {
+    private void upData(){
+        if (isHaveData()){
             user.setIdentCard(IdCard.getText().toString());
-//            user.setJobName(tvWork.getText().toString());
-            //职业身份
-            user.setJobId(jobList.get(jobPos).getId());
             user.setDetailAddr(address.getText().toString());
             user.setNativePlace(tvJiguan.getText().toString());
             user.setNativePlaceAddr(tvAddress.getText().toString());
             user.setUserAge(Integer.parseInt(age.getText().toString()));
-//            user.setHaveCar(tvCar.getText().toString());
-            //车产
-            user.setHaveCar(carList.get(carPos).getId());
-//            user.setHaveHours(tvHome.getText().toString());
-            //房产
-            user.setHaveHours(hourseList.get(hoursePos).getId());
+            user.setHaveCar(carList.get(carPos).getId());//车产
+            user.setHaveCarName(carList.get(carPos).getName());
+            user.setJobId(jobList.get(jobPos).getId());//职业身份
+            user.setHavaJobName(jobList.get(jobPos).getName());
+            user.setHaveHours(hourseList.get(hoursePos).getId());//房产
+            user.setHaveHoursName(hourseList.get(hoursePos).getName());
+            user.setTowYearCred(creditList.get(creditPos).getId());//信用状况
+            user.setTowYearCredName(creditList.get(creditPos).getName());
             user.setUserName(name.getText().toString());
             user.setCompanyName(companyName.getText().toString());
             user.setBusiness(zhiwu.getText().toString());
-//            user.setJobName(companyName.getText().toString().trim());
-//            user.setTowYearCred(tvXy.getText().toString().trim());
-            //信用状况
-            user.setTowYearCred(creditList.get(creditPos).getId());
             RequestManager.getCommManager().updateData(user, new RequestManager.CallBack() {
                 @Override
                 public void onSucess(String result) throws JSONException {
@@ -703,12 +610,11 @@ public class CreditSecondFrag extends BaseFragment {
 
                 @Override
                 public void onError(int status, String msg) {
-                    MyToastUtils.showShortToast(context, msg);
+
                 }
             });
         }
     }
-
     private boolean isHaveData() {
         if (!FinancialUtil.isInputChinese(name.getText().toString())) {
             MyToastUtils.showShortToast(getActivity(), "真实姓名必须为中文！");
@@ -789,23 +695,18 @@ public class CreditSecondFrag extends BaseFragment {
         }
         return true;
     }
-
-
-
     private int i = 5;
     private String reOrderId;
     /**
      * 提交订单
      */
-    private void toSubmitOrder() {
+    private void toSubmitOrder(){
         OrderBean orderBean = new OrderBean();
-//        if (!TextUtils.isEmpty(orderNo))
-//            orderBean.setOrderNo(orderNo);
         orderBean.setProductId(productInfo.getProductId());
         orderBean.setTotalAmount(Double.parseDouble(HomeCreditDetailAct.creditMoney) * 10000 + "");//总金额
         orderBean.setTotalPeriods(HomeCreditDetailAct.creditMonth);//总期数
         orderBean.setPeriodsAmount(HomeCreditDetailAct.monthlyPayments);//单期还款金额
-        if (orderBean != null) {
+        if (orderBean != null){
             RequestManager.getCommManager().submitOrder(orderBean, new RequestManager.CallBack() {
                 @Override
                 public void onSucess(String result) {
@@ -833,7 +734,6 @@ public class CreditSecondFrag extends BaseFragment {
                         }
                     }).start();
 
-
                 }
 
                 @Override
@@ -843,7 +743,6 @@ public class CreditSecondFrag extends BaseFragment {
             });
         }
     }
-
     /**
      * 倒计时
      */
@@ -858,6 +757,12 @@ public class CreditSecondFrag extends BaseFragment {
             }
         }
     };
-
-
+    private void scrollDown() {
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                criSv.fullScroll(ScrollView.FOCUS_DOWN);
+            }
+        });
+    }
 }

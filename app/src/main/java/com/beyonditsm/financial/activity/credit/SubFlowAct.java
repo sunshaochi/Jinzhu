@@ -172,12 +172,15 @@ public class SubFlowAct extends BaseActivity {
 //                holder.ivUpload.setImageResource(R.mipmap.load_sucess);
                 holder.tvState.setVisibility(View.VISIBLE);
                 holder.tvIsLoad.setText("已上传");
+                holder.tvIsLoad.setBackgroundResource(R.drawable.btn_bg_green);
             }
             if (list.get(position).getStatus() != null) {
                 if (list.get(position).getStatus() == 0) {
                     holder.tvState.setText("驳回");
+                    holder.tvState.setBackgroundResource(R.drawable.btn_bg_false);
                 } else if (list.get(position).getStatus() == 1) {
                     holder.tvState.setText("通过");
+                    holder.tvState.setBackgroundResource(R.drawable.btn_bg_green);
                 } else if (list.get(position).getStatus() == 2) {
                     holder.tvState.setText("审核中");
                 }

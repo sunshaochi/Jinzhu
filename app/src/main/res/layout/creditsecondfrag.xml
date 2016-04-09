@@ -534,7 +534,7 @@
                 android:layout_marginTop="30dp"
                 android:textColor="#333333"
                 android:textSize="21sp"
-                android:text="恭喜，您已经提交审贷成功！"
+                android:text="恭喜，您已经提交申贷成功！"
                 />
             
             <LinearLayout

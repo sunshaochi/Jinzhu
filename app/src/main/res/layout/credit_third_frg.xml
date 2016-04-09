@@ -9,12 +9,24 @@
         android:background="@color/bg_color">
 
         <ImageView
+            android:id="@+id/iv_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@mipmap/progress_03" />
+            android:background="@mipmap/progress_03" />
     </RelativeLayout>
 
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:id="@+id/ll_upload"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -55,4 +67,108 @@
         android:layout_marginBottom="20dp"
         android:enabled="false"
         />
+    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_uploadSuccess"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <TextView
+                android:drawablePadding="15dp"
+                android:drawableTop="@mipmap/ico_success"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="70dp"
+                android:textColor="#333333"
+                android:textSize="21sp"
+                android:text="恭喜您申贷资料上传完毕！"
+                />
+
+            <TextView
+                android:drawablePadding="15dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="#333333"
+                android:textSize="21sp"
+                android:text="我们会以最快速度进行审核"
+                />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tvNo"
+                    android:drawablePadding="15dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#333333"
+                    android:textSize="21sp"
+                    android:visibility="gone"
+                    android:text="请您耐心等待结果"/>
+
+                <LinearLayout
+                    android:id="@+id/llHas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp"
+                    >
+                    <TextView
+                        android:drawablePadding="15dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textColor="#333333"
+                        android:textSize="21sp"
+                        android:text="若您提交额外增信材料"/>
+                    <TextView
+                        android:drawablePadding="15dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:textColor="#333333"
+                        android:textSize="21sp"
+                        android:text="将能加快审贷速度"/>
+                </LinearLayout>
+
+            </FrameLayout>
+
+
+            <LinearLayout
+                android:layout_marginTop="40dp"
+                android:gravity="center_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/crethr_btn1"
+                    android:background="@drawable/crethr_btn1_bg"
+                    android:textSize="16sp"
+                    android:textColor="#28c350"
+                    android:layout_marginRight="5dp"
+                    android:text="继续申请"
+                    android:layout_width="100dp"
+                    android:layout_height="36dp" />
+
+                <Button
+                    android:id="@+id/crethr_btn2"
+                    android:background="@drawable/crethe_btn2_bg"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="@color/white"
+                    android:text="返回首页"
+                    android:layout_width="100dp"
+                    android:layout_height="36dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
 </LinearLayout>

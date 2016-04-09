@@ -516,4 +516,22 @@ public class CommManager extends RequestManager {
         params.put("orderId",orderId);
         doPost(IFinancialUrl.FIND_EXTRA_FlOW_URL, params, callBack);
     }
+
+    /**
+     * 订单状态
+     * @param orderId
+     * @param callBack
+     */
+    public void applayStatus(String orderId,CallBack callBack){
+        Map<String,String> params = new HashMap<>();
+        params.put("orderId",orderId);
+        doPost(IFinancialUrl.APPLAY_CREDIT_STATUS,params,callBack);
+    }
+
+    public void skipFlow(String orderId,String flowId,CallBack callBack){
+        Map<String,String> params = new HashMap<>();
+        params.put("orderId",orderId);
+        params.put("flowId",flowId);
+        doPost(IFinancialUrl.SKIP_FLOW,params,callBack);
+    }
 }

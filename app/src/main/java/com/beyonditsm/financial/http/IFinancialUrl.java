@@ -215,4 +215,8 @@ public interface IFinancialUrl {
     String SUBIT_ORDER_FLOW_URL=BASE_URL+API_VERSION+"/platform/login/submitOrderFlow.do";
     /*提交审核*/
     String APPLAY_CREDIT_URL=BASE_URL+API_VERSION+"/platform/login/applyCredit.do";
+    /*订单状态*/
+    String APPLAY_CREDIT_STATUS = BASE_URL+API_VERSION+"/platform/login/applyCreditStatus.do";
+    /*跳过某个流程*/
+    String SKIP_FLOW = BASE_URL +API_VERSION +"/platform/login/skipFlow.do";
 }
