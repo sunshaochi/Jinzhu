@@ -59,6 +59,8 @@ public class CreditUploadAct extends BaseActivity {
     private ListView lvUpLoad;
     @ViewInject(R.id.tvSkip)
     private TextView tvSkip;
+    @ViewInject(R.id.tvRemarks)
+    private TextView tvRemarks;
     private String orderId;
     private String flowId;
 
@@ -174,6 +176,10 @@ public class CreditUploadAct extends BaseActivity {
                 upLoadData = GsonUtils.json2Bean(data.toString(), UpLoadEntity.class);
                 if (!TextUtils.isEmpty(upLoadData.getDisplayName()))
                     tvDes.setText(upLoadData.getDisplayName());
+                if (!TextUtils.isEmpty(upLoadData.getDescription())){
+                    tvRemarks.setVisibility(View.VISIBLE);
+                    tvRemarks.setText(upLoadData.getDescription());
+                }
                 creDatas = upLoadData.getItems();
 
                 imageMap = getImageMap(creDatas);
@@ -265,7 +271,6 @@ public class CreditUploadAct extends BaseActivity {
         RequestManager.getCommManager().toUpLoadFile(fileMaps, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
-                MyLogUtils.info("imageUrl=" + result);
                 dialog.cancel();
                 CreditImageBean cib = new CreditImageBean();
                 if (imageMap.get(uploadItemId).size() == 0) {
@@ -432,6 +437,10 @@ public class CreditUploadAct extends BaseActivity {
                     ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + list.get(position).getImageUrl(), holder.ivPhoto, options);
                     if ("0".equals(list.get(position).getIsPass())) {
                         holder.tvStatus.setText("已驳回");
+                        holder.tvRejectRemarks.setVisibility(View.VISIBLE);
+                        if (!TextUtils.isEmpty(list.get(position).getRemark())) {
+                            holder.tvRejectRemarks.setText(list.get(position).getRemark());
+                        }
                     } else if ("1".equals(list.get(position).getIsPass())) {
                         holder.tvStatus.setText("通过");
                     } else if ("2".equals(list.get(position).getIsPass())) {
@@ -494,11 +503,13 @@ public class CreditUploadAct extends BaseActivity {
         public class ViewHolder {
             public final ImageView ivPhoto;
             public final TextView tvStatus;
+            public final TextView tvRejectRemarks;
             public final View root;
 
             public ViewHolder(View root) {
                 ivPhoto = (ImageView) root.findViewById(R.id.ivPhoto);
                 tvStatus = (TextView) root.findViewById(R.id.tvStatus);
+                tvRejectRemarks = (TextView) root.findViewById(R.id.tvRejectRemarks);
                 this.root = root;
             }
         }

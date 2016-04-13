@@ -122,11 +122,23 @@ public class CreditSecondFrag extends BaseFragment {
     private List<DictionaryType> carList, jobList, hourseList, creditList;//车产，职业，房产，信用
     private int jobPos, carPos, hoursePos, creditPos;
     private ProductInfo productInfo;//产品信息
+    private boolean jobSelect = false;
+    private boolean carSelect = false;
+    private boolean hourseSelect = false;
+    private boolean creditSelect = false;
 
     private ObjectAnimator obaDown, obaDownts,obaOn, obaOnts;
     private Map<Integer, Boolean> map = new HashMap<>();
     private UserEntity user;
     private MySelfSheetDialog dialog;
+    private String haveHoursId;
+    private String haveCarId;
+    private String jobId;
+    private String creditId;
+    private String haveHoursName;
+    private String haveCarName;
+    private String haveJobName;
+    private String creditName;
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -355,7 +367,7 @@ public class CreditSecondFrag extends BaseFragment {
                         dialog.addSheetItem(jobList.get(i).getName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
-                                MyLogUtils.info("职业身份which="+which);
+                                jobSelect = true;
                                 tvWork.setText(jobList.get(which - 1).getName());
                                 jobPos = which - 1;
                             }
@@ -366,13 +378,14 @@ public class CreditSecondFrag extends BaseFragment {
                 break;
             case R.id.rl_home:
                 //无房产、商品房、 住宅、 商铺、 办公楼、 厂房、经济/限价房、房改/危改房
+
                 dialog = new MySelfSheetDialog(getActivity()).builder();
                 if (hourseList.size() != 0) {
                     for (int i = 0; i < hourseList.size(); i++) {
                         dialog.addSheetItem(hourseList.get(i).getName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
-                                MyLogUtils.info("房产which="+which);
+                                hourseSelect = true;
                                 tvHome.setText(hourseList.get(which - 1).getName());
                                 hoursePos = which - 1;
                             }
@@ -390,7 +403,7 @@ public class CreditSecondFrag extends BaseFragment {
                         dialog.addSheetItem(carList.get(i).getName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
-                                MyLogUtils.info("车产which="+which);
+                                carSelect = true;
                                 tvCar.setText(carList.get(which - 1).getName());
                                 carPos = which - 1;
                             }
@@ -407,7 +420,7 @@ public class CreditSecondFrag extends BaseFragment {
                         dialog.addSheetItem(creditList.get(i).getName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
-                                MyLogUtils.info("信用状况which="+which);
+                                creditSelect = true;
                                 tvXy.setText(creditList.get(which - 1).getName());
                                 creditPos = which - 1;
                             }
@@ -469,6 +482,14 @@ public class CreditSecondFrag extends BaseFragment {
                 ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
                 user = rd.getData();
                 if (user != null) {
+                    haveHoursId = user.getHaveHours();
+                    haveHoursName = user.getHaveHoursName();
+                    haveCarId = user.getHaveCar();
+                    haveCarName = user.getHaveCarName();
+                    jobId = user.getJobId();
+                    haveJobName = user.getHavaJobName();
+                    creditId = user.getTowYearCred();
+                    creditName = user.getTowYearCredName();
                     if (!TextUtils.isEmpty(user.getUserName())) {
                         name.setText(user.getUserName());
                         name.setSelection(user.getUserName().length());
@@ -536,7 +557,7 @@ public class CreditSecondFrag extends BaseFragment {
                             tvSb.setText("是，有本地社保");
                     }
 
-                    if (!TextUtils.isEmpty(user.getHaveHoursName())) {//房产类型
+                    if (!TextUtils.isEmpty(user.getHaveHoursName())&&!TextUtils.isEmpty(user.getHaveHours())) {//房产类型
                         tvHome.setText(user.getHaveHoursName());
                     }
 
@@ -578,14 +599,42 @@ public class CreditSecondFrag extends BaseFragment {
             user.setNativePlace(tvJiguan.getText().toString());
             user.setNativePlaceAddr(tvAddress.getText().toString());
             user.setUserAge(Integer.parseInt(age.getText().toString()));
-            user.setHaveCar(carList.get(carPos).getId());//车产
-            user.setHaveCarName(carList.get(carPos).getName());
-            user.setJobId(jobList.get(jobPos).getId());//职业身份
-            user.setHavaJobName(jobList.get(jobPos).getName());
-            user.setHaveHours(hourseList.get(hoursePos).getId());//房产
-            user.setHaveHoursName(hourseList.get(hoursePos).getName());
-            user.setTowYearCred(creditList.get(creditPos).getId());//信用状况
-            user.setTowYearCredName(creditList.get(creditPos).getName());
+            if (carSelect){
+                user.setHaveCar(carList.get(carPos).getId());//车产
+                user.setHaveCarName(carList.get(carPos).getName());
+            }else{
+                if (!TextUtils.isEmpty(haveCarId)&&!TextUtils.isEmpty(haveCarName)) {
+                    user.setHaveCar(haveCarId);
+                    user.setHaveCarName(haveCarName);
+                }
+            }
+            if (jobSelect){
+                user.setJobId(jobList.get(jobPos).getId());//职业身份
+                user.setHavaJobName(jobList.get(jobPos).getName());
+            }else{
+                if (!TextUtils.isEmpty(jobId)&&!TextUtils.isEmpty(haveJobName)) {
+                    user.setJobId(jobId);
+                    user.setHavaJobName(haveJobName);
+                }
+            }
+            if (hourseSelect){
+                user.setHaveHours(hourseList.get(hoursePos).getId());//房产
+                user.setHaveHoursName(hourseList.get(hoursePos).getName());
+            }else{
+                if (!TextUtils.isEmpty(haveHoursId)&&!TextUtils.isEmpty(haveHoursName)) {
+                    user.setHaveHours(haveHoursId);
+                    user.setHaveHoursName(haveHoursName);
+                }
+            }
+            if (creditSelect){
+                user.setTowYearCred(creditList.get(creditPos).getId());//信用状况
+                user.setTowYearCredName(creditList.get(creditPos).getName());
+            }else{
+                if (!TextUtils.isEmpty(creditId)&&!TextUtils.isEmpty(creditName)) {
+                    user.setTowYearCred(creditId);
+                    user.setTowYearCredName(creditName);
+                }
+            }
             user.setUserName(name.getText().toString());
             user.setCompanyName(companyName.getText().toString());
             user.setBusiness(zhiwu.getText().toString());

@@ -288,6 +288,7 @@ public class CreditThirFrag extends BaseFragment {
                 JSONObject object = new JSONObject(result);
                 JSONObject data = object.getJSONObject("data");
                 int r = data.getInt("result");
+                String orderSts = data.getString("orderSts");
                 MyLogUtils.info("返回的结果："+r);
                 if (r==1){
                     tvCredit.setBackgroundResource(R.drawable.button_gen);
@@ -361,11 +362,11 @@ public class CreditThirFrag extends BaseFragment {
 //                holder.tvState.setVisibility(View.VISIBLE);
                 holder.tvIsLoad.setText("已上传");
                 holder.tvIsLoad.setBackgroundResource(R.drawable.btn_bg_green);
-            }
 
+            }
             if ("DRAFT".equals(orderStatus)){
                 holder.tvState.setVisibility(View.GONE);
-            }else if ("WAIT_BACKGROUND_APPROVAL".equals(orderStatus)||"CANCEL_REQUET".equals(orderStatus)) {
+            }else if ("WAIT_BACKGROUND_APPROVAL".equals(orderStatus)||"CANCEL_REQUET".equals(orderStatus)||"NO_PASS".equals(orderStatus)||"".equals(orderStatus)) {
                 holder.tvState.setVisibility(View.VISIBLE);
             }
             if (list.get(position).getStatus() != null) {
