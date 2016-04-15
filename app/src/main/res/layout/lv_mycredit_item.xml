@@ -24,8 +24,7 @@
             <TextView
                 android:id="@+id/tv_productName"
                 style="@style/tv_second_style"
-                android:layout_centerVertical="true"
-                android:text="我的贷款" />
+                android:layout_centerVertical="true" />
 
             <ImageView
                 android:id="@+id/ivMs"
@@ -45,7 +44,6 @@
             <TextView
                 android:id="@+id/tv_totalAmount"
                 style="@style/tv_price"
-                android:text="20"
                 android:textSize="16sp" />
 
             <TextView
@@ -71,7 +69,6 @@
                 android:id="@+id/tv_periodsAmount"
                 style="@style/tv_price"
                 android:layout_marginLeft="3dp"
-                android:text="3000"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -86,7 +83,6 @@
                 style="@style/tv_price"
                 android:layout_centerInParent="true"
                 android:gravity="center"
-                android:text="审核中"
                 android:textSize="14sp" />
 
             <ImageView

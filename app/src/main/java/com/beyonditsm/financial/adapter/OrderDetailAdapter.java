@@ -142,6 +142,9 @@ public class OrderDetailAdapter extends BaseAdapter implements View.OnClickListe
             if ("CUSTOMER_CANCEL_ORDER".equals(ode.getOrderFlowStatus())){//取消订单
                 holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_failed);
             }
+            if ("DATA_REJECT_UPDATA".equals(ode.getOrderFlowStatus())){//资料驳回
+                holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_failed);
+            }
         }
         return convertView;
     }

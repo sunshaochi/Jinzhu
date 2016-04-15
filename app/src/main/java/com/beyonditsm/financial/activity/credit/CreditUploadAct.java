@@ -437,8 +437,8 @@ public class CreditUploadAct extends BaseActivity {
                     ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + list.get(position).getImageUrl(), holder.ivPhoto, options);
                     if ("0".equals(list.get(position).getIsPass())) {
                         holder.tvStatus.setText("已驳回");
-                        holder.tvRejectRemarks.setVisibility(View.VISIBLE);
                         if (!TextUtils.isEmpty(list.get(position).getRemark())) {
+                            holder.tvRejectRemarks.setVisibility(View.VISIBLE);
                             holder.tvRejectRemarks.setText(list.get(position).getRemark());
                         }
                     } else if ("1".equals(list.get(position).getIsPass())) {

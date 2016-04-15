@@ -522,6 +522,8 @@ public class MyCreditDetailFragment extends BaseFragment {
                             tvStatus.setText("已取消");
                         }else if ("DRAFT".equals(status)){
                             tvStatus.setText("资料待上传");
+                        }else if ("REJECT".equals(status)){
+                            tvStatus.setText("已驳回");
                         }
 
                         if (!"SUPPLEMENT_DATA".equals(status)) {

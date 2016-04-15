@@ -40,6 +40,7 @@ public class SubFlowAct extends BaseActivity {
     private String orderId;
 
     private MyAdapter adapter;
+
     @Override
     public void setLayout() {
         setContentView(R.layout.act_sub_flow);
@@ -49,14 +50,14 @@ public class SubFlowAct extends BaseActivity {
     public void init(Bundle savedInstanceState) {
         EventBus.getDefault().register(this);
         setTopTitle("提交增信资料");
-        orderId=getIntent().getStringExtra("order_id");
-        datas=getIntent().getParcelableArrayListExtra("sub_list");
+        orderId = getIntent().getStringExtra("order_id");
+        datas = getIntent().getParcelableArrayListExtra("sub_list");
         loadView.setNoContentTxt("暂无增信资料需要上传");
-        if(datas!=null&&datas.size()>0) {
+        if (datas != null && datas.size() > 0) {
             loadView.loadComplete();
             adapter = new MyAdapter(datas);
             lvCredit.setAdapter(adapter);
-        }else{
+        } else {
             findOrderFlow(orderId);
         }
         lvCredit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -92,26 +93,33 @@ public class SubFlowAct extends BaseActivity {
 
     /**
      * 是否需要增信资料
+     *
      * @param orderId
      */
-    private void findOrderFlow(String orderId){
+    private void findOrderFlow(String orderId) {
         RequestManager.getCommManager().findOrderFlow(orderId, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
                 loadView.loadComplete();
                 JSONObject jsonObject = new JSONObject(result);
-                JSONArray array = jsonObject.getJSONArray("data");
+                String message = jsonObject.getString("message");
+                if (message.equals("查询流程成功")) {
+                    JSONArray array = jsonObject.getJSONArray("data");
 //                List<UpLoadEntity> datas = gson.fromJson(array.toString(), new TypeToken<List<UpLoadEntity>>() {
 //                }.getType());
-                datas = gson.fromJson(array.toString(), new TypeToken<List<UpLoadEntity>>() {
-                }.getType());
-                if (adapter == null) {
-                    adapter = new MyAdapter(datas);
-                    lvCredit.setAdapter(adapter);
-                } else {
-                    adapter.notifyChange(datas);
-                }
+                    datas = gson.fromJson(array.toString(), new TypeToken<List<UpLoadEntity>>() {
+                    }.getType());
 
+                    if (adapter == null) {
+                        adapter = new MyAdapter(datas);
+                        lvCredit.setAdapter(adapter);
+                    } else {
+                        adapter.notifyChange(datas);
+                    }
+                }else{
+//                    JSONObject data = jsonObject.getJSONObject("data");
+                    loadView.setNoContentTxt("暂无增信资料需要上传");
+                }
             }
 
             @Override

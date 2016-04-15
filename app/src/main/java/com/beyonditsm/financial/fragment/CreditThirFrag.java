@@ -366,7 +366,7 @@ public class CreditThirFrag extends BaseFragment {
             }
             if ("DRAFT".equals(orderStatus)){
                 holder.tvState.setVisibility(View.GONE);
-            }else if ("WAIT_BACKGROUND_APPROVAL".equals(orderStatus)||"CANCEL_REQUET".equals(orderStatus)||"NO_PASS".equals(orderStatus)||"".equals(orderStatus)) {
+            }else if ("WAIT_BACKGROUND_APPROVAL".equals(orderStatus)||"CANCEL_REQUET".equals(orderStatus)||"NO_PASS".equals(orderStatus)||"REJECT".equals(orderStatus)||"PASS".equals(orderStatus)) {
                 holder.tvState.setVisibility(View.VISIBLE);
             }
             if (list.get(position).getStatus() != null) {

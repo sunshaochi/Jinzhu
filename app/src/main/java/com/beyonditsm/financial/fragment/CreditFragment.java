@@ -427,6 +427,9 @@ public class CreditFragment extends BaseFragment {
                     } else {
                         adapter.setNotifyChange(datas, creditTotal, creditTime);
                     }
+                }else if (TextUtils.isEmpty(etAmount.getText().toString().trim())||TextUtils.isEmpty(tvM.getText().toString().trim())){
+                    MyToastUtils.showShortToast(getActivity(), "请输入贷款金额或贷款期限");
+                    return;
                 } else {
                     double creditTotal = Double.valueOf(etAmount.getText().toString().trim()) * 10000;
 
