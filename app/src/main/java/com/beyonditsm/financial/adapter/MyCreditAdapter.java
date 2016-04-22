@@ -80,17 +80,21 @@ public  class MyCreditAdapter extends BaseAdapter {
         holder.tvTotalAmount.setText(df.format(Double.valueOf(list.get(position).getTotalAmount()) / 10000) + "万");
         holder.tvPeriodsAmount.setText(df.format(Double.valueOf(list.get(position).getPeriodsAmount()) / 10000) + "万");
         String status = list.get(position).getOrderSts();
-        if ("CREDIT_MANAGER_APPROVAL".equals(status) ||
-                "CREDIT_MANAGER_GRAB".equals(status) || "ORGANIZATION_APPROVAL".equals(status)) {
-            holder.tvName.setText("审批中");
+        if ("ORGANIZATION_APPROVAL".equals(status)) {
+            holder.tvName.setText("机构审批中");
             holder.tvName.setTextColor(Color.parseColor("#ff6633"));
 
-        } else if ("PASS".equals(status)) {
+        } else if ("CREDIT_MANAGER_GRAB".equals(status)) {
+            holder.tvName.setText("待抢单");
+            holder.tvName.setTextColor(Color.parseColor("#ff6633"));
+        }else if ("CREDIT_MANAGER_APPROVAL".equals(status)){
+            holder.tvName.setText("已抢单");
+            holder.tvName.setTextColor(Color.parseColor("#ff6633"));
+        }else if ("PASS".equals(status)) {
             holder.tvName.setText("审批通过");
             holder.tvName.setTextColor(Color.parseColor("#1fd45f"));
 
-        } else if ("WAIT_BACKGROUND_APPROVAL".equals(status)
-                ) {
+        } else if ("WAIT_BACKGROUND_APPROVAL".equals(status)) {
             holder.tvName.setText("待审批");
             holder.tvName.setTextColor(Color.parseColor("#ff6633"));
 
@@ -108,7 +112,7 @@ public  class MyCreditAdapter extends BaseAdapter {
             holder.tvName.setText("资料待上传");
             holder.tvName.setTextColor(Color.parseColor("#ff6633"));
         }else if ("REJECT".equals(status)){
-            holder.tvName.setText("已驳回");
+            holder.tvName.setText("驳回");
             holder.tvName.setTextColor(Color.parseColor("#ff0000"));
         }
 

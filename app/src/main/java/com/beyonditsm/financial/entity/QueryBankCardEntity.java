@@ -28,6 +28,11 @@ public class QueryBankCardEntity implements Parcelable {
      */
 
     private int status;
+    /**
+     * accountName : 吕东东
+     */
+
+    private String accountName;
 
     protected QueryBankCardEntity(Parcel in) {
         cardType = in.readString();
@@ -121,5 +126,13 @@ public class QueryBankCardEntity implements Parcelable {
 
     public int getStatus() {
         return status;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 }

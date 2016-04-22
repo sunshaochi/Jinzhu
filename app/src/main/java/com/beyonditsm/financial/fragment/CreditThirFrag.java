@@ -71,6 +71,8 @@ public class CreditThirFrag extends BaseFragment {
 
     private int act_type;
     private String orderStatus;
+    private String orderSts;
+
     @Override
     public View initView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.credit_third_frg, null);
@@ -97,6 +99,7 @@ public class CreditThirFrag extends BaseFragment {
                 Intent intent = new Intent(getContext(), CreditUploadAct.class);
                 intent.putExtra("orderId", orderId);
                 intent.putExtra("flowId", datas.get(position).getFlowId());
+                intent.putExtra("status",datas.get(position).getStatus());
                 getActivity().startActivity(intent);
             }
         });
@@ -220,10 +223,16 @@ public class CreditThirFrag extends BaseFragment {
             @Override
             public void onSucess(String result) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result);
-                JSONArray array = jsonObject.getJSONArray("data");
-                List<UpLoadEntity> datas = gson.fromJson(array.toString(), new TypeToken<List<UpLoadEntity>>() {
-                }.getType());
-                CreditStepAct.upList = datas;
+                String message = jsonObject.getString("message");
+                if (!"没有可用的增信流程".equals(message)) {
+                    JSONArray array = jsonObject.getJSONArray("data");
+                    List<UpLoadEntity> datas = gson.fromJson(array.toString(), new TypeToken<List<UpLoadEntity>>() {
+                    }.getType());
+                    CreditStepAct.upList = datas;
+
+                }else{
+                    CreditStepAct.upList=null;
+                }
                 if (act_type == 0) {
 //                    EventBus.getDefault().post(new CreditStepAct.FirstEvent(3, orderId));
                     llUploadSuccess.setVisibility(View.VISIBLE);
@@ -288,8 +297,8 @@ public class CreditThirFrag extends BaseFragment {
                 JSONObject object = new JSONObject(result);
                 JSONObject data = object.getJSONObject("data");
                 int r = data.getInt("result");
-                String orderSts = data.getString("orderSts");
-                MyLogUtils.info("返回的结果："+r);
+                orderSts = data.getString("orderSts");
+                MyLogUtils.info("返回的结果："+r+",orderSts:"+orderSts);
                 if (r==1){
                     tvCredit.setBackgroundResource(R.drawable.button_gen);
                     tvCredit.setEnabled(true);
@@ -366,9 +375,24 @@ public class CreditThirFrag extends BaseFragment {
             }
             if ("DRAFT".equals(orderStatus)){
                 holder.tvState.setVisibility(View.GONE);
-            }else if ("WAIT_BACKGROUND_APPROVAL".equals(orderStatus)||"CANCEL_REQUET".equals(orderStatus)||"NO_PASS".equals(orderStatus)||"REJECT".equals(orderStatus)||"PASS".equals(orderStatus)) {
+            }else if ("WAIT_BACKGROUND_APPROVAL".equals(orderStatus) ||//待审批
+                    "CANCEL_REQUET".equals(orderStatus) ||//取消订单
+                    "NO_PASS".equals(orderStatus)||//审批不通过
+                    "REJECT".equals(orderStatus)||//驳回
+                    "PASS".equals(orderStatus)||//通过
+                    "SUPPLEMENT_DATA".equals(orderStatus)||//补件中
+                    "ORGANIZATION_APPROVAL".equals(orderStatus)||//机构审批中
+                    "CREDIT_MANAGER_GRAB".equals(orderStatus)||//待抢单
+                    "CREDIT_MANAGER_APPROVAL".equals(orderStatus)){//已抢单
                 holder.tvState.setVisibility(View.VISIBLE);
             }
+//            else if () {
+//                holder.tvState.setVisibility(View.VISIBLE);
+//            }
+//            if (!"DRAFT".equals(orderSts)){
+//                holder.tvState.setVisibility(View.VISIBLE);
+//            }
+
             if (list.get(position).getStatus() != null) {
                 if (list.get(position).getStatus() == 0) {
                     holder.tvState.setText("驳回");
@@ -378,6 +402,7 @@ public class CreditThirFrag extends BaseFragment {
                     holder.tvState.setBackgroundResource(R.drawable.btn_bg_green);
                 } else if (list.get(position).getStatus() == 2) {
                     holder.tvState.setText("审核中");
+                    holder.tvState.setBackgroundResource(R.drawable.button_gen);
                 }
             }
 

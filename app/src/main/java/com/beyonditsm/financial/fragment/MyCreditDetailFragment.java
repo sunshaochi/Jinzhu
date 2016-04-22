@@ -483,10 +483,13 @@ public class MyCreditDetailFragment extends BaseFragment {
 
                         String status = data.getOrderSts();
 
-                        if ("CREDIT_MANAGER_APPROVAL".equals(status) ||
-                                "CREDIT_MANAGER_GRAB".equals(status) || "ORGANIZATION_APPROVAL".equals(status)) {
-                            tvStatus.setText("审批中");
-                        } else if ("PASS".equals(status)) {
+                        if ( "ORGANIZATION_APPROVAL".equals(status)) {//机构审批 机构正在进行审批
+                            tvStatus.setText("机构审批中");
+                        }else if ("CREDIT_MANAGER_GRAB".equals(status)){//信贷经理抢单 当前节点信贷经理可以抢单
+                            tvStatus.setText("待抢单");
+                        }else if ("CREDIT_MANAGER_APPROVAL".equals(status)){//信贷经理审批中 当前节点信贷经理已抢到单
+                            tvStatus.setText("已抢单");
+                        }else if ("PASS".equals(status)) {//审批通过 机构审批通过
                             tvStatus.setText("审批通过");
                             tvStatus.setBackgroundResource(R.drawable.cre_btn_green);
                             llCreditRemark.setVisibility(View.GONE);
@@ -510,17 +513,19 @@ public class MyCreditDetailFragment extends BaseFragment {
                                 String periods = data.getBankPracticalPeriods();
                                 getMOnthPay(loan, rate, periods);
                             }
-                        } else if ("WAIT_BACKGROUND_APPROVAL".equals(status)
-                                ) {
+                        /**
+                        * 等待后台审批 用户提交订单后的状态， 当前节点由后台管理（我们平台的工作人员）进行第一轮审批，审批完成后信贷经理才可以抢单
+                        */
+                        } else if ("WAIT_BACKGROUND_APPROVAL".equals(status)) {
                             tvStatus.setText("待审批");
-                        } else if ("SUPPLEMENT_DATA".equals(status)) {
+                        } else if ("SUPPLEMENT_DATA".equals(status)) {//补件中 由信贷经理或机构发起的补件 由信贷经理与客户联系，要求客户补件
                             tvStatus.setText("补件中");
                             rlbj.setVisibility(View.VISIBLE);
-                        } else if ("NO_PASS".equals(status)) {
+                        } else if ("NO_PASS".equals(status)) {//不通过 机构审批不通过
                             tvStatus.setText("审批不通过");
-                        } else if ("CANCEL_REQUET".equals(status)) {
+                        } else if ("CANCEL_REQUET".equals(status)) {//取消申请 客户取消申请
                             tvStatus.setText("已取消");
-                        }else if ("DRAFT".equals(status)){
+                        }else if ("DRAFT".equals(status)){//草稿
                             tvStatus.setText("资料待上传");
                         }else if ("REJECT".equals(status)){
                             tvStatus.setText("已驳回");

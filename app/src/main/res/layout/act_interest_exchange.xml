@@ -168,11 +168,10 @@
                             android:layout_width="150dp"
                             android:layout_height="40dp"
                             android:textSize="24sp"
-                            android:maxWidth="150dp"
                             android:background="@null"
                             android:inputType="number"
                             android:numeric="integer"
-                            android:cursorVisible="true"
+                            android:cursorVisible="false"
                             android:textColor="@color/tv_money_color"
                             android:layout_centerInParent="true"
                             />
@@ -235,21 +234,44 @@
                     android:background="@color/line_color"/>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
+                    android:layout_height="40dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:textColor="#333333"
                         android:textSize="14sp"
-                        android:text="银行名称"/>
-                    <EditText
-                        android:id="@+id/bankName"
-                        style="@style/cre_et"
-                        android:layout_marginLeft="15dp"
-                        android:hint="请输入银行名称"
-                        android:maxLength="18" />
+                        android:text="银行卡号"/>
+                    <!--<EditText
+                    android:id="@+id/bankName"
+                    style="@style/cre_et"
+                    android:layout_marginLeft="15dp"
+                    android:hint="请输入银行名称"
+                    android:maxLength="18" />-->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:id="@+id/bankCount"
+                            style="@style/cre_et"
+                            android:inputType="number"
+                            android:numeric="integer"
+                            android:layout_marginLeft="15dp"
+                            android:hint="请输入银行卡号"
+                            android:maxLength="19"
+                            android:gravity="center_vertical"/>
+                        <TextView
+                            android:id="@+id/tvBankCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@mipmap/button_select"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="20dp"
+                            android:visibility="gone"/>
+                    </RelativeLayout>
                 </LinearLayout>
                 <View
                     android:layout_width="match_parent"
@@ -259,28 +281,50 @@
                     android:background="@color/line_color"/>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
+                    android:layout_height="40dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:textColor="#333333"
                         android:textSize="14sp"
-                        android:text="银行卡号"/>
-                    <EditText
+                        android:text="银行名称"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:id="@+id/bankName"
+                            style="@style/cre_et"
+                            android:layout_marginLeft="15dp"
+                            android:maxLength="18"
+                            android:clickable="false"
+                            android:hint="请输入银行名称"/>
+                        <TextView
+                            android:id="@+id/tvBankName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@mipmap/button_select"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="20dp"
+                            android:visibility="gone"/>
+                    </RelativeLayout>
+                    <!--<EditText
                         android:id="@+id/bankCount"
                         style="@style/cre_et"
                         android:inputType="number"
                         android:numeric="integer"
                         android:layout_marginLeft="15dp"
                         android:hint="请输入银行卡号"
-                        android:maxLength="19" />
+                        android:maxLength="19" />-->
                 </LinearLayout>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
                     android:background="@color/line_color"/>
                 <LinearLayout
                     android:id="@+id/lldiqu"

@@ -61,6 +61,8 @@ public class CreditUploadAct extends BaseActivity {
     private TextView tvSkip;
     @ViewInject(R.id.tvRemarks)
     private TextView tvRemarks;
+    @ViewInject(R.id.tvSave)
+    private TextView tvSave;
     private String orderId;
     private String flowId;
 
@@ -106,7 +108,11 @@ public class CreditUploadAct extends BaseActivity {
         setTopTitle("上传资料图片");
         orderId = getIntent().getStringExtra("orderId");
         flowId = getIntent().getStringExtra("flowId");
-
+        int status = getIntent().getIntExtra("status", 0);
+        if (status==1){//流程状态是通过的情况下不能点击保存
+            tvSave.setEnabled(false);
+            tvSave.setBackgroundResource(R.drawable.button_grey);
+        }
         if ("7930d49af22a4a8eae5fe22f7dcde252".equals(flowId)) {//园区公积金显示
             tvSkip.setVisibility(View.VISIBLE);
         }
@@ -514,4 +520,5 @@ public class CreditUploadAct extends BaseActivity {
             }
         }
     }
+
 }

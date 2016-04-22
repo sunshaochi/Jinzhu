@@ -15,6 +15,7 @@ import com.beyonditsm.financial.entity.UserLoginEntity;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.GsonUtils;
+import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.widget.ScaleAllImageView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
@@ -43,6 +44,9 @@ public class MyWalletActivity extends BaseActivity{
     private TextView tvWeitGetMoney;//待奖励
     @ViewInject(R.id.tv_DikouMoney)
     private TextView tvDikouMoney;//抵扣金额
+    @ViewInject(R.id.loadingView)
+    private LoadingView loadingView;
+
 
 
     @SuppressWarnings("deprecation")
@@ -87,6 +91,14 @@ public class MyWalletActivity extends BaseActivity{
         }else {
             setUserInfo();
         }
+        loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
+            @Override
+            public void OnRetry() {
+                getUserLoginInfo();
+                getUserInfo();
+                findServantInfo();
+            }
+        });
     }
 
     private void setUserLogin(){
@@ -174,13 +186,14 @@ public class MyWalletActivity extends BaseActivity{
         RequestManager.getUserManager().findUserLoginInfo(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
+                loadingView.loadComplete();
                 ResultData<UserLoginEntity> rd = (ResultData<UserLoginEntity>) GsonUtils.json(result, UserLoginEntity.class);
                 ule = rd.getData();
             }
 
             @Override
             public void onError(int status, String msg) {
-
+                loadingView.loadError();
             }
         });
     }
@@ -193,6 +206,7 @@ public class MyWalletActivity extends BaseActivity{
         RequestManager.getCommManager().findUserInfo(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
+                loadingView.loadComplete();
                 ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
                 user = rd.getData();
                 if (user != null) {
@@ -214,7 +228,7 @@ public class MyWalletActivity extends BaseActivity{
 
             @Override
             public void onError(int status, String msg) {
-
+                loadingView.loadError();
             }
         });
     }
@@ -227,6 +241,7 @@ public class MyWalletActivity extends BaseActivity{
         RequestManager.getServicerManager().findServantDetail(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
+                loadingView.loadComplete();
                 ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
                 user = rd.getData();
                 if (user != null) {
@@ -247,6 +262,7 @@ public class MyWalletActivity extends BaseActivity{
 
             @Override
             public void onError(int status, String msg) {
+                loadingView.loadError();
             }
         });
     }

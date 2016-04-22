@@ -1,19 +1,17 @@
 package com.beyonditsm.financial.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.entity.OrderListEntity;
 import com.beyonditsm.financial.util.FinancialUtil;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -76,10 +74,21 @@ public class OrderDetailAdp extends BaseAdapter {
         }else if (rowsEntity.getORDER_STS().equals("FINISHED")){
             holder.orderStatus.setText("已完成");
             holder.orderStatus.setTextColor(convertView.getResources().getColor(R.color.green_order));
+        } else if (rowsEntity.getORDER_STS().equals("PAY_FAIL")){
+            holder.orderStatus.setText("支付失败");
+            holder.orderStatus.setTextColor(convertView.getResources().getColor(R.color.backed));
+        }else if (rowsEntity.getORDER_STS().equals("PAY_ING")) {
+            holder.orderStatus.setText("支付中");
+            holder.orderStatus.setTextColor(convertView.getResources().getColor(R.color.tv_price_color));
         }
         holder.orderAmount.setText(rowsEntity.getCASH_OUT_AMOUNT());
         holder.orderType.setText(rowsEntity.getO_TYPE());
-        holder.orderTime.setText(FinancialUtil.timeToDate(Long.valueOf(rowsEntity.getCREATE_TIME())));
+//        holder.orderTime.setText(FinancialUtil.timeToDate(Long.valueOf(rowsEntity.getCREATE_TIME())));
+        if (!TextUtils.isEmpty(rowsEntity.getCREATE_TIME())) {
+            holder.orderTime.setText(FinancialUtil.timeToDate(Long.valueOf(rowsEntity.getCREATE_TIME())));
+        }else{
+            holder.orderTime.setText("----");
+        }
         return convertView;
     }
     class  ViewHolder{

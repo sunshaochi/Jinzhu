@@ -17,15 +17,24 @@ import com.beyonditsm.financial.AppManager;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.entity.OrderBean;
+import com.beyonditsm.financial.entity.QueryBankCardEntity;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.MyLogUtils;
+import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.widget.DialogChooseProvince;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.tandong.sa.json.Gson;
+import com.tandong.sa.json.reflect.TypeToken;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * Created by gxy on 2016/1/14.
@@ -44,6 +53,10 @@ public class CashExchange extends BaseActivity {
     private EditText bankName;//银行名称
     @ViewInject(R.id.bankCount)
     private EditText bankCount;//银行卡号
+    @ViewInject(R.id.tvBankCount)
+    private TextView tvBankCount;//选择银行卡
+    @ViewInject(R.id.tvBankName)
+    private TextView tvBankName;//选择银行
     @ViewInject(R.id.lldiqu)
     private LinearLayout lldiqu;//选择地区
     @ViewInject(R.id.tvdiqu)
@@ -61,6 +74,9 @@ public class CashExchange extends BaseActivity {
 
     private double MIN_MARK = 0.0;
     private double MAX_MARK = 0.0;
+    private List<QueryBankCardEntity> bindList;
+    private int bankNamePos;
+
     @Override
     public void setLayout() {
         setContentView(R.layout.act_cash_exchange);
@@ -72,13 +88,30 @@ public class CashExchange extends BaseActivity {
         setLeftTv("返回");
         setTopTitle("现金兑换");
         user=getIntent().getParcelableExtra("userInfo");
+//        findBankCard();
         if(user!=null){
+//            if (!TextUtils.isEmpty(user.getUserName())){
+//                name.setText(user.getUserName());
+//                name.setEnabled(false);
+//            }else{
+//                user.setUserName(name.getText().toString().trim());
+//            }
             if(!TextUtils.isEmpty(user.getCashTicketAmount())){
                 double dCashA=Double.valueOf(user.getCashTicketAmount());
                 tvxianjin.setText((long)dCashA+"");
                 MAX_MARK=Double.parseDouble(user.getCashTicketAmount());
             }
         }
+        setListener();
+        if (!TextUtils.isEmpty(bankName.getText())&&!TextUtils.isEmpty(bankCount.getText())&&!TextUtils.isEmpty(name.getText())){
+            MyLogUtils.info("aaaaaaaaaaaaaaaaaaaa");
+            bankCount.setEnabled(false);
+            bankName.setEnabled(false);
+            name.setEnabled(false);
+        }
+    }
+
+    private void setListener() {
         tvxianjinfen.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -92,12 +125,12 @@ public class CashExchange extends BaseActivity {
                         double num = Double.parseDouble(s.toString());
                         if (num > MAX_MARK) {
                             s = String.valueOf(MAX_MARK);
-                            double dMAX=Double.valueOf(s.toString());
-                            tvxianjinfen.setText((long)dMAX+"");
+                            double dMAX = Double.valueOf(s.toString());
+                            tvxianjinfen.setText((long) dMAX + "");
                         } else if (num < MIN_MARK) {
                             s = String.valueOf(MIN_MARK);
-                            double dMIN=Double.valueOf(s.toString());
-                            tvxianjinfen.setText((long)dMIN+"");
+                            double dMIN = Double.valueOf(s.toString());
+                            tvxianjinfen.setText((long) dMIN + "");
                         } else {
                             if (s.toString().trim().length() == 0) {
                                 tvgetxianjin.setText("");
@@ -124,8 +157,8 @@ public class CashExchange extends BaseActivity {
                         }
                         if (markVal > MAX_MARK) {
                             Toast.makeText(getBaseContext(), "不能超过最大可兑换数字", Toast.LENGTH_SHORT).show();
-                            double dMAX=Double.valueOf(MAX_MARK);
-                            tvxianjinfen.setText((long)dMAX+"");
+                            double dMAX = Double.valueOf(MAX_MARK);
+                            tvxianjinfen.setText((long) dMAX + "");
                         } else {
                             if (s.toString().trim().length() == 0) {
                                 tvgetxianjin.setText("");
@@ -155,7 +188,38 @@ public class CashExchange extends BaseActivity {
 
             }
         });
+        tvxianjinfen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tvxianjinfen.setCursorVisible(true);
+                tvxianjinfen.requestFocus();
+            }
+        });
+        tvBankCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (bindList != null) {
+                    MySelfSheetDialog dialog = new MySelfSheetDialog(CashExchange.this).builder();
+                    for (int i = 0; i < bindList.size(); i++) {
+                        dialog.addSheetItem(bindList.get(i).getCardNo(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which) {
+                                bankName.setText(bindList.get(which - 1).getBankName());
+                                bankCount.setText(bindList.get(which - 1).getCardNo());
+                                name.setText(bindList.get(which - 1).getAccountName());
+                                bankNamePos = which - 1;
+                                bankCount.setTextColor(getResources().getColor(R.color.tv_primary_color));
+                                bankName.setTextColor(getResources().getColor(R.color.tv_primary_color));
+                                name.setTextColor(getResources().getColor(R.color.tv_primary_color));
+                            }
+                        });
+                    }
+                    dialog.show();
+                }
+            }
+        });
     }
+
     @OnClick({R.id.btn_ok,R.id.lldiqu,R.id.rlset})
     public void toClick(View v){
         Intent intent=null;
@@ -255,5 +319,42 @@ public class CashExchange extends BaseActivity {
         }
 
         return true;
+    }
+
+    /*查询绑定银行卡*/
+    private void findBankCard() {
+        RequestManager.getWalletManager().findBankCard(new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                JSONObject object = new JSONObject(result);
+                JSONArray data = object.getJSONArray("data");
+                Gson gson = new Gson();
+                bindList = gson.fromJson(data.toString(), new TypeToken<List<QueryBankCardEntity>>() {
+                }.getType());
+
+                if (bindList!=null) {
+                    for (int i = 0; i < bindList.size(); i++) {
+                        int status = bindList.get(i).getStatus();
+                        if (status == 2) {
+                            bankName.setText(bindList.get(i).getBankName());
+                            bankCount.setText(bindList.get(i).getCardNo());
+                            name.setText(bindList.get(i).getAccountName());
+                            bankName.setEnabled(false);
+                            bankCount.setEnabled(false);
+                            name.setEnabled(false);
+                            bankCount.setTextColor(getResources().getColor(R.color.tv_primary_color));
+                            bankName.setTextColor(getResources().getColor(R.color.tv_primary_color));
+                            name.setTextColor(getResources().getColor(R.color.tv_primary_color));
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+                MyToastUtils.showShortToast(CashExchange.this, msg);
+            }
+        });
     }
 }

@@ -16,14 +16,14 @@ import com.beyonditsm.financial.AppManager;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.entity.OrderBean;
+import com.beyonditsm.financial.entity.QueryBankCardEntity;
 import com.beyonditsm.financial.entity.ResultData;
-import com.beyonditsm.financial.entity.TaskEntity;
 import com.beyonditsm.financial.entity.UserEntity;
-import com.beyonditsm.financial.entity.UserLoginEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
+import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.widget.DialogChooseProvince;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -62,6 +62,10 @@ public class InterestDeduction extends BaseActivity {
     private EditText bankName;//银行名称
     @ViewInject(R.id.bankCount)
     private EditText bankCount;//银行卡号
+    @ViewInject(R.id.tvBankCount)
+    private TextView tvBankCount;//选择银行卡
+    @ViewInject(R.id.tvBankName)
+    private TextView tvBankName;//选择银行
     @ViewInject(R.id.lldiqu)
     private LinearLayout lldiqu;//选择地区
     @ViewInject(R.id.tvdiqu)
@@ -81,6 +85,9 @@ public class InterestDeduction extends BaseActivity {
 
     private double MIN_MARK = 0.0;
     private double MAX_MARK = 0.0;
+    private List<QueryBankCardEntity> bindList;
+    private int bankNamePos;
+
     @Override
     public void setLayout() {
         setContentView(R.layout.act_interest_exchange);
@@ -94,6 +101,12 @@ public class InterestDeduction extends BaseActivity {
 
         user=getIntent().getParcelableExtra("userInfo");
         if(user!=null){
+//            if (!TextUtils.isEmpty(user.getUserName())){
+//                name.setText(user.getUserName());
+//                name.setEnabled(false);
+//            } else {
+//                user.setUserName(name.getText().toString().trim());
+//            }
             if(!TextUtils.isEmpty(user.getDeductionTicketAmount())){
                 double dCashA=Double.valueOf(user.getDeductionTicketAmount());
                 tvDikouMoney.setText((long)dCashA+"");
@@ -102,7 +115,17 @@ public class InterestDeduction extends BaseActivity {
             }
         }
         getOrderNoList();
+//        findBankCard();
 
+        setListener();
+        if (!TextUtils.isEmpty(bankName.getText())&&!TextUtils.isEmpty(bankCount.getText())&&!TextUtils.isEmpty(name.getText())){
+            bankCount.setEnabled(false);
+            bankName.setEnabled(false);
+            name.setEnabled(false);
+        }
+    }
+
+    private void setListener() {
         tvlixifen.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -128,7 +151,7 @@ public class InterestDeduction extends BaseActivity {
                             }
                             if (!TextUtils.isEmpty(tvlixifen.getText().toString().trim())) {
 //                                tvlixixianjin.setText(Double.parseDouble(s.toString()) / 100 + "");
-                                tvlixixianjin.setText(Integer.parseInt(s.toString())  + "");
+                                tvlixixianjin.setText(Integer.parseInt(s.toString()) + "");
                             }
                         }
                         return;
@@ -179,7 +202,38 @@ public class InterestDeduction extends BaseActivity {
                 }*/
             }
         });
+        tvlixifen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tvlixifen.setCursorVisible(true);
+                tvlixifen.requestFocus();
+            }
+        });
+        tvBankCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (bindList != null) {
+                    MySelfSheetDialog dialog = new MySelfSheetDialog(InterestDeduction.this).builder();
+                    for (int i = 0; i < bindList.size(); i++) {
+                        dialog.addSheetItem(bindList.get(i).getCardNo(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which) {
+                                bankName.setText(bindList.get(which - 1).getBankName());
+                                bankCount.setText(bindList.get(which - 1).getCardNo());
+                                name.setText(bindList.get(which - 1).getAccountName());
+                                bankNamePos = which - 1;
+                                bankCount.setTextColor(getResources().getColor(R.color.tv_primary_color));
+                                bankName.setTextColor(getResources().getColor(R.color.tv_primary_color));
+                                name.setTextColor(getResources().getColor(R.color.tv_primary_color));
+                            }
+                        });
+                    }
+                    dialog.show();
+                }
+            }
+        });
     }
+
     @OnClick({R.id.lldk,R.id.btn_ok,R.id.lldiqu,R.id.tvset,R.id.tv_creName})
     public void toClick(View v){
         Intent intent=null;
@@ -361,15 +415,15 @@ public class InterestDeduction extends BaseActivity {
             public void onSucess(String result) throws JSONException {
                 ResultData<OrderBean> rd = (ResultData<OrderBean>) GsonUtils.json(result, OrderBean.class);
                 orderBeanLixi = rd.getData();
-                if(orderBeanLixi!=null){
-                    if(!TextUtils.isEmpty(orderBeanLixi.getTotalLoanInterest())){
-                        deductionAll.setText(orderBeanLixi.getTotalLoanInterest()+"元");
-                    }else {
+                if (orderBeanLixi != null) {
+                    if (!TextUtils.isEmpty(orderBeanLixi.getTotalLoanInterest())) {
+                        deductionAll.setText(orderBeanLixi.getTotalLoanInterest() + "元");
+                    } else {
                         deductionAll.setText("0.0元");
                     }
-                    if(!TextUtils.isEmpty(orderBeanLixi.getDeductibleInterest())){
-                        deductionDebit.setText(orderBeanLixi.getDeductibleInterest()+"元");
-                    }else {
+                    if (!TextUtils.isEmpty(orderBeanLixi.getDeductibleInterest())) {
+                        deductionDebit.setText(orderBeanLixi.getDeductibleInterest() + "元");
+                    } else {
                         deductionDebit.setText("0.0元");
                     }
                 }
@@ -382,4 +436,39 @@ public class InterestDeduction extends BaseActivity {
         });
     }
 
+    /*查询绑定银行卡*/
+    private void findBankCard() {
+        RequestManager.getWalletManager().findBankCard(new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                JSONObject object = new JSONObject(result);
+                JSONArray data = object.getJSONArray("data");
+                Gson gson = new Gson();
+                bindList = gson.fromJson(data.toString(), new TypeToken<List<QueryBankCardEntity>>() {
+                }.getType());
+
+                if (bindList!=null) {
+                    for (int i = 0; i < bindList.size(); i++) {
+                        int status = bindList.get(i).getStatus();
+                        if (status == 2) {
+                            bankName.setText(bindList.get(i).getBankName());
+                            bankCount.setText(bindList.get(i).getCardNo());
+                            name.setText(bindList.get(i).getAccountName());
+                            bankName.setEnabled(false);
+                            bankCount.setEnabled(false);
+                            name.setEnabled(false);
+                            bankCount.setTextColor(getResources().getColor(R.color.tv_primary_color));
+                            bankName.setTextColor(getResources().getColor(R.color.tv_primary_color));
+                            name.setTextColor(getResources().getColor(R.color.tv_primary_color));
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+                MyToastUtils.showShortToast(InterestDeduction.this, msg);
+            }
+        });
+    }
 }
