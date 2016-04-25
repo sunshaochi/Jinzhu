@@ -269,8 +269,7 @@
                             android:background="@mipmap/button_select"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:layout_marginRight="20dp"
-                            android:visibility="gone"/>
+                            android:layout_marginRight="20dp" />
                     </RelativeLayout>
                 </LinearLayout>
                 <View
@@ -319,6 +318,31 @@
                         android:layout_marginLeft="15dp"
                         android:hint="请输入银行卡号"
                         android:maxLength="19" />-->
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@color/line_color"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:text="支行名称"
+                        android:textColor="#333333"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/depositBank"
+                        style="@style/cre_et"
+                        android:layout_marginLeft="15dp"
+                        android:hint="请输入支行名称" />
                 </LinearLayout>
                 <View
                     android:layout_width="match_parent"

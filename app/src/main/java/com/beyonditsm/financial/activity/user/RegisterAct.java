@@ -29,6 +29,7 @@ import com.beyonditsm.financial.activity.credit.CreditStepAct;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.fragment.MineFragment;
 import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GeneralUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.SpUtils;
@@ -133,30 +134,23 @@ public class RegisterAct extends BaseActivity {
                 break;
             //获取验证码
             case R.id.reg_yzm_btn:
-                phone = regPhone.getText().toString().trim();
-                if (TextUtils.isEmpty(phone)) {
-                    MyToastUtils.showShortToast(getApplicationContext(), "请输入手机号");
-                    return;
-                }
-                if (phone.length() != 11) {
-                    MyToastUtils.showShortToast(getApplicationContext(), "请输入正确的手机号码");
-                    return;
-                }
-
-                String mobile = regPhone.getText().toString().trim();
-                generalUtil.getCode(mobile);
-                generalUtil.setiCode(new GeneralUtils.ICode() {
-                    @Override
-                    public void isSucess(int flag) {
-                        if (flag == 1) {
-                            i = 60;
-                            regYzmBtn.setEnabled(false);
-                            timer = new Timer();
-                            myTask = new MyTimerTask();
-                            timer.schedule(myTask, 0, 1000);
+                if (isValidate()) {
+                    phone = regPhone.getText().toString().trim();
+                    String mobile = regPhone.getText().toString().trim();
+                    generalUtil.getCode(mobile);
+                    generalUtil.setiCode(new GeneralUtils.ICode() {
+                        @Override
+                        public void isSucess(int flag) {
+                            if (flag == 1) {
+                                i = 60;
+                                regYzmBtn.setEnabled(false);
+                                timer = new Timer();
+                                myTask = new MyTimerTask();
+                                timer.schedule(myTask, 0, 1000);
+                            }
                         }
-                    }
-                });
+                    });
+                }
                 break;
             //注册
             case R.id.reg_btn:
@@ -277,8 +271,18 @@ public class RegisterAct extends BaseActivity {
 //        pwd2 = regPwd2.getText().toString().trim();
         yqm = regYqm.getText().toString().trim();
         if (TextUtils.isEmpty(phone)) {
-            MyToastUtils.showShortToast(getApplicationContext(), "请输入手机号");
+            MyToastUtils.showShortToast(getApplicationContext(), "请输入正确的手机号");
             regPhone.requestFocus();
+            return false;
+        }
+        if (!FinancialUtil.isMobileNO(phone)){
+            MyToastUtils.showShortToast(getApplicationContext(), "请输入正确的手机号");
+            regPhone.requestFocus();
+            return false;
+        }
+        if (yzm.length()<6){
+            MyToastUtils.showShortToast(getApplicationContext(), "验证码必须为6位纯数字");
+            regYzm.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(yzm)) {

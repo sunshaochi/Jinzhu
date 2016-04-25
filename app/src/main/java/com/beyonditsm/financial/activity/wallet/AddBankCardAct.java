@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
@@ -147,19 +146,23 @@ public class AddBankCardAct extends BaseActivity {
             return false;
         }
         if (TextUtils.isEmpty(etAccountName.getText().toString())) {
-            MyToastUtils.showShortToast(AddBankCardAct.this, "请输入开户姓名");
+            MyToastUtils.showShortToast(AddBankCardAct.this, "请填写开户姓名");
             return false;
         }
         if (TextUtils.isEmpty(etCardNo.getText().toString())) {
-            MyToastUtils.showShortToast(AddBankCardAct.this, "请输入银行卡号");
+            MyToastUtils.showShortToast(AddBankCardAct.this, "请填写银行卡号");
             return false;
         }
         if (TextUtils.isEmpty(tvBankName.getText().toString())) {
             MyToastUtils.showShortToast(AddBankCardAct.this, "请选择支持银行");
             return false;
         }
+        if (TextUtils.isEmpty(etBranchName.getText().toString())){
+            MyToastUtils.showShortToast(AddBankCardAct.this, "请填写支行名称");
+            return false;
+        }
         if (TextUtils.isEmpty(etFundPassword.getText().toString())) {
-            MyToastUtils.showShortToast(AddBankCardAct.this, "请输入资金密码");
+            MyToastUtils.showShortToast(AddBankCardAct.this, "请填写资金密码");
             return false;
         }
         if (!FinancialUtil.checkBankCard(etCardNo.getText().toString())) {

@@ -62,6 +62,8 @@ public class InterestDeduction extends BaseActivity {
     private EditText bankName;//银行名称
     @ViewInject(R.id.bankCount)
     private EditText bankCount;//银行卡号
+    @ViewInject(R.id.depositBank)
+    private EditText depositBank;//支行名称
     @ViewInject(R.id.tvBankCount)
     private TextView tvBankCount;//选择银行卡
     @ViewInject(R.id.tvBankName)
@@ -115,7 +117,7 @@ public class InterestDeduction extends BaseActivity {
             }
         }
         getOrderNoList();
-//        findBankCard();
+        findBankCard();
 
         setListener();
         if (!TextUtils.isEmpty(bankName.getText())&&!TextUtils.isEmpty(bankCount.getText())&&!TextUtils.isEmpty(name.getText())){
@@ -221,10 +223,12 @@ public class InterestDeduction extends BaseActivity {
                                 bankName.setText(bindList.get(which - 1).getBankName());
                                 bankCount.setText(bindList.get(which - 1).getCardNo());
                                 name.setText(bindList.get(which - 1).getAccountName());
+                                depositBank.setText(bindList.get(which-1).getBranchBankName());
                                 bankNamePos = which - 1;
                                 bankCount.setTextColor(getResources().getColor(R.color.tv_primary_color));
                                 bankName.setTextColor(getResources().getColor(R.color.tv_primary_color));
                                 name.setTextColor(getResources().getColor(R.color.tv_primary_color));
+                                depositBank.setTextColor(getResources().getColor(R.color.tv_primary_color));
                             }
                         });
                     }
@@ -324,6 +328,9 @@ public class InterestDeduction extends BaseActivity {
                 bankCount.requestFocus();
             }
         }
+        if (!TextUtils.isEmpty(depositBank.getText().toString())){
+            orderBean.setDepositBank(depositBank.getText().toString());
+        }
         if(!TextUtils.isEmpty(tvlixixianjin.getText().toString())){
             orderBean.setCashOutAmount(Double.parseDouble(tvlixixianjin.getText().toString()));
         }
@@ -353,8 +360,11 @@ public class InterestDeduction extends BaseActivity {
             Toast.makeText(InterestDeduction.this, "请输入银行卡号", Toast.LENGTH_SHORT).show();
             bankCount.requestFocus();
             return false;
-        }
-        else if(TextUtils.isEmpty(tvlixixianjin.getText().toString())){
+        }else if (TextUtils.isEmpty(depositBank.getText().toString())){
+            MyToastUtils.showShortToast(getApplicationContext(),"请填写支行名称");
+            depositBank.requestFocus();
+            return false;
+        } else if(TextUtils.isEmpty(tvlixixianjin.getText().toString())){
             Toast.makeText(InterestDeduction.this, "未输入抵扣金额", Toast.LENGTH_SHORT).show();
             tvlixifen.requestFocus();
 
@@ -451,15 +461,26 @@ public class InterestDeduction extends BaseActivity {
                     for (int i = 0; i < bindList.size(); i++) {
                         int status = bindList.get(i).getStatus();
                         if (status == 2) {
-                            bankName.setText(bindList.get(i).getBankName());
-                            bankCount.setText(bindList.get(i).getCardNo());
-                            name.setText(bindList.get(i).getAccountName());
-                            bankName.setEnabled(false);
-                            bankCount.setEnabled(false);
-                            name.setEnabled(false);
-                            bankCount.setTextColor(getResources().getColor(R.color.tv_primary_color));
-                            bankName.setTextColor(getResources().getColor(R.color.tv_primary_color));
-                            name.setTextColor(getResources().getColor(R.color.tv_primary_color));
+                            if (!TextUtils.isEmpty(bindList.get(i).getBankName())){
+                                bankName.setText(bindList.get(i).getBankName());
+                                bankName.setEnabled(false);
+                                bankName.setTextColor(getResources().getColor(R.color.tv_primary_color));
+                            }
+                            if (!TextUtils.isEmpty(bindList.get(i).getCardNo())){
+                                bankCount.setText(bindList.get(i).getCardNo());
+                                bankCount.setEnabled(false);
+                                bankCount.setTextColor(getResources().getColor(R.color.tv_primary_color));
+                            }
+                            if (!TextUtils.isEmpty(bindList.get(i).getAccountName())){
+                                name.setText(bindList.get(i).getAccountName());
+                                name.setEnabled(false);
+                                name.setTextColor(getResources().getColor(R.color.tv_primary_color));
+                            }
+                            if (!TextUtils.isEmpty(bindList.get(i).getBranchBankName())){
+                                depositBank.setText(bindList.get(i).getBranchBankName());
+                                depositBank.setEnabled(false);
+                                depositBank.setTextColor(getResources().getColor(R.color.tv_primary_color));
+                            }
                         }
                     }
                 }

@@ -38,6 +38,7 @@ public class WalletManager extends RequestManager{
         queryParams.add(new BasicNameValuePair("userName",orderBean.getUserName()));
         queryParams.add(new BasicNameValuePair("orderId",orderBean.getOrderId()));
         queryParams.add(new BasicNameValuePair("fundPassword",fundPassword));
+        queryParams.add(new BasicNameValuePair("depositBank",orderBean.getDepositBank()));
         doPost(IFinancialUrl.SUBMIT_DEDUCTION_ORDER,queryParams,callBack);
     }
     /**
@@ -53,6 +54,7 @@ public class WalletManager extends RequestManager{
         queryParams.add(new BasicNameValuePair("cashOutAmount",orderBean.getCashOutAmount()+""));
         queryParams.add(new BasicNameValuePair("userName",orderBean.getUserName()));
         queryParams.add(new BasicNameValuePair("fundPassword", fundPassword));
+        queryParams.add(new BasicNameValuePair("depositBank",orderBean.getDepositBank()));
         doPost(IFinancialUrl.SUBMIT_Cash_ORDER, queryParams, callBack);
     }
     /** 设置资金密码

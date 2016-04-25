@@ -32,7 +32,16 @@ public class QueryBankCardEntity implements Parcelable {
      * accountName : 吕东东
      */
 
-    private String accountName;
+    private String accountName;//开户姓名
+    private String branchBankName;//支行名称
+
+    public String getBranchBankName() {
+        return branchBankName;
+    }
+
+    public void setBranchBankName(String branchBankName) {
+        this.branchBankName = branchBankName;
+    }
 
     protected QueryBankCardEntity(Parcel in) {
         cardType = in.readString();

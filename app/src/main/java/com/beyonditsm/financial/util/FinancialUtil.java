@@ -775,4 +775,15 @@ public class FinancialUtil {
         Matcher matcher = pattern.matcher(input);
         return  matcher.matches();//true全部为汉字，否则是false
     }
+
+    /**
+     * 验证手机号是否正确
+     * @param mobiles
+     * @return
+     */
+    public static boolean isMobileNO(String mobiles){
+        Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$");
+        Matcher m = p.matcher(mobiles);
+        return m.matches();
+    }
 }
