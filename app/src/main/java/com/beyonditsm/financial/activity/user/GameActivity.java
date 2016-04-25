@@ -92,10 +92,32 @@ public class GameActivity extends BaseActivity {
         settings.setAppCacheEnabled(true);
 
         wvGame.setWebViewClient(new WebViewClient() {
+            // 点击页面中的链接会调用这个方法
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                // TODO Auto-generated method stub
-                return super.shouldOverrideUrlLoading(view, url);
+                view.loadUrl(url);
+                MyLogUtils.info(url);
+                if (url.endsWith("order")) {
+//                    intent = new Intent(GameActivity.this, MainActivity.class);
+//
+//                    Intent intentBroad = new Intent(MainActivity.UPDATATAB);
+//                    intentBroad.putExtra(GAME_TYPE, 1);
+//                    sendBroadcast(intentBroad);
+//                    startActivity(intent);
+                    intent = new Intent(GameActivity.this,MyCreditAct.class);
+                    startActivity(intent);
+                } else if (url.endsWith("task")) {
+//                    intent = new Intent(GameActivity.this, HardCreditAct.class);
+//                    startActivity(intent);
+                } else if (url.endsWith("friend")) {
+                    intent = new Intent(GameActivity.this, AddressBookAct.class);
+                    startActivity(intent);
+                } else if (url.endsWith("house")) {
+                    intent = new Intent(GameActivity.this, HardCreditAct.class);
+                    startActivity(intent);
+                }
+
+                return true;
             }
 
             @Override
@@ -109,6 +131,8 @@ public class GameActivity extends BaseActivity {
                 // TODO Auto-generated method stub
                 super.onPageFinished(view, url);
             }
+
+
         });
 
         wvGame.setWebChromeClient(new WebChromeClient() {
@@ -147,37 +171,7 @@ public class GameActivity extends BaseActivity {
             }
         });
 
-        wvGame.setWebViewClient(new WebViewClient() {
 
-            // 点击页面中的链接会调用这个方法
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                MyLogUtils.info(url);
-                if (url.endsWith("order")) {
-//                    intent = new Intent(GameActivity.this, MainActivity.class);
-//
-//                    Intent intentBroad = new Intent(MainActivity.UPDATATAB);
-//                    intentBroad.putExtra(GAME_TYPE, 1);
-//                    sendBroadcast(intentBroad);
-//                    startActivity(intent);
-                    intent = new Intent(GameActivity.this,MyCreditAct.class);
-                    startActivity(intent);
-                } else if (url.endsWith("task")) {
-//                    intent = new Intent(GameActivity.this, HardCreditAct.class);
-//                    startActivity(intent);
-                } else if (url.endsWith("friend")) {
-                    intent = new Intent(GameActivity.this, AddressBookAct.class);
-                    startActivity(intent);
-                } else if (url.endsWith("house")) {
-                    intent = new Intent(GameActivity.this, HardCreditAct.class);
-                    startActivity(intent);
-                }
-
-                return true;
-            }
-
-        });
 
 
     }

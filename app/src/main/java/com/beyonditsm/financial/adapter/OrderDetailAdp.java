@@ -6,15 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.entity.OrderListEntity;
 import com.beyonditsm.financial.util.FinancialUtil;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -71,24 +68,22 @@ public class OrderDetailAdp extends BaseAdapter {
         }else if (rowsEntity.getORDER_STS().equals("APPROVAL_NO_PASS")){
             holder.orderStatus.setText("已驳回");
             holder.orderStatus.setTextColor(convertView.getResources().getColor(R.color.backed));
-        }else if (rowsEntity.getORDER_STS().equals("APPROVAL_PASS")){
+        }else if (rowsEntity.getORDER_STS().equals("APPROVAL_PASS")||rowsEntity.getORDER_STS().equals("PAY_SUCCESS")){
             holder.orderStatus.setText("已通过");
             holder.orderStatus.setTextColor(convertView.getResources().getColor(R.color.green_order));
         }else if (rowsEntity.getORDER_STS().equals("FINISHED")){
             holder.orderStatus.setText("已完成");
             holder.orderStatus.setTextColor(convertView.getResources().getColor(R.color.green_order));
-        }else if (rowsEntity.getORDER_STS().equals("PAY_FAIL")){
+        } else if (rowsEntity.getORDER_STS().equals("PAY_FAIL")){
             holder.orderStatus.setText("支付失败");
             holder.orderStatus.setTextColor(convertView.getResources().getColor(R.color.backed));
-        }else if (rowsEntity.getORDER_STS().equals("PAY_ING")){
+        }else if (rowsEntity.getORDER_STS().equals("PAY_ING")) {
             holder.orderStatus.setText("支付中");
             holder.orderStatus.setTextColor(convertView.getResources().getColor(R.color.tv_price_color));
-        }else if (rowsEntity.getORDER_STS().equals("PAY_SUCCESS")){
-            holder.orderStatus.setText("支付成功");
-            holder.orderStatus.setTextColor(convertView.getResources().getColor(R.color.green_order));
         }
         holder.orderAmount.setText(rowsEntity.getCASH_OUT_AMOUNT());
         holder.orderType.setText(rowsEntity.getO_TYPE());
+//        holder.orderTime.setText(FinancialUtil.timeToDate(Long.valueOf(rowsEntity.getCREATE_TIME())));
         if (!TextUtils.isEmpty(rowsEntity.getCREATE_TIME())) {
             holder.orderTime.setText(FinancialUtil.timeToDate(Long.valueOf(rowsEntity.getCREATE_TIME())));
         }else{

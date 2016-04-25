@@ -34,6 +34,15 @@ public class OrderBean implements Parcelable{
     private String deductibleInterest;//可抵扣利息
     private String totalLoanInterest;//总贷款利息
     private String orderId;//订单Id
+    private String depositBank;//支行名称
+
+    public String getDepositBank() {
+        return depositBank;
+    }
+
+    public void setDepositBank(String depositBank) {
+        this.depositBank = depositBank;
+    }
 
     public String getOrderId() {
         return orderId;
@@ -267,6 +276,7 @@ public class OrderBean implements Parcelable{
         dest.writeString(this.deductibleInterest);
         dest.writeString(this.totalLoanInterest);
         dest.writeString(this.orderId);
+        dest.writeString(this.depositBank);
     }
 
     public OrderBean() {
@@ -298,6 +308,7 @@ public class OrderBean implements Parcelable{
         this.deductibleInterest=in.readString();
         this.totalLoanInterest=in.readString();
         this.orderId=in.readString();
+        this.depositBank = in.readString();
     }
 
     public static final Creator<OrderBean> CREATOR = new Creator<OrderBean>() {

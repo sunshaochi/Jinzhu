@@ -62,6 +62,8 @@ public class InterestDeduction extends BaseActivity {
     private EditText bankName;//银行名称
     @ViewInject(R.id.bankCount)
     private EditText bankCount;//银行卡号
+    @ViewInject(R.id.depositBank)
+    private EditText depositBank;//支行名称
     @ViewInject(R.id.tvBankCount)
     private TextView tvBankCount;//选择银行卡
     @ViewInject(R.id.tvBankName)
@@ -77,7 +79,7 @@ public class InterestDeduction extends BaseActivity {
     @ViewInject(R.id.tvset)
     private TextView tvset;//设置资金密码
 
-    private OrderBean orderBean, orderBeanLixi;//订单实体
+    private OrderBean orderBean,orderBeanLixi;//订单实体
     private UserEntity user;//用户实体
 
     private List<OrderBean> list;
@@ -99,26 +101,33 @@ public class InterestDeduction extends BaseActivity {
         setLeftTv("返回");
         setTopTitle("抵扣利息");
 
-        user = getIntent().getParcelableExtra("userInfo");
-        if (user != null) {
-            if (!TextUtils.isEmpty(user.getUserName())) {
-                name.setText(user.getUserName());
-                name.setEnabled(false);
-                name.setTextColor(getResources().getColor(R.color.tv_primary_color));
-            } else {
-                user.setUserName(name.getText().toString().trim());
-            }
-            if (!TextUtils.isEmpty(user.getDeductionTicketAmount())) {
-                double dCashA = Double.valueOf(user.getDeductionTicketAmount());
-                tvDikouMoney.setText((long) dCashA + "");
-                MAX_MARK = Double.parseDouble(user.getDeductionTicketAmount());
+        user=getIntent().getParcelableExtra("userInfo");
+        if(user!=null){
+//            if (!TextUtils.isEmpty(user.getUserName())){
+//                name.setText(user.getUserName());
+//                name.setEnabled(false);
+//            } else {
+//                user.setUserName(name.getText().toString().trim());
+//            }
+            if(!TextUtils.isEmpty(user.getDeductionTicketAmount())){
+                double dCashA=Double.valueOf(user.getDeductionTicketAmount());
+                tvDikouMoney.setText((long)dCashA+"");
+                MAX_MARK=Double.parseDouble(user.getDeductionTicketAmount());
 
             }
         }
-
         getOrderNoList();
-//        findBankCard();
+        findBankCard();
 
+        setListener();
+        if (!TextUtils.isEmpty(bankName.getText())&&!TextUtils.isEmpty(bankCount.getText())&&!TextUtils.isEmpty(name.getText())){
+            bankCount.setEnabled(false);
+            bankName.setEnabled(false);
+            name.setEnabled(false);
+        }
+    }
+
+    private void setListener() {
         tvlixifen.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -213,10 +222,13 @@ public class InterestDeduction extends BaseActivity {
                             public void onClick(int which) {
                                 bankName.setText(bindList.get(which - 1).getBankName());
                                 bankCount.setText(bindList.get(which - 1).getCardNo());
+                                name.setText(bindList.get(which - 1).getAccountName());
+                                depositBank.setText(bindList.get(which-1).getBranchBankName());
                                 bankNamePos = which - 1;
-                                tvBankName.setClickable(false);
-                                bankName.setEnabled(false);
+                                bankCount.setTextColor(getResources().getColor(R.color.tv_primary_color));
                                 bankName.setTextColor(getResources().getColor(R.color.tv_primary_color));
+                                name.setTextColor(getResources().getColor(R.color.tv_primary_color));
+                                depositBank.setTextColor(getResources().getColor(R.color.tv_primary_color));
                             }
                         });
                     }
@@ -226,19 +238,19 @@ public class InterestDeduction extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.lldk, R.id.btn_ok, R.id.lldiqu, R.id.tvset, R.id.tv_creName})
-    public void toClick(View v) {
-        Intent intent = null;
-        switch (v.getId()) {
+    @OnClick({R.id.lldk,R.id.btn_ok,R.id.lldiqu,R.id.tvset,R.id.tv_creName})
+    public void toClick(View v){
+        Intent intent=null;
+        switch (v.getId()){
             case R.id.lldk:
-                if (list.size() != 0) {
+                if(list.size()!=0) {
                     MySelfSheetDialog dialog = new MySelfSheetDialog(InterestDeduction.this).builder();
-                    for (int i = 0; i < list.size(); i++) {
+                    for(int i=0;i<list.size();i++) {
                         dialog.addSheetItem(list.get(i).getOrderNo(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
-                                creName.setText(list.get(which - 1).getOrderNo());
-                                position = which - 1;
+                                creName.setText(list.get(which-1).getOrderNo());
+                                position=which-1;
                                 getLiXiByOrder(creName.getText().toString());
                             }
                         });
@@ -248,31 +260,31 @@ public class InterestDeduction extends BaseActivity {
                 break;
             //确认
             case R.id.btn_ok:
-                if (isValidate()) {
+                if(isValidate()){
                     setOrderBean();
-                    if (!TextUtils.isEmpty(zjPassword.getText().toString().trim())) {
-                        RequestManager.getWalletManager().submitDeductionTOrder(orderBean, zjPassword.getText().toString(), new RequestManager.CallBack() {
-                            @Override
-                            public void onSucess(String result) throws JSONException {
-                                Intent intent = new Intent(InterestDeduction.this, OrderCommitSusAct.class);
-                                startActivity(intent);
-                                MyLogUtils.degug(orderBean.getUserName() + ">" + orderBean.getBankName() + ">" + orderBean.getBankCardNo()
-                                        + ">" + orderBean.getCashOutAmount() + ">" + orderBean.getOrderNo() + ">" + zjPassword.getText().toString());
+                        if (!TextUtils.isEmpty(zjPassword.getText().toString().trim())) {
+                            RequestManager.getWalletManager().submitDeductionTOrder(orderBean, zjPassword.getText().toString(), new RequestManager.CallBack() {
+                                @Override
+                                public void onSucess(String result) throws JSONException {
+                                    Intent intent = new Intent(InterestDeduction.this, OrderCommitSusAct.class);
+                                    startActivity(intent);
+                                    MyLogUtils.degug(orderBean.getUserName() + ">" + orderBean.getBankName() + ">" + orderBean.getBankCardNo()
+                                            + ">" + orderBean.getCashOutAmount() + ">" + orderBean.getOrderNo() + ">" + zjPassword.getText().toString());
 
-                            }
+                                }
 
-                            @Override
-                            public void onError(int status, String msg) {
-                                Toast.makeText(InterestDeduction.this, msg, Toast.LENGTH_SHORT).show();
-                                MyLogUtils.degug(orderBean.getUserName() + ">" + orderBean.getBankName() + ">" + orderBean.getBankCardNo()
-                                        + ">" + orderBean.getCashOutAmount() + ">" + orderBean.getOrderNo() + ">" + zjPassword.getText().toString());
+                                @Override
+                                public void onError(int status, String msg) {
+                                    Toast.makeText(InterestDeduction.this, msg, Toast.LENGTH_SHORT).show();
+                                    MyLogUtils.degug(orderBean.getUserName() + ">" + orderBean.getBankName() + ">" + orderBean.getBankCardNo()
+                                            + ">" + orderBean.getCashOutAmount() + ">" + orderBean.getOrderNo() + ">" + zjPassword.getText().toString());
 
-                            }
-                        });
-                    } else {
-                        Toast.makeText(InterestDeduction.this, "请输入资金密码", Toast.LENGTH_SHORT).show();
-                        zjPassword.requestFocus();
-                    }
+                                }
+                            });
+                        } else {
+                            Toast.makeText(InterestDeduction.this, "请输入资金密码", Toast.LENGTH_SHORT).show();
+                            zjPassword.requestFocus();
+                        }
 
                 }
                 break;
@@ -288,8 +300,8 @@ public class InterestDeduction extends BaseActivity {
                 break;
             //设置资金密码
             case R.id.tvset:
-                intent = new Intent(InterestDeduction.this, SetPwdActivity.class);
-                intent.putExtra("userPhone", user.getAccountName());
+                intent=new Intent(InterestDeduction.this,SetPwdActivity.class);
+                intent.putExtra("userPhone",user.getAccountName());
                 startActivity(intent);
                 break;
 
@@ -299,65 +311,79 @@ public class InterestDeduction extends BaseActivity {
     /**
      * 给订单实体赋值
      */
-    private void setOrderBean() {
-        orderBean = new OrderBean();
-        if (!TextUtils.isEmpty(name.getText().toString())) {
+    private void setOrderBean(){
+        orderBean=new OrderBean();
+        if(!TextUtils.isEmpty(name.getText().toString())){
             orderBean.setUserName(name.getText().toString());
         }
-        if (!TextUtils.isEmpty(bankName.getText().toString())) {
+        if(!TextUtils.isEmpty(bankName.getText().toString())){
             orderBean.setBankName(bankName.getText().toString());
         }
-        if (!TextUtils.isEmpty(bankCount.getText().toString())) {
-            if (FinancialUtil.checkBankCard(bankCount.getText().toString())) {
+        if(!TextUtils.isEmpty(bankCount.getText().toString())){
+            if(FinancialUtil.checkBankCard(bankCount.getText().toString())) {
                 orderBean.setBankCardNo(bankCount.getText().toString());
-            } else {
+            }else {
                 bankCount.setText("");
-                Toast.makeText(InterestDeduction.this, "请输入正确的银行卡号", Toast.LENGTH_SHORT).show();
+                Toast.makeText(InterestDeduction.this,"请输入正确的银行卡号",Toast.LENGTH_SHORT).show();
                 bankCount.requestFocus();
             }
         }
-        if (!TextUtils.isEmpty(tvlixixianjin.getText().toString())) {
+        if (!TextUtils.isEmpty(depositBank.getText().toString())){
+            orderBean.setDepositBank(depositBank.getText().toString());
+        }
+        if(!TextUtils.isEmpty(tvlixixianjin.getText().toString())){
             orderBean.setCashOutAmount(Double.parseDouble(tvlixixianjin.getText().toString()));
         }
-        if (!TextUtils.isEmpty(creName.getText().toString())) {
+        if(!TextUtils.isEmpty(creName.getText().toString())){
             orderBean.setOrderNo(creName.getText().toString());
             orderBean.setOrderId(list.get(position).getOrderId());
         }
     }
 
-    private boolean isValidate() {
-        if (TextUtils.isEmpty(name.getText().toString())) {
+    private boolean isValidate(){
+        if(TextUtils.isEmpty(name.getText().toString())){
             Toast.makeText(InterestDeduction.this, "请输入您的姓名", Toast.LENGTH_SHORT).show();
             name.requestFocus();
             return false;
-        } else if (TextUtils.isEmpty(bankName.getText().toString())) {
+        }
+        else if(TextUtils.isEmpty(bankName.getText().toString())){
             Toast.makeText(InterestDeduction.this, "请输入银行名称", Toast.LENGTH_SHORT).show();
             bankName.requestFocus();
             return false;
-        } else if (!TextUtils.isEmpty(bankCount.getText().toString()) && (!FinancialUtil.checkBankCard(bankCount.getText().toString()))) {
-            Toast.makeText(InterestDeduction.this, "请输入正确的银行卡号", Toast.LENGTH_SHORT).show();
+        }
+        else if(!TextUtils.isEmpty(bankCount.getText().toString())&&(!FinancialUtil.checkBankCard(bankCount.getText().toString()))){
+            Toast.makeText(InterestDeduction.this,"请输入正确的银行卡号",Toast.LENGTH_SHORT).show();
             bankCount.requestFocus();
             return false;
-        } else if (TextUtils.isEmpty(bankCount.getText().toString())) {
+        }
+        else if(TextUtils.isEmpty(bankCount.getText().toString())){
             Toast.makeText(InterestDeduction.this, "请输入银行卡号", Toast.LENGTH_SHORT).show();
             bankCount.requestFocus();
             return false;
-        } else if (TextUtils.isEmpty(tvlixixianjin.getText().toString())) {
+        }else if (TextUtils.isEmpty(depositBank.getText().toString())){
+            MyToastUtils.showShortToast(getApplicationContext(),"请填写支行名称");
+            depositBank.requestFocus();
+            return false;
+        } else if(TextUtils.isEmpty(tvlixixianjin.getText().toString())){
             Toast.makeText(InterestDeduction.this, "未输入抵扣金额", Toast.LENGTH_SHORT).show();
             tvlixifen.requestFocus();
 
             return false;
-        } else if (!TextUtils.isEmpty(tvlixixianjin.getText().toString()) && ((Double.parseDouble(tvlixixianjin.getText().toString()) == 0))) {
-            Toast.makeText(InterestDeduction.this, "输入的抵扣金额无效", Toast.LENGTH_SHORT).show();
+        }
+        else if(!TextUtils.isEmpty(tvlixixianjin.getText().toString())&&((Double.parseDouble(tvlixixianjin.getText().toString())==0))){
+            Toast.makeText(InterestDeduction.this,"输入的抵扣金额无效",Toast.LENGTH_SHORT).show();
             tvlixifen.requestFocus();
             return false;
-        } else if (TextUtils.isEmpty(creName.getText().toString())) {
-            Toast.makeText(InterestDeduction.this, "贷款产品不能为空", Toast.LENGTH_SHORT).show();
+        }
+        else if(TextUtils.isEmpty(creName.getText().toString())){
+            Toast.makeText(InterestDeduction.this,"贷款产品不能为空",Toast.LENGTH_SHORT).show();
             return false;
-        } else if (!TextUtils.isEmpty(tvlixixianjin.getText().toString()) && orderBeanLixi == null) {
+        }
+        else if(!TextUtils.isEmpty(tvlixixianjin.getText().toString())&&orderBeanLixi==null){
             Toast.makeText(InterestDeduction.this, "请查看贷款产品及利息相关信息", Toast.LENGTH_SHORT).show();
             return false;
-        } else if (!TextUtils.isEmpty(tvlixixianjin.getText().toString()) && orderBeanLixi != null) {
+        }
+        else if(!TextUtils.isEmpty(tvlixixianjin.getText().toString())&&orderBeanLixi!=null){
             if (!(Double.parseDouble(tvlixifen.getText().toString()) <= Double.parseDouble(orderBeanLixi.getDeductibleInterest()))) {
                 Toast.makeText(InterestDeduction.this, "抵扣利息金额超过最大可抵扣利息", Toast.LENGTH_SHORT).show();
                 tvlixifen.setText("");
@@ -371,11 +397,11 @@ public class InterestDeduction extends BaseActivity {
     /**
      * 获取个人贷款订单编号列表
      */
-    private void getOrderNoList() {
+    private void getOrderNoList(){
         RequestManager.getWalletManager().findOrderNoListByUserName(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-                list = new ArrayList<OrderBean>();
+                list=new ArrayList<OrderBean>();
 
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray dataArr = jsonObject.getJSONArray("data");
@@ -393,7 +419,7 @@ public class InterestDeduction extends BaseActivity {
         });
     }
 
-    private void getLiXiByOrder(String order) {
+    private void getLiXiByOrder(String order){
         RequestManager.getWalletManager().findInterestByOrderNo(order, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
@@ -435,8 +461,26 @@ public class InterestDeduction extends BaseActivity {
                     for (int i = 0; i < bindList.size(); i++) {
                         int status = bindList.get(i).getStatus();
                         if (status == 2) {
-                            bankName.setText(bindList.get(i).getBankName());
-                            bankCount.setText(bindList.get(i).getCardNo());
+                            if (!TextUtils.isEmpty(bindList.get(i).getBankName())){
+                                bankName.setText(bindList.get(i).getBankName());
+                                bankName.setEnabled(false);
+                                bankName.setTextColor(getResources().getColor(R.color.tv_primary_color));
+                            }
+                            if (!TextUtils.isEmpty(bindList.get(i).getCardNo())){
+                                bankCount.setText(bindList.get(i).getCardNo());
+                                bankCount.setEnabled(false);
+                                bankCount.setTextColor(getResources().getColor(R.color.tv_primary_color));
+                            }
+                            if (!TextUtils.isEmpty(bindList.get(i).getAccountName())){
+                                name.setText(bindList.get(i).getAccountName());
+                                name.setEnabled(false);
+                                name.setTextColor(getResources().getColor(R.color.tv_primary_color));
+                            }
+                            if (!TextUtils.isEmpty(bindList.get(i).getBranchBankName())){
+                                depositBank.setText(bindList.get(i).getBranchBankName());
+                                depositBank.setEnabled(false);
+                                depositBank.setTextColor(getResources().getColor(R.color.tv_primary_color));
+                            }
                         }
                     }
                 }
@@ -448,5 +492,4 @@ public class InterestDeduction extends BaseActivity {
             }
         });
     }
-
 }

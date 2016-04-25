@@ -7,20 +7,26 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
+import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.user.MyCreditAct;
 import com.beyonditsm.financial.entity.MyCreditBean;
+import com.beyonditsm.financial.fragment.MineFragment;
 import com.beyonditsm.financial.fragment.MyCreditDetailFragment;
 import com.beyonditsm.financial.fragment.MyCreditStatusFragment;
 import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.widget.DialogHint;
 import com.beyonditsm.financial.widget.MyAlertDialog;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -42,9 +48,14 @@ public class MyCreditDAct extends BaseActivity {
 
     @ViewInject(R.id.mycredit_viewpager)
     private ViewPager myCreditViewpager;
+    @ViewInject(R.id.iv_statusRedPoint)
+    private ImageView ivStatusRedPoint;
+    @ViewInject(R.id.iv_detailRedPoint)
+    private ImageView ivDetailRedPoint;
 
     private ImageView[] imageArras;
     private TextView[] textArras;
+    private LinearLayout[] linearArras;
     private MyCreditBean.RowsEntity rowe;
     private int position;
 
@@ -60,6 +71,18 @@ public class MyCreditDAct extends BaseActivity {
         setLeftTv("返回");
         setTopTitle("贷款详情");
         rowe = getIntent().getParcelableExtra(MyCreditAct.CREDIT);
+        String orderId = SpUtils.getOrderId(MyApplication.getInstance());
+        MyLogUtils.info("获取到已保存的orderID+" + orderId);
+        if (!TextUtils.isEmpty(orderId)) {
+            if (orderId.equals(rowe.getId())) {
+                ivDetailRedPoint.setVisibility(View.VISIBLE);
+                ivStatusRedPoint.setVisibility(View.VISIBLE);
+                ivStatusRedPoint.setVisibility(View.INVISIBLE);
+            }
+        } else {
+            ivDetailRedPoint.setVisibility(View.INVISIBLE);
+            ivStatusRedPoint.setVisibility(View.INVISIBLE);
+        }
         position = getIntent().getIntExtra("position", 0);
 
         initTextView();
@@ -67,8 +90,25 @@ public class MyCreditDAct extends BaseActivity {
         initViewpager();
 
 
+//        textArras[0].setTextColor(getResources().getColor(R.color.main_color));
+    }
 
-        textArras[0].setTextColor(getResources().getColor(R.color.main_color));
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        String orderId = SpUtils.getOrderId(MyApplication.getInstance());
+        MyLogUtils.info("重新获取到已保存的orderID+" + orderId);
+        if (!TextUtils.isEmpty(orderId)) {
+            if (orderId.equals(rowe.getId())) {
+                ivDetailRedPoint.setVisibility(View.VISIBLE);
+                ivStatusRedPoint.setVisibility(View.VISIBLE);
+                ivDetailRedPoint.setVisibility(View.INVISIBLE);
+            }
+        } else {
+            ivDetailRedPoint.setVisibility(View.INVISIBLE);
+            ivStatusRedPoint.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -77,19 +117,25 @@ public class MyCreditDAct extends BaseActivity {
         EventBus.getDefault().unregister(this);
     }
 
-    public void onEvent(final MyCreditDetailFragment.PatchEvent event){
-        if(event._type==1) {
+    public void onEvent(final MyCreditDetailFragment.PatchEvent event) {
+        if (event._type == 1) {
             setRightBtn("补件说明", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+//                    SpUtils.clearOrderId(MyApplication.getInstance());
+//                    ivDetailRedPoint.setVisibility(View.INVISIBLE);
+//                    ivStatusRedPoint.setVisibility(View.INVISIBLE);
+//                    sendBroadcast(new Intent(MyCreditAct.CREDIT_RECEIVER));
+//                    sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
+//                    sendBroadcast(new Intent(MineFragment.HIDE_POINT));
                     DialogHint dialogHint = new DialogHint(MyCreditDAct.this, event._remark).builder();
                     dialogHint.show();
                 }
             });
-        }else {
-            if ("CANCEL_REQUET".equals(rowe.getOrderSts())){
+        } else {
+            if ("CANCEL_REQUET".equals(rowe.getOrderSts())) {
                 setRightVG(false);
-            }else if ("WAIT_BACKGROUND_APPROVAL".equals(rowe.getOrderSts())||"CREDIT_MANAGER_GRAB".equals(rowe.getOrderSts())){
+            } else if ("WAIT_BACKGROUND_APPROVAL".equals(rowe.getOrderSts()) || "CREDIT_MANAGER_GRAB".equals(rowe.getOrderSts())) {
                 setRightBtn("取消订单", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -109,6 +155,9 @@ public class MyCreditDAct extends BaseActivity {
                                             Intent intent = new Intent(MyCreditAct.CREDIT_RECEIVER);
                                             intent.putExtra("position", position);
                                             sendBroadcast(intent);
+//                                            SpUtils.clearOrderId(MyApplication.getInstance());
+//                                            sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
+//                                            sendBroadcast(new Intent(MineFragment.HIDE_POINT));
                                             finish();
                                         }
                                     }
@@ -132,7 +181,7 @@ public class MyCreditDAct extends BaseActivity {
         Bundle bundle = new Bundle();
         bundle.putParcelable("rowe", rowe);
         MyCreditStatusFragment statusFragment = new MyCreditStatusFragment();
-        MyCreditDetailFragment detailFragment =new MyCreditDetailFragment();
+        MyCreditDetailFragment detailFragment = new MyCreditDetailFragment();
         statusFragment.setArguments(bundle);
         detailFragment.setArguments(bundle);
         fragmentList.add(statusFragment);
@@ -146,12 +195,14 @@ public class MyCreditDAct extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                for (int i=0;i<textArras.length;i++){
-                    textArras[i].setTextColor(getResources().getColor(R.color.tv_second_color));
+                for (int i = 0; i < linearArras.length; i++) {
+//                    textArras[i].setTextColor(getResources().getColor(R.color.tv_second_color));
                     imageArras[i].setBackgroundColor(Color.TRANSPARENT);
+                    clearRedPoint();
                 }
-                textArras[position].setTextColor(getResources().getColor(R.color.main_color));
+//                textArras[position].setTextColor(getResources().getColor(R.color.main_color));
                 imageArras[position].setBackgroundColor(getResources().getColor(R.color.main_color));
+                clearRedPoint();
             }
 
             @Override
@@ -162,10 +213,19 @@ public class MyCreditDAct extends BaseActivity {
         myCreditViewpager.setCurrentItem(0);
     }
 
+    private void clearRedPoint() {
+        SpUtils.clearOrderId(MyApplication.getInstance());
+        ivDetailRedPoint.setVisibility(View.INVISIBLE);
+        ivStatusRedPoint.setVisibility(View.INVISIBLE);
+        sendBroadcast(new Intent(MyCreditAct.HIDE_MESSAGE));
+        sendBroadcast(new Intent(MineFragment.HIDE_POINT));
+        sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
+    }
+
     private void initImageView() {
         LinearLayout tabTextLayout = (LinearLayout) findViewById(R.id.tabImageLayout);
         imageArras = new ImageView[2];
-        for (int i =0;i< imageArras.length;i++){
+        for (int i = 0; i < imageArras.length; i++) {
             ImageView imageView = (ImageView) tabTextLayout.getChildAt(i);
             imageArras[i] = imageView;
             imageArras[i].setTag(i);
@@ -176,13 +236,24 @@ public class MyCreditDAct extends BaseActivity {
 
     private void initTextView() {
         LinearLayout tabTextLayout = (LinearLayout) findViewById(R.id.tabTextLayout);
-        textArras = new TextView[2];
-        for (int i =0;i< textArras.length;i++){
-            TextView textView = (TextView) tabTextLayout.getChildAt(i);
-            textArras[i] = textView;
-            textArras[i].setEnabled(true);
-            textArras[i].setTag(i);
-            textArras[i].setOnClickListener(new View.OnClickListener() {
+//        textArras = new TextView[2];
+        linearArras = new LinearLayout[2];
+        for (int i = 0; i < linearArras.length; i++) {
+//            TextView textView = (TextView) tabTextLayout.getChildAt(i);
+            LinearLayout linearLayout = (LinearLayout) tabTextLayout.getChildAt(i);
+//            textArras[i] = textView;
+            linearArras[i] = linearLayout;
+//            textArras[i].setTag(i);
+//            textArras[i].setEnabled(true);
+//            textArras[i].setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    myCreditViewpager.setCurrentItem((Integer) v.getTag());
+//                }
+//            });
+            linearArras[i].setEnabled(true);
+            linearArras[i].setTag(i);
+            linearArras[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     myCreditViewpager.setCurrentItem((Integer) v.getTag());
@@ -190,19 +261,22 @@ public class MyCreditDAct extends BaseActivity {
             });
         }
     }
-    class  MyAdapter extends FragmentStatePagerAdapter{
+
+    class MyAdapter extends FragmentStatePagerAdapter {
 
         private FragmentManager fm;
-        private List<Fragment> fragmentList =null;
+        private List<Fragment> fragmentList = null;
+
         public MyAdapter(FragmentManager fm) {
             super(fm);
         }
 
-        public MyAdapter(FragmentManager fm,List<Fragment> fragmentList){
+        public MyAdapter(FragmentManager fm, List<Fragment> fragmentList) {
             super(fm);
             this.fm = fm;
             this.fragmentList = fragmentList;
         }
+
         @Override
         public Fragment getItem(int position) {
             return fragmentList.get(position);
@@ -227,4 +301,5 @@ public class MyCreditDAct extends BaseActivity {
             fm.beginTransaction().hide(fragment).commit();
         }
     }
+
 }

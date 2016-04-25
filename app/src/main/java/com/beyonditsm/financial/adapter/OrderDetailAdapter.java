@@ -69,17 +69,18 @@ public class OrderDetailAdapter extends BaseAdapter implements View.OnClickListe
             holder.rlCreditItem = (LinearLayout) convertView.findViewById(R.id.credit_item);
             holder.llListHead = (RelativeLayout) convertView.findViewById(R.id.ll_list_head);
             holder.llListFoot = (RelativeLayout) convertView.findViewById(R.id.ll_list_bottom);
+            holder.tvCreditStatus.setSelected(true);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
         OrderDealEntity ode = orderList.get(position);
-        if (position==0){
-            holder.llListHead.setVisibility(View.VISIBLE);
-        }
-        if (position==orderList.size()-1){
-            holder.llListFoot.setVisibility(View.VISIBLE);
-        }
+//        if (position==0){
+//            holder.llListHead.setVisibility(View.VISIBLE);
+//        }
+//        if (position==orderList.size()-1){
+//            holder.llListFoot.setVisibility(View.VISIBLE);
+//        }
         if (!TextUtils.isEmpty(ode.getDealName())) {
             holder.tvCreditStatus.setText(ode.getDealName());
         }
@@ -139,6 +140,9 @@ public class OrderDetailAdapter extends BaseAdapter implements View.OnClickListe
                 holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_middle);
             }
             if ("CUSTOMER_CANCEL_ORDER".equals(ode.getOrderFlowStatus())){//取消订单
+                holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_failed);
+            }
+            if ("DATA_REJECT_UPDATA".equals(ode.getOrderFlowStatus())){//资料驳回
                 holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_failed);
             }
         }

@@ -20,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.beyonditsm.financial.R;
+import com.beyonditsm.financial.activity.credit.CreditStepAct;
+import com.beyonditsm.financial.activity.credit.SubFlowAct;
 import com.beyonditsm.financial.activity.user.DoTaskPicture;
 import com.beyonditsm.financial.activity.user.DoTaskPlaceAct;
 import com.beyonditsm.financial.activity.user.FinishTaskPicture;
@@ -149,6 +151,10 @@ public class MyCreditDetailFragment extends BaseFragment {
 
     @ViewInject(R.id.start_bj)
     private RelativeLayout rlbj;//补件
+    @ViewInject(R.id.rlUpload)
+    private RelativeLayout rlUpload;
+    @ViewInject(R.id.rlUpCredit)
+    private RelativeLayout rlUpCredit;
 
     private MyCreditBean.RowsEntity rowe;
 
@@ -201,7 +207,7 @@ public class MyCreditDetailFragment extends BaseFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        addressUtil=new AddressUtil(getActivity());
+        addressUtil = new AddressUtil(getActivity());
         rowe = getArguments().getParcelable("rowe");
         tvName.setText(rowe.getProductName());
         dialog = new FinalLoadDialog(getActivity());
@@ -258,7 +264,7 @@ public class MyCreditDetailFragment extends BaseFragment {
         });
     }
 
-    @OnClick({R.id.rlzl, R.id.rlzz, R.id.rlts, R.id.bj})
+    @OnClick({R.id.rlzl, R.id.rlzz, R.id.rlts, R.id.bj,R.id.tvUpload,R.id.tvUpCredit})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.rlzl://用户基本资料
@@ -309,13 +315,30 @@ public class MyCreditDetailFragment extends BaseFragment {
                     map.put(2, false);
                 }
                 break;
-            case R.id.bj://提交其它附件
+            case R.id.bj://提交其它附件(补件)
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), TiJiaoFuJianAct.class);
                 intent.putExtra("orderNo", rowe.getOrderNo());
-                intent.putExtra("orderId",rowe.getId());
+                intent.putExtra("orderId", rowe.getId());
                 getActivity().startActivity(intent);
 
+                break;
+            case R.id.tvUpload://上传
+//                SpUtils.clearOrderId(MyApplication.getInstance());
+//                getActivity().sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
+//                getActivity().sendBroadcast(new Intent(MyCreditDAct.HIDE_RED));
+//                getActivity().sendBroadcast(new Intent(MyCreditAct.HIDE_MESSAGE));
+//                getActivity().sendBroadcast(new Intent(MineFragment.HIDE_POINT));
+                Intent intent2 = new Intent(getContext(), CreditStepAct.class);
+                intent2.putExtra("credit_upload", 1);
+                intent2.putExtra("orderId", rowe.getId());
+                intent2.putExtra("orderStatus",data.getOrderSts());
+                getActivity().startActivity(intent2);
+                break;
+            case R.id.tvUpCredit://增信上传
+                Intent intent3=new Intent(getContext(), SubFlowAct.class);
+                intent3.putExtra("order_id",rowe.getId());
+                getActivity().startActivity(intent3);
                 break;
         }
     }
@@ -369,16 +392,22 @@ public class MyCreditDetailFragment extends BaseFragment {
 
                         Double totalMPay = Arith.sub(Double.valueOf(data.getPeriodsAmount()) * data.getTotalPeriods(), Double.valueOf(data.getTotalAmount()));
                         tvT.setText("¥" + df.format(totalMPay));
-                        tvFTime.setText(data.getLoanPeriod() + "个工作日");
-                        if (Double.valueOf(data.getMonthlyRateMin()) - Double.valueOf(data.getMonthlyRateMax()) == 0) {
-                            tvRate.setText("利率:" + data.getMonthlyRateMin() + "%");
-                        } else {
-                            tvRate.setText("利率：" + data.getMonthlyRateMin() + "%" + "~" + data.getMonthlyRateMax() + "%");
+                        if (!TextUtils.isEmpty(String.valueOf(data.getLoanPeriod()))) {
+                            tvFTime.setText(data.getLoanPeriod() + "个工作日");
                         }
-                        if (Double.valueOf(data.getDisposableRateMax())-Double.valueOf(data.getDisposableRateMin())==0){
-                            onpay.setText("一次性收费：" + data.getDisposableRateMin() + "%");
-                        }else {
-                            onpay.setText("一次性收费：" + data.getDisposableRateMin() + "%" + "~" + data.getDisposableRateMax() + "%");
+                        if (!TextUtils.isEmpty(data.getMonthlyRateMin())&&!TextUtils.isEmpty(data.getMonthlyRateMax())) {
+                            if (Double.valueOf(data.getMonthlyRateMin()) - Double.valueOf(data.getMonthlyRateMax()) == 0) {
+                                tvRate.setText("利率:" + data.getMonthlyRateMin() + "%");
+                            } else {
+                                tvRate.setText("利率：" + data.getMonthlyRateMin() + "%" + "~" + data.getMonthlyRateMax() + "%");
+                            }
+                        }
+                        if (!TextUtils.isEmpty(data.getDisposableRateMax())&&!TextUtils.isEmpty(data.getDisposableRateMin())) {
+                            if (Double.valueOf(data.getDisposableRateMax()) - Double.valueOf(data.getDisposableRateMin()) == 0) {
+                                onpay.setText("一次性收费：" + data.getDisposableRateMin() + "%");
+                            } else {
+                                onpay.setText("一次性收费：" + data.getDisposableRateMin() + "%" + "~" + data.getDisposableRateMax() + "%");
+                            }
                         }
                         if (!TextUtils.isEmpty(data.getUserName()))
                             tv_tochat.setText(data.getUserName());
@@ -391,11 +420,11 @@ public class MyCreditDetailFragment extends BaseFragment {
                             IdCard.setText(data.getIdentCard());
                         }
 
-                        if (!TextUtils.isEmpty(data.getProvince())&&!TextUtils.isEmpty(data.getCity())
-                                &&!TextUtils.isEmpty(data.getDistrict())) {
-                            alwaysaddress.setText(addressUtil.getProName(data.getProvince())+
-                            addressUtil.getCityName(data.getProvince(),data.getCity())+
-                            addressUtil.getCountryName(data.getCity(),data.getDistrict()));
+                        if (!TextUtils.isEmpty(data.getProvince()) && !TextUtils.isEmpty(data.getCity())
+                                && !TextUtils.isEmpty(data.getDistrict())) {
+                            alwaysaddress.setText(addressUtil.getProName(data.getProvince()) +
+                                    addressUtil.getCityName(data.getProvince(), data.getCity()) +
+                                    addressUtil.getCountryName(data.getCity(), data.getDistrict()));
                         }
                         if (!TextUtils.isEmpty(data.getDetailAddress())) {
                             address.setText(data.getDetailAddress());
@@ -454,10 +483,13 @@ public class MyCreditDetailFragment extends BaseFragment {
 
                         String status = data.getOrderSts();
 
-                        if ("CREDIT_MANAGER_APPROVAL".equals(status) ||
-                                "CREDIT_MANAGER_GRAB".equals(status) || "ORGANIZATION_APPROVAL".equals(status)) {
-                            tvStatus.setText("审批中");
-                        } else if ("PASS".equals(status)) {
+                        if ( "ORGANIZATION_APPROVAL".equals(status)) {//机构审批 机构正在进行审批
+                            tvStatus.setText("机构审批中");
+                        }else if ("CREDIT_MANAGER_GRAB".equals(status)){//信贷经理抢单 当前节点信贷经理可以抢单
+                            tvStatus.setText("待抢单");
+                        }else if ("CREDIT_MANAGER_APPROVAL".equals(status)){//信贷经理审批中 当前节点信贷经理已抢到单
+                            tvStatus.setText("已抢单");
+                        }else if ("PASS".equals(status)) {//审批通过 机构审批通过
                             tvStatus.setText("审批通过");
                             tvStatus.setBackgroundResource(R.drawable.cre_btn_green);
                             llCreditRemark.setVisibility(View.GONE);
@@ -469,28 +501,34 @@ public class MyCreditDetailFragment extends BaseFragment {
                                 tvRate.setText("利率：" + data.getRealMonthlyInterestRate() + "%");
                             if (!TextUtils.isEmpty(data.getRealOneTimeRate()))
                                 onpay.setText("一次性收费：" + data.getRealOneTimeRate() + "%");
-                            if (!TextUtils.isEmpty(data.getCreditAmount())){
-                                tvCreditAmount.setText("¥"+df.format(Double.valueOf(data.getCreditAmount())/10000)+"万");
+                            if (!TextUtils.isEmpty(data.getCreditAmount())) {
+                                tvCreditAmount.setText("¥" + df.format(Double.valueOf(data.getCreditAmount()) / 10000) + "万");
                             }
-                            if (!TextUtils.isEmpty(data.getBankPracticalPeriods())){
+                            if (!TextUtils.isEmpty(data.getBankPracticalPeriods())) {
                                 tvTime.setText(data.getBankPracticalPeriods());
                             }
-                            if (!TextUtils.isEmpty(data.getPracticalLoan())&&!TextUtils.isEmpty(data.getBankPracticalPeriods())&&!TextUtils.isEmpty(data.getRealMonthlyInterestRate())){
+                            if (!TextUtils.isEmpty(data.getPracticalLoan()) && !TextUtils.isEmpty(data.getBankPracticalPeriods()) && !TextUtils.isEmpty(data.getRealMonthlyInterestRate())) {
                                 String loan = data.getPracticalLoan();
                                 String rate = data.getRealMonthlyInterestRate();
                                 String periods = data.getBankPracticalPeriods();
-                                getMOnthPay(loan,rate , periods);
+                                getMOnthPay(loan, rate, periods);
                             }
-                        } else if ("WAIT_BACKGROUND_APPROVAL".equals(status)
-                                ) {
+                        /**
+                        * 等待后台审批 用户提交订单后的状态， 当前节点由后台管理（我们平台的工作人员）进行第一轮审批，审批完成后信贷经理才可以抢单
+                        */
+                        } else if ("WAIT_BACKGROUND_APPROVAL".equals(status)) {
                             tvStatus.setText("待审批");
-                        } else if ("SUPPLEMENT_DATA".equals(status)) {
+                        } else if ("SUPPLEMENT_DATA".equals(status)) {//补件中 由信贷经理或机构发起的补件 由信贷经理与客户联系，要求客户补件
                             tvStatus.setText("补件中");
                             rlbj.setVisibility(View.VISIBLE);
-                        } else if ("NO_PASS".equals(status)) {
+                        } else if ("NO_PASS".equals(status)) {//不通过 机构审批不通过
                             tvStatus.setText("审批不通过");
-                        }else if ("CANCEL_REQUET".equals(status)){
+                        } else if ("CANCEL_REQUET".equals(status)) {//取消申请 客户取消申请
                             tvStatus.setText("已取消");
+                        }else if ("DRAFT".equals(status)){//草稿
+                            tvStatus.setText("资料待上传");
+                        }else if ("REJECT".equals(status)){
+                            tvStatus.setText("已驳回");
                         }
 
                         if (!"SUPPLEMENT_DATA".equals(status)) {
@@ -535,6 +573,7 @@ public class MyCreditDetailFragment extends BaseFragment {
                     }
                 });
     }
+
     public static final String UPDATE_ORDER = "com.update.order";
     private OrderBroadCastReceiver order_receiver;
 
@@ -749,7 +788,6 @@ public class MyCreditDetailFragment extends BaseFragment {
         }
         getActivity().registerReceiver(order_receiver, new IntentFilter(UPDATE_ORDER));
         getActivity().registerReceiver(receiver, new IntentFilter(TaskLevelAct.UPDATE_LIST));
-
     }
 
     @Override
@@ -771,5 +809,4 @@ public class MyCreditDetailFragment extends BaseFragment {
             findTaskBytaskIds(data.getTaskManageId());
         }
     }
-
 }

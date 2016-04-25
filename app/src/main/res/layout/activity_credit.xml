@@ -200,7 +200,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/button_gen"
             android:gravity="center"
-            android:text="免费申请"
+            android:text="立即申请"
             android:textColor="#ffffff"
             android:textSize="16sp" />
 

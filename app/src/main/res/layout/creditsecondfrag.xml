@@ -482,95 +482,10 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/llts"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="visible">
 
-                    <RelativeLayout
-                        android:id="@+id/ts_tv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+               
 
-                        <TextView
-                            android:id="@+id/ts"
-                            style="@style/tv_primary_style"
-                            android:layout_width="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginTop="10dp"
-                            android:drawablePadding="6dp"
-                            android:text="所需材料"
-                            android:textColor="#446ebc" />
 
-                        <ImageView
-                            android:id="@+id/tsivSlide"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:src="@mipmap/slide" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1px"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="30dp"
-                            android:layout_marginRight="30dp"
-                            android:layout_toLeftOf="@id/tsivSlide"
-                            android:layout_toRightOf="@id/ts"
-                            android:background="#dfdfdf"></View>
-                    </RelativeLayout>
-
-                    <LinearLayout
-                        android:id="@+id/tsll"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <com.leaf.library.widget.MyListView
-                            android:id="@+id/mlv"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="-15dp"
-                            android:layout_marginRight="-15dp" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/commit_report"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/button_gen"
-                    android:text="上传征信报告照片"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:visibility="gone" />
-
-                <Button
-                    android:id="@+id/commit_idCard"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/button_gen"
-                    android:text="上传身份证照片"
-                    android:textColor="@color/white"
-                    android:textSize="16sp" />
-
-                <Button
-                    android:id="@+id/commit_file"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:background="@drawable/button_gen"
-                    android:text="上传其他附件照片"
-                    android:textColor="@color/white"
-                    android:textSize="16sp" />
 
                 <Button
                     android:id="@+id/second_btn_next"
@@ -578,7 +493,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
                     android:background="@drawable/button_gen"
-                    android:text="下一步"
+                    android:text="快速申贷"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 
@@ -587,10 +502,91 @@
 
         </ScrollView>
 
+
+
         <com.beyonditsm.financial.view.LoadingView
             android:id="@+id/loadView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            />
+
+        <!--申请贷款成功-->
+        <LinearLayout
+            android:id="@+id/llSucess"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone"
+            >
+
+            <ImageView
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:src="@mipmap/ico_success"
+                android:layout_marginTop="50dp"
+                android:layout_gravity="center_horizontal"
+                />
+            <TextView
+                android:drawablePadding="15dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:textColor="#333333"
+                android:textSize="21sp"
+                android:text="恭喜，您已经提交申贷成功！"
+                />
+            
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                >
+                <TextView
+                    android:id="@+id/tvSecond"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/main_color"
+                    android:textSize="21sp"
+                    android:text="5"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#333333"
+                    android:textSize="21sp"
+                    android:text="秒后"
+                    android:layout_marginLeft="5dp"
+                    />
+                
+            </LinearLayout>
+            <TextView
+                android:drawablePadding="15dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="#333333"
+                android:textSize="21sp"
+                android:text="将自动跳转上传资料页面"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                ></View>
+
+            <TextView
+                android:id="@+id/tvSure"
+                style="@style/zc_btn"
+                android:text="确定"
+                android:gravity="center"
+                android:layout_marginBottom="20dp"
+                />
+        </LinearLayout>
 
     </FrameLayout>
 </LinearLayout>

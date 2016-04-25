@@ -1,5 +1,9 @@
 package com.beyonditsm.financial.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -42,7 +46,7 @@ public class MyCreditStatusFragment extends BaseFragment {
     private String roleName;//角色名字
     private String userId;//用户id
     private OrderDetailAdapter detailAdapter;
-
+    private MyBroadCastReceiver receiver;
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -108,5 +112,32 @@ public class MyCreditStatusFragment extends BaseFragment {
                 loadingView.loadError();
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (receiver==null) {
+            receiver = new MyBroadCastReceiver();
+        }
+        getActivity().registerReceiver(receiver,new IntentFilter(UPDATE_DEAL));
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (receiver!=null){
+            getActivity().unregisterReceiver(receiver);
+        }
+    }
+
+    public static final String UPDATE_DEAL  = "update_deal";
+    private class MyBroadCastReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            findOrderDealHisory(rowe.getId());
+        }
     }
 }

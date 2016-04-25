@@ -11,16 +11,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.beyonditsm.financial.AppManager;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
-import com.beyonditsm.financial.adapter.HardCreditAdapter;
 import com.beyonditsm.financial.adapter.PrimaryTaskAdapter;
 import com.beyonditsm.financial.entity.TaskEntity;
 import com.beyonditsm.financial.entity.TaskStrategyEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.tandong.sa.eventbus.EventBus;
 import com.tandong.sa.json.Gson;
 import com.tandong.sa.json.reflect.TypeToken;
 

@@ -2,7 +2,6 @@ package com.beyonditsm.financial.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -241,7 +240,7 @@ public class CreditFirstFrag extends BaseFragment {
                         public void gotResult(int arg0, String arg1, Set<String> arg2) {
                         }
                     });
-                    EventBus.getDefault().post(new CreditStepAct.FirstEvent(1));
+                    EventBus.getDefault().post(new CreditStepAct.FirstEvent(1,null));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

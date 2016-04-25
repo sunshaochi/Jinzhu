@@ -27,7 +27,7 @@ import org.json.JSONException;
 /**
  * Created by wangbin on 16/1/14.
  */
-public class MyWalletActivity extends BaseActivity {
+public class MyWalletActivity extends BaseActivity{
     @ViewInject(R.id.civHead)
     private ScaleAllImageView civHead;//头像
     @ViewInject(R.id.tvName)
@@ -46,6 +46,7 @@ public class MyWalletActivity extends BaseActivity {
     private TextView tvDikouMoney;//抵扣金额
     @ViewInject(R.id.loadingView)
     private LoadingView loadingView;
+
 
 
     @SuppressWarnings("deprecation")
@@ -69,26 +70,25 @@ public class MyWalletActivity extends BaseActivity {
     public void init(Bundle savedInstanceState) {
         setLeftTv("返回");
         setTopTitle("我的钱包");
-        ule = getIntent().getParcelableExtra("userLogin");
-        user = getIntent().getParcelableExtra("userInfo");
-        if (ule == null) {
+        ule=getIntent().getParcelableExtra("userLogin");
+        user=getIntent().getParcelableExtra("userInfo");
+        if(ule==null){
             getUserLoginInfo();
             setUserLogin();
-        } else {
+        }else {
             setUserLogin();
         }
-        if (user == null) {
-            if (ule != null) {
-                if (ule.getDescription().contains("用户")) {
+        if(user==null){
+            if(ule!=null){
+                if(ule.getDescription().contains("用户")){
                     getUserInfo();
                     setUserInfo();
-                }
-                if (ule.getDescription().contains("服务者")) {
+                }if(ule.getDescription().contains("服务者")){
                     findServantInfo();
                     setUserInfo();
                 }
             }
-        } else {
+        }else {
             setUserInfo();
         }
         loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
@@ -101,66 +101,66 @@ public class MyWalletActivity extends BaseActivity {
         });
     }
 
-    private void setUserLogin() {
-        if (ule != null) {
-            if (!TextUtils.isEmpty(ule.getDescription())) {
+    private void setUserLogin(){
+        if(ule!=null){
+            if(!TextUtils.isEmpty(ule.getDescription())){
                 tvName.setText(ule.getDescription());
             }
-            if (!TextUtils.isEmpty(ule.getUsername())) {
+            if(!TextUtils.isEmpty(ule.getUsername())){
                 tvPhone.setText(ule.getUsername());
             }
         }
     }
 
-    private void setUserInfo() {
-        if (user != null) {
-            if (!TextUtils.isEmpty(user.getCashTicketAmount())) {
-                double dCashA = Double.valueOf(user.getCashTicketAmount());
-                tvExangeMoney.setText((long) dCashA + "");
+    private void setUserInfo(){
+        if(user!=null){
+            if(!TextUtils.isEmpty(user.getCashTicketAmount())){
+                double dCashA=Double.valueOf(user.getCashTicketAmount());
+                tvExangeMoney.setText((long)dCashA+"");
             }
-            if (!TextUtils.isEmpty(user.getUnCashTicketAmount())) {
-                double unCashA = Double.valueOf(user.getUnCashTicketAmount());
-                tvWeitGetMoney.setText((long) unCashA + "");
+            if(!TextUtils.isEmpty(user.getUnCashTicketAmount())){
+                double unCashA=Double.valueOf(user.getUnCashTicketAmount());
+                tvWeitGetMoney.setText((long)unCashA+"");
             }
-            if (!TextUtils.isEmpty(user.getDeductionTicketAmount())) {
-                double deductionA = Double.valueOf(user.getDeductionTicketAmount());
-                tvDikouMoney.setText((long) deductionA + "");
+            if(!TextUtils.isEmpty(user.getDeductionTicketAmount())){
+                double deductionA=Double.valueOf(user.getDeductionTicketAmount());
+                tvDikouMoney.setText((long)deductionA+"");
             }
             ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon(), civHead, options);
 
         }
     }
 
-    @OnClick({R.id.rlMyPayments, R.id.rlMyOrder, R.id.rlxianjin, R.id.rldikou, R.id.rlBindBankCard})
-    public void toClick(View v) {
-        Intent intent = null;
-        switch (v.getId()) {
+    @OnClick({R.id.rlMyPayments,R.id.rlMyOrder,R.id.rlxianjin,R.id.rldikou,R.id.rlBindBankCard})
+    public void toClick(View v){
+        Intent intent=null;
+        switch (v.getId()){
             //收支明细
             case R.id.rlMyPayments:
-                intent = new Intent(MyWalletActivity.this, BalancePaymentsAct.class);
+                intent=new Intent(MyWalletActivity.this,BalancePaymentsAct.class);
                 startActivity(intent);
                 break;
             //订单明细
             case R.id.rlMyOrder:
-                intent = new Intent(MyWalletActivity.this, OrderDetailAct.class);
+                intent=new Intent(MyWalletActivity.this,OrderDetailAct.class);
                 startActivity(intent);
                 break;
             //现金券兑换
             case R.id.rlxianjin:
-                intent = new Intent(MyWalletActivity.this, CashExchange.class);
-                intent.putExtra("userInfo", user);
+                intent=new Intent(MyWalletActivity.this,CashExchange.class);
+                intent.putExtra("userInfo",user);
                 startActivity(intent);
                 break;
             //抵扣券
             case R.id.rldikou:
-                intent = new Intent(MyWalletActivity.this, InterestDeduction.class);
-                intent.putExtra("userInfo", user);
+                intent=new Intent(MyWalletActivity.this,InterestDeduction.class);
+                intent.putExtra("userInfo",user);
                 startActivity(intent);
                 break;
             //绑定银行卡
             case R.id.rlBindBankCard:
-                intent = new Intent(MyWalletActivity.this, BindBankCardAct.class);
-                intent.putExtra("userInfo", user);
+                intent = new Intent(MyWalletActivity.this,BindBankCardAct.class);
+                intent.putExtra("userInfo",user);
                 startActivity(intent);
                 break;
         }
@@ -169,7 +169,7 @@ public class MyWalletActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (ule != null) {
+        if(ule!=null) {
             if (ule.getDescription().contains("服务者")) {
                 findServantInfo();
             }
@@ -210,17 +210,17 @@ public class MyWalletActivity extends BaseActivity {
                 ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
                 user = rd.getData();
                 if (user != null) {
-                    if (!TextUtils.isEmpty(user.getCashTicketAmount())) {
-                        double dCashA = Double.valueOf(user.getCashTicketAmount());
-                        tvExangeMoney.setText((long) dCashA + "");
+                    if(!TextUtils.isEmpty(user.getCashTicketAmount())){
+                        double dCashA=Double.valueOf(user.getCashTicketAmount());
+                        tvExangeMoney.setText((long)dCashA+"");
                     }
-                    if (!TextUtils.isEmpty(user.getUnCashTicketAmount())) {
-                        double unCashA = Double.valueOf(user.getUnCashTicketAmount());
-                        tvWeitGetMoney.setText((long) unCashA + "");
+                    if(!TextUtils.isEmpty(user.getUnCashTicketAmount())){
+                        double unCashA=Double.valueOf(user.getUnCashTicketAmount());
+                        tvWeitGetMoney.setText((long)unCashA+"");
                     }
-                    if (!TextUtils.isEmpty(user.getDeductionTicketAmount())) {
-                        double deductionA = Double.valueOf(user.getDeductionTicketAmount());
-                        tvDikouMoney.setText((long) deductionA + "");
+                    if(!TextUtils.isEmpty(user.getDeductionTicketAmount())){
+                        double deductionA=Double.valueOf(user.getDeductionTicketAmount());
+                        tvDikouMoney.setText((long)deductionA+"");
                     }
 
                 }
@@ -245,17 +245,17 @@ public class MyWalletActivity extends BaseActivity {
                 ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
                 user = rd.getData();
                 if (user != null) {
-                    if (!TextUtils.isEmpty(user.getCashTicketAmount())) {
-                        double dCashA = Double.valueOf(user.getCashTicketAmount());
-                        tvExangeMoney.setText((long) dCashA + "");
+                    if(!TextUtils.isEmpty(user.getCashTicketAmount())){
+                        double dCashA=Double.valueOf(user.getCashTicketAmount());
+                        tvExangeMoney.setText((long)dCashA+"");
                     }
-                    if (!TextUtils.isEmpty(user.getUnCashTicketAmount())) {
-                        double unCashA = Double.valueOf(user.getUnCashTicketAmount());
-                        tvWeitGetMoney.setText((long) unCashA + "");
+                    if(!TextUtils.isEmpty(user.getUnCashTicketAmount())){
+                        double unCashA=Double.valueOf(user.getUnCashTicketAmount());
+                        tvWeitGetMoney.setText((long)unCashA+"");
                     }
-                    if (!TextUtils.isEmpty(user.getDeductionTicketAmount())) {
-                        double deductionA = Double.valueOf(user.getDeductionTicketAmount());
-                        tvDikouMoney.setText((long) deductionA + "");
+                    if(!TextUtils.isEmpty(user.getDeductionTicketAmount())){
+                        double deductionA=Double.valueOf(user.getDeductionTicketAmount());
+                        tvDikouMoney.setText((long)deductionA+"");
                     }
                 }
             }
@@ -266,4 +266,5 @@ public class MyWalletActivity extends BaseActivity {
             }
         });
     }
+
 }

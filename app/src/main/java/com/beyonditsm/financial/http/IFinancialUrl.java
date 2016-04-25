@@ -10,19 +10,23 @@ public interface IFinancialUrl {
     /*test1地址*/
 //    String BASE_URL = "http://139.196.111.82:5018";
     /*正式地址*/
-    String BASE_URL = "http://option.myjinzhu.com";
-
-    /*测试地址2*/
-//    String BASE_URL = "http://test.myjinzhu.com:8082";
 //    String BASE_URL = "http://option.myjinzhu.com";
 
+    /*测试地址2*/
+    String BASE_URL="http://172.16.6.216:8080";
+//    String BASE_URL = "http://test.myjinzhu.com:8082";
+    /*测试地址3*/
+//    String BASE_URL="http://test.myjinzhu.com:60";
+    //内网地址（测试钱包功能）
+//   String BASE_URL = "http://172.16.6.254:8082";
+
     /*正式游戏地址*/
-    String GAME_URL = "http://m.farm.myjinzhu.com/";
+//    String GAME_URL = "http://m.farm.myjinzhu.com/";
 
     /*测试游戏地址1*/
 //    String GAME_URL = "http://myjinzhu.com:5011/";
     /*测试游戏地址2*/
-//    String GAME_URL = "http://test.myjinzhu.com:63";
+    String GAME_URL = "http://test.myjinzhu.com:63";
     String API_VERSION = "/easyplay";
 
     String BASE_IMAGE_URL = BASE_URL + API_VERSION + "/";
@@ -203,4 +207,18 @@ public interface IFinancialUrl {
     /*修改银行卡状态*/
     String MODIFY_BANK_CARD_STATUS = BASE_URL + API_VERSION + "/wallet/login/modifyBankCard.do";
 
+    /*上传资料列表*/
+    String UPLOAD_LIST_URL=BASE_URL+API_VERSION+"/platform/login/findOrderFlow.do";
+    /*查找上传详情*/
+    String FIND_FLOW_DETAIL_URL=BASE_URL+API_VERSION+"/platform/login/findFlowDetail.do";
+    /*查看是否有增信资料*/
+    String FIND_EXTRA_FlOW_URL=BASE_URL+API_VERSION+"/platform/login/findExtraOrderFlow.do";
+    /*提交图片*/
+    String SUBIT_ORDER_FLOW_URL=BASE_URL+API_VERSION+"/platform/login/submitOrderFlow.do";
+    /*提交审核*/
+    String APPLAY_CREDIT_URL=BASE_URL+API_VERSION+"/platform/login/applyCredit.do";
+    /*订单状态*/
+    String APPLAY_CREDIT_STATUS = BASE_URL+API_VERSION+"/platform/login/applyCreditStatus.do";
+    /*跳过某个流程*/
+    String SKIP_FLOW = BASE_URL +API_VERSION +"/platform/login/skipFlow.do";
 }

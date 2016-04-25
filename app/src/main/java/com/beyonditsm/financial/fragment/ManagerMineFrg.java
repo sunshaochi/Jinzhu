@@ -183,6 +183,7 @@ public class ManagerMineFrg extends BaseFragment {
                         MessageDao.deleteAllMes();
 //                        FriendDao.deleteAllMes();
                         SpUtils.clearSp(getContext());
+                        SpUtils.clearOrderId(getContext());
                         Intent intent = new Intent(getActivity(), LoginAct.class);
                         intent.putExtra(LoginAct.LOGIN_TYPE,1);
                         getActivity().startActivity(intent);

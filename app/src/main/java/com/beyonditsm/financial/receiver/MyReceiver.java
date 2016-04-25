@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.MessageActivity;
 import com.beyonditsm.financial.activity.manager.ManagerMainAct;
@@ -16,6 +17,7 @@ import com.beyonditsm.financial.fragment.MineFragment;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
+import com.beyonditsm.financial.util.SpUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,6 +33,7 @@ import cn.jpush.android.api.JPushInterface;
  */
 public class MyReceiver extends BroadcastReceiver {
     private static final String TAG = "JPush";
+    private String orderId;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -45,20 +48,36 @@ public class MyReceiver extends BroadcastReceiver {
         } else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
 //        	processCustomMessage(context, bundle);
-
         } else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 接收到推送下来的通知");
             int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
             Log.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
             String jsonType = bundle.getString(JPushInterface.EXTRA_EXTRA);
-            MyLogUtils.info("推送数据：" +jsonType);
+            MyLogUtils.info("推送数据：" + jsonType);
             context.sendBroadcast(new Intent(MineFragment.UPDATE_MESSAGE));
-            if(!TextUtils.isEmpty(jsonType)) {
-                MessageBean mb = GsonUtils.json2Bean(jsonType, MessageBean.class);
-                mb.setTime(FinancialUtil.getCurrentTime());
-                mb.setMsg_id(bundle.getString(JPushInterface.EXTRA_MSG_ID));
-                MessageDao.saveMes(mb);
-                context.sendBroadcast(new Intent(MessageActivity.MESSAGE));
+            context.sendBroadcast(new Intent(MainActivity.DISPLAY_REDPOINT));
+//            context.sendOrderedBroadcast(new Intent("com.update.message"),null);
+////            context.sendBroadcast(new Intent(MineFragment.DISPLAY_POINT));
+            if (!TextUtils.isEmpty(jsonType)) {
+                try {
+                    MessageBean mb = GsonUtils.json2Bean(jsonType, MessageBean.class);
+                    mb.setTime(FinancialUtil.getCurrentTime());
+                    mb.setMsg_id(bundle.getString(JPushInterface.EXTRA_MSG_ID));
+                    MessageDao.saveMes(mb);
+                    context.sendBroadcast(new Intent(MessageActivity.MESSAGE));
+                    JSONObject object = new JSONObject(jsonType);
+                    orderId = object.getString("orderId");
+                    MyLogUtils.info("orderId+" + orderId);
+                    if (!TextUtils.isEmpty(orderId)){
+                        SpUtils.setOrderId(MyApplication.getInstance(),orderId);
+                    }
+//                    Intent intent1 = new Intent(MyCreditAct.PUSH_MESSAGE);
+//                    intent1.putExtra("id", orderId);
+//                    context.sendBroadcast(intent1);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
             /*消息推送扩展返回参数：{type:1}注：1：向信贷经理推送抢单提醒，跳到信贷经理抢单页面，
@@ -72,11 +91,11 @@ public class MyReceiver extends BroadcastReceiver {
                 try {
                     JSONObject obj = new JSONObject(jsonType);
                     String type = obj.optString("type");
-                    Intent i=null;
-                    if("1".equals(type)){
-                        i=new Intent(context, ManagerMainAct.class);
-                    }else{
-                        i=new Intent(context, MainActivity.class);
+                    Intent i = null;
+                    if ("1".equals(type)) {
+                        i = new Intent(context, ManagerMainAct.class);
+                    } else {
+                        i = new Intent(context, MainActivity.class);
                     }
 
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -7,10 +7,12 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.credit.MyCreditDAct;
@@ -21,6 +23,8 @@ import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GsonUtils;
+import com.beyonditsm.financial.util.MyLogUtils;
+import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
@@ -45,6 +49,9 @@ public class MyCreditAct extends BaseActivity {
     private MyCreditAdapter adapter;
 
     public static String CREDIT = "credit";
+    private PushBroadReceiver pushBroadReceiver;
+    private String orderId;
+    //    private String id;
 
     @Override
     public void setLayout() {
@@ -57,6 +64,8 @@ public class MyCreditAct extends BaseActivity {
         setLeftTv("返回");
 
         loadingView.setNoContentTxt("暂无贷款");
+        orderId = SpUtils.getOrderId(MyApplication.getInstance());
+        MyLogUtils.info("保存的orderID:"+ orderId);
         plv.setPullRefreshEnabled(true);
         plv.setScrollLoadEnabled(true);
         plv.setPullLoadEnabled(false);
@@ -70,37 +79,37 @@ public class MyCreditAct extends BaseActivity {
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 plv.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
                 currentPage = 1;
-                getMycreditList(currentPage);
+                getMycreditList(currentPage,orderId);
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 currentPage++;
-                getMycreditList(currentPage);
+                getMycreditList(currentPage,orderId);
             }
         });
-        getMycreditList(currentPage);
+        getMycreditList(currentPage, orderId);
         plv.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MyCreditAct.this, MyCreditDAct.class);
                 MyCreditBean.RowsEntity credit = (MyCreditBean.RowsEntity) datas.get(position);
                 intent.putExtra(CREDIT, credit);
-                intent.putExtra("position",position);
+                intent.putExtra("position", position);
                 startActivity(intent);
             }
         });
         loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
             @Override
             public void OnRetry() {
-                getMycreditList(currentPage);
+                getMycreditList(currentPage, orderId);
             }
         });
     }
 
     private List<MyCreditBean.RowsEntity> datas = new ArrayList<>();
 
-    private void getMycreditList(final int page) {
+    private void getMycreditList(final int page, final String orderId) {
         MyCreditEntity mce = new MyCreditEntity();
         mce.setPage(page);
         mce.setRows(10);
@@ -125,10 +134,10 @@ public class MyCreditAct extends BaseActivity {
                 }
                 datas.addAll(list);
                 if (adapter == null) {
-                    adapter = new MyCreditAdapter(getApplicationContext(), datas);
+                    adapter = new MyCreditAdapter(getApplicationContext(), datas, orderId);
                     plv.getRefreshableView().setAdapter(adapter);
                 } else {
-                    adapter.setDatas(datas);
+                    adapter.setDatas(datas,orderId);
                 }
 
             }
@@ -142,14 +151,28 @@ public class MyCreditAct extends BaseActivity {
         });
     }
 
+
     @Override
     public void onStart() {
         super.onStart();
         if (receiver == null) {
             receiver = new CreditBroadReceiver();
         }
+        if (pushBroadReceiver == null) {
+            pushBroadReceiver = new PushBroadReceiver();
+        }
+        registerReceiver(pushBroadReceiver, new IntentFilter(HIDE_MESSAGE));
         registerReceiver(receiver, new IntentFilter(CREDIT_RECEIVER));
 
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        String orderId = SpUtils.getOrderId(MyApplication.getInstance());
+        if (!TextUtils.isEmpty(orderId)){
+            getMycreditList(currentPage,orderId);
+        }
     }
 
     @Override
@@ -157,6 +180,9 @@ public class MyCreditAct extends BaseActivity {
         super.onDestroy();
         if (receiver != null) {
             unregisterReceiver(receiver);
+        }
+        if (pushBroadReceiver != null) {
+            unregisterReceiver(pushBroadReceiver);
         }
     }
 
@@ -168,7 +194,20 @@ public class MyCreditAct extends BaseActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             currentPage = 1;
-            getMycreditList(currentPage);
+            getMycreditList(currentPage, orderId);
         }
     }
+
+    public static final String HIDE_MESSAGE = "hide_message";
+
+    private class PushBroadReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String orderId = SpUtils.getOrderId(MyApplication.getInstance());
+            MyLogUtils.info("广播发回来的orderID"+orderId);
+            currentPage = 1;
+            getMycreditList(currentPage, orderId);
+        }
+    }
+
 }
