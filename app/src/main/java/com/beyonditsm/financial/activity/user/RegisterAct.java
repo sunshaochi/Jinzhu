@@ -134,7 +134,7 @@ public class RegisterAct extends BaseActivity {
                 break;
             //获取验证码
             case R.id.reg_yzm_btn:
-                if (isValidate()) {
+                if (isPhoneEnable()) {
                     phone = regPhone.getText().toString().trim();
                     String mobile = regPhone.getText().toString().trim();
                     generalUtil.getCode(mobile);
@@ -280,34 +280,33 @@ public class RegisterAct extends BaseActivity {
             regPhone.requestFocus();
             return false;
         }
-        if (yzm.length()<6){
-            MyToastUtils.showShortToast(getApplicationContext(), "验证码必须为6位纯数字");
-            regYzm.requestFocus();
-            return false;
-        }
         if (TextUtils.isEmpty(yzm)) {
             MyToastUtils.showShortDebugToast(getApplicationContext(), "请输入验证码");
             regYzm.requestFocus();
             return false;
         }
-//        if (TextUtils.isEmpty(pwd)) {
-//            MyToastUtils.showShortDebugToast(getApplicationContext(), "请输入密码");
-//            regPwd.requestFocus();
-//            return false;
-//        }
-//        if (TextUtils.isEmpty(pwd2)) {
-//            MyToastUtils.showShortDebugToast(getApplicationContext(), "请再次输入密码");
-//            regPwd2.requestFocus();
-//            return false;
-//        }
-//        if (!pwd.equals(pwd2)) {
-//            MyToastUtils.showShortDebugToast(getApplicationContext(), "两次输入的密码不一致");
-//            regPwd.requestFocus();
-//            return false;
-//        }
+        if (yzm.length()<6){
+            MyToastUtils.showShortToast(getApplicationContext(), "验证码必须为6位纯数字");
+            regYzm.requestFocus();
+            return false;
+        }
         return true;
     }
 
+    private boolean isPhoneEnable(){
+        phone = regPhone.getText().toString().trim();
+        if (TextUtils.isEmpty(phone)) {
+            MyToastUtils.showShortToast(getApplicationContext(), "请输入正确的手机号");
+            regPhone.requestFocus();
+            return false;
+        }
+        if (!FinancialUtil.isMobileNO(phone)){
+            MyToastUtils.showShortToast(getApplicationContext(), "请输入正确的手机号");
+            regPhone.requestFocus();
+            return false;
+        }
+        return  true;
+    }
 
     /**
      * 倒计时
