@@ -382,12 +382,24 @@ public class MyCreditDetailFragment extends BaseFragment {
                         ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + data.getImageLogoPath(), ivBank, options);
                         total.setText("贷款金额：");
                         time.setText("贷款期限：");
-                        tvTotal.setText("¥" + df.format(data.getTotalAmount() / 10000) + "万");
-                        tvLimit.setText("额度范围：" + df.format(Double.valueOf(data.getMinVal()) / 10000) + "~" + df.format(Double.valueOf(data.getMaxVal()) / 10000) + "万");
-                        tvL.setText("期限范围：" + data.getTimeMinVal() + "~" + data.getTimeMaxVal() + "月");
-                        tvTime.setText(data.getTotalPeriods() + "");
-                        tvYueG.setText("¥" + data.getPeriodsAmount());
-                        tvHf.setText("还款方式：" + data.getPayTypeName());
+                        if (!TextUtils.isEmpty(String.valueOf(data.getTotalAmount()))) {
+                            tvTotal.setText("¥" + df.format(data.getTotalAmount() / 10000) + "万");
+                        }
+                        if (!TextUtils.isEmpty(String.valueOf(data.getMinVal()))&&!TextUtils.isEmpty(String.valueOf(data.getMaxVal()))) {
+                            tvLimit.setText("额度范围：" + df.format(Double.valueOf(data.getMinVal()) / 10000) + "~" + df.format(Double.valueOf(data.getMaxVal()) / 10000) + "万");
+                        }
+                        if (!TextUtils.isEmpty(String.valueOf(data.getTimeMinVal()))&&!TextUtils.isEmpty(String.valueOf(data.getTimeMaxVal()))) {
+                            tvL.setText("期限范围：" + data.getTimeMinVal() + "~" + data.getTimeMaxVal() + "月");
+                        }
+                        if (!TextUtils.isEmpty(String.valueOf(data.getTotalPeriods()))) {
+                            tvTime.setText(data.getTotalPeriods() + "");
+                        }
+                        if (!TextUtils.isEmpty(String.valueOf(data.getPeriodsAmount()))) {
+                            tvYueG.setText("¥" + data.getPeriodsAmount());
+                        }
+                        if (!TextUtils.isEmpty(data.getPayTypeName())) {
+                            tvHf.setText("还款方式：" + data.getPayTypeName());
+                        }
 //                        tvT.setText("¥" + data.getTotalAmount());
 
                         Double totalMPay = Arith.sub(Double.valueOf(data.getPeriodsAmount()) * data.getTotalPeriods(), Double.valueOf(data.getTotalAmount()));

@@ -2,9 +2,12 @@ package com.beyonditsm.financial.activity.user;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
@@ -20,6 +23,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
@@ -40,6 +44,8 @@ import java.util.List;
 public class GameActivity extends BaseActivity {
     @ViewInject(R.id.wvGame)
     private WebView wvGame;
+    @ViewInject(R.id.ll_gameLayout)
+    private LinearLayout llGameLayout;
 
     private String gUrl;
     private Intent intent;
@@ -51,6 +57,7 @@ public class GameActivity extends BaseActivity {
     private ValueCallback<Uri[]> mUploadCallbackAboveL;
     private final static int FILECHOOSER_RESULTCODE = 1;// 表单的结果回调</span>
     private Uri imageUri;
+    private MyBroadCastReceiver receiver;
 
     @Override
     public void setLayout() {
@@ -180,6 +187,20 @@ public class GameActivity extends BaseActivity {
         super.onDestroy();
 //        setConfigCallback(null);
 //        wvGame.destroy();
+        llGameLayout.removeView(wvGame);
+        wvGame.destroy();
+        if (receiver!=null){
+            unregisterReceiver(receiver);
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (receiver == null) {
+            receiver = new MyBroadCastReceiver();
+        }
+        registerReceiver(receiver, new IntentFilter(RELOAD));
     }
 
 
@@ -308,6 +329,23 @@ public class GameActivity extends BaseActivity {
         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, cameraIntents.toArray(new Parcelable[]{}));
         startActivityForResult(chooserIntent, FILECHOOSER_RESULTCODE);
     }
+
+    public static final String RELOAD = "com.game.reload";
+
+    public class MyBroadCastReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            wvGame.loadUrl(gUrl);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        wvGame.onPause();
+    }
+
 
 }
 

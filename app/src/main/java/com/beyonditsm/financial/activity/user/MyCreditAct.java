@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
@@ -41,9 +42,10 @@ public class MyCreditAct extends BaseActivity {
 
     @ViewInject(R.id.plv)
     private LoadRefreshView plv;
-
     @ViewInject(R.id.loadingView)
     private LoadingView loadingView;
+    @ViewInject(R.id.rl_back)
+    private RelativeLayout rlBack;
 
     private int currentPage = 1;
     private MyCreditAdapter adapter;
@@ -105,6 +107,15 @@ public class MyCreditAct extends BaseActivity {
                 getMycreditList(currentPage, orderId);
             }
         });
+        rlBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                Intent intent = new Intent(GameActivity.RELOAD);
+                sendBroadcast(intent);
+            }
+        });
+
     }
 
     private List<MyCreditBean.RowsEntity> datas = new ArrayList<>();
