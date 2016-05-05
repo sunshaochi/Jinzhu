@@ -10,23 +10,23 @@ public interface IFinancialUrl {
     /*test1地址*/
 //    String BASE_URL = "http://139.196.111.82:5018";
     /*正式地址*/
-//    String BASE_URL = "http://option.myjinzhu.com";
+    String BASE_URL = "http://option.myjinzhu.com";
 
     /*测试地址2*/
 //    String BASE_URL="http://172.16.6.216:8080";
-    String BASE_URL = "http://test.myjinzhu.com:8082";
+//    String BASE_URL = "http://test.myjinzhu.com:8082";
     /*测试地址3*/
 //    String BASE_URL="http://test.myjinzhu.com:60";
     //内网地址（测试钱包功能）
 //   String BASE_URL = "http://172.16.6.254:8082";
 
     /*正式游戏地址*/
-//    String GAME_URL = "http://m.farm.myjinzhu.com/";
+    String GAME_URL = "http://m.farm.myjinzhu.com/";
 
     /*测试游戏地址1*/
 //    String GAME_URL = "http://myjinzhu.com:5011/";
     /*测试游戏地址2*/
-    String GAME_URL = "http://test.myjinzhu.com:63";
+//    String GAME_URL = "http://test.myjinzhu.com:63";
     String API_VERSION = "/easyplay";
 
     String BASE_IMAGE_URL = BASE_URL + API_VERSION + "/";
