@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -55,6 +56,8 @@ public class HomeFragment extends BaseFragment {
     private LinearLayout llTillage;
     @ViewInject(R.id.ll_work)
     private LinearLayout llWork;
+    @ViewInject(R.id.ivSuspen)
+    private ImageView ivSuspen;
     private CreditFragment creditFragment;
     private int currentPage = 1;
     private HomeCreditAdapter adapter;
@@ -69,6 +72,12 @@ public class HomeFragment extends BaseFragment {
     public void initData(Bundle savedInstanceState) {
 //        getHotProductList(currentPage);
 
+        String roleName = SpUtils.getRoleName(context);
+        if ("ROLE_COMMON_CLIENT".equals(roleName)){//普通用户显示贷款指南
+            ivSuspen.setBackgroundResource(R.mipmap.suspension_icon);
+        }else{//服务者显示服务者指南
+
+        }
         plvHotCredit.setPullRefreshEnabled(true);
         plvHotCredit.setScrollLoadEnabled(false);
         plvHotCredit.setPullLoadEnabled(false);
@@ -158,7 +167,7 @@ public class HomeFragment extends BaseFragment {
                     context.startActivity(goLog);
                 }
                 break;
-            case R.id.ivSuspen:
+            case R.id.ivSuspen://浮窗
                 intent=new Intent(getContext(), CreditGuideAct.class);
                 startActivity(intent);
                 break;

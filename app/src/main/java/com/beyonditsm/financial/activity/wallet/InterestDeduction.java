@@ -390,6 +390,10 @@ public class InterestDeduction extends BaseActivity {
                 tvlixifen.requestFocus();
                 return false;
             }
+        }else if (Integer.parseInt(tvlixifen.getText().toString())<100){
+            MyToastUtils.showShortToast(InterestDeduction.this,"申请兑换金额需大于100元");
+            tvlixifen.requestFocus();
+            return false;
         }
         return true;
     }

@@ -16,17 +16,14 @@
             android:id="@+id/tv_bankName"
             style="@style/tv_second_style"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="招商银行" />
+            android:layout_marginTop="10dp" />
 
         <TextView
             android:id="@+id/tv_cardNo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/tv_second_style"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="12345678912312313" />
+            android:layout_marginTop="10dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -43,16 +40,18 @@
             android:layout_height="30dp"
             android:background="@drawable/et_witchdraw"
             android:gravity="center"
-            android:text="设为默认" />
+            android:text="设为默认"
+            android:layout_marginRight="10dp"
+            android:textColor="#333333"/>
 
         <TextView
             android:id="@+id/jiebang"
             android:layout_width="40dp"
             android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@drawable/et_witchdraw"
             android:gravity="center"
-            android:text="解绑" />
+            android:text="解绑"
+            android:textColor="#333333"/>
     </LinearLayout>
 </RelativeLayout>

@@ -9,19 +9,111 @@
 
     <!--<include layout="@layout/tj_up_content"></include>-->
 
-
-
     <com.beyonditsm.financial.view.pullfreshview.PullToRefreshListView
         android:id="@+id/fr_tj_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@null"
-        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="42dp"
         android:layout_marginRight="42dp"
+        android:layout_marginTop="20dp"
+        android:divider="@null"
         android:paddingBottom="10dp"
-        android:layout_marginBottom="10dp"
         android:scrollbars="none"
-        >
-    </com.beyonditsm.financial.view.pullfreshview.PullToRefreshListView>
+        android:visibility="gone"></com.beyonditsm.financial.view.pullfreshview.PullToRefreshListView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="42dp"
+        android:layout_marginRight="42dp"
+        android:layout_marginTop="20dp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include layout="@layout/tj_up_content" />
+            <LinearLayout
+                android:id="@+id/ll_tj_bg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/shadow_rectangle"
+                android:orientation="vertical"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    style="@style/tv_primary_style"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:text="我推荐的用户"
+                    android:textColor="#333"
+                    android:textSize="16sp" />
+                <View
+                    style="@style/view_line"
+                    android:background="@color/gray_color"
+                    android:layout_marginTop="10dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="推荐用户总数(人)"
+                            android:textSize="14sp"
+                            android:textColor="#333"
+                            android:layout_gravity="center"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="50"
+                            android:textSize="16sp"
+                            android:textColor="#333"
+                            android:layout_marginTop="10dp"/>
+                    </LinearLayout>
+                    <View
+                        android:layout_width="1px"
+                        android:layout_height="match_parent"
+                        android:background="@color/gray_color"/>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="用户放贷总额(元)"
+                            android:textSize="14sp"
+                            android:textColor="#333"
+                            android:layout_gravity="center"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="50000000"
+                            android:textSize="16sp"
+                            android:textColor="#333"
+                            android:layout_marginTop="10dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

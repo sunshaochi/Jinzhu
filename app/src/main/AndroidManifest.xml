@@ -63,6 +63,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
         android:name=".MyApplication">
+        <!--android:theme="@style/AppBaseTheme"-->
         <activity
             android:name=".activity.SplashAct"
             android:label="@string/app_name"

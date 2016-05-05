@@ -56,7 +56,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="80dp"
             android:orientation="horizontal">
 
             <TextView
@@ -68,25 +68,40 @@
                 android:textColor="#333333"
                 android:textSize="14sp" />
 
-            <RelativeLayout
-                android:layout_width="150dp"
-                android:layout_height="40dp"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="15dp"
-                android:background="@drawable/dikoufen">
+                android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/tvxianjinfen"
-                    style="@style/cre_et"
+                <RelativeLayout
                     android:layout_width="150dp"
                     android:layout_height="40dp"
-                    android:layout_centerInParent="true"
-                    android:cursorVisible="false"
-                    android:inputType="number"
-                    android:numeric="integer"
-                    android:textColor="@color/tv_money_color"
-                    android:textSize="24sp" />
-            </RelativeLayout>
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/dikoufen">
+
+                    <EditText
+                        android:id="@+id/tvxianjinfen"
+                        style="@style/cre_et"
+                        android:layout_width="150dp"
+                        android:layout_height="40dp"
+                        android:layout_centerInParent="true"
+                        android:cursorVisible="false"
+                        android:inputType="number"
+                        android:numeric="integer"
+                        android:textColor="@color/tv_money_color"
+                        android:textSize="24sp" />
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="申请兑换金额需大于100元"
+                    android:textSize="10sp"
+                    android:layout_marginTop="10dp"/>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -255,7 +270,8 @@
             android:layout_height="1px"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:background="@color/line_color"/>
+            android:background="@color/line_color" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -275,6 +291,7 @@
                 android:layout_marginLeft="15dp"
                 android:hint="请输入支行名称" />
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"

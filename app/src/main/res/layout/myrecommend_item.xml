@@ -13,14 +13,14 @@
         android:paddingLeft="30dp"
         android:paddingRight="20dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/recommend_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-             />
+            android:layout_alignParentLeft="true" />
 
         <TextView
             android:id="@+id/recommend_phone"
@@ -40,4 +40,58 @@
              />-->
     </RelativeLayout>
 
+    <LinearLayout
+        android:background="@color/white"
+        android:paddingLeft="30dp"
+        android:paddingRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="推荐用户总数（人）"
+                android:textSize="16sp"
+                android:textColor="#333"
+                android:layout_gravity="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="50"
+                android:textSize="16sp"
+                android:textColor="#333"
+                android:layout_marginTop="10dp"/>
+        </LinearLayout>
+        <View
+            android:layout_width="2px"
+            android:layout_height="match_parent"
+            android:background="@color/view_line"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="用户放贷总额（元）"
+                android:textSize="16sp"
+                android:textColor="#333"
+                android:layout_gravity="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="50000000"
+                android:textSize="16sp"
+                android:textColor="#333"
+                android:layout_marginTop="10dp"/>
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

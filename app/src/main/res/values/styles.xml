@@ -354,4 +354,8 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">#ffffff</item>
     </style>
+    <!-- 设置应用布局时是否考虑系统窗口布局；true -->
+    <style name="AppBaseTheme" parent="android:Theme.Light.NoTitleBar">
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
 </resources>

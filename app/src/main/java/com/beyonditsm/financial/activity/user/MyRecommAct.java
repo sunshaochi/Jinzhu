@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import com.beyonditsm.financial.entity.MyRecommeEntity;
 import com.beyonditsm.financial.entity.UserLoginEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
+import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshListView;
 import com.lidroid.xutils.util.LogUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -52,6 +54,32 @@ public class MyRecommAct extends BaseActivity {
 
     @ViewInject(R.id.fr_tj_list)
     private PullToRefreshListView fr_tj_list;
+    @ViewInject(R.id.ivtuijianma)
+    private ImageView ivTuiJianMa;
+    @ViewInject(R.id.tuijianma)
+    private TextView tvTuijianma;
+    @ViewInject(R.id.iv_weixin)
+    private ImageView ivWeixin;
+    @ViewInject(R.id.iv_wxpyq)
+    private ImageView ivWxpyq;
+    @ViewInject(R.id.iv_weibo)
+    private ImageView ivWeibo;
+    @ViewInject(R.id.iv_qq)
+    private ImageView ivQQ;
+    @ViewInject(R.id.tvRoleName)
+    private TextView RoleName;
+    @ViewInject(R.id.tv_BecomeServant)
+    private TextView BecomeServant;
+    @ViewInject(R.id.tvServant)
+    private TextView tvServant;
+    @ViewInject(R.id.rl_servant)
+    private RelativeLayout rlServant;
+    @ViewInject(R.id.rl_primaryServant)
+    private LinearLayout llPrimaryServant;
+    @ViewInject(R.id.rl_middleServant)
+    private LinearLayout llMiddleServant;
+    @ViewInject(R.id.rl_seniorServant)
+    private LinearLayout llSeniorServant;
 
     private List<MyRecomBean.RowsEntity> datas = new ArrayList<>();
     private MyRecommeEntity fre;
@@ -66,6 +94,7 @@ public class MyRecommAct extends BaseActivity {
     String yqUrl = "http://m.myjinzhu.com/#/tab/home?redirctUrl=/register/";
 //    String codeUrl = "http://www.myjinzhu.com/#/activity/spring-festival";
       String codeUrl="http://m.myjinzhu.com/#/tab/home?redirctUrl=%2Ftab%2Fhome%2Factivity%2Ffestival";
+
     @Override
     public void setLayout() {
         setContentView(R.layout.activity_myrecomm);
@@ -76,13 +105,89 @@ public class MyRecommAct extends BaseActivity {
         fre = new MyRecommeEntity();
         setTopTitle("我的推荐");
         setLeftTv("返回");
+        rlServant.setVisibility(View.VISIBLE);
+        tvServant.setText("服务者");
         ule = getIntent().getParcelableExtra("userLogin");
         context = MyRecommAct.this;
-        if (frAdapter == null) {
-            frAdapter = new FrAdapter();
-            fr_tj_list.getRefreshableView().setAdapter(frAdapter);
+//        if (frAdapter == null) {
+//            frAdapter = new FrAdapter();
+//            fr_tj_list.getRefreshableView().setAdapter(frAdapter);
+//        }
+//        fr_tj_list.setPullRefreshEnabled(false);
+        String roleName = SpUtils.getRoleName(this);
+        if ("ROLE_COMMON_CLIENT".equals(roleName)){
+            BecomeServant.setVisibility(View.VISIBLE);
+            RoleName.setVisibility(View.GONE);
+            llMiddleServant.setVisibility(View.GONE);
+            llSeniorServant.setVisibility(View.GONE);
+//            BecomeServant.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    llPrimaryServant.setVisibility(View.GONE);
+//                    BecomeServant.setVisibility(View.GONE);
+//                }
+//            });
+
+        }else if ("ROLE_SERVANT_PRIMARY".equals(roleName)){
+            llPrimaryServant.setVisibility(View.GONE);
+        }else if ("ROLE_SERVANT_MIDDLE".equals(roleName)){
+            llPrimaryServant.setVisibility(View.GONE);
+            llMiddleServant.setVisibility(View.GONE);
+        }else {
+            llPrimaryServant.setVisibility(View.GONE);
+            llMiddleServant.setVisibility(View.GONE);
+            llSeniorServant.setVisibility(View.GONE);
         }
-        fr_tj_list.setPullRefreshEnabled(false);
+        if (ule!=null){
+            RoleName.setText(ule.getDescription());
+        }
+        Bitmap bitmap = null;
+        if (ule != null)
+            bitmap = FinancialUtil.createQRImage(yqUrl + ule.getMyReferralCode());
+        else
+            bitmap = FinancialUtil.createQRImage(yqUrl);
+        ivTuiJianMa.setScaleType(ImageView.ScaleType.FIT_XY);
+        ivTuiJianMa.setImageBitmap(bitmap);
+        if (ule != null) {
+//            tvTuijianma.setText(ule.getMyReferralCode());
+            tvTuijianma.setText(ule.getUsername());
+        }
+
+        shareListener();
+//        findFriendList();
+
+        mController = UMServiceFactory.getUMSocialService("com.umeng.share");
+        mController.getConfig().closeToast();
+    }
+
+    private void shareListener() {
+        ivWeixin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                weixinShare();
+            }
+        });
+        ivWxpyq.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                weixinCircleShare();
+            }
+        });
+        ivWeibo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                weiboShare();
+            }
+        });
+        ivQQ.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qqShare();
+            }
+        });
+    }
+
+    private void findFriendList() {
         RequestManager.getUserManager().findFriendList(fre, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
@@ -118,9 +223,6 @@ public class MyRecommAct extends BaseActivity {
 
             }
         });
-
-        mController = UMServiceFactory.getUMSocialService("com.umeng.share");
-        mController.getConfig().closeToast();
     }
 
 
@@ -350,7 +452,6 @@ public class MyRecommAct extends BaseActivity {
                 if (ule != null)
                     vh.tvMyReferralCode.setText(ule.getMyReferralCode());
                 if (datas != null && datas.size() > 0) {
-                    LogUtils.i("999999999999999999999999999999");
                     vh.ll_tj_bg.setVisibility(View.VISIBLE);
 //                    MyRecomBean.RowsEntity us = datas.get(position);
                     vh.nameTv.setText(datas.get(0).getUserName());
@@ -359,13 +460,11 @@ public class MyRecommAct extends BaseActivity {
             } else if (position > 0) {
                 vh.ll.setVisibility(View.GONE);
                 if (datas != null && datas.size() > 0) {
-                    LogUtils.i("1111111111111111111111111");
                     vh.ll_tj_bg.setVisibility(View.VISIBLE);
 //                    MyRecomBean.RowsEntity us = datas.get(position);
                     vh.nameTv.setText(datas.get(position).getUserName());
                     vh.phoneTv.setText(datas.get(position).getMobile());
                 } else {
-                    LogUtils.i("66666666666666666666666");
                     vh.ll_tj_bg.setVisibility(View.GONE);
                 }
             }
