@@ -231,7 +231,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
                         android:layout_toRightOf="@id/ivCredit"
-                        android:text="我的贷款" />
+                        android:text="服务者" />
 
                     <ImageView
                         style="@style/arrow_right_style"
@@ -247,7 +247,8 @@
 
                 <RelativeLayout
                     android:id="@+id/rlWork"
-                    style="@style/rl_mine_style">
+                    style="@style/rl_mine_style"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/ivWork"
@@ -276,7 +277,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:layout_marginLeft="45dp"
-                    android:background="@color/line_color"></View>
+                    android:background="@color/line_color"
+                    android:visibility="gone"></View>
 
                 <RelativeLayout
                     android:id="@+id/rlWallet"
