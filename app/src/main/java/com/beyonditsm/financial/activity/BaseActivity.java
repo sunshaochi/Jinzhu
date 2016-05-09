@@ -11,7 +11,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
-import com.beyonditsm.financial.view.NotificationImmersed;
 import com.lidroid.xutils.ViewUtils;
 import com.tandong.sa.activity.SmartFragmentActivity;
 import com.umeng.analytics.MobclickAgent;
@@ -28,7 +27,6 @@ public abstract class BaseActivity extends SmartFragmentActivity{
     private TextView tvRight;
     private  TextView tvLeft;
     private RelativeLayout rl_right;
-    private NotificationImmersed immersed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
