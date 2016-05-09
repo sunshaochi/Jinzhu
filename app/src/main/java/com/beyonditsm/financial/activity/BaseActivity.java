@@ -23,7 +23,7 @@ import cn.jpush.android.api.JPushInterface;
  */
 public abstract class BaseActivity extends SmartFragmentActivity{
 
-    private TextView tv_title;
+    private TextView tv_title ;
     private TextView tvRight;
     private  TextView tvLeft;
     private RelativeLayout rl_right;
