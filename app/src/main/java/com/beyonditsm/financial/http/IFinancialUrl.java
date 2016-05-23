@@ -14,11 +14,12 @@ public interface IFinancialUrl {
 
     /*测试地址2*/
 //    String BASE_URL="http://172.16.6.216:8080";
-//    String BASE_URL = "http://test.myjinzhu.com:8082";
+    String BASE_URL = "http://test.myjinzhu.com:8082";
     /*测试地址3*/
 //    String BASE_URL="http://test.myjinzhu.com:60";
     //内网地址（测试钱包功能）
-   String BASE_URL = "http://172.16.6.254:8082";
+//    String BASE_URL = "http://172.16.6.254:8082";
+//    String BASE_URL = "http://172.16.5.250:8080";
 
     /*正式游戏地址*/
 //    String GAME_URL = "http://m.farm.myjinzhu.com/";
@@ -208,17 +209,27 @@ public interface IFinancialUrl {
     String MODIFY_BANK_CARD_STATUS = BASE_URL + API_VERSION + "/wallet/login/modifyBankCard.do";
 
     /*上传资料列表*/
-    String UPLOAD_LIST_URL=BASE_URL+API_VERSION+"/platform/login/findOrderFlow.do";
+    String UPLOAD_LIST_URL = BASE_URL + API_VERSION + "/platform/login/findOrderFlow.do";
     /*查找上传详情*/
-    String FIND_FLOW_DETAIL_URL=BASE_URL+API_VERSION+"/platform/login/findFlowDetail.do";
+    String FIND_FLOW_DETAIL_URL = BASE_URL + API_VERSION + "/platform/login/findFlowDetail.do";
     /*查看是否有增信资料*/
-    String FIND_EXTRA_FlOW_URL=BASE_URL+API_VERSION+"/platform/login/findExtraOrderFlow.do";
+    String FIND_EXTRA_FlOW_URL = BASE_URL + API_VERSION + "/platform/login/findExtraOrderFlow.do";
     /*提交图片*/
-    String SUBIT_ORDER_FLOW_URL=BASE_URL+API_VERSION+"/platform/login/submitOrderFlow.do";
+    String SUBIT_ORDER_FLOW_URL = BASE_URL + API_VERSION + "/platform/login/submitOrderFlow.do";
     /*提交审核*/
-    String APPLAY_CREDIT_URL=BASE_URL+API_VERSION+"/platform/login/applyCredit.do";
+    String APPLAY_CREDIT_URL = BASE_URL + API_VERSION + "/platform/login/applyCredit.do";
     /*订单状态*/
-    String APPLAY_CREDIT_STATUS = BASE_URL+API_VERSION+"/platform/login/applyCreditStatus.do";
+    String APPLAY_CREDIT_STATUS = BASE_URL + API_VERSION + "/platform/login/applyCreditStatus.do";
     /*跳过某个流程*/
-    String SKIP_FLOW = BASE_URL +API_VERSION +"/platform/login/skipFlow.do";
+    String SKIP_FLOW = BASE_URL + API_VERSION + "/platform/login/skipFlow.do";
+    /*服务者条件获取*/
+    String SERVANT_COND_INFO = BASE_URL + API_VERSION + "/servant/login/getServantCondInfo.do";
+    /*成为服务者*/
+    String APPLY_TO_SERVANT = BASE_URL + API_VERSION + "/servant/login/applyToServant.do";
+    /*服务者推荐信息获取*/
+    String SERVANT_RMD_INFO = BASE_URL + API_VERSION + "/servant/login/getServantRmdInfo.do";
+    /*最低提现额度*/
+    String MIN_EXCHANGE = BASE_URL + API_VERSION + "/wallet/login/ifGetMinExchange.do";
+    /*查询角色信息*/
+    String ROLE_INTO = BASE_URL+API_VERSION+"/servant/login/getRoleInfo.do";
 }

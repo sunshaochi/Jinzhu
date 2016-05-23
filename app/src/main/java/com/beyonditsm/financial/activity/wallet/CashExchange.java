@@ -69,6 +69,8 @@ public class CashExchange extends BaseActivity {
     private Button btnOk;//确认
     @ViewInject(R.id.tvset)
     private TextView tvset;//设置资金密码
+    @ViewInject(R.id.tv_minPayment)
+    private TextView tvMinPayment;//最小兑换金额
     private RelativeLayout rlset;
 
     private OrderBean orderBean;//订单实体
@@ -78,6 +80,7 @@ public class CashExchange extends BaseActivity {
     private double MAX_MARK = 0.0;
     private List<QueryBankCardEntity> bindList;
     private int bankNamePos;
+    private int minPayment;
 
     @Override
     public void setLayout() {
@@ -89,8 +92,11 @@ public class CashExchange extends BaseActivity {
         AppManager.getAppManager().addActivity(CashExchange.this);
         setLeftTv("返回");
         setTopTitle("现金兑换");
+
         user = getIntent().getParcelableExtra("userInfo");
         findBankCard();
+        getMinExchange();
+
         if (user != null) {
 //            if (!TextUtils.isEmpty(user.getUserName())){
 //                name.setText(user.getUserName());
@@ -327,8 +333,8 @@ public class CashExchange extends BaseActivity {
             Toast.makeText(CashExchange.this, "输入的兑换金额无效", Toast.LENGTH_SHORT).show();
             tvxianjinfen.requestFocus();
             return false;
-        }else if (Integer.parseInt(tvxianjinfen.getText().toString())<100){
-            MyToastUtils.showShortToast(CashExchange.this,"申请兑换金额需大于100元");
+        }else if (Integer.parseInt(tvxianjinfen.getText().toString())<minPayment){
+            MyToastUtils.showShortToast(CashExchange.this,"申请兑换金额需大于"+minPayment+"元");
             tvxianjinfen.requestFocus();
             return false;
         }
@@ -380,6 +386,26 @@ public class CashExchange extends BaseActivity {
             @Override
             public void onError(int status, String msg) {
                 MyToastUtils.showShortToast(CashExchange.this, msg);
+            }
+        });
+    }
+
+    /**
+     * 获取最小兑换金额
+     */
+    private void getMinExchange(){
+        RequestManager.getCommManager().getMinExchange(new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                JSONObject object = new JSONObject(result);
+                JSONObject data = object.getJSONObject("data");
+                minPayment = data.getInt("minPayment");
+                tvMinPayment.setText("申请兑换金额需大于" + minPayment + "元");
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
             }
         });
     }

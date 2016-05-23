@@ -881,11 +881,12 @@ public class FinancialUtil {
 
     /**
      * 验证手机号是否正确
+     * 130,131,132，133，134,135,136,137,138，139,145，147，150,151,152，153,155,156,157，158，159,180,181,182,183,184,185,186,187,188,189
      * @param mobiles
      * @return
      */
     public static boolean isMobileNO(String mobiles){
-        Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$");
+        Pattern p = Pattern.compile("^((13[0-9])|(14[5,7])|(15[^4,\\D])|(18[0-9]))\\d{8}$");
         Matcher m = p.matcher(mobiles);
         return m.matches();
     }

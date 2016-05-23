@@ -13,8 +13,7 @@
         android:paddingLeft="30dp"
         android:paddingRight="20dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/recommend_name"
@@ -26,8 +25,7 @@
             android:id="@+id/recommend_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-             />
+            android:layout_alignParentRight="true" />
 
       <!--  <TextView
             android:id="@+id/recommend_status"
@@ -46,7 +44,8 @@
         android:paddingRight="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"

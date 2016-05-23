@@ -24,6 +24,7 @@ import com.beyonditsm.financial.entity.HomeHotProductEntity;
 import com.beyonditsm.financial.entity.HotProduct;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
+import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
@@ -73,10 +74,9 @@ public class HomeFragment extends BaseFragment {
 //        getHotProductList(currentPage);
 
         String roleName = SpUtils.getRoleName(context);
-        if ("ROLE_COMMON_CLIENT".equals(roleName)){//普通用户显示贷款指南
-            ivSuspen.setBackgroundResource(R.mipmap.suspension_icon);
-        }else{//服务者显示服务者指南
-
+        MyLogUtils.info("ROLENAME="+roleName);
+        if (!"ROLE_COMMON_CLIENT".equals(roleName)&&!TextUtils.isEmpty(roleName)){//普通用户显示贷款指南
+            ivSuspen.setBackgroundResource(R.mipmap.servant_guide);
         }
         plvHotCredit.setPullRefreshEnabled(true);
         plvHotCredit.setScrollLoadEnabled(false);

@@ -78,6 +78,8 @@ public class InterestDeduction extends BaseActivity {
     private Button btnOk;//确认
     @ViewInject(R.id.tvset)
     private TextView tvset;//设置资金密码
+    @ViewInject(R.id.tv_minPayment)
+    private TextView tvMinPayment;//最小兑换金额
 
     private OrderBean orderBean,orderBeanLixi;//订单实体
     private UserEntity user;//用户实体
@@ -89,6 +91,7 @@ public class InterestDeduction extends BaseActivity {
     private double MAX_MARK = 0.0;
     private List<QueryBankCardEntity> bindList;
     private int bankNamePos;
+    private int minPayment;
 
     @Override
     public void setLayout() {
@@ -100,6 +103,7 @@ public class InterestDeduction extends BaseActivity {
         AppManager.getAppManager().addActivity(InterestDeduction.this);
         setLeftTv("返回");
         setTopTitle("抵扣利息");
+
 
         user=getIntent().getParcelableExtra("userInfo");
         if(user!=null){
@@ -118,6 +122,7 @@ public class InterestDeduction extends BaseActivity {
         }
         getOrderNoList();
         findBankCard();
+        getMinExchange();
 
         setListener();
         if (!TextUtils.isEmpty(bankName.getText())&&!TextUtils.isEmpty(bankCount.getText())&&!TextUtils.isEmpty(name.getText())){
@@ -223,7 +228,7 @@ public class InterestDeduction extends BaseActivity {
                                 bankName.setText(bindList.get(which - 1).getBankName());
                                 bankCount.setText(bindList.get(which - 1).getCardNo());
                                 name.setText(bindList.get(which - 1).getAccountName());
-                                depositBank.setText(bindList.get(which-1).getBranchBankName());
+                                depositBank.setText(bindList.get(which - 1).getBranchBankName());
                                 bankNamePos = which - 1;
                                 bankCount.setTextColor(getResources().getColor(R.color.tv_primary_color));
                                 bankName.setTextColor(getResources().getColor(R.color.tv_primary_color));
@@ -390,8 +395,8 @@ public class InterestDeduction extends BaseActivity {
                 tvlixifen.requestFocus();
                 return false;
             }
-        }else if (Integer.parseInt(tvlixifen.getText().toString())<100){
-            MyToastUtils.showShortToast(InterestDeduction.this,"申请兑换金额需大于100元");
+        }else if (Integer.parseInt(tvlixifen.getText().toString())<minPayment){
+            MyToastUtils.showShortToast(InterestDeduction.this,"申请兑换金额需大于"+minPayment+"元");
             tvlixifen.requestFocus();
             return false;
         }
@@ -461,26 +466,26 @@ public class InterestDeduction extends BaseActivity {
                 bindList = gson.fromJson(data.toString(), new TypeToken<List<QueryBankCardEntity>>() {
                 }.getType());
 
-                if (bindList!=null) {
+                if (bindList != null) {
                     for (int i = 0; i < bindList.size(); i++) {
                         int status = bindList.get(i).getStatus();
                         if (status == 2) {
-                            if (!TextUtils.isEmpty(bindList.get(i).getBankName())){
+                            if (!TextUtils.isEmpty(bindList.get(i).getBankName())) {
                                 bankName.setText(bindList.get(i).getBankName());
                                 bankName.setEnabled(false);
                                 bankName.setTextColor(getResources().getColor(R.color.tv_primary_color));
                             }
-                            if (!TextUtils.isEmpty(bindList.get(i).getCardNo())){
+                            if (!TextUtils.isEmpty(bindList.get(i).getCardNo())) {
                                 bankCount.setText(bindList.get(i).getCardNo());
                                 bankCount.setEnabled(false);
                                 bankCount.setTextColor(getResources().getColor(R.color.tv_primary_color));
                             }
-                            if (!TextUtils.isEmpty(bindList.get(i).getAccountName())){
+                            if (!TextUtils.isEmpty(bindList.get(i).getAccountName())) {
                                 name.setText(bindList.get(i).getAccountName());
                                 name.setEnabled(false);
                                 name.setTextColor(getResources().getColor(R.color.tv_primary_color));
                             }
-                            if (!TextUtils.isEmpty(bindList.get(i).getBranchBankName())){
+                            if (!TextUtils.isEmpty(bindList.get(i).getBranchBankName())) {
                                 depositBank.setText(bindList.get(i).getBranchBankName());
                                 depositBank.setEnabled(false);
                                 depositBank.setTextColor(getResources().getColor(R.color.tv_primary_color));
@@ -493,6 +498,26 @@ public class InterestDeduction extends BaseActivity {
             @Override
             public void onError(int status, String msg) {
                 MyToastUtils.showShortToast(InterestDeduction.this, msg);
+            }
+        });
+    }
+
+    /**
+     * 获取最小兑换金额
+     */
+    private void getMinExchange(){
+        RequestManager.getCommManager().getMinExchange(new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                JSONObject object = new JSONObject(result);
+                JSONObject data = object.getJSONObject("data");
+                minPayment = data.getInt("minPayment");
+                tvMinPayment.setText("申请兑换金额需大于"+minPayment+"元");
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
             }
         });
     }

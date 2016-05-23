@@ -9,18 +9,21 @@
 
     <!--<include layout="@layout/tj_up_content"></include>-->
 
+
+
     <com.beyonditsm.financial.view.pullfreshview.PullToRefreshListView
         android:id="@+id/fr_tj_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="10dp"
+        android:divider="@null"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="42dp"
         android:layout_marginRight="42dp"
-        android:layout_marginTop="20dp"
-        android:divider="@null"
         android:paddingBottom="10dp"
+        android:layout_marginBottom="10dp"
         android:scrollbars="none"
-        android:visibility="gone"></com.beyonditsm.financial.view.pullfreshview.PullToRefreshListView>
+        android:visibility="gone">
+    </com.beyonditsm.financial.view.pullfreshview.PullToRefreshListView>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -74,10 +77,10 @@
                             android:textColor="#333"
                             android:layout_gravity="center"/>
                         <TextView
+                            android:id="@+id/tv_recommedUserCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text="50"
                             android:textSize="16sp"
                             android:textColor="#333"
                             android:layout_marginTop="10dp"/>
@@ -99,10 +102,10 @@
                             android:textColor="#333"
                             android:layout_gravity="center"/>
                         <TextView
+                            android:id="@+id/tv_recommedTotalAmt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text="50000000"
                             android:textSize="16sp"
                             android:textColor="#333"
                             android:layout_marginTop="10dp"/>

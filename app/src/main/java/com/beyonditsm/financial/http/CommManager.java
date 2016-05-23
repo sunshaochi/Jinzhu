@@ -528,10 +528,58 @@ public class CommManager extends RequestManager {
         doPost(IFinancialUrl.APPLAY_CREDIT_STATUS,params,callBack);
     }
 
+    /**
+     * 跳过流程
+     * @param orderId
+     * @param flowId
+     * @param callBack
+     */
     public void skipFlow(String orderId,String flowId,CallBack callBack){
         Map<String,String> params = new HashMap<>();
         params.put("orderId",orderId);
         params.put("flowId",flowId);
         doPost(IFinancialUrl.SKIP_FLOW,params,callBack);
+    }
+
+    /**
+     * 获取服务者条件
+     * @param callBack
+     */
+    public void getServantCondInfo(CallBack callBack){
+        Map<String,String> params = new HashMap<>();
+        doPost(IFinancialUrl.SERVANT_COND_INFO,params,callBack);
+    }
+
+    /**
+     * 成为服务者
+     * @param callBack
+     */
+    public void applyServant(CallBack callBack){
+        Map<String,String> params = new HashMap<>();
+        doPost(IFinancialUrl.APPLY_TO_SERVANT,params,callBack);
+    }
+
+    /**
+     * 服务和推荐信息获取
+     * @param callBack
+     */
+    public void getServantRmdInfo(CallBack callBack){
+        Map<String,String> params = new HashMap<>();
+        doPost(IFinancialUrl.SERVANT_RMD_INFO,params,callBack);
+    }
+
+    /**
+     * 最低提现额度
+     * @param callBack
+     */
+    public void getMinExchange(CallBack callBack){
+        Map<String,String> params = new HashMap<>();
+        doPost(IFinancialUrl.MIN_EXCHANGE,params,callBack);
+    }
+
+    /*获取角色信息*/
+    public void getRoleInfo(CallBack callBack){
+        Map<String,String> params = new HashMap<>();
+        doPost(IFinancialUrl.ROLE_INTO,params,callBack);
     }
 }

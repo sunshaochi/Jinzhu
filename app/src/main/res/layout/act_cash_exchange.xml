@@ -95,10 +95,10 @@
                 </RelativeLayout>
 
                 <TextView
+                    android:id="@+id/tv_minPayment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="申请兑换金额需大于100元"
                     android:textSize="10sp"
                     android:layout_marginTop="10dp"/>
             </LinearLayout>

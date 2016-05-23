@@ -353,6 +353,9 @@
         <activity android:name=".activity.credit.SubFlowAct"
             android:screenOrientation="portrait"
             ></activity>
+        <!--服务者专题-->
+        <activity android:name=".activity.user.ServantSpecialAct"
+            android:screenOrientation="portrait"></activity>
         <!-- 扫描二维码结果展示界面 -->
 
         <!--上传身份证照片-->

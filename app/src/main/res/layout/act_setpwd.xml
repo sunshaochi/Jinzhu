@@ -91,6 +91,7 @@
                 android:inputType="numberPassword"
                 android:layout_marginLeft="10dp"
                 android:singleLine="true"
+                android:maxLength="6"
                 />
         </LinearLayout>
         <View
@@ -120,6 +121,7 @@
                 android:inputType="numberPassword"
                 android:layout_marginLeft="10dp"
                 android:singleLine="true"
+                android:maxLength="6"
                 />
         </LinearLayout>
 

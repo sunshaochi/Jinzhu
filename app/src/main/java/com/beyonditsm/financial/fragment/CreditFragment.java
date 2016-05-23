@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
@@ -59,6 +61,8 @@ public class CreditFragment extends BaseFragment {
     private TextView tvM;//月份
     @ViewInject(R.id.tvSearch)
     private TextView tvSearch;//搜索
+    @ViewInject(R.id.ivSuspen)
+    private ImageView ivSuspen;
 
 //    @ViewInject(R.id.rlMoney)
 //    private RelativeLayout rlMoney;
@@ -94,6 +98,10 @@ public class CreditFragment extends BaseFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         tvTitle.setText("贷款");
+        String roleName = SpUtils.getRoleName(context);
+        if (!"ROLE_COMMON_CLIENT".equals(roleName)){//非普通用户显示服务者指南
+            ivSuspen.setBackgroundResource(R.mipmap.servant_guide);
+        }
         loadView.setNoContentTxt("暂无此类产品，换个条件试试");
         etAmount.setSelection(etAmount.getText().length());
         rl_back.setVisibility(View.GONE);

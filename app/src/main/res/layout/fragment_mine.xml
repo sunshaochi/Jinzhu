@@ -331,8 +331,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:layout_marginLeft="45dp"
-                    android:background="@color/line_color"
-                    android:visibility="gone"></View>
+                    android:background="@color/line_color"></View>
 
                 <RelativeLayout
                     android:id="@+id/rlWallet"
