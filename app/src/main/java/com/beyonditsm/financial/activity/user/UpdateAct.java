@@ -1,20 +1,26 @@
 package com.beyonditsm.financial.activity.user;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
-import com.beyonditsm.financial.activity.manager.SelectSexAct;
 import com.beyonditsm.financial.db.FriendDao;
 import com.beyonditsm.financial.entity.FriendBean;
 import com.beyonditsm.financial.entity.ResultData;
@@ -28,6 +34,7 @@ import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyBitmapUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.view.crop.square.CameraUtils;
 import com.beyonditsm.financial.view.crop.square.Crop;
@@ -71,6 +78,9 @@ public class UpdateAct extends BaseActivity {
     private String photoSavePath;
     private String photoSaveName;
     Uri imageUri = null;
+
+    private static final int CAMERA_REQUEST_CODE=2;
+    private boolean isGetPermission=false;
     String appHome = Environment.getExternalStorageDirectory().getAbsolutePath() + "/financial_tx";
 
     @SuppressWarnings("deprecation")
@@ -86,6 +96,8 @@ public class UpdateAct extends BaseActivity {
     private ScaleAllImageView civHead;//头像
     @ViewInject(R.id.tvSex)
     private TextView tvSex;//性别
+    @ViewInject(R.id.cb_select_sex)
+    private CheckBox cbSelectSex;//选择性别
 
     @ViewInject(R.id.tvAge)
     private TextView tvAge;//年龄
@@ -103,6 +115,8 @@ public class UpdateAct extends BaseActivity {
     private TextView tvLocal;
 //    @ViewInject(R.id.loadingView)
 //    private LoadingView loadingView;
+    @ViewInject(R.id.Service_ll)
+    private LinearLayout llServant;
 
     private AddressUtil addressUtil;
 
@@ -137,6 +151,18 @@ public class UpdateAct extends BaseActivity {
 //                getUserInfo();
 //            }
 //        });
+        cbSelectSex.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    userInfo.setUserSex(0);
+                    updateData(userInfo,5);
+                }else{
+                    userInfo.setUserSex(1);
+                    updateData(userInfo,5);
+                }
+            }
+        });
     }
 
     @Override
@@ -154,9 +180,11 @@ public class UpdateAct extends BaseActivity {
             case 1://身份证号
                 tvCard.setText(userInfo.getIdentCard());
                 if (userInfo.getUserSex() == 0) {
-                    tvSex.setText("女");
+//                    tvSex.setText("女");
+                    cbSelectSex.setChecked(true);
                 } else {
-                    tvSex.setText("男");
+//                    tvSex.setText("男");
+                    cbSelectSex.setChecked(false);
                 }
                 if (userInfo.getUserAge() != null)
                     tvAge.setText(userInfo.getUserAge() + "");
@@ -167,15 +195,17 @@ public class UpdateAct extends BaseActivity {
                 break;
             case 10://修改性别
                 if (userInfo.getUserSex() == 0) {
-                    tvSex.setText("女");
+//                    tvSex.setText("女");
+                    cbSelectSex.setChecked(true);
                 } else {
-                    tvSex.setText("男");
+//                    tvSex.setText("男");
+                    cbSelectSex.setChecked(false);
                 }
                 break;
         }
     }
 
-    @OnClick({R.id.rlHead, R.id.rlName, R.id.rlSex, R.id.rlCard, R.id.rlNative, R.id.rlHouseHold, R.id.rlBank,
+    @OnClick({R.id.rlHead, R.id.rlName, R.id.rlCard, R.id.rlNative, R.id.rlHouseHold, R.id.rlBank,
             R.id.rlSonBank, R.id.rlBankNumber, R.id.rlEmail, R.id.rlAge, R.id.rlMarry, R.id.rlLocal})
     public void toClick(View v) {
         Intent intent = null;
@@ -300,12 +330,12 @@ public class UpdateAct extends BaseActivity {
                     }
                 }).show();
                 break;
-            case R.id.rlSex://性别
-                intent = new Intent(this, SelectSexAct.class);
-                intent.putExtra(SelectSexAct.SEX, userInfo.getUserSex());
-                intent.putExtra(MineFragment.USER_KEY, userInfo);
-                startActivity(intent);
-                break;
+//            case R.id.rlSex://性别
+//                intent = new Intent(this, SelectSexAct.class);
+//                intent.putExtra(SelectSexAct.SEX, userInfo.getUserSex());
+//                intent.putExtra(MineFragment.USER_KEY, userInfo);
+//                startActivity(intent);
+//                break;
         }
     }
 
@@ -319,9 +349,11 @@ public class UpdateAct extends BaseActivity {
             ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + userInfo.getHeadIcon(), civHead, options);
             if (userInfo.getUserSex() != null) {
                 if (userInfo.getUserSex() == 0) {
-                    tvSex.setText("女");
+//                    tvSex.setText("女");
+                    cbSelectSex.setChecked(true);
                 } else {
-                    tvSex.setText("男");
+//                    tvSex.setText("男");
+                    cbSelectSex.setChecked(false);
                 }
             }
 
@@ -387,7 +419,13 @@ public class UpdateAct extends BaseActivity {
                     case 4://籍贯
                         tvnative.setText(ue.getNativePlace());
                         break;
-
+                    case 5://性别
+                        if (ue.getUserSex()==1){
+                            cbSelectSex.setChecked(false);
+                        }else{
+                            cbSelectSex.setChecked(true);
+                        }
+                        break;
                 }
                 Intent intent = new Intent(MineFragment.UPDATE_USER);
                 intent.putExtra(MineFragment.USER_KEY, ue);
@@ -509,7 +547,7 @@ public class UpdateAct extends BaseActivity {
             }
 
             @Override
-            public void onError(int status,String msg) {
+            public void onError(int status, String msg) {
                 MyLogUtils.info(msg);
             }
         });
@@ -593,6 +631,33 @@ public class UpdateAct extends BaseActivity {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    //6.0系统（API23）下检查并申请权限
+    private void findCameraPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
+            //申请相机权限
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST_CODE);
+        }
+    }
+    //6.0系统用户选择权限允许或者取消之后回调
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        doNext(requestCode,grantResults);
+    }
+    private void doNext(int requestCode,int[] grantResults) {
+        if (requestCode==CAMERA_REQUEST_CODE){
+            if (grantResults[0]==PackageManager.PERMISSION_GRANTED){//权限授予
+                isGetPermission = true;
+                SpUtils.setISpermission(getApplicationContext(), isGetPermission);
+                MyLogUtils.info("是否获取到权限："+isGetPermission);
+            }else{//权限否认
+                isGetPermission = false;
+                MyLogUtils.info("是否获取到权限："+isGetPermission);
+                MyToastUtils.showShortToast(getApplicationContext(),"没有权限");
+            }
         }
     }
 }

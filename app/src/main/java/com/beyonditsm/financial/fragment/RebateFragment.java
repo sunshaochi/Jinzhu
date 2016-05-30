@@ -48,8 +48,8 @@ public class RebateFragment extends BaseFragment{
         page=1;
 
         plv.setPullRefreshEnabled(true);
-        plv.setScrollLoadEnabled(true);
-        plv.setPullLoadEnabled(false);
+        plv.setScrollLoadEnabled(false);
+        plv.setPullLoadEnabled(true);
         plv.setHasMoreData(true);
         plv.getRefreshableView().setDivider(null);
         plv.getRefreshableView().setVerticalScrollBarEnabled(false);

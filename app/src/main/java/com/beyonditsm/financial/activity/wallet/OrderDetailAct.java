@@ -49,8 +49,8 @@ public class OrderDetailAct extends BaseActivity {
         page = 1;
         findOrderDetail();
         lvOrderDetail.setPullRefreshEnabled(true);
-        lvOrderDetail.setScrollLoadEnabled(true);
-        lvOrderDetail.setPullLoadEnabled(false);
+        lvOrderDetail.setScrollLoadEnabled(false);
+        lvOrderDetail.setPullLoadEnabled(true);
         lvOrderDetail.setHasMoreData(true);
         lvOrderDetail.getRefreshableView().setDivider(null);
         lvOrderDetail.getRefreshableView().setDividerHeight(20);

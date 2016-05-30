@@ -1,11 +1,16 @@
 package com.beyonditsm.financial.activity.credit;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +33,7 @@ import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyBitmapUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.widget.FinalLoadDialog;
 import com.leaf.library.widget.MyListView;
@@ -65,6 +71,7 @@ public class CreditUploadAct extends BaseActivity {
     private TextView tvSave;
     private String orderId;
     private String flowId;
+    private static final int CAMERA_REQUEST_CODE=2;
 
     private UpLoadEntity upLoadData;
     private DisplayImageOptions options = new DisplayImageOptions.Builder()
@@ -97,6 +104,7 @@ public class CreditUploadAct extends BaseActivity {
     private List<CreditUplEntity> resultData;//最终生成的data
     private MyAdapter myAdapter;
     private FinalLoadDialog dialog;
+    private boolean isGetPermission=false;
 
     @Override
     public void setLayout() {
@@ -410,6 +418,10 @@ public class CreditUploadAct extends BaseActivity {
             this.list = list;
             this.uItemId = uItemId;
             this.limit = limit;
+            if (Build.VERSION.SDK_INT>=23){
+                findCameraPermission();
+            }
+
         }
 
 
@@ -465,22 +477,26 @@ public class CreditUploadAct extends BaseActivity {
                         dialog.builder().addSheetItem("拍照", null, new MySelfSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
-                                uploadItemId = uItemId;
-                                if (list.size() > position) {
-                                    if (!TextUtils.isEmpty(list.get(position).getId())) {
-                                        imageId = list.get(position).getId();
-                                        imageIsPass = list.get(position).getIsPass();
+                                boolean isPermission = SpUtils.getIsPermission(getApplicationContext());
+//                                if (isPermission){
+                                    uploadItemId = uItemId;
+                                    if (list.size() > position) {
+                                        if (!TextUtils.isEmpty(list.get(position).getId())) {
+                                            imageId = list.get(position).getId();
+                                            imageIsPass = list.get(position).getIsPass();
+                                        }
                                     }
-                                }
-                                imagePosi = position;
+                                    imagePosi = position;
 
-                                photoSaveName = String.valueOf(System.currentTimeMillis()) + ".png";
-                                Uri imageUri = null;
-                                Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                imageUri = Uri.fromFile(new File(photoSavePath, photoSaveName));
-                                openCameraIntent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
-                                openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                                startActivityForResult(openCameraIntent, PHOTOTAKE);
+                                    photoSaveName = String.valueOf(System.currentTimeMillis()) + ".png";
+                                    Uri imageUri = null;
+                                    Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                    imageUri = Uri.fromFile(new File(photoSavePath, photoSaveName));
+                                    openCameraIntent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
+                                    openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                                    startActivityForResult(openCameraIntent, PHOTOTAKE);
+//                                }
+
                             }
                         }).addSheetItem("从相册选取", null, new MySelfSheetDialog.OnSheetItemClickListener() {
                             @Override
@@ -521,4 +537,38 @@ public class CreditUploadAct extends BaseActivity {
         }
     }
 
+    //6.0系统（API23）下检查并申请权限
+    private void findCameraPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
+            //申请相机权限
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST_CODE);
+        }
+    }
+    //6.0系统用户选择权限允许或者取消之后回调
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        doNext(requestCode,grantResults);
+    }
+
+    private void doNext(int requestCode,int[] grantResults) {
+        if (requestCode==CAMERA_REQUEST_CODE){
+            if (grantResults[0]==PackageManager.PERMISSION_GRANTED){//权限授予
+                isGetPermission = true;
+                SpUtils.setISpermission(getApplicationContext(),isGetPermission);
+                MyLogUtils.info("是否获取到权限："+isGetPermission);
+//                photoSaveName = String.valueOf(System.currentTimeMillis()) + ".png";
+//                Uri imageUri = null;
+//                Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                imageUri = Uri.fromFile(new File(photoSavePath, photoSaveName));
+//                openCameraIntent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
+//                openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+//                startActivityForResult(openCameraIntent, PHOTOTAKE);
+            }else{//权限否认
+                isGetPermission = false;
+                MyLogUtils.info("是否获取到权限："+isGetPermission);
+                MyToastUtils.showShortToast(getApplicationContext(),"没有权限");
+            }
+        }
+    }
 }

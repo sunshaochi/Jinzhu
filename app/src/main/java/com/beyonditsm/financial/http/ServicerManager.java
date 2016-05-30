@@ -55,6 +55,7 @@ public class ServicerManager extends RequestManager{
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        params.put("json",json);
         doPost(IFinancialUrl.UPDATE_SERVANT_URL, params, callBack);
     }
 

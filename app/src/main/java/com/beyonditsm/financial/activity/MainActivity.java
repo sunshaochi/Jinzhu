@@ -1,16 +1,21 @@
 package com.beyonditsm.financial.activity;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -38,6 +43,7 @@ import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GeneralUtils;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
+import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.lidroid.xutils.util.LogUtils;
 import com.lidroid.xutils.view.annotation.event.OnClick;
@@ -96,6 +102,8 @@ public class MainActivity extends BaseActivity{
     private DisplayRedPointReceiver displayRedReceiver;
     private HideRedPointReceiver hideRedPointReceiver;
 
+    private static final int READ_CONTACTS_REQUEST_CODE = 2;
+
     /**/
     private void assignViews() {
         ivMyCredit = (ImageView) findViewById(R.id.ivMyCredit);
@@ -129,6 +137,8 @@ public class MainActivity extends BaseActivity{
         //注册EventBus
         EventBus.getDefault().register(this);
         assignViews();
+
+
         String orderId = SpUtils.getOrderId(MyApplication.getInstance());
         if ("".equals(orderId)){
             ivRedPoint.setVisibility(View.GONE);
@@ -136,6 +146,11 @@ public class MainActivity extends BaseActivity{
             ivRedPoint.setVisibility(View.VISIBLE);
         }
         manager = getSupportFragmentManager();
+//        String def = getIntent().getStringExtra("def");
+//        if (!TextUtils.isEmpty(def)&&Integer.valueOf(def)==0){
+//            setTabSelection(Integer.valueOf(def));
+//            setCheckItem(Integer.valueOf(def));
+//        }
         setTabSelection(0);
         setCheckItem(0);
         mDialog = new ProgressDialog(this);
@@ -282,8 +297,13 @@ public class MainActivity extends BaseActivity{
                 break;
             //添加通讯录好友
             case R.id.add_friend:
-                Intent intent = new Intent(MainActivity.this, AddressBookAct.class);
-                startActivity(intent);
+                if (Build.VERSION.SDK_INT>=23){
+                    findContactsPermission();
+                }else{
+                    Intent intent = new Intent(MainActivity.this, AddressBookAct.class);
+                    startActivity(intent);
+                }
+
                 break;
             //顶部沟通按钮
             case R.id.title_chat:
@@ -303,6 +323,32 @@ public class MainActivity extends BaseActivity{
                 setTitleCheckItem(1);
                 setCheckItem(2);
                 break;
+        }
+    }
+
+    //6.0系统（API23）下检查并申请权限
+    private void findContactsPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)!= PackageManager.PERMISSION_GRANTED){
+            //申请读取联系人权限
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_CONTACTS},READ_CONTACTS_REQUEST_CODE);
+        }
+    }
+
+    //6.0系统用户选择允许或者取消之后回调
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        doNext(requestCode,grantResults);
+    }
+
+    private void doNext(int requestCode,int[] grantResults) {
+        if (requestCode==READ_CONTACTS_REQUEST_CODE){
+            if (grantResults[0]==PackageManager.PERMISSION_GRANTED){//权限授予
+                Intent intent = new Intent(MainActivity.this, AddressBookAct.class);
+                startActivity(intent);
+            }else{//权限否认
+                MyToastUtils.showShortToast(getApplicationContext(),"没有权限");
+            }
         }
     }
 

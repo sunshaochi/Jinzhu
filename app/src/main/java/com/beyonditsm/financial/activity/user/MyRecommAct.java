@@ -16,13 +16,14 @@ import android.widget.Toast;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
+import com.beyonditsm.financial.activity.MainActivity;
+import com.beyonditsm.financial.db.MessageDao;
 import com.beyonditsm.financial.entity.MyRecomBean;
 import com.beyonditsm.financial.entity.MyRecommeEntity;
 import com.beyonditsm.financial.entity.ServantCondEntity;
 import com.beyonditsm.financial.entity.UserLoginEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
-import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.ListViewForScrollView;
@@ -50,7 +51,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
+import io.rong.imkit.RongIM;
 
 
 /**
@@ -155,6 +162,7 @@ public class MyRecommAct extends BaseActivity {
         rlServant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                logout();
                 Intent intent = new Intent(MyRecommAct.this, ServantSpecialAct.class);
                 startActivity(intent);
             }
@@ -193,7 +201,6 @@ public class MyRecommAct extends BaseActivity {
 
     private void getRoleName() {
 //        String roleName = SpUtils.getRoleName(this);
-        MyLogUtils.info("xxxxxxx+" + roleName);
         if ("ROLE_COMMON_CLIENT".equals(roleName)) {//普通用户
             llServantCondInfo.setVisibility(View.GONE);
             BecomeServant.setVisibility(View.VISIBLE);
@@ -621,11 +628,12 @@ public class MyRecommAct extends BaseActivity {
                 BecomeServant.setVisibility(View.GONE);
                 JSONObject object = new JSONObject(result);
                 String message = object.getString("message");
-                MyToastUtils.showShortToast(getApplicationContext(), message);
-                SpUtils.setRoleName(getApplicationContext(),"ROLE_SERVANT_PRIMARY");
-                getRoleInfo();
+                MyToastUtils.showShortToast(getApplicationContext(), "恭喜成为服务者，请重新登录");
+                SpUtils.setRoleName(getApplicationContext(), "ROLE_SERVANT_PRIMARY");
+//                getRoleInfo();
 //                Intent intent = new Intent(MyRecommAct.this, LoginAct.class);
 //                startActivity(intent);
+                logout();
             }
 
             @Override
@@ -633,6 +641,39 @@ public class MyRecommAct extends BaseActivity {
 
             }
         });
+    }
+
+    private void logout() {
+        RequestManager.getCommManager().toLoginOut(new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) {
+                if (RongIM.getInstance() != null) {
+                    RongIM.getInstance().logout();
+                }
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
+            }
+        });
+        Set<String> set=new HashSet<String>();
+        JPushInterface.setAliasAndTags(getApplicationContext(), "", set, new TagAliasCallback() {
+            @Override
+            public void gotResult(int i, String s, Set<String> set) {
+
+            }
+        });
+        JPushInterface.clearAllNotifications(getApplicationContext());
+        MessageDao.deleteAllMes();
+        SpUtils.clearSp(getApplicationContext());
+        SpUtils.clearOrderId(getApplicationContext());
+//        Intent intent = new Intent(this, LoginAct.class);
+//        intent.putExtra(LoginAct.LOGIN_TYPE,1);
+        Intent intent1 = new Intent(MyRecommAct.this, MainActivity.class);
+        intent1.putExtra("def", "0");
+        startActivity(intent1);
+        finish();
     }
 
     //获取服务者推荐信息

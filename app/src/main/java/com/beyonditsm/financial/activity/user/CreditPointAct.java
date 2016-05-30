@@ -81,7 +81,6 @@ public class CreditPointAct extends BaseActivity {
     public void init(Bundle savedInstanceState) {
         setTopTitle("我的信用");
         setLeftTv("返回");
-        rlTop.setBackgroundResource(R.color.gray_color);
         totalCurrent=getIntent().getIntExtra(CREDIT, 0);
         totalPer=Double.valueOf(getIntent().getStringExtra(GRADE));
         doAnimation();

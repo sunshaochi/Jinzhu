@@ -8,9 +8,10 @@
     android:padding="15dp">
 
     <RelativeLayout
-        android:layout_width="130dp"
+        android:layout_width="wrap_content"
         android:layout_height="33dp"
         android:background="@drawable/et_back"
+        android:layout_weight="1"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
@@ -46,15 +47,17 @@
             android:inputType="numberDecimal"
             android:cursorVisible="false"
             android:textSize="12sp"
-            android:hint="-请输入-"
+            android:hint="请输入"
+            android:textColorHint="#ff6633"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/rlMonth"
-        android:layout_width="135dp"
+        android:layout_width="wrap_content"
         android:layout_height="33dp"
         android:background="@drawable/et_back"
+        android:layout_weight="1"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:layout_marginLeft="10dp">
@@ -90,7 +93,8 @@
             android:maxLength="3"
             android:textSize="12sp"
             android:textColor="#ff6633"
-            android:hint="-请选择-"
+            android:hint="请选择"
+            android:textColorHint="#ff6633"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
 
@@ -103,7 +107,8 @@
         android:text="搜索"
         android:gravity="center"
         android:textColor="#ffffff"
-        android:textSize="14sp"/>
+        android:textSize="14sp"
+        android:visibility="gone"/>
 
 </LinearLayout>
 

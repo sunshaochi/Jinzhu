@@ -20,7 +20,7 @@
             android:layout_weight="1"
             android:background="@drawable/white_bg"
             android:gravity="center"
-            android:text="沟通"
+            android:text="消息"
             android:textColor="#3e444f" />
 
         <TextView

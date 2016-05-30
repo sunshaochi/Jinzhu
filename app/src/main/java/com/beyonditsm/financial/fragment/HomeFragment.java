@@ -15,16 +15,21 @@ import android.widget.ListView;
 import com.beyonditsm.financial.ConstantValue;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.credit.CreditGuideAct;
+import com.beyonditsm.financial.activity.user.CreditCardAct;
 import com.beyonditsm.financial.activity.user.GameActivity;
 import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
 import com.beyonditsm.financial.activity.user.LoginAct;
-import com.beyonditsm.financial.activity.user.NewWorkAct;
+import com.beyonditsm.financial.activity.user.MyRecommAct;
 import com.beyonditsm.financial.adapter.HomeCreditAdapter;
 import com.beyonditsm.financial.entity.HomeHotProductEntity;
 import com.beyonditsm.financial.entity.HotProduct;
+import com.beyonditsm.financial.entity.ResultData;
+import com.beyonditsm.financial.entity.UserLoginEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
+import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
+import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
@@ -63,6 +68,7 @@ public class HomeFragment extends BaseFragment {
     private int currentPage = 1;
     private HomeCreditAdapter adapter;
     private List<HomeHotProductEntity> hotList;
+    private UserLoginEntity ule;
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -77,10 +83,11 @@ public class HomeFragment extends BaseFragment {
         MyLogUtils.info("ROLENAME="+roleName);
         if (!"ROLE_COMMON_CLIENT".equals(roleName)&&!TextUtils.isEmpty(roleName)){//普通用户显示贷款指南
             ivSuspen.setBackgroundResource(R.mipmap.servant_guide);
+            getUserLoginInfo();
         }
         plvHotCredit.setPullRefreshEnabled(true);
         plvHotCredit.setScrollLoadEnabled(false);
-        plvHotCredit.setPullLoadEnabled(false);
+        plvHotCredit.setPullLoadEnabled(true);
         plvHotCredit.setHasMoreData(true);
         plvHotCredit.getRefreshableView().setDivider(null);
         plvHotCredit.getRefreshableView().setVerticalScrollBarEnabled(false);
@@ -142,7 +149,7 @@ public class HomeFragment extends BaseFragment {
         });
     }
 
-    @OnClick({R.id.ll_credit, R.id.ll_tillage, R.id.ll_work,R.id.ivSuspen})
+    @OnClick({R.id.ll_credit, R.id.ll_tillage, R.id.ll_work,R.id.ivSuspen,R.id.ll_creditCard})
     public void toClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
@@ -160,7 +167,9 @@ public class HomeFragment extends BaseFragment {
                 break;
             case R.id.ll_work://打工挣钱
                 if(!"".equals(SpUtils.getRoleName(getActivity()))) {
-                    intent = new Intent(getActivity(), NewWorkAct.class);
+//                    intent = new Intent(getActivity(), NewWorkAct.class);//跳转打工挣钱页面
+                    intent = new Intent(getActivity(), MyRecommAct.class);//跳转服务者页面
+                    intent.putExtra("userLogin", ule);
                     startActivity(intent);
                 }else{
                     Intent goLog = new Intent(context,LoginAct.class);
@@ -170,6 +179,16 @@ public class HomeFragment extends BaseFragment {
             case R.id.ivSuspen://浮窗
                 intent=new Intent(getContext(), CreditGuideAct.class);
                 startActivity(intent);
+                break;
+            case R.id.ll_creditCard://信用卡
+                if(TextUtils.isEmpty(SpUtils.getRoleName(context).toString())){
+                    MyToastUtils.showShortToast(getContext(),"请先登录金蛛账号");
+                    Intent goLog = new Intent(context,LoginAct.class);
+                    context.startActivity(goLog);
+                }else{
+                    intent = new Intent(getActivity(), CreditCardAct.class);
+                    startActivity(intent);
+                }
                 break;
         }
     }
@@ -225,6 +244,24 @@ public class HomeFragment extends BaseFragment {
                 plvHotCredit.onPullUpRefreshComplete();
                 plvHotCredit.onPullDownRefreshComplete();
                 loadingView.loadError();
+            }
+        });
+    }
+
+    /**
+     * 获取用户的角色信息
+     */
+    private void getUserLoginInfo() {
+        RequestManager.getUserManager().findUserLoginInfo(new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                ResultData<UserLoginEntity> rd = (ResultData<UserLoginEntity>) GsonUtils.json(result, UserLoginEntity.class);
+                ule = rd.getData();
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
             }
         });
     }

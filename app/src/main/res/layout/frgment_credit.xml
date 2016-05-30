@@ -1,37 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/bg_color">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical">
 
     <include layout="@layout/title_act_layout"></include>
 
     <include layout="@layout/search_tit"></include>
 
-    <View
-       style="@style/view_line"></View>
+    <View style="@style/view_line"></View>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <com.beyonditsm.financial.view.pullfreshview.LoadRefreshView
-        android:id="@+id/plv"
-        android:layout_marginTop="1px"
-        style="@style/pullrefresh_style"
-        ></com.beyonditsm.financial.view.pullfreshview.LoadRefreshView>
-
+        <com.beyonditsm.financial.view.pullfreshview.LoadRefreshView
+            android:id="@+id/plv"
+            style="@style/pullrefresh_style"
+            android:layout_marginTop="1px"></com.beyonditsm.financial.view.pullfreshview.LoadRefreshView>
         <com.beyonditsm.financial.view.LoadingView
             android:id="@+id/loadView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"></com.beyonditsm.financial.view.LoadingView>
+
         <ImageView
             android:id="@+id/ivSuspen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@mipmap/suspension_icon"
             android:layout_gravity="right"
             android:layout_marginTop="60dp"
-            />
+            android:background="@mipmap/suspension_icon" />
     </FrameLayout>
 </LinearLayout>

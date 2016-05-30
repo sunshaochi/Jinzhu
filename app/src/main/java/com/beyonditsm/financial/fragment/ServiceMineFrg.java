@@ -14,11 +14,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
+import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.MessageActivity;
 import com.beyonditsm.financial.activity.servicer.ServiceDataAct;
 import com.beyonditsm.financial.activity.user.CreditPointAct;
 import com.beyonditsm.financial.activity.user.HardCreditAct;
-import com.beyonditsm.financial.activity.user.LoginAct;
 import com.beyonditsm.financial.activity.user.MyCreditAct;
 import com.beyonditsm.financial.activity.user.MyRecommAct;
 import com.beyonditsm.financial.activity.user.NewWorkAct;
@@ -83,6 +83,10 @@ public class ServiceMineFrg extends BaseFragment {
     private RelativeLayout msg_top;//右上角消息图标
     @ViewInject(R.id.msg_top_point)
     private ImageView msg_top_point;//右上角消息图标小红点
+    @ViewInject(R.id.ivWalletRed)
+    private ImageView ivWalletRed;//我的钱包小红点
+    @ViewInject(R.id.ivCreditRed)
+    private ImageView ivCreditRed;//我的贷款小红点
 
 
     @ViewInject(R.id.civHead)
@@ -105,6 +109,9 @@ public class ServiceMineFrg extends BaseFragment {
     private String grade;
     private UserLoginEntity ule;
     private UserEntity ue;
+    private HideRedPointReciver hideRedPointReciver;
+    private DisplayCreditRedReciver displayCreditRedReciver;
+    private DisplayWalletRedReceiver displayWalletRedReceiver;
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -118,6 +125,12 @@ public class ServiceMineFrg extends BaseFragment {
         msg_top.setVisibility(View.VISIBLE);
 //        findServantInfo();
         getUserLoginInfo();
+        String isUpgrade = SpUtils.getIsUpgrade(getContext());
+        if (!TextUtils.isEmpty(isUpgrade)&&"isUpgrade".equals(isUpgrade)){
+            ivWalletRed.setVisibility(View.VISIBLE);
+        }else{
+            ivWalletRed.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -219,9 +232,13 @@ public class ServiceMineFrg extends BaseFragment {
 //                        FriendDao.deleteAllMes();
                         SpUtils.clearSp(getContext());
                         SpUtils.clearOrderId(getContext());
-                        Intent intent = new Intent(getActivity(), LoginAct.class);
-                        intent.putExtra(LoginAct.LOGIN_TYPE,1);
-                        getActivity().startActivity(intent);
+//                        Intent intent = new Intent(getActivity(), LoginAct.class);
+//                        intent.putExtra(LoginAct.LOGIN_TYPE,1);
+//                        getActivity().startActivity(intent);
+//                        getActivity().finish();
+                        Intent intent1 = new Intent(getActivity(), MainActivity.class);
+                        intent1.putExtra("def", "0");
+                        getActivity().startActivity(intent1);
                         getActivity().finish();
 //                        isLogin = false;
 //                        tvName.setText("去登录");
@@ -248,6 +265,7 @@ public class ServiceMineFrg extends BaseFragment {
                 getActivity().finish();*/
                 break;
             case R.id.msg_top:
+                msg_top_point.setVisibility(View.GONE);
                 Intent msgintent = new Intent(getActivity(), MessageActivity.class);
                 getActivity().startActivity(msgintent);
                 break;
@@ -263,8 +281,8 @@ public class ServiceMineFrg extends BaseFragment {
                 ue = rd.getData();
                 if (ue != null) {
                     if (ue.getServantId() != null) {
-                        if (!TextUtils.isEmpty(ue.getUserName())) {
-                            tv_name.setText(ue.getUserName());
+                        if (!TextUtils.isEmpty(ue.getAccountName())) {
+                            tv_name.setText(ue.getAccountName());
                         }
                         if (!TextUtils.isEmpty(ue.getCreditScore())){
                             tvCredit.setText(ue.getCreditScore());
@@ -346,10 +364,22 @@ public class ServiceMineFrg extends BaseFragment {
         if (scoreReceiver==null){
             scoreReceiver = new ScoreBroadCastReceiver();
         }
-        getActivity().registerReceiver(scoreReceiver,new IntentFilter(UPDATE_SCORE));
+        if (hideRedPointReciver==null){
+            hideRedPointReciver = new HideRedPointReciver();
+        }
+
+        if (displayCreditRedReciver==null){
+            displayCreditRedReciver = new DisplayCreditRedReciver();
+        }
+        if (displayWalletRedReceiver==null){
+            displayWalletRedReceiver = new DisplayWalletRedReceiver();
+        }
+        getActivity().registerReceiver(scoreReceiver, new IntentFilter(UPDATE_SCORE));
         getActivity().registerReceiver(mineReceiver, new IntentFilter(UPDATE_SERVANT));
         getActivity().registerReceiver(messageReceiver,new IntentFilter(MineFragment.UPDATE_MESSAGE));
-
+        getActivity().registerReceiver(hideRedPointReciver,new IntentFilter(HIDE_RED_POINT));
+        getActivity().registerReceiver(displayCreditRedReciver,new IntentFilter(DISPLAY_CREIDT_RED));
+        getActivity().registerReceiver(displayWalletRedReceiver,new IntentFilter(DISPLAY_WALLET_RED));
     }
 
     @Override
@@ -363,6 +393,15 @@ public class ServiceMineFrg extends BaseFragment {
         }
         if (scoreReceiver!=null){
             getActivity().unregisterReceiver(scoreReceiver);
+        }
+        if (hideRedPointReciver!=null){
+            getActivity().unregisterReceiver(hideRedPointReciver);
+        }
+        if (displayCreditRedReciver!=null){
+            getActivity().unregisterReceiver(displayCreditRedReciver);
+        }
+        if (displayWalletRedReceiver!=null){
+            getActivity().unregisterReceiver(displayWalletRedReceiver);
         }
     }
 
@@ -403,5 +442,37 @@ public class ServiceMineFrg extends BaseFragment {
     public void onResume() {
         super.onResume();
         findServantInfo();
+    }
+
+    //隐藏所有红点的receiver
+    public  static final String HIDE_RED_POINT = "hide_red_point";
+    public class  HideRedPointReciver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ivWalletRed.setVisibility(View.GONE);
+            ivCreditRed.setVisibility(View.GONE);
+        }
+    }
+
+    //显示我的贷款小红点的receiver
+    public static final String DISPLAY_CREIDT_RED = "display_credit_red";
+    public class DisplayCreditRedReciver extends  BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ivCreditRed.setVisibility(View.VISIBLE);
+        }
+    }
+
+    //显示我的钱包小红点的receiver
+    public static final String DISPLAY_WALLET_RED = "display_wallet";
+    public class DisplayWalletRedReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ivCreditRed.setVisibility(View.VISIBLE);
+            context.sendBroadcast(new Intent(MyWalletActivity.DISPLAY));
+        }
     }
 }

@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.RongCloudEvent;
 import com.beyonditsm.financial.activity.BaseActivity;
@@ -80,6 +81,9 @@ public class ServiceMainAct extends BaseActivity{
     private List<UserEntity> friends = new ArrayList<>();
     private List<FriendBean> friendBeans = new ArrayList<>();
     private Gson gson = new Gson();
+    private ImageView ivMs;
+    private DisplayRedReceiver displayRedReceiver;
+    private HideRedReceiver hideRedReceiver;
 
     /**/
     private void assignViews() {
@@ -96,6 +100,7 @@ public class ServiceMainAct extends BaseActivity{
         title_friend = (TextView) findViewById(R.id.title_friend);
         main_title = (RelativeLayout) findViewById(R.id.main_title);
         add_friend = (RelativeLayout) findViewById(R.id.add_friend);
+        ivMs = (ImageView) findViewById(R.id.ivMs);
     }
 
     @Override
@@ -111,6 +116,16 @@ public class ServiceMainAct extends BaseActivity{
         manager = getSupportFragmentManager();
         setTabSelection(0);
         setCheckItem(0);
+        String isUpgradeSp = SpUtils.getIsUpgrade(getApplicationContext());
+        if (!TextUtils.isEmpty(isUpgradeSp)&&"isUpgrade".equals(isUpgradeSp)){
+            ivMs.setVisibility(View.VISIBLE);
+        }else{
+            ivMs.setVisibility(View.GONE);
+        }
+        String orderId = SpUtils.getOrderId(MyApplication.getInstance());
+        if ("".equals(orderId)){
+            ivMs.setVisibility(View.GONE);
+        }
 //        RongIM.setUserInfoProvider(this, true);
         String token = SpUtils.getToken(ServiceMainAct.this);
         if (!TextUtils.isEmpty(token)) {
@@ -384,6 +399,7 @@ public class ServiceMainAct extends BaseActivity{
                 main_title.setVisibility(View.GONE);
                 if (mineFgt == null) {
                     mineFgt = new ServiceMineFrg();
+//                    mineFgt =new MineFragment();
                     transaction.add(R.id.main_frame, mineFgt);
                 } else {
                     transaction.show(mineFgt);
@@ -455,6 +471,15 @@ public class ServiceMainAct extends BaseActivity{
     protected void onStart() {
         if (myReceiver == null)
             myReceiver = new MyReceiver();
+        if (displayRedReceiver==null){
+            displayRedReceiver = new DisplayRedReceiver();
+        }
+        if (hideRedReceiver==null){
+            hideRedReceiver = new HideRedReceiver();
+        }
+
+        registerReceiver(displayRedReceiver,new IntentFilter(DISPLAY));
+        registerReceiver(hideRedReceiver,new IntentFilter(HIDE));
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(UPDATATAB);
         this.registerReceiver(myReceiver, intentFilter);
@@ -466,6 +491,12 @@ public class ServiceMainAct extends BaseActivity{
         EventBus.getDefault().unregister(this);
         this.unregisterReceiver(myReceiver);
         myReceiver = null;
+        if (displayRedReceiver!=null){
+            unregisterReceiver(displayRedReceiver);
+        }
+        if (hideRedReceiver!=null){
+            unregisterReceiver(hideRedReceiver);
+        }
         super.onDestroy();
     }
 
@@ -503,4 +534,25 @@ public class ServiceMainAct extends BaseActivity{
 //        }
 //        return null;
 //    }
+
+    public static final String DISPLAY = "display";
+    //红点显示
+    public class DisplayRedReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ivMs.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public static final String HIDE= "hide";
+    //红点隐藏
+    public class HideRedReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ivMs.setVisibility(View.GONE);
+        }
+    }
+
 }

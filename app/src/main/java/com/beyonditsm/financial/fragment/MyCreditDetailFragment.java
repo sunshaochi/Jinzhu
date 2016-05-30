@@ -69,7 +69,8 @@ import io.rong.imlib.model.UserInfo;
  */
 public class MyCreditDetailFragment extends BaseFragment {
     public static final String CREDIT_DETAIL = "credit_detail";
-    java.text.DecimalFormat df = new java.text.DecimalFormat("#0.00");//保留小数
+    java.text.DecimalFormat df = new java.text.DecimalFormat("#0.0");//保留小数
+    java.text.DecimalFormat df2 = new java.text.DecimalFormat("#0.00");//保留小数
 
 
     private DisplayImageOptions options = new DisplayImageOptions.Builder()
@@ -383,7 +384,7 @@ public class MyCreditDetailFragment extends BaseFragment {
                         total.setText("贷款金额：");
                         time.setText("贷款期限：");
                         if (!TextUtils.isEmpty(String.valueOf(data.getTotalAmount()))) {
-                            tvTotal.setText("¥" + df.format(data.getTotalAmount() / 10000) + "万");
+                            tvTotal.setText( df2.format(data.getTotalAmount() / 10000) + "万");
                         }
                         if (!TextUtils.isEmpty(String.valueOf(data.getMinVal()))&&!TextUtils.isEmpty(String.valueOf(data.getMaxVal()))) {
                             tvLimit.setText("额度范围：" + df.format(Double.valueOf(data.getMinVal()) / 10000) + "~" + df.format(Double.valueOf(data.getMaxVal()) / 10000) + "万");
@@ -395,7 +396,7 @@ public class MyCreditDetailFragment extends BaseFragment {
                             tvTime.setText(data.getTotalPeriods() + "");
                         }
                         if (!TextUtils.isEmpty(String.valueOf(data.getPeriodsAmount()))) {
-                            tvYueG.setText("¥" + data.getPeriodsAmount());
+                            tvYueG.setText(data.getPeriodsAmount()+"");
                         }
                         if (!TextUtils.isEmpty(data.getPayTypeName())) {
                             tvHf.setText("还款方式：" + data.getPayTypeName());
@@ -403,7 +404,7 @@ public class MyCreditDetailFragment extends BaseFragment {
 //                        tvT.setText("¥" + data.getTotalAmount());
 
                         Double totalMPay = Arith.sub(Double.valueOf(data.getPeriodsAmount()) * data.getTotalPeriods(), Double.valueOf(data.getTotalAmount()));
-                        tvT.setText("¥" + df.format(totalMPay));
+                        tvT.setText( df2.format(totalMPay));
                         if (!TextUtils.isEmpty(String.valueOf(data.getLoanPeriod()))) {
                             tvFTime.setText(data.getLoanPeriod() + "个工作日");
                         }
@@ -423,10 +424,12 @@ public class MyCreditDetailFragment extends BaseFragment {
                         }
                         if (!TextUtils.isEmpty(data.getUserName()))
                             tv_tochat.setText(data.getUserName());
-                        if (data.getUserSex() == 1) {
-                            tvSex.setText("男");
-                        } else {
-                            tvSex.setText("女");
+                        if (data.getUserSex()!=null) {
+                            if (data.getUserSex() == 1) {
+                                tvSex.setText("男");
+                            } else {
+                                tvSex.setText("女");
+                            }
                         }
                         if (!TextUtils.isEmpty(data.getIdentCard())) {
                             IdCard.setText(data.getIdentCard());
@@ -508,13 +511,13 @@ public class MyCreditDetailFragment extends BaseFragment {
                             total.setText("放款金额：");
                             time.setText("还款期限：");
                             if (!TextUtils.isEmpty(data.getPracticalLoan()))
-                                tvTotal.setText("¥" + df.format(Double.valueOf(data.getPracticalLoan()) / 10000) + "万");
+                                tvTotal.setText( df2.format(Double.valueOf(data.getPracticalLoan()) / 10000) + "万");
                             if (!TextUtils.isEmpty(data.getRealMonthlyInterestRate()))
                                 tvRate.setText("利率：" + data.getRealMonthlyInterestRate() + "%");
                             if (!TextUtils.isEmpty(data.getRealOneTimeRate()))
                                 onpay.setText("一次性收费：" + data.getRealOneTimeRate() + "%");
                             if (!TextUtils.isEmpty(data.getCreditAmount())) {
-                                tvCreditAmount.setText("¥" + df.format(Double.valueOf(data.getCreditAmount()) / 10000) + "万");
+                                tvCreditAmount.setText(df.format(Double.valueOf(data.getCreditAmount()) / 10000) + "万");
                             }
                             if (!TextUtils.isEmpty(data.getBankPracticalPeriods())) {
                                 tvTime.setText(data.getBankPracticalPeriods());
@@ -575,8 +578,8 @@ public class MyCreditDetailFragment extends BaseFragment {
                         JSONObject jsonData = json.getJSONObject("data");
                         monthlyPayments = jsonData.getDouble("monthlyPayments") + "";
                         totalRath = jsonData.getDouble("totalRath") + "";
-                        tvT.setText("￥" + totalRath);
-                        tvYueG.setText("￥" + monthlyPayments);
+                        tvT.setText( totalRath);
+                        tvYueG.setText( monthlyPayments);
                     }
 
                     @Override

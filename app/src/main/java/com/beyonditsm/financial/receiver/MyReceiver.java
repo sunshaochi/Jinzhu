@@ -11,9 +11,11 @@ import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.MessageActivity;
 import com.beyonditsm.financial.activity.manager.ManagerMainAct;
+import com.beyonditsm.financial.activity.servicer.ServiceMainAct;
 import com.beyonditsm.financial.db.MessageDao;
 import com.beyonditsm.financial.entity.MessageBean;
 import com.beyonditsm.financial.fragment.MineFragment;
+import com.beyonditsm.financial.fragment.ServiceMineFrg;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
@@ -54,8 +56,7 @@ public class MyReceiver extends BroadcastReceiver {
             Log.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
             String jsonType = bundle.getString(JPushInterface.EXTRA_EXTRA);
             MyLogUtils.info("推送数据：" + jsonType);
-            context.sendBroadcast(new Intent(MineFragment.UPDATE_MESSAGE));
-            context.sendBroadcast(new Intent(MainActivity.DISPLAY_REDPOINT));
+
 //            context.sendOrderedBroadcast(new Intent("com.update.message"),null);
 ////            context.sendBroadcast(new Intent(MineFragment.DISPLAY_POINT));
             if (!TextUtils.isEmpty(jsonType)) {
@@ -65,15 +66,49 @@ public class MyReceiver extends BroadcastReceiver {
                     mb.setMsg_id(bundle.getString(JPushInterface.EXTRA_MSG_ID));
                     MessageDao.saveMes(mb);
                     context.sendBroadcast(new Intent(MessageActivity.MESSAGE));
+                    context.sendBroadcast(new Intent(MainActivity.DISPLAY_REDPOINT));
+                    context.sendBroadcast(new Intent(ServiceMainAct.DISPLAY));
                     JSONObject object = new JSONObject(jsonType);
-                    orderId = object.getString("orderId");
-                    MyLogUtils.info("orderId+" + orderId);
-                    if (!TextUtils.isEmpty(orderId)){
-                        SpUtils.setOrderId(MyApplication.getInstance(),orderId);
+                    String type = object.getString("type");
+
+                    MyLogUtils.info("type="+type);
+                    String roleName = SpUtils.getRoleName(context);
+                    if (type.equals("12")){//升级服务者推送
+                        MyLogUtils.info("升级服务者推送");
+                        SpUtils.setIsUpgrade(context, "isUpgrade");
+                        context.sendBroadcast(new Intent(ServiceMineFrg.DISPLAY_WALLET_RED));
+                    }else if (type.equals("5")){//贷款推送
+                        MyLogUtils.info("贷款推送");
+                        if (!TextUtils.isEmpty(roleName)){
+                            if ("ROLE_COMMON_CLIENT".equals(roleName)){
+                                context.sendBroadcast(new Intent(MineFragment.UPDATE_MESSAGE));
+                                context.sendBroadcast(new Intent(MineFragment.DISPLAY_POINT));
+                            }else{
+                                context.sendBroadcast(new Intent(ServiceMineFrg.DISPLAY_CREIDT_RED));
+                            }
+                        }
+                        orderId = object.getString("orderId");
+                        MyLogUtils.info("orderId+" + orderId);
+                        if (!TextUtils.isEmpty(orderId)){
+                            SpUtils.setOrderId(MyApplication.getInstance(),orderId);
+                        }
+                    }else if (type.equals("13")){
+                        MyLogUtils.info("领取奖励推送");
+                        SpUtils.setReceiveReward(context, "isReceive");
+                        if (!TextUtils.isEmpty(roleName)){
+                            if ("ROLE_COMMON_CLIENT".equals(roleName)){
+                                context.sendBroadcast(new Intent(MineFragment.WALLET_POINT));
+                            }else{
+                                context.sendBroadcast(new Intent(ServiceMineFrg.DISPLAY_WALLET_RED));
+                            }
+                        }
+
                     }
+
 //                    Intent intent1 = new Intent(MyCreditAct.PUSH_MESSAGE);
 //                    intent1.putExtra("id", orderId);
 //                    context.sendBroadcast(intent1);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

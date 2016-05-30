@@ -41,7 +41,7 @@ public class BalanceEntity {
         private String businessSubject;
         private String createPersonId;
         private long createTime;
-        private Double deductionAmount;
+        private String deductionAmount;
         private String orderId;
         private String remark;
         private String userId;
@@ -52,7 +52,7 @@ public class BalanceEntity {
          */
 
         private Double unCashAmount;
-        private Double cashAmount;
+        private String cashAmount;
         private String cashTHistoryId;
         /**
          * remainingSum : 0
@@ -66,7 +66,7 @@ public class BalanceEntity {
             businessSubject = in.readString();
             createPersonId = in.readString();
             createTime = in.readLong();
-            deductionAmount = in.readDouble();
+            deductionAmount = in.readString();
             orderId = in.readString();
             remark = in.readString();
             userId = in.readString();
@@ -100,7 +100,7 @@ public class BalanceEntity {
             this.createTime = createTime;
         }
 
-        public void setDeductionAmount(double deductionAmount) {
+        public void setDeductionAmount(String deductionAmount) {
             this.deductionAmount = deductionAmount;
         }
 
@@ -132,7 +132,7 @@ public class BalanceEntity {
             return createTime;
         }
 
-        public Double getDeductionAmount() {
+        public String getDeductionAmount() {
             return deductionAmount;
         }
 
@@ -159,7 +159,7 @@ public class BalanceEntity {
             dest.writeString(businessSubject);
             dest.writeString(createPersonId);
             dest.writeLong(createTime);
-            dest.writeDouble(deductionAmount);
+            dest.writeString(deductionAmount);
             dest.writeString(orderId);
             dest.writeString(remark);
             dest.writeString(userId);
@@ -169,7 +169,7 @@ public class BalanceEntity {
             this.unCashAmount = unCashAmount;
         }
 
-        public void setCashAmount(Double cashAmount) {
+        public void setCashAmount(String cashAmount) {
             this.cashAmount = cashAmount;
         }
 
@@ -181,7 +181,7 @@ public class BalanceEntity {
             return unCashAmount;
         }
 
-        public Double getCashAmount() {
+        public String getCashAmount() {
             return cashAmount;
         }
 

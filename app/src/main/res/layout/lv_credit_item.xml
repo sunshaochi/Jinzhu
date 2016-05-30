@@ -33,42 +33,46 @@
             <TextView
                 android:id="@+id/tvBank"
                 style="@style/tv_primary_style"
-                android:text="平安银行－贷款50万"
                 android:textSize="16sp" />
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_marginTop="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/tvTime"
-                    style="@style/tv_second_style"
-                    android:text="放贷时间：2015／12/20"
-                    android:textSize="12sp" />
-                <TextView
-                    android:id="@+id/tvRate"
-                    style="@style/tv_second_style"
-                    android:layout_marginLeft="10dp"
-                    android:text="月利率：0.88"
-                    android:textSize="12sp" />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
-
                 <TextView
-                    android:id="@+id/onepay"
+                    android:id="@+id/tvTime"
                     style="@style/tv_second_style"
-                    android:layout_marginTop="5dp"
-                    android:text="一次性收费："
+                    android:text="放贷周期："
                     android:textSize="12sp" />
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvRate"
+                    style="@style/tv_second_style"
+                    android:layout_width="70dp"
+                    android:layout_weight="1"
+                    android:text="月利率："
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/onepay"
+                    style="@style/tv_second_style"
+                    android:layout_width="70dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_weight="1"
+                    android:text="一次性收费："
+                    android:textSize="12sp" />
+
+            </LinearLayout>
 
 
             <RelativeLayout
@@ -78,51 +82,57 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:id="@+id/llTotal"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <TextView
-                        style="@style/tv_second_style"
-                        android:text="总利息："
-                        android:textColor="#a1a1a1"
-                        android:textSize="12sp" />
 
-                    <TextView
-                        android:id="@+id/tvTotal"
-                        style="@style/tv_price"
-                        android:text="500,00"
-                        android:textSize="12sp" />
+                    <LinearLayout
+                        android:id="@+id/llTotal"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_weight="1">
+
+                        <TextView
+                            style="@style/tv_second_style"
+                            android:text="总利息："
+                            android:textColor="#a1a1a1"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/tvTotal"
+                            style="@style/tv_price"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/llMonth"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="5dp"
+                        android:orientation="horizontal"
+                        android:visibility="visible"
+                        android:layout_weight="1">
+
+                        <TextView
+                            style="@style/tv_second_style"
+                            android:text="每月还款："
+                            android:textColor="#a1a1a1"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/tvReim"
+                            style="@style/tv_price"
+                            android:text=""
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/llMonth"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="5dp"
-                    android:orientation="horizontal"
-                    android:visibility="visible">
-
-                    <TextView
-                        style="@style/tv_second_style"
-                        android:text="每月还款 "
-                        android:textColor="#a1a1a1"
-                        android:textSize="12sp"
-                        />
-
-                    <TextView
-                        android:id="@+id/tvReim"
-                        style="@style/tv_price"
-                        android:text=""
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-
             </RelativeLayout>
         </LinearLayout>
 

@@ -12,250 +12,275 @@
         android:layout_height="match_parent">
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-
-    <RelativeLayout
-        android:id="@+id/rlServiceData"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@drawable/item_back"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_marginTop="10dp"
-        >
-
-        <com.beyonditsm.financial.widget.ScaleAllImageView
-            android:id="@+id/civHead"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@mipmap/ava_default"
-            android:layout_centerVertical="true"/>
-
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/civHead"
-            android:layout_centerVertical="true"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/tvName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#333333"
-                android:textSize="15sp"
-                android:layout_marginLeft="15dp"
-                />
-            <TextView
-                android:id="@+id/tvPhone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#333333"
-                android:textSize="15sp"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="15dp"
-                />
-        </LinearLayout>
-
-
-    </RelativeLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <RelativeLayout
-            android:id="@+id/rlxianjin"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:drawableBottom="@mipmap/xianjin"
-                />
-            <TextView
-                android:id="@+id/xianjin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#ffffff"
-                android:textSize="15sp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"
-                android:text="现金券(元)"/>
-            <LinearLayout
-                android:layout_centerInParent="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rlServiceData"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/item_back"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <com.beyonditsm.financial.widget.ScaleAllImageView
+                    android:id="@+id/civHead"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/ava_default" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:orientation="horizontal">
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/civHead"
+                    android:orientation="vertical">
+
                     <TextView
+                        android:id="@+id/tvName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:textColor="@color/tv_second_color"
-                        android:text="可兑换："/>
-                    <TextView
-                        android:id="@+id/tv_ExchangeMoney"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="16dp"
+                        android:layout_marginLeft="15dp"
                         android:textColor="#333333"
-                        />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="22dp"
-                    android:orientation="horizontal">
+                        android:textSize="15sp" />
+
                     <TextView
+                        android:id="@+id/tvPhone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:textColor="@color/tv_third_color"
-                        android:text="待奖励："/>
-                    <TextView
-                        android:id="@+id/tv_WeitGetMoney"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="15dp"
-                        android:textColor="@color/tv_third_color"
-                        />
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="10dp"
+                        android:textColor="#333333"
+                        android:textSize="15sp" />
                 </LinearLayout>
 
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:id="@+id/rlxianjin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:drawableBottom="@mipmap/xianjin" />
+
+                    <TextView
+                        android:id="@+id/xianjin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="30dp"
+                        android:text="现金券(元)"
+                        android:textColor="#ffffff"
+                        android:textSize="15sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="15dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="30dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="可兑换："
+                                android:textColor="@color/tv_second_color"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/tv_ExchangeMoney"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="#333333"
+                                android:textSize="16dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="22dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="待奖励："
+                                android:textColor="@color/tv_third_color"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/tv_WeitGetMoney"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/tv_third_color"
+                                android:textSize="15dp" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rldikou"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableBottom="@mipmap/quan" />
+
+                    <TextView
+                        android:id="@+id/dikou"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="30dp"
+                        android:text="抵扣券(元)"
+                        android:textColor="#ffffff"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tv_DikouMoney"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/dikou"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="25dp"
+                        android:singleLine="true"
+                        android:textColor="#333333"
+                        android:textSize="27sp" />
+                </RelativeLayout>
 
             </LinearLayout>
 
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rldikou"
-            android:layout_weight="1"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableBottom="@mipmap/quan"/>
+                android:layout_marginTop="20dp"
+                android:background="@drawable/item_back"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/line_color" />
+
+                <RelativeLayout
+                    android:id="@+id/rlMyPayments"
+                    style="@style/rl_mine_style">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:orientation="horizontal">
+                        <TextView
+                            style="@style/tv_second_style"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="5dp"
+                            android:text="收支明细" />
+                        <ImageView
+                            android:id="@+id/ivPaymentsRed"
+                            style="@style/red_oval_style"
+                            android:layout_marginLeft="5dp"
+                            android:visibility="gone"/>
+                    </LinearLayout>
+
+
+                    <ImageView
+                        android:id="@+id/ivMyPayments"
+                        style="@style/arrow_right_style"
+                        android:layout_alignParentRight="true" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/line_color" />
+
+                <RelativeLayout
+                    android:id="@+id/rlMyOrder"
+                    style="@style/rl_mine_style">
+
+                    <TextView
+                        style="@style/tv_second_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
+                        android:text="订单明细" />
+
+                    <ImageView
+                        android:id="@+id/ivMyOrder"
+                        style="@style/arrow_right_style"
+                        android:layout_alignParentRight="true" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/line_color" />
+
+                <RelativeLayout
+                    android:id="@+id/rlBindBankCard"
+                    style="@style/rl_mine_style">
+
+                    <TextView
+                        style="@style/tv_second_style"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
+                        android:text="绑定银行卡" />
+
+                    <ImageView
+                        android:id="@+id/ivBindBankCard"
+                        style="@style/arrow_right_style"
+                        android:layout_alignParentRight="true" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
             <TextView
-                android:id="@+id/dikou"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#ffffff"
-                android:textSize="15sp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"
-                android:text="抵扣券(元)"/>
-            <TextView
-                android:id="@+id/tv_DikouMoney"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#333333"
-                android:textSize="27sp"
-                android:layout_below="@+id/dikou"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="25dp"
-                android:singleLine="true"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                />
-        </RelativeLayout>
+                android:id="@+id/tv_bindBankCard"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/item_back"
+                android:gravity="center"
+                android:text="绑定银行卡"
+                android:textColor="@color/tv_second_color"
+                android:textSize="14sp"
+                android:visibility="gone" />
+        </LinearLayout>
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/item_back"
-        android:layout_height="wrap_content">
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/line_color"/>
-        <RelativeLayout
-            android:id="@+id/rlMyPayments"
-            style="@style/rl_mine_style">
-
-            <TextView
-                style="@style/tv_second_style"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:text="收支明细" />
-
-            <ImageView
-                android:id="@+id/ivMyPayments"
-                style="@style/arrow_right_style"
-                android:layout_alignParentRight="true" />
-
-        </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/line_color"/>
-        <RelativeLayout
-            android:id="@+id/rlMyOrder"
-            style="@style/rl_mine_style">
-
-            <TextView
-                style="@style/tv_second_style"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:text="订单明细" />
-
-            <ImageView
-                android:id="@+id/ivMyOrder"
-                style="@style/arrow_right_style"
-                android:layout_alignParentRight="true" />
-
-        </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/line_color"/>
-        <RelativeLayout
-            android:id="@+id/rlBindBankCard"
-            style="@style/rl_mine_style">
-
-            <TextView
-                style="@style/tv_second_style"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:text="绑定银行卡" />
-
-            <ImageView
-                android:id="@+id/ivBindBankCard"
-                style="@style/arrow_right_style"
-                android:layout_alignParentRight="true" />
-
-        </RelativeLayout>
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/tv_bindBankCard"
-        android:layout_width="match_parent"
-        android:layout_height="41dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/item_back"
-        android:text="绑定银行卡"
-        android:gravity="center"
-        android:textColor="@color/tv_second_color"
-        android:textSize="14sp"
-        android:visibility="gone"
-        />
-    </LinearLayout>
         <com.beyonditsm.financial.view.LoadingView
             android:id="@+id/loadingView"
             android:layout_width="match_parent"

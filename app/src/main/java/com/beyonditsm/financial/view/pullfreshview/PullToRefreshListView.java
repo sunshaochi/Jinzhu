@@ -26,6 +26,7 @@ public class PullToRefreshListView extends PullToRefreshBase<ListView>
 	private LoadingLayout mLoadMoreFooterLayout;
 	/** 滚动的监听器 */
 	private OnScrollListener mScrollListener;
+	private LoadingLayout footerLoadingLayout;
 
 	/**
 	 * 构造方法
@@ -160,11 +161,36 @@ public class PullToRefreshListView extends PullToRefreshBase<ListView>
 	}
 
 	@Override
-	public LoadingLayout getFooterLoadingLayout() {
-		if (isScrollLoadEnabled()) {
-			return mLoadMoreFooterLayout;
+	public void setPullLoadEnabled(boolean pullLoadEnabled){
+		if (isPullLoadEnabled()==pullLoadEnabled){
+			return;
 		}
+		super.setPullLoadEnabled(pullLoadEnabled);
+		if (pullLoadEnabled){
+			// 设置Footer
+			if (null == footerLoadingLayout) {
+//				mLoadMoreFooterLayout = createFooterLoadingLayout(getContext(), null);
+//				mListView.addFooterView(mLoadMoreFooterLayout);
+				footerLoadingLayout = createFooterLoadingLayout(getContext(), null);
+				mListView.addFooterView(footerLoadingLayout,null,false);
+			}
 
+			footerLoadingLayout.show(true);
+		}else{
+			if (null != footerLoadingLayout) {
+				footerLoadingLayout.show(false);
+			}
+		}
+	}
+
+	@Override
+	public LoadingLayout getFooterLoadingLayout() {
+//		if (isScrollLoadEnabled()) {
+//			return mLoadMoreFooterLayout;
+//		}
+		if (isPullLoadEnabled()){
+			return footerLoadingLayout;
+		}
 		return super.getFooterLoadingLayout();
 	}
 

@@ -99,11 +99,21 @@
             android:id="@+id/llMine"
             style="@style/main_btm_ll">
 
-            <ImageView
-                android:id="@+id/ivMine"
+            <RelativeLayout
+                android:id="@+id/rlMine"
                 android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:background="@mipmap/tab_me_nor"/>
+                android:layout_height="32dp">
+                <ImageView
+                    android:id="@+id/ivMine"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@mipmap/tab_me_nor" />
+                <ImageView
+                    android:id="@+id/ivMs"
+                    style="@style/red_oval_style"
+                    android:layout_alignParentRight="true"
+                    android:visibility="gone"/>
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/tvMine"

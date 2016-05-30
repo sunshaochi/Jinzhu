@@ -27,6 +27,9 @@ public class SpUtils {
     private static final String ISCOMMIT = "iscommit";
     private static final String ISCOMMITORDERID = "iscommitorderid";
     private static final String SP_ISCOMMIT = "sp_iscommit";
+    private static final String ISUPGRADE = "is_upgrade";
+    private static final String ISRECEIVE ="is_receive";
+    private static final String GETPERMISSION = "get_permission";
 
     public SpUtils(){
 
@@ -45,6 +48,17 @@ public class SpUtils {
 
     public static SharedPreferences getIsCommitSp(Context context){
         return context.getSharedPreferences(SP_ISCOMMIT,Context.MODE_PRIVATE);
+    }
+
+    public static SharedPreferences getIsUpgradeSp(Context context){
+        return context.getSharedPreferences(ISUPGRADE,Context.MODE_PRIVATE);
+    }
+
+    public static SharedPreferences getIsReceiveSp(Context context){
+        return context.getSharedPreferences(ISRECEIVE,Context.MODE_PRIVATE);
+    }
+    public static SharedPreferences getPermissionSp(Context context){
+        return context.getSharedPreferences(GETPERMISSION,Context.MODE_PRIVATE);
     }
     /**
      * 是否第一次进入app
@@ -175,9 +189,38 @@ public class SpUtils {
         return getIsCommitSp(context).getBoolean(ISCOMMIT, true);
     }
     public static String getIsCommitOrderId(Context context){
-        return getIsCommitSp(context).getString(ISCOMMITORDERID,"");
+        return getIsCommitSp(context).getString(ISCOMMITORDERID, "");
     }
     public static void clearIsCommit(Context context){
         getIsCommitSp(context).edit().clear().commit();
+    }
+
+    //保存是否升级服务者
+    public static  void setIsUpgrade(Context context,String isUpgrade){
+        getIsUpgradeSp(context).edit().putString(ISUPGRADE, isUpgrade).commit();
+    }
+    public static String getIsUpgrade(Context context){
+        return getIsUpgradeSp(context).getString(ISUPGRADE,"");
+    }
+    public static void clearIsUpgrade(Context context){
+        getIsUpgradeSp(context).edit().clear().commit();
+    }
+
+    //保存领取奖励的推送
+    public static void setReceiveReward(Context context,String isReceive){
+        getIsReceiveSp(context).edit().putString(ISRECEIVE, isReceive).commit();
+    }
+    public static String getReceiveReward(Context context){
+        return getIsReceiveSp(context).getString(ISRECEIVE,"");
+    }
+    public static void clearReceiveReward(Context context){
+        getIsReceiveSp(context).edit().clear().commit();
+    }
+
+    public static void setISpermission(Context context,boolean isGetPermission){
+        getPermissionSp(context).edit().putBoolean(GETPERMISSION, isGetPermission).commit();
+    }
+    public static boolean getIsPermission(Context context){
+        return getPermissionSp(context).getBoolean(GETPERMISSION,false);
     }
 }

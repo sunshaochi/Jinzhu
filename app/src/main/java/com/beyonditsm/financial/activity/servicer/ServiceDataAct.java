@@ -10,11 +10,12 @@ import android.text.TextUtils;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
-import com.beyonditsm.financial.activity.manager.SelectSexAct;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.entity.UserEvent;
@@ -110,6 +111,9 @@ public class ServiceDataAct extends BaseActivity {
     @ViewInject(R.id.tvEmail)
     private TextView tvEmail;
 
+    @ViewInject(R.id.cb_select_sex)
+    private CheckBox cbSelectSex;
+
     private String path;// 图片全路径
     public static final int PHOTOZOOM = 0;
     public static final int PHOTOTAKE = 1;
@@ -153,6 +157,18 @@ public class ServiceDataAct extends BaseActivity {
         }
         EventBus.getDefault().register(this);
         photoSavePath = Environment.getExternalStorageDirectory() + "/ClipHeadPhoto/cache/";
+        cbSelectSex.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    servantInfo.setUserSex(0);
+                    updateServantDatas(servantInfo,4);
+                }else{
+                    servantInfo.setUserSex(1);
+                    updateServantDatas(servantInfo,4);
+                }
+            }
+        });
     }
 
     private void setServantInfo(UserEntity usrInfo) {
@@ -172,9 +188,11 @@ public class ServiceDataAct extends BaseActivity {
             //性别
             if (usrInfo.getUserSex() != null) {
                 if (usrInfo.getUserSex() == 0) {
-                    tvSex.setText("女");
+//                    tvSex.setText("女");
+                    cbSelectSex.setChecked(true);
                 } else {
-                    tvSex.setText("男");
+//                    tvSex.setText("男");
+                    cbSelectSex.setChecked(false);
                 }
             }
             //年龄
@@ -248,15 +266,17 @@ public class ServiceDataAct extends BaseActivity {
                 break;
             case 10://修改性别
                 if (servantInfo.getUserSex() == 0) {
-                    tvSex.setText("女");
+//                    tvSex.setText("女");
+                    cbSelectSex.setChecked(true);
                 } else {
-                    tvSex.setText("男");
+//                    tvSex.setText("男");
+                    cbSelectSex.setChecked(false);
                 }
                 break;
         }
     }
 
-    @OnClick({R.id.rlHead, R.id.rlsexSelector, R.id.rlAge, R.id.rlHome, R.id.rlName, R.id.rlCard, R.id.rlCity, R.id.rlNative,
+    @OnClick({R.id.rlHead, R.id.rlAge, R.id.rlHome, R.id.rlName, R.id.rlCard, R.id.rlCity, R.id.rlNative,
             R.id.rlHouseHold, R.id.rlBank, R.id.rlSubbranch, R.id.rlBankAccount, R.id.rlEmail})
     public void todo(View v) {
         Intent intent = null;
@@ -285,12 +305,12 @@ public class ServiceDataAct extends BaseActivity {
                     }
                 }).show();
                 break;
-            case R.id.rlsexSelector://性别
-                intent = new Intent(this, SelectSexAct.class);
-                intent.putExtra(SelectSexAct.SEX, servantInfo.getUserSex());
-                intent.putExtra(ServiceMineFrg.SERVANT_INFO, servantInfo);
-                startActivity(intent);
-                break;
+//            case R.id.rlsexSelector://性别
+//                intent = new Intent(this, SelectSexAct.class);
+//                intent.putExtra(SelectSexAct.SEX, servantInfo.getUserSex());
+//                intent.putExtra(ServiceMineFrg.SERVANT_INFO, servantInfo);
+//                startActivity(intent);
+//                break;
             case R.id.rlAge://年龄
                 intent = new Intent(this, ServiceEditAct.class);
                 intent.putExtra(ServiceEditAct.USER_TYPE, 8);
@@ -545,7 +565,13 @@ public class ServiceDataAct extends BaseActivity {
                     case 3:
 
                         break;
-
+                    case 4:
+                        if (se.getUserSex()==0){
+                            cbSelectSex.setChecked(true);
+                        }else{
+                            cbSelectSex.setChecked(false);
+                        }
+                        break;
                 }
 
                 Intent intent = new Intent(ServiceMineFrg.UPDATE_SERVANT);

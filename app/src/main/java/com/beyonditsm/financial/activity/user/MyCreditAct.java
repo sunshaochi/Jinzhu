@@ -69,8 +69,8 @@ public class MyCreditAct extends BaseActivity {
         orderId = SpUtils.getOrderId(MyApplication.getInstance());
         MyLogUtils.info("保存的orderID:"+ orderId);
         plv.setPullRefreshEnabled(true);
-        plv.setScrollLoadEnabled(true);
-        plv.setPullLoadEnabled(false);
+        plv.setScrollLoadEnabled(false);
+        plv.setPullLoadEnabled(true);
         plv.setHasMoreData(true);
         plv.getRefreshableView().setDivider(null);
         plv.getRefreshableView().setVerticalScrollBarEnabled(false);

@@ -11,8 +11,8 @@ import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.entity.BalanceEntity;
 import com.beyonditsm.financial.util.FinancialUtil;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -73,10 +73,16 @@ public class CouponsAdapter extends BaseAdapter {
 //        }else{
 //            holder.pay.setText(divide+"");
 //        }
-        if (rowsEntity.getCashAmount()>0) {
-            holder.pay.setText("+"+rowsEntity.getCashAmount().intValue());
-        }else{
-            holder.pay.setText(rowsEntity.getCashAmount().intValue()+"");
+        DecimalFormat df = new DecimalFormat("##.00");
+        try {
+            if (Double.valueOf(rowsEntity.getCashAmount()) > 0) {
+//            holder.pay.setText("+"+rowsEntity.getDeductionAmount());
+                holder.pay.setText("+" + df.format(df.parse(rowsEntity.getCashAmount())));
+            } else {
+                holder.pay.setText(df.format(df.parse(rowsEntity.getCashAmount())));
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
         return convertView;
     }

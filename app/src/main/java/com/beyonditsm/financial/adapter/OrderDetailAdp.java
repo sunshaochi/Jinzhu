@@ -12,6 +12,8 @@ import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.entity.OrderListEntity;
 import com.beyonditsm.financial.util.FinancialUtil;
 
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -81,7 +83,13 @@ public class OrderDetailAdp extends BaseAdapter {
             holder.orderStatus.setText("支付中");
             holder.orderStatus.setTextColor(convertView.getResources().getColor(R.color.tv_price_color));
         }
-        holder.orderAmount.setText(rowsEntity.getCASH_OUT_AMOUNT());
+        DecimalFormat df = new DecimalFormat("##.00");
+
+        try {
+            holder.orderAmount.setText(df.format(df.parse(rowsEntity.getCASH_OUT_AMOUNT())));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         holder.orderType.setText(rowsEntity.getO_TYPE());
 //        holder.orderTime.setText(FinancialUtil.timeToDate(Long.valueOf(rowsEntity.getCREATE_TIME())));
         if (!TextUtils.isEmpty(rowsEntity.getCREATE_TIME())) {

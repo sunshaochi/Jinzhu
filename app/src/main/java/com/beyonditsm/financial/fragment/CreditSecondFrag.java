@@ -158,12 +158,12 @@ public class CreditSecondFrag extends BaseFragment {
         getDictionaryContent(2, "under_own_hour");//名下房产
         getDictionaryContent(3, "two_year_credit");//信用状况
 
-        obaDown = ObjectAnimator.ofFloat(ivSlide, "rotation", 0,
-                180);
-        obaDown.setDuration(300);
-        obaOn = ObjectAnimator.ofFloat(ivSlide, "rotation", -180,
-                0);
-        obaOn.setDuration(300);
+//        obaDown = ObjectAnimator.ofFloat(ivSlide, "rotation", 0,
+//                180);
+//        obaDown.setDuration(300);
+//        obaOn = ObjectAnimator.ofFloat(ivSlide, "rotation", -180,
+//                0);
+//        obaOn.setDuration(300);
 
 
         map.put(1, false);
@@ -295,12 +295,12 @@ public class CreditSecondFrag extends BaseFragment {
                 break;
             case R.id.zz_tv://我的资质显示与否按钮
                 if (!map.get(1)) {
-                    obaDown.start();
+//                    obaDown.start();
                     zz_ll.setVisibility(View.VISIBLE);
                     map.put(1, true);
                     scrollDown();
                 } else {
-                    obaOn.start();
+//                    obaOn.start();
                     zz_ll.setVisibility(View.GONE);
                     map.put(1, false);
                 }
@@ -328,14 +328,14 @@ public class CreditSecondFrag extends BaseFragment {
                 dialog.addSheetItem("否，没有", null, new MySelfSheetDialog.OnSheetItemClickListener() {
                     @Override
                     public void onClick(int which) {
-                        tvSb.setText("否，没有");
+                        tvSb.setText("否");
                         user.setSecailSecurity(0);
                     }
                 });
                 dialog.addSheetItem("是，有本地社保", null, new MySelfSheetDialog.OnSheetItemClickListener() {
                     @Override
                     public void onClick(int which) {
-                        tvSb.setText("是，有本地社保");
+                        tvSb.setText("是");
                         user.setSecailSecurity(1);
                     }
                 });
@@ -346,14 +346,14 @@ public class CreditSecondFrag extends BaseFragment {
                 dialog.addSheetItem("否，没有", null, new MySelfSheetDialog.OnSheetItemClickListener() {
                     @Override
                     public void onClick(int which) {
-                        tvGjj.setText("否，没有");
+                        tvGjj.setText("否");
                         user.setProFund(0);
                     }
                 });
                 dialog.addSheetItem("是，有本地公积金", null, new MySelfSheetDialog.OnSheetItemClickListener() {
                     @Override
                     public void onClick(int which) {
-                        tvGjj.setText("是，有本地公积金");
+                        tvGjj.setText("是");
                         user.setProFund(1);
                     }
                 });
@@ -519,9 +519,9 @@ public class CreditSecondFrag extends BaseFragment {
 
                     if (user.getProFund() != null) {
                         if (user.getProFund() == 0) {
-                            tvGjj.setText("是，有本地公积金");
+                            tvGjj.setText("是");
                         } else {
-                            tvGjj.setText("否，没有");
+                            tvGjj.setText("否");
                         }
                     }
 
@@ -552,9 +552,9 @@ public class CreditSecondFrag extends BaseFragment {
 
                     if (user.getSecailSecurity() != null) {
                         if (user.getSecailSecurity() == 0)
-                            tvSb.setText("否，没有");
+                            tvSb.setText("否");
                         else
-                            tvSb.setText("是，有本地社保");
+                            tvSb.setText("是");
                     }
 
                     if (!TextUtils.isEmpty(user.getHaveHoursName())&&!TextUtils.isEmpty(user.getHaveHours())) {//房产类型

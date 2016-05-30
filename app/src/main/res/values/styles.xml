@@ -358,4 +358,10 @@
     <style name="AppBaseTheme" parent="android:Theme.Light.NoTitleBar">
         <item name="android:fitsSystemWindows">true</item>
     </style>
+
+    <style name="receive_reward">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">20dp</item>
+    </style>
 </resources>

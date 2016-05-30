@@ -84,11 +84,14 @@ public class MineFragment extends BaseFragment {
     private ImageView msg_top_point;//右上角消息图标小红点
     @ViewInject(R.id.ivMs)
     private ImageView ivRedPoint;
+    @ViewInject(R.id.ivWalletRed)
+    private ImageView ivWalletRedPoint;
 
 
     private UserEntity user;//用户信息
     public static final String USER_KEY = "user_info";
     private boolean isLogin;
+    private boolean isWalletRed = false;
 
     String grade;//超过百分之多少用户
 
@@ -101,8 +104,10 @@ public class MineFragment extends BaseFragment {
             .cacheOnDisc(true) // 设置下载的图片是否缓存在SD卡中
             .build(); // 创建配置过得DisplayImageOption对象
     private UserLoginEntity ule;
-//    private DisplayRedReceiver displayRedReceiver;
+    private DisplayRedReceiver displayRedReceiver;
     private HideRedReceiver hideRedReceiver;
+    private WalletRedReceiver walletRedReceiver;
+    private HideWalletRedReceiver hideWalletRedReceiver;
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -243,6 +248,10 @@ public class MineFragment extends BaseFragment {
                         intent.putExtra(LoginAct.LOGIN_TYPE,1);
                         getActivity().startActivity(intent);
                         getActivity().finish();
+//                        Intent intent1 = new Intent(getActivity(), MainActivity.class);
+//                        intent1.putExtra("def", "0");
+//                        getActivity().startActivity(intent1);
+//                        getActivity().finish();
 //                        isLogin = false;
 //                        tvName.setText("去登录");
 //                        tvExit.setVisibility(View.GONE);
@@ -270,10 +279,8 @@ public class MineFragment extends BaseFragment {
                 ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
                 user = rd.getData();
                 if (user != null) {
-                    if (TextUtils.isEmpty(user.getUserName())){
+                    if (!TextUtils.isEmpty(user.getAccountName())){
                         tvName.setText(user.getAccountName());
-                    }else{
-                        tvName.setText(user.getUserName());
                     }
                     tv_score.setText(user.getCreditScore());
 //                    tvGrade.setText(user.getCreditGrade());
@@ -345,17 +352,26 @@ public class MineFragment extends BaseFragment {
         if(messageReceiver==null){
             messageReceiver=new MessageBroadCastReceiver();
         }
-//        if (displayRedReceiver==null) {
-//            displayRedReceiver = new DisplayRedReceiver();
-//        }
+        if (displayRedReceiver==null) {
+            displayRedReceiver = new DisplayRedReceiver();
+        }
         if (hideRedReceiver==null) {
             hideRedReceiver = new HideRedReceiver();
         }
+        if (walletRedReceiver==null) {
+            walletRedReceiver = new WalletRedReceiver();
+        }
+        if (hideWalletRedReceiver==null){
+            hideWalletRedReceiver = new HideWalletRedReceiver();
+        }
+
         getActivity().registerReceiver(receiver, new IntentFilter(UPDATE_USER));
         getActivity().registerReceiver(scoreReceiver,new IntentFilter(UPDATE_SCORE));
         getActivity().registerReceiver(messageReceiver,new IntentFilter(UPDATE_MESSAGE));
-//        getActivity().registerReceiver(displayRedReceiver,new IntentFilter(DISPLAY_POINT));
+        getActivity().registerReceiver(displayRedReceiver,new IntentFilter(DISPLAY_POINT));
         getActivity().registerReceiver(hideRedReceiver,new IntentFilter(HIDE_POINT));
+        getActivity().registerReceiver(walletRedReceiver,new IntentFilter(WALLET_POINT));
+        getActivity().registerReceiver(hideWalletRedReceiver,new IntentFilter(HIDE_WALLET_POINT));
     }
 
     @Override
@@ -370,11 +386,17 @@ public class MineFragment extends BaseFragment {
         if(messageReceiver!=null){
             getActivity().unregisterReceiver(messageReceiver);
         }
-//        if (displayRedReceiver!=null) {
-//            getActivity().unregisterReceiver(displayRedReceiver);
-//        }
+        if (displayRedReceiver!=null) {
+            getActivity().unregisterReceiver(displayRedReceiver);
+        }
         if (hideRedReceiver!=null){
             getActivity().unregisterReceiver(hideRedReceiver);
+        }
+        if (walletRedReceiver!=null){
+            getActivity().unregisterReceiver(walletRedReceiver);
+        }
+        if (hideWalletRedReceiver!=null){
+            getActivity().unregisterReceiver(hideWalletRedReceiver);
         }
     }
 
@@ -416,8 +438,7 @@ public class MineFragment extends BaseFragment {
         public void onReceive(Context context, Intent intent) {
             msg_top_point.setVisibility(View.VISIBLE);
             MyLogUtils.info("右上角消息红点显示");
-            ivRedPoint.setVisibility(View.VISIBLE);
-            MyLogUtils.info("我的贷款红点显示");
+
         }
     }
 
@@ -445,15 +466,15 @@ public class MineFragment extends BaseFragment {
         getUserInfo();
 
     }
-//    public static final String DISPLAY_POINT = "com.display.point";
-//    private class DisplayRedReceiver extends BroadcastReceiver{
-//
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//            ivRedPoint.setVisibility(View.VISIBLE);
-//            MyLogUtils.info("MineFragment:红点显示");
-//        }
-//    }
+    public static final String DISPLAY_POINT = "com.display.point";
+    private class DisplayRedReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ivRedPoint.setVisibility(View.VISIBLE);
+            MyLogUtils.info("我的贷款红点显示");
+        }
+    }
     public static final String HIDE_POINT = "com.hide.point";
     private class HideRedReceiver extends BroadcastReceiver{
 
@@ -461,6 +482,26 @@ public class MineFragment extends BaseFragment {
         public void onReceive(Context context, Intent intent) {
             ivRedPoint.setVisibility(View.GONE);
             MyLogUtils.info("MineFragment:红点隐藏");
+        }
+    }
+    public static final String WALLET_POINT = "com.wallet.point";
+    private class WalletRedReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ivWalletRedPoint.setVisibility(View.VISIBLE);
+            MyLogUtils.info("MineFragment:我的钱包红点显示");
+            context.sendBroadcast(new Intent(MyWalletActivity.DISPLAY));
+        }
+    }
+
+    public static  final String HIDE_WALLET_POINT = "hide_wallet_point";
+    private class HideWalletRedReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ivWalletRedPoint.setVisibility(View.GONE);
+            MyLogUtils.info("MineFragment:我的钱包红点隐藏");
         }
     }
 }

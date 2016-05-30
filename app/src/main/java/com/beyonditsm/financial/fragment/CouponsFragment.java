@@ -9,7 +9,6 @@ import android.widget.ListView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.adapter.CouponsAdapter;
-import com.beyonditsm.financial.adapter.RebateAdapter;
 import com.beyonditsm.financial.entity.BalanceEntity;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.http.RequestManager;
@@ -50,8 +49,8 @@ public class CouponsFragment extends BaseFragment{
         page=1;
 
         plv.setPullRefreshEnabled(true);
-        plv.setScrollLoadEnabled(true);
-        plv.setPullLoadEnabled(false);
+        plv.setScrollLoadEnabled(false);
+        plv.setPullLoadEnabled(true);
         plv.setHasMoreData(true);
         plv.getRefreshableView().setDivider(null);
         plv.getRefreshableView().setVerticalScrollBarEnabled(false);

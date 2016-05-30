@@ -11,207 +11,205 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
-
-
-
-    <ScrollView
-        android:id="@+id/svCridet"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-
-        android:layout_weight="1"
-        android:scrollbars="none">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
             android:orientation="vertical">
 
+
+            <ScrollView
+                android:id="@+id/svCridet"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+
+                android:layout_weight="1"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <View style="@style/view_line"></View>
+
+                    <include layout="@layout/order_top"></include>
+
+                    <View style="@style/view_line"></View>
+                    <!--申请条件-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp">
+
+                        <View style="@style/view_line"></View>
+
+                        <RelativeLayout
+                            android:id="@+id/rlRequire"
+                            android:layout_width="match_parent"
+                            android:layout_height="36dp">
+
+                            <TextView
+                                style="@style/tv_second_style"
+                                android:layout_centerVertical="true"
+                                android:text="申请条件" />
+
+                            <ImageView
+                                android:id="@+id/ivRequire"
+                                android:layout_width="6dp"
+                                android:layout_height="5dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:background="@mipmap/arrow_down" />
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llRequire"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingBottom="25dp"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/tvCon"
+                                style="@style/tv_third_style"
+                                android:text="22-55周岁，月打卡4000以上，信用良好\n1、年龄要求\n2、本地工作\n3、工作6月以上" />
+
+
+                        </LinearLayout>
+
+                        <View style="@style/view_line"></View>
+                    </LinearLayout>
+
+                    <!--所需材料-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp">
+
+                        <RelativeLayout
+                            android:id="@+id/rlMaterial"
+                            android:layout_width="match_parent"
+                            android:layout_height="36dp">
+
+                            <TextView
+                                style="@style/tv_second_style"
+                                android:layout_centerVertical="true"
+                                android:text="所需材料" />
+
+                            <ImageView
+                                android:id="@+id/ivMaterial"
+                                android:layout_width="6dp"
+                                android:layout_height="5dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:background="@mipmap/arrow_down" />
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llMaterial"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingBottom="25dp"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/tvNeed"
+                                style="@style/tv_third_style"
+                                android:text="22-55周岁，月打卡4000以上，信用良好\n1、年龄要求\n2、本地工作\n3、工作6月以上" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp">
+
+                        <RelativeLayout
+                            android:id="@+id/rlDetail"
+                            android:layout_width="match_parent"
+                            android:layout_height="36dp">
+
+                            <TextView
+                                style="@style/tv_second_style"
+                                android:layout_centerVertical="true"
+                                android:text="详细说明" />
+
+                            <ImageView
+                                android:id="@+id/ivDetail"
+                                android:layout_width="6dp"
+                                android:layout_height="5dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:background="@mipmap/arrow_down" />
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:id="@+id/llDetail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingBottom="25dp"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/tvDetail"
+                                style="@style/tv_third_style"
+                                android:text="22-55周岁，月打卡4000以上，信用良好\n1、年龄要求\n2、本地工作\n3、工作6月以上" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </ScrollView>
+
             <View style="@style/view_line"></View>
 
-            <include layout="@layout/order_top"></include>
-
-            <View style="@style/view_line"></View>
-            <!--申请条件-->
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@color/white"
-                android:orientation="vertical"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp">
+                android:layout_height="76dp"
+                android:background="#fff"
+                android:padding="15dp">
 
-                <View style="@style/view_line"></View>
-
-                <RelativeLayout
-                    android:id="@+id/rlRequire"
+                <TextView
+                    android:id="@+id/tvApplay"
                     android:layout_width="match_parent"
-                    android:layout_height="36dp">
+                    android:layout_height="match_parent"
+                    android:background="@drawable/button_gen"
+                    android:gravity="center"
+                    android:text="立即申请"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp" />
 
-                    <TextView
-                        style="@style/tv_second_style"
-                        android:layout_centerVertical="true"
-                        android:text="申请条件" />
-
-                    <ImageView
-                        android:id="@+id/ivRequire"
-                        android:layout_width="6dp"
-                        android:layout_height="5dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:background="@mipmap/arrow_down" />
-                </RelativeLayout>
-
-                <LinearLayout
-                    android:id="@+id/llRequire"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingBottom="25dp"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:id="@+id/tvCon"
-                        style="@style/tv_third_style"
-                        android:text="22-55周岁，月打卡4000以上，信用良好\n1、年龄要求\n2、本地工作\n3、工作6月以上" />
-
-
-                </LinearLayout>
-
-                <View style="@style/view_line"></View>
-            </LinearLayout>
-
-            <!--所需材料-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@color/white"
-                android:orientation="vertical"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp">
-
-                <RelativeLayout
-                    android:id="@+id/rlMaterial"
-                    android:layout_width="match_parent"
-                    android:layout_height="36dp">
-
-                    <TextView
-                        style="@style/tv_second_style"
-                        android:layout_centerVertical="true"
-                        android:text="所需材料" />
-
-                    <ImageView
-                        android:id="@+id/ivMaterial"
-                        android:layout_width="6dp"
-                        android:layout_height="5dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:background="@mipmap/arrow_down" />
-                </RelativeLayout>
-
-                <LinearLayout
-                    android:id="@+id/llMaterial"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingBottom="25dp"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:id="@+id/tvNeed"
-                        style="@style/tv_third_style"
-                        android:text="22-55周岁，月打卡4000以上，信用良好\n1、年龄要求\n2、本地工作\n3、工作6月以上" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:layout_marginTop="15dp"
-                android:background="@color/white"
-                android:orientation="vertical"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp">
-
-                <RelativeLayout
-                    android:id="@+id/rlDetail"
-                    android:layout_width="match_parent"
-                    android:layout_height="36dp">
-
-                    <TextView
-                        style="@style/tv_second_style"
-                        android:layout_centerVertical="true"
-                        android:text="详细说明" />
-
-                    <ImageView
-                        android:id="@+id/ivDetail"
-                        android:layout_width="6dp"
-                        android:layout_height="5dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:background="@mipmap/arrow_down" />
-                </RelativeLayout>
-
-                <LinearLayout
-                    android:id="@+id/llDetail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingBottom="25dp"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:id="@+id/tvDetail"
-                        style="@style/tv_third_style"
-                        android:text="22-55周岁，月打卡4000以上，信用良好\n1、年龄要求\n2、本地工作\n3、工作6月以上" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
+            </RelativeLayout>
 
         </LinearLayout>
 
-    </ScrollView>
-
-    <View style="@style/view_line"></View>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="76dp"
-        android:background="#fff"
-        android:padding="15dp">
-
-        <TextView
-            android:id="@+id/tvApplay"
+        <com.beyonditsm.financial.view.LoadingView
+            android:id="@+id/loadView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/button_gen"
-            android:gravity="center"
-            android:text="立即申请"
-            android:textColor="#ffffff"
-            android:textSize="16sp" />
+            android:layout_height="match_parent"></com.beyonditsm.financial.view.LoadingView>
 
-    </RelativeLayout>
-
-</LinearLayout>
-
-      <com.beyonditsm.financial.view.LoadingView
-          android:id="@+id/loadView"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"></com.beyonditsm.financial.view.LoadingView>
-
-</FrameLayout>
+    </FrameLayout>
 </LinearLayout>

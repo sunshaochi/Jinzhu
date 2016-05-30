@@ -10,6 +10,7 @@
     <!--<FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">-->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -46,31 +47,7 @@
 
             <View style="@style/view_line"></View>
 
-            <RelativeLayout
-                android:id="@+id/rlCard"
-                style="@style/rl_mine_style">
 
-                <TextView
-                    style="@style/tv_second_style"
-                    android:layout_centerVertical="true"
-                    android:text="身份证号" />
-
-
-                <ImageView
-                    android:id="@+id/ivArrowCard"
-                    style="@style/arrow_right_style"
-                    android:layout_alignParentRight="true" />
-
-                <TextView
-                    android:id="@+id/tvCard"
-                    style="@style/tv_second_style"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@id/ivArrowCard"
-                    />
-            </RelativeLayout>
-
-            <View style="@style/view_line"></View>
 
             <RelativeLayout
                 android:id="@+id/rlSex"
@@ -84,7 +61,8 @@
                 <ImageView
                     android:id="@+id/ivArrowSex"
                     style="@style/arrow_right_style"
-                    android:layout_alignParentRight="true" />
+                    android:layout_alignParentRight="true"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/tvSex"
@@ -92,8 +70,15 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
                     android:layout_toLeftOf="@id/ivArrowSex"
-                    />
-
+                    android:visibility="gone"/>
+                <CheckBox
+                    android:id="@+id/cb_select_sex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/select_sex"
+                    android:button="@null" />
                 <RadioGroup
                     android:id="@+id/sex_rg"
                     android:layout_width="wrap_content"
@@ -215,7 +200,31 @@
 
             <View style="@style/view_line"></View>
 
+            <RelativeLayout
+                android:id="@+id/rlCard"
+                style="@style/rl_mine_style">
 
+                <TextView
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:text="身份证号" />
+
+
+                <ImageView
+                    android:id="@+id/ivArrowCard"
+                    style="@style/arrow_right_style"
+                    android:layout_alignParentRight="true" />
+
+                <TextView
+                    android:id="@+id/tvCard"
+                    style="@style/tv_second_style"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@id/ivArrowCard"
+                    />
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
 
             <RelativeLayout
                 android:id="@+id/rlMarry"

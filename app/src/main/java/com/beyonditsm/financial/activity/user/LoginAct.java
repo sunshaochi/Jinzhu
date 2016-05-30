@@ -26,7 +26,6 @@ import com.beyonditsm.financial.activity.servicer.ServiceMainAct;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.fragment.MineFragment;
 import com.beyonditsm.financial.http.RequestManager;
-import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.AutoAnimImageView;
@@ -197,11 +196,11 @@ public class LoginAct extends BaseActivity{
             loginPhone.requestFocus();
             return false;
         }
-        if (!FinancialUtil.isMobileNO(phone)){
-            MyToastUtils.showShortToast(getApplicationContext(), "请输入正确的手机号");
-            loginPhone.requestFocus();
-            return false;
-        }
+//        if (!FinancialUtil.isMobileNO(phone)){
+//            MyToastUtils.showShortToast(getApplicationContext(), "请输入正确的手机号");
+//            loginPhone.requestFocus();
+//            return false;
+//        }
         if (TextUtils.isEmpty(pwd)) {
             MyToastUtils.showShortDebugToast(getApplicationContext(), "请输入密码");
             loginPwd.requestFocus();

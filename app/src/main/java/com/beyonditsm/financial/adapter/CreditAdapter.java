@@ -29,6 +29,7 @@ public class CreditAdapter extends BaseAdapter {
     private double creditMoney,creditTime;
     private String creditMoney2,creditTime2;
 
+    java.text.DecimalFormat df = new java.text.DecimalFormat("#0.00");//保留小数
     private DisplayImageOptions options = new DisplayImageOptions.Builder()
             .showStubImage(R.mipmap.pro_default) // 设置图片下载期间显示的图片
             .showImageForEmptyUri(R.mipmap.pro_default) // 设置图片Uri为空或是错误的时候显示的图片
@@ -104,11 +105,12 @@ public class CreditAdapter extends BaseAdapter {
                 viewHolder.tvRate.setText("月利率:" + productEntity.getMonthlyRathMin() + "%~" + productEntity.getMonthlyRathMax() + "%");
             }
         }
+
         if (!TextUtils.isEmpty(productEntity.get_totalRath())) {
-            viewHolder.tvTotal.setText("¥" + productEntity.get_totalRath());
+            viewHolder.tvTotal.setText( df.format(Double.valueOf(productEntity.get_totalRath())));
         }
         if (!TextUtils.isEmpty(productEntity.get_monthlyPayment())) {
-            viewHolder.tvReim.setText("¥" + productEntity.get_monthlyPayment());
+            viewHolder.tvReim.setText(df.format(Double.valueOf(productEntity.get_monthlyPayment())) );
         }
         if (!TextUtils.isEmpty(productEntity.getDisposableRateMax())||!TextUtils.isEmpty(productEntity.getDisposableRateMin())) {
             if (Double.valueOf(productEntity.getDisposableRateMax()) - Double.valueOf(productEntity.getDisposableRateMin()) == 0) {

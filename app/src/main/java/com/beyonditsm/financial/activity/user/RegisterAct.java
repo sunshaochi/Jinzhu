@@ -29,7 +29,6 @@ import com.beyonditsm.financial.activity.credit.CreditStepAct;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.fragment.MineFragment;
 import com.beyonditsm.financial.http.RequestManager;
-import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GeneralUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.SpUtils;
@@ -275,11 +274,11 @@ public class RegisterAct extends BaseActivity {
             regPhone.requestFocus();
             return false;
         }
-        if (!FinancialUtil.isMobileNO(phone)){
-            MyToastUtils.showShortToast(getApplicationContext(), "请输入正确的手机号");
-            regPhone.requestFocus();
-            return false;
-        }
+//        if (!FinancialUtil.isMobileNO(phone)){
+//            MyToastUtils.showShortToast(getApplicationContext(), "请输入正确的手机号");
+//            regPhone.requestFocus();
+//            return false;
+//        }
         if (TextUtils.isEmpty(yzm)) {
             MyToastUtils.showShortDebugToast(getApplicationContext(), "请输入验证码");
             regYzm.requestFocus();
@@ -300,11 +299,11 @@ public class RegisterAct extends BaseActivity {
             regPhone.requestFocus();
             return false;
         }
-        if (!FinancialUtil.isMobileNO(phone)){
-            MyToastUtils.showShortToast(getApplicationContext(), "请输入正确的手机号");
-            regPhone.requestFocus();
-            return false;
-        }
+//        if (!FinancialUtil.isMobileNO(phone)){
+//            MyToastUtils.showShortToast(getApplicationContext(), "请输入正确的手机号");
+//            regPhone.requestFocus();
+//            return false;
+//        }
         return  true;
     }
 

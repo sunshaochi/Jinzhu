@@ -1,6 +1,7 @@
 package com.beyonditsm.financial.activity.credit;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.beyonditsm.financial.R;
@@ -25,7 +26,7 @@ public class CreditGuideAct extends BaseActivity {
     public void init(Bundle savedInstanceState) {
         setTopTitle("贷款指南");
         String roleName = SpUtils.getRoleName(getApplicationContext());
-        if (!"ROLE_COMMON_CLIENT".equals(roleName)){//非普通用户显示服务者指南
+        if (!"ROLE_COMMON_CLIENT".equals(roleName)&&!TextUtils.isEmpty(roleName)){//非普通用户显示服务者指南
             setTopTitle("服务者指南");
             ivBg.setBackgroundResource(R.mipmap.servantguide);
         }

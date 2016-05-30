@@ -79,7 +79,22 @@
                     style="@style/home_text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="打工挣钱" />
+                    android:text="服务者" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_creditCard"
+                style="@style/home_head_layout">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="45dp"
+                    android:src="@drawable/credit" />
+
+                <TextView
+                    style="@style/home_text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="信用卡" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

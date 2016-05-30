@@ -356,6 +356,15 @@
         <!--服务者专题-->
         <activity android:name=".activity.user.ServantSpecialAct"
             android:screenOrientation="portrait"></activity>
+        <!--信用卡专题-->
+        <activity android:name=".activity.user.CreditCardAct"
+            android:screenOrientation="portrait"></activity>
+        <!--领取奖励页面-->
+        <activity android:name=".activity.user.ReceiveRewardAct"
+            android:screenOrientation="portrait"></activity>
+        <!--立即申请-->
+        <activity android:name=".activity.user.ApplicationAct"
+            android:screenOrientation="portrait"></activity>
         <!-- 扫描二维码结果展示界面 -->
 
         <!--上传身份证照片-->

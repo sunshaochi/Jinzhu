@@ -18,11 +18,13 @@ import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.MainActivity;
+import com.beyonditsm.financial.activity.servicer.ServiceMainAct;
 import com.beyonditsm.financial.activity.user.MyCreditAct;
 import com.beyonditsm.financial.entity.MyCreditBean;
 import com.beyonditsm.financial.fragment.MineFragment;
 import com.beyonditsm.financial.fragment.MyCreditDetailFragment;
 import com.beyonditsm.financial.fragment.MyCreditStatusFragment;
+import com.beyonditsm.financial.fragment.ServiceMineFrg;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
@@ -220,6 +222,8 @@ public class MyCreditDAct extends BaseActivity {
         sendBroadcast(new Intent(MyCreditAct.HIDE_MESSAGE));
         sendBroadcast(new Intent(MineFragment.HIDE_POINT));
         sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
+        sendBroadcast(new Intent(ServiceMineFrg.HIDE_RED_POINT));
+        sendBroadcast(new Intent(ServiceMainAct.HIDE));
     }
 
     private void initImageView() {

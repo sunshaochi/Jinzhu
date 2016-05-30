@@ -2,32 +2,34 @@ package com.beyonditsm.financial.http;
 
 /**
  * Url
- * <p/>
+ * <p>
  * Created by wangbin on 15/11/18.
  */
 public interface IFinancialUrl {
 
-    /*test1地址*/
+    /*验收环境地址*/
 //    String BASE_URL = "http://139.196.111.82:5018";
+        /*验收环境游戏地址*/
+//    String GAME_URL = "http://myjinzhu.com:5011/";
     /*正式地址*/
 //    String BASE_URL = "http://option.myjinzhu.com";
+        /*正式游戏地址*/
+//    String GAME_URL = "http://m.farm.myjinzhu.com/";
 
-    /*测试地址2*/
-//    String BASE_URL="http://172.16.6.216:8080";
+
     String BASE_URL = "http://test.myjinzhu.com:8082";
     /*测试地址3*/
 //    String BASE_URL="http://test.myjinzhu.com:60";
     //内网地址（测试钱包功能）
 //    String BASE_URL = "http://172.16.6.254:8082";
-//    String BASE_URL = "http://172.16.5.250:8080";
-
-    /*正式游戏地址*/
-//    String GAME_URL = "http://m.farm.myjinzhu.com/";
-
-    /*测试游戏地址1*/
-//    String GAME_URL = "http://myjinzhu.com:5011/";
     /*测试游戏地址2*/
     String GAME_URL = "http://test.myjinzhu.com:63";
+    //调试地址
+//    String BASE_URL = "http://172.16.5.250:8080";
+//    String BASE_URL="http://172.16.6.216";
+//    String BASE_URL = "http://172.16.6.227:8080";
+
+
     String API_VERSION = "/easyplay";
 
     String BASE_IMAGE_URL = BASE_URL + API_VERSION + "/";
@@ -231,5 +233,7 @@ public interface IFinancialUrl {
     /*最低提现额度*/
     String MIN_EXCHANGE = BASE_URL + API_VERSION + "/wallet/login/ifGetMinExchange.do";
     /*查询角色信息*/
-    String ROLE_INTO = BASE_URL+API_VERSION+"/servant/login/getRoleInfo.do";
+    String ROLE_INTO = BASE_URL + API_VERSION + "/servant/login/getRoleInfo.do";
+    /*领取奖励（修改资料）*/
+    String RECEIVE_REWARD = BASE_URL + API_VERSION + "/creditCard/login/modifyClient.do";
 }

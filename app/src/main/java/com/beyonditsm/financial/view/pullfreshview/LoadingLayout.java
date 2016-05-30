@@ -101,7 +101,7 @@ public abstract class LoadingLayout extends FrameLayout implements
 			}
 
 			requestLayout();
-			setVisibility(show ? View.VISIBLE : View.INVISIBLE);
+			setVisibility(show ? View.VISIBLE : View.GONE);
 		}
 	}
 

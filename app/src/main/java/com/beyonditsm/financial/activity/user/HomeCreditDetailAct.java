@@ -517,8 +517,8 @@ public class HomeCreditDetailAct extends BaseActivity {
                         JSONObject jsonData = json.getJSONObject("data");
                         monthlyPayments = jsonData.getDouble("monthlyPayments") + "";
                         totalRath = jsonData.getDouble("totalRath") + "";
-                        tvTotal.setText("￥" + totalRath);
-                        tvMonthPay.setText("￥" + monthlyPayments);
+                        tvTotal.setText( totalRath);
+                        tvMonthPay.setText( monthlyPayments);
                     }
 
                     @Override

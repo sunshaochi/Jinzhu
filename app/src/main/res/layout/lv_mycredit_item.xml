@@ -60,10 +60,6 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <TextView
-                style="@style/tv_second_style"
-                android:layout_marginLeft="3dp"
-                android:text="¥" />
 
             <TextView
                 android:id="@+id/tv_periodsAmount"
