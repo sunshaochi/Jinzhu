@@ -23,6 +23,13 @@ public class UserLoginEntity implements Parcelable{
     private String roleName;//角色
     private String description;//用户类型
     private String username;//用户名
+    /**
+     * vipLevel : 1
+     * vipImage : img/1778238623.jpg
+     */
+
+    private int vipLevel;//vip等级
+    private String vipImage;//vip等级图片
 
     protected UserLoginEntity(Parcel in) {
         myReferralCode = in.readString();
@@ -30,6 +37,8 @@ public class UserLoginEntity implements Parcelable{
         roleName = in.readString();
         description=in.readString();
         username = in.readString();
+        vipLevel = in.readInt();
+        vipImage = in.readString();
     }
 
     public static final Creator<UserLoginEntity> CREATOR = new Creator<UserLoginEntity>() {
@@ -99,5 +108,23 @@ public class UserLoginEntity implements Parcelable{
         dest.writeString(roleName);
         dest.writeString(description);
         dest.writeString(username);
+        dest.writeInt(vipLevel);
+        dest.writeString(vipImage);
+    }
+
+    public int getVipLevel() {
+        return vipLevel;
+    }
+
+    public void setVipLevel(int vipLevel) {
+        this.vipLevel = vipLevel;
+    }
+
+    public String getVipImage() {
+        return vipImage;
+    }
+
+    public void setVipImage(String vipImage) {
+        this.vipImage = vipImage;
     }
 }

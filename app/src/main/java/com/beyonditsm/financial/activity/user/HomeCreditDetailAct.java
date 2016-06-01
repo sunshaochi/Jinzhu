@@ -1,6 +1,7 @@
 package com.beyonditsm.financial.activity.user;
 
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -18,6 +19,7 @@ import com.beyonditsm.financial.AppManager;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.credit.CreditStepAct;
+import com.beyonditsm.financial.activity.vip.VipAct;
 import com.beyonditsm.financial.entity.ProductInfo;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.http.IFinancialUrl;
@@ -289,7 +291,7 @@ public class HomeCreditDetailAct extends BaseActivity {
      *
      * @param v
      */
-    @OnClick({R.id.rlRequire, R.id.rlMaterial, R.id.rlDetail, R.id.tvApplay, R.id.rlMonth, R.id.tvCal, R.id.etAmount})
+    @OnClick({R.id.rlRequire, R.id.rlMaterial, R.id.rlDetail, R.id.tvApplay, R.id.rlMonth, R.id.tvCal, R.id.etAmount,R.id.tvBuy})
     public void toClick(View v) {
         switch (v.getId()) {
             //搜索
@@ -432,6 +434,11 @@ public class HomeCreditDetailAct extends BaseActivity {
                 validateCredit(minVal, maxVal, curVal, creditMonth);
 
 
+                break;
+
+            case R.id.tvBuy://购买VIP
+                Intent intent = new Intent(HomeCreditDetailAct.this, VipAct.class);
+                startActivity(intent);
                 break;
         }
     }

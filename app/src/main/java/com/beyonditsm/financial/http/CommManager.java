@@ -582,4 +582,11 @@ public class CommManager extends RequestManager {
         Map<String,String> params = new HashMap<>();
         doPost(IFinancialUrl.ROLE_INTO,params,callBack);
     }
+
+    /*获取vip信息*/
+    public void findVipInfo(UserEntity ue,CallBack callBack){
+        Map<String,String> params = new HashMap<>();
+        params.put("userName",ue.getAccountName());
+        doPost(IFinancialUrl.VIP_INFO, params, callBack);
+    }
 }

@@ -232,4 +232,6 @@ public interface IFinancialUrl {
     String MIN_EXCHANGE = BASE_URL + API_VERSION + "/wallet/login/ifGetMinExchange.do";
     /*查询角色信息*/
     String ROLE_INTO = BASE_URL+API_VERSION+"/servant/login/getRoleInfo.do";
+
+    String VIP_INFO = BASE_URL+API_VERSION+"/manager/unlogin/findVipInfo.do";
 }

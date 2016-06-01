@@ -23,6 +23,7 @@ import com.beyonditsm.financial.activity.user.MyCreditAct;
 import com.beyonditsm.financial.activity.user.MyRecommAct;
 import com.beyonditsm.financial.activity.user.NewWorkAct;
 import com.beyonditsm.financial.activity.user.SettingAct;
+import com.beyonditsm.financial.activity.vip.VipAct;
 import com.beyonditsm.financial.activity.wallet.MyWalletActivity;
 import com.beyonditsm.financial.db.FriendDao;
 import com.beyonditsm.financial.db.MessageDao;
@@ -89,6 +90,8 @@ public class ServiceMineFrg extends BaseFragment {
     private ScaleAllImageView civHead;
     @ViewInject(R.id.tvName)
     private TextView tv_name;
+    @ViewInject(R.id.iv_vipLevel)
+    private ImageView ivVipLevel;
 
     public static final String SERVANT_INFO = "servant_info";
 
@@ -118,6 +121,7 @@ public class ServiceMineFrg extends BaseFragment {
         msg_top.setVisibility(View.VISIBLE);
 //        findServantInfo();
         getUserLoginInfo();
+
     }
 
     @Override
@@ -126,7 +130,7 @@ public class ServiceMineFrg extends BaseFragment {
     }
 
     @OnClick({R.id.rlServiceData, R.id.rlMyTuiJian, R.id.rlSet, R.id.tvExit, R.id.rlMyCredit,
-            R.id.rlMyCode, R.id.rlLines,R.id.rlWork,R.id.msg_top,R.id.rlWallet})
+            R.id.rlMyCode, R.id.rlLines,R.id.rlWork,R.id.msg_top,R.id.rlWallet,R.id.rlVip})
     public void toClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
@@ -251,6 +255,13 @@ public class ServiceMineFrg extends BaseFragment {
                 Intent msgintent = new Intent(getActivity(), MessageActivity.class);
                 getActivity().startActivity(msgintent);
                 break;
+
+            case R.id.rlVip://金蛛VIP
+                intent = new Intent(getActivity(), VipAct.class);
+                intent.putExtra("userInfo",ue);
+                getActivity().startActivity(intent);
+                break;
+
         }
     }
     //获取服务者信息
@@ -326,6 +337,26 @@ public class ServiceMineFrg extends BaseFragment {
             public void onSucess(String result) throws JSONException {
                 ResultData<UserLoginEntity> rd = (ResultData<UserLoginEntity>) GsonUtils.json(result, UserLoginEntity.class);
                 ule = rd.getData();
+                if (ule!=null){
+                    int vipLevel = ule.getVipLevel();
+                    if (vipLevel==0){
+                        ivVipLevel.setBackgroundResource(R.mipmap.vip_nomal);
+                    }else if (vipLevel==1){
+                        ivVipLevel.setBackgroundResource(R.mipmap.vip1);
+                    }
+                    else if (vipLevel==2){
+                        ivVipLevel.setBackgroundResource(R.mipmap.vip2);
+                    }
+                    else if (vipLevel==3){
+                        ivVipLevel.setBackgroundResource(R.mipmap.vip3);
+                    }else if (vipLevel==4){
+                        ivVipLevel.setBackgroundResource(R.mipmap.vip4);
+                    }else if (vipLevel==5){
+                        ivVipLevel.setBackgroundResource(R.mipmap.vip5);
+                    }else if (vipLevel==6){
+                        ivVipLevel.setBackgroundResource(R.mipmap.vip6);
+                    }
+                }
             }
 
             @Override
