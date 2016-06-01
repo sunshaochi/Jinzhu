@@ -232,8 +232,10 @@ public interface IFinancialUrl {
     String SERVANT_RMD_INFO = BASE_URL + API_VERSION + "/servant/login/getServantRmdInfo.do";
     /*最低提现额度*/
     String MIN_EXCHANGE = BASE_URL + API_VERSION + "/wallet/login/ifGetMinExchange.do";
-    /*查询角色信息*/
-    String ROLE_INTO = BASE_URL + API_VERSION + "/servant/login/getRoleInfo.do";
     /*领取奖励（修改资料）*/
     String RECEIVE_REWARD = BASE_URL + API_VERSION + "/creditCard/login/modifyClient.do";
+    /*查询角色信息*/
+    String ROLE_INTO = BASE_URL+API_VERSION+"/servant/login/getRoleInfo.do";
+    /*Vip信息*/
+    String VIP_INFO = BASE_URL+API_VERSION+"/manager/unlogin/findVipInfo.do";
 }

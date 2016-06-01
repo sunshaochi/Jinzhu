@@ -583,27 +583,33 @@ public class CommManager extends RequestManager {
         doPost(IFinancialUrl.ROLE_INTO,params,callBack);
     }
     /*领取奖励或者修改资料*/
-    public void getReceiveReward(UserEntity ue,CallBack callBack){
-        Map<String,String> params = new HashMap<>();
-        params.put("userName",ue.getUserName());
-        params.put("accountId",ue.getAccountId());
-        params.put("id",ue.getId());
-        params.put("userSex",String.valueOf(ue.getUserSex()));
-        params.put("userAge",String.valueOf(ue.getUserAge()));
-        params.put("identCard",ue.getIdentCard());
-        params.put("detailAddr",ue.getDetailAddr());
-        params.put("marrySts",String.valueOf(ue.getMarrySts()));
-        params.put("jobId",ue.getJobId());
-        params.put("secailSecurity",String.valueOf(ue.getSecailSecurity()));
-        params.put("haveCar",ue.getHaveCar());
-        params.put("haveHours",ue.getHaveHours());
-        params.put("proFund",String.valueOf(ue.getProFund()));
-        params.put("towYearCred",ue.getTowYearCred());
-        params.put("province",ue.getProvince());
-        params.put("city",ue.getCity());
-        params.put("district",ue.getDistrict());
-        MyLogUtils.info("实体类里的参数："+ue.getUserName()+","+ue.getAccountId()+","+ue.getId()+","+ue.getUserSex()+","+ue.getDetailAddr()+","+ue.getMarrySts()+","+ue.getJobId()+","+ue.getSecailSecurity()+","+ue.getHaveCar()
-        +","+ue.getHaveHours()+","+ue.getProFund()+","+ue.getTowYearCred()+","+ue.getProvince()+","+ue.getCity()+","+ue.getDistrict());
+    public void getReceiveReward(UserEntity ue,CallBack callBack) {
+        Map<String, String> params = new HashMap<>();
+        params.put("userName", ue.getUserName());
+        params.put("accountId", ue.getAccountId());
+        params.put("id", ue.getId());
+        params.put("userSex", String.valueOf(ue.getUserSex()));
+        params.put("userAge", String.valueOf(ue.getUserAge()));
+        params.put("identCard", ue.getIdentCard());
+        params.put("detailAddr", ue.getDetailAddr());
+        params.put("marrySts", String.valueOf(ue.getMarrySts()));
+        params.put("jobId", ue.getJobId());
+        params.put("secailSecurity", String.valueOf(ue.getSecailSecurity()));
+        params.put("haveCar", ue.getHaveCar());
+        params.put("haveHours", ue.getHaveHours());
+        params.put("proFund", String.valueOf(ue.getProFund()));
+        params.put("towYearCred", ue.getTowYearCred());
+        params.put("province", ue.getProvince());
+        params.put("city", ue.getCity());
+        params.put("district", ue.getDistrict());
+        MyLogUtils.info("实体类里的参数：" + ue.getUserName() + "," + ue.getAccountId() + "," + ue.getId() + "," + ue.getUserSex() + "," + ue.getDetailAddr() + "," + ue.getMarrySts() + "," + ue.getJobId() + "," + ue.getSecailSecurity() + "," + ue.getHaveCar()
+                + "," + ue.getHaveHours() + "," + ue.getProFund() + "," + ue.getTowYearCred() + "," + ue.getProvince() + "," + ue.getCity() + "," + ue.getDistrict());
         doPost(IFinancialUrl.RECEIVE_REWARD, params, callBack);
+    }
+    /*获取vip信息*/
+    public void findVipInfo(UserEntity ue,CallBack callBack){
+        Map<String,String> params = new HashMap<>();
+        params.put("userName",ue.getAccountName());
+        doPost(IFinancialUrl.VIP_INFO, params, callBack);
     }
 }

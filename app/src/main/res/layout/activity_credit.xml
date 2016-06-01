@@ -193,9 +193,27 @@
                 android:padding="15dp">
 
                 <TextView
-                    android:id="@+id/tvApplay"
+                    android:id="@+id/tvBuy"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@drawable/btn_invitation"
+                    android:gravity="center"
+                    android:text="购买VIP"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp" />
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#fff"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <TextView
+                    android:id="@+id/tvApplay"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
                     android:background="@drawable/button_gen"
                     android:gravity="center"
                     android:text="立即申请"
@@ -210,6 +228,5 @@
             android:id="@+id/loadView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"></com.beyonditsm.financial.view.LoadingView>
-
     </FrameLayout>
 </LinearLayout>

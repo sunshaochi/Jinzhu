@@ -24,6 +24,7 @@ import com.beyonditsm.financial.activity.user.MyRecommAct;
 import com.beyonditsm.financial.activity.user.NewWorkAct;
 import com.beyonditsm.financial.activity.user.SettingAct;
 import com.beyonditsm.financial.activity.user.UpdateAct;
+import com.beyonditsm.financial.activity.vip.VipAct;
 import com.beyonditsm.financial.activity.wallet.MyWalletActivity;
 import com.beyonditsm.financial.db.FriendDao;
 import com.beyonditsm.financial.db.MessageDao;
@@ -86,6 +87,8 @@ public class MineFragment extends BaseFragment {
     private ImageView ivRedPoint;
     @ViewInject(R.id.ivWalletRed)
     private ImageView ivWalletRedPoint;
+    @ViewInject(R.id.iv_vipLevel)
+    private ImageView ivVipLevel;
 
 
     private UserEntity user;//用户信息
@@ -137,6 +140,7 @@ public class MineFragment extends BaseFragment {
             getUserLoginInfo();
         }
 
+
     }
 
     @Override
@@ -145,7 +149,7 @@ public class MineFragment extends BaseFragment {
     }
 
     @OnClick({R.id.rlMyCode, R.id.rlRecomm, R.id.rlLines, R.id.rlMyCredit, R.id.rlSet, R.id.tvExit,
-            R.id.rlWork, R.id.rlMyData,R.id.msg_top,R.id.rlWallet})
+            R.id.rlWork, R.id.rlMyData,R.id.msg_top,R.id.rlWallet,R.id.rlVip})
     public void toClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
@@ -263,6 +267,12 @@ public class MineFragment extends BaseFragment {
                 msg_top_point.setVisibility(View.GONE);
                 Intent msgintent = new Intent(getActivity(), MessageActivity.class);
                 getActivity().startActivity(msgintent);
+                break;
+
+            case R.id.rlVip://金蛛VIP
+                intent = new Intent(getActivity(), VipAct.class);
+                intent.putExtra("userInfo",user);
+                getActivity().startActivity(intent);
                 break;
         }
     }
@@ -451,6 +461,26 @@ public class MineFragment extends BaseFragment {
             public void onSucess(String result) throws JSONException {
                 ResultData<UserLoginEntity> rd = (ResultData<UserLoginEntity>) GsonUtils.json(result, UserLoginEntity.class);
                 ule = rd.getData();
+                if (ule!=null){
+                    int vipLevel = ule.getVipLevel();
+                    if (vipLevel==0){
+                        ivVipLevel.setBackgroundResource(R.mipmap.vip_nomal);
+                    }else if (vipLevel==1){
+                        ivVipLevel.setBackgroundResource(R.mipmap.vip1);
+                    }
+                    else if (vipLevel==2){
+                        ivVipLevel.setBackgroundResource(R.mipmap.vip2);
+                    }
+                    else if (vipLevel==3){
+                        ivVipLevel.setBackgroundResource(R.mipmap.vip3);
+                    }else if (vipLevel==4){
+                        ivVipLevel.setBackgroundResource(R.mipmap.vip4);
+                    }else if (vipLevel==5){
+                        ivVipLevel.setBackgroundResource(R.mipmap.vip5);
+                    }else if (vipLevel==6){
+                        ivVipLevel.setBackgroundResource(R.mipmap.vip6);
+                    }
+                }
             }
 
             @Override

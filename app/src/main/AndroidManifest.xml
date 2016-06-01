@@ -365,6 +365,12 @@
         <!--立即申请-->
         <activity android:name=".activity.user.ApplicationAct"
             android:screenOrientation="portrait"></activity>
+        <!--VIP专题页-->
+        <activity android:name=".activity.vip.VipAct"
+            android:screenOrientation="portrait"></activity>
+        <!-- 选择支付方式-->
+        <activity android:name=".activity.vip.SelectPayWayAct"
+            android:screenOrientation="portrait"></activity>
         <!-- 扫描二维码结果展示界面 -->
 
         <!--上传身份证照片-->
