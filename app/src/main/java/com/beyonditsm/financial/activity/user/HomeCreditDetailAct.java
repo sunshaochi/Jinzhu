@@ -22,6 +22,7 @@ import com.beyonditsm.financial.activity.credit.CreditStepAct;
 import com.beyonditsm.financial.activity.vip.VipAct;
 import com.beyonditsm.financial.entity.ProductInfo;
 import com.beyonditsm.financial.entity.ResultData;
+import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.GsonUtils;
@@ -117,6 +118,7 @@ public class HomeCreditDetailAct extends BaseActivity {
             .build(); // 创建配置过得DisplayImageOption对象
     private ProductInfo productEntity;
     private TextView tvOnePay;
+    private UserEntity userInfo;
 
 
     private void assignViews() {
@@ -198,6 +200,7 @@ public class HomeCreditDetailAct extends BaseActivity {
         assignViews();
         initAnim();
         String creditName = getIntent().getStringExtra(CREDIT_NAME);
+        userInfo = getIntent().getParcelableExtra("userInfo");
         setTopTitle(creditName);
         if (creditName.length() > 14) {
             tvTitle.setTextSize(14);
@@ -438,6 +441,7 @@ public class HomeCreditDetailAct extends BaseActivity {
 
             case R.id.tvBuy://购买VIP
                 Intent intent = new Intent(HomeCreditDetailAct.this, VipAct.class);
+                intent.putExtra("userInfo",userInfo);
                 startActivity(intent);
                 break;
         }

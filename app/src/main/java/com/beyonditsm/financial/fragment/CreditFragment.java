@@ -27,6 +27,7 @@ import com.beyonditsm.financial.entity.FindProductListEntity;
 import com.beyonditsm.financial.entity.ProductInfo;
 import com.beyonditsm.financial.entity.ProductResult;
 import com.beyonditsm.financial.entity.ResultData;
+import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GsonUtils;
@@ -89,6 +90,7 @@ public class CreditFragment extends BaseFragment {
     private int pageSize = 10;
     private int currentP = 1;
     private CreditAdapter adapter;
+    private UserEntity user;
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -98,6 +100,7 @@ public class CreditFragment extends BaseFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         tvTitle.setText("贷款");
+        getUserInfo();
         String roleName = SpUtils.getRoleName(context);
         if (!"ROLE_COMMON_CLIENT".equals(roleName)&&!TextUtils.isEmpty(roleName)){//非普通用户显示服务者指南
             ivSuspen.setBackgroundResource(R.mipmap.servant_guide);
@@ -255,6 +258,7 @@ public class CreditFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), HomeCreditDetailAct.class);
 //                intent.putExtra(CreditDetailAct.PRODUCTINFO,datas.get(position));
+                intent.putExtra("userInfo",user);
                 if (TextUtils.isEmpty(etAmount.getText().toString().trim()) && !TextUtils.isEmpty(tvM.getText().toString().trim())) {
                     MyToastUtils.showShortToast(getActivity(), "请输入金额");
                     etAmount.requestFocus();
@@ -460,6 +464,26 @@ public class CreditFragment extends BaseFragment {
                 plv.onPullDownRefreshComplete();
                 plv.onPullUpRefreshComplete();
                 loadView.loadError();
+            }
+        });
+    }
+
+    /**
+     * 获取用户信息
+     */
+    private void getUserInfo() {
+
+        RequestManager.getCommManager().findUserInfo(new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) {
+                ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
+                user = rd.getData();
+
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
             }
         });
     }

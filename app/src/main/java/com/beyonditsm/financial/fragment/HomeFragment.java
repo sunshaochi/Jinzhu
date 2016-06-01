@@ -24,6 +24,7 @@ import com.beyonditsm.financial.adapter.HomeCreditAdapter;
 import com.beyonditsm.financial.entity.HomeHotProductEntity;
 import com.beyonditsm.financial.entity.HotProduct;
 import com.beyonditsm.financial.entity.ResultData;
+import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.entity.UserLoginEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
@@ -69,6 +70,7 @@ public class HomeFragment extends BaseFragment {
     private HomeCreditAdapter adapter;
     private List<HomeHotProductEntity> hotList;
     private UserLoginEntity ule;
+    private UserEntity user;
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -79,6 +81,7 @@ public class HomeFragment extends BaseFragment {
     public void initData(Bundle savedInstanceState) {
 //        getHotProductList(currentPage);
 
+        getUserInfo();
         String roleName = SpUtils.getRoleName(context);
         MyLogUtils.info("ROLENAME="+roleName);
         if (!"ROLE_COMMON_CLIENT".equals(roleName)&&!TextUtils.isEmpty(roleName)){//普通用户显示贷款指南
@@ -141,6 +144,7 @@ public class HomeFragment extends BaseFragment {
                 intent.putExtra(HomeCreditDetailAct.PRODUCTINFO, datas.get(position).getProductId());
 //                intent.putExtra(HomeCreditDetailAct.CREDIT_MIN,ConstantValue.CREDIT_MIN_MONEY+"");
 //                intent.putExtra(HomeCreditDetailAct.CREDIT_TIME_MIN,ConstantValue.CREDIT_MIN_MONTH+"");
+                intent.putExtra("userInfo",user);
                 intent.putExtra(HomeCreditDetailAct.CREDIT_AMOUNT, ConstantValue.CREDIT_MONEY+"");
                 intent.putExtra(HomeCreditDetailAct.CREDIT_TIME,ConstantValue.CREDIT_MONTH+"");
                 intent.putExtra(HomeCreditDetailAct.CREDIT_NAME,datas.get(position).getProductName());
@@ -257,6 +261,26 @@ public class HomeFragment extends BaseFragment {
             public void onSucess(String result) throws JSONException {
                 ResultData<UserLoginEntity> rd = (ResultData<UserLoginEntity>) GsonUtils.json(result, UserLoginEntity.class);
                 ule = rd.getData();
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
+            }
+        });
+    }
+
+    /**
+     * 获取用户信息
+     */
+    private void getUserInfo() {
+
+        RequestManager.getCommManager().findUserInfo(new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) {
+                ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
+                user = rd.getData();
+
             }
 
             @Override
