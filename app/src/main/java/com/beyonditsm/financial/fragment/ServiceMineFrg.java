@@ -276,8 +276,7 @@ public class ServiceMineFrg extends BaseFragment {
 
             case R.id.rlVip://金蛛VIP
                 intent = new Intent(getActivity(), VipAct.class);
-                intent.putExtra("userInfo",ue);
-                intent.putExtra("userLogin",ule);
+                intent.putExtra("user",ule);
                 getActivity().startActivity(intent);
                 break;
 

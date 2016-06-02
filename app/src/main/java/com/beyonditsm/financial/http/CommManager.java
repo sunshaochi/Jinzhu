@@ -607,9 +607,10 @@ public class CommManager extends RequestManager {
         doPost(IFinancialUrl.RECEIVE_REWARD, params, callBack);
     }
     /*获取vip信息*/
-    public void findVipInfo(UserEntity ue,CallBack callBack){
+    public void findVipInfo(String username,CallBack callBack){
         Map<String,String> params = new HashMap<>();
-        params.put("userName",ue.getAccountName());
+        params.put("userName",username);
+        MyLogUtils.info("用户名是否为空："+username);
         doPost(IFinancialUrl.VIP_INFO, params, callBack);
     }
 }

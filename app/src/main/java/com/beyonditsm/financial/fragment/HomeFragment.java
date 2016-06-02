@@ -81,7 +81,6 @@ public class HomeFragment extends BaseFragment {
     public void initData(Bundle savedInstanceState) {
 //        getHotProductList(currentPage);
 
-        getUserInfo();
         String roleName = SpUtils.getRoleName(context);
         MyLogUtils.info("ROLENAME="+roleName);
         if (!"ROLE_COMMON_CLIENT".equals(roleName)&&!TextUtils.isEmpty(roleName)){//普通用户显示贷款指南
@@ -144,7 +143,6 @@ public class HomeFragment extends BaseFragment {
                 intent.putExtra(HomeCreditDetailAct.PRODUCTINFO, datas.get(position).getProductId());
 //                intent.putExtra(HomeCreditDetailAct.CREDIT_MIN,ConstantValue.CREDIT_MIN_MONEY+"");
 //                intent.putExtra(HomeCreditDetailAct.CREDIT_TIME_MIN,ConstantValue.CREDIT_MIN_MONTH+"");
-                intent.putExtra("userInfo",user);
                 intent.putExtra(HomeCreditDetailAct.CREDIT_AMOUNT, ConstantValue.CREDIT_MONEY+"");
                 intent.putExtra(HomeCreditDetailAct.CREDIT_TIME,ConstantValue.CREDIT_MONTH+"");
                 intent.putExtra(HomeCreditDetailAct.CREDIT_NAME,datas.get(position).getProductName());
@@ -214,37 +212,37 @@ public class HomeFragment extends BaseFragment {
                 plvHotCredit.onPullUpRefreshComplete();
                 plvHotCredit.onPullDownRefreshComplete();
 
-                JSONObject object  =new JSONObject(result);
+                JSONObject object = new JSONObject(result);
                 JSONArray data = object.getJSONArray("data");
-                Gson gson =new Gson();
+                Gson gson = new Gson();
                 hotList = gson.fromJson(data.toString(), new TypeToken<List<HomeHotProductEntity>>() {
                 }.getType());
-                if (data==null){
+                if (data == null) {
                     loadingView.noContent();
                     return;
                 }
-                if (hotList==null||hotList.size()==0){
-                    if (Page==1) {
+                if (hotList == null || hotList.size() == 0) {
+                    if (Page == 1) {
                         loadingView.noContent();
-                    }else{
+                    } else {
                         plvHotCredit.setHasMoreData(false);
                     }
                     return;
                 }
-                if (Page==1){
+                if (Page == 1) {
                     datas.clear();
                 }
                 datas.addAll(hotList);
-                if (adapter==null) {
+                if (adapter == null) {
                     adapter = new HomeCreditAdapter(getContext(), hotList);
                     plvHotCredit.getRefreshableView().setAdapter(adapter);
-                }else{
+                } else {
                     adapter.setDatas(hotList);
                 }
             }
 
             @Override
-            public void onError(int status,String msg) {
+            public void onError(int status, String msg) {
                 plvHotCredit.onPullUpRefreshComplete();
                 plvHotCredit.onPullDownRefreshComplete();
                 loadingView.loadError();
@@ -270,23 +268,4 @@ public class HomeFragment extends BaseFragment {
         });
     }
 
-    /**
-     * 获取用户信息
-     */
-    private void getUserInfo() {
-
-        RequestManager.getCommManager().findUserInfo(new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) {
-                ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
-                user = rd.getData();
-
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-
-            }
-        });
-    }
 }

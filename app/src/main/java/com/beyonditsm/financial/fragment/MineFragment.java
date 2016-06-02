@@ -271,8 +271,7 @@ public class MineFragment extends BaseFragment {
 
             case R.id.rlVip://金蛛VIP
                 intent = new Intent(getActivity(), VipAct.class);
-                intent.putExtra("userInfo",user);
-                intent.putExtra("userLogin",ule);
+                intent.putExtra("user",ule);
                 getActivity().startActivity(intent);
                 break;
         }

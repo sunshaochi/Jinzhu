@@ -211,7 +211,7 @@
                     <ImageView
                         android:id="@+id/ivVip"
                         style="@style/iv_mine"
-                        android:src="@mipmap/ico_friend" />
+                        android:src="@mipmap/crown" />
 
                     <TextView
                         style="@style/tv_second_style"

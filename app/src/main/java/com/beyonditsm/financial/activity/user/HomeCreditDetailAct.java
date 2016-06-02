@@ -23,10 +23,12 @@ import com.beyonditsm.financial.activity.vip.VipAct;
 import com.beyonditsm.financial.entity.ProductInfo;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserEntity;
+import com.beyonditsm.financial.entity.UserLoginEntity;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.widget.DialogChooseMonth;
 import com.beyonditsm.financial.widget.MyAlertDialog;
@@ -119,6 +121,7 @@ public class HomeCreditDetailAct extends BaseActivity {
     private ProductInfo productEntity;
     private TextView tvOnePay;
     private UserEntity userInfo;
+    private UserLoginEntity ule;
 
 
     private void assignViews() {
@@ -199,8 +202,8 @@ public class HomeCreditDetailAct extends BaseActivity {
     public void init(Bundle savedInstanceState) {
         assignViews();
         initAnim();
+        getUserLoginInfo();
         String creditName = getIntent().getStringExtra(CREDIT_NAME);
-        userInfo = getIntent().getParcelableExtra("userInfo");
         setTopTitle(creditName);
         if (creditName.length() > 14) {
             tvTitle.setTextSize(14);
@@ -296,6 +299,7 @@ public class HomeCreditDetailAct extends BaseActivity {
      */
     @OnClick({R.id.rlRequire, R.id.rlMaterial, R.id.rlDetail, R.id.tvApplay, R.id.rlMonth, R.id.tvCal, R.id.etAmount,R.id.tvBuy})
     public void toClick(View v) {
+        Intent intent = null;
         switch (v.getId()) {
             //搜索
 //            case R.id.etAmount:
@@ -440,8 +444,13 @@ public class HomeCreditDetailAct extends BaseActivity {
                 break;
 
             case R.id.tvBuy://购买VIP
-                Intent intent = new Intent(HomeCreditDetailAct.this, VipAct.class);
-                intent.putExtra("userInfo",userInfo);
+                if (!TextUtils.isEmpty(SpUtils.getRoleName(getApplicationContext()))){
+                    intent = new Intent(HomeCreditDetailAct.this, VipAct.class);
+                    intent.putExtra("user", ule);
+                }else{
+                    intent = new Intent(HomeCreditDetailAct.this,LoginAct.class);
+                }
+
                 startActivity(intent);
                 break;
         }
@@ -528,8 +537,8 @@ public class HomeCreditDetailAct extends BaseActivity {
                         JSONObject jsonData = json.getJSONObject("data");
                         monthlyPayments = jsonData.getDouble("monthlyPayments") + "";
                         totalRath = jsonData.getDouble("totalRath") + "";
-                        tvTotal.setText( totalRath);
-                        tvMonthPay.setText( monthlyPayments);
+                        tvTotal.setText(totalRath);
+                        tvMonthPay.setText(monthlyPayments);
                     }
 
                     @Override
@@ -646,6 +655,24 @@ public class HomeCreditDetailAct extends BaseActivity {
             @Override
             public void onError(int status, String msg) {
                 loadView.loadError();
+            }
+        });
+    }
+
+    /**
+     * 获取用户的角色信息
+     */
+    private void getUserLoginInfo() {
+        RequestManager.getUserManager().findUserLoginInfo(new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                ResultData<UserLoginEntity> rd = (ResultData<UserLoginEntity>) GsonUtils.json(result, UserLoginEntity.class);
+                ule = rd.getData();
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
             }
         });
     }
