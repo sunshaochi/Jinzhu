@@ -647,19 +647,24 @@ public class UpdateAct extends BaseActivity {
     }
 
     //6.0系统（API23）下申请查看相册权限
-    private void findPhotoPermission(){
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS)!= PackageManager.PERMISSION_GRANTED){
-            //申请相册权限
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS}, PHOTO_REQUEST_CODE);
-        }
-    }
-    //6.0系统（API23）下检查并申请权限
     private void findCameraPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
             //申请相机权限
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST_CODE);
+        }else {
+            Crop.pickCameraImage(null, UpdateAct.this);
         }
     }
+    //6.0系统（API23）下检查并申请权限
+    private void findPhotoPermission(){
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS)!= PackageManager.PERMISSION_GRANTED){
+//            //申请相册权限
+//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS}, PHOTO_REQUEST_CODE);
+//        }else {
+        Crop.pickAlbumsImage(null, UpdateAct.this);
+//        }
+    }
+
     //6.0系统用户选择权限允许或者取消之后回调
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
