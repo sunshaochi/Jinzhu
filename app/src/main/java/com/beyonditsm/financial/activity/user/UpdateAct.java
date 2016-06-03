@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
@@ -34,7 +35,6 @@ import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyBitmapUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
-import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.view.crop.square.CameraUtils;
 import com.beyonditsm.financial.view.crop.square.Crop;
@@ -68,6 +68,7 @@ import io.rong.imlib.model.UserInfo;
  */
 public class UpdateAct extends BaseActivity {
 
+    public static final int PHOTO_REQUEST_CODE = 5;
     private UserEntity userInfo;//传过来的user信息
 
     private String path;// 图片全路径
@@ -216,7 +217,12 @@ public class UpdateAct extends BaseActivity {
                 dialog.builder().addSheetItem("拍照", null, new MySelfSheetDialog.OnSheetItemClickListener() {
                     @Override
                     public void onClick(int which) {
-                        Crop.pickCameraImage(null, UpdateAct.this);
+                        if (Build.VERSION.SDK_INT>=23){
+                            findCameraPermission();
+                        }else{
+                            Crop.pickCameraImage(null, UpdateAct.this);
+                        }
+
 //                        photoSaveName = String.valueOf(System.currentTimeMillis()) + ".png";
 //                        Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 //                        imageUri = Uri.fromFile(new File(photoSavePath, photoSaveName));
@@ -227,12 +233,18 @@ public class UpdateAct extends BaseActivity {
                 }).addSheetItem("从相册选取", null, new MySelfSheetDialog.OnSheetItemClickListener() {
                     @Override
                     public void onClick(int which) {
-                        Crop.pickAlbumsImage(null, UpdateAct.this);
+                        if (Build.VERSION.SDK_INT>=23){
+                            findPhotoPermission();
+                        }else{
+                            Crop.pickAlbumsImage(null, UpdateAct.this);
+                        }
+
 //                        Intent openAlbumIntent = new Intent(Intent.ACTION_GET_CONTENT);
 //                        openAlbumIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
 //                        startActivityForResult(openAlbumIntent, PHOTOZOOM);
                     }
                 }).show();
+
                 break;
             case R.id.rlName://真实姓名
                 intent = new Intent(this, EditAct.class);
@@ -634,6 +646,13 @@ public class UpdateAct extends BaseActivity {
         }
     }
 
+    //6.0系统（API23）下申请查看相册权限
+    private void findPhotoPermission(){
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS)!= PackageManager.PERMISSION_GRANTED){
+            //申请相册权限
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS}, PHOTO_REQUEST_CODE);
+        }
+    }
     //6.0系统（API23）下检查并申请权限
     private void findCameraPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
@@ -651,7 +670,19 @@ public class UpdateAct extends BaseActivity {
         if (requestCode==CAMERA_REQUEST_CODE){
             if (grantResults[0]==PackageManager.PERMISSION_GRANTED){//权限授予
                 isGetPermission = true;
-                SpUtils.setISpermission(getApplicationContext(), isGetPermission);
+//                SpUtils.setISpermission(getApplicationContext(), isGetPermission);
+                Crop.pickCameraImage(null, UpdateAct.this);
+                MyLogUtils.info("是否获取到权限："+isGetPermission);
+            }else{//权限否认
+                isGetPermission = false;
+                MyLogUtils.info("是否获取到权限："+isGetPermission);
+                MyToastUtils.showShortToast(getApplicationContext(),"没有权限");
+            }
+        }else if (requestCode==  PHOTO_REQUEST_CODE){
+            if (grantResults[0]==PackageManager.PERMISSION_GRANTED){//权限授予
+                isGetPermission = true;
+//                SpUtils.setISpermission(getApplicationContext(), isGetPermission);
+                Crop.pickAlbumsImage(null, UpdateAct.this);
                 MyLogUtils.info("是否获取到权限："+isGetPermission);
             }else{//权限否认
                 isGetPermission = false;
@@ -660,4 +691,6 @@ public class UpdateAct extends BaseActivity {
             }
         }
     }
+
+
 }
