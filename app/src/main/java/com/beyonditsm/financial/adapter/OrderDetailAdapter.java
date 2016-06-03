@@ -127,6 +127,9 @@ public class OrderDetailAdapter extends BaseAdapter implements View.OnClickListe
                 holder.ivConnection.setTag(position);
                 holder.ivConnection.setOnClickListener(this);
             }
+            if (!"CREDIT_MANAGER_PASS".equals(ode.getOrderFlowStatus())&&!"CREDITMANAGER_CATCH_ORDER".equals(ode.getOrderFlowStatus())&&!"CREDIT_MANAGER_SUPPLEMENT".equals(ode.getOrderFlowStatus())){
+                holder.ivConnection.setVisibility(View.GONE);
+            }
             if ("ORDER_AUTO_RELEASE".equals(ode.getOrderFlowStatus())) {//订单处理超时
                 holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_failed);
             }
@@ -144,6 +147,9 @@ public class OrderDetailAdapter extends BaseAdapter implements View.OnClickListe
             }
             if ("DATA_REJECT_UPDATA".equals(ode.getOrderFlowStatus())){//资料驳回
                 holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_failed);
+            }
+            if (!"DATA_REJECT_UPDATA".equals(ode.getOrderFlowStatus())&&!"CUSTOMER_CANCEL_ORDER".equals(ode.getOrderFlowStatus())&&!"ORG_REJECT".equals(ode.getOrderFlowStatus())&&!"ORDER_AUTO_RELEASE".equals(ode.getOrderFlowStatus())){
+                holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_f);
             }
         }
         return convertView;
