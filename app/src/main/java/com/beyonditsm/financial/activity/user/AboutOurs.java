@@ -24,8 +24,12 @@ public class AboutOurs extends BaseActivity {
         setContentView(R.layout.act_clausejinzhu);
     }
 
+    public void play(){
+
+    }
     @Override
     public void init(Bundle savedInstanceState) {
+        play();
         setTopTitle("关于我们");
         setLeftTv("返回");
         //如果访问的页面中有javascript，则webview必须设置支持javascript
