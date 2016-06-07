@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "com.beyonditsm.financial"
         minSdkVersion 14
-        targetSdkVersion 23
+        targetSdkVersion 22
         versionCode 12
         versionName "v1.0.11"
         multiDexEnabled true
@@ -58,10 +58,9 @@ android {
     }
 }
 dependencies {
-    provided fileTree(dir: 'libs', include: ['*.jar'])
+    provided fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.1.0'
     compile project(':IMKit')
-    compile 'com.squareup.picasso:picasso:2.4.0'
     compile files('libs/SmartAndroid2.0.jar')
     compile files('libs/AndroidCodeGenerator.jar')
     compile files('libs/togglebuttonlib.jar')
@@ -81,4 +80,19 @@ dependencies {
     compile files('libs/Volley.jar')
     compile files('libs/xUtils-2.4.7.jar')
     compile files('libs/jpush-android-2.1.0.jar')
+    compile files('libs/picasso-2.4.0.jar')
+    compile files('libs/layoutlib-api-23.1.0.jar')
+    compile files('libs/tncrash.jar')
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.1.0'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
 }

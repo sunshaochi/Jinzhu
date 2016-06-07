@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.beyonditsm.financial.R;
 import com.lidroid.xutils.ViewUtils;
 import com.tandong.sa.activity.SmartFragmentActivity;
+import com.testin.agent.TestinAgent;
+import com.testin.agent.TestinAgentConfig;
 import com.umeng.analytics.MobclickAgent;
 
 import cn.jpush.android.api.JPushInterface;
@@ -44,6 +46,8 @@ public abstract class BaseActivity extends SmartFragmentActivity{
 //        MyLogUtils.info(getDeviceInfo(getApplicationContext()));
 //        immersed = new NotificationImmersed(this);
     }
+
+
 
     /**
      * 设置布局

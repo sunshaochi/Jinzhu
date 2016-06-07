@@ -3,6 +3,8 @@ package com.beyonditsm.financial;
 import android.app.Activity;
 import android.content.Context;
 
+import com.testin.agent.TestinAgent;
+
 import java.util.Stack;
 
 /**
@@ -93,11 +95,12 @@ public class AppManager {
 		try {
 			finishAllActivity();
 			android.os.Process.killProcess(android.os.Process.myPid());
+
 //			ActivityManager activityMgr= (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
 //			activityMgr.restartPackage(context.getPackageName());
 //			System.exit(0);
-		} catch (Exception e) {	
-			
+		} catch (Exception e) {
+
 		}
 	}
 }

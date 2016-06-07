@@ -61,7 +61,7 @@ import io.rong.imlib.model.UserInfo;
 /**
  * 主页面
  */
-public class MainActivity extends BaseActivity{
+public class MainActivity extends BaseActivity {
 
     private ImageView ivMyCredit;//我的信用
     private TextView tvMyCredit;
@@ -140,9 +140,9 @@ public class MainActivity extends BaseActivity{
 
 
         String orderId = SpUtils.getOrderId(MyApplication.getInstance());
-        if ("".equals(orderId)){
+        if ("".equals(orderId)) {
             ivRedPoint.setVisibility(View.GONE);
-        }else{
+        } else {
             ivRedPoint.setVisibility(View.VISIBLE);
         }
         manager = getSupportFragmentManager();
@@ -165,7 +165,7 @@ public class MainActivity extends BaseActivity{
         }
 
 //        if(NetUtil.isWifiConnection(getApplicationContext())){
-            gUtils.toVersion(MainActivity.this, FinancialUtil.getAppVer(MainActivity.this),1);
+        gUtils.toVersion(MainActivity.this, FinancialUtil.getAppVer(MainActivity.this), 1);
 //        }
 
     }
@@ -297,11 +297,13 @@ public class MainActivity extends BaseActivity{
                 break;
             //添加通讯录好友
             case R.id.add_friend:
-                if (Build.VERSION.SDK_INT>=23){
+                if (Build.VERSION.SDK_INT >= 23) {
                     findContactsPermission();
-                }else{
+                } else if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
                     Intent intent = new Intent(MainActivity.this, AddressBookAct.class);
                     startActivity(intent);
+                } else {
+                    MyToastUtils.showShortToast(getApplicationContext(), "请在设置中勾选应用的通讯录权限");
                 }
 
                 break;
@@ -328,9 +330,12 @@ public class MainActivity extends BaseActivity{
 
     //6.0系统（API23）下检查并申请权限
     private void findContactsPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)!= PackageManager.PERMISSION_GRANTED){
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
             //申请读取联系人权限
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_CONTACTS},READ_CONTACTS_REQUEST_CODE);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS}, READ_CONTACTS_REQUEST_CODE);
+        } else {
+            Intent intent = new Intent(MainActivity.this, AddressBookAct.class);
+            startActivity(intent);
         }
     }
 
@@ -338,16 +343,16 @@ public class MainActivity extends BaseActivity{
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        doNext(requestCode,grantResults);
+        doNext(requestCode, grantResults);
     }
 
-    private void doNext(int requestCode,int[] grantResults) {
-        if (requestCode==READ_CONTACTS_REQUEST_CODE){
-            if (grantResults[0]==PackageManager.PERMISSION_GRANTED){//权限授予
+    private void doNext(int requestCode, int[] grantResults) {
+        if (requestCode == READ_CONTACTS_REQUEST_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {//权限授予
                 Intent intent = new Intent(MainActivity.this, AddressBookAct.class);
                 startActivity(intent);
-            }else{//权限否认
-                MyToastUtils.showShortToast(getApplicationContext(),"没有权限");
+            } else {//权限否认
+                MyToastUtils.showShortToast(getApplicationContext(), "没有权限");
             }
         }
     }
@@ -447,7 +452,7 @@ public class MainActivity extends BaseActivity{
                 main_title.setVisibility(View.VISIBLE);
                 if (friendFgt == null) {
                     friendFgt = new FriendFrg();
-                    transaction.add(R.id.main_frame, friendFgt,"common");
+                    transaction.add(R.id.main_frame, friendFgt, "common");
                 } else {
                     transaction.show(friendFgt);
                 }
@@ -509,7 +514,7 @@ public class MainActivity extends BaseActivity{
             Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
             touchTime = currentTime;
         } else {
-            if(RongIM.getInstance()!=null)
+            if (RongIM.getInstance() != null)
                 RongIM.getInstance().disconnect();
 //            finish();
             try {
@@ -547,14 +552,14 @@ public class MainActivity extends BaseActivity{
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(UPDATATAB);
         this.registerReceiver(myReceiver, intentFilter);
-        if (displayRedReceiver==null){
+        if (displayRedReceiver == null) {
             displayRedReceiver = new DisplayRedPointReceiver();
         }
-        if (hideRedPointReceiver==null) {
+        if (hideRedPointReceiver == null) {
             hideRedPointReceiver = new HideRedPointReceiver();
         }
-        registerReceiver(hideRedPointReceiver,new IntentFilter(HIDE_REDPOINT));
-        registerReceiver(displayRedReceiver,new IntentFilter(DISPLAY_REDPOINT));
+        registerReceiver(hideRedPointReceiver, new IntentFilter(HIDE_REDPOINT));
+        registerReceiver(displayRedReceiver, new IntentFilter(DISPLAY_REDPOINT));
         super.onStart();
     }
 
@@ -563,10 +568,10 @@ public class MainActivity extends BaseActivity{
         EventBus.getDefault().unregister(this);
         this.unregisterReceiver(myReceiver);
         myReceiver = null;
-        if (displayRedReceiver!=null){
+        if (displayRedReceiver != null) {
             unregisterReceiver(displayRedReceiver);
         }
-        if (hideRedPointReceiver!=null){
+        if (hideRedPointReceiver != null) {
             unregisterReceiver(hideRedPointReceiver);
         }
         super.onDestroy();
@@ -599,8 +604,10 @@ public class MainActivity extends BaseActivity{
 
         }
     }
+
     public static final String DISPLAY_REDPOINT = "com.push.message";
-    private class DisplayRedPointReceiver extends BroadcastReceiver{
+
+    private class DisplayRedPointReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -610,7 +617,8 @@ public class MainActivity extends BaseActivity{
     }
 
     public static final String HIDE_REDPOINT = "com.hide.redpoint";
-    private class HideRedPointReceiver extends BroadcastReceiver{
+
+    private class HideRedPointReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
