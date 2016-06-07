@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.activity.credit;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,8 +11,10 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.MyApplication;
@@ -31,6 +34,7 @@ import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.widget.DialogHint;
 import com.beyonditsm.financial.widget.MyAlertDialog;
+import com.lidroid.xutils.util.LogUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.tandong.sa.eventbus.EventBus;
 
@@ -54,21 +58,31 @@ public class MyCreditDAct extends BaseActivity {
     private ImageView ivStatusRedPoint;
     @ViewInject(R.id.iv_detailRedPoint)
     private ImageView ivDetailRedPoint;
-
+    @ViewInject(R.id.credit_page_bg)
+    private ImageView credit_page_bg;
+    @ViewInject(R.id.credit_frame)
+    private RelativeLayout creditFrame;
+    @ViewInject(R.id.credit_button_frame)
+    private LinearLayout creditButtonFrame;
     private ImageView[] imageArras;
     private TextView[] textArras;
     private LinearLayout[] linearArras;
     private MyCreditBean.RowsEntity rowe;
     private int position;
 
-
+    private int screenWidth;
     @Override
     public void setLayout() {
         setContentView(R.layout.mycredit_detail);
+        WindowManager wm = (WindowManager)
+                getSystemService(Context.WINDOW_SERVICE);
+
+        screenWidth = wm.getDefaultDisplay().getWidth();
     }
 
     @Override
     public void init(Bundle savedInstanceState) {
+
         EventBus.getDefault().register(this);
         setLeftTv("返回");
         setTopTitle("贷款详情");
@@ -99,6 +113,7 @@ public class MyCreditDAct extends BaseActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
+
         String orderId = SpUtils.getOrderId(MyApplication.getInstance());
         MyLogUtils.info("重新获取到已保存的orderID+" + orderId);
         if (!TextUtils.isEmpty(orderId)) {
@@ -111,6 +126,10 @@ public class MyCreditDAct extends BaseActivity {
             ivDetailRedPoint.setVisibility(View.INVISIBLE);
             ivStatusRedPoint.setVisibility(View.INVISIBLE);
         }
+    }
+
+    private void setBGHeight() {
+//        creditButtonFrame.setPadding(0,0,0,(screenWidth/750 )*130);
     }
 
     @Override
@@ -141,34 +160,34 @@ public class MyCreditDAct extends BaseActivity {
                 setRightBtn("取消订单", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        RequestManager.getUserManager().cancelOrder(rowe.getId(), new RequestManager.CallBack() {
+                            @Override
+                            public void onSucess(String result) throws JSONException {
+
+                                JSONObject object = new JSONObject(result);
+                                int status = object.getInt("status");
+                                String message = object.getString("message");
+                                if (status == 200) {
+                                    MyToastUtils.showShortToast(MyCreditDAct.this, message);
+                                    Intent intent = new Intent(MyCreditAct.CREDIT_RECEIVER);
+                                    intent.putExtra("position", position);
+                                    sendBroadcast(intent);
+//                                            SpUtils.clearOrderId(MyApplication.getInstance());
+//                                            sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
+//                                            sendBroadcast(new Intent(MineFragment.HIDE_POINT));
+                                    finish();
+                                }
+                            }
+
+                            @Override
+                            public void onError(int status, String msg) {
+                                MyToastUtils.showShortToast(MyCreditDAct.this, msg);
+                            }
+                        });
                         MyAlertDialog dialog = new MyAlertDialog(MyCreditDAct.this);
                         dialog.builder().setTitle("提示").setMsg("确认取消订单？").setPositiveButton("确定", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                RequestManager.getUserManager().cancelOrder(rowe.getId(), new RequestManager.CallBack() {
-                                    @Override
-                                    public void onSucess(String result) throws JSONException {
-
-                                        JSONObject object = new JSONObject(result);
-                                        int status = object.getInt("status");
-                                        String message = object.getString("message");
-                                        if (status == 200) {
-                                            MyToastUtils.showShortToast(MyCreditDAct.this, message);
-                                            Intent intent = new Intent(MyCreditAct.CREDIT_RECEIVER);
-                                            intent.putExtra("position", position);
-                                            sendBroadcast(intent);
-//                                            SpUtils.clearOrderId(MyApplication.getInstance());
-//                                            sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
-//                                            sendBroadcast(new Intent(MineFragment.HIDE_POINT));
-                                            finish();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onError(int status, String msg) {
-                                        MyToastUtils.showShortToast(MyCreditDAct.this, msg);
-                                    }
-                                });
                             }
                         }).setNegativeButton("取消", null).show();
 

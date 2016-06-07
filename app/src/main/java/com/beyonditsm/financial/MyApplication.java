@@ -14,6 +14,8 @@ import com.tandong.sa.zUImageLoader.cache.disc.naming.Md5FileNameGenerator;
 import com.tandong.sa.zUImageLoader.core.ImageLoader;
 import com.tandong.sa.zUImageLoader.core.ImageLoaderConfiguration;
 import com.tandong.sa.zUImageLoader.core.assist.QueueProcessingType;
+import com.testin.agent.TestinAgent;
+import com.testin.agent.TestinAgentConfig;
 
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
@@ -65,6 +67,23 @@ public class MyApplication extends Application {
         JPushInterface.setDebugMode(false);    // 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);            // 初始化 JPush
         initImageLoader(this);
+        initTestIn();
+    }
+
+    private void initTestIn() {
+
+            TestinAgentConfig config =  new  TestinAgentConfig.Builder(getApplicationContext())
+                    .withAppKey("a50d2b5acb4bdaff30006cc017a6a991")             // Appkey of your appliation, required
+                    .withAppChannel("")         // Channel of your application
+                    .withDebugModel( true )        // Output the crash log in local if you open debug mode
+                    .withErrorActivity( true )     // Output the activity info in crash or error log
+                    .withCollectNDKCrash( true )   // Collect NDK crash or not if you use our NDK
+                    .withOpenCrash( true )         // Monitor crash if true
+                    .withReportOnlyWifi( true )    // Report data only on wifi mode
+                    .withReportOnBack( true )      // allow to report data when application in background
+                    .build();
+            TestinAgent.init(config);
+
     }
 
     public boolean isDownload() {

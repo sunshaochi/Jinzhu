@@ -31,6 +31,7 @@ import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.AutoAnimImageView;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.eventbus.EventBus;
+import com.testin.agent.TestinAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -214,12 +215,13 @@ public class LoginAct extends BaseActivity{
      *
      * @param ue
      */
-    private void toLogin(UserEntity ue) {
+    private void toLogin(final UserEntity ue) {
         RequestManager.getCommManager().toLogin(ue, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
 
                 try {
+                    TestinAgent.setUserInfo(ue.getUserName()+"");
                     JSONObject objects = new JSONObject(result);
                     JSONObject datas = objects.getJSONObject("data");
                     String token = datas.optString("rcToken");
