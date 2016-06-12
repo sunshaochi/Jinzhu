@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -59,7 +61,16 @@ public class SettingAct extends BaseActivity {
     private boolean isUploading = false;
     private boolean isFirstClick = false;
     private String totalCacheSize;
-
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 1){
+                tvCacheSize.setText(totalCacheSize);
+                MyToastUtils.showShortToast(getApplicationContext(),"缓存清理完毕");
+            }
+        }
+    };
     @Override
     public void setLayout() {
         setContentView(R.layout.activity_set);
@@ -219,7 +230,21 @@ public class SettingAct extends BaseActivity {
                         @Override
                         public void onClick(int which) {
 //                        pbClearCache.setVisibility(View.VISIBLE);
-                            ClearCache();
+                            new Thread(){
+                                @Override
+                                public void run() {
+                                    super.run();
+                                    ClearCache();
+                                    try {
+                                        totalCacheSize = FinancialUtil.getTotalCacheSize(getApplicationContext());
+                                        handler.sendEmptyMessage(1);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                            }.start();
+
                         }
                     }).show();
                 }else{
@@ -234,13 +259,7 @@ public class SettingAct extends BaseActivity {
 
     private void ClearCache() {
         FinancialUtil.clearAllCache(getApplicationContext());
-        try {
-            totalCacheSize = FinancialUtil.getTotalCacheSize(getApplicationContext());
-            tvCacheSize.setText(totalCacheSize);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        MyToastUtils.showShortToast(SettingAct.this, "已清除缓存");
+
     }
 
 
