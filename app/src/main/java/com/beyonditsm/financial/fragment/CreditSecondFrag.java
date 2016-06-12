@@ -752,45 +752,51 @@ public class CreditSecondFrag extends BaseFragment {
     private void toSubmitOrder(){
         OrderBean orderBean = new OrderBean();
         orderBean.setProductId(productInfo.getProductId());
-        orderBean.setTotalAmount(Double.parseDouble(HomeCreditDetailAct.creditMoney) * 10000 + "");//总金额
-        orderBean.setTotalPeriods(HomeCreditDetailAct.creditMonth);//总期数
-        orderBean.setPeriodsAmount(HomeCreditDetailAct.monthlyPayments);//单期还款金额
-        if (orderBean != null){
-            RequestManager.getCommManager().submitOrder(orderBean, new RequestManager.CallBack() {
-                @Override
-                public void onSucess(String result) {
-                    llSucess.setVisibility(View.VISIBLE);
-                    criSv.setVisibility(View.GONE);
-                    try {
-                        JSONObject jsonObject=new JSONObject(result);
-                        reOrderId=jsonObject.getString("data");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            while (i>0){
-                                try {
-                                    Thread.sleep(1000);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                                i--;
-                                handler.sendEmptyMessage(i);
-
-                            }
+        if (null == HomeCreditDetailAct.creditMoney){
+            MyToastUtils.showShortToast(getContext(),"网络不给力，请返回重新提交");
+        }else {
+            orderBean.setTotalAmount(Double.parseDouble(HomeCreditDetailAct.creditMoney) * 10000 + "");//总金额
+            orderBean.setTotalPeriods(HomeCreditDetailAct.creditMonth);//总期数
+            orderBean.setPeriodsAmount(HomeCreditDetailAct.monthlyPayments);//单期还款金额
+            if (orderBean != null){
+                RequestManager.getCommManager().submitOrder(orderBean, new RequestManager.CallBack() {
+                    @Override
+                    public void onSucess(String result) {
+                        llSucess.setVisibility(View.VISIBLE);
+                        criSv.setVisibility(View.GONE);
+                        try {
+                            JSONObject jsonObject=new JSONObject(result);
+                            reOrderId=jsonObject.getString("data");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    }).start();
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                while (i>0){
+                                    try {
+                                        Thread.sleep(1000);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                    i--;
+                                    handler.sendEmptyMessage(i);
 
-                }
+                                }
+                            }
+                        }).start();
 
-                @Override
-                public void onError(int status, String msg) {
-                    MyToastUtils.showShortToast(context, msg);
-                }
-            });
+                    }
+
+                    @Override
+                    public void onError(int status, String msg) {
+                        MyToastUtils.showShortToast(context, msg);
+                    }
+                });
+            }
         }
+
+
     }
     /**
      * 倒计时
