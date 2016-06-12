@@ -135,7 +135,7 @@ public class ServiceEditAct extends BaseActivity {
 
             case 4:////
                 setTopTitle("收款银行");
-                etM.setText("请输入收款银行");
+                etM.setHint("请输入收款银行");
                 if (!TextUtils.isEmpty(userInfo.getBankNameTitle())) {
                     etM.setText(userInfo.getBankNameTitle());
                 }

@@ -247,30 +247,35 @@ public class CreditUploadAct extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != RESULT_OK) {
-            return;
+        try {
+            if (resultCode != RESULT_OK) {
+                return;
+            }
+            Uri uri = null;
+            switch (requestCode) {
+                case PHOTOZOOM:// 相册
+                    if (data == null) {
+                        return;
+                    }
+                    uri = data.getData();
+                    Bitmap userbitmap = MyBitmapUtils.decodeUriAsBitmap(CreditUploadAct.this, uri);
+                    if (null != userbitmap){
+                        Bitmap compressB = MyBitmapUtils.zoomImgKeepWH(userbitmap, 100, 100, true);
+                        MyBitmapUtils.saveBitmap(compressB, "upload/cache/credit_upload.png");
+                    }
+                    break;
+                case PHOTOTAKE:// 拍照
+                    path = photoSavePath + photoSaveName;
+                    MyBitmapUtils.saveBitmap(MyBitmapUtils.LoadBigImg(path, 100, 100), "upload/cache/credit_upload.png");
+                    break;
+            }
+            path = Environment.getExternalStorageDirectory() + "/upload/cache/credit_upload.png";
+            uploadFile(path);
+            super.onActivityResult(requestCode, resultCode, data);
+        }catch (NullPointerException e){
+            e.printStackTrace();
         }
-        Uri uri = null;
-        switch (requestCode) {
-            case PHOTOZOOM:// 相册
-                if (data == null) {
-                    return;
-                }
-                uri = data.getData();
-                Bitmap userbitmap = MyBitmapUtils.decodeUriAsBitmap(CreditUploadAct.this, uri);
-                if (null != userbitmap){
-                    Bitmap compressB = MyBitmapUtils.zoomImgKeepWH(userbitmap, 100, 100, true);
-                    MyBitmapUtils.saveBitmap(compressB, "upload/cache/credit_upload.png");
-                }
-                break;
-            case PHOTOTAKE:// 拍照
-                path = photoSavePath + photoSaveName;
-                MyBitmapUtils.saveBitmap(MyBitmapUtils.LoadBigImg(path, 100, 100), "upload/cache/credit_upload.png");
-                break;
-        }
-        path = Environment.getExternalStorageDirectory() + "/upload/cache/credit_upload.png";
-        uploadFile(path);
-        super.onActivityResult(requestCode, resultCode, data);
+
     }
 
     /**

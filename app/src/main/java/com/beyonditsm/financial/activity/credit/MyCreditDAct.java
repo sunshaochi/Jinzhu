@@ -122,9 +122,6 @@ public class MyCreditDAct extends BaseActivity {
         }
     }
 
-    private void setBGHeight() {
-//        creditButtonFrame.setPadding(0,0,0,(screenWidth/750 )*130);
-    }
 
     @Override
     protected void onDestroy() {
