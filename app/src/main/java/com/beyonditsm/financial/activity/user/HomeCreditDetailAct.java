@@ -275,16 +275,19 @@ public class HomeCreditDetailAct extends BaseActivity {
                 if (!TextUtils.isEmpty(etAmount.getText().toString().trim())) {
                     creditMoney = etAmount.getText().toString().trim();
                 }
-                final double minVal = Double.valueOf(productEntity.getMinVal());
-                double maxVal = Double.valueOf(productEntity.getMaxVal());
-                double curVal = Double.valueOf(creditMoney.toString()) * 10000;
-                if (TextUtils.isEmpty(creditMonth)) {
-                    double minTimeVal = Double.valueOf(productEntity.getTimeMinVal());
-                    creditMonth = minTimeVal + "";
-                } else {
-                    creditMonth = tvM.getText().toString();
+                if (null!=productEntity.getMinVal() && null != productEntity.getMinVal()){
+                    final double minVal = Double.valueOf(productEntity.getMinVal());
+                    double maxVal = Double.valueOf(productEntity.getMaxVal());
+                    double curVal = Double.valueOf(creditMoney.toString()) * 10000;
+                    if (TextUtils.isEmpty(creditMonth)) {
+                        double minTimeVal = Double.valueOf(productEntity.getTimeMinVal());
+                        creditMonth = minTimeVal + "";
+                    } else {
+                        creditMonth = tvM.getText().toString();
+                    }
+                    validateCredit(minVal, maxVal, curVal, creditMonth);
                 }
-                validateCredit(minVal, maxVal, curVal, creditMonth);
+
             } else if (s.toString().startsWith(".")) {
                 Toast.makeText(HomeCreditDetailAct.this, "不能以小数点开头", Toast.LENGTH_SHORT).show();
                 etAmount.setText("");

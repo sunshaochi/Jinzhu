@@ -16,6 +16,15 @@ import java.util.List;
 public class ParamsUtil {
 
     public static ParamsUtil util;
+    private boolean walletEnter = false;
+
+    public boolean isWalletEnter() {
+        return walletEnter;
+    }
+
+    public void setWalletEnter(boolean walletEnter) {
+        this.walletEnter = walletEnter;
+    }
 
     public static ParamsUtil getInstance() {
         if (util == null)

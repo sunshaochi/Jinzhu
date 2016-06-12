@@ -23,6 +23,7 @@ import com.beyonditsm.financial.fragment.ServiceMineFrg;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.GsonUtils;
+import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.widget.ScaleAllImageView;
@@ -80,6 +81,7 @@ public class MyWalletActivity extends BaseActivity {
 
     @Override
     public void init(Bundle savedInstanceState) {
+        ParamsUtil.getInstance().setWalletEnter(false);
         setLeftTv("返回");
         setTopTitle("我的钱包");
         ule = getIntent().getParcelableExtra("userLogin");

@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
+import com.beyonditsm.financial.RongCloudEvent;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.servicer.ChangePwdAct;
 import com.beyonditsm.financial.util.FinancialUtil;
@@ -20,6 +21,7 @@ import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.widget.ToggleButton;
+import com.lidroid.xutils.util.LogUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
@@ -28,6 +30,7 @@ import java.io.File;
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.ipc.RongExceptionHandler;
 
 /**
  * 设置

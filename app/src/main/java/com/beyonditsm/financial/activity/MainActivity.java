@@ -297,9 +297,9 @@ public class MainActivity extends BaseActivity {
                 break;
             //添加通讯录好友
             case R.id.add_friend:
-                if (Build.VERSION.SDK_INT >= 23) {
-                    findContactsPermission();
-                } else if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+//                if (Build.VERSION.SDK_INT >= 23) {
+//                    findContactsPermission();
+                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
                     Intent intent = new Intent(MainActivity.this, AddressBookAct.class);
                     startActivity(intent);
                 } else {

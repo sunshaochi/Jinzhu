@@ -52,6 +52,8 @@ import java.util.Set;
 
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
+import cn.jpush.android.data.JPushLocalNotification;
+import cn.jpush.android.data.JPushView;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.UserInfo;
 
@@ -243,6 +245,7 @@ public class MineFragment extends BaseFragment {
 
                             }
                         });
+
                         JPushInterface.clearAllNotifications(getActivity());
 //                        FriendDao.deleteAllMes();
                         MessageDao.deleteAllMes();

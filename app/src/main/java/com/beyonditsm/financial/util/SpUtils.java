@@ -30,7 +30,6 @@ public class SpUtils {
     private static final String ISUPGRADE = "is_upgrade";
     private static final String ISRECEIVE ="is_receive";
     private static final String GETPERMISSION = "get_permission";
-
     public SpUtils(){
 
     }

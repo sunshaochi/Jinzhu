@@ -140,12 +140,16 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), HomeCreditDetailAct.class);
-                intent.putExtra(HomeCreditDetailAct.PRODUCTINFO, datas.get(position).getProductId());
+                if(datas.size()>position){
+                    intent.putExtra(HomeCreditDetailAct.PRODUCTINFO, datas.get(position).getProductId());
+                    intent.putExtra(HomeCreditDetailAct.CREDIT_NAME,datas.get(position).getProductName());
+                }
+
 //                intent.putExtra(HomeCreditDetailAct.CREDIT_MIN,ConstantValue.CREDIT_MIN_MONEY+"");
 //                intent.putExtra(HomeCreditDetailAct.CREDIT_TIME_MIN,ConstantValue.CREDIT_MIN_MONTH+"");
                 intent.putExtra(HomeCreditDetailAct.CREDIT_AMOUNT, ConstantValue.CREDIT_MONEY+"");
                 intent.putExtra(HomeCreditDetailAct.CREDIT_TIME,ConstantValue.CREDIT_MONTH+"");
-                intent.putExtra(HomeCreditDetailAct.CREDIT_NAME,datas.get(position).getProductName());
+
                 startActivity(intent);
             }
         });

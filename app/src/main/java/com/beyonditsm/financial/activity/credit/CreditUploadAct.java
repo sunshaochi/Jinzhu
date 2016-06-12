@@ -258,8 +258,10 @@ public class CreditUploadAct extends BaseActivity {
                 }
                 uri = data.getData();
                 Bitmap userbitmap = MyBitmapUtils.decodeUriAsBitmap(CreditUploadAct.this, uri);
-                Bitmap compressB = MyBitmapUtils.zoomImgKeepWH(userbitmap, 100, 100, true);
-                MyBitmapUtils.saveBitmap(compressB, "upload/cache/credit_upload.png");
+                if (null != userbitmap){
+                    Bitmap compressB = MyBitmapUtils.zoomImgKeepWH(userbitmap, 100, 100, true);
+                    MyBitmapUtils.saveBitmap(compressB, "upload/cache/credit_upload.png");
+                }
                 break;
             case PHOTOTAKE:// 拍照
                 path = photoSavePath + photoSaveName;
@@ -418,9 +420,10 @@ public class CreditUploadAct extends BaseActivity {
             this.list = list;
             this.uItemId = uItemId;
             this.limit = limit;
-            if (Build.VERSION.SDK_INT>=23){
-                findCameraPermission();
-            }
+            /*暂时取消SDK23以后的动态获取权限*/
+//            if (Build.VERSION.SDK_INT>=23){
+//                findCameraPermission();
+//            }
 
         }
 

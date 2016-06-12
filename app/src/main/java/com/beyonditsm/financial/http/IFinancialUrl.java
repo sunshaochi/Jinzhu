@@ -6,7 +6,8 @@ package com.beyonditsm.financial.http;
  * Created by wangbin on 15/11/18.
  */
 public interface IFinancialUrl {
-
+    /*吕东测试*/
+//    String BASE_URL = "http://172.16.6.216";
     /*验收环境地址*/
 //    String BASE_URL = "http://139.196.111.82:5018";
         /*验收环境游戏地址*/

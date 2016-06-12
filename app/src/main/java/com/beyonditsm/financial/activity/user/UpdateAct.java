@@ -218,12 +218,17 @@ public class UpdateAct extends BaseActivity {
                 dialog.builder().addSheetItem("拍照", null, new MySelfSheetDialog.OnSheetItemClickListener() {
                     @Override
                     public void onClick(int which) {
-                        if (Build.VERSION.SDK_INT>=23){
-                            findCameraPermission();
-                        }else{
+                        /*暂时取消6.0的动态获取权限*/
+//                        if (Build.VERSION.SDK_INT>=23){
+//                            findCameraPermission();
+//                        }else{
+//                            Crop.pickCameraImage(null, UpdateAct.this);
+//                        }
+                        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
                             Crop.pickCameraImage(null, UpdateAct.this);
+                        } else {
+                            MyToastUtils.showShortToast(getApplicationContext(), "请在设置中勾选应用的相机权限");
                         }
-
 //                        photoSaveName = String.valueOf(System.currentTimeMillis()) + ".png";
 //                        Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 //                        imageUri = Uri.fromFile(new File(photoSavePath, photoSaveName));
@@ -234,11 +239,12 @@ public class UpdateAct extends BaseActivity {
                 }).addSheetItem("从相册选取", null, new MySelfSheetDialog.OnSheetItemClickListener() {
                     @Override
                     public void onClick(int which) {
-                        if (Build.VERSION.SDK_INT>=23){
-                            findPhotoPermission();
-                        }else{
+                        /*暂时取消动态获取权限*/
+//                        if (Build.VERSION.SDK_INT>=23){
+//                            findPhotoPermission();
+//                        }else{
                             Crop.pickAlbumsImage(null, UpdateAct.this);
-                        }
+//                        }
 
 //                        Intent openAlbumIntent = new Intent(Intent.ACTION_GET_CONTENT);
 //                        openAlbumIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");

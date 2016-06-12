@@ -58,12 +58,6 @@ public class MyCreditDAct extends BaseActivity {
     private ImageView ivStatusRedPoint;
     @ViewInject(R.id.iv_detailRedPoint)
     private ImageView ivDetailRedPoint;
-    @ViewInject(R.id.credit_page_bg)
-    private ImageView credit_page_bg;
-    @ViewInject(R.id.credit_frame)
-    private RelativeLayout creditFrame;
-    @ViewInject(R.id.credit_button_frame)
-    private LinearLayout creditButtonFrame;
     private ImageView[] imageArras;
     private TextView[] textArras;
     private LinearLayout[] linearArras;
