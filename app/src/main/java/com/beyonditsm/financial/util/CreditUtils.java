@@ -11,6 +11,7 @@ public class CreditUtils {
      * @param monthRate 月利率
      * @return 利息
      */
+
     public static String calculateCredit(double total,double monthRate,double creditTime){
         java.text.DecimalFormat   df   =new   java.text.DecimalFormat("#.00");
         String credit= df.format(total * monthRate * creditTime);

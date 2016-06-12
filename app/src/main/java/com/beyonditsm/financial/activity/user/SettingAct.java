@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -50,16 +52,25 @@ public class SettingAct extends BaseActivity {
     @ViewInject(R.id.pb_clearCache)
     private ProgressBar pbClearCache;
 
-
+    private Thread tbSleepOption;
     private GeneralUtils gUtils;
-    //    private UserEntity userInfo;
+        //    private UserEntity userInfo;
     public static final String ISLOADING = "com.settingAct.isloading";
     private static final String APP_CACAHE_DIRNAME = "/gamecache";
     private boolean isStart = false;
     private boolean isUploading = false;
     private boolean isFirstClick = false;
     private String totalCacheSize;
-
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 1){
+                tvCacheSize.setText(totalCacheSize);
+                MyToastUtils.showShortToast(getApplicationContext(),"缓存清理完毕");
+            }
+        }
+    };
     @Override
     public void setLayout() {
         setContentView(R.layout.activity_set);
@@ -67,15 +78,13 @@ public class SettingAct extends BaseActivity {
 
     @Override
     public void init(Bundle savedInstanceState) {
+        try {
         setLeftTv("返回");
         setTopTitle("设置");
         gUtils = new GeneralUtils();
-        try {
             totalCacheSize = FinancialUtil.getTotalCacheSize(getApplicationContext());
             tvCacheSize.setText(totalCacheSize);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
         tvVersion.setText(FinancialUtil.getAppVersion(this));
 //        userInfo=getIntent().getParcelableExtra("user_info");
         tb_msg.setIsSwitch(SpUtils.getMsg(SettingAct.this));
@@ -86,9 +95,16 @@ public class SettingAct extends BaseActivity {
                 //是否接受新消息
                 if (on) {
                     SpUtils.setMsg(getApplicationContext(), true);
-                    if (JPushInterface.isPushStopped(getApplicationContext()))
+
+                    if (JPushInterface.isPushStopped(getApplicationContext())){
                         JPushInterface.resumePush(getApplicationContext());
+                    }
+
                 } else {
+                    SpUtils.setMsg(getApplicationContext(), false);
+                    if (!JPushInterface.isPushStopped(getApplicationContext())){
+                        JPushInterface.stopPush(getApplicationContext());
+                    }
 
                 }
             }
@@ -98,43 +114,58 @@ public class SettingAct extends BaseActivity {
             public void onToggle(boolean on) {
                 //消息免打扰
                 if (on) {
-                    SpUtils.setSleep(SettingAct.this, true);
-                    JPushInterface.setSilenceTime(getApplicationContext(), 0, 0, 23, 59);
-                    if (null!=RongIM.getInstance()){
-                        RongIM.getInstance().getRongIMClient().setNotificationQuietHours("00:00:00", 1399, new RongIMClient.OperationCallback() {
-                            @Override
-                            public void onSuccess() {
+                    new Thread(){
+                        @Override
+                        public void run() {
+                            super.run();
+                            SpUtils.setSleep(SettingAct.this, true);
+                            JPushInterface.setSilenceTime(getApplicationContext(), 0, 0, 23, 59);
+                            if (null!=RongIM.getInstance()){
+                                RongIM.getInstance().getRongIMClient().setNotificationQuietHours("00:00:00", 1399, new RongIMClient.OperationCallback() {
+                                    @Override
+                                    public void onSuccess() {
 
+                                    }
+
+                                    @Override
+                                    public void onError(RongIMClient.ErrorCode errorCode) {
+
+                                    }
+                                });
                             }
-
-                            @Override
-                            public void onError(RongIMClient.ErrorCode errorCode) {
-
-                            }
-                        });
-                    }
-
+                        }
+                    }.start();
 
                 } else {
-                    SpUtils.setSleep(SettingAct.this, false);
-                    JPushInterface.setSilenceTime(getApplicationContext(), 0, 0, 0, 0);
-                    if (null!=RongIM.getInstance()){
-                        RongIM.getInstance().getRongIMClient().removeNotificationQuietHours(new RongIMClient.OperationCallback() {
-                            @Override
-                            public void onSuccess() {
+                   new Thread(){
+                        @Override
+                        public void run() {
+                            super.run();
+                            SpUtils.setSleep(SettingAct.this, false);
+                            JPushInterface.setSilenceTime(getApplicationContext(), 0, 0, 0, 0);
+                            if (null!=RongIM.getInstance()){
+                                RongIM.getInstance().getRongIMClient().removeNotificationQuietHours(new RongIMClient.OperationCallback() {
+                                    @Override
+                                    public void onSuccess() {
 
+                                    }
+
+                                    @Override
+                                    public void onError(RongIMClient.ErrorCode errorCode) {
+
+                                    }
+                                });
                             }
+                        }
+                    }.start();
 
-                            @Override
-                            public void onError(RongIMClient.ErrorCode errorCode) {
-
-                            }
-                        });
-                    }
 
                 }
             }
         });
+            } catch (Exception e) {
+                e.printStackTrace();
+        }
     }
 
 
@@ -199,7 +230,21 @@ public class SettingAct extends BaseActivity {
                         @Override
                         public void onClick(int which) {
 //                        pbClearCache.setVisibility(View.VISIBLE);
-                            ClearCache();
+                            new Thread(){
+                                @Override
+                                public void run() {
+                                    super.run();
+                                    ClearCache();
+                                    try {
+                                        totalCacheSize = FinancialUtil.getTotalCacheSize(getApplicationContext());
+                                        handler.sendEmptyMessage(1);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                            }.start();
+
                         }
                     }).show();
                 }else{
@@ -214,13 +259,7 @@ public class SettingAct extends BaseActivity {
 
     private void ClearCache() {
         FinancialUtil.clearAllCache(getApplicationContext());
-        try {
-            totalCacheSize = FinancialUtil.getTotalCacheSize(getApplicationContext());
-            tvCacheSize.setText(totalCacheSize);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        MyToastUtils.showShortToast(SettingAct.this, "已清除缓存");
+
     }
 
 

@@ -254,18 +254,19 @@ public class CreditUploadAct extends BaseActivity {
             Uri uri = null;
             switch (requestCode) {
                 case PHOTOZOOM:// 相册
-                    if (data == null) {
+                    if (data == null || "".equals(data)) {
                         return;
                     }
                     uri = data.getData();
-                    Bitmap userbitmap = MyBitmapUtils.decodeUriAsBitmap(CreditUploadAct.this, uri);
-                    if (null != userbitmap){
-                        Bitmap compressB = MyBitmapUtils.zoomImgKeepWH(userbitmap, 100, 100, true);
+                    if (null!= uri && !"".equals(uri)){
+                        Bitmap compressB = MyBitmapUtils.zoomImgKeepWH(MyBitmapUtils.decodeUriAsBitmap(CreditUploadAct.this, uri), 100, 100, true);
                         MyBitmapUtils.saveBitmap(compressB, "upload/cache/credit_upload.png");
                     }
+
+
                     break;
                 case PHOTOTAKE:// 拍照
-                    path = photoSavePath + photoSaveName;
+//                    path = photoSavePath + photoSaveName;
                     MyBitmapUtils.saveBitmap(MyBitmapUtils.LoadBigImg(path, 100, 100), "upload/cache/credit_upload.png");
                     break;
             }
@@ -341,7 +342,23 @@ public class CreditUploadAct extends BaseActivity {
         });
     }
 
-
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+//        outState.putString("photoSavePath",photoSavePath);
+        outState.putString("photoSaveName",path);
+//        Log.d(TAG, "onSaveInstanceState");
+    }
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+//        if (TextUtils.isEmpty(photoSavePath)) {
+//            photoSavePath = savedInstanceState.getString("photoSavePath");
+//        }
+        if (TextUtils.isEmpty(path)) {
+            path = savedInstanceState.getString("photoSaveName");
+        }
+    }
     private  void skipFlow(String orderId,String flowId){
         RequestManager.getCommManager().skipFlow(orderId, flowId, new RequestManager.CallBack() {
             @Override
@@ -497,6 +514,7 @@ public class CreditUploadAct extends BaseActivity {
                                     imagePosi = position;
 
                                     photoSaveName = String.valueOf(System.currentTimeMillis()) + ".png";
+                                    path = photoSavePath+photoSaveName;
                                     Uri imageUri = null;
                                     Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                                     imageUri = Uri.fromFile(new File(photoSavePath, photoSaveName));
