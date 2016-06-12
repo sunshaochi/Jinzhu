@@ -30,6 +30,8 @@ public class CreditGuideAct extends BaseActivity {
     public void init(Bundle savedInstanceState) {
         setTopTitle("贷款指南");
         getWidth();
+        Bitmap bitmap1 = decodeSampledBitmapFromResource(getResources(), R.mipmap.credit_guide, screenWidth, (int)(screenWidth/750 * 3871));
+        ivBg.setImageBitmap(bitmap1);
         String roleName = SpUtils.getRoleName(getApplicationContext());
         if (!"ROLE_COMMON_CLIENT".equals(roleName)&&!TextUtils.isEmpty(roleName)){//非普通用户显示服务者指南
             setTopTitle("服务者指南");
