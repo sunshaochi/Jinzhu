@@ -29,9 +29,7 @@ import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshListView;
 import com.beyonditsm.financial.widget.MyAlertDialog;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.lidroid.xutils.view.annotation.event.OnClick;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -50,7 +48,6 @@ public class MessageActivity extends BaseActivity {
 
     private int width;
 
-    private List<MessageBean> datas = new ArrayList<MessageBean>();
     ;
 
     @Override
@@ -119,7 +116,7 @@ public class MessageActivity extends BaseActivity {
 
     private void setDatas() {
         loadView.loadComplete();
-        datas = MessageDao.findMess();
+        List<MessageBean> datas = MessageDao.findMess();
         if (datas.size() == 0) {
             loadView.noContent();
             loadView.setNoContentTxt("亲，你暂时没有消息");
@@ -200,6 +197,7 @@ public class MessageActivity extends BaseActivity {
 
         }
 
+        @SuppressLint("SetTextI18n")
         @Override
         public View getView(final int position, View convertView,
                             ViewGroup parent) {

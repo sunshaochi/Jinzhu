@@ -1,8 +1,6 @@
 package com.beyonditsm.financial.activity.credit;
 
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -12,8 +10,8 @@ import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.util.MyBitmapUtils;
 import com.beyonditsm.financial.util.SpUtils;
-import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
+
 
 /**
  * 贷款指南
@@ -30,16 +28,42 @@ public class CreditGuideAct extends BaseActivity {
 
     @Override
     public void init(Bundle savedInstanceState) {
-        setTopTitle("贷款指南");
         getWidth();
-        Bitmap bitmap1 = decodeSampledBitmapFromResource(getResources(), R.mipmap.credit_guide, screenWidth, (int)(screenWidth/750 * 3871));
-        ivBg.setImageBitmap(bitmap1);
         String roleName = SpUtils.getRoleName(getApplicationContext());
         if (!"ROLE_COMMON_CLIENT".equals(roleName)&&!TextUtils.isEmpty(roleName)){//非普通用户显示服务者指南
             setTopTitle("服务者指南");
             Bitmap bitmap = MyBitmapUtils.decodeSampledBitmapFromResource(getResources(), R.mipmap.servantguide, screenWidth/2, (int)(screenWidth/2/1000 * 2974));
             ivBg.setImageBitmap(bitmap);
+        }else {
+            setTopTitle("贷款指南");
+            Bitmap bitmap = MyBitmapUtils.decodeSampledBitmapFromResource(getResources(), R.mipmap.credit_guide, screenWidth/2, (int)(screenWidth/2/750 * 3871));
+            ivBg.setImageBitmap(bitmap);
+
         }
+//        try
+//        {
+//
+//            InputStream inputStream = getResources().getAssets().open("credit_guide.png");
+//
+//            //获得图片的宽、高
+//            BitmapFactory.Options tmpOptions = new BitmapFactory.Options();
+//            tmpOptions.inJustDecodeBounds = true;
+//            BitmapFactory.decodeStream(inputStream, null, tmpOptions);
+//            int width = tmpOptions.outWidth;
+//            int height = tmpOptions.outHeight;
+//
+//            //设置显示图片的中心区域
+//            BitmapRegionDecoder bitmapRegionDecoder = BitmapRegionDecoder.newInstance(inputStream, false);
+//            BitmapFactory.Options options = new BitmapFactory.Options();
+//            options.inPreferredConfig = Bitmap.Config.RGB_565;
+//            Bitmap bitmap = bitmapRegionDecoder.decodeRegion(new Rect(width / 2 - 100, height / 2 - 100, width / 2 + 100, height / 2 + 100), options);
+//            ivBg.setImageBitmap(bitmap);
+//
+//        } catch (IOException e)
+//        {
+//            e.printStackTrace();
+//        }
+
     }
 
     private void getWidth() {
