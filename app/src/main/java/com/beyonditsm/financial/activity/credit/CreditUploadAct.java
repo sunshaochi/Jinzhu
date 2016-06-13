@@ -1,16 +1,11 @@
 package com.beyonditsm.financial.activity.credit;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +28,6 @@ import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyBitmapUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
-import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.widget.FinalLoadDialog;
 import com.leaf.library.widget.MyListView;
@@ -71,7 +65,7 @@ public class CreditUploadAct extends BaseActivity {
     private TextView tvSave;
     private String orderId;
     private String flowId;
-    private static final int CAMERA_REQUEST_CODE=2;
+    private static final int CAMERA_REQUEST_CODE = 2;
 
     private UpLoadEntity upLoadData;
     private DisplayImageOptions options = new DisplayImageOptions.Builder()
@@ -104,7 +98,7 @@ public class CreditUploadAct extends BaseActivity {
     private List<CreditUplEntity> resultData;//最终生成的data
     private MyAdapter myAdapter;
     private FinalLoadDialog dialog;
-    private boolean isGetPermission=false;
+    private boolean isGetPermission = false;
 
     @Override
     public void setLayout() {
@@ -117,7 +111,7 @@ public class CreditUploadAct extends BaseActivity {
         orderId = getIntent().getStringExtra("orderId");
         flowId = getIntent().getStringExtra("flowId");
         int status = getIntent().getIntExtra("status", 0);
-        if (status==1){//流程状态是通过的情况下不能点击保存
+        if (status == 1) {//流程状态是通过的情况下不能点击保存
             tvSave.setEnabled(false);
             tvSave.setBackgroundResource(R.drawable.button_grey);
         }
@@ -137,7 +131,7 @@ public class CreditUploadAct extends BaseActivity {
         findFlowDetail(orderId, flowId);
     }
 
-    @OnClick({R.id.tvBack, R.id.tvSave,R.id.tvSkip})
+    @OnClick({R.id.tvBack, R.id.tvSave, R.id.tvSkip})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tvBack:
@@ -152,7 +146,7 @@ public class CreditUploadAct extends BaseActivity {
                 toSubmit(getSubEntity(resultData));
                 break;
             case R.id.tvSkip://跳过
-                skipFlow(orderId,flowId);
+                skipFlow(orderId, flowId);
                 break;
         }
     }
@@ -190,7 +184,7 @@ public class CreditUploadAct extends BaseActivity {
                 upLoadData = GsonUtils.json2Bean(data.toString(), UpLoadEntity.class);
                 if (!TextUtils.isEmpty(upLoadData.getDisplayName()))
                     tvDes.setText(upLoadData.getDisplayName());
-                if (!TextUtils.isEmpty(upLoadData.getDescription())){
+                if (!TextUtils.isEmpty(upLoadData.getDescription())) {
                     tvRemarks.setVisibility(View.VISIBLE);
                     tvRemarks.setText(upLoadData.getDescription());
                 }
@@ -258,7 +252,7 @@ public class CreditUploadAct extends BaseActivity {
                         return;
                     }
                     uri = data.getData();
-                    if (null!= uri && !"".equals(uri)){
+                    if (null != uri && !"".equals(uri)) {
                         Bitmap compressB = MyBitmapUtils.zoomImgKeepWH(MyBitmapUtils.decodeUriAsBitmap(CreditUploadAct.this, uri), 100, 100, true);
                         MyBitmapUtils.saveBitmap(compressB, "upload/cache/credit_upload.png");
                     }
@@ -273,7 +267,7 @@ public class CreditUploadAct extends BaseActivity {
             path = Environment.getExternalStorageDirectory() + "/upload/cache/credit_upload.png";
             uploadFile(path);
             super.onActivityResult(requestCode, resultCode, data);
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             e.printStackTrace();
         }
 
@@ -346,9 +340,10 @@ public class CreditUploadAct extends BaseActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 //        outState.putString("photoSavePath",photoSavePath);
-        outState.putString("photoSaveName",path);
+        outState.putString("photoSaveName", path);
 //        Log.d(TAG, "onSaveInstanceState");
     }
+
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
@@ -359,21 +354,23 @@ public class CreditUploadAct extends BaseActivity {
             path = savedInstanceState.getString("photoSaveName");
         }
     }
-    private  void skipFlow(String orderId,String flowId){
+
+    private void skipFlow(String orderId, String flowId) {
         RequestManager.getCommManager().skipFlow(orderId, flowId, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-                MyToastUtils.showShortToast(getApplicationContext(),"已跳过园区公积金截图");
+                MyToastUtils.showShortToast(getApplicationContext(), "已跳过园区公积金截图");
                 EventBus.getDefault().post(new CreditEvent());
                 finish();
             }
 
             @Override
             public void onError(int status, String msg) {
-                MyToastUtils.showShortToast(getApplicationContext(),msg);
+                MyToastUtils.showShortToast(getApplicationContext(), msg);
             }
         });
     }
+
     private class MyAdapter extends BaseAdapter {
         private List<CreditUplEntity> list;
 
@@ -442,10 +439,6 @@ public class CreditUploadAct extends BaseActivity {
             this.list = list;
             this.uItemId = uItemId;
             this.limit = limit;
-            /*暂时取消SDK23以后的动态获取权限*/
-//            if (Build.VERSION.SDK_INT>=23){
-//                findCameraPermission();
-//            }
 
         }
 
@@ -502,26 +495,23 @@ public class CreditUploadAct extends BaseActivity {
                         dialog.builder().addSheetItem("拍照", null, new MySelfSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
-                                boolean isPermission = SpUtils.getIsPermission(getApplicationContext());
-//                                if (isPermission){
-                                    uploadItemId = uItemId;
-                                    if (list.size() > position) {
-                                        if (!TextUtils.isEmpty(list.get(position).getId())) {
-                                            imageId = list.get(position).getId();
-                                            imageIsPass = list.get(position).getIsPass();
-                                        }
+                                uploadItemId = uItemId;
+                                if (list.size() > position) {
+                                    if (!TextUtils.isEmpty(list.get(position).getId())) {
+                                        imageId = list.get(position).getId();
+                                        imageIsPass = list.get(position).getIsPass();
                                     }
-                                    imagePosi = position;
+                                }
+                                imagePosi = position;
 
-                                    photoSaveName = String.valueOf(System.currentTimeMillis()) + ".png";
-                                    path = photoSavePath+photoSaveName;
-                                    Uri imageUri = null;
-                                    Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                    imageUri = Uri.fromFile(new File(photoSavePath, photoSaveName));
-                                    openCameraIntent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
-                                    openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                                    startActivityForResult(openCameraIntent, PHOTOTAKE);
-//                                }
+                                photoSaveName = String.valueOf(System.currentTimeMillis()) + ".png";
+                                path = photoSavePath + photoSaveName;
+                                Uri imageUri = null;
+                                Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                imageUri = Uri.fromFile(new File(photoSavePath, photoSaveName));
+                                openCameraIntent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
+                                openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                                startActivityForResult(openCameraIntent, PHOTOTAKE);
 
                             }
                         }).addSheetItem("从相册选取", null, new MySelfSheetDialog.OnSheetItemClickListener() {
@@ -559,41 +549,6 @@ public class CreditUploadAct extends BaseActivity {
                 tvStatus = (TextView) root.findViewById(R.id.tvStatus);
                 tvRejectRemarks = (TextView) root.findViewById(R.id.tvRejectRemarks);
                 this.root = root;
-            }
-        }
-    }
-
-    //6.0系统（API23）下检查并申请权限
-    private void findCameraPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
-            //申请相机权限
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST_CODE);
-        }
-    }
-    //6.0系统用户选择权限允许或者取消之后回调
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        doNext(requestCode,grantResults);
-    }
-
-    private void doNext(int requestCode,int[] grantResults) {
-        if (requestCode==CAMERA_REQUEST_CODE){
-            if (grantResults[0]==PackageManager.PERMISSION_GRANTED){//权限授予
-                isGetPermission = true;
-                SpUtils.setISpermission(getApplicationContext(),isGetPermission);
-                MyLogUtils.info("是否获取到权限："+isGetPermission);
-//                photoSaveName = String.valueOf(System.currentTimeMillis()) + ".png";
-//                Uri imageUri = null;
-//                Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                imageUri = Uri.fromFile(new File(photoSavePath, photoSaveName));
-//                openCameraIntent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
-//                openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-//                startActivityForResult(openCameraIntent, PHOTOTAKE);
-            }else{//权限否认
-                isGetPermission = false;
-                MyLogUtils.info("是否获取到权限："+isGetPermission);
-                MyToastUtils.showShortToast(getApplicationContext(),"没有权限");
             }
         }
     }

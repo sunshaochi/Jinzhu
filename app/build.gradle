@@ -80,7 +80,6 @@ dependencies {
     compile files('libs/Volley.jar')
     compile files('libs/xUtils-2.4.7.jar')
     compile files('libs/jpush-android-2.1.0.jar')
-    compile files('libs/picasso-2.4.0.jar')
     compile files('libs/layoutlib-api-23.1.0.jar')
     compile files('libs/tncrash.jar')
 }
