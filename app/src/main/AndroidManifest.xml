@@ -397,7 +397,9 @@
         <!-- 贷款引导 -->
         <activity
             android:name=".activity.credit.CreditGuideAct"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:hardwareAccelerated="false"
+            />
         <!-- 上传 -->
         <activity
             android:name=".activity.credit.CreditUploadAct"
@@ -444,7 +446,7 @@
             android:configChanges="orientation|keyboard"
             android:launchMode="singleTask"
             android:noHistory="true"
-            android:windowSoftInputMode="stateVisible|adjustResize"></activity>
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
 
         <!-- 腾讯SSO授权的Activity注册 -->
         <activity
@@ -476,7 +478,7 @@
         <!-- ###################添加UmengAppkey###################### -->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="5668ecbde0f55aa3b5002968"></meta-data>
+            android:value="5668ecbde0f55aa3b5002968"/>
 
         <!-- 推广渠道 -->
         <!-- <meta-data android:value="Wandoujia" android:name="UMENG_CHANNEL"/> -->
@@ -516,7 +518,7 @@
         <service
             android:name="cn.jpush.android.service.DownloadService"
             android:enabled="true"
-            android:exported="false"></service>
+            android:exported="false"/>
 
         <!-- Required SDK 核心功能 -->
         <!-- 可配置android:process参数将PushService放在其他进程中 -->
@@ -611,7 +613,7 @@
         <!-- 设置TestIn 渠道信息 -->
         <meta-data  android:name = "TESTIN_CHANNEL"  android:value = "" />
 
-        <activity android:name=".activity.credit.CreditWebView"></activity>
+        <activity android:name=".activity.credit.CreditWebView"/>
 
     </application>
 
