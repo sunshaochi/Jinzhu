@@ -13,8 +13,6 @@ import android.widget.TextView;
 import com.beyonditsm.financial.R;
 import com.lidroid.xutils.ViewUtils;
 import com.tandong.sa.activity.SmartFragmentActivity;
-import com.testin.agent.TestinAgent;
-import com.testin.agent.TestinAgentConfig;
 import com.umeng.analytics.MobclickAgent;
 
 import cn.jpush.android.api.JPushInterface;
@@ -23,11 +21,11 @@ import cn.jpush.android.api.JPushInterface;
  * 基础activity
  * Created by wangbin on 15/11/11.
  */
-public abstract class BaseActivity extends SmartFragmentActivity{
+public abstract class BaseActivity extends SmartFragmentActivity {
 
-    private TextView tv_title ;
+    private TextView tv_title;
     private TextView tvRight;
-    private  TextView tvLeft;
+    private TextView tvLeft;
     private RelativeLayout rl_right;
 
     @Override
@@ -46,7 +44,6 @@ public abstract class BaseActivity extends SmartFragmentActivity{
 //        MyLogUtils.info(getDeviceInfo(getApplicationContext()));
 //        immersed = new NotificationImmersed(this);
     }
-
 
 
     /**
@@ -95,12 +92,14 @@ public abstract class BaseActivity extends SmartFragmentActivity{
             rl_right.setVisibility(View.GONE);
         }
     }
+
     /**
      * 设置左边文字
+     *
      * @param tv
      */
-    public void setLeftTv(String tv){
-        tvLeft= (TextView) findViewById(R.id.tvLeft);
+    public void setLeftTv(String tv) {
+        tvLeft = (TextView) findViewById(R.id.tvLeft);
         tvLeft.setVisibility(View.VISIBLE);
         tvLeft.setText(tv);
     }
@@ -132,11 +131,12 @@ public abstract class BaseActivity extends SmartFragmentActivity{
 
     /**
      * 获取测试设备信息
+     *
      * @param context
      * @return
      */
     public static String getDeviceInfo(Context context) {
-        try{
+        try {
             org.json.JSONObject json = new org.json.JSONObject();
             android.telephony.TelephonyManager tm = (android.telephony.TelephonyManager) context
                     .getSystemService(Context.TELEPHONY_SERVICE);
@@ -148,18 +148,18 @@ public abstract class BaseActivity extends SmartFragmentActivity{
             String mac = wifi.getConnectionInfo().getMacAddress();
             json.put("mac", mac);
 
-            if( TextUtils.isEmpty(device_id) ){
+            if (TextUtils.isEmpty(device_id)) {
                 device_id = mac;
             }
 
-            if( TextUtils.isEmpty(device_id) ){
-                device_id = android.provider.Settings.Secure.getString(context.getContentResolver(),android.provider.Settings.Secure.ANDROID_ID);
+            if (TextUtils.isEmpty(device_id)) {
+                device_id = android.provider.Settings.Secure.getString(context.getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
             }
 
             json.put("device_id", device_id);
 
             return json.toString();
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
