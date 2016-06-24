@@ -94,17 +94,31 @@ public class SettingAct extends BaseActivity {
             public void onToggle(boolean on) {
                 //是否接受新消息
                 if (on) {
-                    SpUtils.setMsg(getApplicationContext(), true);
+                    new Thread(){
+                        @Override
+                        public void run() {
+                            super.run();
+                            SpUtils.setMsg(getApplicationContext(), true);
 
-                    if (JPushInterface.isPushStopped(getApplicationContext())){
-                        JPushInterface.resumePush(getApplicationContext());
-                    }
+                            if (JPushInterface.isPushStopped(getApplicationContext())){
+                                JPushInterface.resumePush(getApplicationContext());
+                            }
+                        }
+                    }.start();
+
 
                 } else {
-                    SpUtils.setMsg(getApplicationContext(), false);
-                    if (!JPushInterface.isPushStopped(getApplicationContext())){
-                        JPushInterface.stopPush(getApplicationContext());
-                    }
+                    new Thread(){
+                        @Override
+                        public void run() {
+                            super.run();
+                            SpUtils.setMsg(getApplicationContext(), false);
+                            if (!JPushInterface.isPushStopped(getApplicationContext())){
+                                JPushInterface.stopPush(getApplicationContext());
+                            }
+                        }
+                    }.start();
+
 
                 }
             }

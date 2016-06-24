@@ -61,7 +61,7 @@ public class FriendFrg extends BaseFragment {
 
     //信贷经理好友列表集合
     private List<UserEntity> mfriends = new ArrayList<>();
-    //用户和服务者列表集合
+    //用户和代言人列表集合
     private List<FriendEntity> friends = new ArrayList<>();
     private Gson gson = new Gson();
     @SuppressWarnings("deprecation")
@@ -218,7 +218,7 @@ public class FriendFrg extends BaseFragment {
         });
     }
 
-    //获取用户和服务者好友列表
+    //获取用户和代言人好友列表
     private void getFriendList() {
         RequestManager.getCommManager().getFriendList(new RequestManager.CallBack() {
             @Override
@@ -343,7 +343,7 @@ public class FriendFrg extends BaseFragment {
         }
     }
 
-    //用户和服务者我的好友列表适配器
+    //用户和代言人我的好友列表适配器
     private class MyFriendsAdapter extends BaseAdapter {
 
         @Override

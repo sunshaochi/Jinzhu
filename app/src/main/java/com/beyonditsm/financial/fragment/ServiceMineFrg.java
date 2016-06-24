@@ -17,8 +17,10 @@ import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.MessageActivity;
 import com.beyonditsm.financial.activity.servicer.ServiceDataAct;
+import com.beyonditsm.financial.activity.servicer.ServiceMainAct;
 import com.beyonditsm.financial.activity.user.CreditPointAct;
 import com.beyonditsm.financial.activity.user.HardCreditAct;
+import com.beyonditsm.financial.activity.user.LoginAct;
 import com.beyonditsm.financial.activity.user.MyCreditAct;
 import com.beyonditsm.financial.activity.user.MyRecommAct;
 import com.beyonditsm.financial.activity.user.NewWorkAct;
@@ -40,6 +42,7 @@ import com.beyonditsm.financial.widget.MyAlertDialog;
 import com.beyonditsm.financial.widget.ScaleAllImageView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.tandong.sa.eventbus.EventBus;
 import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
 import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
@@ -55,7 +58,7 @@ import io.rong.imkit.RongIM;
 import io.rong.imlib.model.UserInfo;
 
 /**
- * 服务者我的界面  15195458338 123456
+ * 代言人我的界面  15195458338 123456
  * Created by Yang on 2015/11/15 0015.
  */
 public class ServiceMineFrg extends BaseFragment {
@@ -236,14 +239,20 @@ public class ServiceMineFrg extends BaseFragment {
 //                        FriendDao.deleteAllMes();
                         SpUtils.clearSp(getContext());
                         SpUtils.clearOrderId(getContext());
+                        getActivity().sendBroadcast(new Intent());
+                        getActivity().sendBroadcast(new Intent(ServiceMainAct.HIDE));
+                        ivCreditRed.setVisibility(View.GONE);
+                        msg_top_point.setVisibility(View.GONE);
+                        ivWalletRed.setVisibility(View.GONE);
 //                        Intent intent = new Intent(getActivity(), LoginAct.class);
 //                        intent.putExtra(LoginAct.LOGIN_TYPE,1);
 //                        getActivity().startActivity(intent);
 //                        getActivity().finish();
-                        Intent intent1 = new Intent(getActivity(), MainActivity.class);
-                        intent1.putExtra("def", "0");
-                        getActivity().startActivity(intent1);
-                        getActivity().finish();
+                        EventBus.getDefault().post(new SwitchEvent());
+//                        Intent intent1 = new Intent(getActivity(), LoginAct.class);
+//                        intent1.putExtra("def", "0");
+//                        getActivity().startActivity(intent1);
+//                        getActivity().finish();
 //                        isLogin = false;
 //                        tvName.setText("去登录");
 //                        tvExit.setVisibility(View.GONE);
@@ -282,7 +291,10 @@ public class ServiceMineFrg extends BaseFragment {
 
         }
     }
-    //获取服务者信息
+    public class  SwitchEvent{
+
+    }
+    //获取代言人信息
     private void findServantInfo() {
 
         RequestManager.getServicerManager().findServantDetail(new RequestManager.CallBack() {

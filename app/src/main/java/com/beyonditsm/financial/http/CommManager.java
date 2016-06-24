@@ -106,7 +106,8 @@ public class CommManager extends RequestManager {
      * @param callBack
      */
     public void findUserInfo(final CallBack callBack) {
-        Map<String, String> params = new HashMap<String, String>();
+//        Map<String, String> params = new HashMap<String, String>();
+        List<NameValuePair> params = new ArrayList<>();
         doPost(IFinancialUrl.USERINFO_URL, params, callBack);
     }
 
@@ -303,7 +304,7 @@ public class CommManager extends RequestManager {
     }
 
     /**
-     * 升级服务者
+     * 升级代言人
      *
      * @param servant
      * @param servant_role_id
@@ -542,7 +543,7 @@ public class CommManager extends RequestManager {
     }
 
     /**
-     * 获取服务者条件
+     * 获取代言人条件
      * @param callBack
      */
     public void getServantCondInfo(CallBack callBack){
@@ -551,7 +552,7 @@ public class CommManager extends RequestManager {
     }
 
     /**
-     * 成为服务者
+     * 成为代言人
      * @param callBack
      */
     public void applyServant(CallBack callBack){
@@ -566,6 +567,10 @@ public class CommManager extends RequestManager {
     public void getServantRmdInfo(CallBack callBack){
         Map<String,String> params = new HashMap<>();
         doPost(IFinancialUrl.SERVANT_RMD_INFO,params,callBack);
+    }
+    public void getServantReward(CallBack callBack){
+        Map<String,String> params = new HashMap<>();
+        doPost(IFinancialUrl.SERVANT_GET_REWARD,params,callBack);
     }
 
     /**

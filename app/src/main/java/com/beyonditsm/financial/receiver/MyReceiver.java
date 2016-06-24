@@ -73,8 +73,8 @@ public class MyReceiver extends BroadcastReceiver {
 
                     MyLogUtils.info("type="+type);
                     String roleName = SpUtils.getRoleName(context);
-                    if (type.equals("12")){//升级服务者推送
-                        MyLogUtils.info("升级服务者推送");
+                    if (type.equals("12")){//升级代言人推送
+                        MyLogUtils.info("升级代言人推送");
                         SpUtils.setIsUpgrade(context, "isUpgrade");
                         context.sendBroadcast(new Intent(ServiceMineFrg.DISPLAY_WALLET_RED));
                     }else if (type.equals("5")){//贷款推送

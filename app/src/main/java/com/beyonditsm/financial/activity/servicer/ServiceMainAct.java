@@ -17,11 +17,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.beyonditsm.financial.AppManager;
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.RongCloudEvent;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.user.AddressBookAct;
+import com.beyonditsm.financial.activity.user.LoginAct;
 import com.beyonditsm.financial.db.FriendDao;
 import com.beyonditsm.financial.entity.FriendBean;
 import com.beyonditsm.financial.entity.ResultData;
@@ -33,6 +35,8 @@ import com.beyonditsm.financial.fragment.ServiceMineFrg;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.GsonUtils;
+import com.beyonditsm.financial.util.MyLogUtils;
+import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
 import com.lidroid.xutils.util.LogUtils;
 import com.lidroid.xutils.view.annotation.event.OnClick;
@@ -50,7 +54,7 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
 
 /**
- * 服务者主act    15195458338   123456
+ * 代言人主act    15195458338   123456
  * Created by Yang on 2015/11/13 0013.
  */
 public class ServiceMainAct extends BaseActivity{
@@ -111,6 +115,7 @@ public class ServiceMainAct extends BaseActivity{
     @Override
     public void init(Bundle savedInstanceState) {
         //注册EventBus
+        ParamsUtil.getInstance().setServiceMainAct(this);
         EventBus.getDefault().register(this);
         assignViews();
         manager = getSupportFragmentManager();
@@ -138,7 +143,7 @@ public class ServiceMainAct extends BaseActivity{
         }
     }
 
-    //获取服务者信息
+    //获取代言人信息
     private void findServantInfo() {
 
         RequestManager.getServicerManager().findServantDetail(new RequestManager.CallBack() {
@@ -249,32 +254,53 @@ public class ServiceMainAct extends BaseActivity{
                 break;
             //我的
             case R.id.llMine:
-                setAllTabNor();
-                setTabSelection(2);
-                setCheckItem(2);
+                String a = SpUtils.getRoleName(ServiceMainAct.this).toString();
+                if (TextUtils.isEmpty(SpUtils.getRoleName(ServiceMainAct.this).toString())) {
+                    gotoActivity(LoginAct.class, false);
+                } else {
+                    setAllTabNor();
+                    setTabSelection(2);
+                    setCheckItem(2);
+                }
+
                 break;
             //顶部沟通按钮
             case R.id.title_chat:
-                title = 1;
-                setAllTabNor();
-                setTabSelection(1);
-                setCheckItem(1);
-                setTitleTabNor();
-                setTitleCheckItem(0);
+                if (TextUtils.isEmpty(SpUtils.getRoleName(ServiceMainAct.this).toString())) {
+                    gotoActivity(LoginAct.class, false);
+                } else {
+                    title = 1;
+                    setAllTabNor();
+                    setTabSelection(1);
+                    setCheckItem(1);
+                    setTitleTabNor();
+                    setTitleCheckItem(0);
+                }
+
                 break;
             //顶部好友按钮
             case R.id.title_friend:
-                title = 2;
-                setAllTabNor();
-                setTabSelection(4);
-                setCheckItem(1);
-                setTitleTabNor();
-                setTitleCheckItem(1);
+                if (TextUtils.isEmpty(SpUtils.getRoleName(ServiceMainAct.this).toString())) {
+                    gotoActivity(LoginAct.class, false);
+                } else {
+                    title = 2;
+                    setAllTabNor();
+                    setTabSelection(4);
+                    setCheckItem(1);
+                    setTitleTabNor();
+                    setTitleCheckItem(1);
+                }
+
                 break;
             //添加好友
             case R.id.add_friend:
-                Intent intent = new Intent(ServiceMainAct.this, AddressBookAct.class);
-                startActivity(intent);
+                if (TextUtils.isEmpty(SpUtils.getRoleName(ServiceMainAct.this).toString())) {
+                    gotoActivity(LoginAct.class, false);
+                } else {
+                    Intent intent = new Intent(ServiceMainAct.this, AddressBookAct.class);
+                    startActivity(intent);
+                }
+
                 break;
         }
     }
@@ -283,6 +309,11 @@ public class ServiceMainAct extends BaseActivity{
         setAllTabNor();
         setTabSelection(3);
         setCheckItem(3);
+    }
+    public void onEvent(ServiceMineFrg.SwitchEvent event) {
+        setAllTabNor();
+        setTabSelection(0);
+        setCheckItem(0);
     }
     /**
      * 标题tab全部切换普通
@@ -330,10 +361,11 @@ public class ServiceMainAct extends BaseActivity{
         } else {
             if(RongIM.getInstance()!=null)
                 RongIM.getInstance().disconnect();
-//            finish();
+            finish();
+//            AppManager.getAppManager().AppExit(null);
             try {
                 Thread.sleep(500);
-                android.os.Process.killProcess(android.os.Process.myPid());
+//                android.os.Process.killProcess(android.os.Process.myPid());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -498,6 +530,7 @@ public class ServiceMainAct extends BaseActivity{
             unregisterReceiver(hideRedReceiver);
         }
         super.onDestroy();
+        MyLogUtils.degug("ServiceMainAct摧毁了");
     }
 
     private MyReceiver myReceiver;

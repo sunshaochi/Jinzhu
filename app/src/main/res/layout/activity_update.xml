@@ -302,86 +302,86 @@
                     />
             </RelativeLayout>
 
-            <LinearLayout
-                android:id="@+id/Service_ll"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical"
-                android:visibility="gone">
+            <!--<LinearLayout-->
+                <!--android:id="@+id/Service_ll"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:orientation="vertical"-->
+                <!--android:visibility="gone">-->
 
-                <RelativeLayout
-                    android:id="@+id/rlBank"
-                    style="@style/rl_mine_style">
+                <!--<RelativeLayout-->
+                    <!--android:id="@+id/rlBank"-->
+                    <!--style="@style/rl_mine_style">-->
 
-                    <TextView
-                        style="@style/tv_second_style"
-                        android:layout_centerVertical="true"
-                        android:text="收支银行" />
-
-
-                    <ImageView
-                        style="@style/arrow_right_style"
-                        android:layout_alignParentRight="true" />
-
-                </RelativeLayout>
-
-                <View style="@style/view_line"></View>
-
-                <RelativeLayout
-                    android:id="@+id/rlSonBank"
-                    style="@style/rl_mine_style">
-
-                    <TextView
-                        style="@style/tv_second_style"
-                        android:layout_centerVertical="true"
-                        android:text="收支支行" />
+                    <!--<TextView-->
+                        <!--style="@style/tv_second_style"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:text="收支银行" />-->
 
 
-                    <ImageView
-                        style="@style/arrow_right_style"
-                        android:layout_alignParentRight="true" />
+                    <!--<ImageView-->
+                        <!--style="@style/arrow_right_style"-->
+                        <!--android:layout_alignParentRight="true" />-->
 
-                </RelativeLayout>
+                <!--</RelativeLayout>-->
 
-                <View style="@style/view_line"></View>
+                <!--<View style="@style/view_line"></View>-->
 
-                <RelativeLayout
-                    android:id="@+id/rlBankNumber"
-                    style="@style/rl_mine_style">
+                <!--<RelativeLayout-->
+                    <!--android:id="@+id/rlSonBank"-->
+                    <!--style="@style/rl_mine_style">-->
 
-                    <TextView
-                        style="@style/tv_second_style"
-                        android:layout_centerVertical="true"
-                        android:text="银行账号" />
-
-
-                    <ImageView
-                        style="@style/arrow_right_style"
-                        android:layout_alignParentRight="true" />
-
-                </RelativeLayout>
-
-                <View style="@style/view_line"></View>
-
-                <RelativeLayout
-                    android:id="@+id/rlEmail"
-                    style="@style/rl_mine_style">
-
-                    <TextView
-                        style="@style/tv_second_style"
-                        android:layout_centerVertical="true"
-                        android:text="电子邮箱" />
+                    <!--<TextView-->
+                        <!--style="@style/tv_second_style"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:text="收支支行" />-->
 
 
-                    <ImageView
-                        style="@style/arrow_right_style"
-                        android:layout_alignParentRight="true" />
+                    <!--<ImageView-->
+                        <!--style="@style/arrow_right_style"-->
+                        <!--android:layout_alignParentRight="true" />-->
 
-                </RelativeLayout>
+                <!--</RelativeLayout>-->
 
-                <View style="@style/view_line"></View>
-            </LinearLayout>
+                <!--<View style="@style/view_line"></View>-->
+
+                <!--<RelativeLayout-->
+                    <!--android:id="@+id/rlBankNumber"-->
+                    <!--style="@style/rl_mine_style">-->
+
+                    <!--<TextView-->
+                        <!--style="@style/tv_second_style"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:text="银行账号" />-->
+
+
+                    <!--<ImageView-->
+                        <!--style="@style/arrow_right_style"-->
+                        <!--android:layout_alignParentRight="true" />-->
+
+                <!--</RelativeLayout>-->
+
+                <!--<View style="@style/view_line"></View>-->
+
+                <!--<RelativeLayout-->
+                    <!--android:id="@+id/rlEmail"-->
+                    <!--style="@style/rl_mine_style">-->
+
+                    <!--<TextView-->
+                        <!--style="@style/tv_second_style"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:text="电子邮箱" />-->
+
+
+                    <!--<ImageView-->
+                        <!--style="@style/arrow_right_style"-->
+                        <!--android:layout_alignParentRight="true" />-->
+
+                <!--</RelativeLayout>-->
+
+                <!--<View style="@style/view_line"></View>-->
+            <!--</LinearLayout>-->
         </LinearLayout>
         <!--<com.beyonditsm.financial.view.LoadingView
             android:id="@+id/loadingView"

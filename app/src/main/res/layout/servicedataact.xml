@@ -219,94 +219,94 @@
                     android:layout_marginRight="10dp"
                     android:layout_toLeftOf="@id/ivArrowHouseHold" />
             </RelativeLayout>
-            <RelativeLayout
-                android:id="@+id/rlBank"
-                style="@style/rl_mine_style"
-                android:layout_marginTop="10dp">
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/rlBank"-->
+                <!--style="@style/rl_mine_style"-->
+                <!--android:layout_marginTop="10dp">-->
 
-                <TextView
-                    style="@style/tv_second_style"
-                    android:layout_centerVertical="true"
-                    android:text="收款银行" />
+                <!--<TextView-->
+                    <!--style="@style/tv_second_style"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:text="收款银行" />-->
 
-                <ImageView
-                    android:id="@+id/iv_Bank"
-                    style="@style/arrow_right_style"
-                    android:layout_alignParentRight="true" />
-                <TextView
-                    android:id="@+id/tvBank"
-                    style="@style/tv_second_style"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@+id/iv_Bank"
-                     />
-            </RelativeLayout>
+                <!--<ImageView-->
+                    <!--android:id="@+id/iv_Bank"-->
+                    <!--style="@style/arrow_right_style"-->
+                    <!--android:layout_alignParentRight="true" />-->
+                <!--<TextView-->
+                    <!--android:id="@+id/tvBank"-->
+                    <!--style="@style/tv_second_style"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginRight="10dp"-->
+                    <!--android:layout_toLeftOf="@+id/iv_Bank"-->
+                     <!--/>-->
+            <!--</RelativeLayout>-->
 
-            <View style="@style/view_line"></View>
-            <RelativeLayout
-                android:id="@+id/rlSubbranch"
-                style="@style/rl_mine_style">
-                <TextView
-                    style="@style/tv_second_style"
-                    android:text="收款支行"
-                    android:layout_centerVertical="true"/>
-                <ImageView
-                    android:id="@+id/iv_Subbranch"
-                    style="@style/arrow_right_style"
-                    android:layout_alignParentRight="true" />
-                <TextView
-                    android:id="@+id/tv_subbranch"
-                    style="@style/tv_second_style"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@+id/iv_Subbranch"/>
-            </RelativeLayout>
+            <!--<View style="@style/view_line"></View>-->
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/rlSubbranch"-->
+                <!--style="@style/rl_mine_style">-->
+                <!--<TextView-->
+                    <!--style="@style/tv_second_style"-->
+                    <!--android:text="收款支行"-->
+                    <!--android:layout_centerVertical="true"/>-->
+                <!--<ImageView-->
+                    <!--android:id="@+id/iv_Subbranch"-->
+                    <!--style="@style/arrow_right_style"-->
+                    <!--android:layout_alignParentRight="true" />-->
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_subbranch"-->
+                    <!--style="@style/tv_second_style"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginRight="10dp"-->
+                    <!--android:layout_toLeftOf="@+id/iv_Subbranch"/>-->
+            <!--</RelativeLayout>-->
 
-            <View style="@style/view_line"></View>
+            <!--<View style="@style/view_line"></View>-->
 
-            <RelativeLayout
-                android:id="@+id/rlBankAccount"
-                style="@style/rl_mine_style">
-                <TextView
-                    style="@style/tv_second_style"
-                    android:text="银行账号"
-                    android:layout_centerVertical="true"/>
-                <ImageView
-                    android:id="@+id/iv_BankAccount"
-                    style="@style/arrow_right_style"
-                    android:layout_alignParentRight="true"/>
-                <TextView
-                    android:id="@+id/tv_bankAcount"
-                    style="@style/tv_second_style"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@+id/iv_BankAccount"
-                    />
-            </RelativeLayout>
-            <View style="@style/view_line"></View>
-            <RelativeLayout
-                android:id="@+id/rlEmail"
-                style="@style/rl_mine_style">
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/rlBankAccount"-->
+                <!--style="@style/rl_mine_style">-->
+                <!--<TextView-->
+                    <!--style="@style/tv_second_style"-->
+                    <!--android:text="银行账号"-->
+                    <!--android:layout_centerVertical="true"/>-->
+                <!--<ImageView-->
+                    <!--android:id="@+id/iv_BankAccount"-->
+                    <!--style="@style/arrow_right_style"-->
+                    <!--android:layout_alignParentRight="true"/>-->
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_bankAcount"-->
+                    <!--style="@style/tv_second_style"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginRight="10dp"-->
+                    <!--android:layout_toLeftOf="@+id/iv_BankAccount"-->
+                    <!--/>-->
+            <!--</RelativeLayout>-->
+            <!--<View style="@style/view_line"></View>-->
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/rlEmail"-->
+                <!--style="@style/rl_mine_style">-->
 
-                <TextView
-                    style="@style/tv_second_style"
-                    android:layout_centerVertical="true"
-                    android:text="电子邮箱" />
+                <!--<TextView-->
+                    <!--style="@style/tv_second_style"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:text="电子邮箱" />-->
 
-                <ImageView
-                    android:id="@+id/ivArrowEmail"
-                    style="@style/arrow_right_style"
-                    android:layout_alignParentRight="true" />
+                <!--<ImageView-->
+                    <!--android:id="@+id/ivArrowEmail"-->
+                    <!--style="@style/arrow_right_style"-->
+                    <!--android:layout_alignParentRight="true" />-->
 
-                <TextView
-                    android:id="@+id/tvEmail"
-                    style="@style/tv_update_style"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:layout_toLeftOf="@id/ivArrowEmail" />
+                <!--<TextView-->
+                    <!--android:id="@+id/tvEmail"-->
+                    <!--style="@style/tv_update_style"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginRight="10dp"-->
+                    <!--android:layout_toLeftOf="@id/ivArrowEmail" />-->
 
-            </RelativeLayout>
-            <View style="@style/view_line"></View>
+            <!--</RelativeLayout>-->
+            <!--<View style="@style/view_line"></View>-->
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

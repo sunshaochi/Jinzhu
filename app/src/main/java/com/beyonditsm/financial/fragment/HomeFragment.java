@@ -31,6 +31,7 @@ import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
@@ -47,6 +48,13 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+//import com.baidu.location.BDLocation;
+//import com.baidu.location.BDLocationListener;
+//import com.baidu.location.LocationClient;
+//import com.baidu.location.LocationClientOption;
+//import com.baidu.location.BDNotifyListener;//假如用到位置提醒功能，需要import该类
+//import com.baidu.location.Poi;
 
 /**
  * Created by Administrator on 2015/12/8.
@@ -71,10 +79,26 @@ public class HomeFragment extends BaseFragment {
     private List<HomeHotProductEntity> hotList;
     private UserLoginEntity ule;
     private UserEntity user;
+//    public LocationClient mLocationClient = null;
 
     @Override
     public View initView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.fragment_home, null);
+
+    }
+
+
+    @Override
+    public void onStart() {
+//        loadingView.loading();
+//        llWork.setClickable(false);
+        getUserLoginInfo();
+//        mLocationClient = new LocationClient(getActivity().getApplicationContext());     //声明LocationClient类
+//        initLocation();
+//        mLocationClient.registerLocationListener( new MyLocationListener());    //注册监听函数
+//        mLocationClient.start();
+        super.onStart();
+
     }
 
     @Override
@@ -83,10 +107,10 @@ public class HomeFragment extends BaseFragment {
 
         String roleName = SpUtils.getRoleName(context);
         MyLogUtils.info("ROLENAME="+roleName);
-        if (!"ROLE_COMMON_CLIENT".equals(roleName)&&!TextUtils.isEmpty(roleName)){//普通用户显示贷款指南
-            ivSuspen.setBackgroundResource(R.mipmap.servant_guide);
-            getUserLoginInfo();
-        }
+//        if (!"ROLE_COMMON_CLIENT".equals(roleName)&&!TextUtils.isEmpty(roleName)){//普通用户显示贷款指南
+//            ivSuspen.setBackgroundResource(R.mipmap.servant_guide);
+
+//        }
         plvHotCredit.setPullRefreshEnabled(true);
         plvHotCredit.setScrollLoadEnabled(false);
         plvHotCredit.setPullLoadEnabled(true);
@@ -174,8 +198,13 @@ public class HomeFragment extends BaseFragment {
             case R.id.ll_work://打工挣钱
                 if(!"".equals(SpUtils.getRoleName(getActivity()))) {
 //                    intent = new Intent(getActivity(), NewWorkAct.class);//跳转打工挣钱页面
-                    intent = new Intent(getActivity(), MyRecommAct.class);//跳转服务者页面
-                    intent.putExtra("userLogin", ule);
+                    intent = new Intent(getActivity(), MyRecommAct.class);//跳转代言人页面
+                    if(null!=ule && !"".equals(ule.getReferralCode())){
+                        intent.putExtra("userLogin", ule);
+                    }else {
+                        intent.putExtra("userLogin", ParamsUtil.getInstance().getUle());
+                    }
+
                     startActivity(intent);
                 }else{
                     Intent goLog = new Intent(context,LoginAct.class);
@@ -263,13 +292,31 @@ public class HomeFragment extends BaseFragment {
             public void onSucess(String result) throws JSONException {
                 ResultData<UserLoginEntity> rd = (ResultData<UserLoginEntity>) GsonUtils.json(result, UserLoginEntity.class);
                 ule = rd.getData();
+//                loadingView.loadComplete();
+//                llWork.setClickable(true);
             }
 
             @Override
             public void onError(int status, String msg) {
-
+                getUserLoginInfo();
             }
         });
     }
-
+//    private void initLocation(){
+//        LocationClientOption option = new LocationClientOption();
+//        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy
+//        );//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
+//        option.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系
+//        int span=1000;
+//        option.setScanSpan(span);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
+//        option.setIsNeedAddress(true);//可选，设置是否需要地址信息，默认不需要
+//        option.setOpenGps(true);//可选，默认false,设置是否使用gps
+//        option.setLocationNotify(true);//可选，默认false，设置是否当gps有效时按照1S1次频率输出GPS结果
+//        option.setIsNeedLocationDescribe(true);//可选，默认false，设置是否需要位置语义化结果，可以在BDLocation.getLocationDescribe里得到，结果类似于“在北京天安门附近”
+//        option.setIsNeedLocationPoiList(true);//可选，默认false，设置是否需要POI结果，可以在BDLocation.getPoiList里得到
+//        option.setIgnoreKillProcess(false);//可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
+//        option.SetIgnoreCacheException(false);//可选，默认false，设置是否收集CRASH信息，默认收集
+//        option.setEnableSimulateGps(false);//可选，默认false，设置是否需要过滤gps仿真结果，默认需要
+//        mLocationClient.setLocOption(option);
+//    }
 }

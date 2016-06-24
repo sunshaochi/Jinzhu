@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
+import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.MessageActivity;
 import com.beyonditsm.financial.activity.user.CreditPointAct;
 import com.beyonditsm.financial.activity.user.HardCreditAct;
@@ -41,6 +42,7 @@ import com.beyonditsm.financial.widget.MyAlertDialog;
 import com.beyonditsm.financial.widget.ScaleAllImageView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.tandong.sa.eventbus.EventBus;
 import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
 import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
@@ -52,8 +54,6 @@ import java.util.Set;
 
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
-import cn.jpush.android.data.JPushLocalNotification;
-import cn.jpush.android.data.JPushView;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.UserInfo;
 
@@ -118,6 +118,7 @@ public class MineFragment extends BaseFragment {
     public View initView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.fragment_mine, null);
     }
+
 
     @Override
     public void initData(Bundle savedInstanceState) {
@@ -251,10 +252,15 @@ public class MineFragment extends BaseFragment {
                         MessageDao.deleteAllMes();
                         SpUtils.clearSp(getContext());
                         SpUtils.clearOrderId(getContext());
-                        Intent intent = new Intent(getActivity(), LoginAct.class);
-                        intent.putExtra(LoginAct.LOGIN_TYPE,1);
-                        getActivity().startActivity(intent);
-                        getActivity().finish();
+                        getActivity().sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
+                        ivWalletRedPoint.setVisibility(View.GONE);
+                        msg_top_point.setVisibility(View.GONE);
+                        ivRedPoint.setVisibility(View.GONE);
+                        EventBus.getDefault().post(new SwitchEvent());
+//                        Intent intent = new Intent(getActivity(), LoginAct.class);
+//                        intent.putExtra(LoginAct.LOGIN_TYPE,1);
+//                        getActivity().startActivity(intent);
+//                        getActivity().finish();
 //                        Intent intent1 = new Intent(getActivity(), MainActivity.class);
 //                        intent1.putExtra("def", "0");
 //                        getActivity().startActivity(intent1);
@@ -280,7 +286,7 @@ public class MineFragment extends BaseFragment {
         }
     }
 
-
+    public class SwitchEvent{}
     /**
      * 获取用户信息
      */
@@ -385,6 +391,7 @@ public class MineFragment extends BaseFragment {
         getActivity().registerReceiver(hideRedReceiver,new IntentFilter(HIDE_POINT));
         getActivity().registerReceiver(walletRedReceiver,new IntentFilter(WALLET_POINT));
         getActivity().registerReceiver(hideWalletRedReceiver,new IntentFilter(HIDE_WALLET_POINT));
+        getUserLoginInfo();
     }
 
     @Override

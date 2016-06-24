@@ -52,7 +52,7 @@ public class NewWorkAct extends BaseActivity {
     @ViewInject(R.id.loadView)
     private LoadingView loadView;
     @ViewInject(R.id.single_two)
-    private LinearLayout single_two;//服务者往上升级单独的两个圆形进度外围布局
+    private LinearLayout single_two;//代言人往上升级单独的两个圆形进度外围布局
     @ViewInject(R.id.up_name)
     private TextView up_name;//顶部圆形进度条中间内容
     @ViewInject(R.id.up_content)
@@ -184,7 +184,7 @@ public class NewWorkAct extends BaseActivity {
                         }
                     }
                 }).start();
-                service.setText("提升服务者等级");
+                service.setText("提升代言人等级");
                 content.setText("初级升中级，推荐好友数达到10人以及授信额总数达到30万\n"+"中级升高级，推荐好友数达到30人以及授信额总数达到100万");
                 String totalStatus=data.getTotalStatus();
                 MyLogUtils.info("是否可升级：" + totalStatus + ";是否在审核：" + isApproving);
@@ -210,7 +210,7 @@ public class NewWorkAct extends BaseActivity {
         });
     }
     /**
-     * 获取升级服务者信息
+     * 获取升级代言人信息
      *
      * @param servantRoleType
      */

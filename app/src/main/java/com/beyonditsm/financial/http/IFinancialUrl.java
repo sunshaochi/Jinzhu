@@ -8,11 +8,13 @@ package com.beyonditsm.financial.http;
 public interface IFinancialUrl {
     /*吕东测试*/
 //    String BASE_URL = "http://172.16.6.216";
+    /*袁峰测试*/
+//    String BASE_URL = "http://172.16.5.197:8080";
     /*验收环境地址*/
 //    String BASE_URL = "http://139.196.111.82:5018";
         /*验收环境游戏地址*/
 //    String GAME_URL = "http://myjinzhu.com:5011/";
-    /*正式地址*/
+//    /*正式地址*/
 //    String BASE_URL = "http://option.myjinzhu.com";
         /*正式游戏地址*/
 //    String GAME_URL = "http://m.farm.myjinzhu.com/";
@@ -88,11 +90,11 @@ public interface IFinancialUrl {
     String OTHER_FILE_URL = BASE_URL + API_VERSION + "/common/commonAPI/login/uploadOtherAccessory.do";
     /*根据任务id查询任务*/
     String FINDTASK_BY_TASKID_URL = BASE_URL + API_VERSION + "/assignmentInterface/login/findTaskBytaskIds.do";
-    /*获取服务者详细*/
+    /*获取代言人详细*/
     String SERVANT_URL = BASE_URL + API_VERSION + "/servant/login/servantDetail.do";
-    /*修改服务者资料*/
+    /*修改代言人资料*/
     String UPDATE_SERVANT_URL = BASE_URL + API_VERSION + "/servant/login/modifyServant.do";
-    /*服务者提现*/
+    /*代言人提现*/
     String SERVICE_WITH_DRAW_URL = BASE_URL + API_VERSION + "/servant/login/servantWithdraw.do";
     /* 查询提现返佣记录*/
     String FIND_SERVANT_WITHDRAW = BASE_URL + API_VERSION + "/servant/login/findServantWithdraw.do";
@@ -144,13 +146,13 @@ public interface IFinancialUrl {
     String ISSUBMIT_UP_URL = BASE_URL + API_VERSION + "/platform/login/isSubmitedUpgrade.do";
     /*是否允许升级 */
     String ISALLOW_UPGRADE_URL = BASE_URL + API_VERSION + "/platform/login/isAllowUpgrade.do";
-    /*升级服务者*/
+    /*升级代言人*/
     String APPLY_LVUP_SERVANT_URL = BASE_URL + API_VERSION + "/servant/login/applyLvUpToServant.do";
     /*用户查看自己的订单详情*/
     String CHECK_COMMON_ORDER_URL = BASE_URL + API_VERSION + "/platform/login/findMyOrderById.do";
     /*计算月供*/
     String MONTH_PAY_URL = BASE_URL + API_VERSION + "/common/commonAPI/unLogin/calcMonthlyPayments.do";
-    /*获取升级服务者信息*/
+    /*获取升级代言人信息*/
     String UPTOSERVANT_URL = BASE_URL + API_VERSION + "/servant/login/judgeIsLvUpOfServant.do";
     /*通过推荐码 加好友*/
     String MYREFERRALCODE_URL = BASE_URL + API_VERSION + "/rongCloudAPIcontroller/login/addFriendByMyReferralCode.do";
@@ -225,12 +227,16 @@ public interface IFinancialUrl {
     String APPLAY_CREDIT_STATUS = BASE_URL + API_VERSION + "/platform/login/applyCreditStatus.do";
     /*跳过某个流程*/
     String SKIP_FLOW = BASE_URL + API_VERSION + "/platform/login/skipFlow.do";
-    /*服务者条件获取*/
+    /*代言人条件获取*/
     String SERVANT_COND_INFO = BASE_URL + API_VERSION + "/servant/login/getServantCondInfo.do";
-    /*成为服务者*/
+    /*成为代言人*/
     String APPLY_TO_SERVANT = BASE_URL + API_VERSION + "/servant/login/applyToServant.do";
-    /*服务者推荐信息获取*/
-    String SERVANT_RMD_INFO = BASE_URL + API_VERSION + "/servant/login/getServantRmdInfo.do";
+//    /*代言人推荐信息获取*/
+    String SERVANT_RMD_INFO = BASE_URL + API_VERSION + "/servant/login/getServantSummary.do";
+//    /*代言人推荐信息获取*/
+//    String SERVANT_GET_REWARD = BASE_URL + API_VERSION + "/servant/unlogin/getServantSummary.do";
+    /*领取奖励*/
+    String SERVANT_GET_REWARD = BASE_URL + API_VERSION + "/servant/login/pickUnhandledAward.do";
     /*最低提现额度*/
     String MIN_EXCHANGE = BASE_URL + API_VERSION + "/wallet/login/ifGetMinExchange.do";
     /*领取奖励（修改资料）*/

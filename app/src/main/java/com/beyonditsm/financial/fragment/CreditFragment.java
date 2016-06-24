@@ -101,9 +101,9 @@ public class CreditFragment extends BaseFragment {
     public void initData(Bundle savedInstanceState) {
         tvTitle.setText("贷款");
         String roleName = SpUtils.getRoleName(context);
-        if (!"ROLE_COMMON_CLIENT".equals(roleName)&&!TextUtils.isEmpty(roleName)){//非普通用户显示服务者指南
-            ivSuspen.setBackgroundResource(R.mipmap.servant_guide);
-        }
+//        if (!"ROLE_COMMON_CLIENT".equals(roleName)&&!TextUtils.isEmpty(roleName)){//非普通用户显示代言人指南
+//            ivSuspen.setBackgroundResource(R.mipmap.servant_guide);
+//        }
         loadView.setNoContentTxt("暂无此类产品，换个条件试试");
         etAmount.setSelection(etAmount.getText().length());
         rl_back.setVisibility(View.GONE);

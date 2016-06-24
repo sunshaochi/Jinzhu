@@ -13,7 +13,7 @@ import com.beyonditsm.financial.util.MyToastUtils;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
 /**
- * 服务者修改密码
+ * 代言人修改密码
  * Created by Yang on 2015/11/15 0015.
  */
 public class ChangePwdAct extends BaseActivity {

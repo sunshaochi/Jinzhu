@@ -117,8 +117,8 @@ public class UpdateAct extends BaseActivity {
     private TextView tvLocal;
 //    @ViewInject(R.id.loadingView)
 //    private LoadingView loadingView;
-    @ViewInject(R.id.Service_ll)
-    private LinearLayout llServant;
+//    @ViewInject(R.id.Service_ll)
+//    private LinearLayout llServant;
 
     private AddressUtil addressUtil;
 
@@ -131,6 +131,7 @@ public class UpdateAct extends BaseActivity {
     public void init(Bundle savedInstanceState) {
         setTopTitle("我的资料");
         setLeftTv("返回");
+//        llServant.setVisibility(View.GONE);
         addressUtil=new AddressUtil(this);
         userInfo = getIntent().getParcelableExtra(MineFragment.USER_KEY);
         //把用户信息放进去
@@ -307,26 +308,26 @@ public class UpdateAct extends BaseActivity {
                     }
                 });
                 break;
-            case R.id.rlBank://收支银行
-                intent = new Intent(this, EditAct.class);
-                intent.putExtra(EditAct.USER_TYPE, 4);
-                startActivity(intent);
-                break;
-            case R.id.rlSonBank://收支支行
-                intent = new Intent(this, EditAct.class);
-                intent.putExtra(EditAct.USER_TYPE, 5);
-                startActivity(intent);
-                break;
-            case R.id.rlBankNumber://银行账号
-                intent = new Intent(this, EditAct.class);
-                intent.putExtra(EditAct.USER_TYPE, 6);
-                startActivity(intent);
-                break;
-            case R.id.rlEmail://邮箱
-                intent = new Intent(this, EditAct.class);
-                intent.putExtra(EditAct.USER_TYPE, 7);
-                startActivity(intent);
-                break;
+//            case R.id.rlBank://收支银行
+//                intent = new Intent(this, EditAct.class);
+//                intent.putExtra(EditAct.USER_TYPE, 4);
+//                startActivity(intent);
+//                break;
+//            case R.id.rlSonBank://收支支行
+//                intent = new Intent(this, EditAct.class);
+//                intent.putExtra(EditAct.USER_TYPE, 5);
+//                startActivity(intent);
+//                break;
+//            case R.id.rlBankNumber://银行账号
+//                intent = new Intent(this, EditAct.class);
+//                intent.putExtra(EditAct.USER_TYPE, 6);
+//                startActivity(intent);
+//                break;
+//            case R.id.rlEmail://邮箱
+//                intent = new Intent(this, EditAct.class);
+//                intent.putExtra(EditAct.USER_TYPE, 7);
+//                startActivity(intent);
+//                break;
             case R.id.rlAge://年龄
                 intent = new Intent(this, EditAct.class);
                 intent.putExtra(EditAct.USER_TYPE, 8);

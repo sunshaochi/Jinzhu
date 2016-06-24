@@ -133,7 +133,7 @@
                 android:layout_marginLeft="32dp"
                 android:layout_marginRight="32dp"
                 android:layout_marginTop="15dp"
-                android:text="当6个指标全部达到100%时，用户可点击升级后成为服务者。每日可享受最高2000元的奖励"
+                android:text="当6个指标全部达到100%时，用户可点击升级后成为代言人。每日可享受最高2000元的奖励"
                 android:textSize="12sp" />
 
             <Button
@@ -145,7 +145,7 @@
                 android:layout_marginRight="32dp"
                 android:layout_marginTop="22dp"
                 android:background="@drawable/button_gen"
-                android:text="升级成为服务者"
+                android:text="升级成为代言人"
                 android:textColor="@color/white" />
         </LinearLayout>
 

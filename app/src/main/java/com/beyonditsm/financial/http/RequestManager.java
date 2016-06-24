@@ -1,6 +1,7 @@
 package com.beyonditsm.financial.http;
 
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 
@@ -14,6 +15,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.beyonditsm.financial.MyApplication;
+import com.beyonditsm.financial.activity.user.LoginAct;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.SpUtils;
@@ -43,7 +45,7 @@ import java.util.Map;
 public class RequestManager {
     private static CommManager commManager;//共同接口
     private static UserManager userManager;//用户接口
-    private static ServicerManager servicerManager;//服务者接口
+    private static ServicerManager servicerManager;//代言人接口
     private static MangManger mangManger;//信贷经理人接口
     private static WalletManager walletManager;//钱包
 
@@ -225,7 +227,7 @@ public class RequestManager {
                     @Override
                     public void onResponse(String response) {
                         String result = response.toString();
-                        MyLogUtils.info(result);
+//                        MyLogUtils.info(result);
                         try {
                             JSONObject obj = new JSONObject(result);
                             int status = obj.getInt("status");
@@ -286,6 +288,7 @@ public class RequestManager {
         httpUtils.configCurrentHttpCacheExpiry(0);
         MyLogUtils.info("地址:" + url);
         RequestParams params = null;
+        String a = SpUtils.getCookie(MyApplication.getInstance());
         if (!"".equals(SpUtils.getCookie(MyApplication.getInstance()))) {
             params = new RequestParams();
             params.addHeader("cookie", SpUtils.getCookie(MyApplication.getInstance()));
@@ -314,11 +317,13 @@ public class RequestManager {
                     JSONObject obj = new JSONObject(result);
                     int status = obj.getInt("status");
                     if (status == 200) {
-
                         callBack.onSucess(result);
-                    } else {
+                    }else if(status == 600){
+                        SpUtils.clearSp(MyApplication.getInstance());
+                        SpUtils.clearRoleName(MyApplication.getInstance());
+                    }
+                    else {
                         callBack.onError(obj.getInt("status"), obj.getString("message"));
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

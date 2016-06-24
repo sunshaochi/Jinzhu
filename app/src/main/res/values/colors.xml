@@ -2,7 +2,7 @@
 <resources>
     <color name="main_color">#f58b35</color>
     <color name="white">#ffffff</color>
-
+    <color name="gray_rom">#f4f4f4</color>
     <!-- 底部按钮线-->
     <color name="bottom_lines">#b2b2b2</color>
     <!-- 背景色-->

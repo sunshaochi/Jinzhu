@@ -23,10 +23,14 @@ import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.credit.CreditStepAct;
 import com.beyonditsm.financial.activity.manager.ManagerMainAct;
 import com.beyonditsm.financial.activity.servicer.ServiceMainAct;
+import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserEntity;
+import com.beyonditsm.financial.entity.UserLoginEntity;
 import com.beyonditsm.financial.fragment.MineFragment;
 import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.AutoAnimImageView;
 import com.lidroid.xutils.view.annotation.event.OnClick;
@@ -57,6 +61,7 @@ public class LoginAct extends BaseActivity{
     private RelativeLayout loginBtn;//登录
     private TextView loginLostPwd;//忘记密码
     private TextView login_zc;//注册
+    private String roleName;
     private AutoAnimImageView progressBar1;
 
     private String phone, pwd;
@@ -150,6 +155,7 @@ public class LoginAct extends BaseActivity{
                     progressBar1.setVisibility(View.VISIBLE);
                     UserEntity ue = new UserEntity();
                     ue.setUsername(phone);
+                    ParamsUtil.getInstance().setUserID(loginPhone.getText().toString()+"");
                     ue.setPassword(pwd);
                     toLogin(ue);
                 }
@@ -239,7 +245,7 @@ public class LoginAct extends BaseActivity{
                             String agencyIdTag=data.optString("agencyIdTag");
                             SpUtils.setRoleName(getApplicationContext(), roleName);
                             SpUtils.setToken(getApplicationContext(), token);
-
+//
                             if(JPushInterface.isPushStopped(getApplicationContext())){
                                 JPushInterface.resumePush(getApplicationContext());
                             }
@@ -293,10 +299,18 @@ public class LoginAct extends BaseActivity{
                             } else if (roleName.equals("ROLE_COMMON_CLIENT")) {
                                 sendBroadcast(new Intent(MainActivity.UPDATATAB));
                                 sendBroadcast(new Intent(MineFragment.UPDATE_USER));
+                                if(null != ParamsUtil.getInstance().getServiceMainAct()){
+                                    ParamsUtil.getInstance().getServiceMainAct().finish();
+                                }
                                 gotoActivity(MainActivity.class, true);
                             } else {
                                 sendBroadcast(new Intent(ServiceMainAct.UPDATATAB));
+                                if(null != ParamsUtil.getInstance().getMainAct()){
+                                    ParamsUtil.getInstance().getMainAct().finish();
+                                }
+
                                 gotoActivity(ServiceMainAct.class, true);
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -386,7 +400,7 @@ public class LoginAct extends BaseActivity{
 
                             JSONObject jsonObject = new JSONObject(result);
                             JSONObject data = jsonObject.getJSONObject("data");
-                            String roleName = data.getString("roleName");
+                            roleName = data.getString("roleName");
                             String accountId=data.optString("accountAlias");
                             String agencyIdTag=data.optString("agencyIdTag");
                             SpUtils.setRoleName(getApplicationContext(), roleName);
@@ -406,18 +420,9 @@ public class LoginAct extends BaseActivity{
 
                                 }
                             });
+                            getUserLoginInfo();
 
-                            if ("ROLE_CREDIT_MANAGER".equals(roleName)) {
-                                sendBroadcast(new Intent(ManagerMainAct.UPDATATAB));
-                                gotoActivity(ManagerMainAct.class, true);
-                            } else if (roleName.equals("ROLE_COMMON_CLIENT")) {
-                                sendBroadcast(new Intent(MainActivity.UPDATATAB));
-                                sendBroadcast(new Intent(MineFragment.UPDATE_USER));
-                                gotoActivity(MainActivity.class, true);
-                            } else {
-                                sendBroadcast(new Intent(ServiceMainAct.UPDATATAB));
-                                gotoActivity(ServiceMainAct.class, true);
-                            }
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -441,7 +446,34 @@ public class LoginAct extends BaseActivity{
     }
 
 
+    /**
+     * 获取用户的角色信息
+     */
+    private void getUserLoginInfo() {
+        RequestManager.getUserManager().findUserLoginInfo(new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                ResultData<UserLoginEntity> rd = (ResultData<UserLoginEntity>) GsonUtils.json(result, UserLoginEntity.class);
+                ParamsUtil.getInstance().setUle(rd.getData());
+                if ("ROLE_CREDIT_MANAGER".equals(roleName)) {
+                    sendBroadcast(new Intent(ManagerMainAct.UPDATATAB));
+                    gotoActivity(ManagerMainAct.class, true);
+                } else if (roleName.equals("ROLE_COMMON_CLIENT")) {
+                    sendBroadcast(new Intent(MainActivity.UPDATATAB));
+                    sendBroadcast(new Intent(MineFragment.UPDATE_USER));
+                    gotoActivity(MainActivity.class, true);
+                } else {
+                    sendBroadcast(new Intent(ServiceMainAct.UPDATATAB));
+                    gotoActivity(ServiceMainAct.class, true);
+                }
+            }
 
+            @Override
+            public void onError(int status, String msg) {
+                getUserLoginInfo();
+            }
+        });
+    }
     /**
      * 登录
      */

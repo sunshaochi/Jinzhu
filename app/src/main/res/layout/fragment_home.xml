@@ -79,7 +79,7 @@
                     style="@style/home_text_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="服务者" />
+                    android:text="代言人" />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/ll_creditCard"

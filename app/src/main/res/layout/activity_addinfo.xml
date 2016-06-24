@@ -252,7 +252,7 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/button_gen"
                 android:gravity="center"
-                android:text="提交服务者资料"
+                android:text="提交代言人资料"
                 android:textColor="@color/white" />
 
 

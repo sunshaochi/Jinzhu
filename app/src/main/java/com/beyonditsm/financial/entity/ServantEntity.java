@@ -35,7 +35,7 @@ public class ServantEntity implements Parcelable {
      * isValid : 1
      * mobile :
      * secailSecurity : 0
-     * userName : 服务者
+     * userName : 代言人
      * nativePlaceAddr : null
      * marrySts : null
      * accountId : 2c908c7e514c18e001514cddb1450009
@@ -61,7 +61,7 @@ public class ServantEntity implements Parcelable {
     private String createPersonId;//创建人ID
     private String bankAccNo;//银行账号
     private String wkCardPic;//工作证图片
-    private String servantId;//服务者ID
+    private String servantId;//代言人ID
     private Integer userAge;//年龄
     private String detailAddr;//详细地址
     private Integer proFund;//是否有公积金 1有 0 无

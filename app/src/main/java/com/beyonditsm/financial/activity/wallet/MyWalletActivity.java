@@ -41,7 +41,7 @@ public class MyWalletActivity extends BaseActivity {
     @ViewInject(R.id.civHead)
     private ScaleAllImageView civHead;//头像
     @ViewInject(R.id.tvName)
-    private TextView tvName;//用户身份（服务者）
+    private TextView tvName;//用户身份（代言人）
     @ViewInject(R.id.tvPhone)
     private TextView tvPhone;//用户电话号
     @ViewInject(R.id.rlMyPayments)
@@ -131,11 +131,18 @@ public class MyWalletActivity extends BaseActivity {
     private void setUserLogin() {
         if (ule != null) {
             if (!TextUtils.isEmpty(ule.getDescription())) {
-                tvName.setText(ule.getDescription());
+//                tvName.setText(ule.getDescription());
+                tvName.setText("代言人");
             }
             if (!TextUtils.isEmpty(ule.getUsername())) {
                 tvPhone.setText(ule.getUsername());
             }
+            if(null != ParamsUtil.getInstance().getUserID() && !"".equals(ParamsUtil.getInstance().getUserID())){
+                tvPhone.setText(ParamsUtil.getInstance().getUserID());
+            }
+
+
+
         }
     }
 
@@ -231,6 +238,7 @@ public class MyWalletActivity extends BaseActivity {
         if (paymentsRedHideReceiver==null){
             paymentsRedHideReceiver = new PaymentsRedHideReceiver();
         }
+        ParamsUtil.getInstance().setWalletEnter(false);
         registerReceiver(paymentsRedDisReceiver,new IntentFilter(DISPLAY));
         registerReceiver(paymentsRedHideReceiver,new IntentFilter(HIDE));
 
@@ -302,7 +310,7 @@ public class MyWalletActivity extends BaseActivity {
     }
 
     /**
-     * 获取服务者信息
+     * 获取代言人信息
      */
     private void findServantInfo() {
 

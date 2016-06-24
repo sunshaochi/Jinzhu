@@ -295,7 +295,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
                         android:layout_toRightOf="@id/ivTuiJian"
-                        android:text="服务者" />
+                        android:text="代言人" />
 
                     <ImageView
                         style="@style/arrow_right_style"

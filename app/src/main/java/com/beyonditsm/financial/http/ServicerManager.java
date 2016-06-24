@@ -7,27 +7,29 @@ import com.beyonditsm.financial.util.GsonUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
- * 服务者接口
+ * 代言人接口
  * Created by wangbin on 15/11/23.
  */
 public class ServicerManager extends RequestManager{
 
     /**
-     * 获取服务者信息
+     * 获取代言人信息
      * @param callBack
      */
     public void findServantDetail(CallBack callBack){
-        Map<String,String> params=new HashMap<String,String>();
+        List params=new ArrayList<>();
         doPost(IFinancialUrl.SERVANT_URL, params, callBack);
     }
 
     /**
-     * 更改服务者资料
+     * 更改代言人资料
      * @param callBack
      */
     public void UpadateServantData(UserEntity userEntity,CallBack callBack){

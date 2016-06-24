@@ -3,6 +3,7 @@ package com.beyonditsm.financial.activity.user;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -17,21 +18,32 @@ import android.widget.Toast;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.MainActivity;
+import com.beyonditsm.financial.activity.wallet.MyWalletActivity;
+import com.beyonditsm.financial.db.FriendDao;
 import com.beyonditsm.financial.db.MessageDao;
+import com.beyonditsm.financial.entity.FriendBean;
 import com.beyonditsm.financial.entity.MyRecomBean;
 import com.beyonditsm.financial.entity.MyRecommeEntity;
+import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.ServantCondEntity;
+import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.entity.UserLoginEntity;
+import com.beyonditsm.financial.fragment.MineFragment;
+import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
+import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.ListViewForScrollView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshListView;
 import com.lidroid.xutils.util.LogUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.json.Gson;
 import com.tandong.sa.json.reflect.TypeToken;
+import com.tandong.sa.zUImageLoader.core.ImageLoader;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.controller.UMServiceFactory;
@@ -50,6 +62,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -58,6 +71,7 @@ import java.util.Set;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.model.UserInfo;
 
 
 /**
@@ -80,64 +94,74 @@ public class MyRecommAct extends BaseActivity {
     private ImageView ivWeibo;
     @ViewInject(R.id.iv_qq)
     private ImageView ivQQ;
-    @ViewInject(R.id.tvRoleName)
-    private TextView RoleName;
-    @ViewInject(R.id.tv_BecomeServant)
-    private TextView BecomeServant;
+//    @ViewInject(R.id.tvRoleName)
+//    private TextView RoleName;
+//    @ViewInject(R.id.tv_BecomeServant)
+//    private TextView BecomeServant;
     @ViewInject(R.id.tvServant)
     private TextView tvServant;
     @ViewInject(R.id.rl_servant)
     private RelativeLayout rlServant;
     @ViewInject(R.id.lv_servantCond)
     private ListViewForScrollView lvServantCond;
-    @ViewInject(R.id.tv_recommedUserCount)
-    private TextView tvRecommedUserCount;
-    @ViewInject(R.id.tv_recommedTotalAmt)
-    private TextView tvRecommeTotalAmt;
+//    @ViewInject(R.id.tv_recommedUserCount)
+//    private TextView tvRecommedUserCount;
+    @ViewInject(R.id.recommendedLoanAmount)
+    private TextView recommendedLoanAmount;
+    @ViewInject(R.id.recommendedCCardAmount)
+    private TextView recommendedCCardAmount;
+    @ViewInject(R.id.handledRewardAmount)
+    private TextView handledRewardAmount;
+    @ViewInject(R.id.unhandledRewardAmount)
+    private TextView unhandledRewardAmount;
     @ViewInject(R.id.ll_primaryServant)
-    private LinearLayout llPrimaryServant;//初级服务者升级条件
+    private LinearLayout llPrimaryServant;//初级代言人升级条件
     @ViewInject(R.id.ll_middleServant)
-    private LinearLayout llMiddleServant;//中级服务者升级条件
+    private LinearLayout llMiddleServant;//中级代言人升级条件
     @ViewInject(R.id.ll_seniorServant)
-    private LinearLayout llSeniorServant;//高级服务者升级条件
+    private LinearLayout llSeniorServant;//高级代言人升级条件
     @ViewInject(R.id.tv_pServantName)
-    private TextView tvpServantName;//初级服务者
+    private TextView tvpServantName;//初级代言人
     @ViewInject(R.id.tv_pServantDesc)
-    private TextView tvpServantDesc;//初级服务者升级条件描述
+    private TextView tvpServantDesc;//初级代言人升级条件描述
     @ViewInject(R.id.tv_pServantPassCond)
-    private TextView tvpServantPassCond;//初级服务者升级条件完成数
+    private TextView tvpServantPassCond;//初级代言人升级条件完成数
     @ViewInject(R.id.tv_pServantTotalCond)
-    private TextView tvpServantTotalCond;//初级服务者升级条件总数
+    private TextView tvpServantTotalCond;//初级代言人升级条件总数
     @ViewInject(R.id.tv_mServantName)
-    private TextView tvmServantName;//中级服务者
+    private TextView tvmServantName;//中级代言人
     @ViewInject(R.id.tv_mServantDesc)
-    private TextView tvmServantDesc;//中级服务者升级条件描述
+    private TextView tvmServantDesc;//中级代言人升级条件描述
     @ViewInject(R.id.tv_mServantPassCond)
-    private TextView tvmServantPassCond;//中初级服务者升级条件完成数
+    private TextView tvmServantPassCond;//中初级代言人升级条件完成数
     @ViewInject(R.id.tv_mServantTotalCond)
-    private TextView tvmServantTotalCond;//中初级服务者升级条件总数
+    private TextView tvmServantTotalCond;//中初级代言人升级条件总数
     @ViewInject(R.id.tv_hServantName)
-    private TextView tvhServantName;//高级服务者
+    private TextView tvhServantName;//高级代言人
     @ViewInject(R.id.tv_hServantDesc)
-    private TextView tvhServantDesc;//高级服务者升级条件描述
+    private TextView tvhServantDesc;//高级代言人升级条件描述
     @ViewInject(R.id.tv_hServantPassCond)
-    private TextView tvhServantPassCond;//高初级服务者升级条件完成数
+    private TextView tvhServantPassCond;//高初级代言人升级条件完成数
     @ViewInject(R.id.tv_hServantTotalCond)
-    private TextView tvhServantTotalCond;//高初级服务者升级条件总数
+    private TextView tvhServantTotalCond;//高初级代言人升级条件总数
     @ViewInject(R.id.ll_servantCondInfo)
-    private LinearLayout llServantCondInfo;//服务者升级条件
-
+    private LinearLayout llServantCondInfo;//代言人升级条件
+    @ViewInject(R.id.already)
+    private ImageView alreadyImg;
+    @ViewInject(R.id.btn_receiveReward)
+    private ImageView btnReward;
 
     private List<MyRecomBean.RowsEntity> datas = new ArrayList<>();
     private MyRecommeEntity fre;
     private UMSocialService mController;
     private Context context;
     private UserLoginEntity ule;
-
-//    private String title = "金蛛金服，业内返佣减利最高，欢迎加入抢钱大队";
-    private String title = "成为金蛛服务者，躺着就能赚钱！";
+    private UserEntity user;//用户信息
+    private int RewardAmount;
+    //    private String title = "金蛛金服，业内返佣减利最高，欢迎加入抢钱大队";
+    private String title = "成为金蛛代言人，躺着就能赚钱！";
 //    private String content = "金蛛金服－－圆你土豪梦想";
-    private String content = "金蛛金服，业内史无前例的贴息返佣力度，只做最快速、方便、低息的银行贷款。成为服务者，和小伙伴一起赚钱，成为土豪不是梦~";
+    private String content = "金蛛金服，业内史无前例的贴息返佣力度，只做最快速、方便、低息的银行贷款。成为代言人，和小伙伴一起赚钱，成为土豪不是梦~";
     private FrAdapter frAdapter;
 
     String yqUrl = "http://m.myjinzhu.com/#/tab/home?redirctUrl=/register/";
@@ -158,7 +182,7 @@ public class MyRecommAct extends BaseActivity {
         setTopTitle("我的推荐");
         setLeftTv("返回");
         rlServant.setVisibility(View.VISIBLE);
-        tvServant.setText("服务者");
+        tvServant.setText("代言人指南");
         rlServant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,6 +192,10 @@ public class MyRecommAct extends BaseActivity {
             }
         });
         ule = getIntent().getParcelableExtra("userLogin");
+        getIntent().removeExtra("userLogin");
+//        if (ule == null){
+//            get
+//        }
         context = MyRecommAct.this;
 //        if (frAdapter == null) {
 //            frAdapter = new FrAdapter();
@@ -176,22 +204,11 @@ public class MyRecommAct extends BaseActivity {
 //        fr_tj_list.setPullRefreshEnabled(false);
 //        findFriendList();
 
-        getRoleInfo();
-        getServantCondInfo();
+//        getRoleInfo();
+//        getServantCondInfo();
         getServantRmdIfo();
 
-
-        Bitmap bitmap = null;
-        if (ule != null)
-            bitmap = FinancialUtil.createQRImage(yqUrl + ule.getMyReferralCode());
-        else
-            bitmap = FinancialUtil.createQRImage(yqUrl);
-        ivTuiJianMa.setScaleType(ImageView.ScaleType.FIT_XY);
-        ivTuiJianMa.setImageBitmap(bitmap);
-        if (ule != null) {
-//            tvTuijianma.setText(ule.getMyReferralCode());
-            tvTuijianma.setText(ule.getUsername());
-        }
+        setQRImg();
 
         shareListener();
 
@@ -199,30 +216,51 @@ public class MyRecommAct extends BaseActivity {
         mController.getConfig().closeToast();
     }
 
-    private void getRoleName() {
-//        String roleName = SpUtils.getRoleName(this);
-        if ("ROLE_COMMON_CLIENT".equals(roleName)) {//普通用户
-            llServantCondInfo.setVisibility(View.GONE);
-            BecomeServant.setVisibility(View.VISIBLE);
-            RoleName.setVisibility(View.GONE);
-            BecomeServant.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    applyServant();
-                }
-            });
+    private void setQRImg() {
+        Bitmap bitmap = null;
+        if (ule != null)
+            bitmap = FinancialUtil.createQRImage(yqUrl + ule.getMyReferralCode());
+        else
+            bitmap = FinancialUtil.createQRImage(yqUrl);
+        ivTuiJianMa.setScaleType(ImageView.ScaleType.FIT_XY);
+        ivTuiJianMa.setImageBitmap(bitmap);
 
-        } else if ("ROLE_SERVANT_PRIMARY".equals(roleName)) {//初级服务者
-            RoleName.setVisibility(View.VISIBLE);
-        } else if ("ROLE_SERVANT_MIDDLE".equals(roleName)) {//中级服务者
-            RoleName.setVisibility(View.VISIBLE);
-            llMiddleServant.setVisibility(View.GONE);
-        } else {//高级服务者
-            RoleName.setVisibility(View.VISIBLE);
-            llServantCondInfo.setVisibility(View.GONE);
+        if (ule != null ) {
+//            tvTuijianma.setText(ule.getMyReferralCode());
+            tvTuijianma.setText(ule.getMyReferralCode());
+        }else if (user != null){
+            tvTuijianma.setText(user.getUsername());
+        }
+        if(null != ParamsUtil.getInstance().getUserID() && !"".equals(ParamsUtil.getInstance().getUserID())){
+            tvTuijianma.setText(ParamsUtil.getInstance().getUserID());
         }
 
     }
+
+//    private void getRoleName() {
+////        String roleName = SpUtils.getRoleName(this);
+//        if ("ROLE_COMMON_CLIENT".equals(roleName)) {//普通用户
+//            llServantCondInfo.setVisibility(View.GONE);
+////            BecomeServant.setVisibility(View.VISIBLE);
+//            RoleName.setVisibility(View.GONE);
+////            BecomeServant.setOnClickListener(new View.OnClickListener() {
+////                @Override
+////                public void onClick(View v) {
+////                    applyServant();
+////                }
+////            });
+//
+//        } else if ("ROLE_SERVANT_PRIMARY".equals(roleName)) {//初级代言人
+//            RoleName.setVisibility(View.VISIBLE);
+//        } else if ("ROLE_SERVANT_MIDDLE".equals(roleName)) {//中级代言人
+//            RoleName.setVisibility(View.VISIBLE);
+//            llMiddleServant.setVisibility(View.GONE);
+//        } else {//高级代言人
+//            RoleName.setVisibility(View.VISIBLE);
+//            llServantCondInfo.setVisibility(View.GONE);
+//        }
+//
+//    }
 
     private void shareListener() {
         ivWeixin.setOnClickListener(new View.OnClickListener() {
@@ -289,7 +327,63 @@ public class MyRecommAct extends BaseActivity {
             }
         });
     }
+    /**
+     * 点击事件
+     *
+     * @param v
+     */
+    @OnClick({ R.id.btn_receiveReward, R.id.ll_wallet})
+    public void toClick(View v) {
+        switch (v.getId()) {
+            //按钮下方的代言人
+//            case R.id.enter_service:
+//                Intent intent = new Intent(MyRecommAct.this, ServantSpecialAct.class);
+//                startActivity(intent);
+//                break;
+            //立即领取按钮
+            case R.id.btn_receiveReward:
+                RequestManager.getCommManager().getServantReward(new RequestManager.CallBack() {
+                    @Override
+                    public void onSucess(String result) {
 
+                        JSONObject obj = null;
+                        try {
+                            obj = new JSONObject(result);
+                        JSONObject data = obj.getJSONObject("data");
+                        int handledAmount = data.getInt("handledAmount");
+                            if (handledAmount > 0){
+                                MyToastUtils.showShortDebugToast(MyRecommAct.this,"领取奖励成功，奖励已发放到您的钱包中");
+                                handledRewardAmount.setText("¥ "+(RewardAmount + handledAmount) +" 元");
+                                sendBroadcast(new Intent(MineFragment.WALLET_POINT));
+                            }else{
+                                MyToastUtils.showShortDebugToast(MyRecommAct.this,"您已在其他终端领取，不可重复领取");
+                            }
+
+                            alreadyImg.setVisibility(View.VISIBLE);
+                            btnReward.setVisibility(View.GONE);
+                            unhandledRewardAmount.setVisibility(View.GONE);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+//                        MyToastUtils.showShortToast(MyRecommAct.this,result.getBytes("handled"));
+                    }
+
+                    @Override
+                    public void onError(int status, String msg) {
+                        MyToastUtils.showShortToast(MyRecommAct.this,msg);
+                    }
+                });
+                break;
+            //累计收益进入我的钱包
+            case R.id.ll_wallet:
+                Intent intent2 = new Intent(MyRecommAct.this,  MyWalletActivity.class);
+                intent2.putExtra("userLogin",ule);
+                intent2.putExtra("userInfo",user);
+                startActivity(intent2);
+                break;
+        }
+    }
 
     private void weixinCircleShare() {
         //appID和appScret不正确，需要修改
@@ -574,74 +668,74 @@ public class MyRecommAct extends BaseActivity {
         TextView tvMyReferralCode;
     }
 
-    /**
-     * 服务者条件获取
-     */
-    private void getServantCondInfo() {
-        RequestManager.getCommManager().getServantCondInfo(new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
-                JSONObject object = new JSONObject(result);
-                JSONArray data = object.getJSONArray("data");
-                Gson gson = new Gson();
-                List<ServantCondEntity> list = gson.fromJson(data.toString(), new TypeToken<List<ServantCondEntity>>() {
-                }.getType());
-                String mServantName = list.get(1).getServantName();
-                String hServantName = list.get(2).getServantName();
-                if (!TextUtils.isEmpty(mServantName)&&!TextUtils.isEmpty(hServantName)){
-                    tvmServantName.setText(mServantName);
-                    tvhServantName.setText(hServantName);
-                }
-                String mServantDesc = list.get(1).getServantDesc();
-                String hServantDesc = list.get(2).getServantDesc();
-                if (!TextUtils.isEmpty(mServantDesc)&&!TextUtils.isEmpty(hServantDesc)){
-                    tvmServantDesc.setText(mServantDesc);
-                    tvhServantDesc.setText(hServantDesc);
-                }
-                int mServantPassCond = list.get(1).getServantPassCond();
-                int hServantPassCond = list.get(2).getServantPassCond();
-                if (!TextUtils.isEmpty(String.valueOf(mServantPassCond))&&!TextUtils.isEmpty(String.valueOf(hServantPassCond))){
-                    tvmServantPassCond.setText(mServantPassCond+"");
-                    tvhServantPassCond.setText(hServantPassCond+"");
-                }
-                int mServantTotalCond = list.get(1).getServantTotalCond();
-                int hServantTotalCond = list.get(2).getServantTotalCond();
-                if (!TextUtils.isEmpty(String.valueOf(mServantTotalCond))&&!TextUtils.isEmpty(String.valueOf(hServantTotalCond))){
-                    tvmServantTotalCond.setText(mServantTotalCond+"");
-                    tvhServantTotalCond.setText(hServantTotalCond+"");
-                }
-
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-
-            }
-        });
-    }
-
-    /*我要成为服务者*/
-    private void applyServant() {
-        RequestManager.getCommManager().applyServant(new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
-                BecomeServant.setVisibility(View.GONE);
-                JSONObject object = new JSONObject(result);
-                String message = object.getString("message");
-                MyToastUtils.showShortToast(getApplicationContext(), "恭喜成为服务者，请重新登录");
-                SpUtils.setRoleName(getApplicationContext(), "ROLE_SERVANT_PRIMARY");
-//                getRoleInfo();
-//                Intent intent = new Intent(MyRecommAct.this, LoginAct.class);
-//                startActivity(intent);
-                logout();
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-
-            }
-        });
-    }
+//    /**
+//     * 代言人条件获取
+//     */
+//    private void getServantCondInfo() {
+//        RequestManager.getCommManager().getServantCondInfo(new RequestManager.CallBack() {
+//            @Override
+//            public void onSucess(String result) throws JSONException {
+//                JSONObject object = new JSONObject(result);
+//                JSONArray data = object.getJSONArray("data");
+//                Gson gson = new Gson();
+//                List<ServantCondEntity> list = gson.fromJson(data.toString(), new TypeToken<List<ServantCondEntity>>() {
+//                }.getType());
+//                String mServantName = list.get(1).getServantName();
+//                String hServantName = list.get(2).getServantName();
+//                if (!TextUtils.isEmpty(mServantName)&&!TextUtils.isEmpty(hServantName)){
+//                    tvmServantName.setText(mServantName);
+//                    tvhServantName.setText(hServantName);
+//                }
+//                String mServantDesc = list.get(1).getServantDesc();
+//                String hServantDesc = list.get(2).getServantDesc();
+//                if (!TextUtils.isEmpty(mServantDesc)&&!TextUtils.isEmpty(hServantDesc)){
+//                    tvmServantDesc.setText(mServantDesc);
+//                    tvhServantDesc.setText(hServantDesc);
+//                }
+//                int mServantPassCond = list.get(1).getServantPassCond();
+//                int hServantPassCond = list.get(2).getServantPassCond();
+//                if (!TextUtils.isEmpty(String.valueOf(mServantPassCond))&&!TextUtils.isEmpty(String.valueOf(hServantPassCond))){
+//                    tvmServantPassCond.setText(mServantPassCond+"");
+//                    tvhServantPassCond.setText(hServantPassCond+"");
+//                }
+//                int mServantTotalCond = list.get(1).getServantTotalCond();
+//                int hServantTotalCond = list.get(2).getServantTotalCond();
+//                if (!TextUtils.isEmpty(String.valueOf(mServantTotalCond))&&!TextUtils.isEmpty(String.valueOf(hServantTotalCond))){
+//                    tvmServantTotalCond.setText(mServantTotalCond+"");
+//                    tvhServantTotalCond.setText(hServantTotalCond+"");
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onError(int status, String msg) {
+//
+//            }
+//        });
+//    }
+//
+//    /*我要成为代言人*/
+//    private void applyServant() {
+//        RequestManager.getCommManager().applyServant(new RequestManager.CallBack() {
+//            @Override
+//            public void onSucess(String result) throws JSONException {
+//                BecomeServant.setVisibility(View.GONE);
+//                JSONObject object = new JSONObject(result);
+//                String message = object.getString("message");
+//                MyToastUtils.showShortToast(getApplicationContext(), "恭喜成为代言人，请重新登录");
+//                SpUtils.setRoleName(getApplicationContext(), "ROLE_SERVANT_PRIMARY");
+////                getRoleInfo();
+////                Intent intent = new Intent(MyRecommAct.this, LoginAct.class);
+////                startActivity(intent);
+//                logout();
+//            }
+//
+//            @Override
+//            public void onError(int status, String msg) {
+//
+//            }
+//        });
+//    }
 
     private void logout() {
         RequestManager.getCommManager().toLoginOut(new RequestManager.CallBack() {
@@ -676,17 +770,48 @@ public class MyRecommAct extends BaseActivity {
         finish();
     }
 
-    //获取服务者推荐信息
+    //获取代言人推荐信息
     private void getServantRmdIfo() {
         RequestManager.getCommManager().getServantRmdInfo(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
                 JSONObject object = new JSONObject(result);
                 JSONObject data = object.getJSONObject("data");
-                int recommedUserCnt = data.getInt("recommedUserCnt");
-                int recommedTotalAmt = data.getInt("recommedTotalAmt");
-                tvRecommedUserCount.setText(recommedUserCnt + "");
-                tvRecommeTotalAmt.setText(recommedTotalAmt + "");
+                int LoanAmount = data.getInt("recommendedLoanAmount");
+                int CCardAmount = data.getInt("recommendedCCardAmount");
+                RewardAmount = data.getInt("handledRewardAmount");
+                int unhandledAmount = data.getInt("unhandledRewardAmount");
+                JSONArray rewards = data.getJSONArray("rewards");
+                for (int i =0;i<rewards.length();i++){
+                    JSONObject jsonObject = rewards.getJSONObject(i);
+                    if(jsonObject.getInt("level") == 1){
+                        ParamsUtil.getInstance().setFirstWard(jsonObject.getDouble("percentage"));
+                        ParamsUtil.getInstance().setFirstCardWard(jsonObject.getDouble("fixedBonus"));
+                    }else if(jsonObject.getInt("level") == 2){
+                        ParamsUtil.getInstance().setSecWard(jsonObject.getDouble("percentage"));
+                        ParamsUtil.getInstance().setSecCardWard(jsonObject.getDouble("fixedBonus"));
+                    }else if(jsonObject.getInt("level") == 3){
+                        ParamsUtil.getInstance().setThirdWard(jsonObject.getDouble("percentage"));
+                        ParamsUtil.getInstance().setThirdCardWard(jsonObject.getDouble("fixedBonus"));
+                    }
+                }
+//                tvRecommedUserCount.setText(recommedUserCnt + "");
+                float num= (float)LoanAmount/10000;
+                DecimalFormat df = new DecimalFormat("0.00");//格式化小数
+                String s = df.format(num);//返回的是String类型
+                recommendedLoanAmount.setText("¥ "+s + " 万元");
+                recommendedCCardAmount.setText(CCardAmount + "");
+                handledRewardAmount.setText("¥ "+RewardAmount + " 元");
+                unhandledRewardAmount.setText("待领取 "+unhandledAmount + " 元");
+                if (unhandledAmount>0){
+                    alreadyImg.setVisibility(View.GONE);
+                    unhandledRewardAmount.setVisibility(View.VISIBLE);
+                    btnReward.setVisibility(View.VISIBLE);
+                }else {
+                    alreadyImg.setVisibility(View.VISIBLE);
+                    unhandledRewardAmount.setVisibility(View.GONE);
+                    btnReward.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -696,28 +821,72 @@ public class MyRecommAct extends BaseActivity {
         });
     }
 
-    //获取角色信息
-    private void getRoleInfo() {
-        RequestManager.getCommManager().getRoleInfo(new RequestManager.CallBack() {
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getUserInfo();
+    }
+
+    /**
+     * 获取用户信息
+     */
+    private void getUserInfo() {
+
+        RequestManager.getCommManager().findUserInfo(new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) {
+                ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
+                user = rd.getData();
+
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+            }
+        });
+    }
+
+    //获取奖励（修改资料）
+    private void getReceiveReward(UserEntity userEntity){
+        RequestManager.getCommManager().getReceiveReward(userEntity,new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-                JSONObject object = new JSONObject(result);
-                JSONObject data = object.getJSONObject("data");
-                roleName = data.getString("name");
-                description = data.getString("description");
-                SpUtils.setRoleName(getApplicationContext(), roleName);
-                if (!TextUtils.isEmpty(description)) {
-                    RoleName.setText(description);
-                }
-                getServantCondInfo();
-                getRoleName();
-
+                MyToastUtils.showShortToast(getApplicationContext(),"恭喜您已成功领取奖励，请至我的钱包查收");
+                ParamsUtil.getInstance().setWalletEnter(true);
+                finish();
             }
 
             @Override
             public void onError(int status, String msg) {
-
+                MyToastUtils.showShortToast(getApplicationContext(),"已领取过奖励，用户信息修改成功");
+                finish();
             }
         });
     }
+    //    //获取角色信息
+//    private void getRoleInfo() {
+//        RequestManager.getCommManager().getRoleInfo(new RequestManager.CallBack() {
+//            @Override
+//            public void onSucess(String result) throws JSONException {
+//                JSONObject object = new JSONObject(result);
+//                JSONObject data = object.getJSONObject("data");
+//                roleName = data.getString("name");
+//                description = data.getString("description");
+//                SpUtils.setRoleName(getApplicationContext(), roleName);
+//                if (!TextUtils.isEmpty(description)) {
+//                    RoleName.setText(description);
+//                }
+////                getServantCondInfo();
+//                getRoleName();
+//
+//            }
+//
+//            @Override
+//            public void onError(int status, String msg) {
+//
+//            }
+//        });
+//    }
 }

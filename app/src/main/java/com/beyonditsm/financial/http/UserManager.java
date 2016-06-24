@@ -4,7 +4,11 @@ import com.beyonditsm.financial.entity.HotProduct;
 import com.beyonditsm.financial.entity.MyRecommeEntity;
 import com.beyonditsm.financial.entity.TaskEntity;
 
+import org.apache.http.NameValuePair;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -127,7 +131,7 @@ public class UserManager extends RequestManager {
     }
 
     /**
-     * @param servantRoleType servantRoleType - 参数说明如下： servantRoleType 普通用户升级初级服务者 赋值 primary_servant 中级服务者升级中级服务者 赋值 middle_servant 中级服务者升级为高级服务者 赋值 senior_servant
+     * @param servantRoleType servantRoleType - 参数说明如下： servantRoleType 普通用户升级初级代言人 赋值 primary_servant 中级代言人升级中级代言人 赋值 middle_servant 中级代言人升级为高级代言人 赋值 senior_servant
      * @param callBack
      */
     public void uptoServant(String servantRoleType, CallBack callBack) {
@@ -170,7 +174,8 @@ public class UserManager extends RequestManager {
      * @param callBack
      */
     public void findUserLoginInfo(CallBack callBack) {
-        Map<String, String> params = new HashMap<String, String>();
+//        Map<String, String> params = new HashMap<String, String>();
+        List<NameValuePair> params = new ArrayList<>();
         doPost(IFinancialUrl.USER_LOGIN_URL, params, callBack);
     }
 

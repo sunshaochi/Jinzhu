@@ -95,21 +95,21 @@ public class ServiceDataAct extends BaseActivity {
     @ViewInject(R.id.tvHouseHold)
     private TextView tvHouseHold;
 
-    //收支银行
-    @ViewInject(R.id.tvBank)
-    private TextView tvBank;
-
-    //收支支行
-    @ViewInject(R.id.tv_subbranch)
-    private TextView tvSubbranch;
-
-    //银行账号
-    @ViewInject(R.id.tv_bankAcount)
-    private TextView tvBankAcount;
-
-    //电子邮箱
-    @ViewInject(R.id.tvEmail)
-    private TextView tvEmail;
+//    //收支银行
+//    @ViewInject(R.id.tvBank)
+//    private TextView tvBank;
+//
+//    //收支支行
+//    @ViewInject(R.id.tv_subbranch)
+//    private TextView tvSubbranch;
+//
+//    //银行账号
+//    @ViewInject(R.id.tv_bankAcount)
+//    private TextView tvBankAcount;
+//
+//    //电子邮箱
+//    @ViewInject(R.id.tvEmail)
+//    private TextView tvEmail;
 
     @ViewInject(R.id.cb_select_sex)
     private CheckBox cbSelectSex;
@@ -203,14 +203,14 @@ public class ServiceDataAct extends BaseActivity {
             if (!TextUtils.isEmpty(usrInfo.getNativePlaceAddr())) {
                 tvHouseHold.setText(usrInfo.getNativePlaceAddr());
             }
-            //银行账号
-            if (!TextUtils.isEmpty(usrInfo.getBankAccNo())) {
-                tvBankAcount.setText(usrInfo.getBankAccNo());
-            }
-            //邮箱
-            if (!TextUtils.isEmpty(usrInfo.getEmail())) {
-                tvEmail.setText(usrInfo.getEmail());
-            }
+//            //银行账号
+//            if (!TextUtils.isEmpty(usrInfo.getBankAccNo())) {
+//                tvBankAcount.setText(usrInfo.getBankAccNo());
+//            }
+//            //邮箱
+//            if (!TextUtils.isEmpty(usrInfo.getEmail())) {
+//                tvEmail.setText(usrInfo.getEmail());
+//            }
             //常住地
             if (!TextUtils.isEmpty(usrInfo.getProvince())&&!TextUtils.isEmpty(usrInfo.getCity())&&!TextUtils.isEmpty(usrInfo.getDistrict())) {
 //                tvHome.setText(se.getProvince()+se.getCity()+se.getDistrict());
@@ -222,15 +222,15 @@ public class ServiceDataAct extends BaseActivity {
             if (!TextUtils.isEmpty(usrInfo.getNativePlace())) {
                 tvCity.setText(usrInfo.getNativePlace());
             }
-            //收款支行
-            if (!TextUtils.isEmpty(usrInfo.getBankName())) {
-                tvSubbranch.setText(usrInfo.getBankName());
-            }
-            //收款银行
-            if (!TextUtils.isEmpty(usrInfo.getBankNameTitle())) {
-                tvBank.setText(usrInfo.getBankNameTitle());
-            }
-            MyLogUtils.error("收款支行" + usrInfo.getBankName() + "银行账号" + usrInfo.getBankAccNo());
+//            //收款支行
+//            if (!TextUtils.isEmpty(usrInfo.getBankName())) {
+//                tvSubbranch.setText(usrInfo.getBankName());
+//            }
+//            //收款银行
+//            if (!TextUtils.isEmpty(usrInfo.getBankNameTitle())) {
+//                tvBank.setText(usrInfo.getBankNameTitle());
+//            }
+//            MyLogUtils.error("收款支行" + usrInfo.getBankName() + "银行账号" + usrInfo.getBankAccNo());
         }
     }
 
@@ -249,18 +249,18 @@ public class ServiceDataAct extends BaseActivity {
             case 1://身份证号
                 tvCard.setText(servantInfo.getIdentCard());
                 break;
-            case 4://收支银行
-                tvBank.setText(servantInfo.getBankNameTitle());
-                break;
-            case 5://收支支行
-                tvSubbranch.setText(servantInfo.getBankName());
-                break;
-            case 6://银行账户
-                tvBankAcount.setText(servantInfo.getBankAccNo());
-                break;
-            case 7://电子邮箱
-                tvEmail.setText(servantInfo.getEmail());
-                break;
+//            case 4://收支银行
+//                tvBank.setText(servantInfo.getBankNameTitle());
+//                break;
+//            case 5://收支支行
+//                tvSubbranch.setText(servantInfo.getBankName());
+//                break;
+//            case 6://银行账户
+//                tvBankAcount.setText(servantInfo.getBankAccNo());
+//                break;
+//            case 7://电子邮箱
+//                tvEmail.setText(servantInfo.getEmail());
+//                break;
             case 8://修改年龄
                 tvAge.setText(servantInfo.getUserAge() + "");
                 break;
@@ -277,7 +277,7 @@ public class ServiceDataAct extends BaseActivity {
     }
 
     @OnClick({R.id.rlHead, R.id.rlAge, R.id.rlHome, R.id.rlName, R.id.rlCard, R.id.rlCity, R.id.rlNative,
-            R.id.rlHouseHold, R.id.rlBank, R.id.rlSubbranch, R.id.rlBankAccount, R.id.rlEmail})
+            R.id.rlHouseHold})
     public void todo(View v) {
         Intent intent = null;
         switch (v.getId()) {
@@ -370,31 +370,31 @@ public class ServiceDataAct extends BaseActivity {
                     }
                 });
                 break;
-            case R.id.rlBank://收支银行
-                intent = new Intent(this, ServiceEditAct.class);
-                intent.putExtra(ServiceEditAct.USER_TYPE, 4);
-                intent.putExtra(ServiceMineFrg.SERVANT_INFO, servantInfo);
-                startActivity(intent);
-                break;
-            case R.id.rlSubbranch://收支支行
-                intent = new Intent(this, ServiceEditAct.class);
-                intent.putExtra(ServiceEditAct.USER_TYPE, 5);
-                intent.putExtra(ServiceMineFrg.SERVANT_INFO, servantInfo);
-                startActivity(intent);
-                break;
-            case R.id.rlBankAccount://银行账号
-                intent = new Intent(this, ServiceEditAct.class);
-                intent.putExtra(ServiceEditAct.USER_TYPE, 6);
-                intent.putExtra(ServiceMineFrg.SERVANT_INFO, servantInfo);
-                startActivity(intent);
-                break;
-            case R.id.rlEmail://电子邮箱
-                intent = new Intent(this, ServiceEditAct.class);
-                intent.putExtra(ServiceEditAct.USER_TYPE, 7);
-                intent.putExtra(ServiceMineFrg.SERVANT_INFO, servantInfo);
-//                intent.putExtra(ServiceMineFrg.USER_INFO,userInfo);
-                startActivity(intent);
-                break;
+//            case R.id.rlBank://收支银行
+//                intent = new Intent(this, ServiceEditAct.class);
+//                intent.putExtra(ServiceEditAct.USER_TYPE, 4);
+//                intent.putExtra(ServiceMineFrg.SERVANT_INFO, servantInfo);
+//                startActivity(intent);
+//                break;
+//            case R.id.rlSubbranch://收支支行
+//                intent = new Intent(this, ServiceEditAct.class);
+//                intent.putExtra(ServiceEditAct.USER_TYPE, 5);
+//                intent.putExtra(ServiceMineFrg.SERVANT_INFO, servantInfo);
+//                startActivity(intent);
+//                break;
+//            case R.id.rlBankAccount://银行账号
+//                intent = new Intent(this, ServiceEditAct.class);
+//                intent.putExtra(ServiceEditAct.USER_TYPE, 6);
+//                intent.putExtra(ServiceMineFrg.SERVANT_INFO, servantInfo);
+//                startActivity(intent);
+//                break;
+//            case R.id.rlEmail://电子邮箱
+//                intent = new Intent(this, ServiceEditAct.class);
+//                intent.putExtra(ServiceEditAct.USER_TYPE, 7);
+//                intent.putExtra(ServiceMineFrg.SERVANT_INFO, servantInfo);
+////                intent.putExtra(ServiceMineFrg.USER_INFO,userInfo);
+//                startActivity(intent);
+//                break;
 
         }
     }

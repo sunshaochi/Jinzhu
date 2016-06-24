@@ -4,14 +4,14 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * 升级服务者返沪信息条件
+ * 升级代言人返沪信息条件
  * Created by wangbin on 15/12/8.
  */
 public class UpServantEntity implements Parcelable {
 
     /**
      * status : 200
-     * data : {"_primaryTaskCt":67,"_seniorTaskCt":0,"_recommendCount":0,"_creditScoreInt":0,"totalStatus":"false","_middleTaskCt":0,"_customerMustAddInt":0,"message":"升级初级服务者的条件里还有未达标的项目"}
+     * data : {"_primaryTaskCt":67,"_seniorTaskCt":0,"_recommendCount":0,"_creditScoreInt":0,"totalStatus":"false","_middleTaskCt":0,"_customerMustAddInt":0,"message":"升级初级代言人的条件里还有未达标的项目"}
      * message : 成功！
      */
 
@@ -24,7 +24,7 @@ public class UpServantEntity implements Parcelable {
      * totalStatus : false
      * _middleTaskCt : 0
      * _customerMustAddInt : 0
-     * message : 升级初级服务者的条件里还有未达标的项目
+     * message : 升级初级代言人的条件里还有未达标的项目
      */
 
     private DataEntity data;

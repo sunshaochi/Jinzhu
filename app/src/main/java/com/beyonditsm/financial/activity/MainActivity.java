@@ -1,6 +1,7 @@
 package com.beyonditsm.financial.activity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -23,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.beyonditsm.financial.AppManager;
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.RongCloudEvent;
@@ -44,6 +46,7 @@ import com.beyonditsm.financial.util.GeneralUtils;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
 import com.lidroid.xutils.util.LogUtils;
 import com.lidroid.xutils.view.annotation.event.OnClick;
@@ -126,11 +129,11 @@ public class MainActivity extends BaseActivity {
     public void setLayout() {
         setContentView(R.layout.activity_main);
     }
-
     @Override
     public void init(Bundle savedInstanceState) {
 //        getCity();
 //        RongIM.setUserInfoProvider(this, true);
+        ParamsUtil.getInstance().setMainAct(this);
         gUtils = new GeneralUtils();
 
 
@@ -166,6 +169,7 @@ public class MainActivity extends BaseActivity {
 
 //        if(NetUtil.isWifiConnection(getApplicationContext())){
         gUtils.toVersion(MainActivity.this, FinancialUtil.getAppVer(MainActivity.this), 1);
+
 //        }
 
     }
@@ -265,6 +269,8 @@ public class MainActivity extends BaseActivity {
             //沟通
             case R.id.llChat:
                 if (TextUtils.isEmpty(SpUtils.getRoleName(MainActivity.this).toString())) {
+//                    Intent intent = new Intent(MainActivity.this,LoginAct.class);
+//                    ParamsUtil.getInstance().setMainAct((Activity)getBaseContext());
                     gotoActivity(LoginAct.class, false);
                 } else {
                     switch (title) {
@@ -485,6 +491,11 @@ public class MainActivity extends BaseActivity {
         setTabSelection(1);
         setCheckItem(1);
     }
+    public void onEvent(MineFragment.SwitchEvent event) {
+        setAllTabNor();
+        setTabSelection(0);
+        setCheckItem(0);
+    }
 
     private void setCheckItem(int position) {
         switch (position) {
@@ -516,10 +527,11 @@ public class MainActivity extends BaseActivity {
         } else {
             if (RongIM.getInstance() != null)
                 RongIM.getInstance().disconnect();
-//            finish();
+            finish();
             try {
+//                AppManager.getAppManager().AppExit(null);
                 Thread.sleep(500);
-                android.os.Process.killProcess(android.os.Process.myPid());
+//                android.os.Process.killProcess(android.os.Process.myPid());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -561,6 +573,7 @@ public class MainActivity extends BaseActivity {
         registerReceiver(hideRedPointReceiver, new IntentFilter(HIDE_REDPOINT));
         registerReceiver(displayRedReceiver, new IntentFilter(DISPLAY_REDPOINT));
         super.onStart();
+//        MyLogUtils.degug("MainAct开始运行了");
     }
 
     @Override

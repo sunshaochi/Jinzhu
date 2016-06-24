@@ -31,7 +31,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * 服务者钱包
+ * 代言人钱包
  * Created by Yang on 2015/11/13 0013.
  */
 public class MyWalletFrg extends BaseFragment implements View.OnClickListener {

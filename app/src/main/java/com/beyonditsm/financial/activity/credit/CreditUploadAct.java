@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.PersistableBundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
@@ -257,7 +258,6 @@ public class CreditUploadAct extends BaseActivity {
                         MyBitmapUtils.saveBitmap(compressB, "upload/cache/credit_upload.png");
                     }
 
-
                     break;
                 case PHOTOTAKE:// 拍照
 //                    path = photoSavePath + photoSaveName;
@@ -413,7 +413,6 @@ public class CreditUploadAct extends BaseActivity {
             holder.lvUpLoad.setAdapter(new ImageAdapter(list.get(position).getImage(), list.get(position).getUploadItemId(), list.get(position).getLimit()));
             return convertView;
         }
-
         public class ViewHolder {
             public final MyListView lvUpLoad;
             public final TextView tvImgDes;

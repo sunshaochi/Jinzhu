@@ -17,7 +17,8 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <!--<uses-permission android:name="android.permission.WRITE_APN_SETTINGS" />-->
+    <!-- <uses-permission android:name="android.permission.WRITE_APN_SETTINGS" /> -->
+
 
     <!-- 用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -42,9 +43,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- QQ、QQ空间所需权限 -->
     <uses-permission android:name="android.permission.GET_TASKS" />
-    <!-- TextIn权限-->
-    <uses-permission  android:name = "android.permission.READ_LOGS" />
-    <!-- TextIn权限-->
+    <!-- TextIn权限 -->
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <!-- TextIn权限 -->
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
@@ -186,7 +187,7 @@
             android:name=".activity.user.HomeCreditDetailAct"
             android:screenOrientation="portrait" />
 
-        <!-- 服务者主act -->
+        <!-- 代言人主act -->
         <activity
             android:name=".activity.servicer.ServiceMainAct"
             android:launchMode="singleTask"
@@ -211,17 +212,17 @@
         <activity
             android:name=".activity.servicer.WithdrawalsAct"
             android:screenOrientation="portrait" />
-        <!-- 服务者设置界面 -->
-        <!-- 服务者修改密码界面 -->
+        <!-- 代言人设置界面 -->
+        <!-- 代言人修改密码界面 -->
         <activity
             android:name=".activity.servicer.ChangePwdAct"
             android:screenOrientation="portrait" />
-        <!-- 服务者我的资料界面 -->
+        <!-- 代言人我的资料界面 -->
         <activity
             android:name=".activity.servicer.ServiceDataAct"
             android:screenOrientation="portrait" />
 
-        <!-- 服务者修改资料条目界面 -->
+        <!-- 代言人修改资料条目界面 -->
         <activity
             android:name=".activity.servicer.ServiceEditAct"
             android:screenOrientation="portrait" />
@@ -397,9 +398,8 @@
         <!-- 贷款引导 -->
         <activity
             android:name=".activity.credit.CreditGuideAct"
-            android:screenOrientation="portrait"
-            android:hardwareAccelerated="false"
-            />
+            android:screenOrientation="portrait" />
+        <!-- android:hardwareAccelerated="false" -->
         <!-- 上传 -->
         <activity
             android:name=".activity.credit.CreditUploadAct"
@@ -408,7 +408,7 @@
         <activity
             android:name=".activity.credit.SubFlowAct"
             android:screenOrientation="portrait" />
-        <!-- 服务者专题 -->
+        <!-- 代言人专题 -->
         <activity
             android:name=".activity.user.ServantSpecialAct"
             android:screenOrientation="portrait" />
@@ -446,7 +446,7 @@
             android:configChanges="orientation|keyboard"
             android:launchMode="singleTask"
             android:noHistory="true"
-            android:windowSoftInputMode="stateVisible|adjustResize"/>
+            android:windowSoftInputMode="stateVisible|adjustResize" />
 
         <!-- 腾讯SSO授权的Activity注册 -->
         <activity
@@ -478,7 +478,7 @@
         <!-- ###################添加UmengAppkey###################### -->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="5668ecbde0f55aa3b5002968"/>
+            android:value="5668ecbde0f55aa3b5002968" />
 
         <!-- 推广渠道 -->
         <!-- <meta-data android:value="Wandoujia" android:name="UMENG_CHANNEL"/> -->
@@ -518,7 +518,7 @@
         <service
             android:name="cn.jpush.android.service.DownloadService"
             android:enabled="true"
-            android:exported="false"/>
+            android:exported="false" />
 
         <!-- Required SDK 核心功能 -->
         <!-- 可配置android:process参数将PushService放在其他进程中 -->
@@ -546,7 +546,9 @@
                 <category android:name="com.beyonditsm.financial" />
             </intent-filter>
         </service>
-
+        <!-- 百度定位服务 -->
+        <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
+        </service>
         <!-- Required SDK核心功能 -->
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
@@ -609,12 +611,19 @@
 
 
         <!-- 设置TestIn AppKey -->
-        <meta-data  android:name = "TESTIN_APPKEY"  android:value = "a50d2b5acb4bdaff30006cc017a6a991" />
+        <meta-data
+            android:name="TESTIN_APPKEY"
+            android:value="a50d2b5acb4bdaff30006cc017a6a991" />
         <!-- 设置TestIn 渠道信息 -->
-        <meta-data  android:name = "TESTIN_CHANNEL"  android:value = "" />
-
-        <activity android:name=".activity.credit.CreditWebView"/>
-
+        <meta-data
+            android:name="TESTIN_CHANNEL"
+            android:value="" />
+        <!-- 设置百度定位信息 -->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="SCD6ctOISQ4TtbuHj2bus7xG6rN6zgVu" />
+        <activity android:name=".activity.credit.CreditWebView" />
+        <activity android:name=".activity.user.JinZhuIndexWeb"></activity>
     </application>
 
 </manifest>
