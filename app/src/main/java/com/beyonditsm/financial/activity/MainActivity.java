@@ -73,7 +73,8 @@ public class MainActivity extends BaseActivity {
     private ImageView ivMes;//沟通
     private ImageView iv_tag;//沟通有未读消息小红点
     private TextView tvMes;
-    private ImageView ivMine;//我的
+    private ImageView ivMine;//我的4
+
     private TextView tvMine;
     private TextView title_chat;
     private TextView title_friend;

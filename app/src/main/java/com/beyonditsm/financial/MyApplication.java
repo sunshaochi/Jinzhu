@@ -3,13 +3,17 @@ package com.beyonditsm.financial;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
-import android.os.Build;
 import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.beyonditsm.financial.util.SpUtils;
+import com.beyonditsm.financial.util.gps.GPSAddressUtils;
 import com.lidroid.xutils.util.LogUtils;
 import com.tandong.sa.zUImageLoader.cache.disc.naming.Md5FileNameGenerator;
 import com.tandong.sa.zUImageLoader.core.ImageLoader;
@@ -17,6 +21,7 @@ import com.tandong.sa.zUImageLoader.core.ImageLoaderConfiguration;
 import com.tandong.sa.zUImageLoader.core.assist.QueueProcessingType;
 import com.testin.agent.TestinAgent;
 import com.testin.agent.TestinAgentConfig;
+
 
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
@@ -37,6 +42,10 @@ public class MyApplication extends Application {
     public static String downloadApkUrl;
 
     private RequestQueue mRequestQueue;
+    // 百度定位参数
+    public LocationClient mLocationClient = null;
+    public BDLocationListener myListener = new MyLocationListener();
+    // 百度定位参数
     public static final String TAG = "VolleyPatterns";
 
     public static MyApplication getInstance() {
@@ -69,6 +78,15 @@ public class MyApplication extends Application {
         JPushInterface.init(this);            // 初始化 JPush
         initImageLoader(this);
         initTestIn();
+        getLocation();
+
+    }
+
+    private void getLocation() {
+        mLocationClient = new LocationClient(getApplicationContext());     //声明LocationClient类
+        GPSAddressUtils.initLocation(mLocationClient);
+        mLocationClient.registerLocationListener( myListener );    //注册监听函数
+        mLocationClient.start();
     }
 
     private void initTestIn() {
@@ -202,5 +220,32 @@ public class MyApplication extends Application {
         if (mRequestQueue != null) {
             mRequestQueue.cancelAll(tag);
         }
+    }
+    class MyLocationListener implements BDLocationListener {
+
+        @Override
+        public void onReceiveLocation(BDLocation location) {
+            //Receive Location
+//
+            if (location.getLocType() == BDLocation.TypeGpsLocation) {// GPS定位结果
+//
+            } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {// 网络定位结果
+
+                SpUtils.setCity(getApplicationContext(),location.getCity());
+
+                mLocationClient.stop();
+
+            } else if (location.getLocType() == BDLocation.TypeNetWorkException) {
+
+                mLocationClient.stop();
+
+            } else if (location.getLocType() == BDLocation.TypeCriteriaException) {
+
+                mLocationClient.stop();
+
+            }
+
+        }
+
     }
 }

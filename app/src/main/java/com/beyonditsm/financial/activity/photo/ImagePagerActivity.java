@@ -86,7 +86,6 @@ public class ImagePagerActivity extends FragmentActivity {
 			@Override
 			public void onClick(View v) {
 				new Thread(new Runnable() {
-
 					@Override
 					public void run() {
 						boolean isSave = sts.ToSDCard(ImagePagerActivity.this,

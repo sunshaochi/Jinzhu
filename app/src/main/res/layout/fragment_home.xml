@@ -19,7 +19,26 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="68dp">
-
+            <LinearLayout
+                android:id="@+id/ll_gps"
+                android:layout_width="160dp"
+                android:layout_height="68dp"
+                android:orientation="horizontal"
+                android:paddingLeft="5dp"
+                android:gravity="center_vertical"
+                >
+                    <TextView
+                        android:id="@+id/tv_city"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <ImageView
+                        android:src="@mipmap/white_arrow_down"
+                        android:scaleType="fitCenter"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp" />
+            </LinearLayout>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

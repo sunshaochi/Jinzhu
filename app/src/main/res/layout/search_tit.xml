@@ -6,8 +6,77 @@
     android:orientation="horizontal"
     android:gravity="center_vertical"
     android:padding="15dp">
-
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="33dp"
+        android:orientation="horizontal"
+        >
+        <RadioButton
+            android:id="@+id/rb_bank"
+            android:button="@null"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:id="@+id/arrow1"
+            android:layout_width="15dp"
+            android:src="@mipmap/arrow_black"
+            android:layout_height="match_parent" />
+        <View
+            android:layout_marginLeft="2dp"
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="#d6d6d6"/>
+        <RadioButton
+            android:id="@+id/rb_range"
+            android:button="@null"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:id="@+id/arrow2"
+            android:layout_width="15dp"
+            android:src="@mipmap/arrow_black"
+            android:layout_height="match_parent" />
+        <View
+            android:layout_marginLeft="2dp"
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="#d6d6d6"/>
+        <RadioButton
+            android:id="@+id/rb_money"
+            android:button="@null"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:id="@+id/arrow3"
+            android:layout_width="15dp"
+            android:src="@mipmap/arrow_black"
+            android:layout_height="match_parent" />
+        <View
+            android:layout_marginLeft="2dp"
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="#d6d6d6"/>
+        <RadioButton
+            android:id="@+id/rb_time"
+            android:button="@null"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:id="@+id/arrow4"
+            android:layout_width="15dp"
+            android:src="@mipmap/arrow_black"
+            android:layout_height="match_parent" />
+    </RadioGroup>
     <RelativeLayout
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="33dp"
         android:background="@drawable/et_back"
@@ -53,6 +122,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:visibility="gone"
         android:id="@+id/rlMonth"
         android:layout_width="wrap_content"
         android:layout_height="33dp"

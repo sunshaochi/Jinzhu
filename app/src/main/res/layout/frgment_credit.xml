@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/bg_color"
     android:orientation="vertical">
 
@@ -10,26 +11,24 @@
     <include layout="@layout/search_tit"></include>
 
     <View style="@style/view_line"></View>
-
-    <FrameLayout
+    <com.beyonditsm.financial.view.slidebottompanel.SlideBottomPanel
+        android:id="@+id/sbp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.beyonditsm.financial.view.pullfreshview.LoadRefreshView
-            android:id="@+id/plv"
-            style="@style/pullrefresh_style"
-            android:layout_marginTop="1px"></com.beyonditsm.financial.view.pullfreshview.LoadRefreshView>
-        <com.beyonditsm.financial.view.LoadingView
-            android:id="@+id/loadView"
+        android:layout_height="match_parent"
+        app:sbp_panel_height="200dp"
+        app:sbp_background_layout="@layout/background_layout"
+        app:sbp_title_height_no_display="0dp"
+        >
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></com.beyonditsm.financial.view.LoadingView>
+            android:layout_height="200dp"
+            android:background="#ffffff"
+            android:orientation="vertical">
+            <ListView
+                android:id="@+id/lv_credit_sort"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </FrameLayout>
+    </com.beyonditsm.financial.view.slidebottompanel.SlideBottomPanel>
 
-        <ImageView
-            android:id="@+id/ivSuspen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginTop="60dp"
-            android:background="@mipmap/suspension_icon" />
-    </FrameLayout>
 </LinearLayout>

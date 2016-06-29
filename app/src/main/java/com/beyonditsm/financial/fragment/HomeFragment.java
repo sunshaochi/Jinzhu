@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.beyonditsm.financial.ConstantValue;
 import com.beyonditsm.financial.R;
@@ -36,6 +37,7 @@ import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
+import com.beyonditsm.financial.widget.gpscity.DialogChooseCity;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.eventbus.EventBus;
@@ -73,6 +75,8 @@ public class HomeFragment extends BaseFragment {
     private LinearLayout llWork;
     @ViewInject(R.id.ivSuspen)
     private ImageView ivSuspen;
+    @ViewInject(R.id.tv_city)
+    private TextView tvCity;
     private CreditFragment creditFragment;
     private int currentPage = 1;
     private HomeCreditAdapter adapter;
@@ -104,7 +108,7 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
 //        getHotProductList(currentPage);
-
+        tvCity.setText(SpUtils.getCity(getContext()));
         String roleName = SpUtils.getRoleName(context);
         MyLogUtils.info("ROLENAME="+roleName);
 //        if (!"ROLE_COMMON_CLIENT".equals(roleName)&&!TextUtils.isEmpty(roleName)){//普通用户显示贷款指南
@@ -179,7 +183,7 @@ public class HomeFragment extends BaseFragment {
         });
     }
 
-    @OnClick({R.id.ll_credit, R.id.ll_tillage, R.id.ll_work,R.id.ivSuspen,R.id.ll_creditCard})
+    @OnClick({R.id.ll_credit, R.id.ll_tillage, R.id.ll_work,R.id.ivSuspen,R.id.ll_creditCard,R.id.ll_gps})
     public void toClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
@@ -225,6 +229,23 @@ public class HomeFragment extends BaseFragment {
                     startActivity(intent);
                 }
                 break;
+            case R.id.ll_gps://GPS
+                DialogChooseCity dialogChooseAdress1 = new DialogChooseCity(context).builder();
+                dialogChooseAdress1.show();
+                dialogChooseAdress1.setOnSheetItemClickListener(new DialogChooseCity.SexClickListener() {
+                    @Override
+                    public void getAdress(List<String> adress) {
+                        if (adress.get(1).length()>4){
+                            tvCity.setText(adress.get(1).substring(0,4)+"...");
+                        }else {
+                            tvCity.setText(adress.get(1));
+                        }
+
+//                        userInfo.setNativePlaceAddr(adress.get(0)+adress.get(1)+adress.get(2));
+//                        updateData(userInfo, 2);
+                    }
+                });
+                break;
         }
     }
 
@@ -267,8 +288,10 @@ public class HomeFragment extends BaseFragment {
                 }
                 datas.addAll(hotList);
                 if (adapter == null) {
-                    adapter = new HomeCreditAdapter(getContext(), hotList);
-                    plvHotCredit.getRefreshableView().setAdapter(adapter);
+                    if (null != getContext()){
+                        adapter = new HomeCreditAdapter(getContext(), hotList);
+                        plvHotCredit.getRefreshableView().setAdapter(adapter);
+                    }
                 } else {
                     adapter.setDatas(hotList);
                 }
@@ -302,21 +325,5 @@ public class HomeFragment extends BaseFragment {
             }
         });
     }
-//    private void initLocation(){
-//        LocationClientOption option = new LocationClientOption();
-//        option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy
-//        );//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
-//        option.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系
-//        int span=1000;
-//        option.setScanSpan(span);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
-//        option.setIsNeedAddress(true);//可选，设置是否需要地址信息，默认不需要
-//        option.setOpenGps(true);//可选，默认false,设置是否使用gps
-//        option.setLocationNotify(true);//可选，默认false，设置是否当gps有效时按照1S1次频率输出GPS结果
-//        option.setIsNeedLocationDescribe(true);//可选，默认false，设置是否需要位置语义化结果，可以在BDLocation.getLocationDescribe里得到，结果类似于“在北京天安门附近”
-//        option.setIsNeedLocationPoiList(true);//可选，默认false，设置是否需要POI结果，可以在BDLocation.getPoiList里得到
-//        option.setIgnoreKillProcess(false);//可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
-//        option.SetIgnoreCacheException(false);//可选，默认false，设置是否收集CRASH信息，默认收集
-//        option.setEnableSimulateGps(false);//可选，默认false，设置是否需要过滤gps仿真结果，默认需要
-//        mLocationClient.setLocOption(option);
-//    }
+
 }

@@ -12,10 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.ConstantValue;
@@ -35,8 +38,10 @@ import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.LoadingView;
+import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
+import com.beyonditsm.financial.view.slidebottompanel.SlideBottomPanel;
 import com.beyonditsm.financial.widget.DialogChooseMonth;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
@@ -64,7 +69,26 @@ public class CreditFragment extends BaseFragment {
     private TextView tvSearch;//搜索
     @ViewInject(R.id.ivSuspen)
     private ImageView ivSuspen;
-
+    @ViewInject(R.id.rb_bank)
+    private RadioButton rbBank; // 银行
+    @ViewInject(R.id.rb_range)
+    private RadioButton rbRange;//排序方式
+    @ViewInject(R.id.rb_money)
+    private RadioButton rbMoney; //按金额
+    @ViewInject(R.id.rb_time)
+    private RadioButton rbTime; //按时间
+    @ViewInject(R.id.arrow1)
+    private ImageView arrow1;
+    @ViewInject(R.id.arrow2)
+    private ImageView arrow2;
+    @ViewInject(R.id.arrow3)
+    private ImageView arrow3;
+    @ViewInject(R.id.arrow4)
+    private ImageView arrow4;
+    @ViewInject(R.id.sbp)
+    private SlideBottomPanel sbp;
+    @ViewInject(R.id.lv_credit_sort)
+    private ListView lvCreditSort;
 //    @ViewInject(R.id.rlMoney)
 //    private RelativeLayout rlMoney;
 //    @ViewInject(R.id.tvMoney)
@@ -100,6 +124,8 @@ public class CreditFragment extends BaseFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         tvTitle.setText("贷款");
+        initTit();
+        sbp = (SlideBottomPanel) getView().findViewById(R.id.sbp);
         String roleName = SpUtils.getRoleName(context);
 //        if (!"ROLE_COMMON_CLIENT".equals(roleName)&&!TextUtils.isEmpty(roleName)){//非普通用户显示代言人指南
 //            ivSuspen.setBackgroundResource(R.mipmap.servant_guide);
@@ -115,6 +141,7 @@ public class CreditFragment extends BaseFragment {
         plv.getRefreshableView().setVerticalScrollBarEnabled(false);
         plv.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
         plv.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
+        lvCreditSort.setAdapter(new ArrayAdapter<>(context, R.layout.list_item, getData()));
         plv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
@@ -140,6 +167,20 @@ public class CreditFragment extends BaseFragment {
         });
         /*把回车键换成搜索*/
         etAmount.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+    }
+    private ArrayList<String> getData()
+    {
+        ArrayList list = new ArrayList();
+        for (int i = 0; i < 20; i++) {
+            list.add("Item " + i);
+        }
+        return list;
+    }
+    private void initTit() {
+        rbBank.setText("机构类型");
+        rbRange.setText("综合排序");
+        rbMoney.setText("金额范围");
+        rbTime.setText("贷款期限");
     }
 
     @Override
@@ -296,7 +337,7 @@ public class CreditFragment extends BaseFragment {
 //        });
     }
 
-    @OnClick({R.id.tvSearch, R.id.rlMonth, R.id.ivSuspen})
+    @OnClick({R.id.tvSearch, R.id.rlMonth, R.id.ivSuspen,R.id.rb_bank,R.id.rb_time,R.id.rb_money,R.id.rb_range})
     public void toClick(View v) {
         switch (v.getId()) {
 //            case R.id.rlMoney:
@@ -305,6 +346,38 @@ public class CreditFragment extends BaseFragment {
 //            case R.id.rlDate:
 //                showDateSpinWindow();
 //                break;
+            case R.id.rb_bank:
+                clearArrow();
+                clearTextColor();
+                rbBank.setTextColor(context.getResources().getColor(R.color.tv_money_color));
+                arrow1.setImageResource(R.mipmap.arrow_orienge_up);
+                sbp.reOpen();
+//                showActionSheet(new String []{"全部","光大银行","浦发银行","宜人贷"},rbBank,arrow1);
+                break;
+            case R.id.rb_money:
+                clearArrow();
+                clearTextColor();
+                rbMoney.setTextColor(context.getResources().getColor(R.color.tv_money_color));
+                arrow3.setImageResource(R.mipmap.arrow_orienge_up);
+                sbp.reOpen();
+//                showActionSheet(new String []{"全部","0-10万","10-15万","15万以上"},rbMoney,arrow3);
+                break;
+            case R.id.rb_range:
+                clearArrow();
+                clearTextColor();
+                rbRange.setTextColor(context.getResources().getColor(R.color.tv_money_color));
+                arrow2.setImageResource(R.mipmap.arrow_orienge_up);
+                sbp.reOpen();
+//                showActionSheet(new String []{"综合排序","按利率","按月供"},rbRange,arrow2);
+                break;
+            case R.id.rb_time:
+                clearArrow();
+                clearTextColor();
+                rbTime.setTextColor(context.getResources().getColor(R.color.tv_money_color));
+                arrow4.setImageResource(R.mipmap.arrow_orienge_up);
+                sbp.reOpen();
+//                showActionSheet(new String []{"全部","0-6个月","6-12个月","12个月以上"},rbTime,arrow4);
+                break;
             case R.id.rlMonth://选择月份
                 int postition;
                 if (TextUtils.isEmpty(tvM.getText().toString().trim())) {
@@ -466,4 +539,38 @@ public class CreditFragment extends BaseFragment {
         });
     }
 
+    public void showActionSheet(final String[] title, final RadioButton radioButton,ImageView arrow){
+        MySelfSheetDialog dialog = new MySelfSheetDialog(context);
+        radioButton.setTextColor(context.getResources().getColor(R.color.tv_money_color));
+        arrow.setImageResource(R.mipmap.arrow_orienge_up);
+        for (int i = 0;i<title.length;i++){
+            final int finalI = i;
+            dialog.builder().addSheetItem(title[i], MySelfSheetDialog.SheetItemColor.Red, new MySelfSheetDialog.OnSheetItemClickListener() {
+                @Override
+                public void onClick(int which) {
+//                        pbClearCache.setVisibility(View.VISIBLE);
+                radioButton.setText(title[finalI]);
+                    clearArrow();
+                    clearTextColor();
+
+                }
+            });
+        }
+
+        dialog.show();
+
+    }
+
+    public void clearTextColor(){
+        rbTime.setTextColor(context.getResources().getColor(R.color.black));
+        rbMoney.setTextColor(context.getResources().getColor(R.color.black));
+        rbRange.setTextColor(context.getResources().getColor(R.color.black));
+        rbBank.setTextColor(context.getResources().getColor(R.color.black));
+    }
+    public void clearArrow(){
+        arrow1.setImageResource(R.mipmap.arrow_black);
+        arrow2.setImageResource(R.mipmap.arrow_black);
+        arrow3.setImageResource(R.mipmap.arrow_black);
+        arrow4.setImageResource(R.mipmap.arrow_black);
+    }
 }

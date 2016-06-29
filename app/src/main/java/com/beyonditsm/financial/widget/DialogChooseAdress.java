@@ -19,7 +19,7 @@ import com.beyonditsm.financial.widget.city.CityPicker;
 import java.util.List;
 
 /**
- * 自定义选择省市区
+ * 自定义选择省
  * 
  * @author yang
  * 

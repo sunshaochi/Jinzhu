@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/title_act_layout" />
+
+    <WebView
+        android:id="@+id/wv_CreditCard"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"></WebView>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="0dp"
+                >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitXY"
+                        android:adjustViewBounds="true"
+                        android:layout_margin="0dp"
+                        android:src="@mipmap/creditcard_page11"
+                        />
+                    <ImageView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/qrcode_layout"
+                        android:src="@mipmap/qrcode"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="100dp"
+                        android:scaleType="fitCenter"
+                        android:layout_height="wrap_content" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitXY"
+                        android:adjustViewBounds="true"
+                        android:layout_margin="0dp"
+                        android:src="@mipmap/creditcard_page12"
+                        />
+                    <ImageView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/iv_application"
+                        android:src="@mipmap/shenqingdaikuan"
+                        android:layout_width="match_parent"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:scaleType="centerInside"
+                        android:layout_height="200dp"
+                        android:paddingTop="60dp"
+                        />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    >
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitXY"
+                        android:adjustViewBounds="true"
+                        android:src="@mipmap/creditcard_page14"
+                        />
+
+                    <ImageView
+                        android:id="@+id/iv_receiveReward"
+                        android:src="@mipmap/get_money"
+                        android:layout_width="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:scaleType="fitCenter"
+                        android:layout_centerInParent="true"
+                        android:layout_height="wrap_content" />
+                    <ImageView
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:id="@+id/iv_wallet"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitCenter"
+                        android:layout_alignParentBottom="true" />
+                </RelativeLayout>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/creditcard_page15"
+                    android:adjustViewBounds="true"
+                    />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/creditcard_page15"
+                    android:adjustViewBounds="true"
+                    />
+            </LinearLayout>
+
+        </ScrollView>
+
+</LinearLayout>

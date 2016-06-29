@@ -30,6 +30,7 @@ public class SpUtils {
     private static final String ISUPGRADE = "is_upgrade";
     private static final String ISRECEIVE = "is_receive";
     private static final String GETPERMISSION = "get_permission";
+    private static final String CITY = "user_city"; //定位城市
 
     public SpUtils() {
 
@@ -46,7 +47,9 @@ public class SpUtils {
     public static SharedPreferences getFinancialSp(Context context) {
         return context.getSharedPreferences(FINANCIAL_SP, Context.MODE_PRIVATE);
     }
-
+    public static SharedPreferences getCitySp(Context context) {
+        return context.getSharedPreferences(CITY, Context.MODE_PRIVATE);
+    }
     public static SharedPreferences getIsCommitSp(Context context) {
         return context.getSharedPreferences(SP_ISCOMMIT, Context.MODE_PRIVATE);
     }
@@ -67,6 +70,18 @@ public class SpUtils {
         return context.getSharedPreferences(ROLE_NAME, Context.MODE_PRIVATE);
     }
 
+    /**
+     * 定位的城市名称
+     * @param context
+     * @param city
+     */
+    public static void setCity(Context context, String city) {
+        getCitySp(context).edit().putString(CITY, city).commit();
+    }
+
+    public static String getCity(Context context) {
+        return getCitySp(context).getString(CITY, "");
+    }
     /**
      * 是否第一次进入app
      *
