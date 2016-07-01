@@ -1,4 +1,4 @@
-package com.davemorrissey.labs.subscaleview.decoder;
+package com.beyonditsm.financial.view.subscaleview.decoder;
 
 /**
  * Interface for decoder (and region decoder) factories.

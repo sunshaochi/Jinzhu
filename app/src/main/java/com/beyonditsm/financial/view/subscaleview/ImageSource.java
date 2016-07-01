@@ -1,4 +1,4 @@
-package com.davemorrissey.labs.subscaleview;
+package com.beyonditsm.financial.view.subscaleview;
 
 import android.graphics.Bitmap;
 import android.graphics.Rect;

@@ -1,12 +1,16 @@
-package com.davemorrissey.labs.subscaleview.decoder;
+package com.beyonditsm.financial.view.subscaleview.decoder;
 
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
-import android.graphics.*;
+import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
+import android.graphics.BitmapFactory;
+import android.graphics.BitmapRegionDecoder;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.text.TextUtils;
 
@@ -14,8 +18,8 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
- * Default implementation of {@link com.davemorrissey.labs.subscaleview.decoder.ImageRegionDecoder}
- * using Android's {@link android.graphics.BitmapRegionDecoder}, based on the Skia library. This
+ * Default implementation of {@link ImageRegionDecoder}
+ * using Android's {@link BitmapRegionDecoder}, based on the Skia library. This
  * works well in most circumstances and has reasonable performance due to the cached decoder instance,
  * however it has some problems with grayscale, indexed and CMYK images.
  */

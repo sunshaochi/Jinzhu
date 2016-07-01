@@ -6,6 +6,15 @@
         <attr name="border_color" format="color" />
     </declare-styleable>
 
+    <declare-styleable name="SubsamplingScaleImageView">
+        <attr name="src" format="reference"/>
+        <attr name="assetName" format="string"/>
+        <attr name="panEnabled" format="boolean"/>
+        <attr name="zoomEnabled" format="boolean"/>
+        <attr name="quickScaleEnabled" format="boolean"/>
+        <attr name="tileBackgroundColor" format="color"/>
+    </declare-styleable>
+
     <declare-styleable name="SlideBottomPanel">
         <attr name="sbp_background_layout" format="reference"/>
         <attr name="sbp_title_height_no_display" format="dimension"/>

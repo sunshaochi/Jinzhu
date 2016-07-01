@@ -1,4 +1,4 @@
-package com.davemorrissey.labs.subscaleview.decoder;
+package com.beyonditsm.financial.view.subscaleview.decoder;
 
 import android.support.annotation.NonNull;
 

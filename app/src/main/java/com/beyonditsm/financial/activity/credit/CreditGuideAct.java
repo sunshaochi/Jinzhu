@@ -12,9 +12,10 @@ import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.util.MyBitmapUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.LoadingView;
-import com.davemorrissey.labs.subscaleview.ImageSource;
-import com.davemorrissey.labs.subscaleview.ImageViewState;
-import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
+
+import com.beyonditsm.financial.view.subscaleview.ImageSource;
+import com.beyonditsm.financial.view.subscaleview.ImageViewState;
+import com.beyonditsm.financial.view.subscaleview.SubsamplingScaleImageView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 
