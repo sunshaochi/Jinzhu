@@ -405,6 +405,7 @@ public class CreditDetailAct extends BaseActivity {
 
                     @Override
                     public void onError(int status, String msg) {
+
                         MyToastUtils.showShortToast(getApplicationContext(), msg);
                     }
                 });

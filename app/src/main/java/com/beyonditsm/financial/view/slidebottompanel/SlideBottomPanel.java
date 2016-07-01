@@ -315,6 +315,7 @@ public class SlideBottomPanel extends FrameLayout {
             public void onAnimationEnd(Animator animation) {
                 isAnimating = false;
                 isPanelShowing = false;
+                mOnStateChangeListener.Hidden(true);
                 showPanelTitle(mPanel);
             }
 
@@ -322,6 +323,7 @@ public class SlideBottomPanel extends FrameLayout {
             public void onAnimationCancel(Animator animation) {
                 isAnimating = false;
                 isPanelShowing = false;
+                mOnStateChangeListener.Hidden(true);
                 showPanelTitle(mPanel);
             }
 
@@ -333,14 +335,18 @@ public class SlideBottomPanel extends FrameLayout {
     }
 
     public void displayPanel() {
+        final View mPanel = findViewWithTag(TAG_PANEL);
         if (isPanelShowing || isAnimating) {
-
+            mPanel.clearAnimation();
+            isAnimating = false;
+            isPanelShowing = false;
+            displayPanel();
             return;
         }
         if (mIsFade || mDarkFrameLayout != null) {
             mDarkFrameLayout.fade(true);
         }
-        final View mPanel = findViewWithTag(TAG_PANEL);
+
         ValueAnimator animator = ValueAnimator.ofFloat(ViewHelper.getY(mPanel), mMeasureHeight - mPanelHeight)
                 .setDuration(mAnimationDuration);
         animator.setTarget(mPanel);
@@ -410,11 +416,14 @@ public class SlideBottomPanel extends FrameLayout {
     }
 
     private void reOpenPanel() {
+        final View mPanel = findViewWithTag(TAG_PANEL);
         if (isPanelShowing()){
             if (isAnimating) {
+                mPanel.clearAnimation();
+                isAnimating = false;
+                reOpen();
                 return;
             }
-            final View mPanel = findViewWithTag(TAG_PANEL);
             final int t = (int)(mMeasureHeight - mTitleHeightNoDisplay);
             ValueAnimator animator = ValueAnimator.ofFloat(
                     ViewHelper.getY(mPanel), mMeasureHeight - mTitleHeightNoDisplay);
@@ -637,5 +646,15 @@ public class SlideBottomPanel extends FrameLayout {
 
     public boolean isPanelShowing() {
         return isPanelShowing;
+    }
+
+
+    public interface OnStateChangeListener{
+        void Hidden(boolean isHidden);
+    }
+
+    OnStateChangeListener mOnStateChangeListener;
+    public void setOnStateChangeListener(OnStateChangeListener e){
+        mOnStateChangeListener=e;
     }
 }

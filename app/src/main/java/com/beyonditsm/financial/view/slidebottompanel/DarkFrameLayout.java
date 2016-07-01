@@ -9,7 +9,7 @@ import android.view.MotionEvent;
 import android.widget.FrameLayout;
 
 /**
- * Created by NeXT on 15/8/3.
+ * Created by xuleyuan on 15/8/3.
  */
 public class DarkFrameLayout extends FrameLayout {
 

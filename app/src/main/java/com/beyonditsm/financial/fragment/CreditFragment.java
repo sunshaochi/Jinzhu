@@ -130,6 +130,7 @@ public class CreditFragment extends BaseFragment {
 //        if (!"ROLE_COMMON_CLIENT".equals(roleName)&&!TextUtils.isEmpty(roleName)){//非普通用户显示代言人指南
 //            ivSuspen.setBackgroundResource(R.mipmap.servant_guide);
 //        }
+
         loadView.setNoContentTxt("暂无此类产品，换个条件试试");
         etAmount.setSelection(etAmount.getText().length());
         rl_back.setVisibility(View.GONE);
@@ -142,6 +143,13 @@ public class CreditFragment extends BaseFragment {
         plv.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
         plv.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
         lvCreditSort.setAdapter(new ArrayAdapter<>(context, R.layout.list_item, getData()));
+        sbp.setOnStateChangeListener(new SlideBottomPanel.OnStateChangeListener() {
+            @Override
+            public void Hidden(boolean isHidden) {
+                clearArrow();
+                clearTextColor();
+            }
+        });
         plv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
