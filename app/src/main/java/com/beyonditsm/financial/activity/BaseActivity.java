@@ -1,6 +1,8 @@
 package com.beyonditsm.financial.activity;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,10 +12,21 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
+import com.beyonditsm.financial.entity.ResultData;
+import com.beyonditsm.financial.entity.UserLoginEntity;
+import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.GsonUtils;
+import com.beyonditsm.financial.util.ParamsUtil;
+import com.beyonditsm.financial.util.SpUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.tandong.sa.activity.SmartFragmentActivity;
+import com.tandong.sa.eventbus.EventBus;
 import com.umeng.analytics.MobclickAgent;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -117,18 +130,44 @@ public abstract class BaseActivity extends SmartFragmentActivity {
 
     protected void onResume() {
         super.onResume();
+//        if (null!=ParamsUtil.getInstance().getCurrentAct()){
+//            getUserLoginInfo(ParamsUtil.getInstance().getCurrentAct());
+//        }
         MobclickAgent.onResume(this);
         JPushInterface.onResume(this);
 //        immersed.setStateBarColor(this.getResources().getColor(R.color.main_color));
     }
-
+//    /**
+//     * 获取用户的角色信息
+//     */
+//    private void getUserLoginInfo(final Activity activity) {
+//        RequestManager.getUserManager().findUserLoginInfo(new RequestManager.CallBack() {
+//            @Override
+//            public void onSucess(String result) throws JSONException {
+//                JSONObject obj = new JSONObject(result);
+//                int status = obj.getInt("status");
+//                if(status == 600){
+//                    activity.startActivity(((new Intent(activity,MainActivity.class)).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)));
+//                    SpUtils.clearSp(MyApplication.getInstance());
+//                    SpUtils.clearRoleName(MyApplication.getInstance());
+//                    EventBus.getDefault().post(new SwitchEvent());
+//                }
+//            }
+//
+//            @Override
+//            public void onError(int status, String msg) {
+//            }
+//        });
+//    }
     protected void onPause() {
         super.onPause();
         JPushInterface.onPause(this);
         MobclickAgent.onPause(this);
     }
 
+    class SwitchEvent{
 
+    }
     /**
      * 获取测试设备信息
      *

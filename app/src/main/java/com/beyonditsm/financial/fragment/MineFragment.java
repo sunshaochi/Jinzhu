@@ -469,28 +469,34 @@ public class MineFragment extends BaseFragment {
         RequestManager.getUserManager().findUserLoginInfo(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-                ResultData<UserLoginEntity> rd = (ResultData<UserLoginEntity>) GsonUtils.json(result, UserLoginEntity.class);
-                ule = rd.getData();
-                if (ule!=null){
-                    int vipLevel = ule.getVipLevel();
-                    if (vipLevel==0){
-                        ivVipLevel.setBackgroundResource(R.mipmap.vip_nomal);
-                    }else if (vipLevel==1){
-                        ivVipLevel.setBackgroundResource(R.mipmap.vip1);
-                    }
-                    else if (vipLevel==2){
-                        ivVipLevel.setBackgroundResource(R.mipmap.vip2);
-                    }
-                    else if (vipLevel==3){
-                        ivVipLevel.setBackgroundResource(R.mipmap.vip3);
-                    }else if (vipLevel==4){
-                        ivVipLevel.setBackgroundResource(R.mipmap.vip4);
-                    }else if (vipLevel==5){
-                        ivVipLevel.setBackgroundResource(R.mipmap.vip5);
-                    }else if (vipLevel==6){
-                        ivVipLevel.setBackgroundResource(R.mipmap.vip6);
+                String a = result;
+                JSONObject obj = new JSONObject(result);
+                int status = obj.getInt("status");
+                if (status == 200){
+                    ResultData<UserLoginEntity> rd = (ResultData<UserLoginEntity>) GsonUtils.json(result, UserLoginEntity.class);
+                    ule = rd.getData();
+                    if (ule!=null){
+                        int vipLevel = ule.getVipLevel();
+                        if (vipLevel==0){
+                            ivVipLevel.setBackgroundResource(R.mipmap.vip_nomal);
+                        }else if (vipLevel==1){
+                            ivVipLevel.setBackgroundResource(R.mipmap.vip1);
+                        }
+                        else if (vipLevel==2){
+                            ivVipLevel.setBackgroundResource(R.mipmap.vip2);
+                        }
+                        else if (vipLevel==3){
+                            ivVipLevel.setBackgroundResource(R.mipmap.vip3);
+                        }else if (vipLevel==4){
+                            ivVipLevel.setBackgroundResource(R.mipmap.vip4);
+                        }else if (vipLevel==5){
+                            ivVipLevel.setBackgroundResource(R.mipmap.vip5);
+                        }else if (vipLevel==6){
+                            ivVipLevel.setBackgroundResource(R.mipmap.vip6);
+                        }
                     }
                 }
+
             }
 
             @Override

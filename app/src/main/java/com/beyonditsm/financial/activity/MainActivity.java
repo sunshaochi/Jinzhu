@@ -497,7 +497,11 @@ public class MainActivity extends BaseActivity {
         setTabSelection(0);
         setCheckItem(0);
     }
-
+    public void onEvent(BaseActivity.SwitchEvent event) {
+        setAllTabNor();
+        setTabSelection(3);
+        setCheckItem(3);
+    }
     private void setCheckItem(int position) {
         switch (position) {
             case 0:

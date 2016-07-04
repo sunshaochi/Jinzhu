@@ -825,6 +825,7 @@ public class MyRecommAct extends BaseActivity {
 
     @Override
     protected void onResume() {
+        ParamsUtil.getInstance().setCurrentAct(MyRecommAct.this);
         super.onResume();
         getUserInfo();
     }

@@ -21,6 +21,7 @@ import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.widget.DialogChooseMonth;
 import com.beyonditsm.financial.widget.MyAlertDialog;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -173,6 +174,12 @@ public class CreditDetailAct extends BaseActivity {
         creditMonth = null;
         creditMoney = null;
         monthlyPayments = null;
+    }
+
+    @Override
+    protected void onResume() {
+        ParamsUtil.getInstance().setCurrentAct(CreditDetailAct.this);
+        super.onResume();
     }
 
     @Override

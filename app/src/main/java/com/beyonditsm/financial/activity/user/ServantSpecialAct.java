@@ -3,18 +3,14 @@ package com.beyonditsm.financial.activity.user;
 import android.content.Intent;
 import android.graphics.PointF;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
-import com.beyonditsm.financial.activity.wallet.MyWalletActivity;
-import com.beyonditsm.financial.fragment.MineFragment;
-import com.beyonditsm.financial.http.RequestManager;
-import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
-import com.beyonditsm.financial.view.LoadingView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
@@ -45,6 +41,11 @@ public class ServantSpecialAct extends BaseActivity {
     @Override
     public void setLayout() {
         setContentView(R.layout.act_servantspecial);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
     }
 
     @Override

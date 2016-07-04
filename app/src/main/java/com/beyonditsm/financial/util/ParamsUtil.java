@@ -31,6 +31,15 @@ public class ParamsUtil {
     private double firstCardWard;
     private double secCardWard;
     private double thirdCardWard;
+    private Activity currentAct;
+
+    public Activity getCurrentAct() {
+        return currentAct;
+    }
+
+    public void setCurrentAct(Activity currentAct) {
+        this.currentAct = currentAct;
+    }
 
     public Activity getServiceMainAct() {
         return serviceMainAct;

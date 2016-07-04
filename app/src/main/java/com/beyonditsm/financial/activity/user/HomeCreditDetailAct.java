@@ -672,8 +672,14 @@ public class HomeCreditDetailAct extends BaseActivity {
         RequestManager.getUserManager().findUserLoginInfo(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-                ResultData<UserLoginEntity> rd = (ResultData<UserLoginEntity>) GsonUtils.json(result, UserLoginEntity.class);
-                ule = rd.getData();
+                String a = result;
+                JSONObject obj = new JSONObject(result);
+                int status = obj.getInt("status");
+                if (status == 200){
+                    ResultData<UserLoginEntity> rd = (ResultData<UserLoginEntity>) GsonUtils.json(result, UserLoginEntity.class);
+                    ule = rd.getData();
+                }
+
             }
 
             @Override

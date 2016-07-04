@@ -23,6 +23,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * 信用卡专题页面
@@ -166,8 +167,14 @@ public class CreditCardAct extends BaseActivity {
         RequestManager.getUserManager().findUserLoginInfo(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-                ResultData<UserLoginEntity> rd = (ResultData<UserLoginEntity>) GsonUtils.json(result, UserLoginEntity.class);
-                ule = rd.getData();
+                String a = result;
+                JSONObject obj = new JSONObject(result);
+                int status = obj.getInt("status");
+                if (status == 200){
+                    ResultData<UserLoginEntity> rd = (ResultData<UserLoginEntity>) GsonUtils.json(result, UserLoginEntity.class);
+                    ule = rd.getData();
+                }
+
             }
 
             @Override
