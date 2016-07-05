@@ -497,11 +497,11 @@ public class MainActivity extends BaseActivity {
         setTabSelection(0);
         setCheckItem(0);
     }
-    public void onEvent(BaseActivity.SwitchEvent event) {
-        setAllTabNor();
-        setTabSelection(3);
-        setCheckItem(3);
-    }
+//    public void onEvent(BaseActivity.SwitchEvent event) {
+//        setAllTabNor();
+//        setTabSelection(3);
+//        setCheckItem(3);
+//    }
     private void setCheckItem(int position) {
         switch (position) {
             case 0:
@@ -585,6 +585,9 @@ public class MainActivity extends BaseActivity {
     protected void onDestroy() {
         EventBus.getDefault().unregister(this);
         this.unregisterReceiver(myReceiver);
+        if (RongIM.getInstance() != null) {
+            RongIM.getInstance().logout();
+        }
         myReceiver = null;
         if (displayRedReceiver != null) {
             unregisterReceiver(displayRedReceiver);

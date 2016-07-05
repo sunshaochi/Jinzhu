@@ -1,5 +1,7 @@
 package com.beyonditsm.financial.fragment;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -9,7 +11,10 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -41,10 +46,12 @@ import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
+import com.beyonditsm.financial.view.slidebottompanel.DarkFrameLayout;
 import com.beyonditsm.financial.view.slidebottompanel.SlideBottomPanel;
 import com.beyonditsm.financial.widget.DialogChooseMonth;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.tandong.sa.animation.ViewHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,6 +122,8 @@ public class CreditFragment extends BaseFragment {
     private int currentP = 1;
     private CreditAdapter adapter;
     private UserLoginEntity ule;
+    private boolean isButtonShowing = false;
+    private boolean isAnimating = false;
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -150,6 +159,21 @@ public class CreditFragment extends BaseFragment {
                 clearTextColor();
             }
         });
+//        plv.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                switch (event.getAction()) {
+//                    case MotionEvent.ACTION_MOVE:
+//                        handlerMove();
+//                        break;
+//                    case MotionEvent.ACTION_UP:
+//                        break;
+//                }
+//                return false;
+//            }
+//
+//
+//        });
         plv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
@@ -176,14 +200,56 @@ public class CreditFragment extends BaseFragment {
         /*把回车键换成搜索*/
         etAmount.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
     }
-    private ArrayList<String> getData()
-    {
+
+    private void handlerMove() {
+        if (!isButtonShowing && !isAnimating) {
+
+            ValueAnimator animator = ValueAnimator.ofFloat(ViewHelper.getX(ivSuspen), 99)
+                    .setDuration(250);
+            animator.setTarget(ivSuspen);
+            animator.setInterpolator(new AccelerateInterpolator());
+//        animator.setInterpolator(mOpenAnimationInterpolator);
+            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    float value = (float) animation.getAnimatedValue();
+                    ViewHelper.setX(ivSuspen, value);
+
+                }
+            });
+            animator.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    isAnimating = true;
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    isAnimating = false;
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+                    isAnimating = false;
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+                }
+            });
+            animator.start();
+            isButtonShowing = true;
+        }
+    }
+
+    private ArrayList<String> getData() {
         ArrayList list = new ArrayList();
         for (int i = 0; i < 20; i++) {
             list.add("Item " + i);
         }
         return list;
     }
+
     private void initTit() {
         rbBank.setText("机构类型");
         rbRange.setText("综合排序");
@@ -345,7 +411,7 @@ public class CreditFragment extends BaseFragment {
 //        });
     }
 
-    @OnClick({R.id.tvSearch, R.id.rlMonth, R.id.ivSuspen,R.id.rb_bank,R.id.rb_time,R.id.rb_money,R.id.rb_range})
+    @OnClick({R.id.tvSearch, R.id.rlMonth, R.id.ivSuspen, R.id.rb_bank, R.id.rb_time, R.id.rb_money, R.id.rb_range})
     public void toClick(View v) {
         switch (v.getId()) {
 //            case R.id.rlMoney:
@@ -522,7 +588,7 @@ public class CreditFragment extends BaseFragment {
                     } else {
                         adapter.setNotifyChange(datas, creditTotal, creditTime);
                     }
-                }else if (TextUtils.isEmpty(etAmount.getText().toString().trim())||TextUtils.isEmpty(tvM.getText().toString().trim())){
+                } else if (TextUtils.isEmpty(etAmount.getText().toString().trim()) || TextUtils.isEmpty(tvM.getText().toString().trim())) {
                     MyToastUtils.showShortToast(getActivity(), "请输入贷款金额或贷款期限");
                     return;
                 } else {
@@ -547,17 +613,17 @@ public class CreditFragment extends BaseFragment {
         });
     }
 
-    public void showActionSheet(final String[] title, final RadioButton radioButton,ImageView arrow){
+    public void showActionSheet(final String[] title, final RadioButton radioButton, ImageView arrow) {
         MySelfSheetDialog dialog = new MySelfSheetDialog(context);
         radioButton.setTextColor(context.getResources().getColor(R.color.tv_money_color));
         arrow.setImageResource(R.mipmap.arrow_orienge_up);
-        for (int i = 0;i<title.length;i++){
+        for (int i = 0; i < title.length; i++) {
             final int finalI = i;
             dialog.builder().addSheetItem(title[i], MySelfSheetDialog.SheetItemColor.Red, new MySelfSheetDialog.OnSheetItemClickListener() {
                 @Override
                 public void onClick(int which) {
 //                        pbClearCache.setVisibility(View.VISIBLE);
-                radioButton.setText(title[finalI]);
+                    radioButton.setText(title[finalI]);
                     clearArrow();
                     clearTextColor();
 
@@ -569,13 +635,14 @@ public class CreditFragment extends BaseFragment {
 
     }
 
-    public void clearTextColor(){
+    public void clearTextColor() {
         rbTime.setTextColor(context.getResources().getColor(R.color.black));
         rbMoney.setTextColor(context.getResources().getColor(R.color.black));
         rbRange.setTextColor(context.getResources().getColor(R.color.black));
         rbBank.setTextColor(context.getResources().getColor(R.color.black));
     }
-    public void clearArrow(){
+
+    public void clearArrow() {
         arrow1.setImageResource(R.mipmap.arrow_black);
         arrow2.setImageResource(R.mipmap.arrow_black);
         arrow3.setImageResource(R.mipmap.arrow_black);

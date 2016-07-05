@@ -47,23 +47,23 @@ public class HomeHotProductEntity implements Parcelable{
     private String compositiveRate;
     private String productName;
     private String loanPeriod;
-    private double monthlyRateMax;//月利率最大值
-    private double monthlyRateMin;//月利率最小值
+    private String monthlyRateMax;//月利率最大值
+    private String monthlyRateMin;//月利率最小值
 
-    public double getMonthlyRateMax() {
-        return monthlyRateMax;
-    }
-
-    public void setMonthlyRateMax(double monthlyRateMax) {
-        this.monthlyRateMax = monthlyRateMax;
-    }
-
-    public double getMonthlyRateMin() {
+    public String getMonthlyRateMin() {
         return monthlyRateMin;
     }
 
-    public void setMonthlyRateMin(double monthlyRateMin) {
+    public void setMonthlyRateMin(String monthlyRateMin) {
         this.monthlyRateMin = monthlyRateMin;
+    }
+
+    public String getMonthlyRateMax() {
+        return monthlyRateMax;
+    }
+
+    public void setMonthlyRateMax(String monthlyRateMax) {
+        this.monthlyRateMax = monthlyRateMax;
     }
 
     public int getAvgSucRate() {
@@ -167,8 +167,8 @@ public class HomeHotProductEntity implements Parcelable{
         dest.writeString(this.compositiveRate);
         dest.writeString(this.productName);
         dest.writeString(this.loanPeriod);
-        dest.writeDouble(this.monthlyRateMax);
-        dest.writeDouble(this.monthlyRateMin);
+        dest.writeString(this.monthlyRateMax);
+        dest.writeString(this.monthlyRateMin);
     }
 
     protected HomeHotProductEntity(Parcel in) {
@@ -181,8 +181,8 @@ public class HomeHotProductEntity implements Parcelable{
         this.compositiveRate = in.readString();
         this.productName = in.readString();
         this.loanPeriod = in.readString();
-        this.monthlyRateMax = in.readDouble();
-        this.monthlyRateMin = in.readDouble();
+        this.monthlyRateMax = in.readString();
+        this.monthlyRateMin = in.readString();
     }
 
     public static final Creator<HomeHotProductEntity> CREATOR = new Creator<HomeHotProductEntity>() {

@@ -158,7 +158,8 @@ public class AddressBookAct extends BaseActivity {
                     } else if (roleName.equals("ROLE_COMMON_CLIENT")) {
                         sendBroadcast(new Intent(MainActivity.UPDATATAB));
                     } else {
-                        sendBroadcast(new Intent(ServiceMainAct.UPDATATAB));
+                        sendBroadcast(new Intent(MainActivity.UPDATATAB));
+//                        sendBroadcast(new Intent(ServiceMainAct.UPDATATAB));
                     }
                     MyToastUtils.showShortToast(getApplicationContext(), jsonData.optString("message"));
                 } else  {

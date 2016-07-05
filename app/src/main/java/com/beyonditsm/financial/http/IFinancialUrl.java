@@ -11,12 +11,12 @@ public interface IFinancialUrl {
     /*袁峰测试*/
 //    String BASE_URL = "http://172.16.5.197:8080";
     /*验收环境地址*/
-//    String BASE_URL = "http://139.196.111.82:5018";
-        /*验收环境游戏地址*/
+////    String BASE_URL = "http://139.196.111.82:5018";
+////        /*验收环境游戏地址*/
 //    String GAME_URL = "http://myjinzhu.com:5011/";
-//    /*正式地址*/
+    /*正式地址*/
 //    String BASE_URL = "http://option.myjinzhu.com";
-        /*正式游戏地址*/
+//        /*正式游戏地址*/
 //    String GAME_URL = "http://m.farm.myjinzhu.com/";
 
 

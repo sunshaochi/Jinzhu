@@ -121,6 +121,7 @@ public class HomeCreditAdapter extends BaseAdapter {
             holder.tvSymbol.setTextSize(18);
 
         }else{
+//            DecimalFormat df = new DecimalFormat("0.00");
             holder.tvRate.setText(hotProductEntity.getMonthlyRateMin() + "%~" + hotProductEntity.getMonthlyRateMax()+"%");
             holder.tvRate.setTextSize(14);
             holder.tvSymbol.setVisibility(View.GONE);

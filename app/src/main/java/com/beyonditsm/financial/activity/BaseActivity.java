@@ -165,9 +165,9 @@ public abstract class BaseActivity extends SmartFragmentActivity {
         MobclickAgent.onPause(this);
     }
 
-    class SwitchEvent{
-
-    }
+//    class SwitchEvent{
+//
+//    }
     /**
      * 获取测试设备信息
      *
