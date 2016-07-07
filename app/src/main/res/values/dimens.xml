@@ -9,4 +9,13 @@
     <dimen name="picture_pull_to_refresh_last_update_time_text_size">10dp</dimen>
     <dimen name="picture_pull_to_refresh_last_update_time_top_margin">6dp</dimen>
     <dimen name="picture_pull_to_refresh_footer_height">40dp</dimen>
+
+
+    <dimen name="fab_size_normal">64dp</dimen>
+    <dimen name="fab_size_mini">40dp</dimen>
+    <dimen name="fab_shadow_size">12dp</dimen>
+
+    <dimen name="fab_scroll_threshold">4dp</dimen>
+    <dimen name="fab_elevation_lollipop">8dp</dimen>
+    <dimen name="fab_press_translation_z">6dp</dimen>
 </resources>
