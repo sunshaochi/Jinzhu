@@ -9,7 +9,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,22 +16,18 @@ import com.beyonditsm.financial.AppManager;
 import com.beyonditsm.financial.ConstantValue;
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
-import com.beyonditsm.financial.RongCloudEvent;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.credit.CreditStepAct;
 import com.beyonditsm.financial.activity.manager.ManagerMainAct;
-import com.beyonditsm.financial.activity.servicer.ServiceMainAct;
-import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserEntity;
-import com.beyonditsm.financial.entity.UserLoginEntity;
 import com.beyonditsm.financial.fragment.MineFragment;
 import com.beyonditsm.financial.http.RequestManager;
-import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.AutoAnimImageView;
+import com.beyonditsm.financial.widget.ClearEditText;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.eventbus.EventBus;
 import com.testin.agent.TestinAgent;
@@ -47,7 +42,6 @@ import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
-import scala.App;
 
 /**
  * 登录
@@ -57,8 +51,8 @@ public class LoginAct extends BaseActivity{
 
     private RelativeLayout rlBack;//后退键
     private TextView tvTitle;//标题
-    private EditText loginPhone;//手机号
-    private EditText loginPwd;//密码
+    private ClearEditText loginPhone;//手机号
+    private ClearEditText loginPwd;//密码
     private RelativeLayout loginBtn;//登录
     private TextView loginLostPwd;//忘记密码
     private TextView login_zc;//注册
@@ -71,8 +65,8 @@ public class LoginAct extends BaseActivity{
     private void assignViews() {
         rlBack = (RelativeLayout) findViewById(R.id.rl_back);
         tvTitle = (TextView) findViewById(R.id.tv_title);
-        loginPhone = (EditText) findViewById(R.id.login_phone);
-        loginPwd = (EditText) findViewById(R.id.login_pwd);
+        loginPhone = (ClearEditText) findViewById(R.id.login_phone);
+        loginPwd = (ClearEditText) findViewById(R.id.login_pwd);
         loginBtn = (RelativeLayout) findViewById(R.id.login_btn);
         loginLostPwd = (TextView) findViewById(R.id.login_lost_pwd);
         login_zc = (TextView) findViewById(R.id.login_zc);

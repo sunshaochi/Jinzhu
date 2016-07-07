@@ -6,46 +6,6 @@
     android:orientation="vertical">
 
     <include layout="@layout/title_act_layout"></include>
-   <!-- <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/main_color">
-
-        <RelativeLayout
-            android:id="@+id/rl_back"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:onClick="goback">
-
-            <ImageView
-                android:id="@+id/ivBack"
-                android:layout_width="12dp"
-                android:layout_height="20dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:src="@mipmap/btn_back" />
-
-            <TextView
-                android:id="@+id/tvLeft"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="3dp"
-                android:layout_toRightOf="@id/ivBack"
-                android:text="返回"
-                android:textColor="#ffffff"
-                android:textSize="18sp" />
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="用户登录"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-    </RelativeLayout>-->
 
     <RelativeLayout
         android:id="@+id/ll_Login"
@@ -56,8 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingLeft="15dp"
-            android:paddingRight="25dp">
+            android:paddingLeft="15dp">
             <TextView
                 android:id="@+id/phone"
                 android:layout_width="wrap_content"
@@ -67,7 +26,7 @@
                 android:textColor="@color/tv_primary_color"
                 android:textSize="15sp" />
 
-            <EditText
+            <com.beyonditsm.financial.widget.ClearEditText
                 android:id="@+id/login_phone"
                 style="@style/zc_et"
                 android:layout_marginLeft="15dp"
@@ -88,8 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/line"
             android:orientation="horizontal"
-            android:paddingLeft="15dp"
-            android:paddingRight="25dp">
+            android:paddingLeft="15dp">
 
             <TextView
                 android:id="@+id/psw"
@@ -100,7 +58,7 @@
                 android:textColor="@color/tv_primary_color"
                 android:textSize="15sp" />
 
-            <EditText
+            <com.beyonditsm.financial.widget.ClearEditText
                 android:id="@+id/login_pwd"
                 style="@style/zc_et"
                 android:layout_marginLeft="30dp"

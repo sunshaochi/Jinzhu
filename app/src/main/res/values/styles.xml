@@ -22,7 +22,7 @@
     </style>
     <!--注册界面et-->
     <style name="zc_et">
-        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:layout_marginRight">15dp</item>
         <item name="android:layout_marginLeft">15dp</item>
         <item name="android:layout_height">40dp</item>
         <item name="android:layout_width">match_parent</item>
@@ -239,6 +239,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:background">@color/white</item>
         <item name="android:singleLine">true</item>
+        <item name="android:paddingRight">15dp</item>
     </style>
 
     <style name="iv_noData_noIntent">
