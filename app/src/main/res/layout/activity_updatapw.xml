@@ -11,7 +11,7 @@
         style="@style/input_corners"
         android:orientation="vertical">
 
-        <EditText
+        <com.beyonditsm.financial.widget.ClearEditText
             android:id="@+id/comfirmPwd1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,11 +22,12 @@
             android:hint="请输入新密码"
             android:inputType="textPassword"
             android:maxLength="20"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:paddingRight="15dp"/>
         <View
             style="@style/zc_line"
             ></View>
-        <EditText
+        <com.beyonditsm.financial.widget.ClearEditText
             android:id="@+id/comfirmPwd2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -38,7 +39,8 @@
             android:hint="确认新密码"
             android:inputType="textPassword"
             android:maxLength="20"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:paddingRight="15dp"/>
     </LinearLayout>
 
     <TextView

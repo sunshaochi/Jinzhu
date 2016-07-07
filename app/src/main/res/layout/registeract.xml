@@ -37,7 +37,7 @@
                     android:textColor="#333333"
                     android:textSize="15sp" />
 
-                <EditText
+                <com.beyonditsm.financial.widget.ClearEditText
                     android:id="@+id/reg_phone"
                     style="@style/zc_et"
                     android:layout_gravity="center_vertical"

@@ -16,8 +16,8 @@ import com.beyonditsm.financial.AppManager;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.http.RequestManager;
-import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.widget.ClearEditText;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
 import org.json.JSONException;
@@ -31,7 +31,7 @@ import java.util.TimerTask;
 public class FindPwdAct extends BaseActivity {
     private TextView gettv;
     private TextView nextttv;
-    private EditText findetphone;
+    private ClearEditText findetphone;
     private EditText findetpwd;
 
     private String name;
@@ -106,7 +106,7 @@ public class FindPwdAct extends BaseActivity {
     private void setView() {
         gettv = (TextView) findViewById(R.id.gettv);
         nextttv = (TextView) findViewById(R.id.nexttv);
-        findetphone = (EditText) findViewById(R.id.findetphone);
+        findetphone = (ClearEditText) findViewById(R.id.findetphone);
         findetpwd = (EditText) findViewById(R.id.findetpwd);
     }
 

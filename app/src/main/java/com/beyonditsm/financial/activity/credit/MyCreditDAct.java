@@ -190,6 +190,7 @@ public class MyCreditDAct extends BaseActivity {
         statusFragment.setArguments(bundle);
         detailFragment.setArguments(bundle);
         fragmentList.add(statusFragment);
+        fragmentList.add(detailFragment);
         myCreditViewpager.setAdapter(new MyAdapter(getSupportFragmentManager(), fragmentList));
         myCreditViewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

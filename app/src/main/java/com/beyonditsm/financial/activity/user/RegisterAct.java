@@ -32,6 +32,7 @@ import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.GeneralUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.SpUtils;
+import com.beyonditsm.financial.widget.ClearEditText;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
@@ -53,7 +54,7 @@ import io.rong.imlib.RongIMClient;
  * Created by Yang on 2015/11/11 0011.
  */
 public class RegisterAct extends BaseActivity {
-    private EditText regPhone;//手机号
+    private ClearEditText regPhone;//手机号
     private EditText regYzm;//验证码
     private TextView regYzmBtn;//获取验证码
     private EditText regPwd;//密码
@@ -90,7 +91,7 @@ public class RegisterAct extends BaseActivity {
     private ObjectAnimator  obaOnts;
 
     private void assignViews() {
-        regPhone = (EditText) findViewById(R.id.reg_phone);
+        regPhone = (ClearEditText) findViewById(R.id.reg_phone);
         regYzm = (EditText) findViewById(R.id.reg_yzm);
         regYzmBtn = (TextView) findViewById(R.id.reg_yzm_btn);
         regPwd = (EditText) findViewById(R.id.reg_pwd);

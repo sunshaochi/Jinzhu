@@ -3,13 +3,13 @@ package com.beyonditsm.financial.activity.servicer;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.EditText;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.entity.ChangePwdEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.widget.ClearEditText;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
 /**
@@ -17,14 +17,14 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
  * Created by Yang on 2015/11/15 0015.
  */
 public class ChangePwdAct extends BaseActivity {
-    private EditText oldPwd;
-    private EditText newPwd;
-    private EditText newPwd2;
+    private ClearEditText oldPwd;
+    private ClearEditText newPwd;
+    private ClearEditText newPwd2;
 
     private void assignViews() {
-        oldPwd = (EditText) findViewById(R.id.old_pwd);
-        newPwd = (EditText) findViewById(R.id.new_pwd);
-        newPwd2 = (EditText) findViewById(R.id.new_pwd2);
+        oldPwd = (ClearEditText) findViewById(R.id.old_pwd);
+        newPwd = (ClearEditText) findViewById(R.id.new_pwd);
+        newPwd2 = (ClearEditText) findViewById(R.id.new_pwd2);
     }
 
     @Override

@@ -11,7 +11,7 @@
         style="@style/input_corners"
         android:orientation="vertical">
 
-        <EditText
+        <com.beyonditsm.financial.widget.ClearEditText
             android:id="@+id/findetphone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,7 +22,8 @@
             android:hint="请输入手机号"
             android:inputType="phone"
             android:maxLength="13"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:layout_marginRight="15dp"/>
 
         <View android:layout_marginLeft="15dp"
             style="@style/zc_line"></View>

@@ -3,7 +3,6 @@ package com.beyonditsm.financial.activity.user;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.AppManager;
@@ -11,6 +10,7 @@ import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.widget.ClearEditText;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
 import org.json.JSONException;
@@ -20,7 +20,7 @@ import org.json.JSONException;
  * Created by wangbin on 15/11/12.
  */
 public class UpdatePwdAct extends BaseActivity {
-    private EditText comfirmPwd1, comfirmPwd2;
+    private ClearEditText comfirmPwd1, comfirmPwd2;
     private TextView comfirmtv;
     private String pwd1, pwd2;
 
@@ -42,8 +42,8 @@ public class UpdatePwdAct extends BaseActivity {
     }
 
     private void setView() {
-        comfirmPwd1 = (EditText) findViewById(R.id.comfirmPwd1);
-        comfirmPwd2 = (EditText) findViewById(R.id.comfirmPwd2);
+        comfirmPwd1 = (ClearEditText) findViewById(R.id.comfirmPwd1);
+        comfirmPwd2 = (ClearEditText) findViewById(R.id.comfirmPwd2);
         comfirmtv = (TextView) findViewById(R.id.comfirmtv);
     }
 
