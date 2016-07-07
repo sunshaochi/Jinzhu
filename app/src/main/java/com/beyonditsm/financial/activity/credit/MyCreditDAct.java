@@ -199,17 +199,6 @@ public class MyCreditDAct extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-<<<<<<< .merge_file_a03392
-                int a =myCreditViewpager.getCurrentItem();
-                for (int i = 0; i < linearArras.length; i++) {
-//                    textArras[i].setTextColor(getResources().getColor(R.color.tv_second_color));
-                    imageArras[i].setBackgroundColor(Color.TRANSPARENT);
-                    clearRedPoint();
-                }
-//                textArras[position].setTextColor(getResources().getColor(R.color.main_color));
-                imageArras[position].setBackgroundColor(getResources().getColor(R.color.main_color));
-=======
->>>>>>> .merge_file_a03420
                 clearRedPoint();
             }
 
