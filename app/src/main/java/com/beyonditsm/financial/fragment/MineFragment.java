@@ -308,18 +308,6 @@ public class MineFragment extends BaseFragment {
                         msg_top_point.setVisibility(View.GONE);
                         ivRedPoint.setVisibility(View.GONE);
                         EventBus.getDefault().post(new SwitchEvent());
-//                        Intent intent = new Intent(getActivity(), LoginAct.class);
-//                        intent.putExtra(LoginAct.LOGIN_TYPE,1);
-//                        getActivity().startActivity(intent);
-//                        getActivity().finish();
-//                        Intent intent1 = new Intent(getActivity(), MainActivity.class);
-//                        intent1.putExtra("def", "0");
-//                        getActivity().startActivity(intent1);
-//                        getActivity().finish();
-//                        isLogin = false;
-//                        tvName.setText("去登录");
-//                        tvExit.setVisibility(View.GONE);
-//                        civHead.setImageResource(R.mipmap.ava_default);
                     }
                 }).setNegativeButton("取消", null).show();
                 break;
@@ -575,6 +563,7 @@ public class MineFragment extends BaseFragment {
 
         @Override
         public void onReceive(Context context, Intent intent) {
+            //我的贷款红点显示
             ivRedPoint.setVisibility(View.VISIBLE);
             MyLogUtils.info("我的贷款红点显示");
         }

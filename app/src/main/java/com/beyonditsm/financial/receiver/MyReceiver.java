@@ -77,7 +77,7 @@ public class MyReceiver extends BroadcastReceiver {
                         MyLogUtils.info("升级代言人推送");
                         SpUtils.setIsUpgrade(context, "isUpgrade");
                         context.sendBroadcast(new Intent(ServiceMineFrg.DISPLAY_WALLET_RED));
-                    }else if (type.equals("5")){//贷款推送
+                    }else if (type.equals("5")||type.equals("7")){//贷款推送
                         MyLogUtils.info("贷款推送");
                         if (!TextUtils.isEmpty(roleName)){
                             if ("ROLE_COMMON_CLIENT".equals(roleName)){

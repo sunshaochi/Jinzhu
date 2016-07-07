@@ -737,39 +737,6 @@ public class MyRecommAct extends BaseActivity {
 //        });
 //    }
 
-    private void logout() {
-        RequestManager.getCommManager().toLoginOut(new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) {
-                if (RongIM.getInstance() != null) {
-                    RongIM.getInstance().logout();
-                }
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-
-            }
-        });
-        Set<String> set=new HashSet<String>();
-        JPushInterface.setAliasAndTags(getApplicationContext(), "", set, new TagAliasCallback() {
-            @Override
-            public void gotResult(int i, String s, Set<String> set) {
-
-            }
-        });
-        JPushInterface.clearAllNotifications(getApplicationContext());
-        MessageDao.deleteAllMes();
-        SpUtils.clearSp(getApplicationContext());
-        SpUtils.clearOrderId(getApplicationContext());
-//        Intent intent = new Intent(this, LoginAct.class);
-//        intent.putExtra(LoginAct.LOGIN_TYPE,1);
-        Intent intent1 = new Intent(MyRecommAct.this, MainActivity.class);
-        intent1.putExtra("def", "0");
-        startActivity(intent1);
-        finish();
-    }
-
     //获取代言人推荐信息
     private void getServantRmdIfo() {
         RequestManager.getCommManager().getServantRmdInfo(new RequestManager.CallBack() {
