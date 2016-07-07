@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.MyApplication;
@@ -38,6 +39,7 @@ import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.SpUtils;
+import com.beyonditsm.financial.view.MinePageLoadingView;
 import com.beyonditsm.financial.widget.MyAlertDialog;
 import com.beyonditsm.financial.widget.ScaleAllImageView;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -83,7 +85,7 @@ public class MineFragment extends BaseFragment {
     private RelativeLayout rlBack;
     @ViewInject(R.id.msg_top)
     private RelativeLayout msg_top;//右上角消息图标
-     @ViewInject(R.id.msg_top_point)
+    @ViewInject(R.id.msg_top_point)
     private ImageView msg_top_point;//右上角消息图标小红点
     @ViewInject(R.id.ivMs)
     private ImageView ivRedPoint;
@@ -91,8 +93,12 @@ public class MineFragment extends BaseFragment {
     private ImageView ivWalletRedPoint;
     @ViewInject(R.id.iv_vipLevel)
     private ImageView ivVipLevel;
-
-
+    @ViewInject(R.id.sv_mine)
+    private ScrollView svMine;
+    @ViewInject(R.id.rlMyData)
+    private RelativeLayout rlMyData;
+    @ViewInject(R.id.mplv_mine)
+    private MinePageLoadingView minePageLoadingView;
     private UserEntity user;//用户信息
     public static final String USER_KEY = "user_info";
     private boolean isLogin;
@@ -122,13 +128,14 @@ public class MineFragment extends BaseFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+
         tvTitle.setText("我");
         rlBack.setVisibility(View.GONE);
         msg_top.setVisibility(View.VISIBLE);
-        if ("".equals(SpUtils.getOrderId(MyApplication.getInstance()))){
+        if ("".equals(SpUtils.getOrderId(MyApplication.getInstance()))) {
             ivRedPoint.setVisibility(View.GONE);
             msg_top_point.setVisibility(View.GONE);
-        }else{
+        } else {
             ivRedPoint.setVisibility(View.VISIBLE);
             msg_top_point.setVisibility(View.VISIBLE);
         }
@@ -143,16 +150,60 @@ public class MineFragment extends BaseFragment {
             getUserLoginInfo();
         }
 
-
+        svMine.smoothScrollTo(0, 20);
+//        rlMyData.setFocusable(true);
+//        rlMyData.setFocusableInTouchMode(true);
+//        rlMyData.requestFocus();
     }
 
     @Override
     public void setListener() {
+        minePageLoadingView.setOnRetryListener(new MinePageLoadingView.OnRetryListener() {
+            @Override
+            public void OnRetry() {
+                getUserInfo();
+            }
+        });
+        minePageLoadingView.setOnLogOutListener(new MinePageLoadingView.OnLogOutListener() {
+            @Override
+            public void OnLogOut() {
+                        RequestManager.getCommManager().toLoginOut(new RequestManager.CallBack() {
+                            @Override
+                            public void onSucess(String result) {
+                                if (RongIM.getInstance() != null) {
+                                    RongIM.getInstance().logout();
+                                }
+                            }
+                            @Override
+                            public void onError(int status, String msg) {
 
+                            }
+                        });
+                        Set<String> set = new HashSet<String>();
+                        JPushInterface.setAliasAndTags(getActivity(), "", set, new TagAliasCallback() {
+                            @Override
+                            public void gotResult(int i, String s, Set<String> set) {
+
+                            }
+                        });
+
+                        JPushInterface.clearAllNotifications(getActivity());
+//                        FriendDao.deleteAllMes();
+                        MessageDao.deleteAllMes();
+                        SpUtils.clearSp(getContext());
+                        SpUtils.clearOrderId(getContext());
+                        getActivity().sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
+                        ivWalletRedPoint.setVisibility(View.GONE);
+                        msg_top_point.setVisibility(View.GONE);
+                        ivRedPoint.setVisibility(View.GONE);
+                        EventBus.getDefault().post(new SwitchEvent());
+
+            }
+        });
     }
 
     @OnClick({R.id.rlMyCode, R.id.rlRecomm, R.id.rlLines, R.id.rlMyCredit, R.id.rlSet, R.id.tvExit,
-            R.id.rlWork, R.id.rlMyData,R.id.msg_top,R.id.rlWallet,R.id.rlVip})
+            R.id.rlWork, R.id.rlMyData, R.id.msg_top, R.id.rlWallet, R.id.rlVip})
     public void toClick(View v) {
         Intent intent = null;
         switch (v.getId()) {
@@ -209,9 +260,9 @@ public class MineFragment extends BaseFragment {
                 break;
             //我的钱包
             case R.id.rlWallet:
-                intent=new Intent(getActivity(), MyWalletActivity.class);
-                intent.putExtra("userLogin",ule);
-                intent.putExtra("userInfo",user);
+                intent = new Intent(getActivity(), MyWalletActivity.class);
+                intent.putExtra("userLogin", ule);
+                intent.putExtra("userInfo", user);
                 getActivity().startActivity(intent);
                 break;
             //设置
@@ -239,7 +290,7 @@ public class MineFragment extends BaseFragment {
 
                             }
                         });
-                        Set<String> set=new HashSet<String>();
+                        Set<String> set = new HashSet<String>();
                         JPushInterface.setAliasAndTags(getActivity(), "", set, new TagAliasCallback() {
                             @Override
                             public void gotResult(int i, String s, Set<String> set) {
@@ -280,13 +331,15 @@ public class MineFragment extends BaseFragment {
 
             case R.id.rlVip://金蛛VIP
                 intent = new Intent(getActivity(), VipAct.class);
-                intent.putExtra("user",ule);
+                intent.putExtra("user", ule);
                 getActivity().startActivity(intent);
                 break;
         }
     }
 
-    public class SwitchEvent{}
+    public class SwitchEvent {
+    }
+
     /**
      * 获取用户信息
      */
@@ -298,7 +351,7 @@ public class MineFragment extends BaseFragment {
                 ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
                 user = rd.getData();
                 if (user != null) {
-                    if (!TextUtils.isEmpty(user.getAccountName())){
+                    if (!TextUtils.isEmpty(user.getAccountName())) {
                         tvName.setText(user.getAccountName());
                     }
                     tv_score.setText(user.getCreditScore());
@@ -313,7 +366,7 @@ public class MineFragment extends BaseFragment {
                     }
                     ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon(), civHead, options);
                     if (RongIM.getInstance() != null) {
-                        if(!TextUtils.isEmpty(user.getAccountId())){
+                        if (!TextUtils.isEmpty(user.getAccountId())) {
                             RongIM.getInstance().setCurrentUserInfo(new UserInfo(user.getAccountId(), user.getUserName(),
                                     Uri.parse(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon())));
                             RongIM.getInstance().setMessageAttachedUserInfo(true);
@@ -324,11 +377,15 @@ public class MineFragment extends BaseFragment {
                             FriendDao.saveMes(bean);
                         }
                     }
+                    minePageLoadingView.loadComplete();
+                }else {
+                    minePageLoadingView.loadError();
                 }
             }
 
             @Override
             public void onError(int status, String msg) {
+                minePageLoadingView.loadError();
             }
         });
     }
@@ -344,8 +401,8 @@ public class MineFragment extends BaseFragment {
             public void onSucess(String result) throws JSONException {
                 JSONObject object = new JSONObject(result);
                 grade = object.optString("data");
-                double dGrade=Double.valueOf(grade);
-                tvGrade.setText((int)dGrade + "%");
+                double dGrade = Double.valueOf(grade);
+                tvGrade.setText((int) dGrade + "%");
 
             }
 
@@ -364,33 +421,33 @@ public class MineFragment extends BaseFragment {
             receiver = new MyBroadCastReceiver();
         }
 
-        if (scoreReceiver==null){
-            scoreReceiver=new ScoreBroadCastReceiver();
+        if (scoreReceiver == null) {
+            scoreReceiver = new ScoreBroadCastReceiver();
         }
 
-        if(messageReceiver==null){
-            messageReceiver=new MessageBroadCastReceiver();
+        if (messageReceiver == null) {
+            messageReceiver = new MessageBroadCastReceiver();
         }
-        if (displayRedReceiver==null) {
+        if (displayRedReceiver == null) {
             displayRedReceiver = new DisplayRedReceiver();
         }
-        if (hideRedReceiver==null) {
+        if (hideRedReceiver == null) {
             hideRedReceiver = new HideRedReceiver();
         }
-        if (walletRedReceiver==null) {
+        if (walletRedReceiver == null) {
             walletRedReceiver = new WalletRedReceiver();
         }
-        if (hideWalletRedReceiver==null){
+        if (hideWalletRedReceiver == null) {
             hideWalletRedReceiver = new HideWalletRedReceiver();
         }
 
         getActivity().registerReceiver(receiver, new IntentFilter(UPDATE_USER));
-        getActivity().registerReceiver(scoreReceiver,new IntentFilter(UPDATE_SCORE));
-        getActivity().registerReceiver(messageReceiver,new IntentFilter(UPDATE_MESSAGE));
-        getActivity().registerReceiver(displayRedReceiver,new IntentFilter(DISPLAY_POINT));
-        getActivity().registerReceiver(hideRedReceiver,new IntentFilter(HIDE_POINT));
-        getActivity().registerReceiver(walletRedReceiver,new IntentFilter(WALLET_POINT));
-        getActivity().registerReceiver(hideWalletRedReceiver,new IntentFilter(HIDE_WALLET_POINT));
+        getActivity().registerReceiver(scoreReceiver, new IntentFilter(UPDATE_SCORE));
+        getActivity().registerReceiver(messageReceiver, new IntentFilter(UPDATE_MESSAGE));
+        getActivity().registerReceiver(displayRedReceiver, new IntentFilter(DISPLAY_POINT));
+        getActivity().registerReceiver(hideRedReceiver, new IntentFilter(HIDE_POINT));
+        getActivity().registerReceiver(walletRedReceiver, new IntentFilter(WALLET_POINT));
+        getActivity().registerReceiver(hideWalletRedReceiver, new IntentFilter(HIDE_WALLET_POINT));
         getUserLoginInfo();
     }
 
@@ -400,22 +457,22 @@ public class MineFragment extends BaseFragment {
         if (receiver != null) {
             getActivity().unregisterReceiver(receiver);
         }
-        if(scoreReceiver!=null){
+        if (scoreReceiver != null) {
             getActivity().unregisterReceiver(scoreReceiver);
         }
-        if(messageReceiver!=null){
+        if (messageReceiver != null) {
             getActivity().unregisterReceiver(messageReceiver);
         }
-        if (displayRedReceiver!=null) {
+        if (displayRedReceiver != null) {
             getActivity().unregisterReceiver(displayRedReceiver);
         }
-        if (hideRedReceiver!=null){
+        if (hideRedReceiver != null) {
             getActivity().unregisterReceiver(hideRedReceiver);
         }
-        if (walletRedReceiver!=null){
+        if (walletRedReceiver != null) {
             getActivity().unregisterReceiver(walletRedReceiver);
         }
-        if (hideWalletRedReceiver!=null){
+        if (hideWalletRedReceiver != null) {
             getActivity().unregisterReceiver(hideWalletRedReceiver);
         }
     }
@@ -440,9 +497,9 @@ public class MineFragment extends BaseFragment {
     }
 
     private ScoreBroadCastReceiver scoreReceiver;
-    public static final String UPDATE_SCORE="com.update.score";
+    public static final String UPDATE_SCORE = "com.update.score";
 
-    public class ScoreBroadCastReceiver extends BroadcastReceiver{
+    public class ScoreBroadCastReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -452,8 +509,9 @@ public class MineFragment extends BaseFragment {
 
 
     private MessageBroadCastReceiver messageReceiver;
-    public static final String UPDATE_MESSAGE="com.update.message";
-    public class MessageBroadCastReceiver extends BroadcastReceiver{
+    public static final String UPDATE_MESSAGE = "com.update.message";
+
+    public class MessageBroadCastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             msg_top_point.setVisibility(View.VISIBLE);
@@ -472,26 +530,24 @@ public class MineFragment extends BaseFragment {
                 String a = result;
                 JSONObject obj = new JSONObject(result);
                 int status = obj.getInt("status");
-                if (status == 200){
+                if (status == 200) {
                     ResultData<UserLoginEntity> rd = (ResultData<UserLoginEntity>) GsonUtils.json(result, UserLoginEntity.class);
                     ule = rd.getData();
-                    if (ule!=null){
+                    if (ule != null) {
                         int vipLevel = ule.getVipLevel();
-                        if (vipLevel==0){
+                        if (vipLevel == 0) {
                             ivVipLevel.setBackgroundResource(R.mipmap.vip_nomal);
-                        }else if (vipLevel==1){
+                        } else if (vipLevel == 1) {
                             ivVipLevel.setBackgroundResource(R.mipmap.vip1);
-                        }
-                        else if (vipLevel==2){
+                        } else if (vipLevel == 2) {
                             ivVipLevel.setBackgroundResource(R.mipmap.vip2);
-                        }
-                        else if (vipLevel==3){
+                        } else if (vipLevel == 3) {
                             ivVipLevel.setBackgroundResource(R.mipmap.vip3);
-                        }else if (vipLevel==4){
+                        } else if (vipLevel == 4) {
                             ivVipLevel.setBackgroundResource(R.mipmap.vip4);
-                        }else if (vipLevel==5){
+                        } else if (vipLevel == 5) {
                             ivVipLevel.setBackgroundResource(R.mipmap.vip5);
-                        }else if (vipLevel==6){
+                        } else if (vipLevel == 6) {
                             ivVipLevel.setBackgroundResource(R.mipmap.vip6);
                         }
                     }
@@ -512,8 +568,10 @@ public class MineFragment extends BaseFragment {
         getUserInfo();
 
     }
+
     public static final String DISPLAY_POINT = "com.display.point";
-    private class DisplayRedReceiver extends BroadcastReceiver{
+
+    private class DisplayRedReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -521,8 +579,10 @@ public class MineFragment extends BaseFragment {
             MyLogUtils.info("我的贷款红点显示");
         }
     }
+
     public static final String HIDE_POINT = "com.hide.point";
-    private class HideRedReceiver extends BroadcastReceiver{
+
+    private class HideRedReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -530,8 +590,10 @@ public class MineFragment extends BaseFragment {
             MyLogUtils.info("MineFragment:红点隐藏");
         }
     }
+
     public static final String WALLET_POINT = "com.wallet.point";
-    private class WalletRedReceiver extends BroadcastReceiver{
+
+    private class WalletRedReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -541,8 +603,9 @@ public class MineFragment extends BaseFragment {
         }
     }
 
-    public static  final String HIDE_WALLET_POINT = "hide_wallet_point";
-    private class HideWalletRedReceiver extends BroadcastReceiver{
+    public static final String HIDE_WALLET_POINT = "hide_wallet_point";
+
+    private class HideWalletRedReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {

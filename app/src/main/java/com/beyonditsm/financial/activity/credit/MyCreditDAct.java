@@ -197,7 +197,6 @@ public class MyCreditDAct extends BaseActivity {
         statusFragment.setArguments(bundle);
         detailFragment.setArguments(bundle);
         fragmentList.add(statusFragment);
-        fragmentList.add(detailFragment);
         myCreditViewpager.setAdapter(new MyAdapter(getSupportFragmentManager(), fragmentList));
         myCreditViewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -207,6 +206,7 @@ public class MyCreditDAct extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
+                int a =myCreditViewpager.getCurrentItem();
                 for (int i = 0; i < linearArras.length; i++) {
 //                    textArras[i].setTextColor(getResources().getColor(R.color.tv_second_color));
                     imageArras[i].setBackgroundColor(Color.TRANSPARENT);

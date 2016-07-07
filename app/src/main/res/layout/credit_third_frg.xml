@@ -170,5 +170,9 @@
                     android:layout_height="36dp" />
             </LinearLayout>
         </LinearLayout>
+        <com.beyonditsm.financial.view.LoadingView
+            android:id="@+id/lv_credit_third"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></com.beyonditsm.financial.view.LoadingView>
     </FrameLayout>
 </LinearLayout>

@@ -253,6 +253,7 @@ public class CreditSecondFrag extends BaseFragment {
 
                 break;
             case R.id.second_btn_next://下一步
+                secondBtnNext.setClickable(false);
                 upData();
                 break;
             case R.id.rlPosition://常住地
@@ -467,6 +468,7 @@ public class CreditSecondFrag extends BaseFragment {
 
             @Override
             public void onError(int status, String msg) {
+                secondBtnNext.setClickable(true);
                 Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
             }
         });
@@ -659,7 +661,7 @@ public class CreditSecondFrag extends BaseFragment {
 
                 @Override
                 public void onError(int status, String msg) {
-
+                    secondBtnNext.setClickable(true);
                 }
             });
         }
@@ -754,6 +756,7 @@ public class CreditSecondFrag extends BaseFragment {
         orderBean.setProductId(productInfo.getProductId());
         if (null == HomeCreditDetailAct.creditMoney){
             MyToastUtils.showShortToast(getContext(),"网络不给力，请返回重新提交");
+            secondBtnNext.setClickable(true);
         }else {
             orderBean.setTotalAmount(Double.parseDouble(HomeCreditDetailAct.creditMoney) * 10000 + "");//总金额
             orderBean.setTotalPeriods(HomeCreditDetailAct.creditMonth);//总期数
@@ -762,8 +765,10 @@ public class CreditSecondFrag extends BaseFragment {
                 RequestManager.getCommManager().submitOrder(orderBean, new RequestManager.CallBack() {
                     @Override
                     public void onSucess(String result) {
+                        secondBtnNext.setClickable(true);
                         llSucess.setVisibility(View.VISIBLE);
                         criSv.setVisibility(View.GONE);
+
                         try {
                             JSONObject jsonObject=new JSONObject(result);
                             reOrderId=jsonObject.getString("data");
@@ -790,6 +795,7 @@ public class CreditSecondFrag extends BaseFragment {
 
                     @Override
                     public void onError(int status, String msg) {
+                        secondBtnNext.setClickable(true);
                         MyToastUtils.showShortToast(context, msg);
                     }
                 });
