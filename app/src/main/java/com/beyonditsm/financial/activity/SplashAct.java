@@ -56,6 +56,7 @@ public class SplashAct extends BaseActivity {
 //                gotoActivity(MainActivity.class, true);
                 boolean isFirst = SpUtils.getIsFirst(getApplicationContext());
                 Intent intent = null;
+                MyApplication.getInstance().getLocation();
                 if (isFirst) {
                     // 第一次进入应用
                     intent = new Intent(SplashAct.this, GuideActivity.class);

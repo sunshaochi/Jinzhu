@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.ConstantValue;
+import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.credit.CreditGuideAct;
 import com.beyonditsm.financial.activity.user.CreditCardAct;
@@ -61,7 +62,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/12/8.
  */
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements MyApplication.LocationChangeListener{
     @ViewInject(R.id.plv_hotCredit)
     private LoadRefreshView plvHotCredit;
     @ViewInject(R.id.loadingView)
@@ -249,6 +250,13 @@ public class HomeFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void onChange(boolean changed, String cityName) {
+        if (changed){
+            tvCity.setText(cityName);
+        }
+    }
+
 
     public class ToSwitchEvent{
 
@@ -310,6 +318,7 @@ public class HomeFragment extends BaseFragment {
      * 获取用户的角色信息
      */
     private void getUserLoginInfo() {
+        MyApplication.getInstance().getLocation();
         RequestManager.getUserManager().findUserLoginInfo(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {

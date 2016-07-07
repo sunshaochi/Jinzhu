@@ -55,7 +55,7 @@ public class MyCreditStatusFragment extends BaseFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        rowe  =getArguments().getParcelable("rowe");
+        rowe  = getArguments().getParcelable("rowe");
         plvCreditStatus.setPullRefreshEnabled(true);
         plvCreditStatus.setScrollLoadEnabled(false);
         plvCreditStatus.setPullLoadEnabled(false);

@@ -82,26 +82,26 @@ public class MyApplication extends Application {
 
     }
 
-    private void getLocation() {
+    public void getLocation() {
         mLocationClient = new LocationClient(getApplicationContext());     //声明LocationClient类
         GPSAddressUtils.initLocation(mLocationClient);
-        mLocationClient.registerLocationListener( myListener );    //注册监听函数
+        mLocationClient.registerLocationListener(myListener);    //注册监听函数
         mLocationClient.start();
     }
 
     private void initTestIn() {
 
-            TestinAgentConfig config =  new  TestinAgentConfig.Builder(getApplicationContext())
-                    .withAppKey("a50d2b5acb4bdaff30006cc017a6a991")             // Appkey of your appliation, required
-                    .withAppChannel("")         // Channel of your application
-                    .withDebugModel( true )        // Output the crash log in local if you open debug mode
-                    .withErrorActivity( true )     // Output the activity info in crash or error log
-                    .withCollectNDKCrash( true )   // Collect NDK crash or not if you use our NDK
-                    .withOpenCrash( true )         // Monitor crash if true
-                    .withReportOnlyWifi( true )    // Report data only on wifi mode
-                    .withReportOnBack( true )      // allow to report data when application in background
-                    .build();
-            TestinAgent.init(config);
+        TestinAgentConfig config = new TestinAgentConfig.Builder(getApplicationContext())
+                .withAppKey("a50d2b5acb4bdaff30006cc017a6a991")             // Appkey of your appliation, required
+                .withAppChannel("")         // Channel of your application
+                .withDebugModel(true)        // Output the crash log in local if you open debug mode
+                .withErrorActivity(true)     // Output the activity info in crash or error log
+                .withCollectNDKCrash(true)   // Collect NDK crash or not if you use our NDK
+                .withOpenCrash(true)         // Monitor crash if true
+                .withReportOnlyWifi(true)    // Report data only on wifi mode
+                .withReportOnBack(true)      // allow to report data when application in background
+                .build();
+        TestinAgent.init(config);
 
     }
 
@@ -150,13 +150,13 @@ public class MyApplication extends Application {
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
                 context)
                 .threadPoolSize(5)
-                        // 线程池内加载的数量
+                // 线程池内加载的数量
                 .threadPriority(Thread.NORM_PRIORITY - 1)
                 .denyCacheImageMultipleSizesInMemory()
                 .diskCacheFileNameGenerator(new Md5FileNameGenerator())
                 .diskCacheSize(50 * 1024 * 1024)
                 .tasksProcessingOrder(QueueProcessingType.LIFO)
-                        // .writeDebugLogs() // Remove for release app
+                // .writeDebugLogs() // Remove for release app
                 .build();
         // Initialize ImageLoader with configuration.
         ImageLoader.getInstance().init(config);
@@ -221,6 +221,7 @@ public class MyApplication extends Application {
             mRequestQueue.cancelAll(tag);
         }
     }
+
     class MyLocationListener implements BDLocationListener {
 
         @Override
@@ -231,8 +232,13 @@ public class MyApplication extends Application {
 //
             } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {// 网络定位结果
 
-                SpUtils.setCity(getApplicationContext(),location.getCity());
+                SpUtils.setCity(getApplicationContext(), location.getCity());
 
+                if (location.getCity().equals(SpUtils.getCity(getApplicationContext()))) {
+                    changeListener.onChange(false, location.getCity());
+                } else {
+                    changeListener.onChange(true, location.getCity());
+                }
                 mLocationClient.stop();
 
             } else if (location.getLocType() == BDLocation.TypeNetWorkException) {
@@ -247,5 +253,15 @@ public class MyApplication extends Application {
 
         }
 
+    }
+
+    public interface LocationChangeListener {
+        public void onChange(boolean changed, String cityName);
+    }
+
+    LocationChangeListener changeListener;
+
+    public void setLocationChangeListener(LocationChangeListener locationChangeListener) {
+        changeListener = locationChangeListener;
     }
 }
