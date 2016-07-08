@@ -669,80 +669,98 @@ public class CreditSecondFrag extends BaseFragment {
     private boolean isHaveData() {
         if (!FinancialUtil.isInputChinese(name.getText().toString())) {
             MyToastUtils.showShortToast(getActivity(), "真实姓名必须为中文！");
+            secondBtnNext.setClickable(true);
             name.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(name.getText().toString())) {
             MyToastUtils.showShortToast(context, "请输入真实姓名");
+            secondBtnNext.setClickable(true);
             name.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(IdCard.getText().toString())) {
             MyToastUtils.showShortToast(context, "请输入身份证号");
+            secondBtnNext.setClickable(true);
             IdCard.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(position.getText().toString())) {
             MyToastUtils.showShortToast(context, "请选择常住地址");
+            secondBtnNext.setClickable(true);
             position.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(tvMarrayed.getText().toString())) {
             MyToastUtils.showShortToast(context, "请选择婚姻状况");
+            secondBtnNext.setClickable(true);
             return false;
         }
         if (TextUtils.isEmpty(tvJiguan.getText().toString())) {
             MyToastUtils.showShortToast(context, "请填写籍贯");
+            secondBtnNext.setClickable(true);
             tvJiguan.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(tvAddress.getText().toString())) {
             MyToastUtils.showShortToast(context, "请填写户籍地址");
+            secondBtnNext.setClickable(true);
             tvAddress.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(tvWork.getText().toString())) {
             MyToastUtils.showShortToast(context, "请选择职业身份");
+            secondBtnNext.setClickable(true);
             return false;
         }
         if (TextUtils.isEmpty(companyName.getText().toString())) {
             MyToastUtils.showShortToast(context, "请填写公司名称");
+            secondBtnNext.setClickable(true);
             companyName.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(zhiwu.getText().toString())) {
             MyToastUtils.showShortToast(context, "请填写您的职务");
+            secondBtnNext.setClickable(true);
             zhiwu.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(age.getText().toString())) {
             MyToastUtils.showShortToast(context, "请填写您的年龄");
+            secondBtnNext.setClickable(true);
             age.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(tvSb.getText().toString())) {
             MyToastUtils.showShortToast(context, "请选择是否有社保");
+            secondBtnNext.setClickable(true);
             return false;
         }
         if (TextUtils.isEmpty(tvGjj.getText().toString())) {
             MyToastUtils.showShortToast(context, "请选择是否有公积金");
+            secondBtnNext.setClickable(true);
             return false;
         }
         if (TextUtils.isEmpty(tvHome.getText().toString())) {
             MyToastUtils.showShortToast(context, "请选择房产类型");
+            secondBtnNext.setClickable(true);
             return false;
         }
         if (TextUtils.isEmpty(tvCar.getText().toString())) {
             MyToastUtils.showShortToast(context, "请选择车产类型");
+            secondBtnNext.setClickable(true);
             return false;
         }
         if (TextUtils.isEmpty(tvXy.getText().toString())) {
             MyToastUtils.showShortToast(context, "请选择您的信用状况");
+            secondBtnNext.setClickable(true);
             return false;
         }
         if (!IdcardUtils.validateCard(IdCard.getText().toString())) {
             MyToastUtils.showShortToast(context, "请输入合法的身份证号码");
+            secondBtnNext.setClickable(true);
             return false;
+
         }
         return true;
     }
