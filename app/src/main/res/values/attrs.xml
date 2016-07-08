@@ -27,7 +27,7 @@
     </declare-styleable>
 
     <declare-styleable name="ToggleButton">
-        <attr name="borderWidth" format="dimension">
+        <attr name="toggleBorderWidth" format="dimension">
         </attr>
         <attr name="offBorderColor" format="reference|color">
         </attr>
