@@ -142,6 +142,12 @@ public class MainActivity extends BaseActivity {
             mineFgt = (MineFragment)fragment;
         }
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+    }
+
     @Override
     public void setLayout() {
         setContentView(R.layout.activity_main);
@@ -150,6 +156,8 @@ public class MainActivity extends BaseActivity {
     public void init(Bundle savedInstanceState) {
 //        getCity();
 //        RongIM.setUserInfoProvider(this, true);
+        manager = getSupportFragmentManager();
+//        initFragment(savedInstanceState);
         ParamsUtil.getInstance().setMainAct(this);
         gUtils = new GeneralUtils();
 
@@ -165,7 +173,7 @@ public class MainActivity extends BaseActivity {
         } else {
             ivRedPoint.setVisibility(View.VISIBLE);
         }
-        manager = getSupportFragmentManager();
+
 //        String def = getIntent().getStringExtra("def");
 //        if (!TextUtils.isEmpty(def)&&Integer.valueOf(def)==0){
 //            setTabSelection(Integer.valueOf(def));
@@ -190,6 +198,16 @@ public class MainActivity extends BaseActivity {
 //        }
 
     }
+//
+//    private void initFragment(Bundle savedInstanceState) {
+//
+//        if (savedInstanceState != null) {
+//            myCreditFgt = (AllOfficialAccountFragment) fManager.findFragmentByTag("allFrg");
+//            creditFgt = (MovieOfficialAccountFragment) fManager.findFragmentByTag("movieFrg");
+//            friendFgt = (NewsOfficialAccountFragment) fManager.findFragmentByTag("newsFrg");
+//            mineFgt = (OtherOfficialAccountFragment) fManager.findFragmentByTag("otherFrg");
+//        }
+//    }
 
     /**
      * 获取用户信息

@@ -121,6 +121,7 @@ public class CreditFragment extends BaseFragment {
     private UserLoginEntity ule;
     private boolean isButtonShowing = false;
     private boolean isAnimating = false;
+    private ArrayList listItem;
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -148,7 +149,6 @@ public class CreditFragment extends BaseFragment {
         plv.getRefreshableView().setVerticalScrollBarEnabled(false);
         plv.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
         plv.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
-        lvCreditSort.setAdapter(new ArrayAdapter<>(context, R.layout.list_item, getData()));
         sbp.setOnStateChangeListener(new SlideBottomPanel.OnStateChangeListener() {
             @Override
             public void Hidden(boolean isHidden) {
@@ -242,14 +242,34 @@ public class CreditFragment extends BaseFragment {
         }
     }
 
-    private ArrayList<String> getData() {
+    private ArrayList<String> getData1() {
         ArrayList list = new ArrayList();
-        for (int i = 0; i < 20; i++) {
-            list.add("Item " + i);
+        for (int i = 0; i < 5; i++) {
+            list.add("第一类 " + i);
         }
         return list;
     }
-
+    private ArrayList<String> getData4() {
+        ArrayList list = new ArrayList();
+        for (int i = 0; i < 4; i++) {
+            list.add("第四类 " + i);
+        }
+        return list;
+    }
+    private ArrayList<String> getData2() {
+        ArrayList list = new ArrayList();
+        for (int i = 0; i < 4; i++) {
+            list.add("第二类 " + i);
+        }
+        return list;
+    }
+    private ArrayList<String> getData3() {
+        ArrayList list = new ArrayList();
+        for (int i = 0; i < 5; i++) {
+            list.add("第三类 " + i);
+        }
+        return list;
+    }
     private void initTit() {
         rbBank.setText("机构类型");
         rbRange.setText("综合排序");
@@ -421,32 +441,40 @@ public class CreditFragment extends BaseFragment {
 //                showDateSpinWindow();
 //                break;
             case R.id.rb_bank:
+                listItem = getData1();
                 clearArrow();
                 clearTextColor();
+                lvCreditSort.setAdapter(new ArrayAdapter<>(context, R.layout.list_item, listItem));
                 rbBank.setTextColor(context.getResources().getColor(R.color.tv_money_color));
                 arrow1.setImageResource(R.mipmap.arrow_orienge_up);
                 sbp.reOpen();
 //                showActionSheet(new String []{"全部","光大银行","浦发银行","宜人贷"},rbBank,arrow1);
                 break;
             case R.id.rb_money:
+                listItem = getData2();
                 clearArrow();
                 clearTextColor();
+                lvCreditSort.setAdapter(new ArrayAdapter<>(context, R.layout.list_item, listItem));
                 rbMoney.setTextColor(context.getResources().getColor(R.color.tv_money_color));
                 arrow3.setImageResource(R.mipmap.arrow_orienge_up);
                 sbp.reOpen();
 //                showActionSheet(new String []{"全部","0-10万","10-15万","15万以上"},rbMoney,arrow3);
                 break;
             case R.id.rb_range:
+                listItem = getData3();
                 clearArrow();
                 clearTextColor();
+                lvCreditSort.setAdapter(new ArrayAdapter<>(context, R.layout.list_item, listItem));
                 rbRange.setTextColor(context.getResources().getColor(R.color.tv_money_color));
                 arrow2.setImageResource(R.mipmap.arrow_orienge_up);
                 sbp.reOpen();
 //                showActionSheet(new String []{"综合排序","按利率","按月供"},rbRange,arrow2);
                 break;
             case R.id.rb_time:
+                listItem = getData4();
                 clearArrow();
                 clearTextColor();
+                lvCreditSort.setAdapter(new ArrayAdapter<>(context, R.layout.list_item, listItem));
                 rbTime.setTextColor(context.getResources().getColor(R.color.tv_money_color));
                 arrow4.setImageResource(R.mipmap.arrow_orienge_up);
                 sbp.reOpen();
@@ -507,37 +535,6 @@ public class CreditFragment extends BaseFragment {
         }
     }
 
-//    private SpinerPopWindow mSpinerPopWindow;
-//    private SpinerPopWindow mDatePupupWindow;
-//
-//    private void showSpinWindow() {
-//        mSpinerPopWindow.setWidth(rlMoney.getWidth());
-//        mSpinerPopWindow.showAsDropDown(rlMoney);
-//    }
-//
-//    private void showDateSpinWindow() {
-//        mDatePupupWindow.setWidth(rlDate.getWidth());
-//        mDatePupupWindow.showAsDropDown(rlDate);
-//    }
-//
-//
-//    private void setHero(int type, int pos) {
-//        switch (type) {
-//            case 0:
-//                if (pos >= 0 && pos <= moneyList.size()) {
-//                    CustemObject value = moneyList.get(pos);
-//                    tvMoney.setText(value.toString());
-//                }
-//                break;
-//            case 1:
-//                if (pos >= 0 && pos <= dateList.size()) {
-//                    CustemObject value = dateList.get(pos);
-//                    tvDate.setText(value.toString());
-//                }
-//                break;
-//        }
-//
-//    }
 
     private List<ProductInfo> datas = new ArrayList<ProductInfo>();
 
@@ -613,27 +610,7 @@ public class CreditFragment extends BaseFragment {
         });
     }
 
-    public void showActionSheet(final String[] title, final RadioButton radioButton, ImageView arrow) {
-        MySelfSheetDialog dialog = new MySelfSheetDialog(context);
-        radioButton.setTextColor(context.getResources().getColor(R.color.tv_money_color));
-        arrow.setImageResource(R.mipmap.arrow_orienge_up);
-        for (int i = 0; i < title.length; i++) {
-            final int finalI = i;
-            dialog.builder().addSheetItem(title[i], MySelfSheetDialog.SheetItemColor.Red, new MySelfSheetDialog.OnSheetItemClickListener() {
-                @Override
-                public void onClick(int which) {
-//                        pbClearCache.setVisibility(View.VISIBLE);
-                    radioButton.setText(title[finalI]);
-                    clearArrow();
-                    clearTextColor();
 
-                }
-            });
-        }
-
-        dialog.show();
-
-    }
 
     public void clearTextColor() {
         rbTime.setTextColor(context.getResources().getColor(R.color.black));
