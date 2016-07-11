@@ -127,6 +127,22 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
+    public void onAttachFragment(Fragment fragment) {
+        // TODO Auto-generated method stub
+        super.onAttachFragment(fragment);
+//        Log.d(TAG,"onAttachFragment");
+
+        if (myCreditFgt == null && fragment instanceof HomeFragment) {
+            myCreditFgt = (HomeFragment)fragment;
+        }else if (creditFgt == null && fragment instanceof CreditFragment) {
+            creditFgt = (CreditFragment)fragment;
+        }else if (friendFgt == null && fragment instanceof FriendFrg) {
+            friendFgt = (FriendFrg)fragment;
+        }else if (mineFgt == null && fragment instanceof MineFragment){
+            mineFgt = (MineFragment)fragment;
+        }
+    }
+    @Override
     public void setLayout() {
         setContentView(R.layout.activity_main);
     }

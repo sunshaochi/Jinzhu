@@ -44,11 +44,6 @@ public class ServantSpecialAct extends BaseActivity {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
-    }
-
-    @Override
     public void init(Bundle savedInstanceState) {
         setTopTitle("代言人指南");
         setLeftTv("返回");
