@@ -35,6 +35,8 @@ import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
+import com.beyonditsm.financial.util.gps.GPSAddressUtils;
+import com.beyonditsm.financial.util.gps.MyLocationListener;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
@@ -64,7 +66,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/12/8.
  */
-public class HomeFragment extends BaseFragment implements MyApplication.LocationChangeListener{
+public class HomeFragment extends BaseFragment implements MyLocationListener.LocationChangeListener{
     @ViewInject(R.id.plv_hotCredit)
     private LoadRefreshView plvHotCredit;
     @ViewInject(R.id.loadingView)
@@ -167,6 +169,8 @@ public class HomeFragment extends BaseFragment implements MyApplication.Location
                 getHotProductList(currentPage);
             }
         });
+        MyLocationListener.setLocationChangeListener(this);
+        GPSAddressUtils.getLocation();
     }
 
     @Override
@@ -288,6 +292,7 @@ public class HomeFragment extends BaseFragment implements MyApplication.Location
                     startActivity(intent);
                 }
             }).setNegativeButton("知道了",null).show();
+
         }
     }
 
@@ -352,7 +357,7 @@ public class HomeFragment extends BaseFragment implements MyApplication.Location
      * 获取用户的角色信息
      */
     private void getUserLoginInfo() {
-        MyApplication.getInstance().getLocation();
+
         RequestManager.getUserManager().findUserLoginInfo(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {

@@ -1,69 +1,25 @@
 package com.beyonditsm.financial.util.gps;
 
-import android.util.Log;
 
+import android.content.Context;
+
+import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
+import com.beyonditsm.financial.MyApplication;
 
 /**
  * Created by xuleyuan on 2016/6/21.
  */
 public class GPSAddressUtils {
-    /**
-     * 通过经纬度，请求google返回城市地址
-     * @param latitude 纬度
-     * @param longitude 经度
-     * @return 返回地址
-     */
-    public static String geocodeAddr(String latitude, String longitude) {
-        String addr = "";
-        // 也可以是http://maps.google.cn/maps/geo?output=csv&key=abcdef&q=%s,%s，不过解析出来的是英文地址
-        // 密钥可以随便写一个key=abc
-        // output=csv,也可以是xml或json，不过使用csv返回的数据最简洁方便解析
-        String url = String.format("http://ditu.google.cn/maps/geo?output=csv&key=abcdef&q=%s,%s",latitude, longitude);
-        URL myURL = null;
-        URLConnection httpsConn = null;
-        try {
-            myURL = new URL(url);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            return null;
-        }
 
-        try {
-            httpsConn = (URLConnection) myURL.openConnection();
-            if (httpsConn != null) {
-                InputStreamReader insr = new InputStreamReader(httpsConn.getInputStream(), "UTF-8");
-                BufferedReader br = new BufferedReader(insr);
-                String data = null;
-                if ((data = br.readLine()) != null) {
-                    System.out.println(data);
-                    String[] retList = data.split(",");
-                    if (retList.length > 2 && ("200".equals(retList[0]))) {
-                        addr = retList[2];
-                        addr = addr.replace("\"", "");
-                    } else {
-                        addr = "";
-                    }
-                    Log.i("HHJ", "123  : "+addr);
-                }
-                insr.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return addr;
-    }
+    public static LocationClient mLocationClient = new LocationClient(MyApplication.getInstance().getApplicationContext());
 
-    public static void initLocation(LocationClient mLocationClient){
+    public static void getLocation(){
+           //声明LocationClient类
+        BDLocationListener myListener = new MyLocationListener();
+        mLocationClient.registerLocationListener(myListener);    //注册监听函数
+        mLocationClient.start();
         LocationClientOption option = new LocationClientOption();
         option.setLocationMode(LocationClientOption.LocationMode.Battery_Saving
         );//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备

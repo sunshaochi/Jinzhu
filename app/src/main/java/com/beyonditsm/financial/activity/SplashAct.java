@@ -18,6 +18,7 @@ import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
 import com.lidroid.xutils.util.LogUtils;
 
+import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 
@@ -48,6 +49,12 @@ public class SplashAct extends BaseActivity {
     private Handler handler=new Handler();
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         handler.postDelayed(new Runnable() {
@@ -56,7 +63,7 @@ public class SplashAct extends BaseActivity {
 //                gotoActivity(MainActivity.class, true);
                 boolean isFirst = SpUtils.getIsFirst(getApplicationContext());
                 Intent intent = null;
-                MyApplication.getInstance().getLocation();
+                JPushInterface.onResume(getApplicationContext());
                 if (isFirst) {
                     // 第一次进入应用
                     intent = new Intent(SplashAct.this, GuideActivity.class);

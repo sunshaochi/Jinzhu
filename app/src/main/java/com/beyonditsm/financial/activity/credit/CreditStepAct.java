@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.activity.credit;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +9,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
-import android.widget.FrameLayout;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
@@ -29,7 +29,7 @@ import java.util.List;
  * Created by Yang on 2015/11/12 0012.
  */
 public class CreditStepAct extends BaseActivity {
-    private FrameLayout creditFl;
+
 
     private CreditFirstFrag firstFrag;//第一步
     private CreditSecondFrag secondFrag;//第二步
@@ -39,11 +39,7 @@ public class CreditStepAct extends BaseActivity {
 
     public static String orderId;//订单id
     public static List<UpLoadEntity> upList;
-    private void assignViews() {
-        creditFl = (FrameLayout) findViewById(R.id.credit_fl);
-    }
 
-    private FragmentTransaction fragmentTransaction;
     private FragmentManager fragmentManager;
 
     private ProductInfo productInfo;
@@ -57,7 +53,6 @@ public class CreditStepAct extends BaseActivity {
     @Override
     public void init(Bundle savedInstanceState) {
         setLeftTv("返回");
-        assignViews();
         orderId=getIntent().getStringExtra("orderId");
         productInfo = getIntent().getParcelableExtra(CreditDetailAct.PRODUCTINFO);
         hotProductInfo = getIntent().getParcelableExtra(HotCreditDetailAct.HOTPRODUCTINFO);
@@ -72,6 +67,8 @@ public class CreditStepAct extends BaseActivity {
             setTabSelection(2);
         }
     }
+
+
 
 
     public void onEventMainThread(FirstEvent event) {
@@ -98,8 +95,9 @@ public class CreditStepAct extends BaseActivity {
         }
     }
 
+    @SuppressLint("CommitTransaction")
     private void setTabSelection(int position) {
-        fragmentTransaction = fragmentManager.beginTransaction();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         hideFragments(fragmentTransaction);
         switch (position) {
             case 0:
