@@ -10,134 +10,141 @@
         android:orientation="vertical">
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:background="#f58b35"
-        android:orientation="vertical">
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="68dp">
-            <LinearLayout
-                android:id="@+id/ll_gps"
-                android:layout_width="160dp"
-                android:layout_height="68dp"
-                android:orientation="horizontal"
-                android:paddingLeft="5dp"
-                android:gravity="center_vertical"
-                >
+            android:layout_height="180dp"
+            android:background="#f58b35"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="68dp">
+
+                <LinearLayout
+                    android:id="@+id/ll_gps"
+                    android:layout_width="160dp"
+                    android:layout_height="68dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="5dp">
+
                     <TextView
                         android:id="@+id/tv_city"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
                     <ImageView
-                        android:src="@mipmap/white_arrow_down"
-                        android:scaleType="fitCenter"
                         android:layout_width="15dp"
-                        android:layout_height="15dp" />
-            </LinearLayout>
-            <TextView
-                android:layout_width="wrap_content"
+                        android:layout_height="15dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/white_arrow_down" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="金蛛金服"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="金蛛金服"
-                android:textColor="#ffffff"
-                android:textSize="20sp" />
-        </RelativeLayout>
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/ll_credit"
+                    style="@style/home_head_layout">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/button_home_01" />
+
+                    <TextView
+                        style="@style/home_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="我要贷款" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_tillage"
+                    style="@style/home_head_layout">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/button_home_02" />
+
+                    <TextView
+                        style="@style/home_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="信用耕耘" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_work"
+                    style="@style/home_head_layout">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/button_home_03" />
+
+                    <TextView
+                        style="@style/home_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="代言人" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_creditCard"
+                    style="@style/home_head_layout">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="45dp"
+                        android:src="@drawable/credit" />
+
+                    <TextView
+                        style="@style/home_text_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="信用卡" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:background="#efeff4">
 
-            <LinearLayout
-                android:id="@+id/ll_credit"
-                style="@style/home_head_layout">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/button_home_01" />
-
-                <TextView
-                    style="@style/home_text_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="我要贷款" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_tillage"
-                style="@style/home_head_layout">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/button_home_02" />
-
-                <TextView
-                    style="@style/home_text_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="信用耕耘" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_work"
-                style="@style/home_head_layout">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/button_home_03" />
-
-                <TextView
-                    style="@style/home_text_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="代言人" />
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/ll_creditCard"
-                style="@style/home_head_layout">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="45dp"
-                    android:src="@drawable/credit" />
-
-                <TextView
-                    style="@style/home_text_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="信用卡" />
-            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:text="热门贷款"
+                android:textColor="#333333"
+                android:textSize="16sp" />
         </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#efeff4">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="热门贷款"
-            android:textSize="16sp"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginBottom="10dp"
-            android:textColor="#333333"/>
-        </LinearLayout>
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <com.beyonditsm.financial.view.pullfreshview.LoadRefreshView
                 android:id="@+id/plv_hotCredit"
-                style="@style/pullrefresh_style"
-                >
+                style="@style/pullrefresh_style">
 
             </com.beyonditsm.financial.view.pullfreshview.LoadRefreshView>
 
@@ -150,9 +157,8 @@
                 android:id="@+id/ivSuspen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@mipmap/suspension_icon"
                 android:layout_gravity="right"
-                />
+                android:background="@mipmap/suspension_icon" />
         </FrameLayout>
-        </LinearLayout>
+    </LinearLayout>
 </FrameLayout>

@@ -228,12 +228,12 @@ public class MyApplication extends Application {
         public void onReceiveLocation(BDLocation location) {
             //Receive Location
 //
-            if (location.getLocType() == BDLocation.TypeGpsLocation) {// GPS定位结果
+                if (location.getLocType() == BDLocation.TypeGpsLocation) {// GPS定位结果
 //
-            } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {// 网络定位结果
+                } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {// 网络定位结果
 
                 SpUtils.setCity(getApplicationContext(), location.getCity());
-
+                changeListener.isGet(true);
                 if (location.getCity().equals(SpUtils.getCity(getApplicationContext()))) {
                     changeListener.onChange(false, location.getCity());
                 } else {
@@ -242,11 +242,11 @@ public class MyApplication extends Application {
                 mLocationClient.stop();
 
             } else if (location.getLocType() == BDLocation.TypeNetWorkException) {
-
+                changeListener.isGet(false);
                 mLocationClient.stop();
 
             } else if (location.getLocType() == BDLocation.TypeCriteriaException) {
-
+                changeListener.isGet(false);
                 mLocationClient.stop();
 
             }
@@ -257,6 +257,7 @@ public class MyApplication extends Application {
 
     public interface LocationChangeListener {
         public void onChange(boolean changed, String cityName);
+        public void isGet(boolean isGet);
     }
 
     LocationChangeListener changeListener;

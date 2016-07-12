@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +18,6 @@ import com.beyonditsm.financial.ConstantValue;
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.credit.CreditGuideAct;
-import com.beyonditsm.financial.activity.user.CreditCardAct;
 import com.beyonditsm.financial.activity.user.GameActivity;
 import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
 import com.beyonditsm.financial.activity.user.LoginAct;
@@ -38,6 +38,7 @@ import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
+import com.beyonditsm.financial.widget.GPSAlertDialog;
 import com.beyonditsm.financial.widget.gpscity.DialogChooseCity;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
@@ -51,6 +52,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 //import com.baidu.location.BDLocation;
 //import com.baidu.location.BDLocationListener;
@@ -109,7 +111,11 @@ public class HomeFragment extends BaseFragment implements MyApplication.Location
     @Override
     public void initData(Bundle savedInstanceState) {
 //        getHotProductList(currentPage);
-        tvCity.setText(SpUtils.getCity(getContext()));
+        String city =SpUtils.getCity(getContext()) ;
+        if (!TextUtils.isEmpty(city)){
+            tvCity.setText(city);
+        }
+
         String roleName = SpUtils.getRoleName(context);
         MyLogUtils.info("ROLENAME="+roleName);
 //        if (!"ROLE_COMMON_CLIENT".equals(roleName)&&!TextUtils.isEmpty(roleName)){//普通用户显示贷款指南
@@ -221,26 +227,39 @@ public class HomeFragment extends BaseFragment implements MyApplication.Location
                 startActivity(intent);
                 break;
             case R.id.ll_creditCard://信用卡
-                if(TextUtils.isEmpty(SpUtils.getRoleName(context).toString())){
-                    MyToastUtils.showShortToast(getContext(),"请先登录金蛛账号");
-                    Intent goLog = new Intent(context,LoginAct.class);
-                    context.startActivity(goLog);
-                }else{
-                    intent = new Intent(getActivity(), CreditCardAct.class);
-                    startActivity(intent);
-                }
+                MyToastUtils.showShortToast(getContext(),"敬请期待");
+//                if(TextUtils.isEmpty(SpUtils.getRoleName(context).toString())){
+//                    MyToastUtils.showShortToast(getContext(),"请先登录金蛛账号");
+//                    Intent goLog = new Intent(context,LoginAct.class);
+//                    context.startActivity(goLog);
+//                }else{
+//                    intent = new Intent(getActivity(), CreditCardAct.class);
+//                    startActivity(intent);
+//                }
                 break;
             case R.id.ll_gps://GPS
                 DialogChooseCity dialogChooseAdress1 = new DialogChooseCity(context).builder();
                 dialogChooseAdress1.show();
                 dialogChooseAdress1.setOnSheetItemClickListener(new DialogChooseCity.SexClickListener() {
                     @Override
-                    public void getAdress(List<String> adress) {
-                        if (adress.get(1).length()>4){
-                            tvCity.setText(adress.get(1).substring(0,4)+"...");
-                        }else {
-                            tvCity.setText(adress.get(1));
+                    public void getAdress(final List<String> adress) {
+                        String city = SpUtils.getCity(getContext());
+                        if (addressChange(city,adress.get(1))){
+                            GPSAlertDialog gpsAlertDialog = new GPSAlertDialog(getContext());
+                            gpsAlertDialog.builder().setCancelable(false).setMsg("您目前所在的区域更改","是否将所在的城市切换为：",adress.get(1)).setPositiveButton("确认切换", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (adress.get(1).length()>4){
+                                        tvCity.setText(adress.get(1).substring(0,4)+"...");
+                                    }else {
+                                        tvCity.setText(adress.get(1));
+                                    }
+                                }
+                            }).setNegativeButton("取消",null).show();
+
                         }
+
+
 
 //                        userInfo.setNativePlaceAddr(adress.get(0)+adress.get(1)+adress.get(2));
 //                        updateData(userInfo, 2);
@@ -254,6 +273,21 @@ public class HomeFragment extends BaseFragment implements MyApplication.Location
     public void onChange(boolean changed, String cityName) {
         if (changed){
             tvCity.setText(cityName);
+        }
+    }
+
+    @Override
+    public void isGet(boolean isGet) {
+        if (!isGet){
+            tvCity.setText("——");
+            GPSAlertDialog gpsAlertDialog = new GPSAlertDialog(getContext());
+            gpsAlertDialog.builder().setCancelable(true).setMsg("无法获取当前位置，请检查设置","或直接切换城市",null).setPositiveButton("去设置", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Settings.ACTION_SETTINGS);
+                    startActivity(intent);
+                }
+            }).setNegativeButton("知道了",null).show();
         }
     }
 
@@ -341,4 +375,11 @@ public class HomeFragment extends BaseFragment implements MyApplication.Location
         });
     }
 
+
+    private boolean addressChange(String locationCity,String selectCity){
+        if (locationCity.equals(selectCity)){
+            return false;
+        }
+        return true;
+    }
 }
