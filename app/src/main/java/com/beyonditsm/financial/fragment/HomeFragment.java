@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,8 @@ import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
+import com.beyonditsm.financial.util.gps.GPSAddressUtils;
+import com.beyonditsm.financial.util.gps.MyLocationListener;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
@@ -62,7 +65,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2015/12/8.
  */
-public class HomeFragment extends BaseFragment implements MyApplication.LocationChangeListener{
+public class HomeFragment extends BaseFragment implements MyLocationListener.LocationChangeListener{
     @ViewInject(R.id.plv_hotCredit)
     private LoadRefreshView plvHotCredit;
     @ViewInject(R.id.loadingView)
@@ -161,6 +164,8 @@ public class HomeFragment extends BaseFragment implements MyApplication.Location
                 getHotProductList(currentPage);
             }
         });
+        MyLocationListener.setLocationChangeListener(this);
+        GPSAddressUtils.getLocation();
     }
 
     @Override
@@ -257,6 +262,13 @@ public class HomeFragment extends BaseFragment implements MyApplication.Location
         }
     }
 
+    @Override
+    public void isGet(boolean isGet) {
+        if (!isGet){
+            getActivity().startActivity(new Intent(Settings.ACTION_SETTINGS));
+        }
+    }
+
 
     public class ToSwitchEvent{
 
@@ -318,7 +330,7 @@ public class HomeFragment extends BaseFragment implements MyApplication.Location
      * 获取用户的角色信息
      */
     private void getUserLoginInfo() {
-        MyApplication.getInstance().getLocation();
+
         RequestManager.getUserManager().findUserLoginInfo(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {

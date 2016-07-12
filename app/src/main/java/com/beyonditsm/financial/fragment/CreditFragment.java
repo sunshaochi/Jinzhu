@@ -12,7 +12,6 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
@@ -25,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.ConstantValue;
+import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.credit.CreditGuideAct;
 import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
@@ -40,8 +40,8 @@ import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.SpUtils;
+import com.beyonditsm.financial.util.Uitls;
 import com.beyonditsm.financial.view.LoadingView;
-import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
 import com.beyonditsm.financial.view.slidebottompanel.SlideBottomPanel;
@@ -137,7 +137,6 @@ public class CreditFragment extends BaseFragment {
 //        if (!"ROLE_COMMON_CLIENT".equals(roleName)&&!TextUtils.isEmpty(roleName)){//非普通用户显示代言人指南
 //            ivSuspen.setBackgroundResource(R.mipmap.servant_guide);
 //        }
-
         loadView.setNoContentTxt("暂无此类产品，换个条件试试");
         etAmount.setSelection(etAmount.getText().length());
         rl_back.setVisibility(View.GONE);
@@ -445,26 +444,32 @@ public class CreditFragment extends BaseFragment {
                 clearArrow();
                 clearTextColor();
                 lvCreditSort.setAdapter(new ArrayAdapter<>(context, R.layout.list_item, listItem));
+                Uitls.setListViewHeightBasedOnChildren(lvCreditSort);
                 rbBank.setTextColor(context.getResources().getColor(R.color.tv_money_color));
                 arrow1.setImageResource(R.mipmap.arrow_orienge_up);
+                sbp.setmPanelHeight(Uitls.getListViewHeight(lvCreditSort));
                 sbp.reOpen();
 //                showActionSheet(new String []{"全部","光大银行","浦发银行","宜人贷"},rbBank,arrow1);
                 break;
             case R.id.rb_money:
-                listItem = getData2();
+                listItem = getData3();
                 clearArrow();
                 clearTextColor();
                 lvCreditSort.setAdapter(new ArrayAdapter<>(context, R.layout.list_item, listItem));
+                Uitls.setListViewHeightBasedOnChildren(lvCreditSort);
+                sbp.setmPanelHeight(Uitls.getListViewHeight(lvCreditSort));
                 rbMoney.setTextColor(context.getResources().getColor(R.color.tv_money_color));
                 arrow3.setImageResource(R.mipmap.arrow_orienge_up);
                 sbp.reOpen();
 //                showActionSheet(new String []{"全部","0-10万","10-15万","15万以上"},rbMoney,arrow3);
                 break;
             case R.id.rb_range:
-                listItem = getData3();
+                listItem = getData2();
                 clearArrow();
                 clearTextColor();
                 lvCreditSort.setAdapter(new ArrayAdapter<>(context, R.layout.list_item, listItem));
+                Uitls.setListViewHeightBasedOnChildren(lvCreditSort);
+                sbp.setmPanelHeight(Uitls.getListViewHeight(lvCreditSort));
                 rbRange.setTextColor(context.getResources().getColor(R.color.tv_money_color));
                 arrow2.setImageResource(R.mipmap.arrow_orienge_up);
                 sbp.reOpen();
@@ -475,6 +480,8 @@ public class CreditFragment extends BaseFragment {
                 clearArrow();
                 clearTextColor();
                 lvCreditSort.setAdapter(new ArrayAdapter<>(context, R.layout.list_item, listItem));
+                Uitls.setListViewHeightBasedOnChildren(lvCreditSort);
+                sbp.setmPanelHeight(Uitls.getListViewHeight(lvCreditSort));
                 rbTime.setTextColor(context.getResources().getColor(R.color.tv_money_color));
                 arrow4.setImageResource(R.mipmap.arrow_orienge_up);
                 sbp.reOpen();
@@ -522,7 +529,6 @@ public class CreditFragment extends BaseFragment {
                 if (TextUtils.isEmpty(tvM.getText().toString().trim())) {
                     tvM.setText(ConstantValue.CREDIT_MONTH + "");
                 }
-
                 currentP = 1;
                 cMoney = etAmount.getText().toString().trim();
                 cTime = tvM.getText().toString().trim();
@@ -606,6 +612,7 @@ public class CreditFragment extends BaseFragment {
                 plv.onPullDownRefreshComplete();
                 plv.onPullUpRefreshComplete();
                 loadView.loadError();
+
             }
         });
     }

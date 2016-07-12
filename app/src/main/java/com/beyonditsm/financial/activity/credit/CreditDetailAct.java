@@ -1,6 +1,7 @@
 package com.beyonditsm.financial.activity.credit;
 
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -14,16 +15,12 @@ import android.widget.TextView;
 import com.beyonditsm.financial.AppManager;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
-import com.beyonditsm.financial.entity.ProductEntity;
 import com.beyonditsm.financial.entity.ProductInfo;
-import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
-import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.widget.DialogChooseMonth;
-import com.beyonditsm.financial.widget.MyAlertDialog;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
@@ -53,15 +50,13 @@ public class CreditDetailAct extends BaseActivity {
     private EditText etAmount;//输入金额
     @ViewInject(R.id.tvM)
     private TextView tvM;//月份
-    @ViewInject(R.id.onpay)
-    private TextView tvOnePay;
 
     public static final String PRODUCTINFO = "productinfo";
 
     public static final String CREDIT_AMOUNT = "credit_mount";
     public static final String CREDIT_TIME = "credit_time";
 
-    private Map<Integer, Boolean> map = new HashMap<Integer, Boolean>();
+    private Map<Integer, Boolean> map = new HashMap<>();
 
     private ProductInfo productInfo;
 
@@ -86,11 +81,10 @@ public class CreditDetailAct extends BaseActivity {
     public static String monthlyPayments;//月供
     private String totalRath;
 
-    private MyAlertDialog dialog;
     java.text.DecimalFormat df = new java.text.DecimalFormat("#0.0");//保留小数
 
 
-    private ArrayList<String> tList = new ArrayList<String>();
+    private ArrayList<String> tList = new ArrayList<>();
 
     private ObjectAnimator obaDown1;
     private ObjectAnimator obaOn1;
@@ -101,11 +95,11 @@ public class CreditDetailAct extends BaseActivity {
 
 
     private DisplayImageOptions options = new DisplayImageOptions.Builder()
-            .showStubImage(R.mipmap.pro_default) // 设置图片下载期间显示的图片
+            .showImageOnLoading(R.mipmap.pro_default) // 设置图片下载期间显示的图片
             .showImageForEmptyUri(R.mipmap.pro_default) // 设置图片Uri为空或是错误的时候显示的图片
             .showImageOnFail(R.mipmap.pro_default) // 设置图片加载或解码过程中发生错误显示的图片
             .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
-            .cacheOnDisc(true) // 设置下载的图片是否缓存在SD卡中
+            .cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
             .build(); // 创建配置过得DisplayImageOption对象
 
     private void assignViews() {
@@ -187,6 +181,7 @@ public class CreditDetailAct extends BaseActivity {
         setContentView(R.layout.activity_credit);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void init(Bundle savedInstanceState) {
         assignViews();
@@ -256,7 +251,7 @@ public class CreditDetailAct extends BaseActivity {
     /**
      * 点击事件
      *
-     * @param v
+     * @param v View
      */
     @OnClick({R.id.rlRequire, R.id.rlMaterial, R.id.rlDetail, R.id.tvApplay, R.id.rlMonth, R.id.tvCal})
     public void toClick(View v) {
@@ -337,7 +332,7 @@ public class CreditDetailAct extends BaseActivity {
                         creditMonth = tvM.getText().toString();
                         final double minVal = Double.valueOf(productInfo.getMinVal());
                         double maxVal = Double.valueOf(productInfo.getMaxVal());
-                        double curVal = Double.valueOf(creditMoney.toString()) * 10000;
+                        double curVal = Double.valueOf(creditMoney+"") * 10000;
                         validateCredit(minVal, maxVal, curVal, creditMonth);
 //                        getMOnthPay(creditMoney, productInfo.getMonthlyRathAvg(), creditMonth);
                     }
@@ -353,7 +348,7 @@ public class CreditDetailAct extends BaseActivity {
                 }
                 final double minVal = Double.valueOf(productInfo.getMinVal());
                 double maxVal = Double.valueOf(productInfo.getMaxVal());
-                double curVal = Double.valueOf(creditMoney.toString()) * 10000;
+                double curVal = Double.valueOf(creditMoney+"") * 10000;
                 creditMonth = tvM.getText().toString();
                 validateCredit(minVal, maxVal, curVal, creditMonth);
 
@@ -365,10 +360,11 @@ public class CreditDetailAct extends BaseActivity {
     /**
      * 验证是否在额度范围
      *
-     * @param minVal
-     * @param maxVal
-     * @param curVal
+     * @param minVal 最小值
+     * @param maxVal 最大范围
+     * @param curVal 当前范围
      */
+    @SuppressLint("SetTextI18n")
     private void validateCredit(final double minVal, double maxVal, double curVal, String creditMonth) {
         if (curVal < minVal || curVal > maxVal) {
             etAmount.setText(df.format(maxVal / 10000) + "");
@@ -400,6 +396,7 @@ public class CreditDetailAct extends BaseActivity {
 
         RequestManager.getUserManager().getMonthPay(Double.valueOf(repaymentMoney) * 10000 + "",
                 Double.valueOf(rate) / 100 + "", month, new RequestManager.CallBack() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onSucess(String result) throws JSONException {
                         JSONObject json = new JSONObject(result);
@@ -418,87 +415,5 @@ public class CreditDetailAct extends BaseActivity {
                 });
     }
 
-    private ProductEntity productEntity;
 
-
-    /**
-     * 根据产品id获取信息
-     *
-     * @param productId
-     */
-    private void findOrderDetail(String productId) {
-        RequestManager.getUserManager().findOrderDetailById(productId, new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
-                ResultData<ProductEntity> pInfo = (ResultData<ProductEntity>) GsonUtils.json(result, ProductEntity.class);
-                productEntity = pInfo.getData();
-                if (productEntity != null) {
-                    Double minMone = Double.valueOf(productEntity.getMinVal());
-                    Double maxMone = Double.valueOf(productEntity.getMaxVal());
-                    Double minMont = Double.valueOf(productEntity.getTimeMinVal());
-                    Double maxMont = Double.valueOf(productEntity.getTimeMaxVal());
-                    if (Double.valueOf(creditMoney) * 10000 < minMone || Double.valueOf(creditMoney) * 10000 > maxMone) {
-                        creditMoney = df.format(maxMone / 10000) + "";
-                    }
-
-                    if (Double.valueOf(creditMonth) < minMont || Double.valueOf(creditMonth) > maxMont) {
-                        creditMonth = maxMont + "";
-                    }
-                    etAmount.setText(creditMoney);
-                    tvM.setText(creditMonth);
-
-                    etAmount.setSelection(etAmount.getText().length());
-
-
-                    minMon = Integer.valueOf(productEntity.getTimeMinVal());
-
-                    getMOnthPay(creditMoney, productEntity.getMonthlyRate(), creditMonth);
-                    int maxMon = Integer.valueOf(productEntity.getTimeMaxVal());
-                    for (int j = minMon; j <= maxMon; j++) {
-                        tList.add(j + "个月");
-                    }
-
-
-                    setTopTitle(productEntity.getProductName());
-                    setLeftTv("返回");
-                    map.put(0, false);
-                    map.put(1, false);
-                    map.put(2, false);
-
-                    ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + productEntity.getImageLogoPath(), ivBank, options);
-                    tvProName.setText(productEntity.getProductName());
-//            tvMount.setText(productEntity.getProductAmount());
-//            tvMount.setText(getIntent().getStringExtra(CREDIT_AMOUNT));
-
-
-                    double minVal = Double.valueOf(productEntity.getMinVal());
-                    double maxVal = Double.valueOf(productEntity.getMaxVal());
-
-                    tvScope.setText("额度范围：" + df.format(minVal / 10000) + "万~" + df.format(maxVal / 10000) + "万");
-//            tvLimit.setText(getIntent().getStringExtra(CREDIT_TIME));
-                    tvLim.setText("期限范围：" + productEntity.getTimeMinVal() + "~" + productEntity.getTimeMaxVal() + "月");
-//            tvMonthPay.setText("¥" + productInfo.getMonthlyPay());
-                    tvPaytype.setText("还款方式：" + productEntity.getPayType());
-//            tvTotal.setText(productInfo.getTotalInterest());
-                    tvLoan.setText(productEntity.getLoanPeriod() + "个工作日");
-                    if (Double.valueOf(productEntity.getMonthlyRathMin()) != Double.valueOf(productEntity.getMonthlyRathMax()))
-                        tvRate.setText("利率：" + productEntity.getMonthlyRathMin() + "%" + "~" + productEntity.getMonthlyRathMax() + "%");
-                    else
-                        tvRate.setText("利率：" + productEntity.getMonthlyRathMin());
-                    tvCon.setText(productEntity.getApplyCondition());
-                    tvNeed.setText(productEntity.getApplyMaterial());
-                    tvDetail.setText(productEntity.getDetailDescribe());
-                    if(TextUtils.equals(productEntity.getDisposableRateMin().toString(),productEntity.getDisposableRateMax().toString()))
-                        tvOnePay.setText("一次付费率：" + productEntity.getDisposableRateMin() + "%");
-                    else
-                        tvOnePay.setText("一次付费率：" + productEntity.getDisposableRateMin() + "%" + "~" + productEntity.getDisposableRateMax() + "%");
-                }
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-
-            }
-        });
-    }
 }

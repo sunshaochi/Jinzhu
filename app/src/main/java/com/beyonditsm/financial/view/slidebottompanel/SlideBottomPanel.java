@@ -316,7 +316,7 @@ public class SlideBottomPanel extends FrameLayout {
                 isAnimating = false;
                 isPanelShowing = false;
                 mOnStateChangeListener.Hidden(true);
-                showPanelTitle(mPanel);
+//                showPanelTitle(mPanel);
             }
 
             @Override
@@ -324,7 +324,7 @@ public class SlideBottomPanel extends FrameLayout {
                 isAnimating = false;
                 isPanelShowing = false;
                 mOnStateChangeListener.Hidden(true);
-                showPanelTitle(mPanel);
+//                showPanelTitle(mPanel);
             }
 
             @Override
@@ -333,7 +333,9 @@ public class SlideBottomPanel extends FrameLayout {
         });
         animator.start();
     }
-
+    public void setmPanelHeight(float panelHeight){
+        mPanelHeight = panelHeight;
+    }
     public void displayPanel() {
         final View mPanel = findViewWithTag(TAG_PANEL);
         if (isPanelShowing || isAnimating) {
@@ -449,7 +451,7 @@ public class SlideBottomPanel extends FrameLayout {
                 public void onAnimationEnd(Animator animation) {
                     isAnimating = false;
                     isPanelShowing = false;
-                    showPanelTitle(mPanel);
+//                    showPanelTitle(mPanel);
                     displayPanel();
                 }
 
@@ -457,7 +459,7 @@ public class SlideBottomPanel extends FrameLayout {
                 public void onAnimationCancel(Animator animation) {
                     isAnimating = false;
                     isPanelShowing = false;
-                    showPanelTitle(mPanel);
+//                    showPanelTitle(mPanel);
                 }
 
                 @Override

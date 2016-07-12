@@ -42,9 +42,9 @@ public class MyApplication extends Application {
     public static String downloadApkUrl;
 
     private RequestQueue mRequestQueue;
-    // 百度定位参数
-    public LocationClient mLocationClient = null;
-    public BDLocationListener myListener = new MyLocationListener();
+//    // 百度定位参数
+//    public LocationClient mLocationClient = null;
+//    public BDLocationListener myListener = new MyLocationListener();
     // 百度定位参数
     public static final String TAG = "VolleyPatterns";
 
@@ -78,16 +78,15 @@ public class MyApplication extends Application {
         JPushInterface.init(this);            // 初始化 JPush
         initImageLoader(this);
         initTestIn();
-        getLocation();
 
     }
 
-    public void getLocation() {
-        mLocationClient = new LocationClient(getApplicationContext());     //声明LocationClient类
-        GPSAddressUtils.initLocation(mLocationClient);
-        mLocationClient.registerLocationListener(myListener);    //注册监听函数
-        mLocationClient.start();
-    }
+//    public void getLocation() {
+//        mLocationClient = new LocationClient(getApplicationContext());     //声明LocationClient类
+//        GPSAddressUtils.initLocation(mLocationClient);
+//        mLocationClient.registerLocationListener(myListener);    //注册监听函数
+//        mLocationClient.start();
+//    }
 
     private void initTestIn() {
 
@@ -222,46 +221,5 @@ public class MyApplication extends Application {
         }
     }
 
-    class MyLocationListener implements BDLocationListener {
 
-        @Override
-        public void onReceiveLocation(BDLocation location) {
-            //Receive Location
-//
-            if (location.getLocType() == BDLocation.TypeGpsLocation) {// GPS定位结果
-//
-            } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {// 网络定位结果
-
-                SpUtils.setCity(getApplicationContext(), location.getCity());
-
-                if (location.getCity().equals(SpUtils.getCity(getApplicationContext()))) {
-                    changeListener.onChange(false, location.getCity());
-                } else {
-                    changeListener.onChange(true, location.getCity());
-                }
-                mLocationClient.stop();
-
-            } else if (location.getLocType() == BDLocation.TypeNetWorkException) {
-
-                mLocationClient.stop();
-
-            } else if (location.getLocType() == BDLocation.TypeCriteriaException) {
-
-                mLocationClient.stop();
-
-            }
-
-        }
-
-    }
-
-    public interface LocationChangeListener {
-        public void onChange(boolean changed, String cityName);
-    }
-
-    LocationChangeListener changeListener;
-
-    public void setLocationChangeListener(LocationChangeListener locationChangeListener) {
-        changeListener = locationChangeListener;
-    }
 }

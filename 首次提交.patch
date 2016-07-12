@@ -5832,7 +5832,7 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 +            .showImageForEmptyUri(R.mipmap.pro_default) // 设置图片Uri为空或是错误的时候显示的图片
 +            .showImageOnFail(R.mipmap.pro_default) // 设置图片加载或解码过程中发生错误显示的图片
 +            .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
-+            .cacheOnDisc(true) // 设置下载的图片是否缓存在SD卡中
++            .cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
 +            .build(); // 创建配置过得DisplayImageOption对象
 +    private ProductInfo productEntity;
 +    private TextView tvOnePay;
@@ -9744,7 +9744,7 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 +            .showImageForEmptyUri(R.mipmap.pro_default) // 设置图片Uri为空或是错误的时候显示的图片
 +            .showImageOnFail(R.mipmap.pro_default) // 设置图片加载或解码过程中发生错误显示的图片
 +            .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
-+            .cacheOnDisc(true) // 设置下载的图片是否缓存在SD卡中
++            .cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
 +            .build(); // 创建配置过得DisplayImageOption对象
 +
 +    public ManagerOrderCommitAdp(Context context, List<GrabOrderBean.RowsEntity> datas) {
@@ -12451,7 +12451,7 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 +            .showImageForEmptyUri(R.mipmap.pro_default) // 设置图片Uri为空或是错误的时候显示的图片
 +            .showImageOnFail(R.mipmap.pro_default) // 设置图片加载或解码过程中发生错误显示的图片
 +            .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
-+            .cacheOnDisc(true) // 设置下载的图片是否缓存在SD卡中
++            .cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
 +            .build(); // 创建配置过得DisplayImageOption对象
 +
 +    private void assignViews() {
@@ -16763,7 +16763,7 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 +            .showImageForEmptyUri(R.mipmap.ava_default) // 设置图片Uri为空或是错误的时候显示的图片
 +            .showImageOnFail(R.mipmap.ava_default) // 设置图片加载或解码过程中发生错误显示的图片
 +            .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
-+            .cacheOnDisc(true) // 设置下载的图片是否缓存在SD卡中
++            .cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
 +            .build(); // 创建配置过得DisplayImageOption对象
 +
 +    @ViewInject(R.id.civHead)
@@ -24030,7 +24030,7 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 +            .showImageForEmptyUri(R.mipmap.ava_default) // 设置图片Uri为空或是错误的时候显示的图片
 +            .showImageOnFail(R.mipmap.ava_default) // 设置图片加载或解码过程中发生错误显示的图片
 +            .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
-+            .cacheOnDisc(true) // 设置下载的图片是否缓存在SD卡中
++            .cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
 +            .build(); // 创建配置过得DisplayImageOption对象
 +    private CreditManager cm;
 +
@@ -31243,7 +31243,7 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 +            .showImageForEmptyUri(R.mipmap.pro_default) // 设置图片Uri为空或是错误的时候显示的图片
 +            .showImageOnFail(R.mipmap.pro_default) // 设置图片加载或解码过程中发生错误显示的图片
 +            .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
-+            .cacheOnDisc(true) // 设置下载的图片是否缓存在SD卡中
++            .cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
 +            .build(); // 创建配置过得DisplayImageOption对象
 +
 +    @Override
@@ -32329,7 +32329,7 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 +            .showImageForEmptyUri(R.mipmap.ava_default) // 设置图片Uri为空或是错误的时候显示的图片
 +            .showImageOnFail(R.mipmap.ava_default) // 设置图片加载或解码过程中发生错误显示的图片
 +            .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
-+            .cacheOnDisc(true) // 设置下载的图片是否缓存在SD卡中
++            .cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
 +            .build(); // 创建配置过得DisplayImageOption对象
 +//    private ServantEntity ;
 +    private UserEntity servantInfo;
@@ -32942,7 +32942,7 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 +            .showImageForEmptyUri(R.mipmap.pro_default) // 设置图片Uri为空或是错误的时候显示的图片
 +            .showImageOnFail(R.mipmap.pro_default) // 设置图片加载或解码过程中发生错误显示的图片
 +            .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
-+            .cacheOnDisc(true) // 设置下载的图片是否缓存在SD卡中
++            .cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
 +            .build(); // 创建配置过得DisplayImageOption对象
 +
 +    public ManagerOrderAdp(Context context, List<GrabOrderBean.RowsEntity> datas) {
@@ -34009,7 +34009,7 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 +            .showImageForEmptyUri(R.mipmap.ava_default) // 设置图片Uri为空或是错误的时候显示的图片
 +            .showImageOnFail(R.mipmap.ava_default) // 设置图片加载或解码过程中发生错误显示的图片
 +            .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
-+            .cacheOnDisc(true) // 设置下载的图片是否缓存在SD卡中
++            .cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
 +            .build(); // 创建配置过得DisplayImageOption对象
 +    private UserLoginEntity ule;
 +
@@ -42013,7 +42013,7 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 +            .showImageForEmptyUri(R.mipmap.ava_default) // 设置图片Uri为空或是错误的时候显示的图片
 +            .showImageOnFail(R.mipmap.ava_default) // 设置图片加载或解码过程中发生错误显示的图片
 +            .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
-+            .cacheOnDisc(true) // 设置下载的图片是否缓存在SD卡中
++            .cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
 +            .build(); // 创建配置过得DisplayImageOption对象
 +
 +    @Override
@@ -47832,7 +47832,7 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 +            .showImageForEmptyUri(R.mipmap.ava_default) // 设置图片Uri为空或是错误的时候显示的图片
 +            .showImageOnFail(R.mipmap.ava_default) // 设置图片加载或解码过程中发生错误显示的图片
 +            .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
-+            .cacheOnDisc(true) // 设置下载的图片是否缓存在SD卡中
++            .cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
 +            .build(); // 创建配置过得DisplayImageOption对象
 +    private ServiceMineReceiver mineReceiver;
 +//    private ServantEntity se;
@@ -48200,7 +48200,7 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 +            .showImageForEmptyUri(R.mipmap.ava_default) // 设置图片Uri为空或是错误的时候显示的图片
 +            .showImageOnFail(R.mipmap.ava_default) // 设置图片加载或解码过程中发生错误显示的图片
 +            .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
-+            .cacheOnDisc(true) // 设置下载的图片是否缓存在SD卡中
++            .cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
 +            .build(); // 创建配置过得DisplayImageOption对象
 +    @Override
 +    public void setLayout() {
@@ -50200,7 +50200,7 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 +            .showImageForEmptyUri(R.mipmap.pro_default) // 设置图片Uri为空或是错误的时候显示的图片
 +            .showImageOnFail(R.mipmap.pro_default) // 设置图片加载或解码过程中发生错误显示的图片
 +            .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
-+            .cacheOnDisc(true) // 设置下载的图片是否缓存在SD卡中
++            .cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
 +            .build(); // 创建配置过得DisplayImageOption对象
 +    private String amount;
 +    private String month;
@@ -50890,7 +50890,7 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 +            .showImageForEmptyUri(R.mipmap.pro_default) // 设置图片Uri为空或是错误的时候显示的图片
 +            .showImageOnFail(R.mipmap.pro_default) // 设置图片加载或解码过程中发生错误显示的图片
 +            .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
-+            .cacheOnDisc(true) // 设置下载的图片是否缓存在SD卡中
++            .cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
 +            .build(); // 创建配置过得DisplayImageOption对象
 +
 +    public HomeCreditAdapter(Context context,List<HomeHotProductEntity> list) {
@@ -53858,7 +53858,7 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 +            .showImageForEmptyUri(R.mipmap.pro_default) // 设置图片Uri为空或是错误的时候显示的图片
 +            .showImageOnFail(R.mipmap.pro_default) // 设置图片加载或解码过程中发生错误显示的图片
 +            .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
-+            .cacheOnDisc(true) // 设置下载的图片是否缓存在SD卡中
++            .cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
 +            .build(); // 创建配置过得DisplayImageOption对象
 +
 +
@@ -59257,7 +59257,7 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 +            .showImageForEmptyUri(R.mipmap.pro_default) // 设置图片Uri为空或是错误的时候显示的图片
 +            .showImageOnFail(R.mipmap.pro_default) // 设置图片加载或解码过程中发生错误显示的图片
 +            .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
-+            .cacheOnDisc(true) // 设置下载的图片是否缓存在SD卡中
++            .cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
 +            .build(); // 创建配置过得DisplayImageOption对象
 +
 +
@@ -62042,7 +62042,7 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 +            .showImageForEmptyUri(R.mipmap.pro_default) // 设置图片Uri为空或是错误的时候显示的图片
 +            .showImageOnFail(R.mipmap.pro_default) // 设置图片加载或解码过程中发生错误显示的图片
 +            .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
-+            .cacheOnDisc(true) // 设置下载的图片是否缓存在SD卡中
++            .cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
 +            .build(); // 创建配置过得DisplayImageOption对象
 +    private Context context;
 +    private List<PictureInfo.DataEntity.RowsEntity
@@ -96982,7 +96982,7 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 +            .showImageForEmptyUri(R.mipmap.pro_default) // 设置图片Uri为空或是错误的时候显示的图片
 +            .showImageOnFail(R.mipmap.pro_default) // 设置图片加载或解码过程中发生错误显示的图片
 +            .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
-+            .cacheOnDisc(true) // 设置下载的图片是否缓存在SD卡中
++            .cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
 +            .build(); // 创建配置过得DisplayImageOption对象
 +
 +    private ImageView ivBank;

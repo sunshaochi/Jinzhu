@@ -1,16 +1,11 @@
 package com.beyonditsm.financial.activity.credit;
 
-import android.graphics.Bitmap;
 import android.graphics.PointF;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.widget.ImageView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
-import com.beyonditsm.financial.util.MyBitmapUtils;
-import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.LoadingView;
 
 import com.beyonditsm.financial.view.subscaleview.ImageSource;
@@ -28,7 +23,6 @@ public class CreditGuideAct extends BaseActivity {
     private SubsamplingScaleImageView ivBg;
     @ViewInject(R.id.loadingView)
     private LoadingView loadingView;
-    private int screenWidth;
 
     @Override
     public void setLayout() {
@@ -110,8 +104,7 @@ public class CreditGuideAct extends BaseActivity {
     private void getWidth() {
         DisplayMetrics metric = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metric);
-        screenWidth = metric.widthPixels;     // 屏幕宽度（像素）
-//        int height = metric.heightPixels;   // 屏幕高度（像素）
+        //        int height = metric.heightPixels;   // 屏幕高度（像素）
 //        float density = metric.density;      // 屏幕密度（0.75 / 1.0 / 1.5）
 //        int densityDpi = metric.densityDpi;  // 屏幕密度DPI（120 / 160 / 240）
     }
