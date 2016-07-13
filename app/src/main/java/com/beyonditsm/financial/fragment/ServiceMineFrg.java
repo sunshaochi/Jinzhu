@@ -14,16 +14,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
-import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.MessageActivity;
 import com.beyonditsm.financial.activity.servicer.ServiceDataAct;
 import com.beyonditsm.financial.activity.servicer.ServiceMainAct;
 import com.beyonditsm.financial.activity.user.CreditPointAct;
 import com.beyonditsm.financial.activity.user.HardCreditAct;
-import com.beyonditsm.financial.activity.user.LoginAct;
 import com.beyonditsm.financial.activity.user.MyCreditAct;
 import com.beyonditsm.financial.activity.user.MyRecommAct;
-import com.beyonditsm.financial.activity.user.NewWorkAct;
 import com.beyonditsm.financial.activity.user.SettingAct;
 import com.beyonditsm.financial.activity.vip.VipAct;
 import com.beyonditsm.financial.activity.wallet.MyWalletActivity;
@@ -189,12 +186,12 @@ public class ServiceMineFrg extends BaseFragment {
                 break;
             //打工挣钱
             case R.id.rlWork:
-                intent = new Intent(getActivity(), NewWorkAct.class);
-//                intent.putExtra("id",user.getId());
-                intent.putExtra("accountId", ue);
-                if (ule != null)
-                    intent.putExtra(NewWorkAct.ROLE, ule.getRoleName());
-                getActivity().startActivity(intent);
+//                intent = new Intent(getActivity(), NewWorkAct.class);
+////                intent.putExtra("id",user.getId());
+//                intent.putExtra("accountId", ue);
+//                if (ule != null)
+//                    intent.putExtra(NewWorkAct.ROLE, ule.getRoleName());
+//                getActivity().startActivity(intent);
                 break;
             //我的钱包
             case R.id.rlWallet:

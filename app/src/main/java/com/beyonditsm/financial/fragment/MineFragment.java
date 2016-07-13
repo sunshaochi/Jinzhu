@@ -23,7 +23,6 @@ import com.beyonditsm.financial.activity.user.HardCreditAct;
 import com.beyonditsm.financial.activity.user.LoginAct;
 import com.beyonditsm.financial.activity.user.MyCreditAct;
 import com.beyonditsm.financial.activity.user.MyRecommAct;
-import com.beyonditsm.financial.activity.user.NewWorkAct;
 import com.beyonditsm.financial.activity.user.SettingAct;
 import com.beyonditsm.financial.activity.user.UpdateAct;
 import com.beyonditsm.financial.activity.vip.VipAct;
@@ -232,7 +231,6 @@ public class MineFragment extends BaseFragment {
                 break;
             //我的信售额
             case R.id.rlLines:
-//                intent = new Intent(getActivity(), CultivationAct.class);
                 intent = new Intent(getActivity(), HardCreditAct.class);
                 getActivity().startActivity(intent);
                 break;
@@ -251,12 +249,12 @@ public class MineFragment extends BaseFragment {
                 break;
             //打工挣钱
             case R.id.rlWork:
-                intent = new Intent(getActivity(), NewWorkAct.class);
-//                intent.putExtra("id",user.getId());
-                intent.putExtra("accountId", user);
-                if (ule != null)
-                    intent.putExtra(NewWorkAct.ROLE, ule.getRoleName());
-                getActivity().startActivity(intent);
+//                intent = new Intent(getActivity(), NewWorkAct.class);
+////                intent.putExtra("id",user.getId());
+//                intent.putExtra("accountId", user);
+//                if (ule != null)
+//                    intent.putExtra(NewWorkAct.ROLE, ule.getRoleName());
+//                getActivity().startActivity(intent);
                 break;
             //我的钱包
             case R.id.rlWallet:

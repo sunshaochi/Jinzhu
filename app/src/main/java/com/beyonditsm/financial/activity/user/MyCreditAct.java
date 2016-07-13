@@ -95,7 +95,7 @@ public class MyCreditAct extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MyCreditAct.this, MyCreditDAct.class);
-                MyCreditBean.RowsEntity credit = (MyCreditBean.RowsEntity) datas.get(position);
+                MyCreditBean.RowsEntity credit = datas.get(position);
                 intent.putExtra(CREDIT, credit);
                 intent.putExtra("position", position);
                 startActivity(intent);
@@ -125,6 +125,7 @@ public class MyCreditAct extends BaseActivity {
         mce.setPage(page);
         mce.setRows(10);
         RequestManager.getCommManager().myCredit(mce, new RequestManager.CallBack() {
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) {
                 loadingView.loadComplete();

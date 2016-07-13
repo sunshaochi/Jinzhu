@@ -26,16 +26,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Created by sunshaochi-1 on 2015/11/19.
+ * Created by sunshaochi-1 on 2015/11/19
  */
 public class FindPwdAct extends BaseActivity {
     private TextView gettv;
-    private TextView nextttv;
     private ClearEditText findetphone;
     private EditText findetpwd;
 
-    private String name;
-    private String authcode;//验证码
     private int i = 60;
     private Timer timer;
     private MyTimerTask myTask;
@@ -69,9 +66,7 @@ public class FindPwdAct extends BaseActivity {
                 if (s == null || s.length() == 0) return;
                 StringBuilder sb = new StringBuilder();
                 for (int i = 0; i < s.length(); i++) {
-                    if (i != 3 && i != 8 && s.charAt(i) == ' ') {
-                        continue;
-                    } else {
+                    if (i == 3 || i == 8 || s.charAt(i) != ' ') {
                         sb.append(s.charAt(i));
                         if ((sb.length() == 4 || sb.length() == 9) && sb.charAt(sb.length() - 1) != ' ') {
                             sb.insert(sb.length() - 1, ' ');
@@ -105,7 +100,6 @@ public class FindPwdAct extends BaseActivity {
 
     private void setView() {
         gettv = (TextView) findViewById(R.id.gettv);
-        nextttv = (TextView) findViewById(R.id.nexttv);
         findetphone = (ClearEditText) findViewById(R.id.findetphone);
         findetpwd = (EditText) findViewById(R.id.findetpwd);
     }
@@ -115,7 +109,7 @@ public class FindPwdAct extends BaseActivity {
         switch (v.getId()) {
             //获取验证码
             case R.id.gettv:
-                name = findetphone.getText().toString().replaceAll(" +","");
+                String name = findetphone.getText().toString().replaceAll(" +", "");
                 if (TextUtils.isEmpty(name)) {
                     MyToastUtils.showShortToast(getApplicationContext(), "请输入手机号");
                     return;
@@ -146,7 +140,7 @@ public class FindPwdAct extends BaseActivity {
             //下一步
             case R.id.nexttv:
                 name = findetphone.getText().toString().replaceAll(" +","");
-                authcode = findetpwd.getText().toString().trim();
+                String authcode = findetpwd.getText().toString().trim();
                 if (TextUtils.isEmpty(name)) {
                     MyToastUtils.showShortToast(getApplicationContext(), "请输入手机号");
                     findetphone.requestFocus();
@@ -185,6 +179,7 @@ public class FindPwdAct extends BaseActivity {
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
 
+        @SuppressLint("SetTextI18n")
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);

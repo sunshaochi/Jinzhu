@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by gxy on 2015/12/7.
+ * Created by gxy on 2015/12/7
  */
 public class TaskLevelAct extends BaseActivity {
     @ViewInject(R.id.lv_task)
@@ -69,8 +69,8 @@ public class TaskLevelAct extends BaseActivity {
         getPrimaryTask(list);
         getMiddleTask(list);
         getHighTask(list);
-        myList = new ArrayList<TaskStrategyEntity>();
-        finishList = new ArrayList<TaskEntity>();//已完成任务列表
+        myList = new ArrayList<>();
+        finishList = new ArrayList<>();//已完成任务列表
 
         lv_task.setAdapter(new PrimaryTaskAdapter(list,getApplicationContext()));
         lv_task.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -94,8 +94,8 @@ public class TaskLevelAct extends BaseActivity {
 
     /**
      * 给对应位置的任务类型设置对应的任务列表
-     * @param list
-     * @param position
+     * @param list 集合
+     * @param position  位置
      */
     private void select(final List<TaskEntity> list,final int position){
         if (list.get(position).getTaskStatus() == -1) {
@@ -148,7 +148,7 @@ public class TaskLevelAct extends BaseActivity {
      * @param position 点击的位置
      */
     private void selectToFinishAct(List<TaskEntity> list,int position){
-        Intent intent = null;
+        Intent intent;
         intent = new Intent();
         intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) list);
         intent.putExtra("position",position);
@@ -168,7 +168,7 @@ public class TaskLevelAct extends BaseActivity {
      * @param position 点击的位置
      */
     private void selectToAct(List<TaskEntity> listTask,List<TaskStrategyEntity> list,int position){
-        Intent intent = null;
+        Intent intent;
         intent = new Intent();
         if(list.size()!=0){
             //根据任务策略的第一条数据中任务组件跳转
@@ -220,7 +220,7 @@ public class TaskLevelAct extends BaseActivity {
         RequestManager.getUserManager().findAllTask(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-                list = new ArrayList<TaskEntity>();
+                list = new ArrayList<>();
 
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray dataArr = jsonObject.getJSONArray("data");
@@ -284,11 +284,10 @@ public class TaskLevelAct extends BaseActivity {
 
     /**
      * 获取初级任务列表
-     * @param tasklist
-     * @return
+     * @param tasklist 任务列表
      */
     private List<TaskEntity> getPrimaryTask(List<TaskEntity> tasklist){
-        primaryList=new ArrayList<TaskEntity>();
+        primaryList= new ArrayList<>();
         for (int i=0;i<tasklist.size();i++){
             if(tasklist.get(i).getTaskType().equals("初级任务")){
                 primaryList.add(tasklist.get(i));
@@ -300,11 +299,10 @@ public class TaskLevelAct extends BaseActivity {
 
     /**
      * 获取中级任务列表
-     * @param tasklist
-     * @return
+     * @param tasklist 任务列表
      */
     private List<TaskEntity> getMiddleTask(List<TaskEntity> tasklist){
-        middleList=new ArrayList<TaskEntity>();
+        middleList= new ArrayList<>();
         for (int i=0;i<tasklist.size();i++){
             if(tasklist.get(i).getTaskType().equals("中级任务")){
                 middleList.add(tasklist.get(i));
@@ -316,11 +314,10 @@ public class TaskLevelAct extends BaseActivity {
 
     /**
      * 获取高级任务列表
-     * @param tasklist
-     * @return
+     * @param tasklist 任务集合
      */
     private List<TaskEntity> getHighTask(List<TaskEntity> tasklist){
-        highList=new ArrayList<TaskEntity>();
+        highList= new ArrayList<>();
         for (int i=0;i<tasklist.size();i++){
             if(tasklist.get(i).getTaskType().equals("高级任务")){
                 highList.add(tasklist.get(i));

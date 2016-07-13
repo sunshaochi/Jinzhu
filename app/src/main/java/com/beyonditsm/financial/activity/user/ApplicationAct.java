@@ -13,7 +13,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.ConstantValue;
@@ -40,27 +39,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/5/26.
+ * Created by liwk on 2016/5/26
  */
 public class ApplicationAct extends BaseActivity {
     @ViewInject(R.id.plv)
     private LoadRefreshView plv;
-    @ViewInject(R.id.tv_title)
-    private TextView tvTitle;
-    @ViewInject(R.id.rl_back)
-    private RelativeLayout rl_back;
     @ViewInject(R.id.etAmount)
     private EditText etAmount;//输入金额
     @ViewInject(R.id.tvM)
     private TextView tvM;//月份
-    @ViewInject(R.id.tvSearch)
-    private TextView tvSearch;//搜索
     @ViewInject(R.id.loadView)
     private LoadingView loadView;
 
     private String cMoney = "";
     private String cTime = "";
-    private int pageSize = 10;
     private int currentP = 1;
     private CreditAdapter adapter;
     @Override
@@ -158,7 +150,7 @@ public class ApplicationAct extends BaseActivity {
                         etAmount.setSelection(s.length());
                     }
                 }
-                if (s.toString().trim().substring(0).equals(".")) {
+                if (s.toString().trim().equals(".")) {
                     s = "0" + s;
                     etAmount.setText(s);
                     etAmount.setSelection(2);
@@ -169,7 +161,6 @@ public class ApplicationAct extends BaseActivity {
                     if (!s.toString().substring(1, 2).equals(".")) {
                         etAmount.setText(s.subSequence(0, 1));
                         etAmount.setSelection(1);
-                        return;
                     }
                 }
             }
@@ -248,11 +239,12 @@ public class ApplicationAct extends BaseActivity {
                 break;
         }
     }
-    private List<ProductInfo> datas = new ArrayList<ProductInfo>();
+    private List<ProductInfo> datas = new ArrayList<>();
 
     private void getCredit(final int currentPage, String creditMoney, String creditTime) {
         FindProductListEntity entity = new FindProductListEntity();
         entity.setPage(currentPage);
+        int pageSize = 10;
         entity.setRows(pageSize);
         MyLogUtils.info("金额：" + creditMoney + "期限：" + creditTime);
         if (TextUtils.isEmpty(creditMoney)) {
@@ -261,6 +253,7 @@ public class ApplicationAct extends BaseActivity {
             creditMoney = Double.valueOf(creditMoney) * 10000 + "";
         }
         RequestManager.getMangManger().findProductList(entity, creditMoney, creditTime, new RequestManager.CallBack() {
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) {
                 loadView.loadComplete();
@@ -299,7 +292,6 @@ public class ApplicationAct extends BaseActivity {
                     }
                 }else if (TextUtils.isEmpty(etAmount.getText().toString().trim())||TextUtils.isEmpty(tvM.getText().toString().trim())){
                     MyToastUtils.showShortToast(ApplicationAct.this, "请输入贷款金额或贷款期限");
-                    return;
                 } else {
                     double creditTotal = Double.valueOf(etAmount.getText().toString().trim()) * 10000;
 

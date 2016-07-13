@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.activity.user;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.webkit.WebSettings;
@@ -11,6 +12,7 @@ import com.beyonditsm.financial.activity.BaseActivity;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 /**
+ * 金蛛条款
  * Created by gxy on 2016/1/7.
  */
 public class ClauseJinzhu extends BaseActivity {
@@ -18,12 +20,12 @@ public class ClauseJinzhu extends BaseActivity {
     private WebView clause;//金蛛条款
 
 
-    private String clause_url="file:///android_asset/clause.html";
     @Override
     public void setLayout() {
         setContentView(R.layout.act_clausejinzhu);
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     public void init(Bundle savedInstanceState) {
         setTopTitle("金蛛服务条款");
@@ -37,6 +39,7 @@ public class ClauseJinzhu extends BaseActivity {
 
         clause.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);//设置缓存模式
         //webview加载web资源
+        String clause_url = "file:///android_asset/clause.html";
         clause.loadUrl(clause_url);
         //覆盖webview使用默认浏览器或第三方浏览器打开网页的行为，使网页用webview打开
         clause.setWebViewClient(new WebViewClient(){

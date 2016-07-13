@@ -49,12 +49,9 @@ import io.rong.imlib.RongIMClient;
  */
 public class LoginAct extends BaseActivity{
 
-    private RelativeLayout rlBack;//后退键
-    private TextView tvTitle;//标题
     private ClearEditText loginPhone;//手机号
     private ClearEditText loginPwd;//密码
     private RelativeLayout loginBtn;//登录
-    private TextView loginLostPwd;//忘记密码
     private TextView login_zc;//注册
     private AutoAnimImageView progressBar1;
 
@@ -63,12 +60,9 @@ public class LoginAct extends BaseActivity{
     public static final String LOGIN_TYPE="login_type";
     private int LTYPE;
     private void assignViews() {
-        rlBack = (RelativeLayout) findViewById(R.id.rl_back);
-        tvTitle = (TextView) findViewById(R.id.tv_title);
         loginPhone = (ClearEditText) findViewById(R.id.login_phone);
         loginPwd = (ClearEditText) findViewById(R.id.login_pwd);
         loginBtn = (RelativeLayout) findViewById(R.id.login_btn);
-        loginLostPwd = (TextView) findViewById(R.id.login_lost_pwd);
         login_zc = (TextView) findViewById(R.id.login_zc);
         progressBar1 = (AutoAnimImageView) findViewById(R.id.progressBar1);
     }
@@ -103,9 +97,7 @@ public class LoginAct extends BaseActivity{
                 if (s == null || s.length() == 0) return;
                 StringBuilder sb = new StringBuilder();
                 for (int i = 0; i < s.length(); i++) {
-                    if (i != 3 && i != 8 && s.charAt(i) == ' ') {
-                        continue;
-                    } else {
+                    if (i == 3 || i == 8 || s.charAt(i) != ' ') {
                         sb.append(s.charAt(i));
                         if ((sb.length() == 4 || sb.length() == 9) && sb.charAt(sb.length() - 1) != ' ') {
                             sb.insert(sb.length() - 1, ' ');
@@ -213,7 +205,7 @@ public class LoginAct extends BaseActivity{
     /**
      * 登录
      *
-     * @param ue
+     * @param ue 用户实体类
      */
     private void toLogin(final UserEntity ue) {
         RequestManager.getCommManager().toLogin(ue, new RequestManager.CallBack() {
@@ -230,9 +222,8 @@ public class LoginAct extends BaseActivity{
                     progressBar1.setVisibility(View.GONE);
                     if (ConstantValue.STEP == 10) {
                         sendBroadcast(new Intent(CreditStepAct.UPDATA));
-                        JSONObject jsonObject = null;
                         try {
-                            jsonObject = new JSONObject(result);
+                            JSONObject jsonObject = new JSONObject(result);
                             JSONObject data = jsonObject.getJSONObject("data");
                             String roleName = data.getString("roleName");
                             String accountId=data.optString("accountAlias");
@@ -243,7 +234,7 @@ public class LoginAct extends BaseActivity{
                             if(JPushInterface.isPushStopped(getApplicationContext())){
                                 JPushInterface.resumePush(getApplicationContext());
                             }
-                            Set<String> set=new HashSet<String>();
+                            Set<String> set= new HashSet<>();
                             if(!TextUtils.isEmpty(agencyIdTag)){
                                 set.add(agencyIdTag);
                             }
@@ -275,7 +266,7 @@ public class LoginAct extends BaseActivity{
                             if(JPushInterface.isPushStopped(getApplicationContext())){
                                 JPushInterface.resumePush(getApplicationContext());
                             }
-                            Set<String> set=new HashSet<String>();
+                            Set<String> set= new HashSet<>();
                             if(!TextUtils.isEmpty(agencyIdTag)){
                                 set.add(agencyIdTag);
                             }
@@ -286,7 +277,7 @@ public class LoginAct extends BaseActivity{
 
                                 }
                             });
-                                connect(SpUtils.getToken(getApplicationContext()),result);
+                                connect(SpUtils.getToken(getApplicationContext()));
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -314,7 +305,7 @@ public class LoginAct extends BaseActivity{
     /**
      * 建立与融云服务器的连接
      */
-    private void connect(final String token,final String result) {
+    private void connect(final String token) {
         if (getApplicationInfo().packageName.equals(MyApplication.getCurProcessName(getApplicationContext()))) {
             /**
              * IMKit SDK调用第二步,建立与服务器的连接

@@ -31,7 +31,6 @@ public class SelectSexAct extends BaseActivity {
     private RadioGroup rgSex;
 
     public final static String SEX = "sex";
-    private int sex;//0女 1男
 
     private UserEntity userInfo;
     private UserEntity servantInfo ;
@@ -46,7 +45,7 @@ public class SelectSexAct extends BaseActivity {
         setTopTitle("性别");
         userInfo = getIntent().getParcelableExtra(MineFragment.USER_KEY);
         servantInfo = getIntent().getParcelableExtra(ServiceMineFrg.SERVANT_INFO);
-        sex = getIntent().getIntExtra(SEX, 0);
+        int sex = getIntent().getIntExtra(SEX, 0);
         if (sex == 0) {
             rgGirl.setChecked(true);
         } else {

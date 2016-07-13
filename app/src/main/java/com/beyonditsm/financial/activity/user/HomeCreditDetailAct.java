@@ -1,6 +1,7 @@
 package com.beyonditsm.financial.activity.user;
 
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,7 +23,6 @@ import com.beyonditsm.financial.activity.credit.CreditStepAct;
 import com.beyonditsm.financial.activity.vip.VipAct;
 import com.beyonditsm.financial.entity.ProductInfo;
 import com.beyonditsm.financial.entity.ResultData;
-import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.entity.UserLoginEntity;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
@@ -31,7 +31,6 @@ import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.widget.DialogChooseMonth;
-import com.beyonditsm.financial.widget.MyAlertDialog;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
@@ -45,8 +44,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Administrator on 2015/12/18.
+ * Created by Administrator on 2015/12/18
  */
+@SuppressWarnings("deprecation")
 public class HomeCreditDetailAct extends BaseActivity {
     private ScrollView svCridet;
     private ImageView ivRequire;//申请条件
@@ -64,7 +64,7 @@ public class HomeCreditDetailAct extends BaseActivity {
     private TextView tvTitle;
 
 
-    private Map<Integer, Boolean> map = new HashMap<Integer, Boolean>();
+    private Map<Integer, Boolean> map = new HashMap<>();
 
 
     private ImageView ivBank;
@@ -89,12 +89,11 @@ public class HomeCreditDetailAct extends BaseActivity {
     public static String monthlyPayments;//月供
     private String totalRath;
 
-    private MyAlertDialog dialog;
     java.text.DecimalFormat df = new java.text.DecimalFormat("#0.0");//保留小数
 
 //    private ProductInfo productInfo;
 
-    private ArrayList<String> tList = new ArrayList<String>();
+    private ArrayList<String> tList = new ArrayList<>();
 
     private ObjectAnimator obaDown1;
     private ObjectAnimator obaOn1;
@@ -120,7 +119,6 @@ public class HomeCreditDetailAct extends BaseActivity {
             .build(); // 创建配置过得DisplayImageOption对象
     private ProductInfo productEntity;
     private TextView tvOnePay;
-    private UserEntity userInfo;
     private UserLoginEntity ule;
 
 
@@ -246,7 +244,7 @@ public class HomeCreditDetailAct extends BaseActivity {
                     etAmount.setSelection(s.length());
                 }
             }
-            if (s.toString().trim().substring(0).equals(".")) {
+            if (s.toString().trim().equals(".")) {
                 s = "0" + s;
                 etAmount.setText(s);
                 etAmount.setSelection(2);
@@ -257,7 +255,6 @@ public class HomeCreditDetailAct extends BaseActivity {
                 if (!s.toString().substring(1, 2).equals(".")) {
                     etAmount.setText(s.subSequence(0, 1));
                     etAmount.setSelection(1);
-                    return;
                 }
             }
         }
@@ -277,16 +274,14 @@ public class HomeCreditDetailAct extends BaseActivity {
                 }
                 if(null!=productEntity){
                     if (null!=productEntity.getMinVal() && null != productEntity.getMinVal()){
-                        final double minVal = Double.valueOf(productEntity.getMinVal());
-                        double maxVal = Double.valueOf(productEntity.getMaxVal());
-                        double curVal = Double.valueOf(creditMoney.toString()) * 10000;
+                        double curVal = Double.valueOf(creditMoney) * 10000;
                         if (TextUtils.isEmpty(creditMonth)) {
                             double minTimeVal = Double.valueOf(productEntity.getTimeMinVal());
                             creditMonth = minTimeVal + "";
                         } else {
                             creditMonth = tvM.getText().toString();
                         }
-                        validateCredit(minVal, maxVal, curVal, creditMonth);
+                        validateCredit(curVal, creditMonth);
                     }
 
                 }
@@ -301,11 +296,10 @@ public class HomeCreditDetailAct extends BaseActivity {
     /**
      * 点击事件
      *
-     * @param v
      */
     @OnClick({R.id.rlRequire, R.id.rlMaterial, R.id.rlDetail, R.id.tvApplay, R.id.rlMonth, R.id.tvCal, R.id.etAmount,R.id.tvBuy})
     public void toClick(View v) {
-        Intent intent = null;
+        Intent intent;
         switch (v.getId()) {
             //搜索
 //            case R.id.etAmount:
@@ -387,7 +381,7 @@ public class HomeCreditDetailAct extends BaseActivity {
                 if (productEntity != null) {
                     final double minVal = Double.valueOf(productEntity.getMinVal());
                     double maxVal = Double.valueOf(productEntity.getMaxVal());
-                    double curVal = Double.valueOf(creditMoney.toString()) * 10000;
+                    double curVal = Double.valueOf(creditMoney) * 10000;
                     if (curVal < minVal || curVal > maxVal) {
                         Toast.makeText(HomeCreditDetailAct.this, "您输入的金额不在额度范围内", Toast.LENGTH_SHORT).show();
                     } else {
@@ -420,10 +414,8 @@ public class HomeCreditDetailAct extends BaseActivity {
 
                         creditMonth = tvM.getText().toString();
 
-                        final double minVal = Double.valueOf(productEntity.getMinVal());
-                        double maxVal = Double.valueOf(productEntity.getMaxVal());
-                        double curVal = Double.valueOf(creditMoney.toString()) * 10000;
-                        validateCredit(minVal, maxVal, curVal, creditMonth);
+                        double curVal = Double.valueOf(creditMoney) * 10000;
+                        validateCredit(curVal, creditMonth);
 //                        getMOnthPay(creditMoney, productInfo.getMonthlyRathAvg(), creditMonth);
                     }
                 });
@@ -441,10 +433,8 @@ public class HomeCreditDetailAct extends BaseActivity {
                     creditMoney = etAmount.getText().toString().trim();
                     creditMonth = tvM.getText().toString();
                 }
-                final double minVal = Double.valueOf(productEntity.getMinVal());
-                double maxVal = Double.valueOf(productEntity.getMaxVal());
-                double curVal = Double.valueOf(creditMoney.toString()) * 10000;
-                validateCredit(minVal, maxVal, curVal, creditMonth);
+                double curVal = Double.valueOf(creditMoney) * 10000;
+                validateCredit(curVal, creditMonth);
 
 
                 break;
@@ -465,11 +455,9 @@ public class HomeCreditDetailAct extends BaseActivity {
     /**
      * 验证是否在额度范围
      *
-     * @param minVal
-     * @param maxVal
-     * @param curVal
+     * @param curVal 当前金额
      */
-    private void validateCredit(final double minVal, double maxVal, double curVal, String creditMonth) {
+    private void validateCredit(double curVal, String creditMonth) {
         String monthRath = (Double.valueOf(productEntity.getMonthlyRathMin()) + Double.valueOf(productEntity.getMonthlyRathMax())) / 2 + "";
 
         getMOnthPay(curVal / 10000 + "", monthRath, creditMonth);
@@ -556,6 +544,8 @@ public class HomeCreditDetailAct extends BaseActivity {
 
     private void findOrderDetail(String productId) {
         RequestManager.getUserManager().findOrderDetailById(productId, new RequestManager.CallBack() {
+            @SuppressLint("SetTextI18n")
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) throws JSONException {
                 loadView.loadComplete();
@@ -670,9 +660,9 @@ public class HomeCreditDetailAct extends BaseActivity {
      */
     private void getUserLoginInfo() {
         RequestManager.getUserManager().findUserLoginInfo(new RequestManager.CallBack() {
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) throws JSONException {
-                String a = result;
                 JSONObject obj = new JSONObject(result);
                 int status = obj.getInt("status");
                 if (status == 200){

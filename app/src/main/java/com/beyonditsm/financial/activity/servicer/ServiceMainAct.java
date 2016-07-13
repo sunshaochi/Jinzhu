@@ -17,7 +17,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.beyonditsm.financial.AppManager;
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.RongCloudEvent;
@@ -41,12 +40,8 @@ import com.beyonditsm.financial.util.SpUtils;
 import com.lidroid.xutils.util.LogUtils;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.eventbus.EventBus;
-import com.tandong.sa.json.Gson;
 
 import org.json.JSONException;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
@@ -70,7 +65,6 @@ public class ServiceMainAct extends BaseActivity{
     private TextView title_chat;
     private TextView title_friend;
     private RelativeLayout main_title;
-    private RelativeLayout add_friend;//添加通讯录好友
 
     private FragmentManager manager;
     private Fragment myWalletfrg, creditFgt, friendFgt, mineFgt;//钱包，沟通，我的
@@ -82,9 +76,6 @@ public class ServiceMainAct extends BaseActivity{
      */
     private final static long WAITTIME = 2000;
     private long touchTime = 0;
-    private List<UserEntity> friends = new ArrayList<>();
-    private List<FriendBean> friendBeans = new ArrayList<>();
-    private Gson gson = new Gson();
     private ImageView ivMs;
     private DisplayRedReceiver displayRedReceiver;
     private HideRedReceiver hideRedReceiver;
@@ -103,7 +94,6 @@ public class ServiceMainAct extends BaseActivity{
         title_chat = (TextView) findViewById(R.id.title_chat);
         title_friend = (TextView) findViewById(R.id.title_friend);
         main_title = (RelativeLayout) findViewById(R.id.main_title);
-        add_friend = (RelativeLayout) findViewById(R.id.add_friend);
         ivMs = (ImageView) findViewById(R.id.ivMs);
     }
 
@@ -147,6 +137,7 @@ public class ServiceMainAct extends BaseActivity{
     private void findServantInfo() {
 
         RequestManager.getServicerManager().findServantDetail(new RequestManager.CallBack() {
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) throws JSONException {
                 ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
@@ -211,12 +202,11 @@ public class ServiceMainAct extends BaseActivity{
 
     /**
      * 点击事件
-     *
-     * @param
      */
     @OnClick({ R.id.llMyWallet,R.id.llCredit, R.id.llChat, R.id.llMine, R.id.add_friend, R.id.title_chat,
             R.id.title_friend})
     public void toClick(View v) {
+        String a = SpUtils.getRoleName(ServiceMainAct.this);
         switch (v.getId()) {
 //            //首页
             case R.id.llMyWallet:
@@ -254,8 +244,8 @@ public class ServiceMainAct extends BaseActivity{
                 break;
             //我的
             case R.id.llMine:
-                String a = SpUtils.getRoleName(ServiceMainAct.this).toString();
-                if (TextUtils.isEmpty(SpUtils.getRoleName(ServiceMainAct.this).toString())) {
+
+                if (TextUtils.isEmpty(a)) {
                     gotoActivity(LoginAct.class, false);
                 } else {
                     setAllTabNor();
@@ -266,7 +256,7 @@ public class ServiceMainAct extends BaseActivity{
                 break;
             //顶部沟通按钮
             case R.id.title_chat:
-                if (TextUtils.isEmpty(SpUtils.getRoleName(ServiceMainAct.this).toString())) {
+                if (TextUtils.isEmpty(a)) {
                     gotoActivity(LoginAct.class, false);
                 } else {
                     title = 1;
@@ -280,7 +270,7 @@ public class ServiceMainAct extends BaseActivity{
                 break;
             //顶部好友按钮
             case R.id.title_friend:
-                if (TextUtils.isEmpty(SpUtils.getRoleName(ServiceMainAct.this).toString())) {
+                if (TextUtils.isEmpty(a)) {
                     gotoActivity(LoginAct.class, false);
                 } else {
                     title = 2;
@@ -294,7 +284,7 @@ public class ServiceMainAct extends BaseActivity{
                 break;
             //添加好友
             case R.id.add_friend:
-                if (TextUtils.isEmpty(SpUtils.getRoleName(ServiceMainAct.this).toString())) {
+                if (TextUtils.isEmpty(a)) {
                     gotoActivity(LoginAct.class, false);
                 } else {
                     Intent intent = new Intent(ServiceMainAct.this, AddressBookAct.class);
@@ -325,6 +315,7 @@ public class ServiceMainAct extends BaseActivity{
         title_friend.setTextColor(Color.parseColor("#ffffff"));
     }
 
+    @SuppressWarnings("deprecation")
     private void setTitleCheckItem(int position) {
         switch (position) {
             case 0:
@@ -396,6 +387,7 @@ public class ServiceMainAct extends BaseActivity{
      *
      * @param position
      */
+    @SuppressWarnings("JavaDoc")
     private void setTabSelection(final int position) {
         FragmentTransaction transaction = manager.beginTransaction();
         hideFragment(transaction);

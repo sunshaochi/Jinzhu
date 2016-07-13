@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.activity.manager;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -25,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by wangbin on 15/12/17.
+ * Created by wangbin on 15/12/17
  */
 public class GetPictureAct extends BaseActivity {
     @ViewInject(R.id.gv_pic)
@@ -42,7 +43,7 @@ public class GetPictureAct extends BaseActivity {
     String account_id;
     String order_id;
     String remark;
-    private List<String> images = new ArrayList<String>();
+    private List<String> images = new ArrayList<>();
 
     @Override
     public void setLayout() {
@@ -74,6 +75,7 @@ public class GetPictureAct extends BaseActivity {
      * @param position
      * @param urls2
      */
+    @SuppressWarnings("JavaDoc")
     protected void imageBrower(int position, ArrayList<String> urls2) {
         Intent intent = new Intent(this, ImagePagerActivity.class);
         // 图片url,为了演示这里使用常量，一般从数据库中或网络中获取
@@ -84,6 +86,7 @@ public class GetPictureAct extends BaseActivity {
 
     public void getPicture(String accountId, String orderNo) {
         RequestManager.getMangManger().getFujianPic(accountId, orderNo, new RequestManager.CallBack() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onSucess(String result) throws JSONException {
                 loadView.loadComplete();

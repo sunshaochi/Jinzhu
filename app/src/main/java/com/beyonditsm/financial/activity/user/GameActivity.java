@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.activity.user;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -41,6 +42,7 @@ import java.util.List;
  * 游戏
  * Created by wangbin on 15/12/7.
  */
+@SuppressWarnings({"deprecation", "StatementWithEmptyBody"})
 public class GameActivity extends BaseActivity {
     @ViewInject(R.id.wvGame)
     private WebView wvGame;
@@ -64,6 +66,7 @@ public class GameActivity extends BaseActivity {
         setContentView(R.layout.act_game);
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     public void init(Bundle savedInstanceState) {
         setTopTitle("信用耕耘");
@@ -152,16 +155,6 @@ public class GameActivity extends BaseActivity {
                 return true;
             }
 
-            public void openFileChooser(ValueCallback<Uri> uploadMsg) {
-                mUploadMessage = uploadMsg;
-                take();
-            }
-
-            public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType) {
-                mUploadMessage = uploadMsg;
-                take();
-            }
-
             // Android > 4.1.1 调用这个方法
 //            public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType, String capture) {
 //                mUploadMessage = uploadMsg;
@@ -172,10 +165,6 @@ public class GameActivity extends BaseActivity {
 //                        Intent.createChooser(intent, "Image Chooser"), FILECHOOSER_RESULTCODE);
 //            }
 
-            public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType, String capture) {
-                mUploadMessage = uploadMsg;
-                take();
-            }
         });
 
 
@@ -297,9 +286,9 @@ public class GameActivity extends BaseActivity {
             mUploadCallbackAboveL = null;
         }
 
-        return;
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private void take() {
         File imageStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "MyApp");
         // Create the storage directory if it does not exist
@@ -309,7 +298,7 @@ public class GameActivity extends BaseActivity {
         File file = new File(imageStorageDir + File.separator + "IMG_" + String.valueOf(System.currentTimeMillis()) + ".jpg");
         imageUri = Uri.fromFile(file);
 
-        final List<Intent> cameraIntents = new ArrayList<Intent>();
+        final List<Intent> cameraIntents = new ArrayList<>();
         final Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         final PackageManager packageManager = getPackageManager();
         final List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
@@ -326,7 +315,7 @@ public class GameActivity extends BaseActivity {
         i.addCategory(Intent.CATEGORY_OPENABLE);
         i.setType("image/*");
         Intent chooserIntent = Intent.createChooser(i, "Image Chooser");
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, cameraIntents.toArray(new Parcelable[]{}));
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, cameraIntents.toArray(new Parcelable[cameraIntents.size()]));
         startActivityForResult(chooserIntent, FILECHOOSER_RESULTCODE);
     }
 

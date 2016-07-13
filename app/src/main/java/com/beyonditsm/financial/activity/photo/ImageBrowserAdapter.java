@@ -18,9 +18,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("ALL")
 public class ImageBrowserAdapter extends PagerAdapter {
 
-	private List<ImageBean> mPhotos = new ArrayList<ImageBean>();
+	private List<ImageBean> mPhotos = new ArrayList<>();
 	Context context;
 
 	public ImageBrowserAdapter(Context context, List<ImageBean> photos) {

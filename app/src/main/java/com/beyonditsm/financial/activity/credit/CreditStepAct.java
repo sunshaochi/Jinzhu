@@ -12,7 +12,6 @@ import android.text.TextUtils;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
-import com.beyonditsm.financial.activity.user.HotCreditDetailAct;
 import com.beyonditsm.financial.entity.ProductInfo;
 import com.beyonditsm.financial.entity.UpLoadEntity;
 import com.beyonditsm.financial.fragment.CreditFirstFrag;
@@ -35,7 +34,6 @@ public class CreditStepAct extends BaseActivity {
     private CreditSecondFrag secondFrag;//第二步
     private CreditThirFrag thrFrag;//第三步
     private CreditFourthFrag fourthFrag;//第四步
-    private ProductInfo hotProductInfo;
 
     public static String orderId;//订单id
     public static List<UpLoadEntity> upList;
@@ -55,7 +53,6 @@ public class CreditStepAct extends BaseActivity {
         setLeftTv("返回");
         orderId=getIntent().getStringExtra("orderId");
         productInfo = getIntent().getParcelableExtra(CreditDetailAct.PRODUCTINFO);
-        hotProductInfo = getIntent().getParcelableExtra(HotCreditDetailAct.HOTPRODUCTINFO);
         EventBus.getDefault().register(this);
         fragmentManager = getSupportFragmentManager();
         if (TextUtils.isEmpty(SpUtils.getRoleName(this)))
@@ -115,7 +112,6 @@ public class CreditStepAct extends BaseActivity {
                     secondFrag = new CreditSecondFrag();
                     Bundle bundle = new Bundle();
                     bundle.putParcelable(CreditDetailAct.PRODUCTINFO,productInfo);
-                    bundle.putParcelable(HotCreditDetailAct.HOTPRODUCTINFO,hotProductInfo);
                     secondFrag.setArguments(bundle);
                     fragmentTransaction.add(R.id.credit_fl, secondFrag);
                 } else {

@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.activity.manager;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -20,7 +21,7 @@ public class PGAct extends BaseActivity{
     private static final int RESULT = 0;
     @ViewInject(R.id.pg_lv)
     private ListView pg_lv;
-    private MyAdapter adapter;
+
     @Override
     public void setLayout() {
         setContentView(R.layout.act_pg);
@@ -29,7 +30,7 @@ public class PGAct extends BaseActivity{
     @Override
     public void init(Bundle savedInstanceState) {
         setLeftTv("返回");
-        adapter = new MyAdapter();
+        MyAdapter adapter = new MyAdapter();
         pg_lv.setAdapter(adapter);
         pg_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -58,6 +59,7 @@ public class PGAct extends BaseActivity{
             return 0;
         }
 
+        @SuppressLint("ViewHolder")
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             view = View.inflate(PGAct.this,R.layout.pg_item,null);

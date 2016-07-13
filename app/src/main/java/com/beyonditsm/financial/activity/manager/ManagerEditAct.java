@@ -6,16 +6,13 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.EditText;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.entity.CreditManager;
-import com.beyonditsm.financial.entity.CreditManagerEntity;
 import com.beyonditsm.financial.entity.UserEvent;
 import com.beyonditsm.financial.fragment.ManagerMineFrg;
 import com.beyonditsm.financial.http.RequestManager;
-import com.beyonditsm.financial.util.IdcardUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.widget.ClearEditText;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -30,8 +27,6 @@ import org.json.JSONException;
 public class ManagerEditAct extends BaseActivity {
     @ViewInject(R.id.etM)
     private ClearEditText et;
-
-    private int flag;
 
     public static final String TYPE = "type";
     private int type;

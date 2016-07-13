@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,10 +33,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by gxy on 2015/11/18.
+ * Created by gxy on 2015/11/18
  */
-
-
 public class DoTaskPicture extends BaseActivity {
 
 
@@ -45,15 +42,13 @@ public class DoTaskPicture extends BaseActivity {
     private TextView tv_pic;
     @ViewInject(R.id.gv_pic)
     private GridView gvPhoto;
-    @ViewInject(R.id.btn_submit)
-    private Button btn_submit;
     private List<TaskEntity> list;
     private List<TaskStrategyEntity> strategyList;
     private List<TaskMessage> messageList;
     private int position;//位置
 
     /**照片List */
-    private List<ImageBean> selecteds=new ArrayList<ImageBean>();
+    private List<ImageBean> selecteds= new ArrayList<>();
     private GvPhotoAdapter adapter;
     private String uploadStr=null;
     @Override
@@ -66,9 +61,9 @@ public class DoTaskPicture extends BaseActivity {
 
         setTopTitle("做任务");
         setLeftTv("返回");
-        list=new ArrayList<TaskEntity>();
-        strategyList=new ArrayList<TaskStrategyEntity>();
-        messageList=new ArrayList<TaskMessage>();
+        list= new ArrayList<>();
+        strategyList= new ArrayList<>();
+        messageList= new ArrayList<>();
         list=getIntent().getParcelableArrayListExtra("list");
         strategyList=getIntent().getParcelableArrayListExtra("listStrategey");
         position=getIntent().getIntExtra("position",-1);
@@ -99,8 +94,9 @@ public class DoTaskPicture extends BaseActivity {
      * 上传图片
      * @param file
      */
+    @SuppressWarnings("JavaDoc")
     private void uploadFile(final String file){
-        Map<String, FileBody> fileMaps=new HashMap<String,FileBody>();
+        Map<String, FileBody> fileMaps= new HashMap<>();
         FileBody fb=new FileBody(new File(file));
         fileMaps.put("file",fb);
 
@@ -148,6 +144,7 @@ public class DoTaskPicture extends BaseActivity {
         });
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

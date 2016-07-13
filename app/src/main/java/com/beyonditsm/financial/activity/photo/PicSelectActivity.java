@@ -55,6 +55,7 @@ import java.util.Random;
  * @author wangbin
  *
  */
+@SuppressWarnings({"ResultOfMethodCallIgnored", "deprecation"})
 @SuppressLint("NewApi") public class PicSelectActivity extends FragmentActivity implements
 		OnItemClickListener {
 	private static final int PHOTO_GRAPH = 1;
@@ -182,8 +183,8 @@ import java.util.Random;
 		System.out.println("..." + requestCode + ".." + resultCode + "..."
 				+ data);
 		if (requestCode == PHOTO_GRAPH && resultCode == RESULT_OK) {
-			List<ImageBean> selecteds = new ArrayList<ImageBean>();
-			selecteds.add(new ImageBean(null, 0l, null, dirPath + "/"
+			List<ImageBean> selecteds = new ArrayList<>();
+			selecteds.add(new ImageBean(null, 0L, null, dirPath + "/"
 					+ fileName + ".jpg", false));
 			Intent intent = new Intent();
 			intent.putExtra(IMAGES, (Serializable) selecteds);
@@ -195,7 +196,7 @@ import java.util.Random;
 	/**
 	 */
 	private String getFileName() {
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		Calendar calendar = Calendar.getInstance();
 		long millis = calendar.getTimeInMillis();
 		String[] dictionaries = { "A", "B", "C", "D", "E", "F", "G", "H", "I",
@@ -211,7 +212,7 @@ import java.util.Random;
 			sb.append(dictionaries[random.nextInt(dictionaries.length - 1)]);
 		}
 		return sb.toString();
-	};
+	}
 
 	OnImageSelectedCountListener onImageSelectedCountListener = new OnImageSelectedCountListener() {
 
@@ -223,6 +224,7 @@ import java.util.Random;
 
 	OnImageSelectedListener onImageSelectedListener = new OnImageSelectedListener() {
 
+		@SuppressLint("SetTextI18n")
 		@Override
 		public void notifyChecked() {
 			selected = getSelectedCount();
@@ -245,6 +247,8 @@ import java.util.Random;
 		}).start();
 	}
 
+	@SuppressLint("HandlerLeak")
+	@SuppressWarnings("unchecked")
 	Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
@@ -255,13 +259,13 @@ import java.util.Random;
 					adapter.taggle(b);
 					popWindow = showPopWindow();
 				} else {
-					List<ImageBean> sets = new ArrayList<ImageBean>();
+					List<ImageBean> sets = new ArrayList<>();
 					sets.add(new ImageBean());
 					AlbumBean b = new AlbumBean("", 1, sets, "");
 					adapter.taggle(b);
 				}
 			}
-		};
+		}
 	};
 
 	/**
@@ -269,11 +273,12 @@ import java.util.Random;
 	 * 
 	 * @return
 	 */
+	@SuppressWarnings("JavaDoc")
 	private int getSelectedCount() {
 		int count = 0;
 		for (AlbumBean albumBean : mAlbumBean) {
 			for (ImageBean b : albumBean.sets) {
-				if (b.isChecked == true) {
+				if (b.isChecked) {
 					count++;
 				}
 			}
@@ -283,10 +288,10 @@ import java.util.Random;
 
 	private List<ImageBean> getSelectedItem() {
 		int count = 0;
-		List<ImageBean> beans = new ArrayList<ImageBean>();
+		List<ImageBean> beans = new ArrayList<>();
 		OK: for (AlbumBean albumBean : mAlbumBean) {
 			for (ImageBean b : albumBean.sets) {
-				if (b.isChecked == true) {
+				if (b.isChecked) {
 					beans.add(b);
 					count++;
 				}
@@ -300,7 +305,7 @@ import java.util.Random;
 
 	private PopupWindow showPopWindow() {
 		LayoutInflater inflater = LayoutInflater.from(this);
-		View view = inflater.inflate(R.layout.the_picture_selection_pop, null);
+		@SuppressLint("InflateParams") View view = inflater.inflate(R.layout.the_picture_selection_pop, null);
 		final PopupWindow mPopupWindow = new PopupWindow(view,
 				LayoutParams.MATCH_PARENT, Uitls.dip2px(PicSelectActivity.this,
 						400), true);
@@ -365,6 +370,7 @@ import java.util.Random;
 			return position;
 		}
 
+		@SuppressLint({"SetTextI18n", "InflateParams"})
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder viewHolder;

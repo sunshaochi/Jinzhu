@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.activity.user;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -70,7 +71,6 @@ public class ReceiveRewardAct extends BaseActivity {
     private TextView tvXy;
 
     private AddressUtil addressUtil;
-    private MySelfSheetDialog dialog;
     private List<DictionaryType> carList, jobList, hourseList, creditList;//车产，职业，房产，信用
     private int jobPos, carPos, hoursePos, creditPos;
     private boolean jobSelect = false;
@@ -144,6 +144,7 @@ public class ReceiveRewardAct extends BaseActivity {
                 DialogChooseAdress dialogChooseAdress = new DialogChooseAdress(this).builder();
                 dialogChooseAdress.show();
                 dialogChooseAdress.setOnSheetItemClickListener(new DialogChooseAdress.SexClickListener() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void getAdress(List<String> adress) {
                         String proCode = addressUtil.getProCode(adress.get(0));
@@ -159,7 +160,7 @@ public class ReceiveRewardAct extends BaseActivity {
                 });
                 break;
             case R.id.rl_marrayed://是否结婚
-                dialog = new MySelfSheetDialog(this).builder();
+                MySelfSheetDialog dialog = new MySelfSheetDialog(this).builder();
                 dialog.addSheetItem("未婚", null, new MySelfSheetDialog.OnSheetItemClickListener() {
                     @Override
                     public void onClick(int which) {
@@ -327,6 +328,8 @@ public class ReceiveRewardAct extends BaseActivity {
     }
     private void getUserInfo(){
         RequestManager.getCommManager().findUserInfo(new RequestManager.CallBack() {
+            @SuppressLint("SetTextI18n")
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) throws JSONException {
 
@@ -407,9 +410,6 @@ public class ReceiveRewardAct extends BaseActivity {
 
                     if (!TextUtils.isEmpty(user.getHaveCarName())) {//车产
                         tvCar.setText(user.getHaveCarName());
-                    }
-
-                    if (!TextUtils.isEmpty(user.getNativePlaceAddr())) {
                     }
 
                     if (!TextUtils.isEmpty(user.getTowYearCredName())) {//信用

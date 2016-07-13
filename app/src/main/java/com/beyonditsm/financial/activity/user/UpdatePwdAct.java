@@ -3,7 +3,6 @@ package com.beyonditsm.financial.activity.user;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.TextView;
 
 import com.beyonditsm.financial.AppManager;
 import com.beyonditsm.financial.R;
@@ -21,8 +20,6 @@ import org.json.JSONException;
  */
 public class UpdatePwdAct extends BaseActivity {
     private ClearEditText comfirmPwd1, comfirmPwd2;
-    private TextView comfirmtv;
-    private String pwd1, pwd2;
 
     private String phone, code;
 
@@ -44,15 +41,14 @@ public class UpdatePwdAct extends BaseActivity {
     private void setView() {
         comfirmPwd1 = (ClearEditText) findViewById(R.id.comfirmPwd1);
         comfirmPwd2 = (ClearEditText) findViewById(R.id.comfirmPwd2);
-        comfirmtv = (TextView) findViewById(R.id.comfirmtv);
     }
 
     @OnClick(R.id.comfirmtv)
     public void toClick(View v) {
         switch (v.getId()) {
             case R.id.comfirmtv:
-                pwd1 = comfirmPwd1.getText().toString();
-                pwd2 = comfirmPwd2.getText().toString();
+                String pwd1 = comfirmPwd1.getText().toString();
+                String pwd2 = comfirmPwd2.getText().toString();
                 if (TextUtils.isEmpty(pwd1)) {
                     MyToastUtils.showLongToast(getApplicationContext(), "输入新密码");
                     return;
@@ -80,7 +76,7 @@ public class UpdatePwdAct extends BaseActivity {
     /**
      * 找回密码
      *
-     * @param password
+     * @param password 密码
      */
     private void toFindPwd(String password) {
         RequestManager.getCommManager().fogetPwd(phone, code, password, new RequestManager.CallBack() {

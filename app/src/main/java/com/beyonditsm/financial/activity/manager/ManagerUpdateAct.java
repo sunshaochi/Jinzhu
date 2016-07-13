@@ -1,10 +1,10 @@
 package com.beyonditsm.financial.activity.manager;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
@@ -35,34 +35,14 @@ public class ManagerUpdateAct extends BaseActivity {
 
     private CreditManager creditManager;
 
-    //工号
-    @ViewInject(R.id.rl_JobNum)
-    private RelativeLayout rlJobNum;
     @ViewInject(R.id.tv_JobNum)
     private TextView tvJobNuM;
-    //姓名
-    @ViewInject(R.id.rl_ManaName)
-    private RelativeLayout rlManaName;
     @ViewInject(R.id.tv_ManaName)
     private TextView tvManaName;
-    //联系方式
-    @ViewInject(R.id.rl_ManaTel)
-    private RelativeLayout rlManaTel;
     @ViewInject(R.id.tv_ManaTel)
     private TextView tvManaTel;
-    //地址
-    @ViewInject(R.id.rl_Address)
-    private RelativeLayout rlAddress;
     @ViewInject(R.id.tv_Address)
     private TextView tvAddress;
-    //职位名称
-    @ViewInject(R.id.rl_jobName)
-    private RelativeLayout rlJobName;
-    @ViewInject(R.id.rl_jobName)
-    private TextView tvJobName;
-    //所属机构
-    @ViewInject(R.id.rl_work)
-    private RelativeLayout rlWork;
     @ViewInject(R.id.tv_Work)
     private TextView tvWork;
     private AddressUtil addressUtil;
@@ -86,6 +66,7 @@ public class ManagerUpdateAct extends BaseActivity {
         EventBus.getDefault().register(this);
     }
 
+    @SuppressLint("SetTextI18n")
     private void setCreditManagerDetails(CreditManager cm) {
 
         //姓名
@@ -143,7 +124,7 @@ public class ManagerUpdateAct extends BaseActivity {
 
     @OnClick({R.id.rl_JobNum,R.id.rl_ManaName,R.id.rl_ManaTel,R.id.rl_Address,R.id.rl_jobName,R.id.rl_Work})
     public void todo(View v) {
-        Intent intent = null;
+        Intent intent;
         switch (v.getId()) {
             case R.id.rl_ManaName://姓名
                 intent = new Intent(this, ManagerEditAct.class);
@@ -192,6 +173,7 @@ public class ManagerUpdateAct extends BaseActivity {
 
     public void findCreditManagerDetails() {
         RequestManager.getMangManger().currentCreditManagerDetail(new RequestManager.CallBack() {
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) throws JSONException {
                 ResultData<CreditManagerEntity> rd = (ResultData<CreditManagerEntity>) GsonUtils.json(result, CreditManagerEntity.class);

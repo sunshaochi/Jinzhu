@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.activity.user;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -32,8 +33,6 @@ import org.json.JSONObject;
  * Created by wangbin on 15/12/9.
  */
 public class CreditPointAct extends BaseActivity {
-    @ViewInject(R.id.rlTop)
-    private RelativeLayout rlTop;
     @ViewInject(R.id.llLogin)
     private RelativeLayout llLogin;//已登录
 //    @ViewInject(R.id.tvCre)
@@ -54,7 +53,6 @@ public class CreditPointAct extends BaseActivity {
 
 
     private int credit_bg[] = {R.mipmap.red_bg, R.mipmap.orange_bg, R.mipmap.blue_bg, R.mipmap.green_bg};
-    private String credit_color[] = {"#ff3d5b", "#c57b24", "#2b98e0", "#1fcb50"};
 
     int i = 0;//切换到第几个背景和文字颜色
     int credit = 0;//初始信用分
@@ -164,7 +162,9 @@ public class CreditPointAct extends BaseActivity {
         ivRight.setAnimation(animation);
     }
 
+    @SuppressLint("HandlerLeak")
     private Handler handler=new Handler(){
+        @SuppressLint("SetTextI18n")
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -187,7 +187,7 @@ public class CreditPointAct extends BaseActivity {
 
     @OnClick({R.id.rlCre,R.id.rlGame})
     public void toClick(View v) {
-        Intent intent = null;
+        Intent intent;
         switch (v.getId()) {
             case R.id.rlCre://信用提速
                 intent = new Intent(CreditPointAct.this, HardCreditAct.class);
@@ -208,6 +208,7 @@ public class CreditPointAct extends BaseActivity {
     private void getUserInfo() {
 
         RequestManager.getCommManager().findUserInfo(new RequestManager.CallBack() {
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) {
                 ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
@@ -238,6 +239,7 @@ public class CreditPointAct extends BaseActivity {
      *
      * @param score
      */
+    @SuppressWarnings("JavaDoc")
     private void getScorePer(String score) {
         RequestManager.getUserManager().getScorePer(score, new RequestManager.CallBack() {
             @Override
