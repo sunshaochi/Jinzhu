@@ -30,7 +30,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 上传身份证照片
@@ -48,7 +47,6 @@ public class UpIdCardAct extends BaseActivity {
     private FinalLoadDialog dialog;
 
     private List<String> list = new ArrayList<>();
-    private Map<String, List<String>> map = new HashMap<>();
     private String orderNo;
 
     public static int flag;
@@ -69,8 +67,6 @@ public class UpIdCardAct extends BaseActivity {
         orderNo = getIntent().getStringExtra("orderNo");
         if (orderNo == null) {
             orderNo = null;
-        } else {
-            orderNo = orderNo;
         }
         commitIDCard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -228,12 +224,11 @@ public class UpIdCardAct extends BaseActivity {
     /**
      * 上传身份证照片
      *
-     * @param
      */
     private void uploadFile(final String isSupplementFile) {
         dialog.show();
-        Map<String, List<FileBody>> fileMaps = new HashMap<String, List<FileBody>>();
-        List<FileBody> lists = new ArrayList<FileBody>();
+        HashMap<String, List<FileBody>> fileMaps = new HashMap<>();
+        List<FileBody> lists = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             MyLogUtils.info("取出list里的值："+list.get(i));
             FileBody fb = new FileBody(new File(list.get(i)));
@@ -267,7 +262,6 @@ public class UpIdCardAct extends BaseActivity {
             public void onError(int status, String msg) {
                 dialog.cancel();
                 MyLogUtils.info(msg);
-                return;
             }
         });
 

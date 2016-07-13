@@ -1,9 +1,9 @@
 package com.beyonditsm.financial.activity.credit;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
@@ -18,6 +18,7 @@ public class CreditWebView extends BaseActivity {
         setContentView(R.layout.credit_web_view);
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     public void init(Bundle savedInstanceState) {
         setLeftTv("返回");

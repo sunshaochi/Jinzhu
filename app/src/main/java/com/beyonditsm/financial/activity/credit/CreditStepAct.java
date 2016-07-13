@@ -26,7 +26,7 @@ import java.util.List;
 
 /**
  * 贷款流程主act
- * Created by Yang on 2015/11/12 0012.
+ * Created by Yang on 2015/11/12 0012
  */
 public class CreditStepAct extends BaseActivity {
 

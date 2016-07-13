@@ -28,7 +28,7 @@ import java.util.List;
 
 /**
  * 提交增信材料
- * Created by wangbin on 16/3/31.
+ * Created by wangbin on 16/3/31
  */
 public class SubFlowAct extends BaseActivity {
     @ViewInject(R.id.lvCredit)
@@ -93,9 +93,9 @@ public class SubFlowAct extends BaseActivity {
 
     /**
      * 是否需要增信资料
-     *
      * @param orderId
      */
+    @SuppressWarnings("JavaDoc")
     private void findOrderFlow(String orderId) {
         RequestManager.getCommManager().findOrderFlow(orderId, new RequestManager.CallBack() {
             @Override

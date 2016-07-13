@@ -1,6 +1,5 @@
 package com.beyonditsm.financial.activity.credit;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,10 +9,6 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
@@ -52,28 +47,20 @@ public class MyCreditDAct extends BaseActivity {
 
     @ViewInject(R.id.mycredit_viewpager)
     private ViewPager myCreditViewpager;
-    @ViewInject(R.id.iv_statusRedPoint)
-    private ImageView ivStatusRedPoint;
-    @ViewInject(R.id.iv_detailRedPoint)
-    private ImageView ivDetailRedPoint;
     @ViewInject(R.id.tl_creditDetail)
     SlidingTabLayout tlCreditDetail;
-    private ImageView[] imageArras;
-    private TextView[] textArras;
-    private LinearLayout[] linearArras;
     private MyCreditBean.RowsEntity rowe;
     private int position;
 
-    private int screenWidth;
     private final String[] mTitles = {"贷款状态", "贷款详情"};
 
     @Override
     public void setLayout() {
         setContentView(R.layout.mycredit_detail);
-        WindowManager wm = (WindowManager)
-                getSystemService(Context.WINDOW_SERVICE);
-
-        screenWidth = wm.getDefaultDisplay().getWidth();
+//        WindowManager wm = (WindowManager)
+//                getSystemService(Context.WINDOW_SERVICE);
+//
+//        int screenWidth = wm.getDefaultDisplay().getWidth();
     }
 
     @Override
@@ -181,6 +168,7 @@ public class MyCreditDAct extends BaseActivity {
         }
     }
 
+    @SuppressWarnings("deprecation")
     private void initViewpager() {
         ArrayList<Fragment> fragmentList = new ArrayList<>();
         Bundle bundle = new Bundle();
@@ -214,8 +202,6 @@ public class MyCreditDAct extends BaseActivity {
 
     private void clearRedPoint() {
         SpUtils.clearOrderId(MyApplication.getInstance());
-        ivDetailRedPoint.setVisibility(View.INVISIBLE);
-        ivStatusRedPoint.setVisibility(View.INVISIBLE);
         tlCreditDetail.hideMsg(1);
         sendBroadcast(new Intent(MyCreditAct.HIDE_MESSAGE));
         sendBroadcast(new Intent(MineFragment.HIDE_POINT));
@@ -228,10 +214,6 @@ public class MyCreditDAct extends BaseActivity {
 
         private FragmentManager fm;
         private List<Fragment> fragmentList = null;
-
-        public MyAdapter(FragmentManager fm) {
-            super(fm);
-        }
 
         public MyAdapter(FragmentManager fm, List<Fragment> fragmentList) {
             super(fm);

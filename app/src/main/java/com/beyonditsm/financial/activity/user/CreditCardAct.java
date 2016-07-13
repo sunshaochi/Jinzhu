@@ -109,6 +109,7 @@ public class CreditCardAct extends BaseActivity {
 
     }
 
+    @SuppressWarnings("deprecation")
     private void setWalletPic() {
         if (ParamsUtil.getInstance().isWalletEnter()){
             ivWallet.setImageDrawable(getResources().getDrawable(R.mipmap.money_bag_red));
@@ -147,6 +148,7 @@ public class CreditCardAct extends BaseActivity {
     private void getUserInfo() {
 
         RequestManager.getCommManager().findUserInfo(new RequestManager.CallBack() {
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) {
                 ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
@@ -165,9 +167,9 @@ public class CreditCardAct extends BaseActivity {
      */
     private void getUserLoginInfo() {
         RequestManager.getUserManager().findUserLoginInfo(new RequestManager.CallBack() {
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) throws JSONException {
-                String a = result;
                 JSONObject obj = new JSONObject(result);
                 int status = obj.getInt("status");
                 if (status == 200){

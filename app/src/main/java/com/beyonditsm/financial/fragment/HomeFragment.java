@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -9,13 +10,10 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.ConstantValue;
-import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.credit.CreditGuideAct;
 import com.beyonditsm.financial.activity.user.GameActivity;
@@ -26,7 +24,6 @@ import com.beyonditsm.financial.adapter.HomeCreditAdapter;
 import com.beyonditsm.financial.entity.HomeHotProductEntity;
 import com.beyonditsm.financial.entity.HotProduct;
 import com.beyonditsm.financial.entity.ResultData;
-import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.entity.UserLoginEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
@@ -64,7 +61,7 @@ import java.util.List;
 //import com.baidu.location.Poi;
 
 /**
- * Created by Administrator on 2015/12/8.
+ * Created by liwk on 2015/12/8
  */
 public class HomeFragment extends BaseFragment implements MyLocationListener.LocationChangeListener{
     @ViewInject(R.id.plv_hotCredit)
@@ -72,24 +69,15 @@ public class HomeFragment extends BaseFragment implements MyLocationListener.Loc
     @ViewInject(R.id.loadingView)
     private LoadingView loadingView;
 
-    @ViewInject(R.id.ll_credit)
-    private LinearLayout llCredit;
-    @ViewInject(R.id.ll_tillage)
-    private LinearLayout llTillage;
-    @ViewInject(R.id.ll_work)
-    private LinearLayout llWork;
-    @ViewInject(R.id.ivSuspen)
-    private ImageView ivSuspen;
     @ViewInject(R.id.tv_city)
     private TextView tvCity;
-    private CreditFragment creditFragment;
     private int currentPage = 1;
     private HomeCreditAdapter adapter;
     private List<HomeHotProductEntity> hotList;
     private UserLoginEntity ule;
-    private UserEntity user;
 //    public LocationClient mLocationClient = null;
 
+    @SuppressLint("InflateParams")
     @Override
     public View initView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.fragment_home, null);
@@ -196,13 +184,13 @@ public class HomeFragment extends BaseFragment implements MyLocationListener.Loc
 
     @OnClick({R.id.ll_credit, R.id.ll_tillage, R.id.ll_work,R.id.ivSuspen,R.id.ll_creditCard,R.id.ll_gps})
     public void toClick(View v) {
-        Intent intent = null;
+        Intent intent;
         switch (v.getId()) {
             case R.id.ll_credit://我要贷款
                 EventBus.getDefault().post(new ToSwitchEvent());
                 break;
             case R.id.ll_tillage://信用耕耘
-                if(TextUtils.isEmpty(SpUtils.getRoleName(context).toString())){
+                if(TextUtils.isEmpty(SpUtils.getRoleName(context)+"")){
                     Intent goLog = new Intent(context,LoginAct.class);
                     context.startActivity(goLog);
                 }else{
@@ -251,6 +239,7 @@ public class HomeFragment extends BaseFragment implements MyLocationListener.Loc
                         if (addressChange(city,adress.get(1))){
                             GPSAlertDialog gpsAlertDialog = new GPSAlertDialog(getContext());
                             gpsAlertDialog.builder().setCancelable(false).setMsg("您目前所在的区域更改","是否将所在的城市切换为：",adress.get(1)).setPositiveButton("确认切换", new View.OnClickListener() {
+                                @SuppressLint("SetTextI18n")
                                 @Override
                                 public void onClick(View v) {
                                     if (adress.get(1).length()>4){
@@ -318,10 +307,10 @@ public class HomeFragment extends BaseFragment implements MyLocationListener.Loc
                 Gson gson = new Gson();
                 hotList = gson.fromJson(data.toString(), new TypeToken<List<HomeHotProductEntity>>() {
                 }.getType());
-                if (data == null) {
-                    loadingView.noContent();
-                    return;
-                }
+//                if (data == null) {
+//                    loadingView.noContent();
+//                    return;
+//                }
                 if (hotList == null || hotList.size() == 0) {
                     if (Page == 1) {
                         loadingView.noContent();
@@ -359,9 +348,9 @@ public class HomeFragment extends BaseFragment implements MyLocationListener.Loc
     private void getUserLoginInfo() {
 
         RequestManager.getUserManager().findUserLoginInfo(new RequestManager.CallBack() {
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) throws JSONException {
-                String a = result;
                 JSONObject obj = new JSONObject(result);
                 int status = obj.getInt("status");
                 if (status == 200){
@@ -382,9 +371,6 @@ public class HomeFragment extends BaseFragment implements MyLocationListener.Loc
 
 
     private boolean addressChange(String locationCity,String selectCity){
-        if (locationCity.equals(selectCity)){
-            return false;
-        }
-        return true;
+        return !locationCity.equals(selectCity);
     }
 }
