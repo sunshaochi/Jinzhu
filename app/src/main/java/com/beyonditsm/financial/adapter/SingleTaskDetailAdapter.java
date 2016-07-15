@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,16 +13,12 @@ import com.beyonditsm.financial.R;
 import java.util.List;
 
 /**
- * Created by gxy on 2015/11/26.
+ * Created by gxy on 2015/11/26
  */
 public class SingleTaskDetailAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<String> list;
 
-
-    public SingleTaskDetailAdapter(Context context){
-        inflater=LayoutInflater.from(context);
-    }
     public SingleTaskDetailAdapter(List<String> list, Context context){
         this.list=list;
         inflater=LayoutInflater.from(context);
@@ -52,7 +47,7 @@ public class SingleTaskDetailAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        ViewHolder holder=null;
+        ViewHolder holder;
         if(convertView==null){
             convertView=inflater.inflate(R.layout.task_detail_item,parent,false);
             holder=new ViewHolder();

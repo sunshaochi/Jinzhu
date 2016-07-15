@@ -6,7 +6,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -49,7 +48,6 @@ public class AddBankCardAct extends BaseActivity {
     private TextView tvSetPassword;
     @ViewInject(R.id.tv_sureAdd)
     private TextView tvSureAdd;
-    private ArrayAdapter<String> adapter;
     private UserEntity user;//用户实体
     private List<BankListEntity> bankList;
     private int bankNamePos;

@@ -15,7 +15,6 @@ public class ConstantValue {
     public final static boolean IS_SHOW_DEBUG = true;
 
     public static int STEP = 0;
-    public static int IMAGE = 0;
 
     public static String ENCODING = "UTF-8";
 

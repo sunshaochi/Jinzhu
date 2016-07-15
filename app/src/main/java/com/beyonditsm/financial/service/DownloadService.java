@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.service;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -22,7 +23,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 public class DownloadService extends Service {
@@ -34,6 +34,7 @@ public class DownloadService extends Service {
 //	private String apkUrl = "http://softfile.3g.qq.com:8080/msoft/179/24659/43549/qq_hd_mini_1.4.apk";
 	 private String apkUrl = MyApplication.downloadApkUrl;
 	/* 下载包安装路径 */
+	@SuppressLint("SdCardPath")
 	private static final String savePath = "/sdcard/updateApkDemo/";
 
 	private static final String saveFileName = savePath + "3GQQ_AppUpdate.apk";
@@ -150,7 +151,7 @@ public class DownloadService extends Service {
 					public void run() {
 						// 下载
 						startDownload();
-					};
+					}
 				}.start();
 			}
 		}
@@ -193,12 +194,13 @@ public class DownloadService extends Service {
 	/**
 	 * 创建通知
 	 */
+	@SuppressWarnings("deprecation")
 	private void setUpNotification() {
 		int icon = R.mipmap.logo;
 		CharSequence tickerText = "开始下载";
 		long when = System.currentTimeMillis();
 		mNotification = new Notification(icon, tickerText, when);
-		;
+
 		// 放置在"正在运行"栏目中
 		mNotification.flags = Notification.FLAG_ONGOING_EVENT;
 
@@ -213,20 +215,13 @@ public class DownloadService extends Service {
 		// 是这么理解么。。。
 		// intent.setAction(Intent.ACTION_MAIN);
 		// intent.addCategory(Intent.CATEGORY_LAUNCHER);
-		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent,
-				PendingIntent.FLAG_UPDATE_CURRENT);
 
 		// 指定内容意图
-		mNotification.contentIntent = contentIntent;
+		mNotification.contentIntent = PendingIntent.getActivity(this, 0, intent,
+				PendingIntent.FLAG_UPDATE_CURRENT);
 		mNotificationManager.notify(NOTIFY_ID, mNotification);
 	}
 
-	//
-	/**
-	 * 下载apk
-	 * 
-	 * @param url
-	 */
 	private Thread downLoadThread;
 
 	private void downloadApk() {
@@ -253,6 +248,7 @@ public class DownloadService extends Service {
 
 	private int lastRate = 0;
 	private Runnable mdownApkRunnable = new Runnable() {
+		@SuppressWarnings("ResultOfMethodCallIgnored")
 		@Override
 		public void run() {
 			try {
@@ -300,8 +296,6 @@ public class DownloadService extends Service {
 
 				fos.close();
 				is.close();
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

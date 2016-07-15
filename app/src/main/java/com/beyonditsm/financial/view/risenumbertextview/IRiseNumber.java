@@ -1,42 +1,39 @@
 package com.beyonditsm.financial.view.risenumbertextview;
 
 /**
- * Created by xuleyuan on 2016/6/22.
+ * Created by xuleyuan on 2016/6/22
  */
 public interface IRiseNumber {
     /**
      * 开始播放动画的方法
      */
-    public void start();
+    void start();
 
     /**
      * 设置小数
      *
-     * @param number
-     * @return
+     * @param number 小数
      */
-    public void withNumber(float number);
+    void withNumber(float number);
 
     /**
      * 设置整数
      *
-     * @param number
-     * @return
+     * @param number 小数
      */
-    public void withNumber(int number);
+    void withNumber(int number);
 
     /**
      * 设置动画播放时长
      *
-     * @param duration
-     * @return
+     * @param duration  时长
      */
-    public void setDuration(long duration);
+    void setDuration(long duration);
 
     /**
      * 设置动画结束监听器
      *
-     * @param callback
+     * @param callback 回调
      */
-    public void setOnEndListener(RiseNumberTextView.EndListener callback);
+    void setOnEndListener(RiseNumberTextView.EndListener callback);
 }

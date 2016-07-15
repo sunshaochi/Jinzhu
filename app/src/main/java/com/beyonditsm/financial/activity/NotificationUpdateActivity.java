@@ -19,14 +19,11 @@ import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.service.DownloadService;
 
 public class NotificationUpdateActivity extends Activity {
-	private Button btn_cancel;// btn_update,
-	private TextView tv_progress;
+    private TextView tv_progress;
 	private DownloadService.DownloadBinder binder;
 	private boolean isBinded;
 	private ProgressBar mProgressBar;
-	// 获取到下载url后，直接复制给MapApp,里面的全局变量
-	private String downloadUrl;
-	//
+    //
 	private boolean isDestroy = true;
 	private MyApplication app;
 
@@ -37,14 +34,13 @@ public class NotificationUpdateActivity extends Activity {
 		setContentView(R.layout.update);
 		app = (MyApplication) getApplication();
 		// btn_update = (Button) findViewById(R.id.update);
-		btn_cancel = (Button) findViewById(R.id.cancel);
+        Button btn_cancel = (Button) findViewById(R.id.cancel);
 		tv_progress = (TextView) findViewById(R.id.currentPos);
 		mProgressBar = (ProgressBar) findViewById(R.id.progressbar1);
 		btn_cancel.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				if(binder!=null) {
 					binder.cancel();
 					binder.cancelNotification();
@@ -59,13 +55,11 @@ public class NotificationUpdateActivity extends Activity {
 
 		@Override
 		public void onServiceDisconnected(ComponentName name) {
-			// TODO Auto-generated method stub
 			isBinded = false;
 		}
 
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder service) {
-			// TODO Auto-generated method stub
 			binder = (DownloadService.DownloadBinder) service;
 			System.out.println("服务启动!!!");
 			// 开始下载
@@ -78,7 +72,6 @@ public class NotificationUpdateActivity extends Activity {
 
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
 		super.onResume();
 		if (isDestroy && app.isDownload()) {
 			Intent it = new Intent(NotificationUpdateActivity.this, DownloadService.class);
@@ -90,47 +83,28 @@ public class NotificationUpdateActivity extends Activity {
 
 	@Override
 	protected void onNewIntent(Intent intent) {
-		// TODO Auto-generated method stub
 		super.onNewIntent(intent);
 		if (isDestroy && app.isDownload()) {
 			Intent it = new Intent(NotificationUpdateActivity.this, DownloadService.class);
 			startService(it);
 			bindService(it, conn, Context.BIND_AUTO_CREATE);
 		}
-		System.out.println(" notification  onNewIntent");
 	}
 
-	@Override
-	protected void onStart() {
-		// TODO Auto-generated method stub
-		super.onStart();
-
-	}
-
-	@Override
-	protected void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
-		System.out.println(" notification  onPause");
-	}
 
 	@Override
 	protected void onStop() {
-		// TODO Auto-generated method stub
 		super.onStop();
 		isDestroy = false;
-		System.out.println(" notification  onStop");
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		if (isBinded) {
-			System.out.println(" onDestroy   unbindservice");
 			unbindService(conn);
 		}
 		if (binder != null && binder.isCanceled()) {
-			System.out.println(" onDestroy  stopservice");
 			Intent it = new Intent(this, DownloadService.class);
 			stopService(it);
 		}
@@ -140,7 +114,6 @@ public class NotificationUpdateActivity extends Activity {
 
 		@Override
 		public void OnBackResult(Object result) {
-			// TODO Auto-generated method stub
 			if ("finish".equals(result)) {
 				finish();
 				return;
@@ -158,10 +131,10 @@ public class NotificationUpdateActivity extends Activity {
 		public void handleMessage(android.os.Message msg) {
 			tv_progress.setText("当前进度 ： " + msg.what + "%");
 
-		};
+		}
 	};
 
 	public interface ICallbackResult {
-		public void OnBackResult(Object result);
+		void OnBackResult(Object result);
 	}
 }

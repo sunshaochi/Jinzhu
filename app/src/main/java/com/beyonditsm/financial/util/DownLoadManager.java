@@ -11,7 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by wangbin on 16/3/11.
+ * Created by wangbin on 16/3/11
  */
 public class DownLoadManager {
 

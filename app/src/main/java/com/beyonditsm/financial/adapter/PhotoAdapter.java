@@ -15,10 +15,10 @@ import com.tandong.sa.zUImageLoader.core.ImageLoader;
 import java.util.List;
 
 /**
- * Created by wangbin on 15/12/17.
+ * Created by wangbin on 15/12/17
  */
 public class PhotoAdapter extends BaseAdapter{
-
+    @SuppressWarnings("deprecation")
     private DisplayImageOptions options = new DisplayImageOptions.Builder()
             .showStubImage(R.mipmap.pro_default) // 设置图片下载期间显示的图片
             .showImageForEmptyUri(R.mipmap.pro_default) // 设置图片Uri为空或是错误的时候显示的图片

@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -19,17 +20,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Administrator on 2015/12/8.
+ * Created by Administrator on 2015/12/8
  */
 public class HomeCreditAdapter extends BaseAdapter {
     private List<HomeHotProductEntity> list;
-    private Context context;
     private final LayoutInflater inflater;
 
-    private String LILV="2c908c7651474aa40151478c2fc70004";//利率较低
-    private String BIANJIE="2c908c7651474aa40151478beed50003";//手续便捷
-    private String FAST="2c908c7651474aa40151478b13820002";//速度快
-
+    @SuppressWarnings("deprecation")
     private DisplayImageOptions options = new DisplayImageOptions.Builder()
             .showStubImage(R.mipmap.pro_default) // 设置图片下载期间显示的图片
             .showImageForEmptyUri(R.mipmap.pro_default) // 设置图片Uri为空或是错误的时候显示的图片
@@ -39,7 +36,6 @@ public class HomeCreditAdapter extends BaseAdapter {
             .build(); // 创建配置过得DisplayImageOption对象
 
     public HomeCreditAdapter(Context context,List<HomeHotProductEntity> list) {
-        this.context= context;
         this.list = list;
         inflater = LayoutInflater.from(context);
     }
@@ -63,6 +59,7 @@ public class HomeCreditAdapter extends BaseAdapter {
         return position;
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
@@ -89,6 +86,7 @@ public class HomeCreditAdapter extends BaseAdapter {
             holder.sd.setVisibility(View.GONE);
             holder.down.setVisibility(View.GONE);
         }else{
+            String FAST = "2c908c7651474aa40151478b13820002";
             if(map.get(FAST)!=null){
                 holder.fast.setVisibility(View.VISIBLE);
             }else {
@@ -96,6 +94,7 @@ public class HomeCreditAdapter extends BaseAdapter {
 
             }
 
+            String BIANJIE = "2c908c7651474aa40151478beed50003";
             if(map.get(BIANJIE)!=null){
                 holder.sd.setVisibility(View.VISIBLE);
             }else {
@@ -103,6 +102,7 @@ public class HomeCreditAdapter extends BaseAdapter {
 
             }
 
+            String LILV = "2c908c7651474aa40151478c2fc70004";
             if(map.get(LILV)!=null){
                 holder.down.setVisibility(View.VISIBLE);
             }else {
@@ -114,7 +114,7 @@ public class HomeCreditAdapter extends BaseAdapter {
          HomeHotProductEntity hotProductEntity =  list.get(position);
          ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + hotProductEntity.getImageLogoPath(), holder.ivProductLogo, options);
 
-        if(hotProductEntity.getMonthlyRateMin()==hotProductEntity.getMonthlyRateMax()){
+        if(hotProductEntity.getMonthlyRateMin().equals(hotProductEntity.getMonthlyRateMax())){
             holder.tvRate.setText(hotProductEntity.getMonthlyRateMin()+"");
             holder.tvRate.setTextSize(28);
             holder.tvSymbol.setVisibility(View.VISIBLE);

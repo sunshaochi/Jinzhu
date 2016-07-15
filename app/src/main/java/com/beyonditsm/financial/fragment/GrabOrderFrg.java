@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -50,6 +51,7 @@ public class GrabOrderFrg extends BaseFragment {
 
     private int page;
 
+    @SuppressLint("InflateParams")
     @Override
     public View initView(LayoutInflater inflater) {
         view = inflater.inflate(R.layout.graborderfrg, null);
@@ -132,6 +134,7 @@ public class GrabOrderFrg extends BaseFragment {
     private void getList() {
         int rows = 10;
         RequestManager.getMangManger().getGrabOeder(page, rows, new RequestManager.CallBack() {
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) {
                 plv.onPullDownRefreshComplete();

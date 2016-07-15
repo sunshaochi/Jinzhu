@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -32,7 +33,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by Administrator on 2015/12/13.
+ * Created by Administrator on 2015/12/13
  */
 public class MyCreditStatusFragment extends BaseFragment {
     @ViewInject(R.id.lv_credit_status)
@@ -41,21 +42,18 @@ public class MyCreditStatusFragment extends BaseFragment {
     private LoadingView loadingView;
     private MyCreditBean.RowsEntity rowe;
     private List<OrderDealEntity> orderList;
-    private String dealName;//处理事件描述
-    private long dealTime;//处理时间
-    private String roleName;//角色名字
-    private String userId;//用户id
     private OrderDetailAdapter detailAdapter;
     private MyBroadCastReceiver receiver;
 
+    @SuppressLint("InflateParams")
     @Override
     public View initView(LayoutInflater inflater) {
-        return inflater.inflate(R.layout.mycreditstatus_frag,null);
+        return inflater.inflate(R.layout.mycreditstatus_frag, null);
     }
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        rowe  = getArguments().getParcelable("rowe");
+        rowe = getArguments().getParcelable("rowe");
         plvCreditStatus.setPullRefreshEnabled(true);
         plvCreditStatus.setScrollLoadEnabled(false);
         plvCreditStatus.setPullLoadEnabled(false);
@@ -83,26 +81,28 @@ public class MyCreditStatusFragment extends BaseFragment {
     }
 
 
-    public void findOrderDealHisory(String orderId){
+    public void findOrderDealHisory(String orderId) {
         RequestManager.getUserManager().findOrderDealHistory(orderId, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
                 loadingView.loadComplete();
                 plvCreditStatus.onPullDownRefreshComplete();
-                JSONObject object  =new JSONObject(result);
+                JSONObject object = new JSONObject(result);
                 JSONArray data = object.getJSONArray("data");
-                if (data==null){
+                if (data == null) {
                     loadingView.noContent();
                 }
-                Gson gson =new Gson();
-                orderList = gson.fromJson(data.toString(), new TypeToken<List<OrderDealEntity>>() {
-                }.getType());
+                Gson gson = new Gson();
+                if (data != null) {
+                    orderList = gson.fromJson(data.toString(), new TypeToken<List<OrderDealEntity>>() {
+                    }.getType());
+                }
                 Collections.reverse(orderList);
-                if (detailAdapter==null) {
+                if (detailAdapter == null) {
                     detailAdapter = new OrderDetailAdapter(getContext(), orderList);
                     plvCreditStatus.getRefreshableView().setAdapter(detailAdapter);
-                }else{
-                    detailAdapter.setDatas(orderList);
+                } else {
+                    detailAdapter.setDatas();
                 }
             }
 
@@ -117,23 +117,24 @@ public class MyCreditStatusFragment extends BaseFragment {
     @Override
     public void onStart() {
         super.onStart();
-        if (receiver==null) {
+        if (receiver == null) {
             receiver = new MyBroadCastReceiver();
         }
-        getActivity().registerReceiver(receiver,new IntentFilter(UPDATE_DEAL));
+        getActivity().registerReceiver(receiver, new IntentFilter(UPDATE_DEAL));
 
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (receiver!=null){
+        if (receiver != null) {
             getActivity().unregisterReceiver(receiver);
         }
     }
 
-    public static final String UPDATE_DEAL  = "update_deal";
-    private class MyBroadCastReceiver extends BroadcastReceiver{
+    public static final String UPDATE_DEAL = "update_deal";
+
+    private class MyBroadCastReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {

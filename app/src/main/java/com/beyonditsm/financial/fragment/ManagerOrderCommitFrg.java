@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,9 +11,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.beyonditsm.financial.ConstantValue;
 import com.beyonditsm.financial.R;
@@ -42,18 +41,13 @@ public class ManagerOrderCommitFrg extends BaseFragment {
     private PullToRefreshListView plv;
     @ViewInject(R.id.loadingView)
     private LoadingView loadingView;
-    @ViewInject(R.id.etAmount)
-    private EditText etAmount;//输入金额
-    @ViewInject(R.id.tvM)
-    private TextView tvM;//月份
-    @ViewInject(R.id.tvSearch)
-    private TextView tvSearch;//搜索
 
     private ManagerOrderCommitAdp adapter;
     private int page;
     private List<GrabOrderBean.RowsEntity> datas = new ArrayList<>();
     private String orderStatus;
 
+    @SuppressLint("InflateParams")
     @Override
     public View initView(LayoutInflater inflater) {
         view = inflater.inflate(R.layout.managerorderfrg, null);
@@ -145,6 +139,7 @@ public class ManagerOrderCommitFrg extends BaseFragment {
     private void getOrder(final int page) {
         int rows = 10;
         RequestManager.getMangManger().findCommitOrder(orderStatus,page, rows, new RequestManager.CallBack() {
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) throws JSONException {
                 loadingView.loadComplete();

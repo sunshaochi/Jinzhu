@@ -1,7 +1,6 @@
 package com.beyonditsm.financial.http;
 
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 
@@ -15,7 +14,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.beyonditsm.financial.MyApplication;
-import com.beyonditsm.financial.activity.user.LoginAct;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.SpUtils;
@@ -97,8 +95,8 @@ public class RequestManager {
     /**
      * Volley get请求
      *
-     * @param url
-     * @param callback
+     * @param url      请求地址
+     * @param callback 回调
      */
     public void doGet(String url, final CallBack callback) {
         MyLogUtils.info("地址:" + url);
@@ -106,13 +104,12 @@ public class RequestManager {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        String result = response.toString();
-                        MyLogUtils.info(result);
+                        MyLogUtils.info(response);
                         try {
-                            JSONObject obj = new JSONObject(result);
+                            JSONObject obj = new JSONObject(response);
                             int status = obj.getInt("status");
                             if (status == 200) {
-                                callback.onSucess(result);
+                                callback.onSucess(response);
                             } else {
                                 callback.onError(obj.getInt("status"), obj.getString("message"));
 
@@ -131,7 +128,7 @@ public class RequestManager {
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap localHashMap = new HashMap();
+                HashMap<String, String> localHashMap = new HashMap<>();
                 localHashMap.put("Cookie", SpUtils.getCookie(MyApplication.getInstance()));
                 localHashMap.put("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance()));
                 return localHashMap;
@@ -217,8 +214,8 @@ public class RequestManager {
     /**
      * Volley Post请求
      *
-     * @param url
-     * @param callback
+     * @param url      请求地址
+     * @param callback 回调
      */
     public void doPost(final String url, final Map<String, String> params, final CallBack callback) {
         MyLogUtils.info("地址:" + url);
@@ -226,13 +223,11 @@ public class RequestManager {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        String result = response.toString();
-//                        MyLogUtils.info(result);
                         try {
-                            JSONObject obj = new JSONObject(result);
+                            JSONObject obj = new JSONObject(response);
                             int status = obj.getInt("status");
                             if (status == 200) {
-                                callback.onSucess(result);
+                                callback.onSucess(response);
                             } else {
                                 callback.onError(obj.getInt("status"), obj.getString("message"));
 
@@ -255,7 +250,7 @@ public class RequestManager {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap localHashMap = new HashMap();
+                HashMap<String, String> localHashMap = new HashMap<>();
                 localHashMap.put("Cookie", SpUtils.getCookie(MyApplication.getInstance()));
                 localHashMap.put("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance()));
                 return localHashMap;
@@ -288,7 +283,6 @@ public class RequestManager {
         httpUtils.configCurrentHttpCacheExpiry(0);
         MyLogUtils.info("地址:" + url);
         RequestParams params = null;
-        String a = SpUtils.getCookie(MyApplication.getInstance());
         if (!"".equals(SpUtils.getCookie(MyApplication.getInstance()))) {
             params = new RequestParams();
             params.addHeader("cookie", SpUtils.getCookie(MyApplication.getInstance()));
@@ -318,11 +312,10 @@ public class RequestManager {
                     int status = obj.getInt("status");
                     if (status == 200) {
                         callBack.onSucess(result);
-                    }else if(status == 600){
+                    } else if (status == 600) {
                         SpUtils.clearSp(MyApplication.getInstance());
                         SpUtils.clearRoleName(MyApplication.getInstance());
-                    }
-                    else {
+                    } else {
                         callBack.onError(obj.getInt("status"), obj.getString("message"));
                     }
                 } catch (JSONException e) {
@@ -339,68 +332,18 @@ public class RequestManager {
         });
     }
 
-    /**
-     * 获取验证码保存cookie
-     *
-     * @param url
-     * @param queryParams
-     * @param callBack
-     */
-    public void getCode(String url, List<NameValuePair> queryParams, final CallBack callBack) {
-        {
-            MyLogUtils.info("地址:" + url);
-            final HttpUtils httpUtils = new HttpUtils();
-            httpUtils.configCurrentHttpCacheExpiry(0);
-
-            RequestParams params = null;
-            if (queryParams != null && queryParams.size() > 0) {
-                params = new RequestParams();
-                params.addBodyParameter(queryParams);
-            }
-
-            httpUtils.send(HttpRequest.HttpMethod.POST, url, params, new RequestCallBack() {
-                @Override
-                public void onSuccess(ResponseInfo responseInfo) {
-                    String result = responseInfo.result.toString();
-                    MyLogUtils.info(result);
-                    try {
-                        JSONObject obj = new JSONObject(result);
-                        int status = obj.getInt("status");
-                        if (status == 200) {
-//                            MyApplication.code_cookie=getCoolie(httpUtils);
-                            callBack.onSucess(result);
-                        } else {
-                            callBack.onError(obj.getInt("status"), obj.getString("message"));
-
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onFailure(HttpException e, String s) {
-                    callBack.onError(no_net, "亲，网络不给力");
-                }
-
-
-            });
-        }
-    }
-
 
     /**
      * 上传图片
      *
-     * @param url
-     * @param
-     * @param fileMaps
-     * @param callBack
+     * @param url      请求地址
+     * @param fileMaps 图片
+     * @param callBack 回调
      */
     public void loadImage(final String url, final Map<String, FileBody> fileMaps, final CallBack callBack) {
         MyLogUtils.info("地址:" + url);
         final HttpManager manager = new HttpManager();
-        final Map<String, String> par = new HashMap<String, String>();
+        final Map<String, String> par = new HashMap<>();
         par.put("type", "img");
         par.put("uploadLableName", "file");
         new AsyncTask<Void, Void, String>() {
@@ -417,10 +360,9 @@ public class RequestManager {
             @Override
             protected void onPostExecute(String result) {
                 MyLogUtils.info("上传图片：" + result);
-                JSONObject obj = null;
                 if (!TextUtils.isEmpty(result)) {
                     try {
-                        obj = new JSONObject(result);
+                        JSONObject obj = new JSONObject(result);
                         int status = obj.getInt("status");
                         if (status == 200) {
                             callBack.onSucess(obj.getString("data"));
@@ -438,14 +380,13 @@ public class RequestManager {
     /**
      * 上传图片
      *
-     * @param url
-     * @param
-     * @param fileMaps
-     * @param callBack
+     * @param url      请求地址
+     * @param fileMaps 图片
+     * @param callBack 回调
      */
     public void submitFujian(final String url, final String orderNo, final String isSupplementFile, final Map<String, List<FileBody>> fileMaps, final CallBack callBack) {
         final HttpManager manager = new HttpManager();
-        final Map<String, String> par = new HashMap<String, String>();
+        final Map<String, String> par = new HashMap<>();
         MyLogUtils.info("地址：" + url);
         par.put("type", "img");
         par.put("uploadLableName", "file");
@@ -467,9 +408,8 @@ public class RequestManager {
             protected void onPostExecute(String result) {
                 MyLogUtils.info("上传图片：" + result);
                 if (result != null) {
-                    JSONObject obj = null;
                     try {
-                        obj = new JSONObject(result);
+                        JSONObject obj = new JSONObject(result);
                         int status = obj.getInt("status");
                         if (status == 200) {
                             callBack.onSucess(obj.getString("data"));
@@ -493,15 +433,15 @@ public class RequestManager {
     private String getCoolie(HttpUtils httpUtils) {
         DefaultHttpClient dh = (DefaultHttpClient) httpUtils.getHttpClient();
         List<Cookie> cookies = dh.getCookieStore().getCookies();
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < cookies.size(); i++) {
             Cookie cookie = cookies.get(i);
             String cookieName = cookie.getName();
             String cookieValue = cookie.getValue();
             if (!TextUtils.isEmpty(cookieName)
                     && !TextUtils.isEmpty(cookieValue)) {
-                sb.append(cookieName + "=");
-                sb.append(cookieValue + ";");
+                sb.append(cookieName).append("=");
+                sb.append(cookieValue).append(";");
             }
         }
         return sb.toString();
@@ -509,9 +449,9 @@ public class RequestManager {
 
 
     public interface CallBack {
-        public void onSucess(String result) throws JSONException;
+        void onSucess(String result) throws JSONException;
 
-        public void onError(int status, String msg);
+        void onError(int status, String msg);
     }
 
 

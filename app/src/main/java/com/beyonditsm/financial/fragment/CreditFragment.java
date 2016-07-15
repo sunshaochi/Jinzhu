@@ -2,6 +2,7 @@ package com.beyonditsm.financial.fragment;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -24,7 +25,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.ConstantValue;
-import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.credit.CreditGuideAct;
 import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
@@ -33,13 +33,11 @@ import com.beyonditsm.financial.entity.FindProductListEntity;
 import com.beyonditsm.financial.entity.ProductInfo;
 import com.beyonditsm.financial.entity.ProductResult;
 import com.beyonditsm.financial.entity.ResultData;
-import com.beyonditsm.financial.entity.UserLoginEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
-import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.util.Uitls;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
@@ -55,7 +53,7 @@ import java.util.List;
 
 /**
  * 贷款
- * Created by wangbin on 15/11/11.
+ * Created by wangbin on 15/11/11
  */
 public class CreditFragment extends BaseFragment {
 
@@ -69,8 +67,6 @@ public class CreditFragment extends BaseFragment {
     private EditText etAmount;//输入金额
     @ViewInject(R.id.tvM)
     private TextView tvM;//月份
-    @ViewInject(R.id.tvSearch)
-    private TextView tvSearch;//搜索
     @ViewInject(R.id.ivSuspen)
     private ImageView ivSuspen;
     @ViewInject(R.id.rb_bank)
@@ -110,19 +106,13 @@ public class CreditFragment extends BaseFragment {
     private String cMoney = "";
     private String cTime = "";
 
-//    private AbstractSpinerAdapter mAdapter;
-//    private AbstractSpinerAdapter mDateAdapter;
-//    private List<CustemObject> moneyList = new ArrayList<CustemObject>();
-//    private List<CustemObject> dateList = new ArrayList<CustemObject>();
 
-    private int pageSize = 10;
     private int currentP = 1;
     private CreditAdapter adapter;
-    private UserLoginEntity ule;
     private boolean isButtonShowing = false;
     private boolean isAnimating = false;
-    private ArrayList listItem;
 
+    @SuppressLint("InflateParams")
     @Override
     public View initView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.frgment_credit, null);
@@ -132,11 +122,6 @@ public class CreditFragment extends BaseFragment {
     public void initData(Bundle savedInstanceState) {
         tvTitle.setText("贷款");
         initTit();
-        sbp = (SlideBottomPanel) getView().findViewById(R.id.sbp);
-        String roleName = SpUtils.getRoleName(context);
-//        if (!"ROLE_COMMON_CLIENT".equals(roleName)&&!TextUtils.isEmpty(roleName)){//非普通用户显示代言人指南
-//            ivSuspen.setBackgroundResource(R.mipmap.servant_guide);
-//        }
         loadView.setNoContentTxt("暂无此类产品，换个条件试试");
         etAmount.setSelection(etAmount.getText().length());
         rl_back.setVisibility(View.GONE);
@@ -349,42 +334,6 @@ public class CreditFragment extends BaseFragment {
                 }
             }
         });
-//        etAmount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View v, boolean hasFocus) {
-//                EditText et = (EditText) v;
-//                if (!hasFocus) {
-//                    et.setHint(et.getText().toString());
-//                } else {
-//                    String hint = et.getHint().toString();
-//                    et.setTag(hint);
-//                    et.setHint(null);
-//                }
-//            }
-//        });
-//        String[] moneys = getResources().getStringArray(R.array.money);
-//        for (int i = 0; i < moneys.length; i++) {
-//            CustemObject object = new CustemObject();
-//            object.setData(moneys[i]);
-//            moneyList.add(object);
-//        }
-//
-//        final String[] dates = getResources().getStringArray(R.array.date);
-//        for (int i = 0; i < dates.length; i++) {
-//            CustemObject object = new CustemObject();
-//            object.setData(dates[i]);
-//            dateList.add(object);
-//        }
-//
-//        mAdapter = new CustemSpinerAdapter(getActivity());
-//        mAdapter.refreshData(moneyList, 0);
-//        mSpinerPopWindow = new SpinerPopWindow(getActivity());
-//        mSpinerPopWindow.setAdatper(mAdapter);
-//
-//        mDateAdapter = new CustemSpinerAdapter(getActivity());
-//        mDateAdapter.refreshData(dateList, 0);
-//        mDatePupupWindow = new SpinerPopWindow(getActivity());
-//        mDatePupupWindow.setAdatper(mDateAdapter);
 
         plv.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -440,7 +389,7 @@ public class CreditFragment extends BaseFragment {
 //                showDateSpinWindow();
 //                break;
             case R.id.rb_bank:
-                listItem = getData1();
+                ArrayList listItem = getData1();
                 clearArrow();
                 clearTextColor();
                 lvCreditSort.setAdapter(new ArrayAdapter<>(context, R.layout.list_item, listItem));
@@ -547,6 +496,7 @@ public class CreditFragment extends BaseFragment {
     private void getCredit(final int currentPage, String creditMoney, String creditTime) {
         FindProductListEntity entity = new FindProductListEntity();
         entity.setPage(currentPage);
+        int pageSize = 10;
         entity.setRows(pageSize);
         MyLogUtils.info("金额：" + creditMoney + "期限：" + creditTime);
         if (TextUtils.isEmpty(creditMoney)) {

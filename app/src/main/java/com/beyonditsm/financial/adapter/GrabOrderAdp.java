@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
@@ -86,6 +87,7 @@ public class GrabOrderAdp extends BaseAdapter {
         return 0;
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder holder;
@@ -136,7 +138,7 @@ public class GrabOrderAdp extends BaseAdapter {
             @Override
             public void onClick(View view) {
 //                int position = (int) view.getTag();
-                GrabOrder(datas.get(i), holder, i);
+                GrabOrder(datas.get(i), i);
             }
         });
     }
@@ -144,7 +146,7 @@ public class GrabOrderAdp extends BaseAdapter {
     /**
      * 抢单
      */
-    private void GrabOrder(final GrabOrderBean.RowsEntity data, final ViewHolder holder, final int i) {
+    private void GrabOrder(final GrabOrderBean.RowsEntity data, final int i) {
         RequestManager.getMangManger().GrabOrder(data.getId(), new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {

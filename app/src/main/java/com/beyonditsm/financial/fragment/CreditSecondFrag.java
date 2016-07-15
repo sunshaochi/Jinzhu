@@ -1,6 +1,5 @@
 package com.beyonditsm.financial.fragment;
 
-import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,11 +13,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,8 +26,6 @@ import com.beyonditsm.financial.entity.DictionaryType;
 import com.beyonditsm.financial.entity.OrderBean;
 import com.beyonditsm.financial.entity.ProductInfo;
 import com.beyonditsm.financial.entity.ResultData;
-import com.beyonditsm.financial.entity.TaskEntity;
-import com.beyonditsm.financial.entity.TaskStrategyEntity;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.AddressUtil;
@@ -46,7 +39,6 @@ import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.widget.DialogChooseAdress;
 import com.beyonditsm.financial.widget.DialogChooseProvince;
-import com.beyonditsm.financial.widget.ToggleButton;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.eventbus.EventBus;
@@ -57,7 +49,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,39 +59,24 @@ import java.util.Map;
  */
 public class CreditSecondFrag extends BaseFragment {
     private ScrollView criSv;
-    private RadioGroup sexRg;//性别rb
-    private RadioButton sexMan;//男
-    private RadioButton sexWoman;//女
-    private ToggleButton tbSex;//设置男女
-
-    private ImageView ivSlide;//资质右边按钮旋转
 
     private EditText name;//姓名
     private EditText IdCard;//身份证
     private TextView position;//常住地
     private EditText address;//详细地址
-    private RelativeLayout rlMarrayed;//是否结婚点击框
     private TextView tvMarrayed;//是否结婚文本
     private TextView tvJiguan;//籍贯
     private TextView tvAddress;//户籍地址
-    private RelativeLayout rlWork;//职业身份点击框
     private TextView tvWork;//职业身份文本
     private EditText companyName;//公司名
     private EditText zhiwu;//职务
     private EditText age;//年龄
-    private RelativeLayout rlSb;
     private TextView tvSb;//社保
-    private RelativeLayout rlGjj;
     private TextView tvGjj;//公积金
-    private RelativeLayout rlHome;
     private TextView tvHome;//房产类型
-    private RelativeLayout rlCar;
     private TextView tvCar;//车产类型
-    private RelativeLayout rlXy;
     private TextView tvXy;//信用状况
     private Button secondBtnNext;//下一步
-    private RelativeLayout rsts;//贷款提速
-    private TextView tvts;//提速
     private CheckBox cbSelectSex;
     private AddressUtil addressUtil;
 
@@ -109,16 +85,12 @@ public class CreditSecondFrag extends BaseFragment {
     private LinearLayout llSucess;
     @ViewInject(R.id.tvSecond)
     private TextView tvSecond;
-    @ViewInject(R.id.tvSure)
-    private TextView tvSure;
     @ViewInject(R.id.loadView)
     private LoadingView loadView;
     @ViewInject(R.id.zz_ll)
     private LinearLayout zz_ll;//资质扩展区域
 
 
-    private List<TaskEntity> taskEntityList, finishList;//任务列表
-    private List<TaskStrategyEntity> taskStrategyEntityList;//任务策略列表
     private List<DictionaryType> carList, jobList, hourseList, creditList;//车产，职业，房产，信用
     private int jobPos, carPos, hoursePos, creditPos;
     private ProductInfo productInfo;//产品信息
@@ -127,10 +99,8 @@ public class CreditSecondFrag extends BaseFragment {
     private boolean hourseSelect = false;
     private boolean creditSelect = false;
 
-    private ObjectAnimator obaDown, obaDownts,obaOn, obaOnts;
     private Map<Integer, Boolean> map = new HashMap<>();
     private UserEntity user;
-    private MySelfSheetDialog dialog;
     private String haveHoursId;
     private String haveCarId;
     private String jobId;
@@ -150,20 +120,10 @@ public class CreditSecondFrag extends BaseFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         addressUtil = new AddressUtil(getActivity());
-        finishList = new ArrayList<TaskEntity>();
-        taskStrategyEntityList = new ArrayList<TaskStrategyEntity>();
-        taskEntityList = new ArrayList<TaskEntity>();
         getDictionaryContent(0, "job_identity");//职业身份
         getDictionaryContent(1, "under_own_car");//名下车产
         getDictionaryContent(2, "under_own_hour");//名下房产
         getDictionaryContent(3, "two_year_credit");//信用状况
-
-//        obaDown = ObjectAnimator.ofFloat(ivSlide, "rotation", 0,
-//                180);
-//        obaDown.setDuration(300);
-//        obaOn = ObjectAnimator.ofFloat(ivSlide, "rotation", -180,
-//                0);
-//        obaOn.setDuration(300);
 
 
         map.put(1, false);
@@ -212,34 +172,22 @@ public class CreditSecondFrag extends BaseFragment {
         });
     }
     private void assignViews() {
-        ivSlide = (ImageView) view.findViewById(R.id.ivSlide);
-        tbSex = (ToggleButton) view.findViewById(R.id.tbSex);
         criSv = (ScrollView) view.findViewById(R.id.criSv);
-        sexRg = (RadioGroup) view.findViewById(R.id.sex_rg);
-        sexMan = (RadioButton) view.findViewById(R.id.sex_man);
-        sexWoman = (RadioButton) view.findViewById(R.id.sex_woman);
         name = (EditText) view.findViewById(R.id.name);
         IdCard = (EditText) view.findViewById(R.id.IdCard);
         position = (TextView) view.findViewById(R.id.position);
         address = (EditText) view.findViewById(R.id.address);
-        rlMarrayed = (RelativeLayout) view.findViewById(R.id.rl_marrayed);
         tvMarrayed = (TextView) view.findViewById(R.id.tv_marrayed);
         tvJiguan = (TextView) view.findViewById(R.id.tv_jiguan);
         tvAddress = (TextView) view.findViewById(R.id.tv_address);
-        rlWork = (RelativeLayout) view.findViewById(R.id.rl_work);
         tvWork = (TextView) view.findViewById(R.id.tv_work);
         companyName = (EditText) view.findViewById(R.id.company_name);
         zhiwu = (EditText) view.findViewById(R.id.zhiwu);
         age = (EditText) view.findViewById(R.id.age);
-        rlSb = (RelativeLayout) view.findViewById(R.id.rl_sb);
         tvSb = (TextView) view.findViewById(R.id.tv_sb);
-        rlGjj = (RelativeLayout) view.findViewById(R.id.rl_gjj);
         tvGjj = (TextView) view.findViewById(R.id.tv_gjj);
-        rlHome = (RelativeLayout) view.findViewById(R.id.rl_home);
         tvHome = (TextView) view.findViewById(R.id.tv_home);
-        rlCar = (RelativeLayout) view.findViewById(R.id.rl_car);
         tvCar = (TextView) view.findViewById(R.id.tv_car);
-        rlXy = (RelativeLayout) view.findViewById(R.id.rl_xy);
         tvXy = (TextView) view.findViewById(R.id.tv_xy);
         secondBtnNext = (Button) view.findViewById(R.id.second_btn_next);
         cbSelectSex = (CheckBox) view.findViewById(R.id.cb_select_sex);
@@ -247,7 +195,6 @@ public class CreditSecondFrag extends BaseFragment {
     @OnClick({R.id.cb_select_sex, R.id.second_btn_next, R.id.zz_tv, R.id.rlNative, R.id.rl_marrayed, R.id.rl_sb, R.id.rl_gjj, R.id.rl_work
             , R.id.rl_home, R.id.rl_car, R.id.rl_xy, R.id.rlAddress, R.id.rlPosition, R.id.commit_file, R.id.commit_idCard,R.id.tvSure})
     public void todo(View v){
-        Intent intent = null;
         switch (v.getId()){
             case R.id.cb_select_sex:
 
@@ -307,7 +254,7 @@ public class CreditSecondFrag extends BaseFragment {
                 }
                 break;
             case R.id.rl_marrayed://是否结婚
-                dialog = new MySelfSheetDialog(getActivity()).builder();
+                MySelfSheetDialog dialog = new MySelfSheetDialog(getActivity()).builder();
                 dialog.addSheetItem("未婚", null, new MySelfSheetDialog.OnSheetItemClickListener() {
                     @Override
                     public void onClick(int which) {
@@ -478,6 +425,7 @@ public class CreditSecondFrag extends BaseFragment {
      */
     private void getData(){
         RequestManager.getCommManager().findUserInfo(new RequestManager.CallBack() {
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) throws JSONException {
                 loadView.loadComplete();
@@ -573,9 +521,6 @@ public class CreditSecondFrag extends BaseFragment {
 
                     if (!TextUtils.isEmpty(user.getBusiness())) {
                         zhiwu.setText(user.getBusiness());
-                    }
-
-                    if (!TextUtils.isEmpty(user.getNativePlaceAddr())) {
                     }
 
                     if (!TextUtils.isEmpty(user.getTowYearCredName())) {//信用
@@ -779,45 +724,43 @@ public class CreditSecondFrag extends BaseFragment {
             orderBean.setTotalAmount(Double.parseDouble(HomeCreditDetailAct.creditMoney) * 10000 + "");//总金额
             orderBean.setTotalPeriods(HomeCreditDetailAct.creditMonth);//总期数
             orderBean.setPeriodsAmount(HomeCreditDetailAct.monthlyPayments);//单期还款金额
-            if (orderBean != null){
-                RequestManager.getCommManager().submitOrder(orderBean, new RequestManager.CallBack() {
-                    @Override
-                    public void onSucess(String result) {
-                        secondBtnNext.setClickable(true);
-                        llSucess.setVisibility(View.VISIBLE);
-                        criSv.setVisibility(View.GONE);
+            RequestManager.getCommManager().submitOrder(orderBean, new RequestManager.CallBack() {
+                @Override
+                public void onSucess(String result) {
+                    secondBtnNext.setClickable(true);
+                    llSucess.setVisibility(View.VISIBLE);
+                    criSv.setVisibility(View.GONE);
 
-                        try {
-                            JSONObject jsonObject=new JSONObject(result);
-                            reOrderId=jsonObject.getString("data");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                while (i>0){
-                                    try {
-                                        Thread.sleep(1000);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                    i--;
-                                    handler.sendEmptyMessage(i);
-
+                    try {
+                        JSONObject jsonObject=new JSONObject(result);
+                        reOrderId=jsonObject.getString("data");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            while (i>0){
+                                try {
+                                    Thread.sleep(1000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
                                 }
+                                i--;
+                                handler.sendEmptyMessage(i);
+
                             }
-                        }).start();
+                        }
+                    }).start();
 
-                    }
+                }
 
-                    @Override
-                    public void onError(int status, String msg) {
-                        secondBtnNext.setClickable(true);
-                        MyToastUtils.showShortToast(context, msg);
-                    }
-                });
-            }
+                @Override
+                public void onError(int status, String msg) {
+                    secondBtnNext.setClickable(true);
+                    MyToastUtils.showShortToast(context, msg);
+                }
+            });
         }
 
 

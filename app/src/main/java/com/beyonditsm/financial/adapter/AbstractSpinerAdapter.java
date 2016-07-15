@@ -13,17 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by wangbin on 15/11/16.
+ * Created by wangbin on 15/11/16
  */
 public abstract class AbstractSpinerAdapter<T> extends BaseAdapter {
 
-    public static interface IOnItemSelectListener{
-        public void onItemClick(int pos);
-    };
+    public  interface IOnItemSelectListener{
+         void onItemClick(int pos);
+    }
 
-    private Context mContext;
     private List<T> mObjects = new ArrayList<T>();
-    private int mSelectItem = 0;
 
     private LayoutInflater mInflater;
 
@@ -40,11 +38,10 @@ public abstract class AbstractSpinerAdapter<T> extends BaseAdapter {
             selIndex = mObjects.size() - 1;
         }
 
-        mSelectItem = selIndex;
+        int mSelectItem = selIndex;
     }
 
     private void init(Context context) {
-        mContext = context;
         mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 

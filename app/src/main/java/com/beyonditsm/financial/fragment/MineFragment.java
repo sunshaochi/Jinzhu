@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -94,14 +95,11 @@ public class MineFragment extends BaseFragment {
     private ImageView ivVipLevel;
     @ViewInject(R.id.sv_mine)
     private ScrollView svMine;
-    @ViewInject(R.id.rlMyData)
-    private RelativeLayout rlMyData;
     @ViewInject(R.id.mplv_mine)
     private MinePageLoadingView minePageLoadingView;
     private UserEntity user;//用户信息
     public static final String USER_KEY = "user_info";
     private boolean isLogin;
-    private boolean isWalletRed = false;
 
     String grade;//超过百分之多少用户
 
@@ -119,6 +117,7 @@ public class MineFragment extends BaseFragment {
     private WalletRedReceiver walletRedReceiver;
     private HideWalletRedReceiver hideWalletRedReceiver;
 
+    @SuppressLint("InflateParams")
     @Override
     public View initView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.fragment_mine, null);
@@ -178,7 +177,7 @@ public class MineFragment extends BaseFragment {
 
                             }
                         });
-                        Set<String> set = new HashSet<String>();
+                        Set<String> set = new HashSet<>();
                         JPushInterface.setAliasAndTags(getActivity(), "", set, new TagAliasCallback() {
                             @Override
                             public void gotResult(int i, String s, Set<String> set) {
@@ -204,7 +203,7 @@ public class MineFragment extends BaseFragment {
     @OnClick({R.id.rlMyCode, R.id.rlRecomm, R.id.rlLines, R.id.rlMyCredit, R.id.rlSet, R.id.tvExit,
             R.id.rlWork, R.id.rlMyData, R.id.msg_top, R.id.rlWallet, R.id.rlVip})
     public void toClick(View v) {
-        Intent intent = null;
+        Intent intent;
         switch (v.getId()) {
             //我的资料
             case R.id.rlMyData:
@@ -288,7 +287,7 @@ public class MineFragment extends BaseFragment {
 
                             }
                         });
-                        Set<String> set = new HashSet<String>();
+                        Set<String> set = new HashSet<>();
                         JPushInterface.setAliasAndTags(getActivity(), "", set, new TagAliasCallback() {
                             @Override
                             public void gotResult(int i, String s, Set<String> set) {
@@ -332,6 +331,7 @@ public class MineFragment extends BaseFragment {
     private void getUserInfo() {
 
         RequestManager.getCommManager().findUserInfo(new RequestManager.CallBack() {
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) {
                 ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
@@ -379,7 +379,7 @@ public class MineFragment extends BaseFragment {
     /**
      * 获取信用分超过多少的用户
      *
-     * @param score
+     * @param score 信用分
      */
     private void getScorePer(String score) {
         RequestManager.getUserManager().getScorePer(score, new RequestManager.CallBack() {
@@ -511,9 +511,9 @@ public class MineFragment extends BaseFragment {
      */
     private void getUserLoginInfo() {
         RequestManager.getUserManager().findUserLoginInfo(new RequestManager.CallBack() {
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) throws JSONException {
-                String a = result;
                 JSONObject obj = new JSONObject(result);
                 int status = obj.getInt("status");
                 if (status == 200) {

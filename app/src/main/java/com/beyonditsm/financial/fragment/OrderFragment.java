@@ -1,9 +1,11 @@
 package com.beyonditsm.financial.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,29 +17,19 @@ import com.beyonditsm.financial.R;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 /**
- * Created by Administrator on 2015/12/10.
+ * Created by Administrator on 2015/12/10
  */
 public class OrderFragment extends BaseFragment {
 
     @ViewInject(R.id.vp)
     private ViewPager vp;
-    @ViewInject(R.id.tvDtj)
-    private TextView tvDtj;
-    @ViewInject(R.id.tvYtj)
-    private TextView tvYtj;
-    @ViewInject(R.id.tvBjz)
-    private TextView tvBjz;
-    @ViewInject(R.id.tvYfk)
-    private TextView tvYfk;
-    @ViewInject(R.id.tvShdtg)
-    private TextView tvShdtg;
     private TextView[] title;
     @ViewInject(R.id.rl_back)
     private RelativeLayout rlBack;
     @ViewInject(R.id.tv_title)
     private TextView tvTitle;
 
-    private int position;
+    @SuppressLint("InflateParams")
     @Override
     public View initView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.orderfragment,null);
@@ -49,7 +41,7 @@ public class OrderFragment extends BaseFragment {
         initViewPager();
         rlBack.setVisibility(View.INVISIBLE);
         tvTitle.setText("订单");
-        title[0].setTextColor(getResources().getColor(R.color.main_color));
+        title[0].setTextColor(ContextCompat.getColor(getActivity(),R.color.main_color));
         title[0].setTextSize(16);
 
     }
@@ -75,7 +67,7 @@ public class OrderFragment extends BaseFragment {
     private void initViewPager() {
 
         vp.setAdapter(new MyAdapter(getChildFragmentManager()));
-        vp.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -83,11 +75,11 @@ public class OrderFragment extends BaseFragment {
 
             public void onPageSelected(int position) {
 
-                for (int i = 0;i<title.length;i++){
-                    title[i].setTextColor(getResources().getColor(R.color.tv_second_color));
-                    title[i].setTextSize(14);
+                for (TextView aTitle : title) {
+                    aTitle.setTextColor(ContextCompat.getColor(getActivity(),R.color.tv_second_color));
+                    aTitle.setTextSize(14);
                 }
-                title[position].setTextColor(getResources().getColor(R.color.main_color));
+                title[position].setTextColor(ContextCompat.getColor(getActivity(),R.color.main_color));
                 title[position].setTextSize(16);
             }
 

@@ -1,6 +1,5 @@
 package com.beyonditsm.financial.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,20 +15,7 @@ import io.rong.imlib.model.Conversation;
  * 会话act
  * Created by Yang on 2015/11/18 0018.
  */
-public class ConversationActivity extends BaseActivity{
-    /**
-     * 目标 Id
-     */
-    private String mTargetId;
-
-    /**
-     * 刚刚创建完讨论组后获得讨论组的id 为targetIds，需要根据 为targetIds 获取 targetId
-     */
-    private String mTargetIds;
-    /**
-     * 会话类型
-     */
-    private Conversation.ConversationType mConversationType;
+public class ConversationActivity extends BaseActivity {
 
     @Override
     public void setLayout() {
@@ -47,11 +33,14 @@ public class ConversationActivity extends BaseActivity{
      */
     private void getIntentDate(Intent intent) {
 
-        mTargetId = intent.getData().getQueryParameter("targetId");
-        mTargetIds = intent.getData().getQueryParameter("targetIds");
-        setTopTitle(intent.getData().getQueryParameter("title").toString());
+        //目标 Id
+        String mTargetId = intent.getData().getQueryParameter("targetId");
+        //刚刚创建完讨论组后获得讨论组的id 为targetIds，需要根据 为targetIds 获取 targetId
+        String mTargetIds = intent.getData().getQueryParameter("targetIds");
+        setTopTitle(intent.getData().getQueryParameter("title"));
         //intent.getData().getLastPathSegment();//获得当前会话类型
-        mConversationType = Conversation.ConversationType.valueOf(intent.getData().getLastPathSegment().toUpperCase(Locale.getDefault()));
+        // 会话类型
+        Conversation.ConversationType mConversationType = Conversation.ConversationType.valueOf(intent.getData().getLastPathSegment().toUpperCase(Locale.getDefault()));
 
         enterFragment(mConversationType, mTargetId);
     }

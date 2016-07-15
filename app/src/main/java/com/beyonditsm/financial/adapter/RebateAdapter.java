@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,15 +17,15 @@ import java.text.ParseException;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/1/14.
+ * Created by Administrator on 2016/1/14
  */
 public class RebateAdapter extends BaseAdapter {
     private List<BalanceEntity.RowsEntity> list;
-    private Context context;
+    private final LayoutInflater inflater;
 
     public RebateAdapter(Context context, List<BalanceEntity.RowsEntity> list) {
         this.list = list;
-        this.context = context;
+        inflater = LayoutInflater.from(context);
     }
 
     public void setDatas(List<BalanceEntity.RowsEntity> list) {
@@ -47,12 +48,13 @@ public class RebateAdapter extends BaseAdapter {
         return position;
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
             holder = new ViewHolder();
-            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.balance_list_item, null);
+            convertView = inflater.inflate(R.layout.balance_list_item, null);
             holder.name = (TextView) convertView.findViewById(R.id.Name);
             holder.pay = (TextView) convertView.findViewById(R.id.pay);
             holder.time = (TextView) convertView.findViewById(R.id.Time);

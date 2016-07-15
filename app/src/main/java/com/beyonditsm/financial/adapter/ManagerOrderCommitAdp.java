@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -26,7 +27,6 @@ import java.util.List;
  * Created by Yang on 2015/11/16 0016.
  */
 public class ManagerOrderCommitAdp extends BaseAdapter  {
-    private Context context;
     private LayoutInflater inflater;
     private List<GrabOrderBean.RowsEntity> datas = new ArrayList<>();
     java.text.DecimalFormat df = new java.text.DecimalFormat("#0.00");//保留小数
@@ -41,7 +41,6 @@ public class ManagerOrderCommitAdp extends BaseAdapter  {
             .build(); // 创建配置过得DisplayImageOption对象
 
     public ManagerOrderCommitAdp(Context context, List<GrabOrderBean.RowsEntity> datas) {
-        this.context = context;
         this.datas = datas;
         inflater = LayoutInflater.from(context);
     }
@@ -66,6 +65,7 @@ public class ManagerOrderCommitAdp extends BaseAdapter  {
         return 0;
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder holder;
@@ -120,7 +120,6 @@ public class ManagerOrderCommitAdp extends BaseAdapter  {
         public final TextView tvdefaultrate;//违约率
         public final TextView tvtotalmoney;//贷款总额
         public final Button graborderbtn;//提交待提交按钮
-        private final TextView tvpingji;//用户评级
         public final LinearLayout llDefaultRate;
         public final View root;
 
@@ -131,7 +130,6 @@ public class ManagerOrderCommitAdp extends BaseAdapter  {
             tvdefaultrate = (TextView) root.findViewById(R.id.tv_default_rate);
             tvtotalmoney = (TextView) root.findViewById(R.id.tv_total_money);
             graborderbtn = (Button) root.findViewById(R.id.graborder_btn);
-            tvpingji= (TextView) root.findViewById(R.id.tv_pingji);
             llDefaultRate = (LinearLayout) root.findViewById(R.id.ll_default_rate);
             this.root = root;
         }

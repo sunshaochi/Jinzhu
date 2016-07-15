@@ -76,7 +76,6 @@ public abstract  class BaseFragment extends Fragment{
     /**
      * 初始化数据
      *
-     * @param savedInstanceState
      */
     public abstract void initData(Bundle savedInstanceState);
 
@@ -85,10 +84,5 @@ public abstract  class BaseFragment extends Fragment{
      */
     public abstract void setListener();
 
-
-
-    public boolean isDestroyed(){
-        return isDestroyed;
-    }
 
 }

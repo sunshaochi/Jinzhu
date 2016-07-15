@@ -1,8 +1,5 @@
 package com.beyonditsm.financial.activity;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,21 +9,10 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
-import com.beyonditsm.financial.entity.ResultData;
-import com.beyonditsm.financial.entity.UserLoginEntity;
-import com.beyonditsm.financial.http.RequestManager;
-import com.beyonditsm.financial.util.GsonUtils;
-import com.beyonditsm.financial.util.ParamsUtil;
-import com.beyonditsm.financial.util.SpUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.tandong.sa.activity.SmartFragmentActivity;
-import com.tandong.sa.eventbus.EventBus;
 import com.umeng.analytics.MobclickAgent;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -36,9 +22,6 @@ import cn.jpush.android.api.JPushInterface;
  */
 public abstract class BaseActivity extends SmartFragmentActivity {
 
-    private TextView tv_title;
-    private TextView tvRight;
-    private TextView tvLeft;
     private RelativeLayout rl_right;
 
     @Override
@@ -69,10 +52,10 @@ public abstract class BaseActivity extends SmartFragmentActivity {
     /**
      * 设置顶部标题
      *
-     * @param title
+     * @param title 标题
      */
     public void setTopTitle(String title) {
-        tv_title = (TextView) findViewById(R.id.tv_title);
+        TextView tv_title = (TextView) findViewById(R.id.tv_title);
         if (title != null) {
             tv_title.setText(title);
         }
@@ -81,10 +64,10 @@ public abstract class BaseActivity extends SmartFragmentActivity {
     /**
      * 顶部右边按键
      *
-     * @param rightText
+     * @param rightText 右边文字
      */
     public void setRightBtn(String rightText, View.OnClickListener listener) {
-        tvRight = (TextView) findViewById(R.id.tvRight);
+        TextView tvRight = (TextView) findViewById(R.id.tvRight);
         rl_right = (RelativeLayout) findViewById(R.id.rl_right);
         if (!TextUtils.isEmpty(rightText)) {
             tvRight.setText(rightText);
@@ -105,14 +88,13 @@ public abstract class BaseActivity extends SmartFragmentActivity {
             rl_right.setVisibility(View.GONE);
         }
     }
-
     /**
      * 设置左边文字
      *
-     * @param tv
+     * @param tv 左边文字
      */
     public void setLeftTv(String tv) {
-        tvLeft = (TextView) findViewById(R.id.tvLeft);
+        TextView tvLeft = (TextView) findViewById(R.id.tvLeft);
         tvLeft.setVisibility(View.VISIBLE);
         tvLeft.setText(tv);
     }
@@ -121,7 +103,7 @@ public abstract class BaseActivity extends SmartFragmentActivity {
     /**
      * 返回
      *
-     * @param view
+     * @param view view
      */
     public void goback(View view) {
         finish();
@@ -164,45 +146,5 @@ public abstract class BaseActivity extends SmartFragmentActivity {
         JPushInterface.onPause(this);
         MobclickAgent.onPause(this);
     }
-
-//    class SwitchEvent{
-//
-//    }
-    /**
-     * 获取测试设备信息
-     *
-     * @param context
-     * @return
-     */
-    public static String getDeviceInfo(Context context) {
-        try {
-            org.json.JSONObject json = new org.json.JSONObject();
-            android.telephony.TelephonyManager tm = (android.telephony.TelephonyManager) context
-                    .getSystemService(Context.TELEPHONY_SERVICE);
-
-            String device_id = tm.getDeviceId();
-
-            android.net.wifi.WifiManager wifi = (android.net.wifi.WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-
-            String mac = wifi.getConnectionInfo().getMacAddress();
-            json.put("mac", mac);
-
-            if (TextUtils.isEmpty(device_id)) {
-                device_id = mac;
-            }
-
-            if (TextUtils.isEmpty(device_id)) {
-                device_id = android.provider.Settings.Secure.getString(context.getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
-            }
-
-            json.put("device_id", device_id);
-
-            return json.toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
 
 }

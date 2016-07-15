@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -51,28 +52,14 @@ import io.rong.imlib.model.UserInfo;
  * Created by Yang on 2015/11/15 0015.
  */
 public class ManagerMineFrg extends BaseFragment {
-    @ViewInject(R.id.rlMyOrder)
-    private RelativeLayout MyOrder;//订单管理
-    @ViewInject(R.id.rlMyChat)
-    private RelativeLayout chat;//我的沟通
-    @ViewInject(R.id.rlSet)
-    private RelativeLayout setting;//设置
-    @ViewInject(R.id.tvExit)
-    private TextView exit;//注销
     @ViewInject(R.id.msg_top)
     private RelativeLayout msg_top;//右上角消息图标
     @ViewInject(R.id.msg_top_point)
     private ImageView msg_top_point;//右上角消息图标小红点
-
-
-
     @ViewInject(R.id.tv_title)
     private TextView tvTitle;//标题
     @ViewInject(R.id.rl_back)
     private RelativeLayout rlBack;
-
-    @ViewInject(R.id.rlManaData)
-    private RelativeLayout rlManaData;
     @ViewInject(R.id.tvName)
     private TextView tvCreditManaName;
     private CreditReceiver creditReceiver;
@@ -90,6 +77,7 @@ public class ManagerMineFrg extends BaseFragment {
             .build(); // 创建配置过得DisplayImageOption对象
     private CreditManager cm;
 
+    @SuppressLint("InflateParams")
     @Override
     public View initView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.fragment_manager_mine, null);
@@ -136,7 +124,7 @@ public class ManagerMineFrg extends BaseFragment {
 
     @OnClick({R.id.rlMyOrder, R.id.rlMyChat, R.id.rlSet, R.id.tvExit, R.id.rlManaData,R.id.msg_top})
     public void toClick(View v) {
-        Intent intent = null;
+        Intent intent;
         switch (v.getId()) {
             //订单管理
             case R.id.rlMyOrder:
@@ -171,7 +159,7 @@ public class ManagerMineFrg extends BaseFragment {
 
                             }
                         });
-                        Set<String> set=new HashSet<String>();
+                        Set<String> set= new HashSet<>();
                         JPushInterface.setAliasAndTags(getActivity(), "", set, new TagAliasCallback() {
                             @Override
                             public void gotResult(int i, String s, Set<String> set) {
@@ -228,6 +216,7 @@ public class ManagerMineFrg extends BaseFragment {
 
     public void getCurrentCreditManagerDetail() {
         RequestManager.getMangManger().currentCreditManagerDetail(new RequestManager.CallBack() {
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) throws JSONException {
                 ResultData<CreditManagerEntity> rd = (ResultData<CreditManagerEntity>) GsonUtils.json(result, CreditManagerEntity.class);

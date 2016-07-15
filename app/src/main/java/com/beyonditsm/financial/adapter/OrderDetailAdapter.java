@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -37,7 +38,7 @@ public class OrderDetailAdapter extends BaseAdapter implements View.OnClickListe
         inflater = LayoutInflater.from(context);
     }
 
-    public void setDatas(List<OrderDealEntity> orderList) {
+    public void setDatas() {
         notifyDataSetChanged();
     }
 
@@ -56,6 +57,7 @@ public class OrderDetailAdapter extends BaseAdapter implements View.OnClickListe
         return position;
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
@@ -86,7 +88,7 @@ public class OrderDetailAdapter extends BaseAdapter implements View.OnClickListe
         }
 
         Date date = new Date(ode.getDealTime());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         holder.tvCreditTime.setText(sdf.format(date));
 
 //        if (!TextUtils.isEmpty(ode.getUserId())) {

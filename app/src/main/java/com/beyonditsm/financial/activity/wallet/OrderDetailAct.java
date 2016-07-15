@@ -32,8 +32,6 @@ public class OrderDetailAct extends BaseActivity {
     private LoadRefreshView lvOrderDetail;
     @ViewInject(R.id.loadingView)
     private LoadingView loadingView;
-    @ViewInject(R.id.lv_Order_Detail)
-    private ListView lvOrder;
     private OrderDetailAdp orderDetailAdapter;
     private int page;
 
@@ -84,6 +82,7 @@ public class OrderDetailAct extends BaseActivity {
     private void findOrderDetail() {
         int rows = 10;
         RequestManager.getWalletManager().findOrderList(page, rows, new RequestManager.CallBack() {
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) throws JSONException {
                 lvOrderDetail.onPullUpRefreshComplete();

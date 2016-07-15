@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -75,6 +76,7 @@ public class CreditThirFrag extends BaseFragment {
     private String orderStatus;
     private String orderSts;
 
+    @SuppressLint("InflateParams")
     @Override
     public View initView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.credit_third_frg, null);
@@ -131,7 +133,7 @@ public class CreditThirFrag extends BaseFragment {
     /**
      * 获取上传资料列表
      *
-     * @param orderId
+     * @param orderId 订单id
      */
     private void getUploadList(final String orderId) {
 
@@ -172,7 +174,7 @@ public class CreditThirFrag extends BaseFragment {
     /**
      * 提交审核
      *
-     * @param orderId
+     * @param orderId 订单id
      */
     private void applayCredit(final String orderId) {
         RequestManager.getCommManager().applyCredit(orderId, new RequestManager.CallBack() {
@@ -227,7 +229,7 @@ public class CreditThirFrag extends BaseFragment {
     /**
      * 是否需要增信资料
      *
-     * @param orderId
+     * @param orderId 订单id
      */
     private void findOrderFlow(final String orderId) {
         RequestManager.getCommManager().findOrderFlow(orderId, new RequestManager.CallBack() {
@@ -237,9 +239,8 @@ public class CreditThirFrag extends BaseFragment {
                 String message = jsonObject.getString("message");
                 if (!"没有可用的增信流程".equals(message)) {
                     JSONArray array = jsonObject.getJSONArray("data");
-                    List<UpLoadEntity> datas = gson.fromJson(array.toString(), new TypeToken<List<UpLoadEntity>>() {
+                    CreditStepAct.upList = gson.fromJson(array.toString(), new TypeToken<List<UpLoadEntity>>() {
                     }.getType());
-                    CreditStepAct.upList = datas;
 
                 } else {
                     CreditStepAct.upList = null;

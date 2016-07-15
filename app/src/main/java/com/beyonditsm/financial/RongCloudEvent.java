@@ -40,7 +40,7 @@ import io.rong.notification.PushNotificationMessage;
 
 
 /**
- * Created by zhjchen on 1/29/15.
+ * Created by zhjchen on 1/29/15
  */
 
 /**
@@ -61,15 +61,11 @@ import io.rong.notification.PushNotificationMessage;
 public final class RongCloudEvent implements RongIM.UserInfoProvider, RongIM.ConversationBehaviorListener,
         RongIM.ConversationListBehaviorListener, Handler.Callback {
 
-    private static final String TAG = RongCloudEvent.class.getSimpleName();
-
     private static RongCloudEvent mRongCloudInstance;
-    private List<FriendBean> friendBeans = new ArrayList<>();
-//    private List<UserEntity> friends = new ArrayList<>();
+    //    private List<UserEntity> friends = new ArrayList<>();
     private List<FriendEntity> friends = new ArrayList<>();
     private Gson gson = new Gson();
     private Context mContext;
-    private Handler mHandler;
 
     /**
      * 初始化 RongCloud.
@@ -97,7 +93,6 @@ public final class RongCloudEvent implements RongIM.UserInfoProvider, RongIM.Con
     private RongCloudEvent(Context context) {
         mContext = context;
         initDefaultListener();
-        mHandler = new Handler(this);
     }
 
     public boolean handleMessage(android.os.Message message) {
@@ -263,7 +258,7 @@ public final class RongCloudEvent implements RongIM.UserInfoProvider, RongIM.Con
      */
     @Override
     public UserInfo getUserInfo(String userId) {
-        friendBeans = FriendDao.findfriend();
+        List<FriendBean> friendBeans = FriendDao.findfriend();
         if (friendBeans != null && friendBeans.size() > 0) {
             //增强for把所有的用户信息 return 到融云服务端
             for (FriendBean friend : friendBeans) {

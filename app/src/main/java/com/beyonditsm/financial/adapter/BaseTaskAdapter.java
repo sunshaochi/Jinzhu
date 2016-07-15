@@ -4,14 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
 
 /**
- * Created by gxy on 2015/11/26.
+ * Created by gxy on 2015/11/26
  */
 public class BaseTaskAdapter extends BaseAdapter {
     private LayoutInflater inflater;
@@ -36,7 +35,7 @@ public class BaseTaskAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder=null;
+        ViewHolder holder;
         if(convertView==null){
             convertView=inflater.inflate(R.layout.hard_credit_item,parent,false);
             holder=new ViewHolder();

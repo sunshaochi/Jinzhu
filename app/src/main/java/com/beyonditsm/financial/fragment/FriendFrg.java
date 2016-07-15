@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -26,7 +27,6 @@ import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
-import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
@@ -47,7 +47,7 @@ import io.rong.imkit.RongIM;
 import io.rong.imlib.model.UserInfo;
 
 /**
- * Created by Yang on 2015/11/30 0030.
+ * Created by Yang on 2015/11/30 0030
  */
 public class FriendFrg extends BaseFragment {
     @ViewInject(R.id.new_friend_lv)
@@ -56,7 +56,6 @@ public class FriendFrg extends BaseFragment {
     @ViewInject(R.id.my_friend_lv)
     private LoadRefreshView mylv;//我的好友
 
-    private NewFriendAdapter newFriendAdapter;
     private MyFriendAdapter myFriendAdapter;
 
     //信贷经理好友列表集合
@@ -72,10 +71,10 @@ public class FriendFrg extends BaseFragment {
             .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
             .cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
             .build(); // 创建配置过得DisplayImageOption对象
-    private String roleName;
     private MyFriendsAdapter myFriendsAdapter;
     private String tag;
 
+    @SuppressLint("InflateParams")
     @Override
     public View initView(LayoutInflater inflater) {
         view = inflater.inflate(R.layout.friend_frg, null);
@@ -85,7 +84,7 @@ public class FriendFrg extends BaseFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         mylv.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
-        newFriendAdapter = new NewFriendAdapter();
+        NewFriendAdapter newFriendAdapter = new NewFriendAdapter();
         newlv.setAdapter(newFriendAdapter);
         tag = getTag();
         MyLogUtils.info("获得的标签：" + tag);
@@ -279,6 +278,7 @@ public class FriendFrg extends BaseFragment {
             return 0;
         }
 
+        @SuppressLint("ViewHolder")
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             view = View.inflate(context, R.layout.new_friend_item, null);
