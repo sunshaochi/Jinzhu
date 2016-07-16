@@ -7,10 +7,6 @@
 
     <include layout="@layout/title_act_layout"></include>
 
-    <!--<include layout="@layout/tj_up_content"></include>-->
-
-
-
     <com.beyonditsm.financial.view.pullfreshview.PullToRefreshListView
         android:id="@+id/fr_tj_list"
         android:layout_width="match_parent"

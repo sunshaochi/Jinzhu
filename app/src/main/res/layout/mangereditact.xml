@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:background="@color/bg_color"
     android:layout_height="match_parent">
-    <include layout="@layout/title_act_layout"></include>
+    <include layout="@layout/title_act_layout"/>
 
     <EditText
         android:id="@+id/manager_et"

@@ -5,11 +5,12 @@
     android:background="@color/bg_color"
     android:orientation="vertical">
 
-    <include layout="@layout/title_act_layout"></include>
+    <include layout="@layout/title_act_layout" />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <ScrollView
             android:id="@+id/sv_mine"
             android:layout_width="match_parent"
@@ -46,26 +47,30 @@
                         android:layout_toRightOf="@id/civHead"
                         android:textColor="#333333"
                         android:textSize="15sp" />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_toRightOf="@+id/tvName"
                         android:layout_centerInParent="true"
-                        android:layout_marginLeft="15dp">
+                        android:layout_marginLeft="15dp"
+                        android:layout_toRightOf="@+id/tvName"
+                        android:orientation="horizontal">
+
                         <ImageView
                             android:id="@+id/iv_vipLevel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:visibility="gone"/>
+                            android:visibility="gone" />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="VIP1"
-                            android:gravity="center"
                             android:layout_gravity="center"
-                            android:visibility="gone"/>
+                            android:gravity="center"
+                            android:text="VIP1"
+                            android:visibility="gone" />
                     </LinearLayout>
+
                     <ImageView
                         style="@style/arrow_right_style"
                         android:layout_alignParentRight="true" />
@@ -238,7 +243,7 @@
                     android:layout_height="1px"
                     android:layout_marginLeft="45dp"
                     android:background="@color/line_color"
-                    android:visibility="gone"></View>
+                    android:visibility="gone" />
 
 
                 <LinearLayout
@@ -250,8 +255,7 @@
 
                     <RelativeLayout
                         android:id="@+id/rlVip"
-                        style="@style/rl_mine_style"
-                        >
+                        style="@style/rl_mine_style">
 
                         <ImageView
                             android:id="@+id/ivVip"
@@ -270,6 +274,7 @@
                             android:layout_alignParentRight="true" />
 
                     </RelativeLayout>
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
@@ -288,11 +293,11 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="5dp"
                             android:layout_toRightOf="@id/ivCredit"
-                            >
+                            android:orientation="horizontal">
+
                             <TextView
                                 style="@style/tv_second_style"
                                 android:layout_centerVertical="true"
@@ -302,7 +307,7 @@
                                 android:id="@+id/ivMs"
                                 style="@style/red_oval_style"
                                 android:layout_marginLeft="5dp"
-                                android:visibility="gone"/>
+                                android:visibility="gone" />
                         </LinearLayout>
 
 
@@ -405,11 +410,11 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="5dp"
                             android:layout_toRightOf="@id/ivMyWallet"
-                            >
+                            android:orientation="horizontal">
+
                             <TextView
                                 style="@style/tv_second_style"
                                 android:layout_centerVertical="true"
@@ -419,8 +424,9 @@
                                 android:id="@+id/ivWalletRed"
                                 style="@style/red_oval_style"
                                 android:layout_marginLeft="5dp"
-                                android:visibility="gone"/>
+                                android:visibility="gone" />
                         </LinearLayout>
+
                         <ImageView
                             style="@style/arrow_right_style"
                             android:layout_alignParentRight="true" />
@@ -469,12 +475,12 @@
                     android:layout_height="30dp" />
             </LinearLayout>
         </ScrollView>
+
         <com.beyonditsm.financial.view.MinePageLoadingView
             android:id="@+id/mplv_mine"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
     </FrameLayout>
-
 
 
 </LinearLayout>

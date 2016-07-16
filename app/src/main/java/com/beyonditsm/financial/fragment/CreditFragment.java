@@ -365,18 +365,7 @@ public class CreditFragment extends BaseFragment {
                 getActivity().startActivity(intent);
             }
         });
-//        mSpinerPopWindow.setItemListener(new AbstractSpinerAdapter.IOnItemSelectListener() {
-//            @Override
-//            public void onItemClick(int pos) {
-//                setHero(0, pos);
-//            }
-//        });
-//        mDatePupupWindow.setItemListener(new AbstractSpinerAdapter.IOnItemSelectListener() {
-//            @Override
-//            public void onItemClick(int pos) {
-//                setHero(1, pos);
-//            }
-//        });
+
     }
 
     @OnClick({R.id.tvSearch, R.id.rlMonth, R.id.ivSuspen, R.id.rb_bank, R.id.rb_time, R.id.rb_money, R.id.rb_range})

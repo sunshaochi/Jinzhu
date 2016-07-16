@@ -7,7 +7,7 @@
     android:background="@color/bg_color"
     android:orientation="vertical">
 
-    <include layout="@layout/title_act_layout"></include>
+    <include layout="@layout/title_act_layout" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -19,13 +19,13 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:visibility="gone"
                 android:id="@+id/single_two"
-                android:background="#ffffff"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:background="#ffffff"
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <RelativeLayout
                     android:layout_width="137dp"
@@ -150,10 +150,9 @@
         </LinearLayout>
 
         <com.beyonditsm.financial.view.LoadingView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/loadView"
-        />
+            android:id="@+id/loadView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </FrameLayout>
 
 

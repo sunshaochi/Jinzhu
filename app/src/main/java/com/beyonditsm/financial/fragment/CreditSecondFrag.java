@@ -193,7 +193,7 @@ public class CreditSecondFrag extends BaseFragment {
         cbSelectSex = (CheckBox) view.findViewById(R.id.cb_select_sex);
     }
     @OnClick({R.id.cb_select_sex, R.id.second_btn_next, R.id.zz_tv, R.id.rlNative, R.id.rl_marrayed, R.id.rl_sb, R.id.rl_gjj, R.id.rl_work
-            , R.id.rl_home, R.id.rl_car, R.id.rl_xy, R.id.rlAddress, R.id.rlPosition, R.id.commit_file, R.id.commit_idCard,R.id.tvSure})
+            , R.id.rl_home, R.id.rl_car, R.id.rl_xy, R.id.rlAddress, R.id.rlPosition, R.id.commit_file,R.id.tvSure})
     public void todo(View v){
         switch (v.getId()){
             case R.id.cb_select_sex:

@@ -1,42 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RelativeLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_color"
-    >
-    <ImageView 
+    android:background="@color/bg_color">
+
+    <ImageView
         android:id="@+id/ivPhoto"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:scaleType="centerCrop"
         android:layout_centerInParent="true"
-        android:src="@mipmap/add_image"
-        />
+        android:scaleType="centerCrop"
+        android:src="@mipmap/add_image" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_toRightOf="@id/ivPhoto"
         android:layout_centerVertical="true"
-        >
+        android:layout_toRightOf="@id/ivPhoto"
+        android:orientation="vertical">
+
         <TextView
             android:id="@+id/tvStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:textSize="16sp"
-            android:textColor="#333333" />
+            android:textColor="#333333"
+            android:textSize="16sp" />
+
         <TextView
             android:id="@+id/tvRejectRemarks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
-            android:textSize="14sp"
+            android:layout_marginTop="10dp"
             android:textColor="#ff0000"
-            android:visibility="gone"/>
+            android:textSize="14sp"
+            android:visibility="gone" />
     </LinearLayout>
 
 </RelativeLayout>

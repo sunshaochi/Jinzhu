@@ -55,18 +55,7 @@ import io.rong.imlib.model.UserInfo;
  * Created by wangbin on 15/11/12.
  */
 public class UpdateAct extends BaseActivity {
-
-//    public static final int PHOTO_REQUEST_CODE = 5;
     private UserEntity userInfo;//传过来的user信息
-
-//    public static final int PHOTOZOOM = 0;
-//    public static final int PHOTOTAKE = 1;
-//    public static final int IMAGE_COMPLETE = 2; // 结果
-//    public static final int CROPREQCODE = 3; // 截取
-//    Uri imageUri = null;
-
-//    private static final int CAMERA_REQUEST_CODE=2;
-//    String appHome = Environment.getExternalStorageDirectory().getAbsolutePath() + "/financial_tx";
 
     @SuppressWarnings("deprecation")
     private DisplayImageOptions options = new DisplayImageOptions.Builder()
@@ -96,10 +85,6 @@ public class UpdateAct extends BaseActivity {
     private TextView tvHouseHold;//户籍地址
     @ViewInject(R.id.tvLocal)
     private TextView tvLocal;
-//    @ViewInject(R.id.loadingView)
-//    private LoadingView loadingView;
-//    @ViewInject(R.id.Service_ll)
-//    private LinearLayout llServant;
 
     private AddressUtil addressUtil;
 
@@ -112,8 +97,7 @@ public class UpdateAct extends BaseActivity {
     public void init(Bundle savedInstanceState) {
         setTopTitle("我的资料");
         setLeftTv("返回");
-//        llServant.setVisibility(View.GONE);
-        addressUtil=new AddressUtil(this);
+        addressUtil = new AddressUtil(this);
         userInfo = getIntent().getParcelableExtra(MineFragment.USER_KEY);
         //把用户信息放进去
         if (userInfo != null)
@@ -123,27 +107,15 @@ public class UpdateAct extends BaseActivity {
 
         //注册EventBus
         EventBus.getDefault().register(this);
-//        photoSavePath = Environment.getExternalStorageDirectory().getPath() + "/ClipHeadPhoto/cache/";
-//        File tempFile = new File(photoSavePath);
-//        if (!tempFile.exists()) {
-//            tempFile.mkdirs();
-//        }
-
-//        loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
-//            @Override
-//            public void OnRetry() {
-//                getUserInfo();
-//            }
-//        });
         cbSelectSex.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+                if (isChecked) {
                     userInfo.setUserSex(0);
-                    updateData(userInfo,5);
-                }else{
+                    updateData(userInfo, 5);
+                } else {
                     userInfo.setUserSex(1);
-                    updateData(userInfo,5);
+                    updateData(userInfo, 5);
                 }
             }
         });
@@ -165,10 +137,8 @@ public class UpdateAct extends BaseActivity {
             case 1://身份证号
                 tvCard.setText(userInfo.getIdentCard());
                 if (userInfo.getUserSex() == 0) {
-//                    tvSex.setText("女");
                     cbSelectSex.setChecked(true);
                 } else {
-//                    tvSex.setText("男");
                     cbSelectSex.setChecked(false);
                 }
                 if (userInfo.getUserAge() != null)
@@ -180,18 +150,15 @@ public class UpdateAct extends BaseActivity {
                 break;
             case 10://修改性别
                 if (userInfo.getUserSex() == 0) {
-//                    tvSex.setText("女");
                     cbSelectSex.setChecked(true);
                 } else {
-//                    tvSex.setText("男");
                     cbSelectSex.setChecked(false);
                 }
                 break;
         }
     }
 
-    @OnClick({R.id.rlHead, R.id.rlName, R.id.rlCard, R.id.rlNative, R.id.rlHouseHold, R.id.rlBank,
-            R.id.rlSonBank, R.id.rlBankNumber, R.id.rlEmail, R.id.rlAge, R.id.rlMarry, R.id.rlLocal})
+    @OnClick({R.id.rlHead, R.id.rlName, R.id.rlCard, R.id.rlNative, R.id.rlHouseHold, R.id.rlAge, R.id.rlMarry, R.id.rlLocal})
     public void toClick(View v) {
         Intent intent;
         switch (v.getId()) {
@@ -201,37 +168,18 @@ public class UpdateAct extends BaseActivity {
                 dialog.builder().addSheetItem("拍照", null, new MySelfSheetDialog.OnSheetItemClickListener() {
                     @Override
                     public void onClick(int which) {
-                        /*暂时取消6.0的动态获取权限*/
-//                        if (Build.VERSION.SDK_INT>=23){
-//                            findCameraPermission();
-//                        }else{
-//                            Crop.pickCameraImage(null, UpdateAct.this);
-//                        }
                         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
                             Crop.pickCameraImage(null, UpdateAct.this);
                         } else {
                             MyToastUtils.showShortToast(getApplicationContext(), "请在设置中勾选应用的相机权限");
                         }
-//                        photoSaveName = String.valueOf(System.currentTimeMillis()) + ".png";
-//                        Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                        imageUri = Uri.fromFile(new File(photoSavePath, photoSaveName));
-////                        openCameraIntent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
-//                        openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-//                        startActivityForResult(openCameraIntent, PHOTOTAKE);
                     }
                 }).addSheetItem("从相册选取", null, new MySelfSheetDialog.OnSheetItemClickListener() {
                     @Override
                     public void onClick(int which) {
-                        /*暂时取消动态获取权限*/
-//                        if (Build.VERSION.SDK_INT>=23){
-//                            findPhotoPermission();
-//                        }else{
-                            Crop.pickAlbumsImage(null, UpdateAct.this);
-//                        }
 
-//                        Intent openAlbumIntent = new Intent(Intent.ACTION_GET_CONTENT);
-//                        openAlbumIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-//                        startActivityForResult(openAlbumIntent, PHOTOZOOM);
+                        Crop.pickAlbumsImage(null, UpdateAct.this);
+
                     }
                 }).show();
 
@@ -254,9 +202,9 @@ public class UpdateAct extends BaseActivity {
                 dialogChooseAdress.setOnSheetItemClickListener(new DialogChooseAdress.SexClickListener() {
                     @Override
                     public void getAdress(List<String> adress) {
-                        String proCode=addressUtil.getProCode(adress.get(0));
-                        String cityCode=addressUtil.getCityCode(proCode, adress.get(1));
-                        String districtCode=addressUtil.getCountryCode(cityCode,adress.get(2));
+                        String proCode = addressUtil.getProCode(adress.get(0));
+                        String cityCode = addressUtil.getCityCode(proCode, adress.get(1));
+                        String districtCode = addressUtil.getCountryCode(cityCode, adress.get(2));
                         userInfo.setProvince(proCode);
                         userInfo.setCity(cityCode);
                         userInfo.setDistrict(districtCode);
@@ -272,44 +220,20 @@ public class UpdateAct extends BaseActivity {
                     public void getAdress(String adress) {
                         userInfo.setNativePlace(adress);
                         updateData(userInfo, 4);
-//                        tvnative.setText(adress);
                     }
                 });
                 break;
             case R.id.rlHouseHold://户籍地址
-//                intent = new Intent(this, EditAct.class);
-//                intent.putExtra(EditAct.USER_TYPE, 3);
-//                startActivity(intent);
                 DialogChooseAdress dialogChooseAdress1 = new DialogChooseAdress(this).builder();
                 dialogChooseAdress1.show();
                 dialogChooseAdress1.setOnSheetItemClickListener(new DialogChooseAdress.SexClickListener() {
                     @Override
                     public void getAdress(List<String> adress) {
-                        userInfo.setNativePlaceAddr(adress.get(0)+adress.get(1)+adress.get(2));
+                        userInfo.setNativePlaceAddr(adress.get(0) + adress.get(1) + adress.get(2));
                         updateData(userInfo, 2);
                     }
                 });
                 break;
-//            case R.id.rlBank://收支银行
-//                intent = new Intent(this, EditAct.class);
-//                intent.putExtra(EditAct.USER_TYPE, 4);
-//                startActivity(intent);
-//                break;
-//            case R.id.rlSonBank://收支支行
-//                intent = new Intent(this, EditAct.class);
-//                intent.putExtra(EditAct.USER_TYPE, 5);
-//                startActivity(intent);
-//                break;
-//            case R.id.rlBankNumber://银行账号
-//                intent = new Intent(this, EditAct.class);
-//                intent.putExtra(EditAct.USER_TYPE, 6);
-//                startActivity(intent);
-//                break;
-//            case R.id.rlEmail://邮箱
-//                intent = new Intent(this, EditAct.class);
-//                intent.putExtra(EditAct.USER_TYPE, 7);
-//                startActivity(intent);
-//                break;
             case R.id.rlAge://年龄
                 intent = new Intent(this, EditAct.class);
                 intent.putExtra(EditAct.USER_TYPE, 8);
@@ -332,12 +256,6 @@ public class UpdateAct extends BaseActivity {
                     }
                 }).show();
                 break;
-//            case R.id.rlSex://性别
-//                intent = new Intent(this, SelectSexAct.class);
-//                intent.putExtra(SelectSexAct.SEX, userInfo.getUserSex());
-//                intent.putExtra(MineFragment.USER_KEY, userInfo);
-//                startActivity(intent);
-//                break;
         }
     }
 
@@ -382,10 +300,10 @@ public class UpdateAct extends BaseActivity {
             if (!TextUtils.isEmpty(userInfo.getNativePlaceAddr())) {
                 tvHouseHold.setText(userInfo.getNativePlaceAddr());
             }
-            if (!TextUtils.isEmpty(userInfo.getProvince())&&!TextUtils.isEmpty(userInfo.getCity())&&!TextUtils.isEmpty(userInfo.getDistrict())) {
+            if (!TextUtils.isEmpty(userInfo.getProvince()) && !TextUtils.isEmpty(userInfo.getCity()) && !TextUtils.isEmpty(userInfo.getDistrict())) {
                 tvLocal.setText(addressUtil.getProName(userInfo.getProvince())
-                        +addressUtil.getCityName(userInfo.getProvince(),userInfo.getCity())
-                        +addressUtil.getCountryName(userInfo.getCity(),userInfo.getDistrict()));
+                        + addressUtil.getCityName(userInfo.getProvince(), userInfo.getCity())
+                        + addressUtil.getCountryName(userInfo.getCity(), userInfo.getDistrict()));
             }
 
         }
@@ -417,16 +335,16 @@ public class UpdateAct extends BaseActivity {
                         break;
                     case 3://常住地
                         tvLocal.setText(addressUtil.getProName(ue.getProvince())
-                                +addressUtil.getCityName(ue.getProvince(),ue.getCity())
-                                +addressUtil.getCountryName(ue.getCity(),ue.getDistrict()));
+                                + addressUtil.getCityName(ue.getProvince(), ue.getCity())
+                                + addressUtil.getCountryName(ue.getCity(), ue.getDistrict()));
                         break;
                     case 4://籍贯
                         tvnative.setText(ue.getNativePlace());
                         break;
                     case 5://性别
-                        if (ue.getUserSex()==1){
+                        if (ue.getUserSex() == 1) {
                             cbSelectSex.setChecked(false);
-                        }else{
+                        } else {
                             cbSelectSex.setChecked(true);
                         }
                         break;
@@ -439,7 +357,7 @@ public class UpdateAct extends BaseActivity {
             }
 
             @Override
-            public void onError(int status,String msg) {
+            public void onError(int status, String msg) {
                 MyToastUtils.showShortToast(getApplicationContext(), msg);
             }
         });
@@ -466,7 +384,7 @@ public class UpdateAct extends BaseActivity {
             }
 
             @Override
-            public void onError(int status,String msg) {
+            public void onError(int status, String msg) {
 //                loadingView.loadError();
                 MyToastUtils.showShortToast(UpdateAct.this, msg);
             }
@@ -479,14 +397,14 @@ public class UpdateAct extends BaseActivity {
             return;
         }
         Uri imageUri = CameraUtils.getBitmapUri(null, this, requestCode, resultCode, data);
-        MyLogUtils.info("imageUri+"+imageUri);
+        MyLogUtils.info("imageUri+" + imageUri);
         if (imageUri != null) {
             /**
              * 上传头像
              */
             Bitmap bitmap = MyBitmapUtils.decodeUriAsBitmap(UpdateAct.this, imageUri);
             File userbanner = MyBitmapUtils.saveBitmap(bitmap, "userhead.png");
-            MyLogUtils.info("userbanner.getPath+"+userbanner.getPath());
+            MyLogUtils.info("userbanner.getPath+" + userbanner.getPath());
             uploadFile(userbanner.getPath());
         }
 

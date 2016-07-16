@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
+    android:layout_height="match_parent"
     android:background="@color/bg_color"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <com.beyonditsm.financial.view.pullfreshview.LoadRefreshView
             android:id="@+id/plv"
-            android:background="@color/white"
-            android:layout_marginTop="10dp"
             style="@style/pullrefresh_style"
-            ></com.beyonditsm.financial.view.pullfreshview.LoadRefreshView>
+            android:layout_marginTop="10dp"
+            android:background="@color/white"/>
+
         <com.beyonditsm.financial.view.LoadingView
             android:id="@+id/loadingView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </com.beyonditsm.financial.view.LoadingView>
+            android:layout_height="match_parent"/>
     </FrameLayout>
-
 
 
 </LinearLayout>

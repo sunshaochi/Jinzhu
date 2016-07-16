@@ -5,35 +5,20 @@
     android:orientation="vertical">
 
     <include layout="@layout/title_act_layout"></include>
-    <!--<ScrollView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
-
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent">-->
-
-            <!--<ImageView-->
-                <!--android:id="@+id/iv_bg"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:adjustViewBounds=   "true"-->
-                <!--android:background="@mipmap/credit_guide"-->
-                <!--android:scaleType="fitXY"/>-->
-        <!--</LinearLayout>-->
-    <!--</ScrollView>-->
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <com.beyonditsm.financial.view.subscaleview.SubsamplingScaleImageView
             android:id="@+id/iv_bg"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
+
         <com.beyonditsm.financial.view.LoadingView
             android:id="@+id/loadingView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
     </FrameLayout>
 

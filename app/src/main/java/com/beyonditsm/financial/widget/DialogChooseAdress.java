@@ -37,7 +37,7 @@ public class DialogChooseAdress  {
 		display = windowManager.getDefaultDisplay();
 	}
 
-	@SuppressLint("InflateParams")
+	@SuppressLint({"InflateParams", "RtlHardcoded"})
 	@SuppressWarnings("deprecation")
 	public DialogChooseAdress builder() {
 		// 获取Dialog布局

@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:background="@drawable/item_back"
 
+    android:orientation="vertical"
     android:paddingLeft="15dp"
-    android:paddingTop="10dp"
-    android:background="@drawable/item_back">
+    android:paddingTop="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -47,6 +47,7 @@
                     android:text="%"
                     android:textColor="#fff"
                     android:textSize="18sp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -99,34 +100,33 @@
                     android:id="@+id/fast"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
+                    android:layout_marginRight="5dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/pass_bg"
                     android:drawableLeft="@drawable/icon_fast"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:layout_marginRight="5dp"
-                    android:textSize="10sp"
                     android:text="速度快"
                     android:textColor="#ff6633"
-                    />
+                    android:textSize="10sp" />
 
                 <TextView
                     android:id="@+id/sd"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
 
+                    android:layout_marginRight="5dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/loan_bg"
                     android:drawableLeft="@drawable/icon_sd"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:layout_marginRight="5dp"
-                    android:textSize="10sp"
                     android:text="手续便捷"
                     android:textColor="#70c94d"
-                    />
+                    android:textSize="10sp" />
+
                 <TextView
                     android:id="@+id/rate_down"
                     android:layout_width="wrap_content"
@@ -138,15 +138,14 @@
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:textSize="10sp"
                     android:text="利率较低"
                     android:textColor="#77a9db"
-                    />
+                    android:textSize="10sp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
-    <View style="@style/view_line"
-        android:layout_marginTop="10dp"
-        ></View>
+    <View
+        style="@style/view_line"
+        android:layout_marginTop="10dp"></View>
 </LinearLayout>

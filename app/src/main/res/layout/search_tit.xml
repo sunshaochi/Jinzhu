@@ -3,182 +3,194 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#ffffff"
-    android:orientation="horizontal"
     android:gravity="center_vertical"
+    android:orientation="horizontal"
     android:padding="15dp">
+
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="33dp"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
+
         <RadioButton
             android:id="@+id/rb_bank"
-            android:button="@null"
-            android:gravity="center"
             android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_height="match_parent" />
+            android:button="@null"
+            android:gravity="center" />
+
         <ImageView
             android:id="@+id/arrow1"
             android:layout_width="15dp"
-            android:src="@mipmap/arrow_black"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:src="@mipmap/arrow_black" />
+
         <View
-            android:layout_marginLeft="2dp"
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
-            android:background="#d6d6d6"/>
+            android:layout_marginLeft="2dp"
+            android:background="#d6d6d6" />
+
         <RadioButton
             android:id="@+id/rb_range"
-            android:button="@null"
             android:layout_width="0dp"
-            android:gravity="center"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_height="match_parent" />
+            android:button="@null"
+            android:gravity="center" />
+
         <ImageView
             android:id="@+id/arrow2"
             android:layout_width="15dp"
-            android:src="@mipmap/arrow_black"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:src="@mipmap/arrow_black" />
+
         <View
-            android:layout_marginLeft="2dp"
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
-            android:background="#d6d6d6"/>
+            android:layout_marginLeft="2dp"
+            android:background="#d6d6d6" />
+
         <RadioButton
             android:id="@+id/rb_money"
-            android:button="@null"
             android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:layout_height="match_parent" />
+            android:button="@null"
+            android:gravity="center" />
+
         <ImageView
             android:id="@+id/arrow3"
             android:layout_width="15dp"
-            android:src="@mipmap/arrow_black"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:src="@mipmap/arrow_black" />
+
         <View
-            android:layout_marginLeft="2dp"
             android:layout_width="0.5dp"
             android:layout_height="match_parent"
-            android:background="#d6d6d6"/>
+            android:layout_marginLeft="2dp"
+            android:background="#d6d6d6" />
+
         <RadioButton
             android:id="@+id/rb_time"
-            android:button="@null"
             android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:layout_height="match_parent" />
+            android:button="@null"
+            android:gravity="center" />
+
         <ImageView
             android:id="@+id/arrow4"
             android:layout_width="15dp"
-            android:src="@mipmap/arrow_black"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:src="@mipmap/arrow_black" />
     </RadioGroup>
+
     <RelativeLayout
-        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="33dp"
-        android:background="@drawable/et_back"
         android:layout_weight="1"
+        android:background="@drawable/et_back"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+        android:paddingRight="10dp"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tvAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#333333"
-            android:textSize="14sp"
+            android:layout_centerVertical="true"
             android:text="金额"
-            android:layout_centerVertical="true"/>
+            android:textColor="#333333"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tvUnit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#333333"
-            android:textSize="14sp"
-            android:text="万"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:text="万"
+            android:textColor="#333333"
+            android:textSize="14sp" />
 
         <EditText
             android:id="@+id/etAmount"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="1dp"
             android:layout_toLeftOf="@id/tvUnit"
             android:layout_toRightOf="@id/tvAmount"
-            android:gravity="center"
             android:background="@null"
-            android:textColor="#ff6633"
-            android:layout_marginRight="1dp"
-            android:inputType="numberDecimal"
             android:cursorVisible="false"
-            android:textSize="12sp"
+            android:gravity="center"
             android:hint="请输入"
+            android:inputType="numberDecimal"
+            android:textColor="#ff6633"
             android:textColorHint="#ff6633"
-            android:layout_centerVertical="true"/>
+            android:textSize="12sp" />
     </RelativeLayout>
 
     <RelativeLayout
-        android:visibility="gone"
         android:id="@+id/rlMonth"
         android:layout_width="wrap_content"
         android:layout_height="33dp"
-        android:background="@drawable/et_back"
+        android:layout_marginLeft="10dp"
         android:layout_weight="1"
+        android:background="@drawable/et_back"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:layout_marginLeft="10dp">
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tvLimit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#333333"
-            android:textSize="14sp"
+            android:layout_centerVertical="true"
             android:text="期限"
-            android:layout_centerVertical="true"/>
+            android:textColor="#333333"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tvMonth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#333333"
-            android:textSize="14sp"
-            android:text="个月"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:text="个月"
+            android:textColor="#333333"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tvM"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/tvMonth"
-            android:layout_toRightOf="@id/tvLimit"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
+            android:layout_toLeftOf="@id/tvMonth"
+            android:layout_toRightOf="@id/tvLimit"
             android:gravity="center"
-            android:maxLength="3"
-            android:textSize="12sp"
-            android:textColor="#ff6633"
             android:hint="请选择"
+            android:maxLength="3"
+            android:textColor="#ff6633"
             android:textColorHint="#ff6633"
-            android:layout_centerVertical="true"/>
+            android:textSize="12sp" />
     </RelativeLayout>
 
     <TextView
         android:id="@+id/tvSearch"
         android:layout_width="match_parent"
         android:layout_height="33dp"
-        android:background="@drawable/search_back"
         android:layout_marginLeft="10dp"
-        android:text="搜索"
+        android:background="@drawable/search_back"
         android:gravity="center"
+        android:text="搜索"
         android:textColor="#ffffff"
         android:textSize="14sp"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 </LinearLayout>
 

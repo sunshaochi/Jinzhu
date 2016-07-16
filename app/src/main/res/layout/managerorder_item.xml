@@ -29,8 +29,7 @@
 
             <TextView
                 android:id="@+id/tv_money"
-                style="@style/tv_primary_style"
-                android:text="贷款50万" />
+                style="@style/tv_primary_style" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -47,7 +46,7 @@
                     <TextView
                         android:id="@+id/tv_rate"
                         style="@style/tv_second_style"
-                        android:text="客户姓名：——"
+                        android:text="客户姓名："
                         />
                     <TextView
                         android:layout_marginLeft="10dp"

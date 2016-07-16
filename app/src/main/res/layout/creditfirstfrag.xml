@@ -119,21 +119,21 @@
         <View style="@style/view_line"></View>
 
         <!--<RelativeLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content">-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
 
-            <!--<TextView-->
-                <!--style="@style/tv_primary_style"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:text="确认密码" />-->
+        <!--<TextView-->
+        <!--style="@style/tv_primary_style"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:text="确认密码" />-->
 
 
-            <!--<EditText-->
-                <!--android:id="@+id/cre_pwd2"-->
-                <!--style="@style/cre_et"-->
-                <!--android:hint="确认密码"-->
-                <!--android:inputType="textPassword"-->
-                <!--android:maxLength="20" />-->
+        <!--<EditText-->
+        <!--android:id="@+id/cre_pwd2"-->
+        <!--style="@style/cre_et"-->
+        <!--android:hint="确认密码"-->
+        <!--android:inputType="textPassword"-->
+        <!--android:maxLength="20" />-->
         <!--</RelativeLayout>-->
 
         <!--<View style="@style/view_line"></View>-->
@@ -159,31 +159,32 @@
 
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
             <CheckBox
-                android:gravity="center_vertical"
                 android:id="@+id/cre_tk"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginTop="10dp"
                 android:button="@drawable/checkbox"
+                android:checked="true"
+                android:gravity="center_vertical"
                 android:paddingStart="4dp"
                 android:text="同意"
                 android:textColor="#333333"
-                android:checked="true"
                 android:textSize="14sp" />
+
             <TextView
                 android:id="@+id/intro"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
-                android:textColor="#333333"
-                android:textSize="14sp"
                 android:text="《金蛛条款说明》"
-                />
+                android:textColor="#333333"
+                android:textSize="14sp" />
 
         </LinearLayout>
 

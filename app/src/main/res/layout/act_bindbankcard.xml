@@ -2,77 +2,88 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/bg_color">
+    android:background="@color/bg_color"
+    android:orientation="vertical">
 
-    <include layout="@layout/title_act_layout"/>
+    <include layout="@layout/title_act_layout" />
+
     <ScrollView
         android:id="@+id/sv_bindBankCard"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <com.beyonditsm.financial.view.ListViewForScrollView
                 android:id="@+id/lv_bankcard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollbars="none"
+                android:choiceMode="singleChoice"
                 android:divider="@null"
                 android:dividerHeight="5dp"
-                android:choiceMode="singleChoice"
-                ></com.beyonditsm.financial.view.ListViewForScrollView>
+                android:scrollbars="none"></com.beyonditsm.financial.view.ListViewForScrollView>
+
             <com.beyonditsm.financial.view.swipemenulistview.SwipeMenuListView
                 android:id="@+id/swlv_bankcard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollbars="none"
+                android:choiceMode="singleChoice"
                 android:divider="@null"
                 android:dividerHeight="5dp"
-                android:choiceMode="singleChoice"
+                android:scrollbars="none"
                 android:visibility="gone"></com.beyonditsm.financial.view.swipemenulistview.SwipeMenuListView>
+
             <LinearLayout
                 android:id="@+id/ll_addBankCard"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/item_back">
+                android:background="@drawable/item_back"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
                 <ImageView
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:src="@mipmap/add_image"
-                    android:layout_marginLeft="10dp"/>
+                    android:layout_marginLeft="10dp"
+                    android:src="@mipmap/add_image" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="添加银行卡"
-                    android:layout_marginLeft="10dp"/>
+                    android:layout_marginLeft="10dp"
+                    android:text="添加银行卡" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:orientation="horizontal"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/item_back"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:visibility="gone">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="输入资金密码"
-                    android:layout_marginLeft="10dp"/>
+                    android:layout_marginLeft="10dp"
+                    android:text="输入资金密码" />
+
                 <EditText
                     android:id="@+id/et_set"
-                    style="@style/et_addbankcard"/>
+                    style="@style/et_addbankcard" />
             </LinearLayout>
+
             <TextView
                 android:id="@+id/tv_surebind"
                 style="@style/zc_btn"
-                android:text="确定"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:text="确定" />
+
             <TextView
                 android:id="@+id/tv_setzjpassword"
                 android:layout_width="wrap_content"
@@ -85,7 +96,7 @@
                 android:text="设置资金密码"
                 android:textColor="@color/tv_price_color"
                 android:textSize="14sp"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </LinearLayout>
     </ScrollView>
 

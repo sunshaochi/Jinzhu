@@ -238,18 +238,6 @@ public class ServiceDataAct extends BaseActivity {
             case 1://身份证号
                 tvCard.setText(servantInfo.getIdentCard());
                 break;
-//            case 4://收支银行
-//                tvBank.setText(servantInfo.getBankNameTitle());
-//                break;
-//            case 5://收支支行
-//                tvSubbranch.setText(servantInfo.getBankName());
-//                break;
-//            case 6://银行账户
-//                tvBankAcount.setText(servantInfo.getBankAccNo());
-//                break;
-//            case 7://电子邮箱
-//                tvEmail.setText(servantInfo.getEmail());
-//                break;
             case 8://修改年龄
                 tvAge.setText(servantInfo.getUserAge() + "");
                 break;
@@ -276,30 +264,14 @@ public class ServiceDataAct extends BaseActivity {
                     @Override
                     public void onClick(int which) {
                         Crop.pickCameraImage(null,ServiceDataAct.this);
-//                        photoSaveName = String.valueOf(System.currentTimeMillis()) + ".png";
-//                        Uri imageUri = null;
-//                        Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                        imageUri = Uri.fromFile(new File(photoSavePath, photoSaveName));
-//                        openCameraIntent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
-//                        openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-//                        startActivityForResult(openCameraIntent, PHOTOTAKE);
                     }
                 }).addSheetItem("从相册选取", null, new MySelfSheetDialog.OnSheetItemClickListener() {
                     @Override
                     public void onClick(int which) {
                         Crop.pickAlbumsImage(null,ServiceDataAct.this);
-//                        Intent openAlbumIntent = new Intent(Intent.ACTION_GET_CONTENT);
-//                        openAlbumIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-//                        startActivityForResult(openAlbumIntent, PHOTOZOOM);
                     }
                 }).show();
                 break;
-//            case R.id.rlsexSelector://性别
-//                intent = new Intent(this, SelectSexAct.class);
-//                intent.putExtra(SelectSexAct.SEX, servantInfo.getUserSex());
-//                intent.putExtra(ServiceMineFrg.SERVANT_INFO, servantInfo);
-//                startActivity(intent);
-//                break;
             case R.id.rlAge://年龄
                 intent = new Intent(this, ServiceEditAct.class);
                 intent.putExtra(ServiceEditAct.USER_TYPE, 8);

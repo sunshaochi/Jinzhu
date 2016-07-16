@@ -15,9 +15,9 @@
         android:textSize="21sp" />
 
     <View
-        android:layout_height="1dp"
         style="@style/view_line"
-        android:layout_marginTop="30dp"></View>
+        android:layout_height="1dp"
+        android:layout_marginTop="30dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/view_line"></View>
+            android:background="@color/view_line" />
 
         <TextView
             android:id="@+id/tv_gocheck"

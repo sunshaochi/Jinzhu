@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/alert_bg"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/txt_title"
@@ -15,8 +15,7 @@
         android:layout_marginTop="15dp"
         android:gravity="center"
         android:textColor="#333333"
-        android:textSize="18sp"
-         />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/txt_msg"
@@ -28,12 +27,12 @@
         android:gravity="center"
         android:textColor="#333333"
         android:textSize="16sp"
-        android:visibility="gone"/>
-    
+        android:visibility="gone" />
+
 
     <include
         android:id="@+id/ll_msg"
-        layout="@layout/layout_versionupload"/>
+        layout="@layout/layout_versionupload" />
 
     <ImageView
         android:layout_width="match_parent"
@@ -44,7 +43,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btn_neg"

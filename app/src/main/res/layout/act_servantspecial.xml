@@ -4,20 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/title_act_layout"></include>
-    <!--<FrameLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent">-->
-    <!--<com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView-->
-    <!--android:id="@+id/iv_sv_bg"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--/>-->
-    <!--<com.beyonditsm.financial.view.LoadingView-->
-    <!--android:id="@+id/loadingView"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"/>-->
-    <!--</FrameLayout>-->
+    <include layout="@layout/title_act_layout"/>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

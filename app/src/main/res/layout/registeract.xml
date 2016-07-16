@@ -5,12 +5,11 @@
     android:background="@color/bg_color"
     android:orientation="vertical">
 
-    <include layout="@layout/title_act_layout"></include>
+    <include layout="@layout/title_act_layout" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
         <LinearLayout
             android:id="@+id/llReg"
@@ -100,8 +99,7 @@
                 android:layout_height="44dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:visibility="gone"
-                >
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -142,8 +140,7 @@
                 android:layout_height="44dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:visibility="gone"
-                >
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -170,17 +167,16 @@
             android:id="@+id/rlSlide"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/llReg">
+            android:layout_below="@+id/llReg"
+            android:layout_marginTop="10dp">
 
             <ImageView
                 android:id="@+id/ivSlide"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/slide"
-
                 android:layout_centerInParent="true"
-                />
+
+                android:src="@mipmap/slide" />
         </RelativeLayout>
 
 
@@ -197,6 +193,7 @@
             android:text="同意"
             android:textColor="#333333"
             android:textSize="14sp" />
+
         <TextView
             android:id="@+id/intro"
             android:layout_width="wrap_content"
@@ -205,9 +202,9 @@
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/cre_tk"
             android:gravity="center_vertical"
+            android:text="《金蛛条款说明》"
             android:textColor="#333333"
-            android:textSize="14sp"
-            android:text="《金蛛条款说明》"/>
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/reg_btn"

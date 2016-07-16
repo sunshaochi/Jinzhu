@@ -71,11 +71,11 @@
                         android:layout_toLeftOf="@id/tvUnit"
                         android:layout_toRightOf="@id/tvAmount"
                         android:background="@null"
+                        android:cursorVisible="false"
                         android:gravity="center"
                         android:inputType="numberDecimal"
                         android:textColor="#ff6633"
-                        android:textSize="14sp"
-                        android:cursorVisible="false"/>
+                        android:textSize="14sp" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -120,7 +120,6 @@
                 </RelativeLayout>
 
                 <TextView
-                    android:visibility="gone"
                     android:id="@+id/tvCal"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
@@ -129,7 +128,8 @@
                     android:gravity="center"
                     android:text="计算"
                     android:textColor="#ffffff"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:visibility="gone" />
 
             </LinearLayout>
         </LinearLayout>

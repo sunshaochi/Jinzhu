@@ -9,111 +9,110 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
-        <LinearLayout
-            style="@style/ll_addbankcard"
-            >
+        <LinearLayout style="@style/ll_addbankcard">
 
             <TextView
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="开户姓名："
+                android:text="开户姓名"
                 android:textColor="#333333"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
             <EditText
                 android:id="@+id/et_cardName"
                 style="@style/et_addbankcard" />
         </LinearLayout>
 
-        <View
-            style="@style/view_line"/>
-        <LinearLayout
-            style="@style/ll_addbankcard">
+        <View style="@style/view_line" />
+
+        <LinearLayout style="@style/ll_addbankcard">
 
             <TextView
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="银行卡号："
+                android:text="银行卡号"
                 android:textColor="#333333"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
             <EditText
                 android:id="@+id/et_cardNo"
                 style="@style/et_addbankcard"
                 android:inputType="number"
-                android:maxLength="19"
-                />
+                android:maxLength="19" />
         </LinearLayout>
 
-        <View
-            style="@style/view_line"/>
-        <LinearLayout
-            style="@style/ll_addbankcard">
+        <View style="@style/view_line" />
+
+        <LinearLayout style="@style/ll_addbankcard">
 
             <TextView
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="银行名称："
+                android:text="银行名称"
                 android:textColor="#333333"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/et_bankName"
                 style="@style/et_addbankcard" />
         </LinearLayout>
-        <View
-            style="@style/view_line"/>
-        <LinearLayout
-            style="@style/ll_addbankcard">
+
+        <View style="@style/view_line" />
+
+        <LinearLayout style="@style/ll_addbankcard">
 
             <TextView
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="支行名称："
+                android:text="支行名称"
                 android:textColor="#333333"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
             <EditText
                 android:id="@+id/et_branchName"
                 style="@style/et_addbankcard" />
         </LinearLayout>
-        <View
-            style="@style/view_line"/>
+
+        <View style="@style/view_line" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:orientation="horizontal"
             android:layout_marginTop="15dp"
             android:background="@drawable/item_back"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:gravity="center_vertical">
+            android:paddingRight="10dp">
+
             <TextView
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:text="输入资金密码"
                 android:textColor="#333333"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
+
             <EditText
                 android:id="@+id/et_fundPassword"
                 style="@style/et_addbankcard"
                 android:layout_marginLeft="10dp"
+                android:hint="请输入资金密码(6位数字)"
                 android:inputType="numberPassword"
-                android:maxLength="6"
-                android:hint="请输入资金密码(6位数字)"/>
+                android:maxLength="6" />
         </LinearLayout>
+
         <TextView
             android:id="@+id/tv_sureAdd"
-            android:text="确定"
             style="@style/zc_btn"
-            android:gravity="center" />
+            android:gravity="center"
+            android:text="确定" />
+
         <TextView
             android:id="@+id/tv_setzjpassword"
             android:layout_width="wrap_content"

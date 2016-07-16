@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/bg_color">
-    <include layout="@layout/title_act_layout">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical">
 
-    </include>
+    <include layout="@layout/title_act_layout" />
 
     <RelativeLayout
         android:id="@+id/llLogin"
@@ -19,41 +19,38 @@
             android:layout_width="256dp"
             android:layout_height="256dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp"
-            >
+            android:layout_marginTop="5dp">
+
             <LinearLayout
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_centerInParent="true">
+                android:layout_centerInParent="true"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
+                    android:text="我的信用分值"
                     android:textColor="#ffffff"
-                    android:text="我的信用分值"/>
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/tvTotal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="70sp"
-                    android:textColor="#ffffff"
                     android:layout_gravity="center_horizontal"
-                    android:text="0"/>
+                    android:text="0"
+                    android:textColor="#ffffff"
+                    android:textSize="70sp" />
             </LinearLayout>
-
 
             <ImageView
                 android:id="@+id/ivRight"
                 android:layout_width="223dp"
                 android:layout_height="223dp"
-                android:src="@mipmap/score_bg"
-                android:layout_centerInParent="true"/>
-
-
+                android:layout_centerInParent="true"
+                android:src="@mipmap/score_bg" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -61,99 +58,89 @@
             android:layout_width="301dp"
             android:layout_height="109dp"
             android:layout_below="@id/rlCredit"
-            android:background="@mipmap/text_wrap_bom"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
-            >
+            android:background="@mipmap/text_wrap_bom">
 
             <TextView
                 android:id="@+id/tvPer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0%"
                 android:layout_centerInParent="true"
-                android:textSize="45sp"
-                android:textStyle="bold"
+                android:text="0%"
                 android:textColor="#ffffff"
-                />
+                android:textSize="45sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@id/tvPer"
+                android:gravity="center"
                 android:text="您已超过"
                 android:textColor="#ffffff"
-                android:textSize="15sp"
-                android:gravity="center"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/tvPer"
-                android:layout_marginRight="5dp"/>
+                android:textSize="15sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/tvPer"
+                android:gravity="center"
                 android:text="金蛛用户"
                 android:textColor="#ffffff"
-                android:textSize="15sp"
-                android:gravity="center"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/tvPer"
-                android:layout_marginLeft="10dp"/>
+                android:textSize="15sp" />
         </RelativeLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_below="@id/rlPer"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
-            android:layout_centerHorizontal="true">
-
+            android:orientation="horizontal">
 
 
             <RelativeLayout
                 android:id="@+id/rlGame"
                 android:layout_width="130dp"
                 android:layout_height="130dp"
-                android:background="@mipmap/button_wz"
-                android:layout_marginRight="5dp">
+                android:layout_marginRight="5dp"
+                android:background="@mipmap/button_wz">
 
                 <TextView
                     android:id="@+id/tvGame"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="玩转金融"
-                    android:textSize="14sp"
-                    android:textColor="#ffffff"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="25dp"
-                    />
+                    android:text="玩转金融"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/rlCre"
                 android:layout_width="130dp"
                 android:layout_height="130dp"
-                android:background="@mipmap/button_spped"
-                android:layout_marginLeft="5dp">
+                android:layout_marginLeft="5dp"
+                android:background="@mipmap/button_spped">
 
                 <TextView
                     android:id="@+id/tvCre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="信用提速"
-                    android:textSize="14sp"
-                    android:textColor="#ffffff"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="25dp"
-                    />
-
+                    android:text="信用提速"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp" />
             </RelativeLayout>
-
-
-
-
         </LinearLayout>
-
     </RelativeLayout>
 </LinearLayout>

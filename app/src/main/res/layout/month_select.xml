@@ -2,26 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="28dp"
-        android:background="#f8f8f8"
         android:layout_marginTop="5dp"
-        >
+        android:background="#f8f8f8">
 
         <TextView
-            android:layout_alignParentRight="true"
             android:id="@+id/adress_Save"
             android:layout_width="105dp"
             android:layout_height="match_parent"
-            android:paddingRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
             android:gravity="right|center_vertical"
-            android:textSize="14sp"
+            android:paddingRight="10dp"
             android:text="保存"
             android:textColor="#9fb3c4"
-            android:layout_centerInParent="true"
-            />
+            android:textSize="14sp" />
     </RelativeLayout>
 
     <com.beyonditsm.financial.widget.MonthPicker
@@ -29,9 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:gravity="center" >
-    </com.beyonditsm.financial.widget.MonthPicker>
-    
+        android:gravity="center"/>
 
 
 </LinearLayout>

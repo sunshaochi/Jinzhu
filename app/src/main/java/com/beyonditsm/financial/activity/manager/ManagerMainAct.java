@@ -91,7 +91,7 @@ public class ManagerMainAct extends BaseActivity{
 
     @Override
     public void setLayout() {
-        setContentView(R.layout.managermainact);
+        setContentView(R.layout.act_managermain);
     }
 
     @Override

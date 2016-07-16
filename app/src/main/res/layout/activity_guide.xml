@@ -3,8 +3,7 @@
     xmlns:parking="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_color"
-    >
+    android:background="@color/bg_color">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
@@ -13,15 +12,14 @@
 
     <com.beyonditsm.financial.view.viewpagerindicator.CirclePageIndicator
         android:id="@+id/indicator"
-        android:visibility="gone"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="40dp"
         android:padding="10dip"
+        android:visibility="gone"
         parking:fillColor="#FFFFFFFF"
         parking:pageColor="#00000000"
-        parking:radius="5dp" 
-        />
+        parking:radius="5dp" />
 
 </RelativeLayout>

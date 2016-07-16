@@ -189,7 +189,7 @@ public class SettingAct extends BaseActivity {
     /**
      * 点击事件
      */
-    @OnClick({R.id.rlUpdate, R.id.rlUpdatePwd, R.id.rlcheck, R.id.rlAbout, R.id.rlClearChche})
+    @OnClick({ R.id.rlUpdatePwd, R.id.rlcheck, R.id.rlAbout, R.id.rlClearChche})
     public void toClick(View v) {
         Intent intent;
         switch (v.getId()) {

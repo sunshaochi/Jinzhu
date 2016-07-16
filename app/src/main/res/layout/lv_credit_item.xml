@@ -91,8 +91,8 @@
                         android:id="@+id/llTotal"
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
 
                         <TextView
                             style="@style/tv_second_style"
@@ -114,9 +114,9 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="5dp"
+                        android:layout_weight="1"
                         android:orientation="horizontal"
-                        android:visibility="visible"
-                        android:layout_weight="1">
+                        android:visibility="visible">
 
                         <TextView
                             style="@style/tv_second_style"

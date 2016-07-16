@@ -33,9 +33,6 @@ public class SplashAct extends BaseActivity {
         MyApplication.screenWith = FinancialUtil.getScreenWidth(this);
         MyApplication.screenHeight = FinancialUtil.getScreenHeight(this);
 
-
-
-
     }
 
     private Handler handler=new Handler();
