@@ -16,6 +16,7 @@ import java.util.Map;
  * Created by wangbin on 15/11/23.
  */
 public class MangManger extends RequestManager {
+
     /**
      * 通过产品表相关参数查询产品信息
      *
@@ -35,7 +36,22 @@ public class MangManger extends RequestManager {
         doGet(IFinancialUrl.FIND_PRODUCT_LIST_URL + "?creditMoney=" + creditMoney + "&creditTime=" + creditTime + "&orderByOfType=" + "" + "&page=" + fpe.getPage() + "&rows=" + fpe.getRows(), callBack);
 //        doPost(IFinancialUrl.FIND_PRODUCT_LIST_URL+"?creditMoney="+creditMoney+"&creditTime="+creditTime+"&orderByOfType="+""+"&page="+fpe.getPage()+"&rows="+fpe.getRows(),queryParams,callBack);
     }
-
+    /**
+     * 通过产品表筛选参数查询产品信息
+     */
+    public void findProductByParam(String area, String orgType, String productOrder, String moneyScope, String loanTerm, int currentPage, int rows ,CallBack callBack) {
+        Map<String,String> params= new HashMap<>();
+        params.put("area", area + "");
+        params.put("orgType", orgType + "");
+        params.put("productOrder", productOrder + "");
+        params.put("moneyScope", moneyScope + "");
+        params.put("loanTerm", loanTerm + "");
+        params.put("page", currentPage + "");
+        params.put("rows", rows + "");
+//        doPost(IFinancialUrl.FIND_PRODUCT_LIST_URL, queryParams, callBack);
+        doPost(IFinancialUrl.FIND_PRODCUT_BY_PARAM ,params, callBack);
+//        doPost(IFinancialUrl.FIND_PRODUCT_LIST_URL+"?creditMoney="+creditMoney+"&creditTime="+creditTime+"&orderByOfType="+""+"&page="+fpe.getPage()+"&rows="+fpe.getRows(),queryParams,callBack);
+    }
     /**
      * 获取抢单列表
      *

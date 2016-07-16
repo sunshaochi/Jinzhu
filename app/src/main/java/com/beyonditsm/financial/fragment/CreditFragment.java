@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
@@ -29,9 +30,15 @@ import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.credit.CreditGuideAct;
 import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
 import com.beyonditsm.financial.adapter.CreditAdapter;
+import com.beyonditsm.financial.adapter.ProductSortAdapter;
 import com.beyonditsm.financial.entity.FindProductListEntity;
+import com.beyonditsm.financial.entity.LoanTermInfo;
+import com.beyonditsm.financial.entity.MoneyScopeInfo;
+import com.beyonditsm.financial.entity.OrgTypeInfo;
 import com.beyonditsm.financial.entity.ProductInfo;
+import com.beyonditsm.financial.entity.ProductOrderInfo;
 import com.beyonditsm.financial.entity.ProductResult;
+import com.beyonditsm.financial.entity.ProductSortEntity;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserLoginEntity;
 import com.beyonditsm.financial.http.RequestManager;
@@ -49,6 +56,11 @@ import com.beyonditsm.financial.widget.DialogChooseMonth;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.animation.ViewHelper;
+import com.tandong.sa.json.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,6 +119,8 @@ public class CreditFragment extends BaseFragment {
 
     //    private String cMoney=ConstantValue.CREDIT_MONEY+"";
 //    private String cTime=ConstantValue.CREDIT_MONTH+"";
+    private String cBank = "";
+    private String cSort = "";
     private String cMoney = "";
     private String cTime = "";
 
@@ -121,7 +135,14 @@ public class CreditFragment extends BaseFragment {
     private UserLoginEntity ule;
     private boolean isButtonShowing = false;
     private boolean isAnimating = false;
-    private ArrayList listItem;
+
+    private List<?> listItem;
+    private List<ProductSortEntity.OrgTypeBean> orgTypeInfos;
+    private List<ProductSortEntity.ProductOrderBean> productInfos;
+    private List<ProductSortEntity.MoneyScopeBean> moneyScopeInfos;
+    private List<ProductSortEntity.LoanTermBean> loanTermInfos;
+    private short clickType;
+
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -130,6 +151,7 @@ public class CreditFragment extends BaseFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        getSortParam();
         tvTitle.setText("贷款");
         initTit();
         sbp = (SlideBottomPanel) getView().findViewById(R.id.sbp);
@@ -148,13 +170,7 @@ public class CreditFragment extends BaseFragment {
         plv.getRefreshableView().setVerticalScrollBarEnabled(false);
         plv.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
         plv.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
-        sbp.setOnStateChangeListener(new SlideBottomPanel.OnStateChangeListener() {
-            @Override
-            public void Hidden(boolean isHidden) {
-                clearArrow();
-                clearTextColor();
-            }
-        });
+
 //        plv.setOnTouchListener(new View.OnTouchListener() {
 //            @Override
 //            public boolean onTouch(View v, MotionEvent event) {
@@ -172,32 +188,55 @@ public class CreditFragment extends BaseFragment {
 //        });
 
 
-
         plv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 plv.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
                 currentP = 1;
 //                getCredit(currentP, cMoney, cTime);
-                getCredit(currentP, etAmount.getText().toString(), tvM.getText().toString());
+                getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cBank,cSort,cMoney,cTime,currentP,pageSize);
+
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 currentP++;
 //                getCredit(currentP, cMoney, cTime);
-                getCredit(currentP, etAmount.getText().toString(), tvM.getText().toString());
+                getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cBank,cSort,cMoney,cTime,currentP,pageSize);  
+
             }
         });
-        getCredit(currentP, cMoney, cTime);
+        getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cBank,cSort,cMoney,cTime,currentP,pageSize);
+
         loadView.setOnRetryListener(new LoadingView.OnRetryListener() {
             @Override
             public void OnRetry() {
-                getCredit(currentP, cMoney, cTime);
+                getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cBank,cSort,cMoney,cTime,currentP,pageSize);
             }
         });
         /*把回车键换成搜索*/
         etAmount.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+    }
+
+    private void getSortParam() {
+        RequestManager.getCommManager().findSortParam(new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) {
+                String a = result;
+                ResultData<ProductSortEntity> rd = (ResultData<ProductSortEntity>) GsonUtils.json(result, ProductSortEntity.class);
+                ProductSortEntity productSortEntity = rd.getData();
+                orgTypeInfos = productSortEntity.getOrgType();
+                productInfos = productSortEntity.getProductOrder();
+                moneyScopeInfos = productSortEntity.getMoneyScope();
+                loanTermInfos = productSortEntity.getLoanTerm();
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
+
+            }
+        });
     }
 
     private void handlerMove() {
@@ -241,34 +280,7 @@ public class CreditFragment extends BaseFragment {
         }
     }
 
-    private ArrayList<String> getData1() {
-        ArrayList list = new ArrayList();
-        for (int i = 0; i < 5; i++) {
-            list.add("第一类 " + i);
-        }
-        return list;
-    }
-    private ArrayList<String> getData4() {
-        ArrayList list = new ArrayList();
-        for (int i = 0; i < 4; i++) {
-            list.add("第四类 " + i);
-        }
-        return list;
-    }
-    private ArrayList<String> getData2() {
-        ArrayList list = new ArrayList();
-        for (int i = 0; i < 4; i++) {
-            list.add("第二类 " + i);
-        }
-        return list;
-    }
-    private ArrayList<String> getData3() {
-        ArrayList list = new ArrayList();
-        for (int i = 0; i < 5; i++) {
-            list.add("第三类 " + i);
-        }
-        return list;
-    }
+
     private void initTit() {
         rbBank.setText("机构类型");
         rbRange.setText("综合排序");
@@ -278,113 +290,62 @@ public class CreditFragment extends BaseFragment {
 
     @Override
     public void setListener() {
-        /*监听回车键*/
-        etAmount.setOnKeyListener(new View.OnKeyListener() {
+        lvCreditSort.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
-                    if (TextUtils.isEmpty(etAmount.getText().toString().trim()) || TextUtils.isEmpty(tvM.getText().toString().trim())) {
-                        MyToastUtils.showShortToast(getActivity(), "请检查贷款金额和贷款期限是否输入完整");
-                        return false;
-                    } else {
-                        cTime = tvM.getText().toString().trim();
-                        cMoney = etAmount.getText().toString().trim();
-                    }
-                    FinancialUtil.closeIM(getActivity(), etAmount);
-                    loadView.loading();
-                    currentP = 1;
-                    getCredit(currentP, cMoney, cTime);
-                    return true;
-                }
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                LinearLayout linearLayout = (LinearLayout) view;
+                TextView textView = (TextView) linearLayout.getChildAt(0); //获取到点击的TextView
+                MyToastUtils.showShortToast(context, textView.getText().toString() + "");
+                switch (clickType){
+                    case ProductSortAdapter.BANK:
+                        if (textView.getText().toString().length() > 4){
+                            rbBank.setText(textView.getText().toString().substring(0,4)+"...");
+                        }else {
+                            rbBank.setText(textView.getText().toString()+"");
+                        }
 
-                return false;
+                        cBank = orgTypeInfos.get(position).getOrgId();
+                        break;
+                    case ProductSortAdapter.MONEY:
+                        if (textView.getText().toString().length() > 4){
+                            rbMoney.setText(textView.getText().toString().substring(0,4)+"...");
+                        }else {
+                            rbMoney.setText(textView.getText().toString()+"");
+                        }
+                        cMoney = moneyScopeInfos.get(position).getMoneyKey();
+                        break;
+                    case ProductSortAdapter.SORT:
+                        if (textView.getText().toString().length() > 4){
+                            rbRange.setText(textView.getText().toString().substring(0,4)+"...");
+                        }else {
+                            rbRange.setText(textView.getText().toString()+"");
+                        }
+                        cSort = productInfos.get(position).getOrderKey();
+                        break;
+                    case ProductSortAdapter.TIME:
+                        if (textView.getText().toString().length() > 4){
+                            rbTime.setText(textView.getText().toString().substring(0,4)+"...");
+                        }else {
+                            rbTime.setText(textView.getText().toString()+"");
+                        }
+                        cTime = loanTermInfos.get(position).getTermKey();
+                        break;
+                    default:
+                        break;
+
+                }
+                sbp.hide();
+                getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cBank,cSort,cMoney,cTime,currentP,pageSize);            }
+        });
+
+        sbp.setOnStateChangeListener(new SlideBottomPanel.OnStateChangeListener() {
+            @Override
+            public void Hidden(boolean isHidden) {
+                clearArrow();
+                clearTextColor();
             }
         });
-        etAmount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText et = (EditText) v;
-                et.setHint(null);
-                et.setCursorVisible(true);
-            }
-        });
-        etAmount.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //小数点后只能输入两位数
-                if (s.toString().contains(".")) {
-                    if (s.length() - 1 - s.toString().indexOf(".") > 2) {
-                        s = s.toString().subSequence(0,
-                                s.toString().indexOf(".") + 3);
-                        etAmount.setText(s);
-                        etAmount.setSelection(s.length());
-                    }
-                }
-                if (s.toString().trim().substring(0).equals(".")) {
-                    s = "0" + s;
-                    etAmount.setText(s);
-                    etAmount.setSelection(2);
-                }
-
-                if (s.toString().startsWith("0")
-                        && s.toString().trim().length() > 1) {
-                    if (!s.toString().substring(1, 2).equals(".")) {
-                        etAmount.setText(s.subSequence(0, 1));
-                        etAmount.setSelection(1);
-                        return;
-                    }
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.toString().startsWith(".")) {
-                    MyToastUtils.showShortToast(getActivity(), "不能以小数点开头");
-                    etAmount.setText("");
-                }
-            }
-        });
-//        etAmount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View v, boolean hasFocus) {
-//                EditText et = (EditText) v;
-//                if (!hasFocus) {
-//                    et.setHint(et.getText().toString());
-//                } else {
-//                    String hint = et.getHint().toString();
-//                    et.setTag(hint);
-//                    et.setHint(null);
-//                }
-//            }
-//        });
-//        String[] moneys = getResources().getStringArray(R.array.money);
-//        for (int i = 0; i < moneys.length; i++) {
-//            CustemObject object = new CustemObject();
-//            object.setData(moneys[i]);
-//            moneyList.add(object);
-//        }
-//
-//        final String[] dates = getResources().getStringArray(R.array.date);
-//        for (int i = 0; i < dates.length; i++) {
-//            CustemObject object = new CustemObject();
-//            object.setData(dates[i]);
-//            dateList.add(object);
-//        }
-//
-//        mAdapter = new CustemSpinerAdapter(getActivity());
-//        mAdapter.refreshData(moneyList, 0);
-//        mSpinerPopWindow = new SpinerPopWindow(getActivity());
-//        mSpinerPopWindow.setAdatper(mAdapter);
-//
-//        mDateAdapter = new CustemSpinerAdapter(getActivity());
-//        mDateAdapter.refreshData(dateList, 0);
-//        mDatePupupWindow = new SpinerPopWindow(getActivity());
-//        mDatePupupWindow.setAdatper(mDateAdapter);
 
         plv.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -409,6 +370,7 @@ public class CreditFragment extends BaseFragment {
                     intent.putExtra(HomeCreditDetailAct.PRODUCTINFO, datas.get(position).getProductId());
 //                    intent.putExtra(HomeCreditDetailAct.CREDIT_AMOUNT, cMoney);
 //                    intent.putExtra(HomeCreditDetailAct.CREDIT_TIME, cTime);
+                    //// TODO: 2016/7/16 Here Some Bug
                     intent.putExtra(HomeCreditDetailAct.CREDIT_AMOUNT, etAmount.getText().toString());
                     intent.putExtra(HomeCreditDetailAct.CREDIT_TIME, tvM.getText().toString());
                     intent.putExtra(HomeCreditDetailAct.CREDIT_NAME, datas.get(position).getProductName());
@@ -416,19 +378,8 @@ public class CreditFragment extends BaseFragment {
                 getActivity().startActivity(intent);
             }
         });
-//        mSpinerPopWindow.setItemListener(new AbstractSpinerAdapter.IOnItemSelectListener() {
-//            @Override
-//            public void onItemClick(int pos) {
-//                setHero(0, pos);
-//            }
-//        });
-//        mDatePupupWindow.setItemListener(new AbstractSpinerAdapter.IOnItemSelectListener() {
-//            @Override
-//            public void onItemClick(int pos) {
-//                setHero(1, pos);
-//            }
-//        });
     }
+
 
     @OnClick({R.id.tvSearch, R.id.rlMonth, R.id.ivSuspen, R.id.rb_bank, R.id.rb_time, R.id.rb_money, R.id.rb_range})
     public void toClick(View v) {
@@ -440,10 +391,11 @@ public class CreditFragment extends BaseFragment {
 //                showDateSpinWindow();
 //                break;
             case R.id.rb_bank:
-                listItem = getData1();
+                listItem = orgTypeInfos;
                 clearArrow();
                 clearTextColor();
-                lvCreditSort.setAdapter(new ArrayAdapter<>(context, R.layout.list_item, listItem));
+                clickType = ProductSortAdapter.BANK;
+                lvCreditSort.setAdapter(new ProductSortAdapter(listItem, context, clickType));
                 Uitls.setListViewHeightBasedOnChildren(lvCreditSort);
                 rbBank.setTextColor(context.getResources().getColor(R.color.tv_money_color));
                 arrow1.setImageResource(R.mipmap.arrow_orienge_up);
@@ -452,10 +404,11 @@ public class CreditFragment extends BaseFragment {
 //                showActionSheet(new String []{"全部","光大银行","浦发银行","宜人贷"},rbBank,arrow1);
                 break;
             case R.id.rb_money:
-                listItem = getData3();
+                listItem = moneyScopeInfos;
                 clearArrow();
                 clearTextColor();
-                lvCreditSort.setAdapter(new ArrayAdapter<>(context, R.layout.list_item, listItem));
+                clickType = ProductSortAdapter.MONEY;
+                lvCreditSort.setAdapter(new ProductSortAdapter(listItem, context, clickType));
                 Uitls.setListViewHeightBasedOnChildren(lvCreditSort);
                 sbp.setmPanelHeight(Uitls.getListViewHeight(lvCreditSort));
                 rbMoney.setTextColor(context.getResources().getColor(R.color.tv_money_color));
@@ -464,10 +417,11 @@ public class CreditFragment extends BaseFragment {
 //                showActionSheet(new String []{"全部","0-10万","10-15万","15万以上"},rbMoney,arrow3);
                 break;
             case R.id.rb_range:
-                listItem = getData2();
+                listItem = productInfos;
                 clearArrow();
                 clearTextColor();
-                lvCreditSort.setAdapter(new ArrayAdapter<>(context, R.layout.list_item, listItem));
+                clickType = ProductSortAdapter.SORT;
+                lvCreditSort.setAdapter(new ProductSortAdapter(listItem, context,clickType));
                 Uitls.setListViewHeightBasedOnChildren(lvCreditSort);
                 sbp.setmPanelHeight(Uitls.getListViewHeight(lvCreditSort));
                 rbRange.setTextColor(context.getResources().getColor(R.color.tv_money_color));
@@ -476,10 +430,11 @@ public class CreditFragment extends BaseFragment {
 //                showActionSheet(new String []{"综合排序","按利率","按月供"},rbRange,arrow2);
                 break;
             case R.id.rb_time:
-                listItem = getData4();
+                listItem = loanTermInfos;
                 clearArrow();
                 clearTextColor();
-                lvCreditSort.setAdapter(new ArrayAdapter<>(context, R.layout.list_item, listItem));
+                clickType = ProductSortAdapter.TIME;
+                lvCreditSort.setAdapter(new ProductSortAdapter(listItem, context, clickType));
                 Uitls.setListViewHeightBasedOnChildren(lvCreditSort);
                 sbp.setmPanelHeight(Uitls.getListViewHeight(lvCreditSort));
                 rbTime.setTextColor(context.getResources().getColor(R.color.tv_money_color));
@@ -488,51 +443,53 @@ public class CreditFragment extends BaseFragment {
 //                showActionSheet(new String []{"全部","0-6个月","6-12个月","12个月以上"},rbTime,arrow4);
                 break;
             case R.id.rlMonth://选择月份
-                int postition;
-                if (TextUtils.isEmpty(tvM.getText().toString().trim())) {
-                    postition = 0;
-                } else {
-                    postition = Integer.valueOf(tvM.getText().toString().trim()) - 1;
-                }
-                DialogChooseMonth dialogChooseMonth = new DialogChooseMonth(context, null).builder(postition);
-                dialogChooseMonth.show();
-                dialogChooseMonth.setOnSheetItemClickListener(new DialogChooseMonth.SexClickListener() {
-                    @Override
-                    public void getAdress(String adress) {
-
-                        cTime = adress.substring(0, adress.length() - 2);
-                        tvM.setText(cTime);
-                        if (TextUtils.isEmpty(etAmount.getText().toString().trim())) {
-//                            cMoney = ConstantValue.CREDIT_MONEY + "";
-//                            etAmount.setText(ConstantValue.CREDIT_MONEY + "");
-                            MyToastUtils.showShortToast(getActivity(), "请输入金额");
-                            return;
-                        } else {
-                            cMoney = etAmount.getText().toString().trim();
-                        }
-                        currentP = 1;
-//                        MyLogUtils.info("cccccccmoney+"+cMoney+"+cccccccTime+"+cTime);
-                        getCredit(currentP, cMoney, cTime);
-                    }
-                });
+//                int postition;
+//                if (TextUtils.isEmpty(tvM.getText().toString().trim())) {
+//                    postition = 0;
+//                } else {
+//                    postition = Integer.valueOf(tvM.getText().toString().trim()) - 1;
+//                }
+//                DialogChooseMonth dialogChooseMonth = new DialogChooseMonth(context, null).builder(postition);
+//                dialogChooseMonth.show();
+//                dialogChooseMonth.setOnSheetItemClickListener(new DialogChooseMonth.SexClickListener() {
+//                    @Override
+//                    public void getAdress(String adress) {
+//
+//                        cTime = adress.substring(0, adress.length() - 2);
+//                        tvM.setText(cTime);
+//                        if (TextUtils.isEmpty(etAmount.getText().toString().trim())) {
+////                            cMoney = ConstantValue.CREDIT_MONEY + "";
+////                            etAmount.setText(ConstantValue.CREDIT_MONEY + "");
+//                            MyToastUtils.showShortToast(getActivity(), "请输入金额");
+//                            return;
+//                        } else {
+//                            cMoney = etAmount.getText().toString().trim();
+//                        }
+//                        currentP = 1;
+////                        MyLogUtils.info("cccccccmoney+"+cMoney+"+cccccccTime+"+cTime);
+//                        getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),rbBank.getText().toString()+"",rbRange.getText().toString()+"",rbMoney.getText().toString()+"",rbTime.getText().toString()+"",currentP,pageSize);
+//
+//                    }
+//                });
                 break;
             case R.id.tvSearch:
-                if (TextUtils.isEmpty(etAmount.getText().toString().trim()) || TextUtils.isEmpty(tvM.getText().toString().trim())) {
-                    MyToastUtils.showShortToast(getActivity(), "请检查贷款金额和贷款期限是否输入完整");
-                    return;
-                }
-                FinancialUtil.closeIM(getActivity(), etAmount);
-                loadView.loading();
-                if (TextUtils.isEmpty(etAmount.getText().toString().trim())) {
-                    etAmount.setText(ConstantValue.CREDIT_MONEY + "");
-                }
-                if (TextUtils.isEmpty(tvM.getText().toString().trim())) {
-                    tvM.setText(ConstantValue.CREDIT_MONTH + "");
-                }
-                currentP = 1;
-                cMoney = etAmount.getText().toString().trim();
-                cTime = tvM.getText().toString().trim();
-                getCredit(currentP, cMoney, cTime);
+//                if (TextUtils.isEmpty(etAmount.getText().toString().trim()) || TextUtils.isEmpty(tvM.getText().toString().trim())) {
+//                    MyToastUtils.showShortToast(getActivity(), "请检查贷款金额和贷款期限是否输入完整");
+//                    return;
+//                }
+//                FinancialUtil.closeIM(getActivity(), etAmount);
+//                loadView.loading();
+//                if (TextUtils.isEmpty(etAmount.getText().toString().trim())) {
+//                    etAmount.setText(ConstantValue.CREDIT_MONEY + "");
+//                }
+//                if (TextUtils.isEmpty(tvM.getText().toString().trim())) {
+//                    tvM.setText(ConstantValue.CREDIT_MONTH + "");
+//                }
+//                currentP = 1;
+//                cMoney = etAmount.getText().toString().trim();
+//                cTime = tvM.getText().toString().trim();
+//                getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),rbBank.getText().toString()+"",rbRange.getText().toString()+"",rbMoney.getText().toString()+"",rbTime.getText().toString()+"",currentP,pageSize);
+
                 break;
             case R.id.ivSuspen:
                 Intent intent = new Intent(getContext(), CreditGuideAct.class);
@@ -544,17 +501,9 @@ public class CreditFragment extends BaseFragment {
 
     private List<ProductInfo> datas = new ArrayList<ProductInfo>();
 
-    private void getCredit(final int currentPage, String creditMoney, String creditTime) {
-        FindProductListEntity entity = new FindProductListEntity();
-        entity.setPage(currentPage);
-        entity.setRows(pageSize);
-        MyLogUtils.info("金额：" + creditMoney + "期限：" + creditTime);
-        if (TextUtils.isEmpty(creditMoney)) {
-            creditMoney = "";
-        } else {
-            creditMoney = Double.valueOf(creditMoney) * 10000 + "";
-        }
-        RequestManager.getMangManger().findProductList(entity, creditMoney, creditTime, new RequestManager.CallBack() {
+    private void getCredit(String area, String orgType, String productOrder, String moneyScope, String loanTerm, final int currentPage, int rows) {
+
+        RequestManager.getMangManger().findProductByParam( area, orgType, productOrder,moneyScope,loanTerm,currentPage,rows,new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
                 loadView.loadComplete();
@@ -564,10 +513,10 @@ public class CreditFragment extends BaseFragment {
                 ProductResult pr = rd.getData();
                 List<ProductInfo> list = pr.getRows();
 
-                if (pr.getTotal() == 0) {
-                    loadView.noContent();
-                    return;
-                }
+//                if (pr.getTotal() == 0) {
+//                    loadView.noContent();
+//                    return;
+//                }
                 if (list == null || list.size() == 0) {
                     if (currentPage == 1)
                         loadView.noContent();
@@ -616,7 +565,6 @@ public class CreditFragment extends BaseFragment {
             }
         });
     }
-
 
 
     public void clearTextColor() {

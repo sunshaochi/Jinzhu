@@ -8,8 +8,7 @@ import java.lang.reflect.Type;
 
 /**
  * json工具类
- * 
- * 
+ *
  */
 public class GsonUtils {
 

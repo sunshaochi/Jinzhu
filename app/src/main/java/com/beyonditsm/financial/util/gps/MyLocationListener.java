@@ -19,9 +19,7 @@ public class MyLocationListener implements BDLocationListener {
         } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {// 网络定位结果
 
             changeListener.isGet(true);
-            SpUtils.setCity(MyApplication.getInstance().getApplicationContext(), location.getCity());
-
-            if (location.getCity().equals(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()))) {
+            if (location.getCity().equals(SpUtils.getCity(MyApplication.getInstance().getApplicationContext())+"")) {
                 changeListener.onChange(false, location.getCity());
             } else {
                 changeListener.onChange(true, location.getCity());

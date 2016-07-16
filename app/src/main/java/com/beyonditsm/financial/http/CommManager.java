@@ -101,6 +101,13 @@ public class CommManager extends RequestManager {
     }
 
     /**
+     * 获取产品列表的筛选参数
+     */
+    public void findSortParam(final CallBack callBack){
+        List<NameValuePair> params = new ArrayList<>();
+        doPost(IFinancialUrl.FIND_PRODUCT_SORT_PARA, params, callBack);
+    }
+    /**
      * 查看用户资料
      *
      * @param callBack
@@ -517,7 +524,14 @@ public class CommManager extends RequestManager {
         params.put("orderId",orderId);
         doPost(IFinancialUrl.FIND_EXTRA_FlOW_URL, params, callBack);
     }
-
+    /**
+     * 移动端获取上次使用的地区
+     *
+     */
+    public void getLastRegion(CallBack callBack){
+        Map<String,String> params = new HashMap<>();
+        doPost(IFinancialUrl.GET_MOBILE_LAST_REGION_URL,params,callBack);
+    }
     /**
      * 订单状态
      * @param orderId

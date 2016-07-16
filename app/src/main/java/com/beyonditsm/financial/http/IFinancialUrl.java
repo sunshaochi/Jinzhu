@@ -6,6 +6,8 @@ package com.beyonditsm.financial.http;
  * Created by wangbin on 15/11/18.
  */
 public interface IFinancialUrl {
+    /*吕建明*/
+    String BASE_URL = "http://172.16.6.236:8080";
     /*吕东测试*/
 //    String BASE_URL = "http://172.16.6.216";
 //    String BASE_URL ="http://172.16.6.228:8080";
@@ -13,7 +15,7 @@ public interface IFinancialUrl {
 //    String BASE_URL = "http://172.16.5.197:8080";
 //    String BASE_URL = "http://172.16.6.228:8080";
     /*验收环境地址*/
-////    String BASE_URL = "http://139.196.111.82:5018";
+//    String BASE_URL = "http://139.196.111.82:5018";
 ////        /*验收环境游戏地址*/
 //    String GAME_URL = "http://myjinzhu.com:5011/";
     /*正式地址*/
@@ -22,7 +24,7 @@ public interface IFinancialUrl {
 //    String GAME_URL = "http://m.farm.myjinzhu.com/";
 
 
-    String BASE_URL = "http://test.myjinzhu.com:8082";
+//    String BASE_URL = "http://test.myjinzhu.com:8082";
     /*测试地址3*/
 //    String BASE_URL="http://test.myjinzhu.com:60";
     //内网地址（测试钱包功能）
@@ -81,6 +83,10 @@ public interface IFinancialUrl {
     String FINISH_DO_URL = BASE_URL + API_VERSION + "/assignmentInterface/login/findTaskValueByTaskId.do";
     /*查询我推荐的好友列表*/
     String FIND_MY_FRIEND_LIST_URL = BASE_URL + API_VERSION + "/platform/login/findMyFriendListByParams.do";
+    /*得到移动端的产品列表页面，所有查询参数的选项*/
+    String FIND_PRODUCT_SORT_PARA = BASE_URL + API_VERSION + "/platform/unLogin/getProductQueryOptions.do";
+    /*通过查询参数获取产品列表页面产品*/
+    String FIND_PRODCUT_BY_PARAM = BASE_URL + API_VERSION  + "/platform/unLogin/fingMobileProductPager.do";
     /* 查询热门产品列表*/
     String FIND_HOT_PRODUCT_LIST = BASE_URL + API_VERSION + "/bankTerminal/unLogin/findHotProducRanklist.do";
     /* 查询订单历史处理流程*/
@@ -175,6 +181,8 @@ public interface IFinancialUrl {
     String UPDATE_ORDER = BASE_URL + API_VERSION + "/platform/login/customerOperationOrder.do";
     /*添加好友*/
     String ADD_FRIEND_URL = BASE_URL + API_VERSION + "/platform/login/findBookAddByPhone.do";
+    /*移动端获取上次使用的地区*/
+    String GET_MOBILE_LAST_REGION_URL = BASE_URL + API_VERSION + "/platform/unLogin/getMobileLastRegion.do";
     /*检查版本更新*/
     String VERSION_URL = BASE_URL + API_VERSION + "/platform/unLogin/checkUpdrage.do";
     /*取消订单*/

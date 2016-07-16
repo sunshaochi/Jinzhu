@@ -633,7 +633,9 @@ public class MainActivity extends BaseActivity {
     }
 
     private MyReceiver myReceiver;
-    public final static String UPDATATAB = "com.beyond.main";
+    public final static String
+
+            UPDATATAB = "com.beyond.main";
 
     private class MyReceiver extends BroadcastReceiver {
 

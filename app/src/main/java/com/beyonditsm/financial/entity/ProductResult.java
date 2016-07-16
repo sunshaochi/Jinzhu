@@ -11,6 +11,8 @@ import java.util.List;
  */
 public class ProductResult implements Parcelable {
 
+
+
     private int total;
     private List<ProductInfo> rows;
 
