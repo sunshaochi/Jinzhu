@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.activity.user;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -8,33 +9,27 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
-import com.beyonditsm.financial.RongCloudEvent;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.servicer.ChangePwdAct;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GeneralUtils;
-import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.widget.ToggleButton;
-import com.lidroid.xutils.util.LogUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
-import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
-import io.rong.imlib.ipc.RongExceptionHandler;
 
 /**
  * 设置
@@ -51,20 +46,17 @@ public class SettingAct extends BaseActivity {
     private RelativeLayout rlCheck;
     @ViewInject(R.id.tvCacheSize)
     private TextView tvCacheSize;
-    @ViewInject(R.id.pb_clearCache)
-    private ProgressBar pbClearCache;
 
-    private Thread tbSleepOption;
     private GeneralUtils gUtils;
     //    private UserEntity userInfo;
     public static final String ISLOADING = "com.settingAct.isloading";
     private static final String APP_CACAHE_DIRNAME = "/gamecache";
     private boolean isStart = false;
     private boolean isUploading = false;
-    private boolean isFirstClick = false;
     private String totalCacheSize;
     ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor(); //创建一个单线程池
 
+    @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -196,12 +188,10 @@ public class SettingAct extends BaseActivity {
 
     /**
      * 点击事件
-     *
-     * @param v
      */
-    @OnClick({R.id.rlUpdate, R.id.rlUpdatePwd, R.id.rlcheck, R.id.rlAbout, R.id.rlClearChche})
+    @OnClick({ R.id.rlUpdatePwd, R.id.rlcheck, R.id.rlAbout, R.id.rlClearChche})
     public void toClick(View v) {
-        Intent intent = null;
+        Intent intent;
         switch (v.getId()) {
 //            //修改资料
 //            case R.id.rlUpdate:
@@ -318,59 +308,4 @@ public class SettingAct extends BaseActivity {
         }
     }
 
-    /**
-     * 清除WebView缓存
-     */
-    public void clearWebViewCache() {
-
-        //清理Webview缓存数据库
-        try {
-            deleteDatabase("webview.db");
-            deleteDatabase("webviewCache.db");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        //WebView 缓存文件
-        File appCacheDir = new File(getFilesDir().getAbsolutePath() + APP_CACAHE_DIRNAME);
-//        Log.e(TAG, "appCacheDir path="+appCacheDir.getAbsolutePath());
-        MyLogUtils.info("appCacheDir path=" + appCacheDir.getAbsolutePath());
-
-        File webviewCacheDir = new File(getCacheDir().getAbsolutePath() + "/webviewCache");
-//        Log.e(TAG, "webviewCacheDir path="+webviewCacheDir.getAbsolutePath());
-        MyLogUtils.info("webviewCacheDir path=" + webviewCacheDir.getAbsolutePath());
-        //删除webview 缓存目录
-        if (webviewCacheDir.exists()) {
-            deleteFile(webviewCacheDir);
-        }
-        //删除webview 缓存 缓存目录
-        if (appCacheDir.exists()) {
-            deleteFile(appCacheDir);
-        }
-    }
-
-    /**
-     * 递归删除 文件/文件夹
-     *
-     * @param file
-     */
-    public void deleteFile(File file) {
-
-//        Log.i(TAG, "delete file path=" + file.getAbsolutePath());
-        MyLogUtils.info("delete file path=" + file.getAbsolutePath());
-        if (file.exists()) {
-            if (file.isFile()) {
-                file.delete();
-            } else if (file.isDirectory()) {
-                File files[] = file.listFiles();
-                for (int i = 0; i < files.length; i++) {
-                    deleteFile(files[i]);
-                }
-            }
-            file.delete();
-        } else {
-//            Log.e(TAG, "delete file no exists " + file.getAbsolutePath());
-            MyLogUtils.info("delete file no exists " + file.getAbsolutePath());
-        }
-    }
 }

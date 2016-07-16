@@ -4,7 +4,6 @@ import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
-import android.text.TextUtils;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -22,7 +21,7 @@ import io.rong.imkit.RongIM;
 import io.rong.imlib.ipc.RongExceptionHandler;
 
 /**
- * Created by wangbin on 15/11/11.
+ * Created by wangbin on 15/11/11
  */
 public class MyApplication extends Application {
     private static MyApplication instance;
@@ -109,7 +108,7 @@ public class MyApplication extends Application {
     /**
      * 获得当前进程的名字
      *
-     * @param context
+     * @param context 上下文
      * @return 进程号
      */
     public static String getCurProcessName(Context context) {
@@ -132,7 +131,7 @@ public class MyApplication extends Application {
     /**
      * 初始化ImageLoader
      *
-     * @param context
+     * @param context 上下文
      */
     public static void initImageLoader(Context context) {
         // This configuration tuning is custom. You can tune every option, you
@@ -178,41 +177,13 @@ public class MyApplication extends Application {
     }
 
     /**
-     * Adds the specified request to the global queue, if tag is specified then
-     * it is used else Default TAG is used.
-     *
-     * @param req
-     * @param tag
-     */
-    public <T> void addToRequestQueue(Request<T> req, String tag) {
-        // set the default tag if tag is empty
-        req.setTag(TextUtils.isEmpty(tag) ? TAG : tag);
-//	        VolleyLog.d("Adding request to queue: %s", req.getUrl());
-        getRequestQueue().add(req);
-    }
-
-    /**
      * Adds the specified request to the global queue using the Default TAG.
      *
-     * @param req
-     * @param
      */
     public <T> void addToRequestQueue(Request<T> req) {
         // set the default tag if tag is empty
         req.setTag(TAG);
         getRequestQueue().add(req);
-    }
-
-    /**
-     * Cancels all pending requests by the specified TAG, it is important to
-     * specify a TAG so that the pending/ongoing requests can be cancelled.
-     *
-     * @param tag
-     */
-    public void cancelPendingRequests(Object tag) {
-        if (mRequestQueue != null) {
-            mRequestQueue.cancelAll(tag);
-        }
     }
 
 }

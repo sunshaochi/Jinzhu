@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.activity.wallet;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +9,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
@@ -36,8 +36,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Created by wangbin on 16/1/14.
+ * Created by wangbin on 16/1/14
  */
+@SuppressLint("SetTextI18n")
 public class MyWalletActivity extends BaseActivity {
     @ViewInject(R.id.civHead)
     private ScaleAllImageView civHead;//头像
@@ -45,10 +46,6 @@ public class MyWalletActivity extends BaseActivity {
     private TextView tvName;//用户身份（代言人）
     @ViewInject(R.id.tvPhone)
     private TextView tvPhone;//用户电话号
-    @ViewInject(R.id.rlMyPayments)
-    private RelativeLayout rlMyPayments;//收支明细
-    @ViewInject(R.id.rlMyOrder)
-    private RelativeLayout rlMyOrder;//订单明细
     @ViewInject(R.id.tv_ExchangeMoney)
     private TextView tvExangeMoney;//可兑换现金
     @ViewInject(R.id.tv_WeitGetMoney)
@@ -147,6 +144,7 @@ public class MyWalletActivity extends BaseActivity {
         }
     }
 
+
     private void setUserInfo() {
         if (user != null) {
             if (!TextUtils.isEmpty(user.getCashTicketAmount())) {
@@ -168,7 +166,7 @@ public class MyWalletActivity extends BaseActivity {
 
     @OnClick({R.id.rlMyPayments, R.id.rlMyOrder, R.id.rlxianjin, R.id.rldikou, R.id.rlBindBankCard})
     public void toClick(View v) {
-        Intent intent = null;
+        Intent intent;
         switch (v.getId()) {
             //收支明细
             case R.id.rlMyPayments:
@@ -261,10 +259,10 @@ public class MyWalletActivity extends BaseActivity {
      */
     private void getUserLoginInfo() {
         RequestManager.getUserManager().findUserLoginInfo(new RequestManager.CallBack() {
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) throws JSONException {
                 loadingView.loadComplete();
-                String a = result;
                 JSONObject obj = new JSONObject(result);
                 int status = obj.getInt("status");
                 if (status == 200){
@@ -287,6 +285,7 @@ public class MyWalletActivity extends BaseActivity {
     private void getUserInfo() {
 
         RequestManager.getCommManager().findUserInfo(new RequestManager.CallBack() {
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) {
                 loadingView.loadComplete();
@@ -322,6 +321,7 @@ public class MyWalletActivity extends BaseActivity {
     private void findServantInfo() {
 
         RequestManager.getServicerManager().findServantDetail(new RequestManager.CallBack() {
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) throws JSONException {
                 loadingView.loadComplete();

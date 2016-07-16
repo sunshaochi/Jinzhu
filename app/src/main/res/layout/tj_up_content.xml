@@ -125,35 +125,12 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp">
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/tvRoleName"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_gravity="center"-->
-                        <!--android:textColor="#333"-->
-                        <!--android:textSize="18sp"-->
-                        <!--android:visibility="gone"/>-->
-
-                    <!--<TextView-->
-                        <!--android:id="@+id/tv_BecomeServant"-->
-                        <!--android:layout_width="120dp"-->
-                        <!--android:layout_height="30dp"-->
-                        <!--android:layout_gravity="center"-->
-                        <!--android:layout_marginTop="10dp"-->
-                        <!--android:background="@drawable/button_gen"-->
-                        <!--android:gravity="center"-->
-                        <!--android:text="我要成为代言人"-->
-                        <!--android:textColor="@color/white"-->
-                        <!--android:visibility="gone" />-->
-
-                    <!--<include layout="@layout/lv_servant_cond_item"/>-->
-
                     <com.beyonditsm.financial.view.ListViewForScrollView
                         android:id="@+id/lv_servantCond"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:visibility="gone"
-                        android:scrollbars="none"></com.beyonditsm.financial.view.ListViewForScrollView>
+                        android:scrollbars="none"/>
 
                 </LinearLayout>
             </RelativeLayout>

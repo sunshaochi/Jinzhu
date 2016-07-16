@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.activity.manager;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,9 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,7 +27,6 @@ import com.beyonditsm.financial.entity.CreditManager;
 import com.beyonditsm.financial.entity.CreditManagerEntity;
 import com.beyonditsm.financial.entity.FriendBean;
 import com.beyonditsm.financial.entity.ResultData;
-import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.fragment.FriendFrg;
 import com.beyonditsm.financial.fragment.GrabOrderFrg;
 import com.beyonditsm.financial.fragment.ManagerMineFrg;
@@ -38,12 +36,8 @@ import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.lidroid.xutils.util.LogUtils;
 import com.lidroid.xutils.view.annotation.event.OnClick;
-import com.tandong.sa.json.Gson;
 
 import org.json.JSONException;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
@@ -55,31 +49,22 @@ import io.rong.imlib.model.UserInfo;
  * Created by Yang on 2015/11/16 0016.
  */
 public class ManagerMainAct extends BaseActivity{
-    private FrameLayout managermainFl;
-    private LinearLayout llQd;
     private ImageView ivQd;
     private TextView tvQd;
-    private LinearLayout llDd;
     private ImageView ivDd;
     private TextView tvDd;
-    private LinearLayout llChat;
     private ImageView ivMes;
     private TextView tvMes;
     private ImageView iv_tag;//沟通有未读消息小红点
-    private LinearLayout llMine;
     private ImageView ivMine;
     private TextView tvMine;
     private TextView title_chat;
     private TextView title_friend;
     private RelativeLayout main_title;
-    private RelativeLayout add_friend;//添加通讯录好友
 
     private Fragment QdFrg, DdFrg, friendFgt, MineFrg;//抢单  订单   聊天  我的
     private ConversationListFragment listFragment;
     private int title = 1;
-    private List<UserEntity> friends = new ArrayList<>();
-    private List<FriendBean> friendBeans = new ArrayList<>();
-    private Gson gson = new Gson();
     /**
      * 按两次退出键时间小于2秒退出
      */
@@ -87,33 +72,26 @@ public class ManagerMainAct extends BaseActivity{
     private long touchTime = 0;
 
     private void assignViews() {
-        managermainFl = (FrameLayout) findViewById(R.id.managermain_fl);
-        llQd = (LinearLayout) findViewById(R.id.llQd);
         ivQd = (ImageView) findViewById(R.id.ivQd);
         tvQd = (TextView) findViewById(R.id.tvQd);
-        llDd = (LinearLayout) findViewById(R.id.lldd);
         ivDd = (ImageView) findViewById(R.id.ivdd);
         tvDd = (TextView) findViewById(R.id.tvdd);
-        llChat = (LinearLayout) findViewById(R.id.llChat);
         ivMes = (ImageView) findViewById(R.id.ivMes);
         tvMes = (TextView) findViewById(R.id.tvMes);
         iv_tag = (ImageView) findViewById(R.id.iv_tag);
-        llMine = (LinearLayout) findViewById(R.id.llMine);
         ivMine = (ImageView) findViewById(R.id.ivMine);
         tvMine = (TextView) findViewById(R.id.tvMine);
         title_chat = (TextView) findViewById(R.id.title_chat);
         title_friend = (TextView) findViewById(R.id.title_friend);
         main_title = (RelativeLayout) findViewById(R.id.main_title);
-        add_friend = (RelativeLayout) findViewById(R.id.add_friend);
     }
 
 
-    private FragmentTransaction fragmentTransaction;
     private FragmentManager fragmentManager;
 
     @Override
     public void setLayout() {
-        setContentView(R.layout.managermainact);
+        setContentView(R.layout.act_managermain);
     }
 
     @Override
@@ -143,6 +121,7 @@ public class ManagerMainAct extends BaseActivity{
 
     public void getCurrentCreditManagerDetail() {
         RequestManager.getMangManger().currentCreditManagerDetail(new RequestManager.CallBack() {
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) throws JSONException {
                 ResultData<CreditManagerEntity> rd = (ResultData<CreditManagerEntity>) GsonUtils.json(result, CreditManagerEntity.class);
@@ -287,8 +266,9 @@ public class ManagerMainAct extends BaseActivity{
         }
     }
 
+    @SuppressLint("CommitTransaction")
     private void setTabSelection(int position) {
-        fragmentTransaction = fragmentManager.beginTransaction();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         hideFragments(fragmentTransaction);
         switch (position) {
             case 0:
@@ -381,6 +361,7 @@ public class ManagerMainAct extends BaseActivity{
         title_friend.setTextColor(Color.parseColor("#ffffff"));
     }
 
+    @SuppressWarnings("deprecation")
     private void setTitleCheckItem(int position) {
         switch (position) {
             case 0:

@@ -1,6 +1,7 @@
 package com.beyonditsm.financial.activity.user;
 
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -20,6 +21,7 @@ public class JinZhuIndexWeb extends BaseActivity {
         setContentView(R.layout.jinzhu_index_web);
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     public void init(Bundle savedInstanceState) {
         setTopTitle("金蛛");

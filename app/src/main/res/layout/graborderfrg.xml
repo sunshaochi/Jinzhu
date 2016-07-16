@@ -20,8 +20,8 @@
     </RelativeLayout>
 
     <!--<include layout="@layout/search_tit"-->
-        <!-- -->
-        <!--></include>-->
+    <!-- -->
+    <!--></include>-->
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -29,16 +29,15 @@
 
         <com.beyonditsm.financial.view.pullfreshview.LoadRefreshView
             android:id="@+id/plv"
-            android:background="@color/white"
             style="@style/pullrefresh_style"
             android:layout_marginBottom="20dp"
-            android:layout_marginTop="10dp"></com.beyonditsm.financial.view.pullfreshview.LoadRefreshView>
+            android:layout_marginTop="10dp"
+            android:background="@color/white" />
 
         <com.beyonditsm.financial.view.LoadingView
             android:id="@+id/loadingView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </com.beyonditsm.financial.view.LoadingView>
+            android:layout_height="match_parent"/>
     </FrameLayout>
 
 

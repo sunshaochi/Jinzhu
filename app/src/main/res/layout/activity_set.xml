@@ -6,24 +6,21 @@
     android:background="@color/bg_color"
     android:orientation="vertical">
 
-    <include layout="@layout/title_act_layout"></include>
+    <include layout="@layout/title_act_layout" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-
             <RelativeLayout
                 android:id="@+id/rlSet"
                 style="@style/rl_mine_style"
                 android:layout_marginTop="10dp">
-
 
                 <TextView
                     style="@style/tv_second_style"
@@ -36,18 +33,17 @@
                     android:layout_height="24dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    app:toggleBorderWidth="1px"
                     app:offBorderColor="#e7e7e7"
                     app:offColor="#f5f5f5"
                     app:onColor="#4dd963"
-                    app:spotColor="#fff" />
+                    app:spotColor="#fff"
+                    app:toggleBorderWidth="1px" />
 
             </RelativeLayout>
 
-            <View style="@style/view_line"></View>
+            <View style="@style/view_line" />
 
             <RelativeLayout style="@style/rl_mine_style">
-
 
                 <TextView
                     style="@style/tv_second_style"
@@ -60,38 +56,19 @@
                     android:layout_height="24dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    app:toggleBorderWidth="1px"
                     app:offBorderColor="#e7e7e7"
                     app:offColor="#f5f5f5"
                     app:onColor="#4dd963"
-                    app:spotColor="#fff" />
+                    app:spotColor="#fff"
+                    app:toggleBorderWidth="1px" />
 
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
 
             <RelativeLayout
-                android:id="@+id/rlUpdate"
-                style="@style/rl_mine_style"
-                android:layout_marginTop="10dp"
-                android:visibility="gone">
-
-
-                <TextView
-                    style="@style/tv_second_style"
-                    android:layout_centerVertical="true"
-                    android:text="修改资料" />
-
-                <ImageView
-                    style="@style/arrow_right_style"
-                    android:layout_alignParentRight="true" />
-            </RelativeLayout>
-
-
-            <RelativeLayout
                 android:id="@+id/rlUpdatePwd"
                 style="@style/rl_mine_style">
-
 
                 <TextView
                     style="@style/tv_second_style"
@@ -108,7 +85,6 @@
             <RelativeLayout
                 android:id="@+id/rlClearChche"
                 style="@style/rl_mine_style">
-
 
                 <TextView
                     style="@style/tv_second_style"
@@ -185,12 +161,13 @@
             </RelativeLayout>
 
         </LinearLayout>
+
         <ProgressBar
             android:id="@+id/pb_clearCache"
+            style="?android:attr/progressBarStyleLarge"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_centerInParent="true"
-            style="?android:attr/progressBarStyleLarge"
-            android:visibility="gone"/>
+            android:visibility="gone" />
     </RelativeLayout>
 </LinearLayout>

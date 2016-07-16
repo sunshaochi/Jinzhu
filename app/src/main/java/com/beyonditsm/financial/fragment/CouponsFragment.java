@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.fragment;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -34,11 +35,10 @@ public class CouponsFragment extends BaseFragment{
     private LoadRefreshView plv;
     @ViewInject(R.id.loadingView)
     private LoadingView loadingView;
-    @ViewInject(R.id.lv)
-    private ListView lv;
 //    private List<OrderDealEntity> orderList;
     private CouponsAdapter couponsAdapter;
     private int page;
+    @SuppressLint("InflateParams")
     @Override
     public View initView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.act_balance,null);
@@ -88,6 +88,7 @@ public class CouponsFragment extends BaseFragment{
     public void findOrderDealHisory(){
         int rows = 10;
         RequestManager.getWalletManager().findCashHistory(page, rows, new RequestManager.CallBack() {
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) throws JSONException {
                 loadingView.loadComplete();

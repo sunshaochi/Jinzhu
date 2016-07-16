@@ -65,7 +65,6 @@ public class CreditUploadAct extends BaseActivity {
     private TextView tvSave;
     private String orderId;
     private String flowId;
-    private static final int CAMERA_REQUEST_CODE = 2;
 
     private UpLoadEntity upLoadData;
     private DisplayImageOptions options = new DisplayImageOptions.Builder()
@@ -78,12 +77,11 @@ public class CreditUploadAct extends BaseActivity {
 
     public static final int PHOTOZOOM = 0;
     public static final int PHOTOTAKE = 1;
-    public static final int IMAGE_COMPLETE = 2; // 结果
 
     private String photoSavePath;
     private String photoSaveName;
     private String path;// 图片全路径
-    String appHome = Environment.getExternalStorageDirectory().getAbsolutePath() + "/jinzhu_tx";
+//    String appHome = Environment.getExternalStorageDirectory().getAbsolutePath() + "/jinzhu_tx";
 
 
     private String uploadItemId;//记录itemId
@@ -98,13 +96,13 @@ public class CreditUploadAct extends BaseActivity {
     private List<CreditUplEntity> resultData;//最终生成的data
     private MyAdapter myAdapter;
     private FinalLoadDialog dialog;
-    private boolean isGetPermission = false;
 
     @Override
     public void setLayout() {
         setContentView(R.layout.act_credit_upload);
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     public void init(Bundle savedInstanceState) {
         setTopTitle("上传资料图片");
@@ -172,8 +170,8 @@ public class CreditUploadAct extends BaseActivity {
     /**
      * 获取上传列表
      *
-     * @param orderId
-     * @param flowId
+     * @param orderId 订单id
+     * @param flowId 流程id
      */
     private void findFlowDetail(String orderId, String flowId) {
         RequestManager.getCommManager().findFlowDetail(orderId, flowId, new RequestManager.CallBack() {
@@ -205,7 +203,7 @@ public class CreditUploadAct extends BaseActivity {
     /**
      * 提交资料
      *
-     * @param upl
+     * @param upl  提交资料实体类
      */
     private void toSubmit(SumLoadEntity upl) {
         RequestManager.getCommManager().submitOrderFlow(upl, new RequestManager.CallBack() {
@@ -226,8 +224,7 @@ public class CreditUploadAct extends BaseActivity {
     /**
      * 获取初始化
      *
-     * @param ceList
-     * @return
+     * @param ceList 所有图片
      */
     private LinkedHashMap<String, List<CreditImageBean>> getImageMap(List<CreditUplEntity> ceList) {
         LinkedHashMap<String, List<CreditImageBean>> map = new LinkedHashMap<>();
@@ -245,14 +242,14 @@ public class CreditUploadAct extends BaseActivity {
             if (resultCode != RESULT_OK) {
                 return;
             }
-            Uri uri = null;
+            Uri uri;
             switch (requestCode) {
                 case PHOTOZOOM:// 相册
-                    if (data == null || "".equals(data)) {
+                    if (data == null || "".equals(data.toString())) {
                         return;
                     }
                     uri = data.getData();
-                    if (null != uri && !"".equals(uri)) {
+                    if (null != uri && !"".equals(uri.toString())) {
                         Bitmap compressB = MyBitmapUtils.zoomImgKeepWH(MyBitmapUtils.decodeUriAsBitmap(CreditUploadAct.this, uri), 100, 100, true);
                         MyBitmapUtils.saveBitmap(compressB, "upload/cache/credit_upload.png");
                     }
@@ -275,11 +272,11 @@ public class CreditUploadAct extends BaseActivity {
     /**
      * 上传图片
      *
-     * @param file
+     * @param file 图片地址
      */
     private void uploadFile(final String file) {
         dialog.show();
-        Map<String, FileBody> fileMaps = new HashMap<String, FileBody>();
+        Map<String, FileBody> fileMaps = new HashMap<>();
         FileBody fb = new FileBody(new File(file));
         fileMaps.put("file", fb);
 
@@ -310,7 +307,7 @@ public class CreditUploadAct extends BaseActivity {
                         imageMap.get(uploadItemId).add(imagePosi, cib);
                     }
                 }
-                resultData = new ArrayList<CreditUplEntity>();
+                resultData = new ArrayList<>();
                 int i = 0;
                 for (LinkedHashMap.Entry<String, List<CreditImageBean>> entry : imageMap.entrySet()) {
                     CreditUplEntity ce = new CreditUplEntity();
@@ -330,7 +327,6 @@ public class CreditUploadAct extends BaseActivity {
             public void onError(int status, String msg) {
                 dialog.cancel();
                 MyLogUtils.info(msg);
-                return;
             }
         });
     }
@@ -504,7 +500,7 @@ public class CreditUploadAct extends BaseActivity {
 
                                 photoSaveName = String.valueOf(System.currentTimeMillis()) + ".png";
                                 path = photoSavePath + photoSaveName;
-                                Uri imageUri = null;
+                                Uri imageUri;
                                 Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                                 imageUri = Uri.fromFile(new File(photoSavePath, photoSaveName));
                                 openCameraIntent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);

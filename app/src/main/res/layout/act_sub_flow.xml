@@ -4,8 +4,7 @@
     android:orientation="vertical"
     android:layout_height="match_parent">
 
-    <include layout="@layout/title_act_layout"></include>
-
+    <include layout="@layout/title_act_layout"/>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -36,12 +35,12 @@
                 android:layout_height="match_parent"
                 android:dividerHeight="1px"
 
-                ></ListView>
+                />
 
                 <com.beyonditsm.financial.view.LoadingView
                     android:id="@+id/loadView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"></com.beyonditsm.financial.view.LoadingView>
+                    android:layout_height="match_parent"/>
             </FrameLayout>
         </LinearLayout>
     </FrameLayout>

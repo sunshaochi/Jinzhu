@@ -1,6 +1,7 @@
 package com.beyonditsm.financial.activity.manager;
 
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -22,17 +23,13 @@ import android.widget.Toast;
 import com.beyonditsm.financial.ConstantValue;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
-import com.beyonditsm.financial.activity.user.DoTaskPicture;
-import com.beyonditsm.financial.activity.user.DoTaskPlaceAct;
 import com.beyonditsm.financial.activity.user.FinishTaskPicture;
 import com.beyonditsm.financial.activity.user.FinishTaskPlaceAct;
-import com.beyonditsm.financial.activity.user.TaskDetail;
 import com.beyonditsm.financial.activity.user.TaskLevelAct;
 import com.beyonditsm.financial.adapter.PrimaryTaskAdapter;
 import com.beyonditsm.financial.entity.GrabOrderBean;
 import com.beyonditsm.financial.entity.OrderDetailInfo;
 import com.beyonditsm.financial.entity.TaskEntity;
-import com.beyonditsm.financial.entity.TaskStrategyEntity;
 import com.beyonditsm.financial.fragment.ManagerOrderFragment;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
@@ -67,31 +64,19 @@ import io.rong.imkit.RongIM;
 public class OrderDetailAct extends BaseActivity {
     @ViewInject(R.id.sv)
     private ScrollView sv;
-    @ViewInject(R.id.rlzl)
-    private RelativeLayout rlzl;
-    private TextView tvTochat;//聊天
     private TextView IdCard;//身份证号
     private TextView address;//详细地址
-    private TextView tvWyl;//婚姻状况
     @ViewInject(R.id.alwaysaddress)
     private TextView alwaysaddress;//常住地
-    @ViewInject(R.id.tv_jgl)
-    private TextView tvjgl;//籍贯
-    private TextView userData;//户籍地址
-    private Button download;
     private Button commit;
     private Button bujian_btn;
     private ImageView ivBank;
     private TextView tvProName;//贷款名称
-    @ViewInject(R.id.tvStatus)
-    private TextView tvStatus;//贷款进度
     @ViewInject(R.id.tvAmount)
     private TextView tvAmount;//贷款数目
     //    private TextView tvMount;
     private TextView tvScope;//额度范围
     private TextView tvLim;//期限范围
-    @ViewInject(R.id.tvTime)
-    private TextView tvTime;//期限
     private TextView tvMonthPay;//月供
     private TextView tvPaytype;//还款方式
     private TextView tvTotal;//总费用
@@ -103,16 +88,8 @@ public class OrderDetailAct extends BaseActivity {
     //用户资质
     @ViewInject(R.id.ivzz)
     private ImageView ivzz;//资质
-    @ViewInject(R.id.rlzz)
-    private RelativeLayout rlzz;
     @ViewInject(R.id.tv_zy)
     private TextView tv_zy;//职业
-    @ViewInject(R.id.company)
-    private TextView company;//公司名称
-    @ViewInject(R.id.zw)
-    private TextView zw;//职务
-    @ViewInject(R.id.age)
-    private TextView age;//年龄
     @ViewInject(R.id.tv_sb)
     private TextView tv_sb;//社保
     @ViewInject(R.id.gjj_data)
@@ -123,8 +100,6 @@ public class OrderDetailAct extends BaseActivity {
     private TextView car_data;//车
     @ViewInject(R.id.tvMonth)
     private TextView tvMonth;//期限
-    @ViewInject(R.id.xy_data)
-    private TextView xy_data;//信用状况
     //贷款提速
     @ViewInject(R.id.rlts)
     private RelativeLayout rlts;
@@ -158,12 +133,11 @@ public class OrderDetailAct extends BaseActivity {
 
     private String orderId;
     private String orderSts;
-    private Map<Integer, Boolean> map = new HashMap<Integer, Boolean>();
+    private Map<Integer, Boolean> map = new HashMap<>();
     private ObjectAnimator obaDownzl, obaDownzz, obaDownts;
     private ObjectAnimator obaOnzl, obaOnzz, obaOnts;
     private String accountId;
     private List<TaskEntity> taskEntityList, finishList;//任务列表
-    private List<TaskStrategyEntity> taskStrategyEntityList;//任务策略列表
     private PrimaryTaskAdapter adapter;
 
     OrderDetailInfo.DataEntity datas;
@@ -173,11 +147,8 @@ public class OrderDetailAct extends BaseActivity {
 
 
     private void assignViews() {
-        tvTochat = (TextView) findViewById(R.id.tv_tochat);
         IdCard = (TextView) findViewById(R.id.IdCard);
         address = (TextView) findViewById(R.id.address);
-        tvWyl = (TextView) findViewById(R.id.tv_wyl);
-        userData = (TextView) findViewById(R.id.user_data);
         //    download = (Button) findViewById(R.id.download);
         bujian_btn = (Button) findViewById(R.id.bujian_btn);
         commit = (Button) findViewById(R.id.commit_btn);
@@ -228,7 +199,9 @@ public class OrderDetailAct extends BaseActivity {
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
             data = bundle.getParcelable(ConstantValue.ORDER);
-            orderId = data.getId();
+            if (data != null) {
+                orderId = data.getId();
+            }
             getOrderDetail(orderId);
 //            fillData();
         }
@@ -416,6 +389,7 @@ public class OrderDetailAct extends BaseActivity {
      */
     private void getOrderDetail(String orderId) {
         RequestManager.getMangManger().checkOrderDetail(orderId, new RequestManager.CallBack() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onSucess(String result) throws JSONException {
                 OrderDetailInfo info = GsonUtils.json2Bean(result, OrderDetailInfo.class);
@@ -439,7 +413,7 @@ public class OrderDetailAct extends BaseActivity {
                         tvProName.setText(datas.getProductName());
                         if(!"PASS".equals(orderSts)) {
                             if (datas.getTotalAmount() != null)
-                                tvAmount.setText("¥" +df.format(Double.valueOf(datas.getTotalAmount()) / 10000) + "万");//金额
+                                tvAmount.setText("¥" +df.format(datas.getTotalAmount() / 10000) + "万");//金额
                         }else {
                             if(!TextUtils.isEmpty(datas.getPracticalLoan())){
                                 tvAmount.setText("¥"+ df.format(Double.valueOf(datas.getPracticalLoan())/10000)+"万");
@@ -447,7 +421,7 @@ public class OrderDetailAct extends BaseActivity {
                         }
 
                         if (datas.getMinVal() != null && datas.getMaxVal() != null) {
-                            tvScope.setText("额度范围：" + df.format(Double.valueOf(datas.getMinVal()) / 10000) + "~" + df.format(Double.valueOf(datas.getMaxVal()) / 10000) + "万");
+                            tvScope.setText("额度范围：" + df.format(datas.getMinVal() / 10000) + "~" + df.format(datas.getMaxVal() / 10000) + "万");
                         }
 //                        tvScope.setText("额度范围：" + datas.getMinVal() + "~" + datas.getMaxVal());//额度范围
                         if (!TextUtils.isEmpty(datas.getTotalPeriods() + ""))
@@ -462,7 +436,7 @@ public class OrderDetailAct extends BaseActivity {
                             tvPaytype.setText("还款方式：" + datas.getPayTypeName());//还款方式
                         }
 
-                        Double totalMPay = Arith.sub(Double.valueOf(datas.getPeriodsAmount()) * datas.getTotalPeriods(), Double.valueOf(datas.getTotalAmount()));
+                        Double totalMPay = Arith.sub(datas.getPeriodsAmount() * datas.getTotalPeriods(), datas.getTotalAmount());
                         tvTotal.setText("¥" + df.format(totalMPay));
 //                        if (!TextUtils.isEmpty(datas.getTotalAmount()+""))
 //                            tvTotal.setText("¥"+datas.getTotalAmount()+"");//总利息
@@ -586,7 +560,7 @@ public class OrderDetailAct extends BaseActivity {
      * @param position 点击的位置
      */
     private void selectToFinishAct(List<TaskEntity> list, int position) {
-        Intent intent = null;
+        Intent intent;
         intent = new Intent();
         intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) list);
         intent.putExtra("position", position);
@@ -598,64 +572,14 @@ public class OrderDetailAct extends BaseActivity {
         startActivity(intent);
     }
 
-    /**
-     * 跳转到对应的做任务的界面
-     *
-     * @param listTask 任务列表
-     * @param list     任务策略列表
-     * @param position 点击的位置
-     */
-    private void selectToAct(List<TaskEntity> listTask, List<TaskStrategyEntity> list, int position) {
-        Intent intent = null;
-        intent = new Intent();
-        if (list.size() != 0) {
-            //根据任务策略的第一条数据中任务组件跳转
-            if (list.get(0).getModelType() == 5) {//上传
-                //判断是否已经完成任务，如果完成任务则显示任务详情（FinishTaskPicture只能看不能修改）否则进去能够执行的界面
-                intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) listTask);
-                intent.putExtra("position", position);
-                intent.putParcelableArrayListExtra("listStrategey", (ArrayList<? extends Parcelable>) list);
-                intent.setClass(OrderDetailAct.this, DoTaskPicture.class);
 
-
-            } else if (list.get(0).getModelType() == 1) {//输入
-                //判断是否已经完成任务，如果完成任务则显示任务详情（FinishTaskPlaceAct只能看不能修改）否则进去能够执行的界面
-                intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) listTask);
-                intent.putExtra("position", position);
-                intent.putParcelableArrayListExtra("listStrategey", (ArrayList<? extends Parcelable>) list);
-                intent.setClass(OrderDetailAct.this, DoTaskPlaceAct.class);
-
-            } else if (list.get(0).getModelType() == 3) {//单选
-                //判断是否已经完成任务，如果完成任务则显示任务详情（FinishTaskDetial只能看不能修改）否则进去能够执行的界面
-                intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) listTask);
-                intent.putParcelableArrayListExtra("listStrategey", (ArrayList<? extends Parcelable>) list);
-                intent.putExtra("position", position);
-                intent.setClass(OrderDetailAct.this, TaskDetail.class);
-
-            } else if (list.get(0).getModelType() == 2) {//下拉
-                //判断是否已经完成任务，如果完成任务则显示任务详情（FinishTaskDetial只能看不能修改）否则进去能够执行的界面
-                intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) listTask);
-                intent.putParcelableArrayListExtra("listStrategey", (ArrayList<? extends Parcelable>) list);
-                intent.putExtra("position", position);
-                intent.setClass(OrderDetailAct.this, TaskDetail.class);
-
-            } else if (list.get(0).getModelType() == 4) {//多选
-                //判断是否已经完成任务，如果完成任务则显示任务详情（FinishTaskDetial只能看不能修改）否则进去能够执行的界面
-                intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) listTask);
-                intent.putParcelableArrayListExtra("listStrategey", (ArrayList<? extends Parcelable>) list);
-                intent.putExtra("position", position);
-                intent.setClass(OrderDetailAct.this, TaskDetail.class);
-
-            }
-            startActivity(intent);
-        }
-    }
 
     /**
      * 根据任务查询任务详情（审核中，已完成）
      *
      * @param taskEntity
      */
+    @SuppressWarnings("JavaDoc")
     private void findTaskDetail(TaskEntity taskEntity, final int position) {
         RequestManager.getUserManager().findProTaskDetail(taskEntity, new RequestManager.CallBack() {
             @Override
@@ -675,37 +599,13 @@ public class OrderDetailAct extends BaseActivity {
         });
     }
 
-    /**
-     * 根据任务查询任务策略
-     *
-     * @param taskEntity
-     */
-    private void findTaskStrategy(TaskEntity taskEntity, final int position) {
-        RequestManager.getUserManager().findProTaskStrategy(taskEntity, new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
-                JSONObject jsonObject = new JSONObject(result);
-                JSONArray dataArr = jsonObject.getJSONArray("data");
-                Gson gson = new Gson();
-                taskStrategyEntityList = gson.fromJson(dataArr.toString(), new TypeToken<List<TaskStrategyEntity>>() {
-                }.getType());
-
-                selectToAct(taskEntityList, taskStrategyEntityList, position);
-
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-
-            }
-        });
-    }
 
     /**
      * 根据任务id查询任务列表内容
      *
      * @param taskId
      */
+    @SuppressWarnings("JavaDoc")
     private void findTaskBytaskIds(String taskId) {
         RequestManager.getUserManager().findTaskBytaskIds(taskId, new RequestManager.CallBack() {
             @Override

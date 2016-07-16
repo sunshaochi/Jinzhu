@@ -14,15 +14,12 @@ import com.beyonditsm.financial.entity.TaskEntity;
 import java.util.List;
 
 /**
- * Created by gxy on 2015/11/26.
+ * Created by gxy on 2015/11/26
  */
 public class PrimaryTaskAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private List<TaskEntity> list;
 
-    public PrimaryTaskAdapter(Context context){
-        inflater=LayoutInflater.from(context);
-    }
     public PrimaryTaskAdapter(List<TaskEntity> list,Context context){
         this.list=list;
         inflater=LayoutInflater.from(context);
@@ -51,7 +48,7 @@ public class PrimaryTaskAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder=null;
+        ViewHolder holder;
         if(convertView==null){
             convertView=inflater.inflate(R.layout.hard_credit_item,parent,false);
             holder=new ViewHolder();

@@ -5,12 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -48,45 +48,31 @@ import io.rong.imlib.RongIMClient;
  * Created by Yang on 2015/11/12 0012.
  */
 public class CreditFirstFrag extends BaseFragment {
-    private EditText creName;
     private EditText crePhone;
     private TextView creBtnYzm;
     private EditText creYzm;
-    private EditText crePwd;
-//    private EditText crePwd2;
+    //    private EditText crePwd2;
     private EditText creYqm;
     private CheckBox creTk;
-    private Button firstBtnNext;
-    private TextView creTvLogin;
     private View view;
 
-    private Intent intent;
     private String phone;
-    private String yzm;
-    private String pwd;
     private String yqm;
     private GeneralUtils generalUtil;
     private int i = 60;
     private Timer timer;
     private MyTimerTask myTask;
-    private TextView intro;//金蛛条款说明
-
-    private int FLAG = 0;//设置跳转登陆标签，0为贷款第一步，1为其他
 
     private void assignViews() {
-        creName = (EditText) view.findViewById(R.id.cre_name);
         crePhone = (EditText) view.findViewById(R.id.cre_phone);
         creBtnYzm = (TextView) view.findViewById(R.id.cre_btn_yzm);
         creYzm = (EditText) view.findViewById(R.id.cre_yzm);
-        crePwd = (EditText) view.findViewById(R.id.cre_pwd);
-//        crePwd2 = (EditText) view.findViewById(R.id.cre_pwd2);
+        //        crePwd2 = (EditText) view.findViewById(R.id.cre_pwd2);
         creYqm = (EditText) view.findViewById(R.id.cre_yqm);
         creTk = (CheckBox) view.findViewById(R.id.cre_tk);
-        firstBtnNext = (Button) view.findViewById(R.id.first_btn_next);
-        creTvLogin = (TextView) view.findViewById(R.id.cre_tv_login);
-        intro= (TextView) view.findViewById(R.id.intro);
+        TextView intro = (TextView) view.findViewById(R.id.intro);
         intro.setText(Html.fromHtml("<u>" + "《金蛛服务条款》" + "</u>"));
-        intro.setTextColor(getResources().getColor(R.color.blue_color));
+        intro.setTextColor(ContextCompat.getColor(getActivity(),R.color.blue_color));
     }
 
 
@@ -161,35 +147,17 @@ public class CreditFirstFrag extends BaseFragment {
             case R.id.cre_tv_login:
                 ConstantValue.STEP = 10;
                 intent = new Intent(context, LoginAct.class);
-                intent.putExtra("FLAG",FLAG);
+                int FLAG = 0;
+                intent.putExtra("FLAG", FLAG);
                 startActivity(intent);
                 break;
         }
     }
 
-//    private void numberIsValidate(){
-//        RequestManager.getCommManager().isPhoneValidate(phone, new RequestManager.CallBack() {
-//            @Override
-//            public void onSucess(String result) throws JSONException {
-//                UserEntity ue=new UserEntity();
-//                ue.setUsername(phone);
-//                ue.setPassword(phone.substring(phone.length() - 6, phone.length()));
-//                String capture=creYzm.getText().toString();
-//                toRegister(ue,phone,capture);
-//            }
-//
-//            @Override
-//            public void onError(String msg) {
-//                Toast.makeText(context,msg,Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
-
     private boolean isValidate() {
         phone = crePhone.getText().toString().trim();
-        yzm = creYzm.getText().toString().trim();
-        pwd = crePwd.getText().toString().trim();
-//        pwd2 = regPwd2.getText().toString().trim();
+        String yzm = creYzm.getText().toString().trim();
+        //        pwd2 = regPwd2.getText().toString().trim();
         yqm = creYqm.getText().toString().trim();
         if (TextUtils.isEmpty(phone)) {
             MyToastUtils.showShortToast(context, "请输入手机号");
@@ -217,9 +185,8 @@ public class CreditFirstFrag extends BaseFragment {
             public void onSucess(String result) {
                 context.sendBroadcast(new Intent(MineFragment.UPDATE_USER));
                 context.sendBroadcast(new Intent(MainActivity.UPDATATAB));
-                JSONObject jsonObject = null;
                 try {
-                    jsonObject = new JSONObject(result);
+                    JSONObject jsonObject = new JSONObject(result);
                     JSONObject data = jsonObject.getJSONObject("data");
 //                    String roleName = data.optString("roleName");
                     String accountId=data.optString("accountAlias");
@@ -231,7 +198,7 @@ public class CreditFirstFrag extends BaseFragment {
                     if (JPushInterface.isPushStopped(getActivity())) {
                         JPushInterface.resumePush(getActivity());
                     }
-                    Set<String> set = new HashSet<String>();
+                    Set<String> set = new HashSet<>();
                     if (!TextUtils.isEmpty(agencyIdTag)) {
                         set.add(agencyIdTag);
                     }

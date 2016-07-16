@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -14,16 +15,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
-import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.MessageActivity;
 import com.beyonditsm.financial.activity.servicer.ServiceDataAct;
 import com.beyonditsm.financial.activity.servicer.ServiceMainAct;
 import com.beyonditsm.financial.activity.user.CreditPointAct;
 import com.beyonditsm.financial.activity.user.HardCreditAct;
-import com.beyonditsm.financial.activity.user.LoginAct;
 import com.beyonditsm.financial.activity.user.MyCreditAct;
 import com.beyonditsm.financial.activity.user.MyRecommAct;
-import com.beyonditsm.financial.activity.user.NewWorkAct;
 import com.beyonditsm.financial.activity.user.SettingAct;
 import com.beyonditsm.financial.activity.vip.VipAct;
 import com.beyonditsm.financial.activity.wallet.MyWalletActivity;
@@ -62,18 +60,6 @@ import io.rong.imlib.model.UserInfo;
  * Created by Yang on 2015/11/15 0015.
  */
 public class ServiceMineFrg extends BaseFragment {
-    @ViewInject(R.id.rlMyData)
-    private RelativeLayout Mydata;//我的资料
-    @ViewInject(R.id.rlMyTuiJian)
-    private RelativeLayout tj;//我的推荐
-    @ViewInject(R.id.rlMyCredit)
-    private RelativeLayout Credit;//我的贷款
-    @ViewInject(R.id.rlSet)
-    private RelativeLayout setting;//设置
-    @ViewInject(R.id.rlWork)
-    private RelativeLayout rlwork;//打工挣钱
-    @ViewInject(R.id.tvExit)
-    private TextView exit;//注销
     @ViewInject(R.id.tvCredit)//信用分
     private TextView tvCredit;
     @ViewInject(R.id.tvScore)
@@ -119,6 +105,7 @@ public class ServiceMineFrg extends BaseFragment {
     private DisplayCreditRedReciver displayCreditRedReciver;
     private DisplayWalletRedReceiver displayWalletRedReceiver;
 
+    @SuppressLint("InflateParams")
     @Override
     public View initView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.service_mine, null);
@@ -148,7 +135,7 @@ public class ServiceMineFrg extends BaseFragment {
     @OnClick({R.id.rlServiceData, R.id.rlMyTuiJian, R.id.rlSet, R.id.tvExit, R.id.rlMyCredit,
             R.id.rlMyCode, R.id.rlLines,R.id.rlWork,R.id.msg_top,R.id.rlWallet,R.id.rlVip})
     public void toClick(View v) {
-        Intent intent = null;
+        Intent intent;
         switch (v.getId()) {
             //我的资料
             case R.id.rlServiceData:
@@ -189,12 +176,12 @@ public class ServiceMineFrg extends BaseFragment {
                 break;
             //打工挣钱
             case R.id.rlWork:
-                intent = new Intent(getActivity(), NewWorkAct.class);
-//                intent.putExtra("id",user.getId());
-                intent.putExtra("accountId", ue);
-                if (ule != null)
-                    intent.putExtra(NewWorkAct.ROLE, ule.getRoleName());
-                getActivity().startActivity(intent);
+//                intent = new Intent(getActivity(), NewWorkAct.class);
+////                intent.putExtra("id",user.getId());
+//                intent.putExtra("accountId", ue);
+//                if (ule != null)
+//                    intent.putExtra(NewWorkAct.ROLE, ule.getRoleName());
+//                getActivity().startActivity(intent);
                 break;
             //我的钱包
             case R.id.rlWallet:
@@ -227,7 +214,7 @@ public class ServiceMineFrg extends BaseFragment {
 
                             }
                         });
-                        Set<String> set=new HashSet<String>();
+                        Set<String> set= new HashSet<>();
                         JPushInterface.setAliasAndTags(getActivity(), "", set, new TagAliasCallback() {
                             @Override
                             public void gotResult(int i, String s, Set<String> set) {
@@ -298,6 +285,7 @@ public class ServiceMineFrg extends BaseFragment {
     private void findServantInfo() {
 
         RequestManager.getServicerManager().findServantDetail(new RequestManager.CallBack() {
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) throws JSONException {
                 ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
@@ -363,6 +351,7 @@ public class ServiceMineFrg extends BaseFragment {
      */
     private void getUserLoginInfo(){
         RequestManager.getUserManager().findUserLoginInfo(new RequestManager.CallBack() {
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) throws JSONException {
                 ResultData<UserLoginEntity> rd = (ResultData<UserLoginEntity>) GsonUtils.json(result, UserLoginEntity.class);

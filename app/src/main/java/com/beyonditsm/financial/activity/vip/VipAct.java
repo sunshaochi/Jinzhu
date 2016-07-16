@@ -1,10 +1,10 @@
 package com.beyonditsm.financial.activity.vip;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -32,6 +32,7 @@ import java.util.List;
  * vip专题页面
  * Created by Administrator on 2016/5/30.
  */
+@SuppressWarnings("deprecation")
 public class VipAct extends BaseActivity {
     @ViewInject(R.id.tv_accountName)
     private TextView tvAccountName;//用户姓名
@@ -80,10 +81,11 @@ public class VipAct extends BaseActivity {
 //    @ViewInject(R.id.tv_vip3Upgrade)
 //    private TextView tvV3Upgrade;
 
-    public static final String TYPE = "type";
-    public static final String PRICE = "price";
-    public static final String VIP_LEVEL = "vip_level";
+//    public static final String TYPE = "type";
+//    public static final String PRICE = "price";
+//    public static final String VIP_LEVEL = "vip_level";
 
+    @SuppressLint("SimpleDateFormat")
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     private String v3PresentPrice;
     private String v2PresentPrice;
@@ -119,6 +121,8 @@ public class VipAct extends BaseActivity {
 
     private void findVipInfo() {
         RequestManager.getCommManager().findVipInfo(ule.getUsername(), new RequestManager.CallBack() {
+            @SuppressLint("SetTextI18n")
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) throws JSONException {
                 ResultData<VipBean> rd = (ResultData<VipBean>) GsonUtils.json(result, VipBean.class);
@@ -126,41 +130,49 @@ public class VipAct extends BaseActivity {
                 if (bean != null) {
                     tvAccountName.setText(bean.getUserName());
                     int userVipLevel = bean.getUserVipLevel();
-                    if (userVipLevel==0){
+                    switch (userVipLevel) {
+                        case 0:
 //                        llIsVip.setVisibility(View.GONE);
 //                        tvNotVip.setVisibility(View.VISIBLE);
-                    }else if (userVipLevel==1){
-                        ivVipLevel.setBackgroundResource(R.mipmap.vip1);
-                        tvVip1Open.setVisibility(View.GONE);
-                        tvVip2Open.setVisibility(View.GONE);
-                        tvVip3Open.setVisibility(View.GONE);
+                            break;
+                        case 1:
+                            ivVipLevel.setBackgroundResource(R.mipmap.vip1);
+                            tvVip1Open.setVisibility(View.GONE);
+                            tvVip2Open.setVisibility(View.GONE);
+                            tvVip3Open.setVisibility(View.GONE);
 //                        tvV1Renew.setVisibility(View.VISIBLE);
 //                        tvV2Upgrade.setVisibility(View.VISIBLE);
 //                        tvV3Upgrade.setVisibility(View.VISIBLE);
-                    }else if (userVipLevel==2){
-                        ivVipLevel.setBackgroundResource(R.mipmap.vip2);
-                        tvVip1Open.setVisibility(View.VISIBLE);
-                        tvVip1Open.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_grey));
-                        tvVip1Open.setEnabled(false);
-                        tvVip2Open.setVisibility(View.GONE);
-                        tvVip3Open.setVisibility(View.GONE);
+                            break;
+                        case 2:
+                            ivVipLevel.setBackgroundResource(R.mipmap.vip2);
+                            tvVip1Open.setVisibility(View.VISIBLE);
+                            tvVip1Open.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_grey));
+                            tvVip1Open.setEnabled(false);
+                            tvVip2Open.setVisibility(View.GONE);
+                            tvVip3Open.setVisibility(View.GONE);
 //                        tvV2Renew.setVisibility(View.VISIBLE);
 //                        tvV3Upgrade.setVisibility(View.VISIBLE);
-                    }else if (userVipLevel==3){
-                        ivVipLevel.setBackgroundResource(R.mipmap.vip3);
-                        tvVip1Open.setVisibility(View.VISIBLE);
-                        tvVip1Open.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_grey));
-                        tvVip1Open.setEnabled(false);
-                        tvVip2Open.setVisibility(View.VISIBLE);
-                        tvVip2Open.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_grey));
-                        tvVip2Open.setEnabled(false);
+                            break;
+                        case 3:
+                            ivVipLevel.setBackgroundResource(R.mipmap.vip3);
+                            tvVip1Open.setVisibility(View.VISIBLE);
+                            tvVip1Open.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_grey));
+                            tvVip1Open.setEnabled(false);
+                            tvVip2Open.setVisibility(View.VISIBLE);
+                            tvVip2Open.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_grey));
+                            tvVip2Open.setEnabled(false);
 //                        tvV3Renew.setVisibility(View.VISIBLE);
-                    }else if (userVipLevel==4){
-                        ivVipLevel.setBackgroundResource(R.mipmap.vip4);
-                    }else if (userVipLevel==5){
-                        ivVipLevel.setBackgroundResource(R.mipmap.vip5);
-                    }else if (userVipLevel==6){
-                        ivVipLevel.setBackgroundResource(R.mipmap.vip6);
+                            break;
+                        case 4:
+                            ivVipLevel.setBackgroundResource(R.mipmap.vip4);
+                            break;
+                        case 5:
+                            ivVipLevel.setBackgroundResource(R.mipmap.vip5);
+                            break;
+                        case 6:
+                            ivVipLevel.setBackgroundResource(R.mipmap.vip6);
+                            break;
                     }
 
                     String data = VipAct.this.format.format(new Date(bean.getExpireDate()));
@@ -193,7 +205,7 @@ public class VipAct extends BaseActivity {
 
     @OnClick({R.id.ll_myInfo, R.id.tv_vip1Open, R.id.tv_vip2Open, R.id.tv_vip3Open})
     public void todo(View v) {
-        Intent intent = null;
+        Intent intent;
         switch (v.getId()) {
             case R.id.ll_myInfo:
                 if ("ROLE_COMMON_CLIENT".equals(roleName)){

@@ -10,7 +10,7 @@
         android:id="@+id/new_friend_lv"
         android:scrollbars="none"
         android:divider="@null"
-        android:layout_height="wrap_content"></ListView>
+        android:layout_height="wrap_content"/>
 
     <com.beyonditsm.financial.view.pullfreshview.LoadRefreshView
         android:background="@color/white"

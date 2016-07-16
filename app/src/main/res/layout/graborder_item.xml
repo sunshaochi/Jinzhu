@@ -14,8 +14,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
-             />
+            android:layout_marginTop="15dp" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -28,8 +27,7 @@
 
             <TextView
                 android:id="@+id/tv_money"
-                style="@style/tv_primary_style"
-                android:text="贷款50万" />
+                style="@style/tv_primary_style" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -40,13 +38,13 @@
                 <TextView
                     android:id="@+id/tv_rate"
                     style="@style/tv_second_style"
-                    android:text="利率：0.88%"
-                    android:layout_marginRight="10dp"/>
+                    android:layout_marginRight="10dp"
+                    android:text="利率：" />
 
                 <TextView
                     style="@style/tv_second_style"
                     android:text="用户等级：D"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
             </LinearLayout>
 
@@ -54,7 +52,7 @@
                 android:id="@+id/tv_default_rate"
                 style="@style/tv_second_style"
                 android:layout_marginTop="5dp"
-                android:text="违约率：0.05%" />
+                android:text="违约率：" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -70,22 +68,21 @@
                     android:id="@+id/tv_total_money"
                     style="@style/tv_primary_style"
                     android:layout_marginLeft="5dp"
-                    android:text="500000"
                     android:textColor="#f63"
                     android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>
 
         <Button
-            android:layout_gravity="center_vertical"
             android:id="@+id/graborder_btn"
             android:layout_width="60dp"
             android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
             android:layout_marginRight="15dp"
-            android:textSize="14sp"
             android:background="@drawable/cre_btn_bg_orange"
             android:text="抢单"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="14sp" />
     </LinearLayout>
 
     <View style="@style/view_line"></View>

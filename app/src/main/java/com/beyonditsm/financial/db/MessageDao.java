@@ -31,7 +31,7 @@ public class MessageDao extends TemplateDAO<MessageBean, String>{
 	
 	/**
 	 * 插入消息
-	 * @param mess
+	 * @param mess 消息实体类
 	 */
 	public static void saveMes(MessageBean mess){
 		getDao().insert(mess);
@@ -39,11 +39,9 @@ public class MessageDao extends TemplateDAO<MessageBean, String>{
 	
 	/**
 	 * 查找所有的
-	 * @return
 	 */
 	public static List<MessageBean> findMess(){
-		List<MessageBean> datas=getDao().find(null, null, null, null, null, "time desc", null);
-		return datas;
+		return getDao().find(null, null, null, null, null, "time desc", null);
 	}
 	
 	/**

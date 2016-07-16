@@ -40,6 +40,7 @@ public class PhotoActivity extends BaseActivity {
         initData();
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -69,7 +70,7 @@ public class PhotoActivity extends BaseActivity {
     public void copyFile(String oldPath, String newPath) {
         try {
             int bytesum = 0;
-            int byteread = 0;
+            int byteread;
             File oldfile = new File(oldPath);
             if (oldfile.exists()) {
                 InputStream inStream = new FileInputStream(oldPath);

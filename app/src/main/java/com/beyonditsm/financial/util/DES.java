@@ -1,6 +1,8 @@
 package com.beyonditsm.financial.util;
 
 
+import android.annotation.SuppressLint;
+
 import org.apache.commons.codec.binary.Base64;
 
 import java.security.InvalidKeyException;
@@ -31,12 +33,12 @@ public class DES {
 		return getInstance(getKeyByStr(key));
 	}
 
+	@SuppressLint("GetInstance")
 	public static DES getInstance(byte key[]) throws NoSuchPaddingException,
 			NoSuchAlgorithmException {
 		DES des = new DES();
 		if (des.key == null) {
-			SecretKeySpec spec = new SecretKeySpec(key, "DES");
-			des.key = spec;
+			des.key = new SecretKeySpec(key, "DES");
 		}
 		des.cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
 		return des;
@@ -45,7 +47,7 @@ public class DES {
 	public byte[] encrypt(byte b[]) throws InvalidKeyException,
 			BadPaddingException, IllegalBlockSizeException,
 			IllegalStateException {
-		byte byteFina[] = null;
+		byte byteFina[];
 		cipher.init(1, key);
 		byteFina = cipher.doFinal(b);
 		return byteFina;
@@ -54,7 +56,7 @@ public class DES {
 	public byte[] decrypt(byte b[]) throws InvalidKeyException,
 			BadPaddingException, IllegalBlockSizeException,
 			IllegalStateException {
-		byte byteFina[] = null;
+		byte byteFina[];
 		cipher.init(2, key);
 		byteFina = cipher.doFinal(b);
 		return byteFina;
@@ -124,7 +126,7 @@ public class DES {
 
 			byte[] b = des.encrypt(text.getBytes("UTF8"));
 			body = new String(Base64.encodeBase64(b));
-		} catch (Exception ex) {
+		} catch (Exception ignored) {
 
 		}
 		return body;
@@ -154,7 +156,6 @@ public class DES {
 	 * @param content  内容
 	 * @param operation 加密或解密
 	 * @param key 使用到的密钥:固定长度
-	 * @return
 	 */
 	public String authcode(String content, String operation, String key){
 		

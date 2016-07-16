@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.activity.user;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.webkit.WebSettings;
@@ -11,14 +12,13 @@ import com.beyonditsm.financial.activity.BaseActivity;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 /**
- * Created by gxy on 2016/1/7.
+ * Created by gxy on 2016/1/7
  */
 public class AboutOurs extends BaseActivity {
     @ViewInject(R.id.clause)
     private WebView clause;//关于我们
 
 
-    private String clause_url="file:///android_asset/aboutOurs.html";
     @Override
     public void setLayout() {
         setContentView(R.layout.act_clausejinzhu);
@@ -27,6 +27,7 @@ public class AboutOurs extends BaseActivity {
     public void play(){
 
     }
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     public void init(Bundle savedInstanceState) {
         play();
@@ -41,6 +42,7 @@ public class AboutOurs extends BaseActivity {
 
         clause.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);//设置缓存模式
         //webview加载web资源
+        String clause_url = "file:///android_asset/aboutOurs.html";
         clause.loadUrl(clause_url);
         //覆盖webview使用默认浏览器或第三方浏览器打开网页的行为，使网页用webview打开
         clause.setWebViewClient(new WebViewClient(){

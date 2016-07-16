@@ -4,9 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ImageView;
 
 import com.beyonditsm.financial.R;
@@ -30,8 +27,6 @@ import org.json.JSONObject;
  * Created by Administrator on 2016/5/25.
  */
 public class CreditCardAct extends BaseActivity {
-    @ViewInject(R.id.wv_CreditCard)
-    private WebView wvCreditCard;
     @ViewInject(R.id.iv_wallet)
     private ImageView ivWallet;
     private UserEntity user;//用户信息
@@ -87,28 +82,9 @@ public class CreditCardAct extends BaseActivity {
         setTopTitle("信用卡专题");
         getUserLoginInfo();
         getUserInfo();
-        WebSettings settings = wvCreditCard.getSettings();
-        settings.setUseWideViewPort(true);// 设置此属性，可任意比例缩放
-        settings.setLoadWithOverviewMode(true);
-        settings.setJavaScriptEnabled(true);
-        settings.setBuiltInZoomControls(true);
-        settings.setSupportZoom(true);
-        wvCreditCard.removeJavascriptInterface("searchBoxJavaBredge_");
-        wvCreditCard.requestFocusFromTouch();
-//        wvCreditCard.loadUrl("http://www.baidu.com");
-        wvCreditCard.loadUrl("http://172.16.5.16:8100/#/tab/home?redirctUrl=/tab/home/spdcredits/spdCredit");
-        wvCreditCard.setWebViewClient(new WebViewClient(){
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                // 重写此方法表明点击网页里面的链接还是在当前的webview里跳转，不跳到浏览器那边
-                view.loadUrl(url);
-                return true;
-            }
-        });
-        wvCreditCard.reload();
-
-
     }
 
+    @SuppressWarnings("deprecation")
     private void setWalletPic() {
         if (ParamsUtil.getInstance().isWalletEnter()){
             ivWallet.setImageDrawable(getResources().getDrawable(R.mipmap.money_bag_red));
@@ -147,6 +123,7 @@ public class CreditCardAct extends BaseActivity {
     private void getUserInfo() {
 
         RequestManager.getCommManager().findUserInfo(new RequestManager.CallBack() {
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) {
                 ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
@@ -165,9 +142,9 @@ public class CreditCardAct extends BaseActivity {
      */
     private void getUserLoginInfo() {
         RequestManager.getUserManager().findUserLoginInfo(new RequestManager.CallBack() {
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) throws JSONException {
-                String a = result;
                 JSONObject obj = new JSONObject(result);
                 int status = obj.getInt("status");
                 if (status == 200){

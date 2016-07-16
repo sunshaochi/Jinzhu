@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -27,8 +28,6 @@ import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
-import com.beyonditsm.financial.view.pullfreshview.PullToRefreshListView;
-import com.lidroid.xutils.util.LogUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 import org.json.JSONException;
@@ -37,21 +36,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Administrator on 2015/12/10.
+ * Created by Administrator on 2015/12/10
  */
 public class ManagerOrderFragment extends BaseFragment {
     @ViewInject(R.id.plv)
     private LoadRefreshView plv;
     @ViewInject(R.id.loadingView)
     private LoadingView loadingView;
-
-    private int data;
     private ManagerOrderAdp adapter;
     private ManagerOrderCommitAdp commitAdapter;
     private static int page;
     private int position;
     private List<GrabOrderBean.RowsEntity> datas = new ArrayList<>();
-    List<GrabOrderBean.RowsEntity> list1 = new ArrayList<GrabOrderBean.RowsEntity>();
     private String orderStatus;
 
 
@@ -59,6 +55,7 @@ public class ManagerOrderFragment extends BaseFragment {
 //        plv = (PullToRefreshListView) view.findViewById(R.id.plv);
 //        loadingView = (LoadingView) view.findViewById(R.id.loadingView);
 //    }
+    @SuppressLint("InflateParams")
     @Override
     public View initView(LayoutInflater inflater) {
         view = inflater.inflate(R.layout.managerorderfrg, null);
@@ -118,7 +115,7 @@ public class ManagerOrderFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getActivity(), OrderDetailAct.class);
-                GrabOrderBean.RowsEntity data = (GrabOrderBean.RowsEntity) datas.get(i);
+                GrabOrderBean.RowsEntity data = datas.get(i);
                 intent.putExtra(ConstantValue.ORDER, data);
                 getActivity().startActivity(intent);
             }
@@ -137,6 +134,7 @@ public class ManagerOrderFragment extends BaseFragment {
         switch (position) {
             case 0://待提交
                 RequestManager.getMangManger().findHasOrder(page, rows, new RequestManager.CallBack() {
+                    @SuppressWarnings("unchecked")
                     @Override
                     public void onSucess(String result) throws JSONException {
                         plv.onPullDownRefreshComplete();
@@ -174,6 +172,7 @@ public class ManagerOrderFragment extends BaseFragment {
             case 1://已提交
                 MyLogUtils.info("ssssssss:"+position+"saaaa:"+orderSts);
                     RequestManager.getMangManger().findCommitOrder("CREDIT_MANAGER_APPROVAL", page, rows, new RequestManager.CallBack() {
+                        @SuppressWarnings("unchecked")
                         @Override
                         public void onSucess(String result) throws JSONException {
                             plv.onPullDownRefreshComplete();
@@ -197,6 +196,7 @@ public class ManagerOrderFragment extends BaseFragment {
             case 2://补件中
 //                if (orderStatus != null) {
                     RequestManager.getMangManger().findCommitOrder("SUPPLEMENT_DATA", page, rows, new RequestManager.CallBack() {
+                       @SuppressWarnings("unchecked")
                         @Override
                         public void onSucess(String result) throws JSONException {
                             plv.onPullDownRefreshComplete();
@@ -219,6 +219,7 @@ public class ManagerOrderFragment extends BaseFragment {
                 break;
             case 3://已放款
                     RequestManager.getMangManger().findCommitOrder("PASS", page, rows, new RequestManager.CallBack() {
+                        @SuppressWarnings("unchecked")
                         @Override
                         public void onSucess(String result) throws JSONException {
                             plv.onPullDownRefreshComplete();
@@ -240,6 +241,7 @@ public class ManagerOrderFragment extends BaseFragment {
                 break;
             case 4://审核未通过
                     RequestManager.getMangManger().findCommitOrder("NO_PASS", page, rows, new RequestManager.CallBack() {
+                        @SuppressWarnings("unchecked")
                         @Override
                         public void onSucess(String result) throws JSONException {
                             plv.onPullDownRefreshComplete();
@@ -308,23 +310,23 @@ public class ManagerOrderFragment extends BaseFragment {
             page = 1;
             String orderStatus = intent.getStringExtra("orderSts");
             if (!TextUtils.isEmpty(orderStatus)) {
-                if (orderStatus.equals("CREDIT_MANAGER_APPROVAL")) {
-                    LogUtils.i("刷新已提交界面————————————————————————————————————————————————————————————");
-                    getOrderStatus(orderStatus,1, page);
-                    getOrderStatus(orderStatus, 0, page);
-                } else if (orderStatus.equals("SUPPLEMENT_DATA")) {
-                    LogUtils.i("刷新补件中界面————————————————————————————————————————————————————————————");
-                    getOrderStatus(orderStatus,2, page);
-                    getOrderStatus(orderStatus, 0, page);
-                } else if (orderStatus.equals("PASS")) {
-                    LogUtils.i("刷已放款界面————————————————————————————————————————————————————————————");
-                    getOrderStatus(orderStatus,3, page);
-                } else if (orderStatus.equals("NO_PASS")) {
-                    LogUtils.i("刷新审核未通过界面————————————————————————————————————————————————————————————");
-                    getOrderStatus(orderStatus,4, page);
+                switch (orderStatus) {
+                    case "CREDIT_MANAGER_APPROVAL":
+                        getOrderStatus(orderStatus, 1, page);
+                        getOrderStatus(orderStatus, 0, page);
+                        break;
+                    case "SUPPLEMENT_DATA":
+                        getOrderStatus(orderStatus, 2, page);
+                        getOrderStatus(orderStatus, 0, page);
+                        break;
+                    case "PASS":
+                        getOrderStatus(orderStatus, 3, page);
+                        break;
+                    case "NO_PASS":
+                        getOrderStatus(orderStatus, 4, page);
+                        break;
                 }
             }else{
-                LogUtils.i("刷新待提交界面————————————————————————————————————————————————————————————");
                 getOrderStatus(orderStatus, 0, page);
             }
         }

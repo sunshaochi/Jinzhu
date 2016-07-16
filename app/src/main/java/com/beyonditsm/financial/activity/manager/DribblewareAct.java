@@ -27,7 +27,6 @@ public class DribblewareAct extends BaseActivity {
     private Button commit;//提交
     @ViewInject(R.id.bj_et)
     private EditText et;//内容
-    private GrabOrderBean.RowsEntity data;
     private String orderId;
 
     @Override
@@ -41,8 +40,10 @@ public class DribblewareAct extends BaseActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
-            data = bundle.getParcelable("data");
-            orderId = data.getId();
+            GrabOrderBean.RowsEntity data = bundle.getParcelable("data");
+            if (data != null) {
+                orderId = data.getId();
+            }
         }
         if (TextUtils.isEmpty(orderId)) {
             commit.setEnabled(false);

@@ -3,15 +3,12 @@ package com.beyonditsm.financial;
 import android.app.Activity;
 import android.content.Context;
 
-import com.testin.agent.TestinAgent;
-
 import java.util.Stack;
 
 /**
  * 应用程序Activity管理类：用于Activity管理和应用程序退出
  * @author wangbin
  * @version 1.0
- * @created 
  */
 public class AppManager {
 	
@@ -33,7 +30,7 @@ public class AppManager {
 	 */
 	public void addActivity(Activity activity){
 		if(activityStack==null){
-			activityStack=new Stack<Activity>();
+			activityStack= new Stack<>();
 		}
 		if(!activityStack.contains(activity)){
 		activityStack.add(activity);
@@ -60,7 +57,6 @@ public class AppManager {
 		if(activity!=null){
 			activityStack.remove(activity);
 			activity.finish();
-			activity=null;
 		}
 	}
 	/**

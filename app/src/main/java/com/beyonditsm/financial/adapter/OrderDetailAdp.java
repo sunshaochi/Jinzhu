@@ -1,6 +1,8 @@
 package com.beyonditsm.financial.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,10 +24,11 @@ import java.util.List;
  */
 public class OrderDetailAdp extends BaseAdapter {
     private List<OrderListEntity.RowsEntity> list;
-    private Context context;
+    private final LayoutInflater inflater;
+
     public OrderDetailAdp(Context context,List<OrderListEntity.RowsEntity> list) {
-        this.context = context;
         this.list = list;
+        inflater = LayoutInflater.from(context);
     }
 
     public void setDatas(List<OrderListEntity.RowsEntity> list){
@@ -47,12 +50,13 @@ public class OrderDetailAdp extends BaseAdapter {
         return position;
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView==null) {
             holder = new ViewHolder();
-            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.order_detail_item, null);
+            convertView = inflater.inflate(R.layout.order_detail_item, null);
             holder.orderNo = (TextView) convertView.findViewById(R.id.order_no);
             holder.orderStatus = (TextView) convertView.findViewById(R.id.order_staus);
             holder.orderAmount = (TextView) convertView.findViewById(R.id.order_amount);
@@ -64,24 +68,32 @@ public class OrderDetailAdp extends BaseAdapter {
         }
         OrderListEntity.RowsEntity rowsEntity = list.get(position);
         holder.orderNo.setText("订单号:"+rowsEntity.getORDER_ID());
-        if (rowsEntity.getORDER_STS().equals("WAIT_APPROVAL")){
-            holder.orderStatus.setText("审批中");
-            holder.orderStatus.setTextColor(convertView.getResources().getColor(R.color.tv_price_color));
-        }else if (rowsEntity.getORDER_STS().equals("APPROVAL_NO_PASS")){
-            holder.orderStatus.setText("已驳回");
-            holder.orderStatus.setTextColor(convertView.getResources().getColor(R.color.backed));
-        }else if (rowsEntity.getORDER_STS().equals("APPROVAL_PASS")||rowsEntity.getORDER_STS().equals("PAY_SUCCESS")){
-            holder.orderStatus.setText("已通过");
-            holder.orderStatus.setTextColor(convertView.getResources().getColor(R.color.green_order));
-        }else if (rowsEntity.getORDER_STS().equals("FINISHED")){
-            holder.orderStatus.setText("已完成");
-            holder.orderStatus.setTextColor(convertView.getResources().getColor(R.color.green_order));
-        } else if (rowsEntity.getORDER_STS().equals("PAY_FAIL")){
-            holder.orderStatus.setText("支付失败");
-            holder.orderStatus.setTextColor(convertView.getResources().getColor(R.color.backed));
-        }else if (rowsEntity.getORDER_STS().equals("PAY_ING")) {
-            holder.orderStatus.setText("支付中");
-            holder.orderStatus.setTextColor(convertView.getResources().getColor(R.color.tv_price_color));
+        switch (rowsEntity.getORDER_STS()) {
+            case "WAIT_APPROVAL":
+                holder.orderStatus.setText("审批中");
+                holder.orderStatus.setTextColor(ContextCompat.getColor(parent.getContext(),R.color.tv_price_color));
+                break;
+            case "APPROVAL_NO_PASS":
+                holder.orderStatus.setText("已驳回");
+                holder.orderStatus.setTextColor(ContextCompat.getColor(parent.getContext(),R.color.backed));
+                break;
+            case "APPROVAL_PASS":
+            case "PAY_SUCCESS":
+                holder.orderStatus.setText("已通过");
+                holder.orderStatus.setTextColor(ContextCompat.getColor(parent.getContext(),R.color.green_order));
+                break;
+            case "FINISHED":
+                holder.orderStatus.setText("已完成");
+                holder.orderStatus.setTextColor(ContextCompat.getColor(parent.getContext(),R.color.green_order));
+                break;
+            case "PAY_FAIL":
+                holder.orderStatus.setText("支付失败");
+                holder.orderStatus.setTextColor(ContextCompat.getColor(parent.getContext(),R.color.backed));
+                break;
+            case "PAY_ING":
+                holder.orderStatus.setText("支付中");
+                holder.orderStatus.setTextColor(ContextCompat.getColor(parent.getContext(),R.color.tv_price_color));
+                break;
         }
         DecimalFormat df = new DecimalFormat("##.00");
 

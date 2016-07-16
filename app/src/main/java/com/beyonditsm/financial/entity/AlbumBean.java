@@ -5,17 +5,14 @@ import java.util.List;
 
 public class AlbumBean {
 
+
 	public String folderName;
 
 	public int count;
 
-	public List<ImageBean> sets = new ArrayList<ImageBean>();
+	public List<ImageBean> sets = new ArrayList<>();
 
 	public String thumbnail;
-
-	public AlbumBean() {
-		super();
-	}
 
 	public AlbumBean(String folderName, int count, List<ImageBean> sets,
 			String thumbnail) {

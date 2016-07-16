@@ -2,6 +2,7 @@ package com.beyonditsm.financial.fragment;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -40,7 +41,6 @@ import com.beyonditsm.financial.entity.ProductOrderInfo;
 import com.beyonditsm.financial.entity.ProductResult;
 import com.beyonditsm.financial.entity.ProductSortEntity;
 import com.beyonditsm.financial.entity.ResultData;
-import com.beyonditsm.financial.entity.UserLoginEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GsonUtils;
@@ -67,7 +67,7 @@ import java.util.List;
 
 /**
  * 贷款
- * Created by wangbin on 15/11/11.
+ * Created by wangbin on 15/11/11
  */
 public class CreditFragment extends BaseFragment {
 
@@ -81,8 +81,6 @@ public class CreditFragment extends BaseFragment {
     private EditText etAmount;//输入金额
     @ViewInject(R.id.tvM)
     private TextView tvM;//月份
-    @ViewInject(R.id.tvSearch)
-    private TextView tvSearch;//搜索
     @ViewInject(R.id.ivSuspen)
     private ImageView ivSuspen;
     @ViewInject(R.id.rb_bank)
@@ -124,15 +122,10 @@ public class CreditFragment extends BaseFragment {
     private String cMoney = "";
     private String cTime = "";
 
-//    private AbstractSpinerAdapter mAdapter;
-//    private AbstractSpinerAdapter mDateAdapter;
-//    private List<CustemObject> moneyList = new ArrayList<CustemObject>();
-//    private List<CustemObject> dateList = new ArrayList<CustemObject>();
 
-    private int pageSize = 10;
     private int currentP = 1;
+    private int pageSize = 10;
     private CreditAdapter adapter;
-    private UserLoginEntity ule;
     private boolean isButtonShowing = false;
     private boolean isAnimating = false;
 
@@ -144,6 +137,7 @@ public class CreditFragment extends BaseFragment {
     private short clickType;
 
 
+    @SuppressLint("InflateParams")
     @Override
     public View initView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.frgment_credit, null);
@@ -154,11 +148,6 @@ public class CreditFragment extends BaseFragment {
         getSortParam();
         tvTitle.setText("贷款");
         initTit();
-        sbp = (SlideBottomPanel) getView().findViewById(R.id.sbp);
-        String roleName = SpUtils.getRoleName(context);
-//        if (!"ROLE_COMMON_CLIENT".equals(roleName)&&!TextUtils.isEmpty(roleName)){//非普通用户显示代言人指南
-//            ivSuspen.setBackgroundResource(R.mipmap.servant_guide);
-//        }
         loadView.setNoContentTxt("暂无此类产品，换个条件试试");
         etAmount.setSelection(etAmount.getText().length());
         rl_back.setVisibility(View.GONE);
@@ -346,7 +335,6 @@ public class CreditFragment extends BaseFragment {
             }
         });
 
-
         plv.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -378,6 +366,7 @@ public class CreditFragment extends BaseFragment {
                 getActivity().startActivity(intent);
             }
         });
+
     }
 
 
@@ -391,6 +380,7 @@ public class CreditFragment extends BaseFragment {
 //                showDateSpinWindow();
 //                break;
             case R.id.rb_bank:
+
                 listItem = orgTypeInfos;
                 clearArrow();
                 clearTextColor();
@@ -501,9 +491,12 @@ public class CreditFragment extends BaseFragment {
 
     private List<ProductInfo> datas = new ArrayList<ProductInfo>();
 
+
     private void getCredit(String area, String orgType, String productOrder, String moneyScope, String loanTerm, final int currentPage, int rows) {
 
         RequestManager.getMangManger().findProductByParam( area, orgType, productOrder,moneyScope,loanTerm,currentPage,rows,new RequestManager.CallBack() {
+
+
             @Override
             public void onSucess(String result) {
                 loadView.loadComplete();

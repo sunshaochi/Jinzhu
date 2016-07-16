@@ -1,6 +1,7 @@
 package com.beyonditsm.financial.fragment;
 
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -22,11 +23,8 @@ import android.widget.Toast;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.credit.CreditStepAct;
 import com.beyonditsm.financial.activity.credit.SubFlowAct;
-import com.beyonditsm.financial.activity.user.DoTaskPicture;
-import com.beyonditsm.financial.activity.user.DoTaskPlaceAct;
 import com.beyonditsm.financial.activity.user.FinishTaskPicture;
 import com.beyonditsm.financial.activity.user.FinishTaskPlaceAct;
-import com.beyonditsm.financial.activity.user.TaskDetail;
 import com.beyonditsm.financial.activity.user.TaskLevelAct;
 import com.beyonditsm.financial.activity.user.TiJiaoFuJianAct;
 import com.beyonditsm.financial.adapter.PrimaryTaskAdapter;
@@ -35,7 +33,6 @@ import com.beyonditsm.financial.entity.FriendBean;
 import com.beyonditsm.financial.entity.MyCreditBean;
 import com.beyonditsm.financial.entity.OrderDetailInfo;
 import com.beyonditsm.financial.entity.TaskEntity;
-import com.beyonditsm.financial.entity.TaskStrategyEntity;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.AddressUtil;
@@ -65,10 +62,10 @@ import io.rong.imkit.RongIM;
 import io.rong.imlib.model.UserInfo;
 
 /**
- * Created by Administrator on 2015/12/13.
+ * Created by Administrator on 2015/12/13
  */
+@SuppressWarnings("deprecation")
 public class MyCreditDetailFragment extends BaseFragment {
-    public static final String CREDIT_DETAIL = "credit_detail";
     java.text.DecimalFormat df = new java.text.DecimalFormat("#0.0");//保留小数
     java.text.DecimalFormat df2 = new java.text.DecimalFormat("#0.00");//保留小数
 
@@ -87,14 +84,12 @@ public class MyCreditDetailFragment extends BaseFragment {
     private TextView tvTotal;
     private TextView tvLimit;
     private TextView tvTime;
-    private TextView tvLim;
     private TextView tvYueG;
     private TextView tvHf;
     private TextView tvT;
     private TextView tvFTime;
     private TextView tvRate;
     private TextView tvL;
-    private TextView startMsg;
     private LinearLayout llzl;//用户基本资料
     private LinearLayout llzz;//用户资质
     @ViewInject(R.id.llts)
@@ -127,8 +122,6 @@ public class MyCreditDetailFragment extends BaseFragment {
     private TextView house_data;//名下房产类型
     @ViewInject(R.id.car_data)
     private TextView car_data;//小轿车
-    @ViewInject(R.id.xy_data)
-    private TextView xy_data;//信用状况
     @ViewInject(R.id.mlv)
     private MyListView mlv;
     @ViewInject(R.id.ivzz)
@@ -150,13 +143,9 @@ public class MyCreditDetailFragment extends BaseFragment {
     @ViewInject(R.id.time)
     private TextView time;
 
+
     @ViewInject(R.id.start_bj)
     private RelativeLayout rlbj;//补件
-    @ViewInject(R.id.rlUpload)
-    private RelativeLayout rlUpload;
-    @ViewInject(R.id.rlUpCredit)
-    private RelativeLayout rlUpCredit;
-
     private MyCreditBean.RowsEntity rowe;
 
     private Map<Integer, Boolean> map = new HashMap<>();
@@ -167,40 +156,33 @@ public class MyCreditDetailFragment extends BaseFragment {
 
     OrderDetailInfo.DataEntity data;
 
-    private ObjectAnimator obaDown;
-    private ObjectAnimator obaOn;
     private ObjectAnimator obaDownzl, obaDownzz, obaDownts;
     private ObjectAnimator obaOnzl, obaOnzz, obaOnts;
 
     private FinalLoadDialog dialog;
 
     private AddressUtil addressUtil;
-    private TextView tvRemarks;//备注
     private TextView tvCreditAmount;//sh
     private LinearLayout llCreditRemark;
-    private Intent intent;
 
     @Override
     public View initView(LayoutInflater inflater) {
 
-        View view = inflater.inflate(R.layout.activity_mycredit_detail, null);
+        @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.activity_mycredit_detail, null);
         ivBank = (ImageView) view.findViewById(R.id.ivBank);
         tvName = (TextView) view.findViewById(R.id.tvName);
         tvStatus = (TextView) view.findViewById(R.id.tvStatus);
         tvTotal = (TextView) view.findViewById(R.id.tvTotal);
         tvLimit = (TextView) view.findViewById(R.id.tvLimit);
         tvTime = (TextView) view.findViewById(R.id.tvTime);
-        tvLim = (TextView) view.findViewById(R.id.tvLim);
         tvYueG = (TextView) view.findViewById(R.id.tvYueG);
         tvHf = (TextView) view.findViewById(R.id.tvHf);
         tvT = (TextView) view.findViewById(R.id.tvT);
         tvFTime = (TextView) view.findViewById(R.id.tvFTime);
         tvRate = (TextView) view.findViewById(R.id.tvRate);
-        startMsg = (TextView) view.findViewById(R.id.start_msg);
         llzl = (LinearLayout) view.findViewById(R.id.llzl);
         llzz = (LinearLayout) view.findViewById(R.id.llzz);
         tvL = (TextView) view.findViewById(R.id.tvL);
-        tvRemarks = (TextView) view.findViewById(R.id.tv_remarks);
         tvCreditAmount = (TextView) view.findViewById(R.id.tv_credit_amount);
         llCreditRemark = (LinearLayout) view.findViewById(R.id.ll_credit_remark);
         return view;
@@ -210,7 +192,9 @@ public class MyCreditDetailFragment extends BaseFragment {
     public void initData(Bundle savedInstanceState) {
         addressUtil = new AddressUtil(getActivity());
         rowe = getArguments().getParcelable("rowe");
-        tvName.setText(rowe.getProductName());
+        if (rowe != null) {
+            tvName.setText(rowe.getProductName());
+        }
         dialog = new FinalLoadDialog(getActivity());
         getOrderDetail(rowe.getId());
 
@@ -254,12 +238,11 @@ public class MyCreditDetailFragment extends BaseFragment {
         mlv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                if (taskEntityList.get(position).getTaskStatus() == -1) {
-//                    findTaskStrategy(taskEntityList.get(position), position);
-                    return;
-                } else if ((taskEntityList.get(position).getTaskStatus() == 0) || (taskEntityList.get(position).getTaskStatus() == 1)) {
-                    findTaskDetail(taskEntityList.get(position), position);
+                if (taskEntityList.get(position).getTaskStatus() != -1) {
+                    if ((taskEntityList.get(position).getTaskStatus() == 0) || (taskEntityList.get(position).getTaskStatus() == 1)) {
+                        findTaskDetail(taskEntityList.get(position), position);
 
+                    }
                 }
             }
         });
@@ -366,10 +349,11 @@ public class MyCreditDetailFragment extends BaseFragment {
     /**
      * 获取订单详情数据
      *
-     * @param orderId
+     * @param orderId  订单id
      */
     private void getOrderDetail(String orderId) {
         RequestManager.getCommManager().checkMyOrderDetail(orderId, new RequestManager.CallBack() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onSucess(String result) throws JSONException {
                 OrderDetailInfo info = GsonUtils.json2Bean(result, OrderDetailInfo.class);
@@ -387,7 +371,7 @@ public class MyCreditDetailFragment extends BaseFragment {
                             tvTotal.setText( df2.format(data.getTotalAmount() / 10000) + "万");
                         }
                         if (!TextUtils.isEmpty(String.valueOf(data.getMinVal()))&&!TextUtils.isEmpty(String.valueOf(data.getMaxVal()))) {
-                            tvLimit.setText("额度范围：" + df.format(Double.valueOf(data.getMinVal()) / 10000) + "~" + df.format(Double.valueOf(data.getMaxVal()) / 10000) + "万");
+                            tvLimit.setText("额度范围：" + df.format(data.getMinVal() / 10000) + "~" + df.format(data.getMaxVal() / 10000) + "万");
                         }
                         if (!TextUtils.isEmpty(String.valueOf(data.getTimeMinVal()))&&!TextUtils.isEmpty(String.valueOf(data.getTimeMaxVal()))) {
                             tvL.setText("期限范围：" + data.getTimeMinVal() + "~" + data.getTimeMaxVal() + "月");
@@ -403,7 +387,7 @@ public class MyCreditDetailFragment extends BaseFragment {
                         }
 //                        tvT.setText("¥" + data.getTotalAmount());
 
-                        Double totalMPay = Arith.sub(Double.valueOf(data.getPeriodsAmount()) * data.getTotalPeriods(), Double.valueOf(data.getTotalAmount()));
+                        Double totalMPay = Arith.sub(data.getPeriodsAmount() * data.getTotalPeriods(), data.getTotalAmount());
                         tvT.setText( df2.format(totalMPay));
                         if (!TextUtils.isEmpty(String.valueOf(data.getLoanPeriod()))) {
                             tvFTime.setText(data.getLoanPeriod() + "个工作日");
@@ -600,13 +584,12 @@ public class MyCreditDetailFragment extends BaseFragment {
     }
 
     private List<TaskEntity> taskEntityList, finishList;//任务列表
-    private List<TaskStrategyEntity> taskStrategyEntityList;//任务策略列表
     private PrimaryTaskAdapter adapter;
 
     /**
      * 根据任务id查询任务列表内容
      *
-     * @param taskId
+     * @param taskId  任务id
      */
     private void findTaskBytaskIds(String taskId) {
         RequestManager.getUserManager().findTaskBytaskIds(taskId, new RequestManager.CallBack() {
@@ -670,7 +653,7 @@ public class MyCreditDetailFragment extends BaseFragment {
      * @param position 点击的位置
      */
     private void selectToFinishAct(List<TaskEntity> list, int position) {
-        Intent intent = null;
+        Intent intent;
         intent = new Intent();
         intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) list);
         intent.putExtra("position", position);
@@ -683,62 +666,9 @@ public class MyCreditDetailFragment extends BaseFragment {
     }
 
     /**
-     * 跳转到对应的做任务的界面
-     *
-     * @param listTask 任务列表
-     * @param list     任务策略列表
-     * @param position 点击的位置
-     */
-    private void selectToAct(List<TaskEntity> listTask, List<TaskStrategyEntity> list, int position) {
-        Intent intent = null;
-        intent = new Intent();
-        if (list.size() != 0) {
-            //根据任务策略的第一条数据中任务组件跳转
-            if (list.get(0).getModelType() == 5) {//上传
-                //判断是否已经完成任务，如果完成任务则显示任务详情（FinishTaskPicture只能看不能修改）否则进去能够执行的界面
-                intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) listTask);
-                intent.putExtra("position", position);
-                intent.putParcelableArrayListExtra("listStrategey", (ArrayList<? extends Parcelable>) list);
-                intent.setClass(getActivity(), DoTaskPicture.class);
-
-
-            } else if (list.get(0).getModelType() == 1) {//输入
-                //判断是否已经完成任务，如果完成任务则显示任务详情（FinishTaskPlaceAct只能看不能修改）否则进去能够执行的界面
-                intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) listTask);
-                intent.putExtra("position", position);
-                intent.putParcelableArrayListExtra("listStrategey", (ArrayList<? extends Parcelable>) list);
-                intent.setClass(getActivity(), DoTaskPlaceAct.class);
-
-            } else if (list.get(0).getModelType() == 3) {//单选
-                //判断是否已经完成任务，如果完成任务则显示任务详情（FinishTaskDetial只能看不能修改）否则进去能够执行的界面
-                intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) listTask);
-                intent.putParcelableArrayListExtra("listStrategey", (ArrayList<? extends Parcelable>) list);
-                intent.putExtra("position", position);
-                intent.setClass(getActivity(), TaskDetail.class);
-
-            } else if (list.get(0).getModelType() == 2) {//下拉
-                //判断是否已经完成任务，如果完成任务则显示任务详情（FinishTaskDetial只能看不能修改）否则进去能够执行的界面
-                intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) listTask);
-                intent.putParcelableArrayListExtra("listStrategey", (ArrayList<? extends Parcelable>) list);
-                intent.putExtra("position", position);
-                intent.setClass(getActivity(), TaskDetail.class);
-
-            } else if (list.get(0).getModelType() == 4) {//多选
-                //判断是否已经完成任务，如果完成任务则显示任务详情（FinishTaskDetial只能看不能修改）否则进去能够执行的界面
-                intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) listTask);
-                intent.putParcelableArrayListExtra("listStrategey", (ArrayList<? extends Parcelable>) list);
-                intent.putExtra("position", position);
-                intent.setClass(getActivity(), TaskDetail.class);
-
-            }
-            startActivity(intent);
-        }
-    }
-
-    /**
      * 根据任务查询任务详情（审核中，已完成）
      *
-     * @param taskEntity
+     * @param taskEntity  任务实体类
      */
     private void findTaskDetail(TaskEntity taskEntity, final int position) {
         dialog.show();
@@ -761,36 +691,6 @@ public class MyCreditDetailFragment extends BaseFragment {
             }
         });
     }
-
-    /**
-     * 根据任务查询任务策略
-     *
-     * @param taskEntity
-     */
-    private void findTaskStrategy(TaskEntity taskEntity, final int position) {
-        dialog.show();
-        RequestManager.getUserManager().findProTaskStrategy(taskEntity, new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
-                dialog.cancel();
-                JSONObject jsonObject = new JSONObject(result);
-                JSONArray dataArr = jsonObject.getJSONArray("data");
-                Gson gson = new Gson();
-                taskStrategyEntityList = gson.fromJson(dataArr.toString(), new TypeToken<List<TaskStrategyEntity>>() {
-                }.getType());
-
-                selectToAct(taskEntityList, taskStrategyEntityList, position);
-
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-                dialog.cancel();
-                MyToastUtils.showShortToast(getActivity(), msg);
-            }
-        });
-    }
-
 
     @Override
     public void onStart() {

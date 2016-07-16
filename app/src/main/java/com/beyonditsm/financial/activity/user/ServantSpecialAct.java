@@ -1,11 +1,9 @@
 package com.beyonditsm.financial.activity.user;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.PointF;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
@@ -14,11 +12,8 @@ import com.beyonditsm.financial.util.ParamsUtil;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 /**
- * Created by Administrator on 2016/5/18.
+ * Created by Administrator on 2016/5/18
  */
 public class ServantSpecialAct extends BaseActivity {
     @ViewInject(R.id.tv_1reward)
@@ -43,6 +38,7 @@ public class ServantSpecialAct extends BaseActivity {
         setContentView(R.layout.act_servantspecial);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void init(Bundle savedInstanceState) {
         setTopTitle("代言人指南");
@@ -94,7 +90,6 @@ public class ServantSpecialAct extends BaseActivity {
     /**
      * 点击事件
      *
-     * @param v
      */
     @OnClick({ R.id.im_url1, R.id.im_url2})
     public void toClick(View v) {

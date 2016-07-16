@@ -68,8 +68,7 @@ public class PicSelectAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		final int index = position;
-		final ImageBean ib = (ImageBean) getItem(index);
+		final ImageBean ib = (ImageBean) getItem(position);
 		final ViewHolder viewHolder;
 		if (convertView == null) {
 			viewHolder = new ViewHolder();
@@ -94,7 +93,7 @@ public class PicSelectAdapter extends BaseAdapter {
 
 		viewHolder.mImageView.setTag(ib.path);
 
-		if (index == 0) {
+		if (position == 0) {
 			viewHolder.mImageView.setImageResource(R.drawable.tk_photo);
 			viewHolder.mCheckBox.setVisibility(View.GONE);
 		} else {
@@ -150,10 +149,6 @@ public class PicSelectAdapter extends BaseAdapter {
 		return convertView;
 	}
 
-	/**
-	 * 
-	 * @param view
-	 */
 	private void addAnimation(View view) {
 		float[] vaules = new float[] { 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1.0f,
 				1.1f, 1.2f, 1.3f, 1.25f, 1.2f, 1.15f, 1.1f, 1.0f };

@@ -1,32 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:background="@drawable/item_back"
     android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:background="@drawable/item_back"
     android:minHeight="45dp"
-    android:layout_height="45dp">
+    android:orientation="vertical">
+
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_vertical">
-    <TextView
-        android:id="@+id/tv_degree"
-        android:text="博士及以上"
-        android:textSize="14sp"
-        android:textColor="#333333"
-        android:layout_marginLeft="15dp"
-        android:layout_weight="1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_degree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="1"
+            android:text="博士及以上"
+            android:textColor="#333333"
+            android:textSize="14sp" />
 
 
         <ImageView
             android:id="@+id/iv_yes"
-            android:layout_marginRight="25dp"
-            android:src="@mipmap/status_nor"
             android:layout_width="20dp"
-            android:layout_height="20dp" />
-        </LinearLayout>
+            android:layout_height="20dp"
+            android:layout_marginRight="25dp"
+            android:src="@mipmap/status_nor" />
+    </LinearLayout>
 
 </LinearLayout>

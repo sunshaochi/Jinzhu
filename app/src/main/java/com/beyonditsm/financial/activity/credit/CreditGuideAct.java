@@ -32,12 +32,6 @@ public class CreditGuideAct extends BaseActivity {
     @Override
     public void init(Bundle savedInstanceState) {
         getWidth();
-//        String roleName = SpUtils.getRoleName(getApplicationContext());
-//        if (!"ROLE_COMMON_CLIENT".equals(roleName)&&!TextUtils.isEmpty(roleName)){//非普通用户显示代言人指南
-//            setTopTitle("代言人指南");
-//            Bitmap bitmap = MyBitmapUtils.decodeSampledBitmapFromResource(getResources(), R.mipmap.servantguide, screenWidth/2, (int)(screenWidth/2/1000 * 2974));
-//            ivBg.setImageBitmap(bitmap);
-//        }else {
         setTopTitle("贷款指南");
 //        ivBg.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CENTER_CROP);
 //        ivBg.setScaleAndCenter(1.0F, new PointF(375, 0));

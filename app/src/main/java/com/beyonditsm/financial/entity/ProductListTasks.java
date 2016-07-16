@@ -11,9 +11,6 @@ public class ProductListTasks implements Parcelable{
     private String taskName;
     private String taskDesc;
 
-    public ProductListTasks(){
-
-    }
     protected ProductListTasks(Parcel in) {
         taskId = in.readString();
         taskName = in.readString();

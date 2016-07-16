@@ -10,12 +10,10 @@ import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.AppManager;
@@ -53,31 +51,24 @@ import io.rong.imlib.RongIMClient;
  * 注册
  * Created by Yang on 2015/11/11 0011.
  */
+@SuppressWarnings("deprecation")
 public class RegisterAct extends BaseActivity {
     private ClearEditText regPhone;//手机号
     private EditText regYzm;//验证码
     private TextView regYzmBtn;//获取验证码
-    private EditText regPwd;//密码
     //    private EditText regPwd2;//确认密码
     private EditText regYqm;//邀请码
-    private Button regBtn;//注册
     @ViewInject(R.id.cre_tk)
     private CheckBox cb;//金蛛条款
-    @ViewInject(R.id.intro)
-    private TextView intro;//金蛛条款说明
 
     @ViewInject(R.id.llYqm)
     private LinearLayout llYqm;
-    @ViewInject(R.id.rlSlide)
-    private RelativeLayout rlSlide;
     @ViewInject(R.id.ivSlide)
     private ImageView ivSlide;
 
     private String phone;
-    private String pwd;
     private String yzm;
     private String yqm;
-    private String pwd2;
 
     private int i = 60;
     private Timer timer;
@@ -94,10 +85,8 @@ public class RegisterAct extends BaseActivity {
         regPhone = (ClearEditText) findViewById(R.id.reg_phone);
         regYzm = (EditText) findViewById(R.id.reg_yzm);
         regYzmBtn = (TextView) findViewById(R.id.reg_yzm_btn);
-        regPwd = (EditText) findViewById(R.id.reg_pwd);
-//        regPwd2 = (EditText) findViewById(R.id.reg_pwd2);
+        //        regPwd2 = (EditText) findViewById(R.id.reg_pwd2);
         regYqm = (EditText) findViewById(R.id.reg_yqm);
-        regBtn = (Button) findViewById(R.id.reg_btn);
         TextView intro = (TextView) findViewById(R.id.intro);
         intro.setText(Html.fromHtml("<u>"+"《金蛛服务条款》"+"</u>"));
         intro.setTextColor(getResources().getColor(R.color.blue_color));
@@ -187,11 +176,10 @@ public class RegisterAct extends BaseActivity {
         RequestManager.getCommManager().toRegister(ue, phoneNumber, captcha, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
-                String token=null;
                 try {
                     JSONObject object = new JSONObject(result);
                     JSONObject data = object.getJSONObject("data");
-                     token = data.optString("rcToken");
+                    String token = data.optString("rcToken");
                     connect(token, result);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -267,8 +255,7 @@ public class RegisterAct extends BaseActivity {
     private boolean isValidate() {
         phone = regPhone.getText().toString().trim();
         yzm = regYzm.getText().toString().trim();
-        pwd = regPwd.getText().toString().trim();
-//        pwd2 = regPwd2.getText().toString().trim();
+        //        pwd2 = regPwd2.getText().toString().trim();
         yqm = regYqm.getText().toString().trim();
         if (TextUtils.isEmpty(phone)) {
             MyToastUtils.showShortToast(getApplicationContext(), "请输入正确的手机号");
@@ -325,6 +312,7 @@ public class RegisterAct extends BaseActivity {
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
 
+        @SuppressLint("SetTextI18n")
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -369,9 +357,8 @@ public class RegisterAct extends BaseActivity {
                     SpUtils.setRoleName(getApplicationContext(), "ROLE_COMMON_CLIENT");
                     SpUtils.setToken(getApplicationContext(), token);
 
-                    JSONObject jsonObject = null;
                     try {
-                        jsonObject = new JSONObject(result);
+                        JSONObject jsonObject = new JSONObject(result);
                         JSONObject data = jsonObject.getJSONObject("data");
 //                        String roleName = data.getString("roleName");
                         String accountId = data.optString("accountAlias");
@@ -381,7 +368,7 @@ public class RegisterAct extends BaseActivity {
                         if (JPushInterface.isPushStopped(getApplicationContext())) {
                             JPushInterface.resumePush(getApplicationContext());
                         }
-                        Set<String> set = new HashSet<String>();
+                        Set<String> set = new HashSet<>();
                         if (!TextUtils.isEmpty(agencyIdTag)) {
                             set.add(agencyIdTag);
                         }

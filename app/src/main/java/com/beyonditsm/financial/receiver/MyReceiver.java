@@ -35,7 +35,6 @@ import cn.jpush.android.api.JPushInterface;
  */
 public class MyReceiver extends BroadcastReceiver {
     private static final String TAG = "JPush";
-    private String orderId;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -73,36 +72,41 @@ public class MyReceiver extends BroadcastReceiver {
 
                     MyLogUtils.info("type="+type);
                     String roleName = SpUtils.getRoleName(context);
-                    if (type.equals("12")){//升级代言人推送
-                        MyLogUtils.info("升级代言人推送");
-                        SpUtils.setIsUpgrade(context, "isUpgrade");
-                        context.sendBroadcast(new Intent(ServiceMineFrg.DISPLAY_WALLET_RED));
-                    }else if (type.equals("5")||type.equals("7")){//贷款推送
-                        MyLogUtils.info("贷款推送");
-                        if (!TextUtils.isEmpty(roleName)){
-                            if ("ROLE_COMMON_CLIENT".equals(roleName)){
-                                context.sendBroadcast(new Intent(MineFragment.UPDATE_MESSAGE));
-                                context.sendBroadcast(new Intent(MineFragment.DISPLAY_POINT));
-                            }else{
-                                context.sendBroadcast(new Intent(ServiceMineFrg.DISPLAY_CREIDT_RED));
+                    switch (type) {
+                        case "12": //升级代言人推送
+                            MyLogUtils.info("升级代言人推送");
+                            SpUtils.setIsUpgrade(context, "isUpgrade");
+                            context.sendBroadcast(new Intent(ServiceMineFrg.DISPLAY_WALLET_RED));
+                            break;
+                        case "5":
+                        case "7": //贷款推送
+                            MyLogUtils.info("贷款推送");
+                            if (!TextUtils.isEmpty(roleName)) {
+                                if ("ROLE_COMMON_CLIENT".equals(roleName)) {
+                                    context.sendBroadcast(new Intent(MineFragment.UPDATE_MESSAGE));
+                                    context.sendBroadcast(new Intent(MineFragment.DISPLAY_POINT));
+                                } else {
+                                    context.sendBroadcast(new Intent(ServiceMineFrg.DISPLAY_CREIDT_RED));
+                                }
                             }
-                        }
-                        orderId = object.getString("orderId");
-                        MyLogUtils.info("orderId+" + orderId);
-                        if (!TextUtils.isEmpty(orderId)){
-                            SpUtils.setOrderId(MyApplication.getInstance(),orderId);
-                        }
-                    }else if (type.equals("13")){
-                        MyLogUtils.info("领取奖励推送");
-                        SpUtils.setReceiveReward(context, "isReceive");
-                        if (!TextUtils.isEmpty(roleName)){
-                            if ("ROLE_COMMON_CLIENT".equals(roleName)){
-                                context.sendBroadcast(new Intent(MineFragment.WALLET_POINT));
-                            }else{
-                                context.sendBroadcast(new Intent(ServiceMineFrg.DISPLAY_WALLET_RED));
+                            String orderId = object.getString("orderId");
+                            MyLogUtils.info("orderId+" + orderId);
+                            if (!TextUtils.isEmpty(orderId)) {
+                                SpUtils.setOrderId(MyApplication.getInstance(), orderId);
                             }
-                        }
+                            break;
+                        case "13":
+                            MyLogUtils.info("领取奖励推送");
+                            SpUtils.setReceiveReward(context, "isReceive");
+                            if (!TextUtils.isEmpty(roleName)) {
+                                if ("ROLE_COMMON_CLIENT".equals(roleName)) {
+                                    context.sendBroadcast(new Intent(MineFragment.WALLET_POINT));
+                                } else {
+                                    context.sendBroadcast(new Intent(ServiceMineFrg.DISPLAY_WALLET_RED));
+                                }
+                            }
 
+                            break;
                     }
 
 //                    Intent intent1 = new Intent(MyCreditAct.PUSH_MESSAGE);
@@ -126,7 +130,7 @@ public class MyReceiver extends BroadcastReceiver {
                 try {
                     JSONObject obj = new JSONObject(jsonType);
                     String type = obj.optString("type");
-                    Intent i = null;
+                    Intent i;
                     if ("1".equals(type)) {
                         i = new Intent(context, ManagerMainAct.class);
                     } else {
@@ -164,11 +168,11 @@ public class MyReceiver extends BroadcastReceiver {
         StringBuilder sb = new StringBuilder();
         for (String key : bundle.keySet()) {
             if (key.equals(JPushInterface.EXTRA_NOTIFICATION_ID)) {
-                sb.append("\nkey:" + key + ", value:" + bundle.getInt(key));
+                sb.append("\nkey:").append(key).append(", value:").append(bundle.getInt(key));
             } else if (key.equals(JPushInterface.EXTRA_CONNECTION_CHANGE)) {
-                sb.append("\nkey:" + key + ", value:" + bundle.getBoolean(key));
+                sb.append("\nkey:").append(key).append(", value:").append(bundle.getBoolean(key));
             } else {
-                sb.append("\nkey:" + key + ", value:" + bundle.getString(key));
+                sb.append("\nkey:").append(key).append(", value:").append(bundle.getString(key));
             }
         }
         return sb.toString();

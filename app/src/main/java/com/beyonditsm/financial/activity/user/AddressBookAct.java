@@ -3,7 +3,6 @@ package com.beyonditsm.financial.activity.user;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -13,7 +12,6 @@ import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.manager.ManagerMainAct;
-import com.beyonditsm.financial.activity.servicer.ServiceMainAct;
 import com.beyonditsm.financial.adapter.AddressBookAdapter;
 import com.beyonditsm.financial.db.FriendDao;
 import com.beyonditsm.financial.entity.FriendBean;
@@ -39,7 +37,7 @@ import java.util.List;
 import io.rong.imkit.RongIM;
 
 /**
- * Created by gxy on 2015/11/24.
+ * Created by gxy on 2015/11/24
  */
 
 public class AddressBookAct extends BaseActivity {
@@ -51,7 +49,6 @@ public class AddressBookAct extends BaseActivity {
     @ViewInject(R.id.dialog)
     private TextView dialog;
     private CharacterParserUtils characterParser;
-    private PinyinComparator pinyinComparator;
     private AddressBookAdapter adapter;
     private List<PhoneInfo> list;
 
@@ -65,7 +62,7 @@ public class AddressBookAct extends BaseActivity {
         setTopTitle("通讯录朋友");
         setLeftTv("返回");
         characterParser = CharacterParserUtils.getInstance();
-        pinyinComparator = new PinyinComparator();
+        PinyinComparator pinyinComparator = new PinyinComparator();
 
 //        GetPhoneNumberUtils.getNumber(getApplicationContext());
         sideBar.setTextView(dialog);
@@ -94,7 +91,7 @@ public class AddressBookAct extends BaseActivity {
     }
 
     private List<PhoneInfo> filledData(List<PhoneInfo> infoList) {
-        List<PhoneInfo> mSortList = new ArrayList<PhoneInfo>();
+        List<PhoneInfo> mSortList = new ArrayList<>();
 
         for (int i = 0; i < infoList.size(); i++) {
             PhoneInfo sortModel = new PhoneInfo();
@@ -118,27 +115,6 @@ public class AddressBookAct extends BaseActivity {
 
     }
 
-    /**
-     * @param filterStr
-     */
-    private void filterData(String filterStr) {
-        List<PhoneInfo> filterDateList = new ArrayList<PhoneInfo>();
-
-        if (TextUtils.isEmpty(filterStr)) {
-            filterDateList = GetPhoneNumberUtils.lists;
-        } else {
-            filterDateList.clear();
-            for (PhoneInfo sortModel : GetPhoneNumberUtils.lists) {
-                String name = sortModel.getName();
-                if (name.indexOf(filterStr.toString()) != -1 || characterParser.getSelling(name).startsWith(filterStr.toString())) {
-                    filterDateList.add(sortModel);
-                }
-            }
-        }
-
-        Collections.sort(filterDateList, pinyinComparator);
-        adapter.updateListView(filterDateList);
-    }
 
     private void addFriend(final String phone) {
         RequestManager.getCommManager().addFriend(phone, new RequestManager.CallBack() {
@@ -153,13 +129,17 @@ public class AddressBookAct extends BaseActivity {
                 } else if ("noFirend".equals(status)) {
                     sendBroadcast(new Intent(FriendFrg.UPDATA));
                     String roleName = SpUtils.getRoleName(getApplicationContext());
-                    if (roleName.equals("ROLE_CREDIT_MANAGER")) {
-                        sendBroadcast(new Intent(ManagerMainAct.UPDATATAB));
-                    } else if (roleName.equals("ROLE_COMMON_CLIENT")) {
-                        sendBroadcast(new Intent(MainActivity.UPDATATAB));
-                    } else {
-                        sendBroadcast(new Intent(MainActivity.UPDATATAB));
+                    switch (roleName) {
+                        case "ROLE_CREDIT_MANAGER":
+                            sendBroadcast(new Intent(ManagerMainAct.UPDATATAB));
+                            break;
+                        case "ROLE_COMMON_CLIENT":
+                            sendBroadcast(new Intent(MainActivity.UPDATATAB));
+                            break;
+                        default:
+                            sendBroadcast(new Intent(MainActivity.UPDATATAB));
 //                        sendBroadcast(new Intent(ServiceMainAct.UPDATATAB));
+                            break;
                     }
                     MyToastUtils.showShortToast(getApplicationContext(), jsonData.optString("message"));
                 } else  {

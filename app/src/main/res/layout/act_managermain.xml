@@ -2,13 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_color"
     android:orientation="vertical">
 
     <include layout="@layout/main_title" />
 
     <FrameLayout
-        android:id="@+id/main_frame"
+        android:id="@+id/managermain_fl"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
@@ -23,37 +22,37 @@
         android:layout_height="48dp"
         android:background="@color/bg_color"
         android:orientation="horizontal">
-        <!--钱包->首页-->
+
         <LinearLayout
-            android:id="@+id/llMyWallet"
+            android:id="@+id/llQd"
             style="@style/main_btm_ll">
 
             <ImageView
-                android:id="@+id/ivMyWallet"
+                android:id="@+id/ivQd"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:background="@drawable/tab_home_nor" />
+                android:background="@mipmap/tab_package_nor" />
 
             <TextView
-                android:id="@+id/tvMyWallet"
+                android:id="@+id/tvQd"
                 style="@style/main_btm_tv"
-                android:text="首页" />
+                android:text="抢单" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/llCredit"
+            android:id="@+id/lldd"
             style="@style/main_btm_ll">
 
             <ImageView
-                android:id="@+id/ivCredit"
+                android:id="@+id/ivdd"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:background="@mipmap/tab_credit_nor" />
+                android:background="@mipmap/tab_order_nor" />
 
             <TextView
-                android:id="@+id/tvCredit"
+                android:id="@+id/tvdd"
                 style="@style/main_btm_tv"
-                android:text="贷款" />
+                android:text="订单" />
         </LinearLayout>
 
         <RelativeLayout
@@ -87,31 +86,17 @@
                 android:layout_marginTop="5dp"
                 android:src="@drawable/unread_count_bg"
                 android:visibility="gone" />
-
         </RelativeLayout>
-
 
         <LinearLayout
             android:id="@+id/llMine"
             style="@style/main_btm_ll">
 
-            <RelativeLayout
-                android:id="@+id/rlMine"
+            <ImageView
+                android:id="@+id/ivMine"
                 android:layout_width="32dp"
-                android:layout_height="32dp">
-
-                <ImageView
-                    android:id="@+id/ivMine"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:background="@mipmap/tab_me_nor" />
-
-                <ImageView
-                    android:id="@+id/ivMs"
-                    style="@style/red_oval_style"
-                    android:layout_alignParentRight="true"
-                    android:visibility="gone" />
-            </RelativeLayout>
+                android:layout_height="32dp"
+                android:background="@mipmap/tab_me_nor" />
 
             <TextView
                 android:id="@+id/tvMine"
@@ -120,4 +105,5 @@
         </LinearLayout>
 
     </LinearLayout>
+
 </LinearLayout>

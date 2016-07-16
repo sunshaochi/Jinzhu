@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
-import com.beyonditsm.financial.view.viewpagerindicator.CirclePageIndicator;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 /**
@@ -20,11 +19,8 @@ import com.lidroid.xutils.view.annotation.ViewInject;
  * @author wangbin
  */
 public class GuideActivity extends BaseActivity {
-    @ViewInject(R.id.indicator)
-    private CirclePageIndicator indicator ;
     @ViewInject(R.id.pager)
     private ViewPager pager;
-    private GuidePagerAdapter adapter;
 
 
     private final static int[] guideImages = {R.drawable.guide1, R.drawable.guide2,
@@ -40,7 +36,7 @@ public class GuideActivity extends BaseActivity {
 
     @Override
     public void init(Bundle savedInstanceState) {
-        adapter = new GuidePagerAdapter();
+        GuidePagerAdapter adapter = new GuidePagerAdapter();
         pager.setAdapter(adapter);
 //        indicator.setViewPager(pager);
     }
@@ -64,7 +60,7 @@ public class GuideActivity extends BaseActivity {
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            ((ViewPager) container).removeView((View) object);
+            container.removeView((View) object);
         }
 
         @Override
@@ -99,7 +95,7 @@ public class GuideActivity extends BaseActivity {
                 }
             });
 
-            ((ViewPager) container).addView(view);
+            container.addView(view);
 
             return view;
         }

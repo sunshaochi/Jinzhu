@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <include layout="@layout/title_act_layout"></include>
+    <include layout="@layout/title_act_layout"/>
 
     <ScrollView
         android:id="@+id/criSv"
@@ -38,15 +38,17 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
                         <TextView
                             android:id="@+id/tv_name"
                             style="@style/cre_et"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:visibility="invisible"
                             android:gravity="center_vertical"
-                            android:hint="姓名" />
+                            android:hint="姓名"
+                            android:visibility="invisible" />
+
                         <EditText
                             android:id="@+id/name"
                             style="@style/cre_et"
@@ -72,17 +74,17 @@
                         android:id="@+id/cb_select_sex"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="75dp"
-                        android:button="@null"
                         android:background="@drawable/select_sex"
-                        android:layout_centerVertical="true"/>
+                        android:button="@null" />
+
                     <RelativeLayout
                         android:layout_width="65dp"
                         android:layout_height="31dp"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="95dp"
-                        android:visibility="gone"
-                        >
+                        android:visibility="gone">
 
                         <com.beyonditsm.financial.widget.ToggleButton
                             android:id="@+id/tbSex"
@@ -93,23 +95,22 @@
                             app:borderWidth="1px"
                             app:offColor="#f76e95"
                             app:onColor="#6ca9ee"
-                            app:spotColor="#fff"
-                            />
+                            app:spotColor="#fff" />
 
                         <ImageView
                             android:layout_width="15dp"
                             android:layout_height="18dp"
                             android:layout_centerVertical="true"
-                            android:src="@mipmap/male"
-                            android:layout_marginLeft="11dp"/>
+                            android:layout_marginLeft="11dp"
+                            android:src="@mipmap/male" />
 
                         <ImageView
                             android:layout_width="15dp"
                             android:layout_height="18dp"
-                            android:layout_centerVertical="true"
                             android:layout_alignParentRight="true"
-                            android:src="@mipmap/femlae"
-                            android:layout_marginRight="11dp"/>
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="11dp"
+                            android:src="@mipmap/femlae" />
 
                     </RelativeLayout>
 
@@ -119,8 +120,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="95dp"
-                        android:visibility="gone"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <RadioButton
                             android:id="@+id/sex_man"
@@ -162,6 +163,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
                         <TextView
                             android:id="@+id/tv_age"
                             style="@style/cre_et"
@@ -169,8 +171,9 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:gravity="center_vertical"
-                            android:visibility="invisible"
-                            android:hint="年龄" />
+                            android:hint="年龄"
+                            android:visibility="invisible" />
+
                         <EditText
                             android:id="@+id/age"
                             style="@style/cre_et"
@@ -194,6 +197,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
                         <TextView
                             android:id="@+id/tv_IdCard"
                             style="@style/cre_et"
@@ -201,8 +205,9 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:gravity="center_vertical"
-                            android:visibility="gone"
-                            android:hint="身份证号" />
+                            android:hint="身份证号"
+                            android:visibility="gone" />
+
                         <EditText
                             android:id="@+id/IdCard"
                             style="@style/cre_et"
@@ -257,6 +262,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
                         <TextView
                             android:id="@+id/tvaddress"
                             style="@style/cre_et"
@@ -264,8 +270,9 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:gravity="center_vertical"
-                            android:visibility="gone"
-                            android:hint="详细地址" />
+                            android:hint="详细地址"
+                            android:visibility="gone" />
+
                         <EditText
                             android:id="@+id/address"
                             style="@style/cre_et"

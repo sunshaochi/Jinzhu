@@ -13,6 +13,6 @@
         android:layout_height="2px"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="56dp"
-        android:background="@color/line_color"></View>
+        android:background="@color/line_color"/>
 
 </RelativeLayout>

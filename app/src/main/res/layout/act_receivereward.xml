@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <include layout="@layout/title_act_layout" />
 
@@ -17,8 +17,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RelativeLayout
-                style="@style/receive_reward">
+            <RelativeLayout style="@style/receive_reward">
 
                 <TextView
                     style="@style/tv_primary_style"
@@ -33,26 +32,27 @@
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
-            <RelativeLayout
-                style="@style/receive_reward">
 
-            <TextView
-                style="@style/tv_primary_style"
-                android:layout_centerVertical="true"
-                android:text="性别" />
+            <RelativeLayout style="@style/receive_reward">
 
-            <CheckBox
-                android:id="@+id/cb_select_sex"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="75dp"
-                android:background="@drawable/select_sex"
-                android:button="@null" />
+                <TextView
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true"
+                    android:text="性别" />
+
+                <CheckBox
+                    android:id="@+id/cb_select_sex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="75dp"
+                    android:background="@drawable/select_sex"
+                    android:button="@null" />
             </RelativeLayout>
+
             <View style="@style/view_line"></View>
-            <RelativeLayout
-                style="@style/receive_reward">
+
+            <RelativeLayout style="@style/receive_reward">
 
                 <TextView
                     style="@style/tv_primary_style"
@@ -68,8 +68,7 @@
 
             <View style="@style/view_line"></View>
 
-            <RelativeLayout
-                style="@style/receive_reward">
+            <RelativeLayout style="@style/receive_reward">
 
                 <TextView
                     style="@style/tv_primary_style"
@@ -85,8 +84,8 @@
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
-            <RelativeLayout
-                style="@style/receive_reward">
+
+            <RelativeLayout style="@style/receive_reward">
 
                 <TextView
                     style="@style/tv_primary_style"
@@ -101,6 +100,7 @@
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
+
             <RelativeLayout
                 android:id="@+id/rlPosition"
                 style="@style/receive_reward">
@@ -121,7 +121,6 @@
             <View style="@style/view_line"></View>
 
 
-
             <RelativeLayout
                 android:id="@+id/rl_marrayed"
                 style="@style/receive_reward"
@@ -140,6 +139,7 @@
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
+
             <RelativeLayout
                 android:id="@+id/rl_work"
                 style="@style/receive_reward"
@@ -251,10 +251,10 @@
                 android:id="@+id/btn_receiveReward"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/button_gen"
                 android:text="领取奖励"
                 android:textColor="@color/white"

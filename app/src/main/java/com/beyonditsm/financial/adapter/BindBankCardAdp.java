@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -15,23 +16,16 @@ import com.beyonditsm.financial.http.RequestManager;
 
 import org.json.JSONException;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/3/15.
+ * Created by Administrator on 2016/3/15
  */
 public class BindBankCardAdp extends BaseAdapter {
     private Context context;
     private List<QueryBankCardEntity> list;
     private final LayoutInflater inflater;
-
-    // 标记当前选择的银行卡
-    private int index = -1;
     private int status;
-
-    HashMap<String, Boolean> isSelecteds = new HashMap<>();
-    private TextView tvStatus;
 
     public BindBankCardAdp(Context context, List<QueryBankCardEntity> list) {
         this.context = context;
@@ -59,6 +53,7 @@ public class BindBankCardAdp extends BaseAdapter {
         return position;
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
@@ -68,8 +63,7 @@ public class BindBankCardAdp extends BaseAdapter {
             holder.tvBankName = (TextView) convertView.findViewById(R.id.tv_bankName);
             holder.tvCardNo = (TextView) convertView.findViewById(R.id.tv_cardNo);
             holder.jiebang = (TextView) convertView.findViewById(R.id.jiebang);
-            tvStatus = (TextView) convertView.findViewById(R.id.tv_status);
-            holder.tvStatus = tvStatus;
+            holder.tvStatus = (TextView) convertView.findViewById(R.id.tv_status);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();

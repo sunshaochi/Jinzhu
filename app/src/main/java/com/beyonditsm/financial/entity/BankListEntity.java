@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by Administrator on 2016/3/17.
+ * Created by Administrator on 2016/3/17
  */
 public class BankListEntity implements Parcelable {
     private String bankName;

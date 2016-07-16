@@ -5,28 +5,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.adapter.BaseTaskAdapter;
-import com.beyonditsm.financial.adapter.PrimaryTaskAdapter;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.entity.UserEvent;
 import com.beyonditsm.financial.fragment.MineFragment;
-import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.tandong.sa.eventbus.EventBus;
-import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
 import org.json.JSONException;
 
@@ -60,7 +53,7 @@ public class BaseTaskAct extends BaseActivity {
         lv_task.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = null;
+                Intent intent;
                 intent = new Intent();
                 switch (position) {
                     case 0:
@@ -116,6 +109,7 @@ public class BaseTaskAct extends BaseActivity {
     }
     private void getUsetInfo(){
         RequestManager.getCommManager().findUserInfo(new RequestManager.CallBack() {
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) throws JSONException {
                 ResultData<UserEntity> rd= (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);

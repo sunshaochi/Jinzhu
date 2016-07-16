@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +45,7 @@ public class BalancePaymentsAct extends BaseActivity{
         initImageView();
         initViewpager();
 
-        textArras[0].setTextColor(getResources().getColor(R.color.main_color));
+        textArras[0].setTextColor(ContextCompat.getColor(BalancePaymentsAct.this,R.color.main_color));
     }
     private void initViewpager() {
         ArrayList<Fragment> fragmentList = new ArrayList<>();
@@ -57,7 +58,7 @@ public class BalancePaymentsAct extends BaseActivity{
         fragmentList.add(couponsFragment);
         fragmentList.add(rebateFragment);
         myCreditViewpager.setAdapter(new MyAdapter(getSupportFragmentManager(), fragmentList));
-        myCreditViewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        myCreditViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -66,11 +67,11 @@ public class BalancePaymentsAct extends BaseActivity{
             @Override
             public void onPageSelected(int position) {
                 for (int i = 0; i < textArras.length; i++) {
-                    textArras[i].setTextColor(getResources().getColor(R.color.tv_second_color));
+                    textArras[i].setTextColor(ContextCompat.getColor(BalancePaymentsAct.this,R.color.tv_second_color));
                     imageArras[i].setBackgroundColor(Color.TRANSPARENT);
                 }
-                textArras[position].setTextColor(getResources().getColor(R.color.main_color));
-                imageArras[position].setBackgroundColor(getResources().getColor(R.color.main_color));
+                textArras[position].setTextColor(ContextCompat.getColor(BalancePaymentsAct.this,R.color.main_color));
+                imageArras[position].setBackgroundColor(ContextCompat.getColor(BalancePaymentsAct.this,R.color.main_color));
             }
 
             @Override
@@ -89,7 +90,7 @@ public class BalancePaymentsAct extends BaseActivity{
             imageArras[i].setTag(i);
             imageArras[i].setBackgroundColor(Color.TRANSPARENT);
         }
-        imageArras[0].setBackgroundColor(getResources().getColor(R.color.main_color));
+        imageArras[0].setBackgroundColor(ContextCompat.getColor(BalancePaymentsAct.this,R.color.main_color));
     }
     private void initTextView() {
         LinearLayout tabTextLayout = (LinearLayout) findViewById(R.id.tabTextLayout);
@@ -111,9 +112,6 @@ public class BalancePaymentsAct extends BaseActivity{
 
         private FragmentManager fm;
         private List<Fragment> fragmentList =null;
-        public MyAdapter(FragmentManager fm) {
-            super(fm);
-        }
 
         public MyAdapter(FragmentManager fm,List<Fragment> fragmentList){
             super(fm);

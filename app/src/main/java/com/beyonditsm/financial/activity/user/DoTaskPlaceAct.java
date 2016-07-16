@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,8 +32,6 @@ public class DoTaskPlaceAct extends BaseActivity {
     private TextView tv_place;
     @ViewInject(R.id.et_place)
     private EditText et_place;
-    @ViewInject(R.id.btn_submit)
-    private Button btn_submit;
 
     private List<TaskEntity> list;
     private List<TaskStrategyEntity> strategyList;

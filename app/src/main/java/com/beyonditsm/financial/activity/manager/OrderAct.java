@@ -6,8 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
@@ -20,21 +18,16 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
  * Created by Yang on 2015/11/16 0016.
  */
 public class OrderAct extends BaseActivity {
-    private RelativeLayout rlBack;
     private TextView waitCommit;
     private TextView alreadyCommit;
-    private FrameLayout orderactFl;
 
     private FragmentManager manager;
-    private FragmentTransaction transaction;
 
     private Fragment waitFrg, alreadyFrg;//待提交，已提交
 
     private void assignViews() {
-        rlBack = (RelativeLayout) findViewById(R.id.rl_back);
         waitCommit = (TextView) findViewById(R.id.wait_commit);
         alreadyCommit = (TextView) findViewById(R.id.already_commit);
-        orderactFl = (FrameLayout) findViewById(R.id.orderact_fl);
     }
 
     @Override
@@ -74,7 +67,7 @@ public class OrderAct extends BaseActivity {
     }
 
     private void setTabSelection(int position) {
-        transaction = manager.beginTransaction();
+        FragmentTransaction transaction = manager.beginTransaction();
         hideFragments(transaction);
         Bundle bundle;
         switch (position) {

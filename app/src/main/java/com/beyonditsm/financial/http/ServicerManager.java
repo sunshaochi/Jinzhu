@@ -1,9 +1,9 @@
 package com.beyonditsm.financial.http;
 
-import com.beyonditsm.financial.entity.ServantWithdrawEntity;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.util.GsonUtils;
 
+import org.apache.http.NameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,32 +21,32 @@ public class ServicerManager extends RequestManager{
 
     /**
      * 获取代言人信息
-     * @param callBack
+     * @param callBack  回调
      */
     public void findServantDetail(CallBack callBack){
-        List params=new ArrayList<>();
+        List<NameValuePair> params=new ArrayList<>();
         doPost(IFinancialUrl.SERVANT_URL, params, callBack);
     }
 
     /**
      * 更改代言人资料
-     * @param callBack
+     * @param callBack  回调
      */
     public void UpadateServantData(UserEntity userEntity,CallBack callBack){
-        Map<String,String> params=new HashMap<String,String>();
+        Map<String,String> params= new HashMap<>();
         String json= GsonUtils.bean2Json(userEntity);
         try {
             JSONObject obj=new JSONObject(json);
-            if((obj.toString()).indexOf("createTime")!=-1){
+            if((obj.toString()).contains("createTime")){
                 obj.remove("createTime");
             }
-            if((obj.toString()).indexOf("createPersonId")!=-1){
+            if((obj.toString()).contains("createPersonId")){
                 obj.remove("createPersonId");
             }
-            if((obj.toString()).indexOf("modifyTime")!=-1){
+            if((obj.toString()).contains("modifyTime")){
                 obj.remove("modifyTime");
             }
-            if((obj.toString()).indexOf("modifyPersonId")!=-1){
+            if((obj.toString()).contains("modifyPersonId")){
                 obj.remove("modifyPersonId");
             }
             Iterator<String> it=obj.keys();
@@ -59,29 +59,5 @@ public class ServicerManager extends RequestManager{
         }
         params.put("json",json);
         doPost(IFinancialUrl.UPDATE_SERVANT_URL, params, callBack);
-    }
-
-    /**
-     * 提现
-     * @param amount
-     */
-    public void serviceWithDraw(String amount,CallBack callBack){
-        Map<String,String> params=new HashMap<String,String>();
-        params.put("amount", amount);
-        doPost(IFinancialUrl.SERVICE_WITH_DRAW_URL, params, callBack);
-    }
-
-    /**
-     * 查询提现返佣记录
-     * @param swe
-     * @param callBack
-     */
-    public void findServantWithdraw(ServantWithdrawEntity swe,CallBack callBack){
-//        List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
-//        queryParams.add(new BasicNameValuePair("startTime",swe.getStartTime()+""));
-//        queryParams.add(new BasicNameValuePair("endTime",swe.getEndTime()+""));
-//        queryParams.add(new BasicNameValuePair("page",swe.getPage()+""));
-//        queryParams.add(new BasicNameValuePair("rows", swe.getRows() + ""));
-        doGet(IFinancialUrl.FIND_SERVANT_WITHDRAW+"?page="+swe.getPage()+"&rows="+swe.getRows(), callBack);
     }
 }

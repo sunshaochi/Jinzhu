@@ -33,7 +33,7 @@ public class FriendDao extends TemplateDAO<FriendBean, String> {
     /**
      * 插入消息
      *
-     * @param friend
+     * @param friend 好友实体类
      */
     public static void saveMes(FriendBean friend) {
         getDao().insert(friend);
@@ -42,11 +42,9 @@ public class FriendDao extends TemplateDAO<FriendBean, String> {
     /**
      * 查找所有的
      *
-     * @return
      */
     public static List<FriendBean> findfriend() {
-        List<FriendBean> datas = getDao().find(null, "user_id", null, null, null, null, null);
-        return datas;
+        return getDao().find(null, "user_id", null, null, null, null, null);
     }
 
     /**

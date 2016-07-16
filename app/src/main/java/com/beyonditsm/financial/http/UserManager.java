@@ -18,18 +18,9 @@ import java.util.Map;
 public class UserManager extends RequestManager {
 
     /**
-     * 查询用户的任务列表
-     *
-     * @param callBack
-     */
-    public void findTaskList(final CallBack callBack) {
-        doGet(IFinancialUrl.TASK_LIST, callBack);
-    }
-
-    /**
      * 查询用户的所有任务列表（未完成，审核中，已完成）
      *
-     * @param callBack
+     * @param callBack  回调
      */
     public void findAllTask(final CallBack callBack) {
         doGet(IFinancialUrl.ALLTASK_URL, callBack);
@@ -38,8 +29,8 @@ public class UserManager extends RequestManager {
     /**
      * 根据任务id查询已提交的任务详情
      *
-     * @param taskEntity
-     * @param callBack
+     * @param taskEntity  任务实体类
+     * @param callBack  回调
      */
     public void findTaskDetail(TaskEntity taskEntity, CallBack callBack) {
 //        List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
@@ -50,8 +41,8 @@ public class UserManager extends RequestManager {
     /**
      * 根据产品列表任务id查询已提交任务详情
      *
-     * @param taskEntity
-     * @param callBack
+     * @param taskEntity 任务实体类
+     * @param callBack  回调
      */
     public void findProTaskDetail(TaskEntity taskEntity, CallBack callBack) {
         doGet(IFinancialUrl.FINISH_DO_URL + "?taskId=" + taskEntity.getTaskId(), callBack);
@@ -60,22 +51,13 @@ public class UserManager extends RequestManager {
     /**
      * 根据任务id查询任务策略
      *
-     * @param taskEntity
-     * @param callBack
+     * @param taskEntity 任务实体类
+     * @param callBack  回调
      */
     public void findTaskStrategy(TaskEntity taskEntity, CallBack callBack) {
         doGet(IFinancialUrl.TASK_STRATEGY + "?taskId=" + taskEntity.getId(), callBack);
     }
 
-    /**
-     * 根据任务id查询任务策略
-     *
-     * @param taskEntity
-     * @param callBack
-     */
-    public void findProTaskStrategy(TaskEntity taskEntity, CallBack callBack) {
-        doGet(IFinancialUrl.TASK_STRATEGY + "?taskId=" + taskEntity.getTaskId(), callBack);
-    }
 
     public void findTaskBytaskIds(String taskId, CallBack callBack) {
 //        List<NameValuePair> queryParams=new ArrayList<>();
@@ -86,32 +68,24 @@ public class UserManager extends RequestManager {
     /**
      * 做任务(提交任务相关信息)
      *
-     * @param json
-     * @param callBack
+     * @param json 整个json
+     * @param callBack  回调
      */
     public void addTaskAnswer(String json, CallBack callBack) {
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         params.put("answerJsonStr", json);
         doPost(IFinancialUrl.DOTASK, params, callBack);
     }
 
-    /**
-     * 查询已完成任务列表
-     *
-     * @param callBack
-     */
-    public void findFinishTaskByAccount(CallBack callBack) {
-        doGet(IFinancialUrl.TASK_FINISH_URL, callBack);
-    }
 
     /**
      * 查找我推荐的好友列表
      *
-     * @param fre
-     * @param callBack
+     * @param fre 我的推荐实体类
+     * @param callBack  回调
      */
     public void findFriendList(MyRecommeEntity fre, final CallBack callBack) {
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         params.put("page", fre.getPage() + "");
         params.put("rows", fre.getRows() + "");
         doPost(IFinancialUrl.FIND_MY_FRIEND_LIST_URL, params, callBack);
@@ -120,10 +94,10 @@ public class UserManager extends RequestManager {
     /**
      * 计算月供
      *
-     * @param callBack
+     * @param callBack  回调
      */
     public void getMonthPay(String repaymentMoney, String rate, String month, CallBack callBack) {
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         params.put("repaymentMoney", repaymentMoney);
         params.put("month", month);
         params.put("rate", rate);
@@ -131,25 +105,13 @@ public class UserManager extends RequestManager {
     }
 
     /**
-     * @param servantRoleType servantRoleType - 参数说明如下： servantRoleType 普通用户升级初级代言人 赋值 primary_servant 中级代言人升级中级代言人 赋值 middle_servant 中级代言人升级为高级代言人 赋值 senior_servant
-     * @param callBack
-     */
-    public void uptoServant(String servantRoleType, CallBack callBack) {
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("servantRoleType", servantRoleType);
-        doPost(IFinancialUrl.UPTOSERVANT_URL, params, callBack);
-
-    }
-
-
-    /**
      * 查询热门产品列表
      *
-     * @param hp
-     * @param callBack
+     * @param hp 热门产品entity
+     * @param callBack  回调
      */
     public void findHotProductList(HotProduct hp, CallBack callBack) {
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         params.put("page", hp.getPage() + "");
         params.put("rows", hp.getRows() + "");
         doPost(IFinancialUrl.FIND_HOT_PRODUCT_LIST, params, callBack);
@@ -159,11 +121,11 @@ public class UserManager extends RequestManager {
     /**
      * 获取超过多少的用户
      *
-     * @param creditScore
-     * @param callBack
+     * @param creditScore 信用分
+     * @param callBack  回调
      */
     public void getScorePer(String creditScore, CallBack callBack) {
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         params.put("creditScore", creditScore);
         doPost(IFinancialUrl.GET_SCORE_PER_URL, params, callBack);
     }
@@ -171,7 +133,7 @@ public class UserManager extends RequestManager {
     /**
      * 查看当前登陆人的信息
      *
-     * @param callBack
+     * @param callBack  回调
      */
     public void findUserLoginInfo(CallBack callBack) {
 //        Map<String, String> params = new HashMap<String, String>();
@@ -180,25 +142,13 @@ public class UserManager extends RequestManager {
     }
 
     public void findOrderDealHistory(String orderId, CallBack callBack) {
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         params.put("orderId", orderId);
         doPost(IFinancialUrl.FIND_ORDER_DEAL_HISTORY, params, callBack);
     }
 
-    /**
-     * 上传其他附件
-     *
-     * @param orderNo
-     * @param callBack
-     */
-    public void uploadOtherAccessory(String orderNo, CallBack callBack) {
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("orderNo", orderNo);
-        doPost(IFinancialUrl.OTHER_FILE_URL, params, callBack);
-    }
-
     public void findOrderDetailById(String productId, CallBack callBack) {
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         params.put("productId", productId);
         doPost(IFinancialUrl.FIND_ORDER_DETAIL, params, callBack);
     }
@@ -206,11 +156,11 @@ public class UserManager extends RequestManager {
     /**
      * 更改订单状态
      *
-     * @param orderId
-     * @param callBack
+     * @param orderId 订单id
+     * @param callBack  回调
      */
     public void updateOrder(String orderId, CallBack callBack) {
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         params.put("orderId", orderId);
         doPost(IFinancialUrl.UPDATE_ORDER, params, callBack);
     }
@@ -218,11 +168,11 @@ public class UserManager extends RequestManager {
     /**
      * 取消订单
      *
-     * @param orderId
-     * @param callBack
+     * @param orderId 订单id
+     * @param callBack  回调
      */
     public void cancelOrder(String orderId, CallBack callBack) {
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         params.put("orderId", orderId);
         doPost(IFinancialUrl.CANCEL_ORDER, params, callBack);
     }

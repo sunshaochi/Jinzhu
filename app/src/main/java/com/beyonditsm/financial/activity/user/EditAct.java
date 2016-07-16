@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.activity.user;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -107,8 +108,9 @@ public class EditAct extends BaseActivity {
     /**
      * 设置顶部标题
      *
-     * @param position
+     * @param position position
      */
+    @SuppressLint("SetTextI18n")
     private void setTopT(int position) {
 
         switch (position) {
@@ -186,7 +188,7 @@ public class EditAct extends BaseActivity {
 
     /**
      * 更新资料
-     * @param ue
+     * @param ue 用户实体类
      */
     private void updateData(final UserEntity ue){
         RequestManager.getCommManager().updateData(ue, new RequestManager.CallBack() {

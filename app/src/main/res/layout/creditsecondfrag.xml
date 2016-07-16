@@ -299,7 +299,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:src="@mipmap/slide"
-                        android:visibility="gone"/>
+                        android:visibility="gone" />
 
                     <View
                         android:layout_width="match_parent"
@@ -310,7 +310,7 @@
                         android:layout_toLeftOf="@id/ivSlide"
                         android:layout_toRightOf="@id/zz"
                         android:background="#dfdfdf"
-                        android:visibility="gone"></View>
+                        android:visibility="gone" />
                 </RelativeLayout>
 
 

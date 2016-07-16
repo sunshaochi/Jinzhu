@@ -1,8 +1,6 @@
 package com.beyonditsm.financial.activity;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,9 +8,7 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -24,7 +20,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.beyonditsm.financial.AppManager;
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.RongCloudEvent;
@@ -51,10 +46,6 @@ import com.beyonditsm.financial.util.SpUtils;
 import com.lidroid.xutils.util.LogUtils;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.eventbus.EventBus;
-import com.tandong.sa.json.Gson;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
@@ -79,29 +70,17 @@ public class MainActivity extends BaseActivity {
     private TextView title_chat;
     private TextView title_friend;
     private RelativeLayout main_title;
-    private RelativeLayout add_friend;//添加通讯录好友
 
     private FragmentManager manager;
     private Fragment myCreditFgt, creditFgt, friendFgt, mineFgt;//我的信用，贷款，朋友，我的
     private ConversationListFragment listFragment;
-    private ProgressDialog mDialog;
-    private List<UserEntity> friends = new ArrayList<>();
-    private List<FriendBean> friendBeans = new ArrayList<>();
     /**
      * 按两次退出键时间小于2秒退出
      */
     private final static long WAITTIME = 2000;
     private long touchTime = 0;
-    /**
-     * 会话列表的fragment
-     */
-    private Fragment mConversationFragment = null;
     private int title = 1;
-    private Gson gson = new Gson();
 
-    private int game_type;
-
-    private GeneralUtils gUtils;
     private ImageView ivRedPoint;
     private DisplayRedPointReceiver displayRedReceiver;
     private HideRedPointReceiver hideRedPointReceiver;
@@ -122,7 +101,6 @@ public class MainActivity extends BaseActivity {
         title_chat = (TextView) findViewById(R.id.title_chat);
         title_friend = (TextView) findViewById(R.id.title_friend);
         main_title = (RelativeLayout) findViewById(R.id.main_title);
-        add_friend = (RelativeLayout) findViewById(R.id.add_friend);
         ivRedPoint = (ImageView) findViewById(R.id.ivMs);
     }
 
@@ -133,13 +111,13 @@ public class MainActivity extends BaseActivity {
 //        Log.d(TAG,"onAttachFragment");
 
         if (myCreditFgt == null && fragment instanceof HomeFragment) {
-            myCreditFgt = (HomeFragment)fragment;
+            myCreditFgt = fragment;
         }else if (creditFgt == null && fragment instanceof CreditFragment) {
-            creditFgt = (CreditFragment)fragment;
+            creditFgt = fragment;
         }else if (friendFgt == null && fragment instanceof FriendFrg) {
-            friendFgt = (FriendFrg)fragment;
+            friendFgt = fragment;
         }else if (mineFgt == null && fragment instanceof MineFragment){
-            mineFgt = (MineFragment)fragment;
+            mineFgt = fragment;
         }
     }
 
@@ -159,7 +137,7 @@ public class MainActivity extends BaseActivity {
         manager = getSupportFragmentManager();
 //        initFragment(savedInstanceState);
         ParamsUtil.getInstance().setMainAct(this);
-        gUtils = new GeneralUtils();
+        GeneralUtils gUtils = new GeneralUtils();
 
 
         //注册EventBus
@@ -181,7 +159,6 @@ public class MainActivity extends BaseActivity {
 //        }
         setTabSelection(0);
         setCheckItem(0);
-        mDialog = new ProgressDialog(this);
         String token = SpUtils.getToken(MainActivity.this);
         if (!TextUtils.isEmpty(token)) {
             getUserInfo();
@@ -215,6 +192,7 @@ public class MainActivity extends BaseActivity {
     private void getUserInfo() {
 
         RequestManager.getCommManager().findUserInfo(new RequestManager.CallBack() {
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) {
                 ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
@@ -283,7 +261,6 @@ public class MainActivity extends BaseActivity {
     /**
      * 点击事件
      *
-     * @param
      */
     @OnClick({R.id.llMyCredit, R.id.llCredit, R.id.llChat, R.id.llMine, R.id.add_friend, R.id.title_chat
             , R.id.title_friend})
@@ -303,7 +280,7 @@ public class MainActivity extends BaseActivity {
                 break;
             //沟通
             case R.id.llChat:
-                if (TextUtils.isEmpty(SpUtils.getRoleName(MainActivity.this).toString())) {
+                if (TextUtils.isEmpty(SpUtils.getRoleName(MainActivity.this))) {
 //                    Intent intent = new Intent(MainActivity.this,LoginAct.class);
 //                    ParamsUtil.getInstance().setMainAct((Activity)getBaseContext());
                     gotoActivity(LoginAct.class, false);
@@ -328,7 +305,7 @@ public class MainActivity extends BaseActivity {
                 break;
             //我的
             case R.id.llMine:
-                if (TextUtils.isEmpty(SpUtils.getRoleName(MainActivity.this).toString())) {
+                if (TextUtils.isEmpty(SpUtils.getRoleName(MainActivity.this))) {
                     gotoActivity(LoginAct.class, false);
                 } else {
                     setAllTabNor();
@@ -369,35 +346,6 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    //6.0系统（API23）下检查并申请权限
-    private void findContactsPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
-            //申请读取联系人权限
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS}, READ_CONTACTS_REQUEST_CODE);
-        } else {
-            Intent intent = new Intent(MainActivity.this, AddressBookAct.class);
-            startActivity(intent);
-        }
-    }
-
-    //6.0系统用户选择允许或者取消之后回调
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        doNext(requestCode, grantResults);
-    }
-
-    private void doNext(int requestCode, int[] grantResults) {
-        if (requestCode == READ_CONTACTS_REQUEST_CODE) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {//权限授予
-                Intent intent = new Intent(MainActivity.this, AddressBookAct.class);
-                startActivity(intent);
-            } else {//权限否认
-                MyToastUtils.showShortToast(getApplicationContext(), "没有权限");
-            }
-        }
-    }
-
     /**
      * 底部全部切换普通
      */
@@ -426,11 +374,11 @@ public class MainActivity extends BaseActivity {
         switch (position) {
             case 0:
                 title_chat.setBackgroundResource(R.drawable.white_bg);
-                title_chat.setTextColor(getResources().getColor(R.color.main_color));
+                title_chat.setTextColor(ContextCompat.getColor(MainActivity.this,R.color.main_color));
                 break;
             case 1:
                 title_friend.setBackgroundResource(R.drawable.white_bg);
-                title_friend.setTextColor(getResources().getColor(R.color.main_color));
+                title_friend.setTextColor(ContextCompat.getColor(MainActivity.this,R.color.main_color));
                 break;
         }
     }
@@ -438,7 +386,7 @@ public class MainActivity extends BaseActivity {
     /**
      * 选中
      *
-     * @param position
+     * @param position 选中位置
      */
     private void setTabSelection(final int position) {
         FragmentTransaction transaction = manager.beginTransaction();

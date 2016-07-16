@@ -48,8 +48,6 @@ public class HardCreditAct extends BaseActivity {
     private LinearLayout ll;
     @ViewInject(R.id.tv_basetask)
     private TextView tv_basetask;
-    @ViewInject(R.id.iv_finish)
-    private ImageView iv_finish;
     @ViewInject(R.id.iv_go)
     private ImageView iv_go;
     @ViewInject(R.id.view)
@@ -91,7 +89,7 @@ public class HardCreditAct extends BaseActivity {
         lv_task.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = null;
+                Intent intent;
                 if (list.size() == 1) {
                     switch (position) {
                         case 0:
@@ -186,7 +184,7 @@ public class HardCreditAct extends BaseActivity {
         RequestManager.getUserManager().findAllTask(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-                myList = new ArrayList<TaskEntity>();
+                myList = new ArrayList<>();
 
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray dataArr = jsonObject.getJSONArray("data");
@@ -206,7 +204,7 @@ public class HardCreditAct extends BaseActivity {
                     myList.add(taskEntity);
                 }
 
-                list = new ArrayList<String>();
+                list = new ArrayList<>();
                 if (getPrimaryTask(myList).size() != 0) {
                     list.add("初级任务");
                 }
@@ -228,7 +226,7 @@ public class HardCreditAct extends BaseActivity {
     }
 
     private List<TaskEntity> getPrimaryTask(List<TaskEntity> tasklist) {
-        primaryList = new ArrayList<TaskEntity>();
+        primaryList = new ArrayList<>();
         for (int i = 0; i < tasklist.size(); i++) {
             if (tasklist.get(i).getTaskType().equals("初级任务")) {
                 primaryList.add(tasklist.get(i));
@@ -239,7 +237,7 @@ public class HardCreditAct extends BaseActivity {
     }
 
     private List<TaskEntity> getMiddleTask(List<TaskEntity> tasklist) {
-        middleList = new ArrayList<TaskEntity>();
+        middleList = new ArrayList<>();
         for (int i = 0; i < tasklist.size(); i++) {
             if (tasklist.get(i).getTaskType().equals("中级任务")) {
                 middleList.add(tasklist.get(i));
@@ -250,7 +248,7 @@ public class HardCreditAct extends BaseActivity {
     }
 
     private List<TaskEntity> getHighTask(List<TaskEntity> tasklist) {
-        highList = new ArrayList<TaskEntity>();
+        highList = new ArrayList<>();
         for (int i = 0; i < tasklist.size(); i++) {
             if (tasklist.get(i).getTaskType().equals("高级任务")) {
                 highList.add(tasklist.get(i));

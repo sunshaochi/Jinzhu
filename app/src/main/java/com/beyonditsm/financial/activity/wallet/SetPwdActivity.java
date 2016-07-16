@@ -23,16 +23,16 @@ public class SetPwdActivity extends BaseActivity {
     private EditText etAPwd;//账户密码
     private EditText etCapitalPwd;//资金密码
     private EditText etSurePwd;//确认资金密码
-    private TextView tvSure;//确认
 
-    private String amount,apwd,capPwd,surePwd;
+    private String amount;
+    private String apwd;
+    private String capPwd;
 
     private void assignViews() {
         tvAmount = (TextView) findViewById(R.id.tvAmount);
         etAPwd = (EditText) findViewById(R.id.etAPwd);
         etCapitalPwd = (EditText) findViewById(R.id.etCapitalPwd);
         etSurePwd = (EditText) findViewById(R.id.etSurePwd);
-        tvSure = (TextView) findViewById(R.id.tvSure);
     }
 
     @Override
@@ -58,13 +58,12 @@ public class SetPwdActivity extends BaseActivity {
 
     /**
      * 是否为空
-     * @return
      */
     private boolean isValidate(){
         amount=tvAmount.getText().toString().trim();
         apwd=etAPwd.getText().toString().trim();
         capPwd=etCapitalPwd.getText().toString().trim();
-        surePwd=etSurePwd.getText().toString().trim();
+        String surePwd = etSurePwd.getText().toString().trim();
 
         if(TextUtils.isEmpty(apwd)){
             MyToastUtils.showShortToast(getApplicationContext(),"请输入账户密码");
@@ -88,8 +87,8 @@ public class SetPwdActivity extends BaseActivity {
 
     /**
      * 设置密码
-     * @param userPassword
-     * @param fundPassword
+     * @param userPassword 用户密码
+     * @param fundPassword 资金密码
      */
     private void setFunPwd(final String userPassword,final String fundPassword){
 

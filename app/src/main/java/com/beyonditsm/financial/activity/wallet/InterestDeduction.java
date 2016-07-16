@@ -1,14 +1,14 @@
 package com.beyonditsm.financial.activity.wallet;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,13 +39,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by gxy on 2016/1/14.
+ * Created by gxy on 2016/1/14
  */
+@SuppressLint("SetTextI18n")
 public class InterestDeduction extends BaseActivity {
     @ViewInject(R.id.tv_DikouMoney)
     private TextView tvDikouMoney;//抵扣券
-    @ViewInject(R.id.tv_creName)
-    private TextView tvcreName;//贷款产品按钮
     @ViewInject(R.id.creName)
     private TextView creName;//贷款产品
     @ViewInject(R.id.deductionAll)
@@ -66,18 +65,10 @@ public class InterestDeduction extends BaseActivity {
     private EditText depositBank;//支行名称
     @ViewInject(R.id.tvBankCount)
     private TextView tvBankCount;//选择银行卡
-    @ViewInject(R.id.tvBankName)
-    private TextView tvBankName;//选择银行
-    @ViewInject(R.id.lldiqu)
-    private LinearLayout lldiqu;//选择地区
     @ViewInject(R.id.tvdiqu)
     private TextView tvdiqu;//显示地区
     @ViewInject(R.id.moneyPassword)
     private EditText zjPassword;//资金密码
-    @ViewInject(R.id.btn_ok)
-    private Button btnOk;//确认
-    @ViewInject(R.id.tvset)
-    private TextView tvset;//设置资金密码
     @ViewInject(R.id.tv_minPayment)
     private TextView tvMinPayment;//最小兑换金额
 
@@ -90,13 +81,13 @@ public class InterestDeduction extends BaseActivity {
     private double MIN_MARK = 0.0;
     private double MAX_MARK = 0.0;
     private List<QueryBankCardEntity> bindList;
-    private int bankNamePos;
     private int minPayment;
 
     @Override
     public void setLayout() {
         setContentView(R.layout.act_interest_exchange);
     }
+
 
     @Override
     public void init(Bundle savedInstanceState) {
@@ -161,16 +152,15 @@ public class InterestDeduction extends BaseActivity {
                                 tvlixixianjin.setText(Integer.parseInt(s.toString()) + "");
                             }
                         }
-                        return;
                     }
                 }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s != null && !s.equals("")) {
+                if (s != null && !"".equals(s.toString())) {
                     if (MIN_MARK != -1 && MAX_MARK != -1) {
-                        double markVal = 0;
+                        double markVal;
                         try {
                             markVal = Double.parseDouble(s.toString());
                         } catch (NumberFormatException e) {
@@ -178,7 +168,7 @@ public class InterestDeduction extends BaseActivity {
                         }
                         if (markVal > MAX_MARK) {
                             Toast.makeText(getBaseContext(), "不能超过最大可抵扣数字", Toast.LENGTH_SHORT).show();
-                            double dMAX = Double.valueOf(MAX_MARK);
+                            double dMAX = MAX_MARK;
                             tvlixifen.setText((long) dMAX + "");
                         } else {
                             if (s.toString().trim().length() == 0) {
@@ -190,7 +180,6 @@ public class InterestDeduction extends BaseActivity {
 
                             }
                         }
-                        return;
                     }
                 }
               /*  if (!s.toString().startsWith(".")) {
@@ -229,11 +218,10 @@ public class InterestDeduction extends BaseActivity {
                                 bankCount.setText(bindList.get(which - 1).getCardNo());
                                 name.setText(bindList.get(which - 1).getAccountName());
                                 depositBank.setText(bindList.get(which - 1).getBranchBankName());
-                                bankNamePos = which - 1;
-                                bankCount.setTextColor(getResources().getColor(R.color.tv_primary_color));
-                                bankName.setTextColor(getResources().getColor(R.color.tv_primary_color));
-                                name.setTextColor(getResources().getColor(R.color.tv_primary_color));
-                                depositBank.setTextColor(getResources().getColor(R.color.tv_primary_color));
+                                bankCount.setTextColor(ContextCompat.getColor(InterestDeduction.this,R.color.tv_primary_color));
+                                bankName.setTextColor(ContextCompat.getColor(InterestDeduction.this,R.color.tv_primary_color));
+                                name.setTextColor(ContextCompat.getColor(InterestDeduction.this,R.color.tv_primary_color));
+                                depositBank.setTextColor(ContextCompat.getColor(InterestDeduction.this,R.color.tv_primary_color));
                             }
                         });
                     }
@@ -245,7 +233,7 @@ public class InterestDeduction extends BaseActivity {
 
     @OnClick({R.id.lldk,R.id.btn_ok,R.id.lldiqu,R.id.tvset,R.id.tv_creName})
     public void toClick(View v){
-        Intent intent=null;
+        Intent intent;
         switch (v.getId()){
             case R.id.lldk:
                 if(list.size()!=0) {
@@ -410,7 +398,7 @@ public class InterestDeduction extends BaseActivity {
         RequestManager.getWalletManager().findOrderNoListByUserName(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-                list=new ArrayList<OrderBean>();
+                list=new ArrayList<>();
 
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray dataArr = jsonObject.getJSONArray("data");
@@ -430,6 +418,7 @@ public class InterestDeduction extends BaseActivity {
 
     private void getLiXiByOrder(String order){
         RequestManager.getWalletManager().findInterestByOrderNo(order, new RequestManager.CallBack() {
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) throws JSONException {
                 ResultData<OrderBean> rd = (ResultData<OrderBean>) GsonUtils.json(result, OrderBean.class);
@@ -473,22 +462,22 @@ public class InterestDeduction extends BaseActivity {
                             if (!TextUtils.isEmpty(bindList.get(i).getBankName())) {
                                 bankName.setText(bindList.get(i).getBankName());
                                 bankName.setEnabled(false);
-                                bankName.setTextColor(getResources().getColor(R.color.tv_primary_color));
+                                bankName.setTextColor(ContextCompat.getColor(InterestDeduction.this,R.color.tv_primary_color));
                             }
                             if (!TextUtils.isEmpty(bindList.get(i).getCardNo())) {
                                 bankCount.setText(bindList.get(i).getCardNo());
                                 bankCount.setEnabled(false);
-                                bankCount.setTextColor(getResources().getColor(R.color.tv_primary_color));
+                                bankCount.setTextColor(ContextCompat.getColor(InterestDeduction.this,R.color.tv_primary_color));
                             }
                             if (!TextUtils.isEmpty(bindList.get(i).getAccountName())) {
                                 name.setText(bindList.get(i).getAccountName());
                                 name.setEnabled(false);
-                                name.setTextColor(getResources().getColor(R.color.tv_primary_color));
+                                name.setTextColor(ContextCompat.getColor(InterestDeduction.this,R.color.tv_primary_color));
                             }
                             if (!TextUtils.isEmpty(bindList.get(i).getBranchBankName())) {
                                 depositBank.setText(bindList.get(i).getBranchBankName());
                                 depositBank.setEnabled(false);
-                                depositBank.setTextColor(getResources().getColor(R.color.tv_primary_color));
+                                depositBank.setTextColor(ContextCompat.getColor(InterestDeduction.this,R.color.tv_primary_color));
                             }
                         }
                     }

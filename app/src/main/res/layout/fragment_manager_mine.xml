@@ -4,53 +4,52 @@
     android:layout_height="match_parent"
     android:background="@color/bg_color"
     android:orientation="vertical">
-    <include layout="@layout/title_act_layout"></include>
+
+    <include layout="@layout/title_act_layout" />
 
     <RelativeLayout
         android:id="@+id/rlManaData"
         android:layout_width="match_parent"
         android:layout_height="70dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/item_back"
         android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:layout_marginTop="10dp"
-        >
+        android:paddingRight="15dp">
 
         <com.beyonditsm.financial.widget.ScaleAllImageView
             android:id="@+id/civHead"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@mipmap/ava_default"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ava_default" />
 
         <TextView
             android:id="@+id/tvName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#333333"
-            android:layout_toRightOf="@id/civHead"
             android:layout_centerVertical="true"
-            android:textSize="15sp"
             android:layout_marginLeft="15dp"
-            />
+            android:layout_toRightOf="@id/civHead"
+            android:textColor="#333333"
+            android:textSize="15sp" />
 
         <ImageView
             style="@style/arrow_right_style"
             android:layout_alignParentRight="true" />
 
     </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
-        android:visibility="gone"
         android:layout_height="1px"
-        android:background="@color/line_color"></View>
+        android:background="@color/line_color"
+        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/rlMyOrder"
         style="@style/rl_mine_style"
         android:layout_marginTop="10dp"
-        android:visibility="gone"
-        >
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/ivLines"
@@ -72,9 +71,9 @@
 
     <View
         android:layout_width="match_parent"
-        android:visibility="gone"
         android:layout_height="1px"
-        android:background="@color/line_color"></View>
+        android:background="@color/line_color"
+        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/rlMyPre"
@@ -102,9 +101,10 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:visibility="gone"
         android:layout_marginLeft="45dp"
-        android:background="@color/line_color"></View>
+        android:background="@color/line_color"
+        android:visibility="gone" />
+
     <RelativeLayout
         android:id="@+id/rlMyChat"
         style="@style/rl_mine_style"

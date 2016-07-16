@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,33 +18,20 @@ import com.lidroid.xutils.BitmapUtils;
 import java.util.List;
 
 /**
- * Created by gxy on 2015/11/24.
+ * Created by gxy on 2015/11/24
  */
 public class AddressBookAdapter extends BaseAdapter implements SectionIndexer{
     private LayoutInflater inflater=null;
     private List<PhoneInfo> list=null;
     BitmapUtils bitmapUtils=null;
 
-    private Context context;
-    public AddressBookAdapter(Context context){
-        inflater=LayoutInflater.from(context);
-    }
 
     public AddressBookAdapter(List<PhoneInfo> list,Context context){
         this.list=list;
-        this.context=context;
         inflater=LayoutInflater.from(context);
         bitmapUtils=new BitmapUtils(context);
     }
 
-    /**
-     * 当ListView数据发生变化时,调用此方法来更新ListView
-     * @param list
-     */
-    public void updateListView(List<PhoneInfo> list){
-        this.list = list;
-        notifyDataSetChanged();
-    }
     @Override
     public int getCount() {
 
@@ -60,9 +48,10 @@ public class AddressBookAdapter extends BaseAdapter implements SectionIndexer{
         return position;
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder=null;
+        ViewHolder holder;
         final PhoneInfo mContent = list.get(position);
         if(convertView==null){
             convertView=inflater.inflate(R.layout.addressbook_item,null);
@@ -88,8 +77,8 @@ public class AddressBookAdapter extends BaseAdapter implements SectionIndexer{
             }else{
                 holder.tv_zm.setVisibility(View.GONE);
             }
-            holder.tv_name.setText(list.get(position).getName().toString());
-            holder.tv_phonenumber.setText(list.get(position).getPhoneNumber().toString());
+            holder.tv_name.setText(list.get(position).getName());
+            holder.tv_phonenumber.setText(list.get(position).getPhoneNumber());
          /*   if(list.get(position).getImage()==null){
                 holder.tv_name.setText(list.get(position).getName().toString());
                 holder.tv_phonenumber.setText(list.get(position).getPhoneNumber().toString());
@@ -131,15 +120,6 @@ public class AddressBookAdapter extends BaseAdapter implements SectionIndexer{
     @Override
     public int getSectionForPosition(int position) {
         return list.get(position).getSortLetters().charAt(0);
-    }
-
-    private String getAlpha(String str) {
-        String  sortStr = str.trim().substring(0, 1).toUpperCase();
-        if (sortStr.matches("[A-Z]")) {
-            return sortStr;
-        } else {
-            return "#";
-        }
     }
 
     static class ViewHolder{

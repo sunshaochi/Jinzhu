@@ -1,11 +1,10 @@
 package com.beyonditsm.financial.activity.user;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -17,33 +16,22 @@ import android.widget.Toast;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
-import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.wallet.MyWalletActivity;
-import com.beyonditsm.financial.db.FriendDao;
-import com.beyonditsm.financial.db.MessageDao;
-import com.beyonditsm.financial.entity.FriendBean;
 import com.beyonditsm.financial.entity.MyRecomBean;
 import com.beyonditsm.financial.entity.MyRecommeEntity;
 import com.beyonditsm.financial.entity.ResultData;
-import com.beyonditsm.financial.entity.ServantCondEntity;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.entity.UserLoginEntity;
 import com.beyonditsm.financial.fragment.MineFragment;
-import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
-import com.beyonditsm.financial.util.SpUtils;
-import com.beyonditsm.financial.view.ListViewForScrollView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshListView;
 import com.lidroid.xutils.util.LogUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
-import com.tandong.sa.json.Gson;
-import com.tandong.sa.json.reflect.TypeToken;
-import com.tandong.sa.zUImageLoader.core.ImageLoader;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.controller.UMServiceFactory;
@@ -64,19 +52,12 @@ import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
-import cn.jpush.android.api.JPushInterface;
-import cn.jpush.android.api.TagAliasCallback;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.model.UserInfo;
 
 
 /**
  * 我的推荐
- * Created by wangbin on 15/11/16.
+ * Created by wangbin on 15/11/16
  */
 public class MyRecommAct extends BaseActivity {
 
@@ -102,8 +83,6 @@ public class MyRecommAct extends BaseActivity {
     private TextView tvServant;
     @ViewInject(R.id.rl_servant)
     private RelativeLayout rlServant;
-    @ViewInject(R.id.lv_servantCond)
-    private ListViewForScrollView lvServantCond;
 //    @ViewInject(R.id.tv_recommedUserCount)
 //    private TextView tvRecommedUserCount;
     @ViewInject(R.id.recommendedLoanAmount)
@@ -114,38 +93,6 @@ public class MyRecommAct extends BaseActivity {
     private TextView handledRewardAmount;
     @ViewInject(R.id.unhandledRewardAmount)
     private TextView unhandledRewardAmount;
-    @ViewInject(R.id.ll_primaryServant)
-    private LinearLayout llPrimaryServant;//初级代言人升级条件
-    @ViewInject(R.id.ll_middleServant)
-    private LinearLayout llMiddleServant;//中级代言人升级条件
-    @ViewInject(R.id.ll_seniorServant)
-    private LinearLayout llSeniorServant;//高级代言人升级条件
-    @ViewInject(R.id.tv_pServantName)
-    private TextView tvpServantName;//初级代言人
-    @ViewInject(R.id.tv_pServantDesc)
-    private TextView tvpServantDesc;//初级代言人升级条件描述
-    @ViewInject(R.id.tv_pServantPassCond)
-    private TextView tvpServantPassCond;//初级代言人升级条件完成数
-    @ViewInject(R.id.tv_pServantTotalCond)
-    private TextView tvpServantTotalCond;//初级代言人升级条件总数
-    @ViewInject(R.id.tv_mServantName)
-    private TextView tvmServantName;//中级代言人
-    @ViewInject(R.id.tv_mServantDesc)
-    private TextView tvmServantDesc;//中级代言人升级条件描述
-    @ViewInject(R.id.tv_mServantPassCond)
-    private TextView tvmServantPassCond;//中初级代言人升级条件完成数
-    @ViewInject(R.id.tv_mServantTotalCond)
-    private TextView tvmServantTotalCond;//中初级代言人升级条件总数
-    @ViewInject(R.id.tv_hServantName)
-    private TextView tvhServantName;//高级代言人
-    @ViewInject(R.id.tv_hServantDesc)
-    private TextView tvhServantDesc;//高级代言人升级条件描述
-    @ViewInject(R.id.tv_hServantPassCond)
-    private TextView tvhServantPassCond;//高初级代言人升级条件完成数
-    @ViewInject(R.id.tv_hServantTotalCond)
-    private TextView tvhServantTotalCond;//高初级代言人升级条件总数
-    @ViewInject(R.id.ll_servantCondInfo)
-    private LinearLayout llServantCondInfo;//代言人升级条件
     @ViewInject(R.id.already)
     private ImageView alreadyImg;
     @ViewInject(R.id.btn_receiveReward)
@@ -167,9 +114,6 @@ public class MyRecommAct extends BaseActivity {
     String yqUrl = "http://m.myjinzhu.com/#/tab/home?redirctUrl=/register/";
     //    String codeUrl = "http://www.myjinzhu.com/#/activity/spring-festival";
     String codeUrl = "http://m.myjinzhu.com/#/tab/home?redirctUrl=%2Ftab%2Fhome%2Factivity%2Ffestival";
-//    private ServantCondAdp servantCondAdp;
-    private String description;
-    private String roleName;
 
     @Override
     public void setLayout() {
@@ -217,7 +161,7 @@ public class MyRecommAct extends BaseActivity {
     }
 
     private void setQRImg() {
-        Bitmap bitmap = null;
+        Bitmap bitmap;
         if (ule != null)
             bitmap = FinancialUtil.createQRImage(yqUrl + ule.getMyReferralCode());
         else
@@ -330,7 +274,6 @@ public class MyRecommAct extends BaseActivity {
     /**
      * 点击事件
      *
-     * @param v
      */
     @OnClick({ R.id.btn_receiveReward, R.id.ll_wallet})
     public void toClick(View v) {
@@ -343,12 +286,12 @@ public class MyRecommAct extends BaseActivity {
             //立即领取按钮
             case R.id.btn_receiveReward:
                 RequestManager.getCommManager().getServantReward(new RequestManager.CallBack() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onSucess(String result) {
 
-                        JSONObject obj = null;
                         try {
-                            obj = new JSONObject(result);
+                            JSONObject obj = new JSONObject(result);
                         JSONObject data = obj.getJSONObject("data");
                         int handledAmount = data.getInt("handledAmount");
                             if (handledAmount > 0){
@@ -580,7 +523,7 @@ public class MyRecommAct extends BaseActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder vh = null;
+            ViewHolder vh;
             if (convertView == null) {
                 convertView = View.inflate(context, R.layout.myrecommend_item, null);
                 vh = new ViewHolder();
@@ -601,7 +544,7 @@ public class MyRecommAct extends BaseActivity {
             if (position == 0) {
                 vh.ll_tj_bg.setVisibility(View.GONE);
                 vh.ll.setVisibility(View.VISIBLE);
-                Bitmap bitmap = null;
+                Bitmap bitmap;
                 if (ule != null)
                     bitmap = FinancialUtil.createQRImage(yqUrl + ule.getMyReferralCode());
                 else
@@ -740,6 +683,7 @@ public class MyRecommAct extends BaseActivity {
     //获取代言人推荐信息
     private void getServantRmdIfo() {
         RequestManager.getCommManager().getServantRmdInfo(new RequestManager.CallBack() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onSucess(String result) throws JSONException {
                 JSONObject object = new JSONObject(result);
@@ -803,6 +747,7 @@ public class MyRecommAct extends BaseActivity {
     private void getUserInfo() {
 
         RequestManager.getCommManager().findUserInfo(new RequestManager.CallBack() {
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) {
                 ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);

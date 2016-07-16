@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by Administrator on 2016/3/15.
+ * Created by Administrator on 2016/3/15
  */
 public class AddBankCardEntity implements Parcelable{
     private String accountName;//开户姓名

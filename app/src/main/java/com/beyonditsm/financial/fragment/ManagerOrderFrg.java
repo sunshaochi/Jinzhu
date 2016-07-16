@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -7,13 +8,10 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.beyonditsm.financial.ConstantValue;
 import com.beyonditsm.financial.R;
@@ -27,9 +25,7 @@ import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshListView;
-import com.beyonditsm.financial.widget.DialogChooseMonth;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.lidroid.xutils.view.annotation.event.OnClick;
 
 import org.json.JSONException;
 
@@ -45,18 +41,11 @@ public class ManagerOrderFrg extends BaseFragment {
     private PullToRefreshListView plv;
     @ViewInject(R.id.loadingView)
     private LoadingView loadingView;
-    @ViewInject(R.id.etAmount)
-    private EditText etAmount;//输入金额
-    @ViewInject(R.id.tvM)
-    private TextView tvM;//月份
-    @ViewInject(R.id.tvSearch)
-    private TextView tvSearch;//搜索
-
-
     private ManagerOrderAdp adapter;
     private int page;
     private List<GrabOrderBean.RowsEntity> datas = new ArrayList<>();
 
+    @SuppressLint("InflateParams")
     @Override
     public View initView(LayoutInflater inflater) {
         view = inflater.inflate(R.layout.managerorderfrg, null);
@@ -148,6 +137,7 @@ public class ManagerOrderFrg extends BaseFragment {
     private void getOrder(final int page) {
         int rows = 10;
         RequestManager.getMangManger().findHasOrder(page, rows, new RequestManager.CallBack() {
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) throws JSONException {
                 loadingView.loadComplete();

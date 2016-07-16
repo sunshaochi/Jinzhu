@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/title_act_layout"></include>
+    <include layout="@layout/title_act_layout" />
 
     <EditText
         android:id="@+id/bj_et"
@@ -20,11 +20,11 @@
 
     <Button
         android:id="@+id/bj_commit"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
         android:layout_margin="10dp"
         android:background="@drawable/button_gen"
-        android:textColor="@color/white"
-        android:layout_width="match_parent"
         android:text="提交"
-        android:layout_height="36dp" />
+        android:textColor="@color/white" />
 
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.activity.servicer;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
@@ -14,7 +15,6 @@ import com.beyonditsm.financial.entity.UserEvent;
 import com.beyonditsm.financial.fragment.ServiceMineFrg;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.IdcardUtils;
-import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.widget.ClearEditText;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -23,8 +23,9 @@ import com.tandong.sa.eventbus.EventBus;
 import org.json.JSONException;
 
 /**
- * Created by Administrator on 2015/11/29.
+ * Created by liwk on 2015/11/29
  */
+@SuppressWarnings("JavaDoc")
 public class ServiceEditAct extends BaseActivity {
     @ViewInject(R.id.etM)
     private ClearEditText etM;
@@ -114,6 +115,7 @@ public class ServiceEditAct extends BaseActivity {
      *
      * @param position
      */
+    @SuppressLint("SetTextI18n")
     private void setTopT(int position) {
 
         switch (position) {

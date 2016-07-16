@@ -45,11 +45,7 @@ public class MessageActivity extends BaseActivity {
     private LoadingView loadView;
 
     private MyAdapter adapter;
-
     private int width;
-
-    ;
-
     @Override
     public void setLayout() {
         setContentView(R.layout.activity_message);

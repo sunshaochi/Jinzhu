@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.activity.user;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -8,10 +9,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,21 +36,13 @@ import org.json.JSONException;
 import java.util.List;
 
 /**
- * Created by gxy on 2015/11/26.
+ * Created by gxy on 2015/11/26
  */
 public class SuppleInfoAct extends BaseActivity {
-    @ViewInject(R.id.criSv)
-    private ScrollView criSv;
     @ViewInject(R.id.name)
     private EditText name;//姓名
     @ViewInject(R.id.tv_name)
     private TextView tvname;
-    @ViewInject(R.id.sex_rg)
-    private RadioGroup sexRg;//性别rb
-    @ViewInject(R.id.sex_man)
-    private RadioButton sexMan;//男
-    @ViewInject(R.id.sex_woman)
-    private RadioButton sexWoman;//女
     @ViewInject(R.id.tbSex)
     private ToggleButton tbSex;//设置男女
 
@@ -98,7 +88,6 @@ public class SuppleInfoAct extends BaseActivity {
     @ViewInject(R.id.btn_submit)
     private Button btn_submit;//提交
 
-    private MySelfSheetDialog dialog;
     private UserEntity userinfo;
     private AddressUtil addressUtil;
 
@@ -173,6 +162,7 @@ public class SuppleInfoAct extends BaseActivity {
                 DialogChooseAdress dialogChooseAdress = new DialogChooseAdress(this).builder();
                 dialogChooseAdress.show();
                 dialogChooseAdress.setOnSheetItemClickListener(new DialogChooseAdress.SexClickListener() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void getAdress(List<String> adress) {
                         String proCode=addressUtil.getProCode(adress.get(0));
@@ -186,7 +176,7 @@ public class SuppleInfoAct extends BaseActivity {
                 });
                 break;
             case R.id.rl_marrayed://是否结婚
-                dialog = new MySelfSheetDialog(SuppleInfoAct.this).builder();
+                MySelfSheetDialog dialog = new MySelfSheetDialog(SuppleInfoAct.this).builder();
                 dialog.addSheetItem("已婚", null, new MySelfSheetDialog.OnSheetItemClickListener() {
                     @Override
                     public void onClick(int which) {
@@ -215,6 +205,7 @@ public class SuppleInfoAct extends BaseActivity {
                 DialogChooseAdress dialogChooseAdress1 = new DialogChooseAdress(this).builder();
                 dialogChooseAdress1.show();
                 dialogChooseAdress1.setOnSheetItemClickListener(new DialogChooseAdress.SexClickListener() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void getAdress(List<String> adress) {
                         tvhuji.setText(adress.get(0)+adress.get(1)+adress.get(2));
@@ -224,6 +215,7 @@ public class SuppleInfoAct extends BaseActivity {
                 break;
         }
     }
+    @SuppressLint("SetTextI18n")
     private void setUserMe(UserEntity userinfo){
         if(!TextUtils.isEmpty(userinfo.getUserName())){
             name.setVisibility(View.INVISIBLE);
@@ -324,6 +316,7 @@ public class SuppleInfoAct extends BaseActivity {
      */
     private void getUserInfo() {
         RequestManager.getCommManager().findUserInfo(new RequestManager.CallBack() {
+            @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) {
                 ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
@@ -350,25 +343,6 @@ public class SuppleInfoAct extends BaseActivity {
         }
         if(userinfo.getUserSex()!=null){
             userinfo.setUserSex(userinfo.getUserSex());
-        }else {
-/*
-            if (sexWoman.isChecked()) {//女
-                userinfo.setUserSex(0);
-            } else if(sexMan.isChecked()){
-                userinfo.setUserSex(1);
-            }
-*/
-//            tbSex.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
-//                @Override
-//                public void onToggle(boolean on) {
-//                    if(on){
-//                        userinfo.setUserSex(1);
-//                    }else{
-//                        userinfo.setUserSex(0);
-//                    }
-//                }
-//            });
-
         }
 
         if(userinfo.getUserAge()!=null){

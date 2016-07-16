@@ -6,9 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
@@ -27,7 +25,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,20 +35,11 @@ public class BindBankCardAct extends BaseActivity {
     @ViewInject(R.id.lv_bankcard)
     private ListViewForScrollView lvBankCard;
 //    private MyScrollListView lvBankCard;
-    @ViewInject(R.id.ll_addBankCard)
-    private LinearLayout llAddBankCard;
-    @ViewInject(R.id.tv_setzjpassword)
-    private TextView tvSetzjPassword;
-    @ViewInject(R.id.tv_surebind)
-    private TextView tvSureBind;
     @ViewInject(R.id.sv_bindBankCard)
     private ScrollView svBindBankCard;
     private UserEntity user;//用户实体
-    private List<QueryBankCardEntity> bankCardList = new ArrayList<>();
     private BindBankCardAdp adapter;
     private MyBroadcastReceiver receiver;
-    private int status = 1;
-    private String cardNo;
 
     @Override
     public void setLayout() {
@@ -69,7 +57,7 @@ public class BindBankCardAct extends BaseActivity {
     }
     @OnClick({R.id.ll_addBankCard,R.id.tv_setzjpassword,R.id.tv_surebind})
     public void todo(View view){
-        Intent intent=null;
+        Intent intent;
         switch (view.getId()){
             case R.id.ll_addBankCard:
                 intent = new Intent(BindBankCardAct.this,AddBankCardAct.class);

@@ -5,24 +5,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
-import com.beyonditsm.financial.RongCloudEvent;
 import com.beyonditsm.financial.activity.manager.ManagerMainAct;
-import com.beyonditsm.financial.activity.servicer.ServiceMainAct;
-import com.beyonditsm.financial.fragment.MineFragment;
 import com.beyonditsm.financial.util.FinancialUtil;
-import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
-import com.lidroid.xutils.util.LogUtils;
 
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
-
-;
 
 /**
  * 闪屏图
@@ -40,9 +32,6 @@ public class SplashAct extends BaseActivity {
     public void init(Bundle savedInstanceState) {
         MyApplication.screenWith = FinancialUtil.getScreenWidth(this);
         MyApplication.screenHeight = FinancialUtil.getScreenHeight(this);
-
-
-
 
     }
 
@@ -62,7 +51,7 @@ public class SplashAct extends BaseActivity {
             public void run() {
 //                gotoActivity(MainActivity.class, true);
                 boolean isFirst = SpUtils.getIsFirst(getApplicationContext());
-                Intent intent = null;
+                Intent intent;
                 JPushInterface.onResume(getApplicationContext());
                 if (isFirst) {
                     // 第一次进入应用
@@ -76,17 +65,21 @@ public class SplashAct extends BaseActivity {
                         gotoActivity(MainActivity.class, true);
                     } else {
                         String roleName = SpUtils.getRoleName(getApplicationContext());
-                        if (roleName.equals("ROLE_CREDIT_MANAGER")) {
-                            sendBroadcast(new Intent(ManagerMainAct.UPDATATAB));
-                            gotoActivity(ManagerMainAct.class, true);
-                        } else if (roleName.equals("ROLE_COMMON_CLIENT")) {
-                            sendBroadcast(new Intent(MainActivity.UPDATATAB));
-                            gotoActivity(MainActivity.class, true);
-                        } else {
+                        switch (roleName) {
+                            case "ROLE_CREDIT_MANAGER":
+                                sendBroadcast(new Intent(ManagerMainAct.UPDATATAB));
+                                gotoActivity(ManagerMainAct.class, true);
+                                break;
+                            case "ROLE_COMMON_CLIENT":
+                                sendBroadcast(new Intent(MainActivity.UPDATATAB));
+                                gotoActivity(MainActivity.class, true);
+                                break;
+                            default:
 //                            sendBroadcast(new Intent(ServiceMainAct.UPDATATAB));
 //                            gotoActivity(ServiceMainAct.class, true);
-                            sendBroadcast(new Intent(MainActivity.UPDATATAB));
-                            gotoActivity(MainActivity.class, true);
+                                sendBroadcast(new Intent(MainActivity.UPDATATAB));
+                                gotoActivity(MainActivity.class, true);
+                                break;
                         }
                         String token = SpUtils.getToken(getApplicationContext());
                         if (!TextUtils.isEmpty(token)) {
@@ -119,24 +112,6 @@ public class SplashAct extends BaseActivity {
             }
         }, 2000);
     }
-
-
-//    private  void getProvince(){
-//        RequestManager.getCommManager().findProvince(new RequestManager.CallBack() {
-//            @Override
-//            public void onSucess(String result) throws JSONException {
-//                JSONObject jsonObject=new JSONObject(result);
-//                ProvinceDao.addProvince((List<ProvinceInfo>) gson.fromJson(jsonObject.optJSONArray("data").toString(), new TypeToken<List<ProvinceInfo>>() {
-//            }.getType()));
-//            }
-//
-//            @Override
-//            public void onError(int status, String msg) {
-//
-//            }
-//        });
-//    }
-
 
     /**
      * 建立与融云服务器的连接

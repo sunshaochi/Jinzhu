@@ -73,11 +73,6 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".service.DownloadService" />
-
-        <activity
-            android:name=".activity.NotificationUpdateActivity"
-            android:screenOrientation="portrait" />
         <!-- 主页面 -->
         <activity
             android:name=".activity.MainActivity"
@@ -115,9 +110,6 @@
             android:name=".activity.credit.CreditDetailAct"
             android:screenOrientation="portrait" />
         <!-- 热门贷款详情 -->
-        <activity
-            android:name=".activity.user.HotCreditDetailAct"
-            android:screenOrientation="portrait" />
         <!-- 设置 -->
         <activity
             android:name=".activity.user.SettingAct"
@@ -160,21 +152,9 @@
             android:name=".activity.user.MyRecommAct"
             android:screenOrientation="portrait" />
         <!-- 忘记密码 -->
-        <activity
-            android:name=".activity.user.FogetPwdAct"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.user.CultivationAct"
-            android:screenOrientation="portrait" />
         <!-- 我的任务 -->
         <!-- 上传附件 -->
-        <activity
-            android:name=".activity.credit.UpLoadFileAct"
-            android:screenOrientation="portrait" />
         <!-- 补充资料 -->
-        <activity
-            android:name=".activity.user.AddInfo"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.user.CreditPointAct"
             android:screenOrientation="portrait" />
@@ -209,9 +189,6 @@
 
         </activity>
         <!-- 提现记录 -->
-        <activity
-            android:name=".activity.servicer.WithdrawalsAct"
-            android:screenOrientation="portrait" />
         <!-- 代言人设置界面 -->
         <!-- 代言人修改密码界面 -->
         <activity
@@ -264,9 +241,6 @@
             android:name=".activity.manager.ManagerEditAct"
             android:screenOrientation="portrait" />
         <!-- 选择性别界面 -->
-        <activity
-            android:name=".activity.manager.SelectSexAct"
-            android:screenOrientation="portrait" />
 
         <!-- 信用耕耘界面 -->
         <!-- 做上传照片的任务 -->
@@ -278,9 +252,6 @@
             android:name=".activity.user.DoTaskPlaceAct"
             android:screenOrientation="portrait" />
         <!-- 评估界面 -->
-        <activity
-            android:name=".activity.manager.PGAct"
-            android:screenOrientation="portrait" />
         <!-- 查看图片界面 -->
         <activity
             android:name=".activity.PhotoActivity"
@@ -343,9 +314,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.manager.OrderDetailAct"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.user.NewWorkAct"
             android:screenOrientation="portrait" />
         <!-- 消息中心 -->
         <activity
@@ -436,9 +404,6 @@
 
 
         <!-- 上传身份证照片 -->
-        <activity
-            android:name=".activity.credit.UpIdCardAct"
-            android:screenOrientation="portrait" />
         <!-- ###################注册SDK使用的Activity###################### -->
         <!-- 分享编辑页 -->
         <activity

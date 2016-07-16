@@ -3,9 +3,7 @@ package com.beyonditsm.financial.activity.user;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.GridView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.beyonditsm.financial.R;
@@ -30,19 +28,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by gxy on 2015/12/16.
+ * Created by liwk on 2015/12/16
  */
 public class TiJiaoFuJianAct extends BaseActivity {
-    @ViewInject(R.id.tv_pic)
-    private TextView tv_pic;
     @ViewInject(R.id.gv_pic)
     private GridView gvPhoto;
-    @ViewInject(R.id.btn_submit)
-    private Button btn_submit;
     /**照片List */
-    private List<ImageBean> selecteds=new ArrayList<ImageBean>();
+    private List<ImageBean> selecteds= new ArrayList<>();
     private GvPhotoAdapter adapter;
-    private String uploadStr=null;
 
     private String orderNo;
 
@@ -89,12 +82,11 @@ public class TiJiaoFuJianAct extends BaseActivity {
 
     /**
      * 上传图片
-     * @param
      */
     private void uploadFile(List<ImageBean> selecteds){
         dialog.show();
-        Map<String, List<FileBody>> fileMaps=new HashMap<String,List<FileBody>>();
-        List<FileBody> lists=new ArrayList<FileBody>();
+        Map<String, List<FileBody>> fileMaps= new HashMap<>();
+        List<FileBody> lists= new ArrayList<>();
         for(int i=0;i<selecteds.size();i++) {
             FileBody fb = new FileBody(new File(selecteds.get(i).getPath()));
             lists.add(fb);
@@ -142,6 +134,7 @@ public class TiJiaoFuJianAct extends BaseActivity {
         });
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

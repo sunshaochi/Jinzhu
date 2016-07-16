@@ -46,6 +46,7 @@ public class HttpManager {
 		headers[1] = new BasicHeader("User-Agent","Jinzhu Android Client "+ FinancialUtil.getAppVer(MyApplication.getInstance()));
 	}
 
+	@SuppressWarnings("deprecation")
 	public HttpManager() {
 		// 初始化client
 		// 如果是wap方式联网，需要设置代理信息
@@ -58,9 +59,7 @@ public class HttpManager {
 	/**
 	 * get请求
 	 * 
-	 * @param uri
-	 *            :自己拼装好get参数的字符串: "http://test.com/api_v270?userId=" + userId +
-	 *            "&version=" + version;
+	 * @param uri :自己拼装好get参数的字符串: "http://test.com/api_v270?userId=" + userId +"&version=" + version;
 	 * @return json字符串
 	 */
 	public String sendGet(String uri) {
@@ -88,7 +87,7 @@ public class HttpManager {
 	/**
 	 * get请求
 	 * 
-	 * @param uri
+	 * @param uri 请求地址
 	 * @return 流
 	 */
 	public InputStream sendGetI(String uri) {
@@ -115,10 +114,9 @@ public class HttpManager {
 	/**
 	 * post请求
 	 * 
-	 * @param uri
-	 * @param data
-	 *            xml或者json字符串
-	 * @return
+	 * @param uri 请求地址
+	 * @param data xml或者json字符串
+	 * @return json字符串
 	 */
 	public String sendPost(String uri, String data) {
 		post = new HttpPost(uri);
@@ -146,9 +144,8 @@ public class HttpManager {
 	/**
 	 * post请求
 	 * 
-	 * @param uri
-	 * @param params
-	 *            参数集合
+	 * @param uri 请求地址
+	 * @param params 参数集合
 	 * @return json字符串
 	 */
 	public String sendPost(String uri, Map<String, String> params) {
@@ -156,7 +153,7 @@ public class HttpManager {
 		post.setHeaders(headers);
 		try {
 			if (params != null && params.size() > 0) {
-				List<BasicNameValuePair> parameters = new ArrayList<BasicNameValuePair>();
+				List<BasicNameValuePair> parameters = new ArrayList<>();
 				for (Map.Entry<String, String> item : params.entrySet()) {
 					BasicNameValuePair pair = new BasicNameValuePair(
 							item.getKey(), item.getValue());
@@ -186,10 +183,9 @@ public class HttpManager {
 	/**
 	 * 文件上传 post
 	 * 
-	 * @param uri
-	 * @param params
-	 * @param fileMaps
-	 * @return
+	 * @param uri 请求地址
+	 * @param params 集合
+	 * @param fileMaps 图片
 	 */
 	public String upLoadFile(String uri, Map<String, String> params,
 			Map<String, FileBody> fileMaps) {
@@ -230,10 +226,7 @@ public class HttpManager {
 	/**
 	 * 文件上传 post
 	 *
-	 * @param uri
-	 * @param params
-	 * @param fileMaps
-	 * @return
+	 * @param uri 请求地址
 	 */
 	public String upListFile(String uri, Map<String, String> params,
 							 Map<String, List<FileBody>> fileMaps) {
@@ -274,45 +267,5 @@ public class HttpManager {
 		}
 		return null;
 	}
-
-	/**
-	 * post请求
-	 * 
-	 * @param url
-	 *            访问的地址
-	 * @param content
-	 *            访问带过去的参数 json格式
-	 * @return
-	 */
-	public String postContentToServer(String url, String content) {
-		StringEntity entity = null;
-		try {
-			entity = new StringEntity(content, ConstantValue.ENCODING);
-			entity.setContentType("application/json");
-			post = new HttpPost(url);
-			post.addHeader("Content-Type", "application/json; charset=utf-8");
-			post.setEntity(entity);
-
-			HttpResponse httpResponse = null;
-
-			httpResponse = client.execute(post);
-
-			if (httpResponse.getStatusLine().getStatusCode() == 200) {
-
-				return EntityUtils.toString(httpResponse.getEntity(),
-						ConstantValue.ENCODING);
-
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			MyLogUtils.error("访问异常：" + e.getMessage());
-		} 
-
-		return null;
-	}
-	
-	
-	
 
 }

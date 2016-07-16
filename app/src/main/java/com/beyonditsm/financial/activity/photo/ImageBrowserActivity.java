@@ -21,6 +21,7 @@ import com.beyonditsm.financial.view.photoView.ScrollViewPager;
 import java.io.Serializable;
 import java.util.List;
 
+@SuppressWarnings("ALL")
 @SuppressLint("NewApi") public class ImageBrowserActivity extends FragmentActivity implements
 		OnPageChangeListener, OnClickListener {
 

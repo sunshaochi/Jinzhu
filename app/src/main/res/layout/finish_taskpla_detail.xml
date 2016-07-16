@@ -1,69 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/bg_color"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:orientation="vertical">
 
-    <include layout="@layout/title_act_layout"></include>
+    <include layout="@layout/title_act_layout" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginTop="15dp"
-        android:background="@color/line_color"></View>
+        android:background="@color/line_color" />
+
     <LinearLayout
-        android:background="@drawable/item_back"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:layout_height="40dp"
+        android:background="@drawable/item_back"
+        android:orientation="horizontal">
+
         <ImageView
             android:layout_width="12dp"
             android:layout_height="15dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"
-            android:src="@mipmap/r_title"
-            />
+            android:src="@mipmap/r_title" />
+
         <TextView
             android:id="@+id/tv_place"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
-            android:textSize="14sp"
+            android:text="最近一次的旅游地点"
             android:textColor="#333333"
-            android:text="最近一次的旅游地点"/>
+            android:textSize="14sp" />
 
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_marginLeft="15dp"
-        android:background="@color/line_color"></View>
+        android:background="@color/line_color" />
+
     <LinearLayout
-        android:background="@drawable/item_back"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:background="@drawable/item_back"
         android:orientation="horizontal">
+
         <ImageView
             android:layout_width="12dp"
             android:layout_height="15dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="15dp"
-            android:src="@mipmap/r_content"
-            />
+            android:src="@mipmap/r_content" />
+
         <TextView
             android:id="@+id/et_place"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
             android:text="苏州"
             android:textColor="#333333"
-            android:textSize="14sp"
-            android:layout_marginLeft="10dp"
-            />
+            android:textSize="14sp" />
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/line_color"></View>
+        android:background="@color/line_color" />
 
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -26,7 +27,6 @@ import java.util.List;
  * Created by Yang on 2015/11/16 0016.
  */
 public class ManagerOrderAdp extends BaseAdapter {
-    private Context context;
     private LayoutInflater inflater;
     private List<GrabOrderBean.RowsEntity> datas = new ArrayList<>();
     java.text.DecimalFormat df = new java.text.DecimalFormat("#0.00");//保留小数
@@ -40,7 +40,6 @@ public class ManagerOrderAdp extends BaseAdapter {
             .build(); // 创建配置过得DisplayImageOption对象
 
     public ManagerOrderAdp(Context context, List<GrabOrderBean.RowsEntity> datas) {
-        this.context = context;
         this.datas = datas;
         inflater = LayoutInflater.from(context);
     }
@@ -65,6 +64,7 @@ public class ManagerOrderAdp extends BaseAdapter {
         return 0;
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder holder;
