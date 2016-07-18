@@ -13,11 +13,16 @@ import com.beyonditsm.financial.MyApplication;
  */
 public class GPSAddressUtils {
 
-    public static LocationClient mLocationClient = new LocationClient(MyApplication.getInstance().getApplicationContext());
+    private static GPSAddressUtils gpsAddressUtils = new GPSAddressUtils();
 
-    public static void getLocation(){
+    public LocationClient mLocationClient = new LocationClient(MyApplication.getInstance().getApplicationContext());
+
+    public static GPSAddressUtils getInstance (){
+        return gpsAddressUtils;
+    }
+    public void getLocation(MyLocationListener myLocationListener){
            //声明LocationClient类
-        BDLocationListener myListener = new MyLocationListener();
+        BDLocationListener myListener = myLocationListener;
         mLocationClient.registerLocationListener(myListener);    //注册监听函数
         mLocationClient.start();
         LocationClientOption option = new LocationClientOption();

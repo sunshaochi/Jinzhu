@@ -24,15 +24,15 @@ public class MyLocationListener implements BDLocationListener {
             } else {
                 changeListener.onChange(true, location.getCity());
             }
-            GPSAddressUtils.mLocationClient.stop();
+            GPSAddressUtils.getInstance().mLocationClient.stop();
 
         } else if (location.getLocType() == BDLocation.TypeNetWorkException) {
             changeListener.isGet(false);
-            GPSAddressUtils.mLocationClient.stop();
+            GPSAddressUtils.getInstance().mLocationClient.stop();
 
         } else if (location.getLocType() == BDLocation.TypeCriteriaException) {
             changeListener.isGet(false);
-            GPSAddressUtils.mLocationClient.stop();
+            GPSAddressUtils.getInstance().mLocationClient.stop();
 
         }
 
@@ -42,9 +42,9 @@ public class MyLocationListener implements BDLocationListener {
         public void isGet(boolean isGet);
     }
 
-    static LocationChangeListener changeListener;
+    LocationChangeListener changeListener;
 
-    public static void setLocationChangeListener(LocationChangeListener locationChangeListener) {
+    public void setLocationChangeListener(LocationChangeListener locationChangeListener) {
         changeListener = locationChangeListener;
     }
 }
