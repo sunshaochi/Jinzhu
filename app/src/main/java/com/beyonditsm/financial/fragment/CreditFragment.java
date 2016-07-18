@@ -326,29 +326,29 @@ public class CreditFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), HomeCreditDetailAct.class);
 //                intent.putExtra(CreditDetailAct.PRODUCTINFO,datas.get(position));
-                if (TextUtils.isEmpty(etAmount.getText().toString().trim()) && !TextUtils.isEmpty(tvM.getText().toString().trim())) {
-                    MyToastUtils.showShortToast(getActivity(), "请输入金额");
-                    etAmount.requestFocus();
-                    return;
-                } else if (!TextUtils.isEmpty(etAmount.getText().toString().trim()) && TextUtils.isEmpty(tvM.getText().toString().trim())) {
-                    MyToastUtils.showShortToast(getActivity(), "请选择月份");
-                    return;
-                }
-                if (TextUtils.isEmpty(etAmount.getText().toString().trim()) && TextUtils.isEmpty(tvM.getText().toString().trim())) {
+//                if (TextUtils.isEmpty(etAmount.getText().toString().trim()) && !TextUtils.isEmpty(tvM.getText().toString().trim())) {
+//                    MyToastUtils.showShortToast(getActivity(), "请输入金额");
+//                    etAmount.requestFocus();
+//                    return;
+//                } else if (!TextUtils.isEmpty(etAmount.getText().toString().trim()) && TextUtils.isEmpty(tvM.getText().toString().trim())) {
+//                    MyToastUtils.showShortToast(getActivity(), "请选择月份");
+//                    return;
+//                }
+//                if (TextUtils.isEmpty(etAmount.getText().toString().trim()) && TextUtils.isEmpty(tvM.getText().toString().trim())) {
 //                    cMoney= ConstantValue.CREDIT_MONEY+"";
                     intent.putExtra(HomeCreditDetailAct.PRODUCTINFO, datas.get(position).getProductId());
                     intent.putExtra(HomeCreditDetailAct.CREDIT_AMOUNT, ConstantValue.CREDIT_MONEY + "");
                     intent.putExtra(HomeCreditDetailAct.CREDIT_TIME, ConstantValue.CREDIT_MONTH + "");
                     intent.putExtra(HomeCreditDetailAct.CREDIT_NAME, datas.get(position).getProductName());
-                } else {
-                    intent.putExtra(HomeCreditDetailAct.PRODUCTINFO, datas.get(position).getProductId());
-//                    intent.putExtra(HomeCreditDetailAct.CREDIT_AMOUNT, cMoney);
-//                    intent.putExtra(HomeCreditDetailAct.CREDIT_TIME, cTime);
-                    //// TODO: 2016/7/16 Here Some Bug
-                    intent.putExtra(HomeCreditDetailAct.CREDIT_AMOUNT, etAmount.getText().toString());
-                    intent.putExtra(HomeCreditDetailAct.CREDIT_TIME, tvM.getText().toString());
-                    intent.putExtra(HomeCreditDetailAct.CREDIT_NAME, datas.get(position).getProductName());
-                }
+//                } else {
+//                    intent.putExtra(HomeCreditDetailAct.PRODUCTINFO, datas.get(position).getProductId());
+////                    intent.putExtra(HomeCreditDetailAct.CREDIT_AMOUNT, cMoney);
+////                    intent.putExtra(HomeCreditDetailAct.CREDIT_TIME, cTime);
+//                    //// TODO: 2016/7/16 Here Some Bug
+//                    intent.putExtra(HomeCreditDetailAct.CREDIT_AMOUNT, etAmount.getText().toString());
+//                    intent.putExtra(HomeCreditDetailAct.CREDIT_TIME, tvM.getText().toString());
+//                    intent.putExtra(HomeCreditDetailAct.CREDIT_NAME, datas.get(position).getProductName());
+//                }
                 getActivity().startActivity(intent);
             }
         });
@@ -405,7 +405,7 @@ public class CreditFragment extends BaseFragment {
                 rbRange.setTextColor(context.getResources().getColor(R.color.tv_money_color));
                 arrow2.setImageResource(R.mipmap.arrow_orienge_up);
                 sbp.reOpen();
-                lvCreditSort.setClickable(true);
+
 //                showActionSheet(new String []{"综合排序","按利率","按月供"},rbRange,arrow2);
                 break;
             case R.id.rb_time:
@@ -419,7 +419,6 @@ public class CreditFragment extends BaseFragment {
                 rbTime.setTextColor(context.getResources().getColor(R.color.tv_money_color));
                 arrow4.setImageResource(R.mipmap.arrow_orienge_up);
                 sbp.reOpen();
-                lvCreditSort.setClickable(true);
 //                showActionSheet(new String []{"全部","0-6个月","6-12个月","12个月以上"},rbTime,arrow4);
                 break;
             case R.id.rlMonth://选择月份

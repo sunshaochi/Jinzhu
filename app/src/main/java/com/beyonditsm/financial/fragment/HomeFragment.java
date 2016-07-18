@@ -80,6 +80,7 @@ public class HomeFragment extends BaseFragment implements BDLocationListener{
     private HomeCreditAdapter adapter;
     private List<HomeHotProductEntity> hotList;
     private UserLoginEntity ule;
+
 //    public LocationClient mLocationClient = null;
 
     @SuppressLint("InflateParams")
@@ -164,6 +165,20 @@ public class HomeFragment extends BaseFragment implements BDLocationListener{
         });
 
 
+    }
+
+    private void getHistoryRegion() {
+        RequestManager.getCommManager().getLastRegion(new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                String a = result;
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
+            }
+        });
     }
 
     @Override
