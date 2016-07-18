@@ -10,7 +10,10 @@ import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.manager.ManagerMainAct;
 import com.beyonditsm.financial.util.FinancialUtil;
+import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
+import com.beyonditsm.financial.util.gps.GPSAddressUtils;
+import com.beyonditsm.financial.util.gps.LocationListener;
 
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
@@ -20,7 +23,7 @@ import io.rong.imlib.RongIMClient;
  * 闪屏图
  * Created by wangbin on 15/11/11.
  */
-public class SplashAct extends BaseActivity {
+public class SplashAct extends BaseActivity implements LocationListener{
 //    @ViewInject(R.id.ivSplash)
 //    private ImageView ivSplash;
     @Override
@@ -46,71 +49,9 @@ public class SplashAct extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-//                gotoActivity(MainActivity.class, true);
-                boolean isFirst = SpUtils.getIsFirst(getApplicationContext());
-                Intent intent;
-                JPushInterface.onResume(getApplicationContext());
-                if (isFirst) {
-                    // 第一次进入应用
-                    intent = new Intent(SplashAct.this, GuideActivity.class);
-                    SpUtils.setIsFirst(SplashAct.this, false);
-                    startActivity(intent);
-                    finish();
-                } else {
+        GPSAddressUtils.getInstance().setLocationListener(this);
+        GPSAddressUtils.getInstance().getLocation(SplashAct.this);
 
-                    if ("".equals(SpUtils.getRoleName(getApplicationContext()))) {
-                        gotoActivity(MainActivity.class, true);
-                    } else {
-                        String roleName = SpUtils.getRoleName(getApplicationContext());
-                        switch (roleName) {
-                            case "ROLE_CREDIT_MANAGER":
-                                sendBroadcast(new Intent(ManagerMainAct.UPDATATAB));
-                                gotoActivity(ManagerMainAct.class, true);
-                                break;
-                            case "ROLE_COMMON_CLIENT":
-                                sendBroadcast(new Intent(MainActivity.UPDATATAB));
-                                gotoActivity(MainActivity.class, true);
-                                break;
-                            default:
-//                            sendBroadcast(new Intent(ServiceMainAct.UPDATATAB));
-//                            gotoActivity(ServiceMainAct.class, true);
-                                sendBroadcast(new Intent(MainActivity.UPDATATAB));
-                                gotoActivity(MainActivity.class, true);
-                                break;
-                        }
-                        String token = SpUtils.getToken(getApplicationContext());
-                        if (!TextUtils.isEmpty(token)) {
-//                            if (RongIM.getInstance() == null || RongIM.getInstance().getRongIMClient() == null) {
-                                connect(token);
-
-//                                RongIM.connect(token, new RongIMClient.ConnectCallback() {
-//                                    @Override
-//                                    public void onTokenIncorrect() {
-//                                        LogUtils.i("token不正确");
-//                                    }
-//
-//                                    @Override
-//                                    public void onSuccess(String s) {
-//                                        RongCloudEvent.getInstance().setOtherListener();
-//                                        LogUtils.i("重连成功");
-//                                    }
-//
-//                                    @Override
-//                                    public void onError(RongIMClient.ErrorCode errorCode) {
-//                                        RongIMClient.ErrorCode a = errorCode;
-//                                        LogUtils.i("错误:"+errorCode+"");
-//                                    }
-//                                });
-//                            }
-
-                        }
-                    }
-                }
-            }
-        }, 2000);
     }
 
     /**
@@ -153,4 +94,54 @@ public class SplashAct extends BaseActivity {
         }
     }
 
+    @Override
+    public void onChanged(boolean isGet, String city) {
+        ParamsUtil.getInstance().setChangedCity(city);
+        ParamsUtil.getInstance().setCityGet(isGet);
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+//                gotoActivity(MainActivity.class, true);
+                boolean isFirst = SpUtils.getIsFirst(getApplicationContext());
+                Intent intent;
+                JPushInterface.onResume(getApplicationContext());
+                if (isFirst) {
+                    // 第一次进入应用
+                    intent = new Intent(SplashAct.this, GuideActivity.class);
+                    SpUtils.setIsFirst(SplashAct.this, false);
+                    startActivity(intent);
+                    finish();
+                } else {
+
+                    if ("".equals(SpUtils.getRoleName(getApplicationContext()))) {
+                        gotoActivity(MainActivity.class, true);
+                    } else {
+                        String roleName = SpUtils.getRoleName(getApplicationContext());
+                        switch (roleName) {
+                            case "ROLE_CREDIT_MANAGER":
+                                sendBroadcast(new Intent(ManagerMainAct.UPDATATAB));
+                                gotoActivity(ManagerMainAct.class, true);
+                                break;
+                            case "ROLE_COMMON_CLIENT":
+                                sendBroadcast(new Intent(MainActivity.UPDATATAB));
+                                gotoActivity(MainActivity.class, true);
+                                break;
+                            default:
+//                            sendBroadcast(new Intent(ServiceMainAct.UPDATATAB));
+//                            gotoActivity(ServiceMainAct.class, true);
+                                sendBroadcast(new Intent(MainActivity.UPDATATAB));
+                                gotoActivity(MainActivity.class, true);
+                                break;
+                        }
+                        String token = SpUtils.getToken(getApplicationContext());
+                        if (!TextUtils.isEmpty(token)) {
+
+                            connect(token);
+
+                        }
+                    }
+                }
+            }
+        }, 2000);
+    }
 }
