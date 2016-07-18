@@ -99,28 +99,17 @@ public class GrabOrderAdp extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
         if (datas != null) {
-//            holder.graborderbtn.setText(getIsSelected().get(i));
-//            if ((holder.graborderbtn.getText().toString()).equals("抢单")) {
             holder.graborderbtn.setText("抢单");
             holder.graborderbtn.setBackgroundResource(R.drawable.cre_btn_bg_orange);
             holder.graborderbtn.setTag(i);
             holder.graborderbtn.setEnabled(true);
             setOnclick(holder, i);
-//            }else {
-//                holder.graborderbtn.setText("已抢单");
-//                holder.graborderbtn.setEnabled(false);
-//                holder.graborderbtn.setBackgroundResource(R.drawable.graborder_btn_bg);
-//            }
             if (!TextUtils.isEmpty(datas.get(i).getProductName())) {
                 holder.tvmoney.setText(datas.get(i).getProductName() + "");
             }
             if (!TextUtils.isEmpty(datas.get(i).getBadPercent())) {
                 holder.tvdefaultrate.setText("预测违约率：" + datas.get(i).getBadPercent() + "%");
             }
-//            Double perA=Double.valueOf(datas.get(i).getPeriodsAmount());
-////            Double s=Double.valueOf()datas.get(i).getTotalPeriods();
-//            Double totalMPay= Arith.sub(Double.valueOf(datas.get(i).getPeriodsAmount())*Double, Double.valueOf(datas.get(i).getTotalAmount()));
-//            holder.tvtotalmoney.setText("¥"+totalMPay);
             if (!TextUtils.isEmpty(datas.get(i).getTotalAmount())) {
                 holder.tvtotalmoney.setText(datas.get(i).getTotalAmount());
             }
@@ -169,14 +158,6 @@ public class GrabOrderAdp extends BaseAdapter {
 
                     }
                 });
-//                isSelected.put(i, "已抢单");
-//                holder.graborderbtn.setText("已抢单");
-//                holder.graborderbtn.setEnabled(false);
-//                holder.graborderbtn.setBackgroundResource(R.drawable.graborder_btn_bg);
-//                Intent intent = new Intent(ManagerOrderFragment.UPDATA);
-//                data.setOrderSts("CREDIT_MANAGER_GRAB");
-//                intent.putExtra("orderSts", data.getOrderSts());
-//                context.sendBroadcast(intent);
             }
 
             @Override

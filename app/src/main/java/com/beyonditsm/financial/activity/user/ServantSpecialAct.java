@@ -56,36 +56,6 @@ public class ServantSpecialAct extends BaseActivity {
                 "－ 推荐二层用户成功申请贷款可获得放贷额*"+(ParamsUtil.getInstance().getSecWard())+"%的现金券；\n\n" +
                 "－ 推荐三层用户成功申请贷款可获得放贷额*"+(ParamsUtil.getInstance().getThirdWard())+"%的现金券。");
 
-//        getWidth();
-//        Bitmap bitmap = MyBitmapUtils.decodeSampledBitmapFromResource(getResources(), R.mipmap.servantguide, screenWidth, (int)(screenWidth/750 * 3871));
-//        ivBg.setOnImageEventListener(new SubsamplingScaleImageView.OnImageEventListener() {
-//            @Override
-//            public void onReady() {
-//
-//            }
-//
-//            @Override
-//            public void onImageLoaded() {
-//                loadingView.loadComplete();
-//            }
-//
-//            @Override
-//            public void onPreviewLoadError(Exception e) {
-//
-//            }
-//
-//            @Override
-//            public void onImageLoadError(Exception e) {
-//
-//            }
-//
-//            @Override
-//            public void onTileLoadError(Exception e) {
-//
-//            }
-//        });
-//        ivBg.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CENTER_CROP);
-//        ivBg.setImage(ImageSource.uri("file:///android_asset/servantguide.png"), new ImageViewState(0, new PointF(0, 0), 0));
     }
     /**
      * 点击事件

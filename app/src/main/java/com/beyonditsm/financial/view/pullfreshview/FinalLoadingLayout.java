@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.view.pullfreshview;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.util.AttributeSet;
@@ -11,11 +12,10 @@ import android.widget.LinearLayout;
 import com.beyonditsm.financial.R;
 
 /**
- * Created by wangbin on 15/12/17.
+ * Created by wangbin on 15/12/17
  */
 public class FinalLoadingLayout extends LoadingLayout{
 
-    private ImageView ivLoad;
     /** Header的容器 */
     private LinearLayout mHeaderContainer;
 
@@ -28,7 +28,7 @@ public class FinalLoadingLayout extends LoadingLayout{
      */
     public FinalLoadingLayout(Context context) {
         super(context);
-        init(context);
+        init();
     }
 
     /**
@@ -41,22 +41,22 @@ public class FinalLoadingLayout extends LoadingLayout{
      */
     public FinalLoadingLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context);
+        init();
     }
 
-    private void init(Context context){
+    private void init(){
         mHeaderContainer = (LinearLayout) findViewById(R.id.pull_to_refresh_header_content);
-        ivLoad=(ImageView) findViewById(R.id.ivLoad);
+        ImageView ivLoad = (ImageView) findViewById(R.id.ivLoad);
         ivLoad.setBackgroundResource(R.anim.refresh_anim);
-        animation=(AnimationDrawable)ivLoad.getBackground();
+        animation=(AnimationDrawable) ivLoad.getBackground();
         animation.setOneShot(false);
     }
 
+    @SuppressLint("InflateParams")
     @Override
     protected View createLoadingView(Context context, AttributeSet arg1) {
-        View container = LayoutInflater.from(context).inflate(
+        return LayoutInflater.from(context).inflate(
                 R.layout.pull_to_refre_header, null);
-        return container;
     }
 
     @Override

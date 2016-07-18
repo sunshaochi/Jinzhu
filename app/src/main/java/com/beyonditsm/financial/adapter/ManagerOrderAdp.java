@@ -76,20 +76,6 @@ public class ManagerOrderAdp extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
 
-//        String ordersts = datas.get(i).getOrderSts();
-//        if (ordersts.equals("SUPPLEMENT_DATA")) {
-//            holder.graborderbtn.setText("补件中");
-//            holder.graborderbtn.setBackgroundResource(R.drawable.btn_login);
-//            holder.graborderbtn.setEnabled(false);
-////            holder.graborderbtn.setTag(i);
-////            holder.graborderbtn.setOnClickListener(this);
-//        } else {
-//            holder.graborderbtn.setText("待提交");
-//            holder.graborderbtn.setBackgroundResource(R.drawable.cre_btn_bg_orange);
-//            holder.graborderbtn.setEnabled(false);
-//            holder.graborderbtn.setTag(i);
-//            holder.graborderbtn.setOnClickListener(this);
-//        }
         if (datas != null) {
             if (!TextUtils.isEmpty(datas.get(i).getProductName())) {
                 holder.tvmoney.setText(datas.get(i).getProductName());
