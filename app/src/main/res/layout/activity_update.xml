@@ -57,19 +57,6 @@
                 android:layout_centerVertical="true"
                 android:text="性别" />
 
-            <ImageView
-                android:id="@+id/ivArrowSex"
-                style="@style/arrow_right_style"
-                android:layout_alignParentRight="true"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/tvSex"
-                style="@style/tv_second_style"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:layout_toLeftOf="@id/ivArrowSex"
-                android:visibility="gone" />
 
             <CheckBox
                 android:id="@+id/cb_select_sex"
@@ -80,37 +67,6 @@
                 android:background="@drawable/select_sex"
                 android:button="@null" />
 
-            <RadioGroup
-                android:id="@+id/sex_rg"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <RadioButton
-                    android:id="@+id/man_rb"
-                    android:layout_width="50dp"
-                    android:layout_height="32dp"
-                    android:layout_marginRight="5dp"
-                    android:background="@drawable/man_rb_select"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="男"
-                    android:textColor="@color/tv_gray" />
-
-                <RadioButton
-                    android:id="@+id/woman_rb"
-                    android:layout_width="50dp"
-                    android:layout_height="32dp"
-                    android:layout_marginLeft="5dp"
-                    android:background="@drawable/woman_rb_select"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="女"
-                    android:textColor="@color/tv_gray" />
-            </RadioGroup>
         </RelativeLayout>
 
         <View style="@style/view_line"></View>

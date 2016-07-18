@@ -41,6 +41,7 @@ public class FindPwdAct extends BaseActivity {
 
     public static final String PHONENUM = "phone";
     public static final String CAPTCHA = "captcha";
+    private String name;
 
     @Override
     public void setLayout() {
@@ -109,37 +110,30 @@ public class FindPwdAct extends BaseActivity {
         switch (v.getId()) {
             //获取验证码
             case R.id.gettv:
-                String name = findetphone.getText().toString().replaceAll(" +", "");
-                if (TextUtils.isEmpty(name)) {
-                    MyToastUtils.showShortToast(getApplicationContext(), "请输入手机号");
-                    return;
+                if (isPhoneNum()){
+                        RequestManager.getCommManager().findpwbyCode(name, new RequestManager.CallBack() {
+                            @Override
+                            public void onSucess(String result) throws JSONException {
+                                i = 60;
+                                gettv.setEnabled(false);
+                                timer = new Timer();
+                                myTask = new MyTimerTask();
+                                timer.schedule(myTask, 0, 1000);
+
+                            }
+
+                            @Override
+                            public void onError(int status, String msg) {
+                                MyToastUtils.showShortToast(getApplicationContext(), msg);
+                            }
+                        });
+
                 }
-                if (name.length() != 11) {
-                    MyToastUtils.showShortToast(getApplicationContext(), "请输入正确的手机号码");
-                    return;
-                }
-                RequestManager.getCommManager().findpwbyCode(name, new RequestManager.CallBack() {
-                    @Override
-                    public void onSucess(String result) throws JSONException {
-                        i = 60;
-                        gettv.setEnabled(false);
-                        timer = new Timer();
-                        myTask = new MyTimerTask();
-                        timer.schedule(myTask, 0, 1000);
-
-                    }
-
-                    @Override
-                    public void onError(int status,String msg) {
-                       MyToastUtils.showShortToast(getApplicationContext(),msg);
-                    }
-                });
-
 
                 break;
             //下一步
             case R.id.nexttv:
-                name = findetphone.getText().toString().replaceAll(" +","");
+                String name = findetphone.getText().toString().replaceAll(" +", "");
                 String authcode = findetpwd.getText().toString().trim();
                 if (TextUtils.isEmpty(name)) {
                     MyToastUtils.showShortToast(getApplicationContext(), "请输入手机号");
@@ -167,6 +161,19 @@ public class FindPwdAct extends BaseActivity {
         }
     }
 
+
+    private boolean isPhoneNum() {
+        name = findetphone.getText().toString().replaceAll(" +", "");
+        if (TextUtils.isEmpty(name)) {
+            MyToastUtils.showShortToast(getApplicationContext(), "请输入手机号");
+            return false;
+        }
+        if (name.length() != 11) {
+            MyToastUtils.showShortToast(getApplicationContext(), "请输入正确的手机号码");
+            return false;
+        }
+        return true;
+    }
 
     private class MyTimerTask extends TimerTask {
         @Override

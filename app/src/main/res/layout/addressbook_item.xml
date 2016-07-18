@@ -67,18 +67,6 @@
             android:layout_gravity="center"
             android:gravity="right">
 
-            <Button
-                android:id="@+id/btn_invate"
-                android:layout_width="55dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="30dp"
-                android:background="@drawable/btn_invate"
-                android:clickable="true"
-                android:text="邀请"
-                android:textColor="#ffffff"
-                android:textSize="28px"
-                android:visibility="gone" />
-
             <TextView
                 android:id="@+id/tv_aregister"
                 android:layout_width="wrap_content"

@@ -34,7 +34,6 @@ import java.util.List;
 public class BindBankCardAct extends BaseActivity {
     @ViewInject(R.id.lv_bankcard)
     private ListViewForScrollView lvBankCard;
-//    private MyScrollListView lvBankCard;
     @ViewInject(R.id.sv_bindBankCard)
     private ScrollView svBindBankCard;
     private UserEntity user;//用户实体

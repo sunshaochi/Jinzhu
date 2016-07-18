@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
@@ -59,7 +58,6 @@ public class AddressBookAdapter extends BaseAdapter implements SectionIndexer{
             holder.iv_head= (ImageView) convertView.findViewById(R.id.iv_head);
             holder.tv_name= (TextView) convertView.findViewById(R.id.tv_name);
             holder.tv_phonenumber= (TextView) convertView.findViewById(R.id.tv_phonenumber);
-            holder.btn_invate= (Button) convertView.findViewById(R.id.btn_invate);
             holder.tv_aregister= (TextView) convertView.findViewById(R.id.tv_aregister);
             holder.tv_zm= (TextView) convertView.findViewById(R.id.tv_zm);
             convertView.setTag(holder);
@@ -126,7 +124,6 @@ public class AddressBookAdapter extends BaseAdapter implements SectionIndexer{
         public ImageView iv_head;
         public TextView tv_name;
         public TextView tv_phonenumber;
-        public Button btn_invate;
         public TextView tv_aregister;
         public TextView tv_zm;
     }

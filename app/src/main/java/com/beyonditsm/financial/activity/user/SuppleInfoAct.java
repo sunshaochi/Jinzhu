@@ -27,7 +27,6 @@ import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.widget.DialogChooseAdress;
 import com.beyonditsm.financial.widget.DialogChooseProvince;
-import com.beyonditsm.financial.widget.ToggleButton;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
@@ -43,8 +42,6 @@ public class SuppleInfoAct extends BaseActivity {
     private EditText name;//姓名
     @ViewInject(R.id.tv_name)
     private TextView tvname;
-    @ViewInject(R.id.tbSex)
-    private ToggleButton tbSex;//设置男女
 
     @ViewInject(R.id.cb_select_sex)
     private CheckBox cbSelectSex;//选择性别
@@ -237,7 +234,7 @@ public class SuppleInfoAct extends BaseActivity {
 //                sexMan.setChecked(true);
 //                sexWoman.setClickable(false);
             }
-            tbSex.setClickable(false);
+//            tbSex.setClickable(false);
 
         }
 
