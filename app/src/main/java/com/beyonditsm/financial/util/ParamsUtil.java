@@ -32,6 +32,24 @@ public class ParamsUtil {
     private double secCardWard;
     private double thirdCardWard;
     private Activity currentAct;
+    private String changedCity;
+    private boolean cityGet;
+
+    public boolean isCityGet() {
+        return cityGet;
+    }
+
+    public void setCityGet(boolean cityGet) {
+        this.cityGet = cityGet;
+    }
+
+    public String getChangedCity() {
+        return changedCity;
+    }
+
+    public void setChangedCity(String changedCity) {
+        this.changedCity = changedCity;
+    }
 
     public Activity getCurrentAct() {
         return currentAct;

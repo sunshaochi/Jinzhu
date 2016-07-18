@@ -1,7 +1,10 @@
 package com.beyonditsm.financial.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -13,6 +16,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
 import com.beyonditsm.financial.ConstantValue;
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
@@ -33,8 +38,7 @@ import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
-import com.beyonditsm.financial.util.gps.GPSAddressUtils;
-import com.beyonditsm.financial.util.gps.MyLocationListener;
+
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
@@ -64,7 +68,7 @@ import java.util.List;
 /**
  * Created by liwk on 2015/12/8
  */
-public class HomeFragment extends BaseFragment implements MyLocationListener.LocationChangeListener{
+public class HomeFragment extends BaseFragment implements BDLocationListener{
     @ViewInject(R.id.plv_hotCredit)
     private LoadRefreshView plvHotCredit;
     @ViewInject(R.id.loadingView)
@@ -85,7 +89,6 @@ public class HomeFragment extends BaseFragment implements MyLocationListener.Loc
 
     }
 
-
     @Override
     public void onStart() {
 //        loadingView.loading();
@@ -96,11 +99,13 @@ public class HomeFragment extends BaseFragment implements MyLocationListener.Loc
 //        mLocationClient.registerLocationListener( new MyLocationListener());    //注册监听函数
 //        mLocationClient.start();
         super.onStart();
+
+        initLocation();
         getUserLoginInfo();
-        MyLocationListener myLocationListener = new MyLocationListener();
-        myLocationListener.setLocationChangeListener(this);
-        GPSAddressUtils.getInstance().getLocation(myLocationListener);
+
     }
+
+
 
     @Override
     public void initData(Bundle savedInstanceState) {
@@ -159,20 +164,6 @@ public class HomeFragment extends BaseFragment implements MyLocationListener.Loc
         });
 
 
-    }
-
-    private void getHistoryRegion() {
-        RequestManager.getCommManager().getLastRegion(new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
-                String a = result;
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-
-            }
-        });
     }
 
     @Override
@@ -275,38 +266,9 @@ public class HomeFragment extends BaseFragment implements MyLocationListener.Loc
     }
 
     @Override
-    public void onChange(boolean changed, final String cityName) {
-        if (changed && !"".equals(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()))){
-            GPSAlertDialog gpsAlertDialog = new GPSAlertDialog(context);
-            gpsAlertDialog.builder().setCancelable(true).setMsg("您目前所处区域发生变更","是否将所在城市切换为",cityName).setPositiveButton("确认切换", new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    tvCity.setText(cityName);
-                    SpUtils.setCity(MyApplication.getInstance().getApplicationContext(), cityName);
-                }
-            }).setNegativeButton("取消",null).show();
-            tvCity.setText(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()));
-        }else {
-            tvCity.setText(cityName);
-        }
+    public void onReceiveLocation(BDLocation bdLocation) {
+
     }
-
-    @Override
-    public void isGet(boolean isGet) {
-        if (!isGet){
-            tvCity.setText("——");
-            GPSAlertDialog gpsAlertDialog = new GPSAlertDialog(context);
-            gpsAlertDialog.builder().setCancelable(true).setMsg("无法获取当前位置，请检查设置","或直接切换城市",null).setPositiveButton("去设置", new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(Settings.ACTION_SETTINGS);
-                    startActivity(intent);
-                }
-            }).setNegativeButton("知道了",null).show();
-
-        }
-    }
-
 
     public class ToSwitchEvent{
 
@@ -394,5 +356,33 @@ public class HomeFragment extends BaseFragment implements MyLocationListener.Loc
 
     private boolean addressChange(String locationCity,String selectCity){
         return !locationCity.equals(selectCity);
+    }
+
+    private void initLocation() {
+        if (ParamsUtil.getInstance().isCityGet()){
+            if (SpUtils.getCity(MyApplication.getInstance().getApplicationContext()).equals(ParamsUtil.getInstance().getChangedCity())){
+                tvCity.setText(ParamsUtil.getInstance().getChangedCity());
+            }else {
+                GPSAlertDialog gpsAlertDialog = new GPSAlertDialog(context);
+                gpsAlertDialog.builder().setCancelable(true).setMsg("您目前所处区域发生变更","是否将所在城市切换为",ParamsUtil.getInstance().getChangedCity()).setPositiveButton("确认切换", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        tvCity.setText(ParamsUtil.getInstance().getChangedCity());
+                        SpUtils.setCity(MyApplication.getInstance().getApplicationContext(), ParamsUtil.getInstance().getChangedCity());
+                    }
+                }).setNegativeButton("取消",null).show();
+                tvCity.setText(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()));
+            }
+        }else {
+            tvCity.setText("——");
+            GPSAlertDialog gpsAlertDialog = new GPSAlertDialog(context);
+            gpsAlertDialog.builder().setCancelable(true).setMsg("无法获取当前位置，请检查设置","或直接切换城市",null).setPositiveButton("去设置", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Settings.ACTION_SETTINGS);
+                    startActivity(intent);
+                }
+            }).setNegativeButton("知道了",null).show();
+        }
     }
 }
