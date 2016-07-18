@@ -71,12 +71,7 @@ public class GPSAddressUtils {
             if (location.getLocType() == BDLocation.TypeGpsLocation) {// GPS定位结果
 
             } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {// 网络定位结果
-
-                if (!location.getCity().equals(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()) + "")) {
-
-                    locationListener.onChanged(true,location.getCity());
-
-                }
+                locationListener.onChanged(true,location.getCity());
                 GPSAddressUtils.getInstance().mLocationClient.stop();
 
             } else if (location.getLocType() == BDLocation.TypeNetWorkException) {

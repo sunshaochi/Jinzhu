@@ -308,7 +308,9 @@ public class CreditFragment extends BaseFragment {
 
                 }
                 sbp.hide();
-                getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cBank,cSort,cMoney,cTime,currentP,pageSize);            }
+                lvCreditSort.setClickable(false);
+                getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cBank,cSort,cMoney,cTime,currentP,pageSize);
+            }
         });
 
         sbp.setOnStateChangeListener(new SlideBottomPanel.OnStateChangeListener() {
@@ -375,6 +377,7 @@ public class CreditFragment extends BaseFragment {
                 arrow1.setImageResource(R.mipmap.arrow_orienge_up);
                 sbp.setmPanelHeight(Uitls.getListViewHeight(lvCreditSort));
                 sbp.reOpen();
+                lvCreditSort.setClickable(true);
 //                showActionSheet(new String []{"全部","光大银行","浦发银行","宜人贷"},rbBank,arrow1);
                 break;
             case R.id.rb_money:
@@ -388,6 +391,7 @@ public class CreditFragment extends BaseFragment {
                 rbMoney.setTextColor(context.getResources().getColor(R.color.tv_money_color));
                 arrow3.setImageResource(R.mipmap.arrow_orienge_up);
                 sbp.reOpen();
+                lvCreditSort.setClickable(true);
 //                showActionSheet(new String []{"全部","0-10万","10-15万","15万以上"},rbMoney,arrow3);
                 break;
             case R.id.rb_range:
@@ -401,6 +405,7 @@ public class CreditFragment extends BaseFragment {
                 rbRange.setTextColor(context.getResources().getColor(R.color.tv_money_color));
                 arrow2.setImageResource(R.mipmap.arrow_orienge_up);
                 sbp.reOpen();
+                lvCreditSort.setClickable(true);
 //                showActionSheet(new String []{"综合排序","按利率","按月供"},rbRange,arrow2);
                 break;
             case R.id.rb_time:
@@ -414,6 +419,7 @@ public class CreditFragment extends BaseFragment {
                 rbTime.setTextColor(context.getResources().getColor(R.color.tv_money_color));
                 arrow4.setImageResource(R.mipmap.arrow_orienge_up);
                 sbp.reOpen();
+                lvCreditSort.setClickable(true);
 //                showActionSheet(new String []{"全部","0-6个月","6-12个月","12个月以上"},rbTime,arrow4);
                 break;
             case R.id.rlMonth://选择月份
