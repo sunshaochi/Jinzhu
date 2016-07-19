@@ -429,7 +429,6 @@ public class RequestManager {
 
     }
 
-
     private String getCoolie(HttpUtils httpUtils) {
         DefaultHttpClient dh = (DefaultHttpClient) httpUtils.getHttpClient();
         List<Cookie> cookies = dh.getCookieStore().getCookies();

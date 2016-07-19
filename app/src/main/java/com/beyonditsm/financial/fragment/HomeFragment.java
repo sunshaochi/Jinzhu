@@ -100,8 +100,10 @@ public class HomeFragment extends BaseFragment implements BDLocationListener{
 //        mLocationClient.registerLocationListener( new MyLocationListener());    //注册监听函数
 //        mLocationClient.start();
         super.onStart();
-
-        initLocation();
+        if (ParamsUtil.getInstance().isFirstLocated()){
+            ParamsUtil.getInstance().setFirstLocated(false);
+            initLocation();
+        }
         getUserLoginInfo();
 
     }
@@ -390,6 +392,7 @@ public class HomeFragment extends BaseFragment implements BDLocationListener{
             }
         }else {
             tvCity.setText("——");
+            ParamsUtil.getInstance().setFirstLocated(true);
             GPSAlertDialog gpsAlertDialog = new GPSAlertDialog(context);
             gpsAlertDialog.builder().setCancelable(true).setMsg("无法获取当前位置，请检查设置","或直接切换城市",null).setPositiveButton("去设置", new View.OnClickListener() {
                 @Override
@@ -399,5 +402,11 @@ public class HomeFragment extends BaseFragment implements BDLocationListener{
                 }
             }).setNegativeButton("知道了",null).show();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ParamsUtil.getInstance().setFirstLocated(true);
     }
 }

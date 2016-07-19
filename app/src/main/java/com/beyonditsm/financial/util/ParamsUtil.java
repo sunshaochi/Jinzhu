@@ -34,6 +34,15 @@ public class ParamsUtil {
     private Activity currentAct;
     private String changedCity;
     private boolean cityGet;
+    private boolean firstLocated = true;
+
+    public boolean isFirstLocated() {
+        return firstLocated;
+    }
+
+    public void setFirstLocated(boolean firstLocated) {
+        this.firstLocated = firstLocated;
+    }
 
     public boolean isCityGet() {
         return cityGet;
