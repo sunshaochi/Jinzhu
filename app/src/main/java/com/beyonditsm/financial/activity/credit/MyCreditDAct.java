@@ -131,34 +131,34 @@ public class MyCreditDAct extends BaseActivity {
                 setRightBtn("取消订单", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        RequestManager.getUserManager().cancelOrder(rowe.getId(), new RequestManager.CallBack() {
-                            @Override
-                            public void onSucess(String result) throws JSONException {
-
-                                JSONObject object = new JSONObject(result);
-                                int status = object.getInt("status");
-                                String message = object.getString("message");
-                                if (status == 200) {
-                                    MyToastUtils.showShortToast(MyCreditDAct.this, message);
-                                    Intent intent = new Intent(MyCreditAct.CREDIT_RECEIVER);
-                                    intent.putExtra("position", position);
-                                    sendBroadcast(intent);
-//                                            SpUtils.clearOrderId(MyApplication.getInstance());
-//                                            sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
-//                                            sendBroadcast(new Intent(MineFragment.HIDE_POINT));
-                                    finish();
-                                }
-                            }
-
-                            @Override
-                            public void onError(int status, String msg) {
-                                MyToastUtils.showShortToast(MyCreditDAct.this, msg);
-                            }
-                        });
                         MyAlertDialog dialog = new MyAlertDialog(MyCreditDAct.this);
                         dialog.builder().setTitle("提示").setMsg("确认取消订单？").setPositiveButton("确定", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                RequestManager.getUserManager().cancelOrder(rowe.getId(), new RequestManager.CallBack() {
+                                    @Override
+                                    public void onSucess(String result) throws JSONException {
+
+                                        JSONObject object = new JSONObject(result);
+                                        int status = object.getInt("status");
+                                        String message = object.getString("message");
+                                        if (status == 200) {
+                                            MyToastUtils.showShortToast(MyCreditDAct.this, message);
+                                            Intent intent = new Intent(MyCreditAct.CREDIT_RECEIVER);
+                                            intent.putExtra("position", position);
+                                            sendBroadcast(intent);
+//                                            SpUtils.clearOrderId(MyApplication.getInstance());
+//                                            sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
+//                                            sendBroadcast(new Intent(MineFragment.HIDE_POINT));
+                                            finish();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onError(int status, String msg) {
+                                        MyToastUtils.showShortToast(MyCreditDAct.this, msg);
+                                    }
+                                });
                             }
                         }).setNegativeButton("取消", null).show();
 

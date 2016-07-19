@@ -54,7 +54,6 @@ public class GeneralUtils {
 
 
     public void toVersion(final Context context, final int currentVersion, final int type) {
-        MyLogUtils.info("当前版本：" + currentVersion + "");
         RequestManager.getCommManager().toVersion(currentVersion, "ANDROID", new RequestManager.CallBack() {
             @SuppressWarnings("unchecked")
             @Override

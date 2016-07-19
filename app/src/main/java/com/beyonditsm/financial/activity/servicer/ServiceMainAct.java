@@ -117,6 +117,11 @@ public class ServiceMainAct extends BaseActivity{
         }else{
             ivMs.setVisibility(View.GONE);
         }
+        if (TextUtils.isEmpty(SpUtils.getRoleName(ServiceMainAct.this))) {
+            ivMs.setVisibility(View.GONE);
+        } else {
+            ivMs.setVisibility(View.VISIBLE);
+        }
         String orderId = SpUtils.getOrderId(MyApplication.getInstance());
         if ("".equals(orderId)){
             ivMs.setVisibility(View.GONE);
