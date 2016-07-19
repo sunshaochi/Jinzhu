@@ -98,9 +98,6 @@ public class SplashAct extends BaseActivity implements LocationListener{
     public void onChanged(boolean isGet, String city) {
         ParamsUtil.getInstance().setChangedCity(city);
         ParamsUtil.getInstance().setCityGet(isGet);
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
 //                gotoActivity(MainActivity.class, true);
                 boolean isFirst = SpUtils.getIsFirst(getApplicationContext());
                 Intent intent;
@@ -160,7 +157,6 @@ public class SplashAct extends BaseActivity implements LocationListener{
                         }
                     }
                 }
-            }
-        }, 2000);
+
     }
 }

@@ -75,9 +75,8 @@ public class GPSAddressUtils {
                 GPSAddressUtils.getInstance().mLocationClient.stop();
 
             } else if (location.getLocType() == BDLocation.TypeNetWorkException) {
-                locationListener.onChanged(false,"");
                 GPSAddressUtils.getInstance().mLocationClient.stop();
-
+                locationListener.onChanged(false,"");
             } else if (location.getLocType() == BDLocation.TypeCriteriaException) {
                 locationListener.onChanged(false,"");
                 GPSAddressUtils.getInstance().mLocationClient.stop();

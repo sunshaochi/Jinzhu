@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.activity.credit;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -42,7 +43,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -243,6 +246,8 @@ public class CreditUploadAct extends BaseActivity {
                 return;
             }
             Uri uri;
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");//设置日期格式
+            String time = df.format(new Date());
             switch (requestCode) {
                 case PHOTOZOOM:// 相册
                     if (data == null || "".equals(data.toString())) {
@@ -250,17 +255,17 @@ public class CreditUploadAct extends BaseActivity {
                     }
                     uri = data.getData();
                     if (null != uri && !"".equals(uri.toString())) {
-                        Bitmap compressB = MyBitmapUtils.zoomImgKeepWH(MyBitmapUtils.decodeUriAsBitmap(CreditUploadAct.this, uri), 100, 100, true);
-                        MyBitmapUtils.saveBitmap(compressB, "upload/cache/credit_upload.png");
+                        Bitmap compressB = MyBitmapUtils.zoomImgKeepWH(MyBitmapUtils.decodeUriAsBitmap(CreditUploadAct.this, uri), 300, 300, true);
+                        MyBitmapUtils.saveBitmap(compressB, "upload/cache/credit_upload"+time+".png");
                     }
 
                     break;
                 case PHOTOTAKE:// 拍照
 //                    path = photoSavePath + photoSaveName;
-                    MyBitmapUtils.saveBitmap(MyBitmapUtils.LoadBigImg(path, 100, 100), "upload/cache/credit_upload.png");
+                    MyBitmapUtils.saveBitmap(MyBitmapUtils.LoadBigImg(path, 300, 300), "upload/cache/credit_upload"+time+".png");
                     break;
             }
-            path = Environment.getExternalStorageDirectory() + "/upload/cache/credit_upload.png";
+            path = Environment.getExternalStorageDirectory() + "/upload/cache/credit_upload"+time+".png";
             uploadFile(path);
             super.onActivityResult(requestCode, resultCode, data);
         } catch (NullPointerException e) {
@@ -489,23 +494,31 @@ public class CreditUploadAct extends BaseActivity {
                         dialog.builder().addSheetItem("拍照", null, new MySelfSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
-                                uploadItemId = uItemId;
-                                if (list.size() > position) {
-                                    if (!TextUtils.isEmpty(list.get(position).getId())) {
-                                        imageId = list.get(position).getId();
-                                        imageIsPass = list.get(position).getIsPass();
+                                //执行拍照前，应该先判断SD卡是否存在
+                                String SDState = Environment.getExternalStorageState();
+                                if(SDState.equals(Environment.MEDIA_MOUNTED))
+                                {
+                                    uploadItemId = uItemId;
+                                    if (list.size() > position) {
+                                        if (!TextUtils.isEmpty(list.get(position).getId())) {
+                                            imageId = list.get(position).getId();
+                                            imageIsPass = list.get(position).getIsPass();
+                                        }
                                     }
-                                }
-                                imagePosi = position;
+                                    imagePosi = position;
 
-                                photoSaveName = String.valueOf(System.currentTimeMillis()) + ".png";
-                                path = photoSavePath + photoSaveName;
-                                Uri imageUri;
-                                Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                imageUri = Uri.fromFile(new File(photoSavePath, photoSaveName));
-                                openCameraIntent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
-                                openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                                startActivityForResult(openCameraIntent, PHOTOTAKE);
+                                    photoSaveName = String.valueOf(System.currentTimeMillis()) + ".png";
+                                    path = photoSavePath + photoSaveName;
+                                    Uri imageUri;
+                                    Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                    imageUri = Uri.fromFile(new File(photoSavePath, photoSaveName));
+                                    openCameraIntent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
+                                    openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                                    startActivityForResult(openCameraIntent, PHOTOTAKE);
+                                }else {
+                                    MyToastUtils.showShortToast(CreditUploadAct.this,"SD卡不存在");
+
+                                }
 
                             }
                         }).addSheetItem("从相册选取", null, new MySelfSheetDialog.OnSheetItemClickListener() {
