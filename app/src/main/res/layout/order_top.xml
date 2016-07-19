@@ -26,8 +26,7 @@
 
             <TextView
                 android:id="@+id/tvProName"
-                style="@style/tv_primary_style"
-                android:text="贷款50万" />
+                style="@style/tv_primary_style"/>
 
             <LinearLayout
                 android:id="@+id/ll_mm"

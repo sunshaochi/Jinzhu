@@ -1,10 +1,7 @@
 package com.beyonditsm.financial.fragment;
 
 import android.annotation.SuppressLint;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -38,7 +35,6 @@ import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
-
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
@@ -116,10 +112,6 @@ public class HomeFragment extends BaseFragment implements BDLocationListener{
 
         String roleName = SpUtils.getRoleName(context);
         MyLogUtils.info("ROLENAME="+roleName);
-//        if (!"ROLE_COMMON_CLIENT".equals(roleName)&&!TextUtils.isEmpty(roleName)){//普通用户显示贷款指南
-//            ivSuspen.setBackgroundResource(R.mipmap.servant_guide);
-
-//        }
         plvHotCredit.setPullRefreshEnabled(true);
         plvHotCredit.setScrollLoadEnabled(false);
         plvHotCredit.setPullLoadEnabled(true);

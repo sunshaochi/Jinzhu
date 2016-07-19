@@ -112,11 +112,11 @@ public class MainActivity extends BaseActivity {
 
         if (myCreditFgt == null && fragment instanceof HomeFragment) {
             myCreditFgt = fragment;
-        }else if (creditFgt == null && fragment instanceof CreditFragment) {
+        } else if (creditFgt == null && fragment instanceof CreditFragment) {
             creditFgt = fragment;
-        }else if (friendFgt == null && fragment instanceof FriendFrg) {
+        } else if (friendFgt == null && fragment instanceof FriendFrg) {
             friendFgt = fragment;
-        }else if (mineFgt == null && fragment instanceof MineFragment){
+        } else if (mineFgt == null && fragment instanceof MineFragment) {
             mineFgt = fragment;
         }
     }
@@ -130,12 +130,10 @@ public class MainActivity extends BaseActivity {
     public void setLayout() {
         setContentView(R.layout.activity_main);
     }
+
     @Override
     public void init(Bundle savedInstanceState) {
-//        getCity();
-//        RongIM.setUserInfoProvider(this, true);
         manager = getSupportFragmentManager();
-//        initFragment(savedInstanceState);
         ParamsUtil.getInstance().setMainAct(this);
         GeneralUtils gUtils = new GeneralUtils();
 
@@ -145,6 +143,11 @@ public class MainActivity extends BaseActivity {
         assignViews();
 
 
+        if (TextUtils.isEmpty(SpUtils.getRoleName(MainActivity.this))) {
+            ivRedPoint.setVisibility(View.GONE);
+        } else {
+            ivRedPoint.setVisibility(View.VISIBLE);
+        }
         String orderId = SpUtils.getOrderId(MyApplication.getInstance());
         if ("".equals(orderId)) {
             ivRedPoint.setVisibility(View.GONE);
@@ -152,39 +155,20 @@ public class MainActivity extends BaseActivity {
             ivRedPoint.setVisibility(View.VISIBLE);
         }
 
-//        String def = getIntent().getStringExtra("def");
-//        if (!TextUtils.isEmpty(def)&&Integer.valueOf(def)==0){
-//            setTabSelection(Integer.valueOf(def));
-//            setCheckItem(Integer.valueOf(def));
-//        }
         setTabSelection(0);
         setCheckItem(0);
         String token = SpUtils.getToken(MainActivity.this);
         if (!TextUtils.isEmpty(token)) {
             getUserInfo();
-//            getFriendList();
             if (RongIM.getInstance() != null) {
                 RongIM.getInstance().setOnReceiveUnreadCountChangedListener
                         (new MyReceiveUnreadCountChangedListener(), Conversation.ConversationType.PRIVATE);
             }
         }
-
-//        if(NetUtil.isWifiConnection(getApplicationContext())){
+        //检查版本更新
         gUtils.toVersion(MainActivity.this, FinancialUtil.getAppVer(MainActivity.this), 1);
 
-//        }
-
     }
-//
-//    private void initFragment(Bundle savedInstanceState) {
-//
-//        if (savedInstanceState != null) {
-//            myCreditFgt = (AllOfficialAccountFragment) fManager.findFragmentByTag("allFrg");
-//            creditFgt = (MovieOfficialAccountFragment) fManager.findFragmentByTag("movieFrg");
-//            friendFgt = (NewsOfficialAccountFragment) fManager.findFragmentByTag("newsFrg");
-//            mineFgt = (OtherOfficialAccountFragment) fManager.findFragmentByTag("otherFrg");
-//        }
-//    }
 
     /**
      * 获取用户信息
@@ -223,44 +207,7 @@ public class MainActivity extends BaseActivity {
     }
 
     /**
-     * 获取好友列表
-     */
-//    private void getFriendList() {
-//        //获取好友列表
-//        RequestManager.getCommManager().getFriendList(new RequestManager.CallBack() {
-//            @Override
-//            public void onSucess(String result) throws JSONException {
-//
-//                JSONObject obj = new JSONObject(result);
-//                JSONArray array = obj.getJSONArray("data");
-//                friends = gson.fromJson(array.toString(), new TypeToken<List<UserEntity>>() {
-//                }.getType());
-//                if (friends != null && friends.size() > 0) {
-//                    for (int i = 0; i < friends.size(); i++) {
-//                        FriendBean friendBean = new FriendBean();
-//                        friendBean.setUserId(friends.get(i).getAccountId());
-//                        friendBean.setUserHead(IFinancialUrl.BASE_IMAGE_URL + friends.get(i).getHeadIcon());
-//                        if (TextUtils.isEmpty(friends.get(i).getUserName()))
-//                            friendBean.setUserName(friends.get(i).getAccountName());
-//                        else
-//                            friendBean.setUserName(friends.get(i).getUserName());
-//                        FriendDao.saveMes(friendBean);
-//                    }
-//                    friendBeans = FriendDao.findfriend();
-//                }
-//            }
-//
-//            @Override
-//            public void onError(int status, String msg) {
-//
-//            }
-//        });
-//    }
-
-
-    /**
      * 点击事件
-     *
      */
     @OnClick({R.id.llMyCredit, R.id.llCredit, R.id.llChat, R.id.llMine, R.id.add_friend, R.id.title_chat
             , R.id.title_friend})
@@ -281,8 +228,6 @@ public class MainActivity extends BaseActivity {
             //沟通
             case R.id.llChat:
                 if (TextUtils.isEmpty(SpUtils.getRoleName(MainActivity.this))) {
-//                    Intent intent = new Intent(MainActivity.this,LoginAct.class);
-//                    ParamsUtil.getInstance().setMainAct((Activity)getBaseContext());
                     gotoActivity(LoginAct.class, false);
                 } else {
                     switch (title) {
@@ -317,7 +262,7 @@ public class MainActivity extends BaseActivity {
             case R.id.add_friend:
 //                if (Build.VERSION.SDK_INT >= 23) {
 //                    findContactsPermission();
-                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
                     Intent intent = new Intent(MainActivity.this, AddressBookAct.class);
                     startActivity(intent);
                 } else {
@@ -374,11 +319,11 @@ public class MainActivity extends BaseActivity {
         switch (position) {
             case 0:
                 title_chat.setBackgroundResource(R.drawable.white_bg);
-                title_chat.setTextColor(ContextCompat.getColor(MainActivity.this,R.color.main_color));
+                title_chat.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.main_color));
                 break;
             case 1:
                 title_friend.setBackgroundResource(R.drawable.white_bg);
-                title_friend.setTextColor(ContextCompat.getColor(MainActivity.this,R.color.main_color));
+                title_friend.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.main_color));
                 break;
         }
     }
@@ -474,12 +419,14 @@ public class MainActivity extends BaseActivity {
         setTabSelection(1);
         setCheckItem(1);
     }
+
     public void onEvent(MineFragment.SwitchEvent event) {
         setAllTabNor();
         setTabSelection(0);
         setCheckItem(0);
     }
-//    public void onEvent(BaseActivity.SwitchEvent event) {
+
+    //    public void onEvent(BaseActivity.SwitchEvent event) {
 //        setAllTabNor();
 //        setTabSelection(3);
 //        setCheckItem(3);
