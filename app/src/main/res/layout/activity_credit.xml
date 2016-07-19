@@ -184,13 +184,14 @@
 
             </ScrollView>
 
-            <View style="@style/view_line"></View>
+            <View style="@style/view_line"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="76dp"
                 android:background="#fff"
-                android:padding="15dp">
+                android:padding="15dp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tvBuy"
