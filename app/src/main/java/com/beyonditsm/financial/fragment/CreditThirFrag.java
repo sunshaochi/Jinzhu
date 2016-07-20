@@ -92,6 +92,7 @@ public class CreditThirFrag extends BaseFragment {
 //        if(act_type==1){
 //            tvCredit.setVisibility(View.GONE);
 //        }
+        lvCreditThird.setNoContentTxt("暂无上传资料项");
         if ("PASS".equals(orderStatus)) {
             ivProgress.setBackgroundResource(R.mipmap.progress_04);
             tvCredit.setVisibility(View.GONE);
@@ -148,6 +149,9 @@ public class CreditThirFrag extends BaseFragment {
                 applayStatus(orderId);
                 setIsTvClick(datas);
 
+                if (datas==null||datas.size()==0){
+                    lvCreditThird.noContent();
+                }
                 if (adapter == null) {
                     adapter = new MyAdapter(datas);
                     lvCredit.setAdapter(adapter);
