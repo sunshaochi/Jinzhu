@@ -203,6 +203,7 @@ public class MyCreditDAct extends BaseActivity {
     private void clearRedPoint() {
         SpUtils.clearOrderId(MyApplication.getInstance());
         tlCreditDetail.hideMsg(1);
+        tlCreditDetail.hideMsg(0);
         sendBroadcast(new Intent(MyCreditAct.HIDE_MESSAGE));
         sendBroadcast(new Intent(MineFragment.HIDE_POINT));
         sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
