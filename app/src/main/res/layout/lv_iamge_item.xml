@@ -9,7 +9,8 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_centerInParent="true"
-        android:scaleType="centerCrop"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
         android:src="@mipmap/add_image" />
 
     <LinearLayout
@@ -37,5 +38,9 @@
             android:textSize="14sp"
             android:visibility="gone" />
     </LinearLayout>
-
+<View
+    android:background="@null"
+    android:layout_below="@id/ivPhoto"
+    android:layout_width="match_parent"
+    android:layout_height="5dp"/>
 </RelativeLayout>

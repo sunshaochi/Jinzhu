@@ -213,12 +213,12 @@ public class MyRecommAct extends BaseActivity {
                 weixinShare();
             }
         });
-        ivWxpyq.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                weixinCircleShare();
-            }
-        });
+//        ivWxpyq.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                weixinCircleShare();
+//            }
+//        });
         ivWeibo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -275,7 +275,7 @@ public class MyRecommAct extends BaseActivity {
      * 点击事件
      *
      */
-    @OnClick({ R.id.btn_receiveReward, R.id.ll_wallet})
+    @OnClick({ R.id.btn_receiveReward, R.id.ll_wallet,R.id.iv_wxpyq})
     public void toClick(View v) {
         switch (v.getId()) {
             //按钮下方的代言人
@@ -324,6 +324,9 @@ public class MyRecommAct extends BaseActivity {
                 intent2.putExtra("userLogin",ule);
                 intent2.putExtra("userInfo",user);
                 startActivity(intent2);
+                break;
+            case R.id.iv_wxpyq:
+                weixinCircleShare();
                 break;
         }
     }

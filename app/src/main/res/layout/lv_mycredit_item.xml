@@ -23,8 +23,15 @@
 
             <TextView
                 android:id="@+id/tv_productName"
-                style="@style/tv_second_style"
-                android:layout_centerVertical="true" />
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:layout_centerVertical="true"
+                android:ellipsize="marquee"
+                android:singleLine="true"
+                android:textColor="#000000"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:textSize="14sp" />
 
             <ImageView
                 android:id="@+id/ivMs"
@@ -97,6 +104,6 @@
 
     <View
         style="@style/view_line"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>
