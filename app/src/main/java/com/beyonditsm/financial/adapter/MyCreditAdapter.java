@@ -65,6 +65,7 @@ public  class MyCreditAdapter extends BaseAdapter {
             holder.tvName = (TextView) convertView.findViewById(R.id.tv_name);
             holder.ivRedPoint = (ImageView) convertView.findViewById(R.id.ivMs);
             holder.rlCreditList = (RelativeLayout) convertView.findViewById(R.id.rl_creditList);
+            holder.tvProductName.setSelected(true);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();

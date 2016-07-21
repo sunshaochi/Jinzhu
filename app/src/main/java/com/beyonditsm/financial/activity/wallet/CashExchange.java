@@ -36,6 +36,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 /**
+ * 现金券兑换
  * Created by gxy on 2016/1/14
  */
 public class CashExchange extends BaseActivity {

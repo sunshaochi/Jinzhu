@@ -174,7 +174,7 @@ public class CreditUploadAct extends BaseActivity {
      * 获取上传列表
      *
      * @param orderId 订单id
-     * @param flowId 流程id
+     * @param flowId  流程id
      */
     private void findFlowDetail(String orderId, String flowId) {
         RequestManager.getCommManager().findFlowDetail(orderId, flowId, new RequestManager.CallBack() {
@@ -206,7 +206,7 @@ public class CreditUploadAct extends BaseActivity {
     /**
      * 提交资料
      *
-     * @param upl  提交资料实体类
+     * @param upl 提交资料实体类
      */
     private void toSubmit(SumLoadEntity upl) {
         RequestManager.getCommManager().submitOrderFlow(upl, new RequestManager.CallBack() {
@@ -256,16 +256,16 @@ public class CreditUploadAct extends BaseActivity {
                     uri = data.getData();
                     if (null != uri && !"".equals(uri.toString())) {
                         Bitmap compressB = MyBitmapUtils.zoomImgKeepWH(MyBitmapUtils.decodeUriAsBitmap(CreditUploadAct.this, uri), 300, 300, true);
-                        MyBitmapUtils.saveBitmap(compressB, "upload/cache/credit_upload"+time+".png");
+                        MyBitmapUtils.saveBitmap(compressB, "upload/cache/credit_upload" + time + ".png");
                     }
 
                     break;
                 case PHOTOTAKE:// 拍照
 //                    path = photoSavePath + photoSaveName;
-                    MyBitmapUtils.saveBitmap(MyBitmapUtils.LoadBigImg(path, 300, 300), "upload/cache/credit_upload"+time+".png");
+                    MyBitmapUtils.saveBitmap(MyBitmapUtils.LoadBigImg(path, 300, 300), "upload/cache/credit_upload" + time + ".png");
                     break;
             }
-            path = Environment.getExternalStorageDirectory() + "/upload/cache/credit_upload"+time+".png";
+            path = Environment.getExternalStorageDirectory() + "/upload/cache/credit_upload" + time + ".png";
             uploadFile(path);
             super.onActivityResult(requestCode, resultCode, data);
         } catch (NullPointerException e) {
@@ -413,6 +413,7 @@ public class CreditUploadAct extends BaseActivity {
             holder.lvUpLoad.setAdapter(new ImageAdapter(list.get(position).getImage(), list.get(position).getUploadItemId(), list.get(position).getLimit()));
             return convertView;
         }
+
         public class ViewHolder {
             public final MyListView lvUpLoad;
             public final TextView tvImgDes;
@@ -496,8 +497,7 @@ public class CreditUploadAct extends BaseActivity {
                             public void onClick(int which) {
                                 //执行拍照前，应该先判断SD卡是否存在
                                 String SDState = Environment.getExternalStorageState();
-                                if(SDState.equals(Environment.MEDIA_MOUNTED))
-                                {
+                                if (SDState.equals(Environment.MEDIA_MOUNTED)) {
                                     uploadItemId = uItemId;
                                     if (list.size() > position) {
                                         if (!TextUtils.isEmpty(list.get(position).getId())) {
@@ -515,8 +515,8 @@ public class CreditUploadAct extends BaseActivity {
                                     openCameraIntent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
                                     openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
                                     startActivityForResult(openCameraIntent, PHOTOTAKE);
-                                }else {
-                                    MyToastUtils.showShortToast(CreditUploadAct.this,"SD卡不存在");
+                                } else {
+                                    MyToastUtils.showShortToast(CreditUploadAct.this, "SD卡不存在");
 
                                 }
 

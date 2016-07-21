@@ -1,22 +1,17 @@
 package com.beyonditsm.financial.activity.wallet;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.fragment.CouponsFragment;
 import com.beyonditsm.financial.fragment.RebateFragment;
+import com.beyonditsm.financial.view.tablayout.SlidingTabLayout;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
@@ -28,9 +23,10 @@ import java.util.List;
 public class BalancePaymentsAct extends BaseActivity{
     @ViewInject(R.id.mycredit_viewpager)
     private ViewPager myCreditViewpager;
+    @ViewInject(R.id.tl_creditDetail)
+    private SlidingTabLayout tlCreditDetail;
 
-    private ImageView[] imageArras;
-    private TextView[] textArras;
+    private String[] mTitles  = {"现金券","抵扣券"};
     @Override
     public void setLayout() {
         setContentView(R.layout.activity_balancepayments);
@@ -40,12 +36,8 @@ public class BalancePaymentsAct extends BaseActivity{
     public void init(Bundle savedInstanceState) {
         setLeftTv("返回");
         setTopTitle("收支明细");
-
-        initTextView();
-        initImageView();
         initViewpager();
 
-        textArras[0].setTextColor(ContextCompat.getColor(BalancePaymentsAct.this,R.color.main_color));
     }
     private void initViewpager() {
         ArrayList<Fragment> fragmentList = new ArrayList<>();
@@ -66,12 +58,7 @@ public class BalancePaymentsAct extends BaseActivity{
 
             @Override
             public void onPageSelected(int position) {
-                for (int i = 0; i < textArras.length; i++) {
-                    textArras[i].setTextColor(ContextCompat.getColor(BalancePaymentsAct.this,R.color.tv_second_color));
-                    imageArras[i].setBackgroundColor(Color.TRANSPARENT);
-                }
-                textArras[position].setTextColor(ContextCompat.getColor(BalancePaymentsAct.this,R.color.main_color));
-                imageArras[position].setBackgroundColor(ContextCompat.getColor(BalancePaymentsAct.this,R.color.main_color));
+
             }
 
             @Override
@@ -80,34 +67,9 @@ public class BalancePaymentsAct extends BaseActivity{
             }
         });
         myCreditViewpager.setCurrentItem(0);
+        tlCreditDetail.setViewPager(myCreditViewpager);
     }
-    private void initImageView() {
-        LinearLayout tabTextLayout = (LinearLayout) findViewById(R.id.tabImageLayout);
-        imageArras = new ImageView[2];
-        for (int i =0;i< imageArras.length;i++){
-            ImageView imageView = (ImageView) tabTextLayout.getChildAt(i);
-            imageArras[i] = imageView;
-            imageArras[i].setTag(i);
-            imageArras[i].setBackgroundColor(Color.TRANSPARENT);
-        }
-        imageArras[0].setBackgroundColor(ContextCompat.getColor(BalancePaymentsAct.this,R.color.main_color));
-    }
-    private void initTextView() {
-        LinearLayout tabTextLayout = (LinearLayout) findViewById(R.id.tabTextLayout);
-        textArras = new TextView[2];
-        for (int i =0;i< textArras.length;i++){
-            TextView textView = (TextView) tabTextLayout.getChildAt(i);
-            textArras[i] = textView;
-            textArras[i].setEnabled(true);
-            textArras[i].setTag(i);
-            textArras[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    myCreditViewpager.setCurrentItem((Integer) v.getTag());
-                }
-            });
-        }
-    }
+
     class  MyAdapter extends FragmentStatePagerAdapter {
 
         private FragmentManager fm;
@@ -133,6 +95,11 @@ public class BalancePaymentsAct extends BaseActivity{
             Fragment fragment = (Fragment) super.instantiateItem(container, position);
             fm.beginTransaction().show(fragment).commit();
             return fragment;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mTitles[position];
         }
 
         @Override

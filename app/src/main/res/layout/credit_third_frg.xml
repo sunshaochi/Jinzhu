@@ -22,7 +22,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <LinearLayout
             android:id="@+id/ll_upload"
             android:layout_width="match_parent"
@@ -55,6 +54,10 @@
                         android:layout_marginTop="10dp"
                         android:dividerHeight="1px" />
                 </LinearLayout>
+                <com.beyonditsm.financial.view.LoadingView
+                    android:id="@+id/lv_credit_third"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
             </FrameLayout>
 
 
@@ -172,9 +175,5 @@
             </LinearLayout>
         </LinearLayout>
 
-        <com.beyonditsm.financial.view.LoadingView
-            android:id="@+id/lv_credit_third"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
     </FrameLayout>
 </LinearLayout>

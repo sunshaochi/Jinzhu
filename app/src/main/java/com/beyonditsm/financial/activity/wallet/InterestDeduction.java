@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 抵扣券
  * Created by gxy on 2016/1/14
  */
 @SuppressLint("SetTextI18n")

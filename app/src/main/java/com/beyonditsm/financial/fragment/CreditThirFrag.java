@@ -142,23 +142,33 @@ public class CreditThirFrag extends BaseFragment {
             @Override
             public void onSucess(String result) throws JSONException {
 
-                JSONObject jsonObject = new JSONObject(result);
-                JSONArray array = jsonObject.getJSONArray("data");
-                datas = gson.fromJson(array.toString(), new TypeToken<List<UpLoadEntity>>() {
-                }.getType());
-                applayStatus(orderId);
-                setIsTvClick(datas);
-
-                if (datas==null||datas.size()==0){
-                    lvCreditThird.noContent();
-                }
-                if (adapter == null) {
-                    adapter = new MyAdapter(datas);
-                    lvCredit.setAdapter(adapter);
-                } else {
-                    adapter.notifyChange(datas);
-                }
                 lvCreditThird.loadComplete();
+                JSONObject jsonObject = new JSONObject(result);
+
+                if (jsonObject.get("data") instanceof JSONArray) {
+                    JSONArray array = jsonObject.getJSONArray("data");
+                    datas = gson.fromJson(array.toString(), new TypeToken<List<UpLoadEntity>>() {
+                    }.getType());
+                    applayStatus(orderId);
+                    setIsTvClick(datas);
+                    if (adapter == null) {
+                        adapter = new MyAdapter(datas);
+                        lvCredit.setAdapter(adapter);
+                    } else {
+                        adapter.notifyChange(datas);
+                    }
+                }else{
+                    lvCreditThird.noContent();
+                    tvCredit.setBackgroundResource(R.drawable.button_gen);
+                    tvCredit.setEnabled(true);
+                    tvCredit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            applayCredit(orderId);
+                        }
+                    });
+                }
+
             }
 
             @Override
