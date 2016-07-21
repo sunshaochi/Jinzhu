@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -165,36 +166,37 @@ public class MineFragment extends BaseFragment {
         minePageLoadingView.setOnLogOutListener(new MinePageLoadingView.OnLogOutListener() {
             @Override
             public void OnLogOut() {
-                        RequestManager.getCommManager().toLoginOut(new RequestManager.CallBack() {
-                            @Override
-                            public void onSucess(String result) {
-                                if (RongIM.getInstance() != null) {
-                                    RongIM.getInstance().logout();
-                                }
-                            }
-                            @Override
-                            public void onError(int status, String msg) {
+                RequestManager.getCommManager().toLoginOut(new RequestManager.CallBack() {
+                    @Override
+                    public void onSucess(String result) {
+                        if (RongIM.getInstance() != null) {
+                            RongIM.getInstance().logout();
+                        }
+                    }
 
-                            }
-                        });
-                        Set<String> set = new HashSet<>();
-                        JPushInterface.setAliasAndTags(getActivity(), "", set, new TagAliasCallback() {
-                            @Override
-                            public void gotResult(int i, String s, Set<String> set) {
+                    @Override
+                    public void onError(int status, String msg) {
 
-                            }
-                        });
+                    }
+                });
+                Set<String> set = new HashSet<>();
+                JPushInterface.setAliasAndTags(getActivity(), "", set, new TagAliasCallback() {
+                    @Override
+                    public void gotResult(int i, String s, Set<String> set) {
 
-                        JPushInterface.clearAllNotifications(getActivity());
+                    }
+                });
+
+                JPushInterface.clearAllNotifications(getActivity());
 //                        FriendDao.deleteAllMes();
-                        MessageDao.deleteAllMes();
-                        SpUtils.clearSp(getContext());
-                        SpUtils.clearOrderId(getContext());
-                        getActivity().sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
-                        ivWalletRedPoint.setVisibility(View.GONE);
-                        msg_top_point.setVisibility(View.GONE);
-                        ivRedPoint.setVisibility(View.GONE);
-                        EventBus.getDefault().post(new SwitchEvent());
+                MessageDao.deleteAllMes();
+                SpUtils.clearSp(getContext());
+                SpUtils.clearOrderId(getContext());
+                getActivity().sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
+                ivWalletRedPoint.setVisibility(View.GONE);
+                msg_top_point.setVisibility(View.GONE);
+                ivRedPoint.setVisibility(View.GONE);
+                EventBus.getDefault().post(new SwitchEvent());
 
             }
         });
@@ -364,7 +366,7 @@ public class MineFragment extends BaseFragment {
                         }
                     }
                     minePageLoadingView.loadComplete();
-                }else {
+                } else {
                     minePageLoadingView.loadError();
                 }
             }
@@ -435,6 +437,19 @@ public class MineFragment extends BaseFragment {
         getActivity().registerReceiver(walletRedReceiver, new IntentFilter(WALLET_POINT));
         getActivity().registerReceiver(hideWalletRedReceiver, new IntentFilter(HIDE_WALLET_POINT));
         getUserLoginInfo();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(USER_KEY, user);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (null != savedInstanceState)
+        {user = savedInstanceState.getParcelable(USER_KEY);}
     }
 
     @Override
