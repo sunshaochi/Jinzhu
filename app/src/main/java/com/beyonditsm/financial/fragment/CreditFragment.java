@@ -584,6 +584,7 @@ public class CreditFragment extends BaseFragment {
             int position = data.getIntExtra("org",0);
             rbBank.setText(orgTypeInfos.get(position).getOrgName());
             cBank = orgTypeInfos.get(position).getOrgId();
+            getCredit(ParamsUtil.getInstance().getUle().getUsername(),SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cBank,cSort,cMoney,cTime,currentP,pageSize);
         }
     }
 
