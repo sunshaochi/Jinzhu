@@ -18,7 +18,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:button="@null"
-            android:gravity="center" />
+            android:gravity="center"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"/>
 
         <ImageView
             android:id="@+id/arrow1"
@@ -38,7 +42,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:button="@null"
-            android:gravity="center" />
+            android:gravity="center"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"/>
 
         <ImageView
             android:id="@+id/arrow2"
@@ -58,7 +66,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:button="@null"
-            android:gravity="center" />
+            android:gravity="center"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"/>
 
         <ImageView
             android:id="@+id/arrow3"
@@ -78,7 +90,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:button="@null"
-            android:gravity="center" />
+            android:gravity="center"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"/>
 
         <ImageView
             android:id="@+id/arrow4"

@@ -28,6 +28,7 @@ import com.beyonditsm.financial.entity.UpLoadEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.view.AutoDismissDialog;
 import com.beyonditsm.financial.view.LoadingView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.tandong.sa.eventbus.EventBus;
@@ -159,14 +160,8 @@ public class CreditThirFrag extends BaseFragment {
                     }
                 }else{
                     lvCreditThird.noContent();
-                    tvCredit.setBackgroundResource(R.drawable.button_gen);
-                    tvCredit.setEnabled(true);
-                    tvCredit.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            applayCredit(orderId);
-                        }
-                    });
+                    applayStatus(orderId);
+                    new AutoDismissDialog(getContext()).builder().show();
                 }
 
             }

@@ -167,7 +167,7 @@ public class CreditFragment extends BaseFragment {
                 plv.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
                 currentP = 1;
 //                getCredit(currentP, cMoney, cTime);
-                getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cBank,cSort,cMoney,cTime,currentP,pageSize);
+                getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
 
             }
 
@@ -175,16 +175,16 @@ public class CreditFragment extends BaseFragment {
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 currentP++;
 //                getCredit(currentP, cMoney, cTime);
-                getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cBank,cSort,cMoney,cTime,currentP,pageSize);  
+                getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
 
             }
         });
-        getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cBank,cSort,cMoney,cTime,currentP,pageSize);
+        getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
 
         loadView.setOnRetryListener(new LoadingView.OnRetryListener() {
             @Override
             public void OnRetry() {
-                getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cBank,cSort,cMoney,cTime,currentP,pageSize);
+                getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
             }
         });
         /*把回车键换成搜索*/
@@ -259,6 +259,10 @@ public class CreditFragment extends BaseFragment {
         rbRange.setText("综合排序");
         rbMoney.setText("金额范围");
         rbTime.setText("贷款期限");
+        rbBank.setSelected(true);
+        rbRange.setSelected(true);
+        rbMoney.setSelected(true);
+        rbTime.setSelected(true);
     }
 
     @Override
@@ -269,38 +273,38 @@ public class CreditFragment extends BaseFragment {
                 LinearLayout linearLayout = (LinearLayout) view;
                 TextView textView = (TextView) linearLayout.getChildAt(0); //获取到点击的TextView
                 MyToastUtils.showShortToast(context, textView.getText().toString() + "");
-                switch (clickType){
+                switch (clickType) {
                     case ProductSortAdapter.BANK:
-                        if (textView.getText().toString().length() > 4){
-                            rbBank.setText(textView.getText().toString().substring(0,4)+"...");
-                        }else {
-                            rbBank.setText(textView.getText().toString()+"");
-                        }
+//                        if (textView.getText().toString().length() > 4) {
+//                            rbBank.setText(textView.getText().toString().substring(0, 4) + "...");
+//                        } else {
+                            rbBank.setText(textView.getText().toString() + "");
+//                        }
 
                         cBank = orgTypeInfos.get(position).getOrgId();
                         break;
                     case ProductSortAdapter.MONEY:
-                        if (textView.getText().toString().length() > 4){
-                            rbMoney.setText(textView.getText().toString().substring(0,4)+"...");
-                        }else {
-                            rbMoney.setText(textView.getText().toString()+"");
-                        }
+//                        if (textView.getText().toString().length() > 4) {
+//                            rbMoney.setText(textView.getText().toString().substring(0, 4) + "...");
+//                        } else {
+                            rbMoney.setText(textView.getText().toString() + "");
+//                        }
                         cMoney = moneyScopeInfos.get(position).getMoneyKey();
                         break;
                     case ProductSortAdapter.SORT:
-                        if (textView.getText().toString().length() > 4){
-                            rbRange.setText(textView.getText().toString().substring(0,4)+"...");
-                        }else {
-                            rbRange.setText(textView.getText().toString()+"");
-                        }
+//                        if (textView.getText().toString().length() > 4){
+//                            rbRange.setText(textView.getText().toString().substring(0,4)+"...");
+//                        }else {
+                        rbRange.setText(textView.getText().toString() + "");
+//                        }
                         cSort = productInfos.get(position).getOrderKey();
                         break;
                     case ProductSortAdapter.TIME:
-                        if (textView.getText().toString().length() > 4){
-                            rbTime.setText(textView.getText().toString().substring(0,4)+"...");
-                        }else {
-                            rbTime.setText(textView.getText().toString()+"");
-                        }
+//                        if (textView.getText().toString().length() > 4) {
+//                            rbTime.setText(textView.getText().toString().substring(0, 4) + "...");
+//                        } else {
+                            rbTime.setText(textView.getText().toString() + "");
+//                        }
                         cTime = loanTermInfos.get(position).getTermKey();
                         break;
                     default:
@@ -309,7 +313,7 @@ public class CreditFragment extends BaseFragment {
                 }
                 sbp.hide();
                 lvCreditSort.setClickable(false);
-                getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cBank,cSort,cMoney,cTime,currentP,pageSize);
+                getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
             }
         });
 
@@ -336,10 +340,10 @@ public class CreditFragment extends BaseFragment {
 //                }
 //                if (TextUtils.isEmpty(etAmount.getText().toString().trim()) && TextUtils.isEmpty(tvM.getText().toString().trim())) {
 //                    cMoney= ConstantValue.CREDIT_MONEY+"";
-                    intent.putExtra(HomeCreditDetailAct.PRODUCTINFO, datas.get(position).getProductId());
-                    intent.putExtra(HomeCreditDetailAct.CREDIT_AMOUNT, ConstantValue.CREDIT_MONEY + "");
-                    intent.putExtra(HomeCreditDetailAct.CREDIT_TIME, ConstantValue.CREDIT_MONTH + "");
-                    intent.putExtra(HomeCreditDetailAct.CREDIT_NAME, datas.get(position).getProductName());
+                intent.putExtra(HomeCreditDetailAct.PRODUCTINFO, datas.get(position).getProductId());
+                intent.putExtra(HomeCreditDetailAct.CREDIT_AMOUNT, ConstantValue.CREDIT_MONEY + "");
+                intent.putExtra(HomeCreditDetailAct.CREDIT_TIME, ConstantValue.CREDIT_MONTH + "");
+                intent.putExtra(HomeCreditDetailAct.CREDIT_NAME, datas.get(position).getProductName());
 //                } else {
 //                    intent.putExtra(HomeCreditDetailAct.PRODUCTINFO, datas.get(position).getProductId());
 ////                    intent.putExtra(HomeCreditDetailAct.CREDIT_AMOUNT, cMoney);
@@ -399,7 +403,7 @@ public class CreditFragment extends BaseFragment {
                 clearArrow();
                 clearTextColor();
                 clickType = ProductSortAdapter.SORT;
-                lvCreditSort.setAdapter(new ProductSortAdapter(listItem, context,clickType));
+                lvCreditSort.setAdapter(new ProductSortAdapter(listItem, context, clickType));
                 Uitls.setListViewHeightBasedOnChildren(lvCreditSort);
                 sbp.setmPanelHeight(Uitls.getListViewHeight(lvCreditSort));
                 rbRange.setTextColor(context.getResources().getColor(R.color.tv_money_color));
@@ -483,7 +487,7 @@ public class CreditFragment extends BaseFragment {
 
     private void getCredit(String area, String orgType, String productOrder, String moneyScope, String loanTerm, final int currentPage, int rows) {
 
-        RequestManager.getMangManger().findProductByParam( area, orgType, productOrder,moneyScope,loanTerm,currentPage,rows,new RequestManager.CallBack() {
+        RequestManager.getMangManger().findProductByParam(area, orgType, productOrder, moneyScope, loanTerm, currentPage, rows, new RequestManager.CallBack() {
 
 
             @Override
