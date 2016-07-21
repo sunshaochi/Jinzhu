@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -105,6 +106,21 @@ public class HomeFragment extends BaseFragment implements BDLocationListener{
     }
 
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (null != ule){
+            outState.putParcelable("userLogin",ule);
+        }
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (null != savedInstanceState){
+            ule = savedInstanceState.getParcelable("userLogin");
+        }
+    }
 
     @Override
     public void initData(Bundle savedInstanceState) {
@@ -161,19 +177,6 @@ public class HomeFragment extends BaseFragment implements BDLocationListener{
 
     }
 
-    private void getHistoryRegion() {
-        RequestManager.getCommManager().getLastRegion(new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
-                String a = result;
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-
-            }
-        });
-    }
 
     @Override
     public void setListener() {
@@ -349,6 +352,7 @@ public class HomeFragment extends BaseFragment implements BDLocationListener{
                 if (status == 200){
                     ResultData<UserLoginEntity> rd = (ResultData<UserLoginEntity>) GsonUtils.json(result, UserLoginEntity.class);
                     ule = rd.getData();
+                    ParamsUtil.getInstance().setUle(ule);
                 }
 
 //                loadingView.loadComplete();

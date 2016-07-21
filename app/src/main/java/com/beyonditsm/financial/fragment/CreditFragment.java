@@ -24,10 +24,12 @@ import android.widget.TextView;
 import com.beyonditsm.financial.ConstantValue;
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
+import com.beyonditsm.financial.activity.OrgTypeListAct;
 import com.beyonditsm.financial.activity.credit.CreditGuideAct;
 import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
 import com.beyonditsm.financial.adapter.CreditAdapter;
 import com.beyonditsm.financial.adapter.ProductSortAdapter;
+import com.beyonditsm.financial.entity.MoneyScopeInfo;
 import com.beyonditsm.financial.entity.ProductInfo;
 import com.beyonditsm.financial.entity.ProductResult;
 import com.beyonditsm.financial.entity.ProductSortEntity;
@@ -36,6 +38,7 @@ import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.util.Uitls;
 import com.beyonditsm.financial.view.LoadingView;
@@ -75,8 +78,6 @@ public class CreditFragment extends BaseFragment {
     private RadioButton rbMoney; //按金额
     @ViewInject(R.id.rb_time)
     private RadioButton rbTime; //按时间
-    @ViewInject(R.id.arrow1)
-    private ImageView arrow1;
     @ViewInject(R.id.arrow2)
     private ImageView arrow2;
     @ViewInject(R.id.arrow3)
@@ -119,12 +120,20 @@ public class CreditFragment extends BaseFragment {
     private List<ProductSortEntity.MoneyScopeBean> moneyScopeInfos;
     private List<ProductSortEntity.LoanTermBean> loanTermInfos;
     private short clickType;
-
+    public static final int ORGQUEST = 1;
 
     @SuppressLint("InflateParams")
     @Override
     public View initView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.frgment_credit, null);
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            getCredit(ParamsUtil.getInstance().getUle().getUsername(), SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
+        }
     }
 
     @Override
@@ -167,7 +176,7 @@ public class CreditFragment extends BaseFragment {
                 plv.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
                 currentP = 1;
 //                getCredit(currentP, cMoney, cTime);
-                getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
+                getCredit(ParamsUtil.getInstance().getUle().getUsername(), SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
 
             }
 
@@ -175,16 +184,14 @@ public class CreditFragment extends BaseFragment {
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 currentP++;
 //                getCredit(currentP, cMoney, cTime);
-                getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
-
+                getCredit(ParamsUtil.getInstance().getUle().getUsername(), SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
             }
         });
-        getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
-
+        getCredit(ParamsUtil.getInstance().getUle().getUsername(), SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
         loadView.setOnRetryListener(new LoadingView.OnRetryListener() {
             @Override
             public void OnRetry() {
-                getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
+                getCredit(ParamsUtil.getInstance().getUle().getUsername(), SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
             }
         });
         /*把回车键换成搜索*/
@@ -195,13 +202,30 @@ public class CreditFragment extends BaseFragment {
         RequestManager.getCommManager().findSortParam(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
-                String a = result;
                 ResultData<ProductSortEntity> rd = (ResultData<ProductSortEntity>) GsonUtils.json(result, ProductSortEntity.class);
                 ProductSortEntity productSortEntity = rd.getData();
+
                 orgTypeInfos = productSortEntity.getOrgType();
+                ProductSortEntity.OrgTypeBean orgTypeBean = new ProductSortEntity.OrgTypeBean();
+                orgTypeBean.setOrgId("");
+                orgTypeBean.setOrgName("全部机构");
+                orgTypeInfos.add(0, orgTypeBean);
+                ParamsUtil.getInstance().setOrgTypeInfos(orgTypeInfos);
                 productInfos = productSortEntity.getProductOrder();
+                ProductSortEntity.ProductOrderBean productOrderBean = new ProductSortEntity.ProductOrderBean();
+                productOrderBean.setOrderKey("");
+                productOrderBean.setOrderVal("综合排序");
+                productInfos.add(0, productOrderBean);
                 moneyScopeInfos = productSortEntity.getMoneyScope();
+                ProductSortEntity.MoneyScopeBean moneyScopeBean = new ProductSortEntity.MoneyScopeBean();
+                moneyScopeBean.setMoneyKey("");
+                moneyScopeBean.setMoneyVal("金额范围");
+                moneyScopeInfos.add(0, moneyScopeBean);
                 loanTermInfos = productSortEntity.getLoanTerm();
+                ProductSortEntity.LoanTermBean loanTermBean = new ProductSortEntity.LoanTermBean();
+                loanTermBean.setTermKey("");
+                loanTermBean.setTermVal("贷款期限");
+                loanTermInfos.add(0, loanTermBean);
             }
 
             @Override
@@ -278,7 +302,7 @@ public class CreditFragment extends BaseFragment {
 //                        if (textView.getText().toString().length() > 4) {
 //                            rbBank.setText(textView.getText().toString().substring(0, 4) + "...");
 //                        } else {
-                            rbBank.setText(textView.getText().toString() + "");
+                        rbBank.setText(textView.getText().toString() + "");
 //                        }
 
                         cBank = orgTypeInfos.get(position).getOrgId();
@@ -287,7 +311,7 @@ public class CreditFragment extends BaseFragment {
 //                        if (textView.getText().toString().length() > 4) {
 //                            rbMoney.setText(textView.getText().toString().substring(0, 4) + "...");
 //                        } else {
-                            rbMoney.setText(textView.getText().toString() + "");
+                        rbMoney.setText(textView.getText().toString() + "");
 //                        }
                         cMoney = moneyScopeInfos.get(position).getMoneyKey();
                         break;
@@ -303,7 +327,7 @@ public class CreditFragment extends BaseFragment {
 //                        if (textView.getText().toString().length() > 4) {
 //                            rbTime.setText(textView.getText().toString().substring(0, 4) + "...");
 //                        } else {
-                            rbTime.setText(textView.getText().toString() + "");
+                        rbTime.setText(textView.getText().toString() + "");
 //                        }
                         cTime = loanTermInfos.get(position).getTermKey();
                         break;
@@ -313,7 +337,10 @@ public class CreditFragment extends BaseFragment {
                 }
                 sbp.hide();
                 lvCreditSort.setClickable(false);
-                getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
+
+
+                getCredit(ParamsUtil.getInstance().getUle().getUsername(), SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
+
             }
         });
 
@@ -362,6 +389,7 @@ public class CreditFragment extends BaseFragment {
 
     @OnClick({R.id.tvSearch, R.id.rlMonth, R.id.ivSuspen, R.id.rb_bank, R.id.rb_time, R.id.rb_money, R.id.rb_range})
     public void toClick(View v) {
+        Intent intent;
         switch (v.getId()) {
 //            case R.id.rlMoney:
 //                showSpinWindow();
@@ -370,18 +398,19 @@ public class CreditFragment extends BaseFragment {
 //                showDateSpinWindow();
 //                break;
             case R.id.rb_bank:
-
-                listItem = orgTypeInfos;
+                intent = new Intent(getActivity(), OrgTypeListAct.class);
+                startActivityForResult(intent, ORGQUEST);
+//                listItem = orgTypeInfos;
                 clearArrow();
                 clearTextColor();
-                clickType = ProductSortAdapter.BANK;
-                lvCreditSort.setAdapter(new ProductSortAdapter(listItem, context, clickType));
-                Uitls.setListViewHeightBasedOnChildren(lvCreditSort);
-                rbBank.setTextColor(context.getResources().getColor(R.color.tv_money_color));
-                arrow1.setImageResource(R.mipmap.arrow_orienge_up);
-                sbp.setmPanelHeight(Uitls.getListViewHeight(lvCreditSort));
-                sbp.reOpen();
-                lvCreditSort.setClickable(true);
+//                clickType = ProductSortAdapter.BANK;
+//                lvCreditSort.setAdapter(new ProductSortAdapter(listItem, context, clickType));
+//                Uitls.setListViewHeightBasedOnChildren(lvCreditSort);
+//                rbBank.setTextColor(context.getResources().getColor(R.color.tv_money_color));
+//                arrow1.setImageResource(R.mipmap.arrow_orienge_up);
+//                sbp.setmPanelHeight(Uitls.getListViewHeight(lvCreditSort));
+//                sbp.reOpen();
+//                lvCreditSort.setClickable(true);
 //                showActionSheet(new String []{"全部","光大银行","浦发银行","宜人贷"},rbBank,arrow1);
                 break;
             case R.id.rb_money:
@@ -450,7 +479,7 @@ public class CreditFragment extends BaseFragment {
 //                        }
 //                        currentP = 1;
 ////                        MyLogUtils.info("cccccccmoney+"+cMoney+"+cccccccTime+"+cTime);
-//                        getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),rbBank.getText().toString()+"",rbRange.getText().toString()+"",rbMoney.getText().toString()+"",rbTime.getText().toString()+"",currentP,pageSize);
+//                        getCredit(ParamsUtil.getInstance().getUle().getUsername(),SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),rbBank.getText().toString()+"",rbRange.getText().toString()+"",rbMoney.getText().toString()+"",rbTime.getText().toString()+"",currentP,pageSize);
 //
 //                    }
 //                });
@@ -471,11 +500,11 @@ public class CreditFragment extends BaseFragment {
 //                currentP = 1;
 //                cMoney = etAmount.getText().toString().trim();
 //                cTime = tvM.getText().toString().trim();
-//                getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),rbBank.getText().toString()+"",rbRange.getText().toString()+"",rbMoney.getText().toString()+"",rbTime.getText().toString()+"",currentP,pageSize);
+//                getCredit(ParamsUtil.getInstance().getUle().getUsername(),SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),rbBank.getText().toString()+"",rbRange.getText().toString()+"",rbMoney.getText().toString()+"",rbTime.getText().toString()+"",currentP,pageSize);
 
                 break;
             case R.id.ivSuspen:
-                Intent intent = new Intent(getContext(), CreditGuideAct.class);
+                intent = new Intent(getContext(), CreditGuideAct.class);
                 startActivity(intent);
                 break;
         }
@@ -485,10 +514,9 @@ public class CreditFragment extends BaseFragment {
     private List<ProductInfo> datas = new ArrayList<ProductInfo>();
 
 
-    private void getCredit(String area, String orgType, String productOrder, String moneyScope, String loanTerm, final int currentPage, int rows) {
+    private void getCredit(String userName, String area, String orgType, String productOrder, String moneyScope, String loanTerm, final int currentPage, int rows) {
 
-        RequestManager.getMangManger().findProductByParam(area, orgType, productOrder, moneyScope, loanTerm, currentPage, rows, new RequestManager.CallBack() {
-
+        RequestManager.getMangManger().findProductByParam(userName, area, orgType, productOrder, moneyScope, loanTerm, currentPage, rows, new RequestManager.CallBack() {
 
             @Override
             public void onSucess(String result) {
@@ -552,16 +580,26 @@ public class CreditFragment extends BaseFragment {
         });
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ORGQUEST && null != data) {
+            int position = data.getIntExtra("org", 0);
+            rbBank.setText(orgTypeInfos.get(position).getOrgName());
+            cBank = orgTypeInfos.get(position).getOrgId();
+            getCredit(ParamsUtil.getInstance().getUle().getUsername(), SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
+        }
+    }
 
     public void clearTextColor() {
         rbTime.setTextColor(context.getResources().getColor(R.color.black));
         rbMoney.setTextColor(context.getResources().getColor(R.color.black));
         rbRange.setTextColor(context.getResources().getColor(R.color.black));
-        rbBank.setTextColor(context.getResources().getColor(R.color.black));
+//        rbBank.setTextColor(context.getResources().getColor(R.color.black));
     }
 
     public void clearArrow() {
-        arrow1.setImageResource(R.mipmap.arrow_black);
+//        arrow1.setImageResource(R.mipmap.arrow_black);
         arrow2.setImageResource(R.mipmap.arrow_black);
         arrow3.setImageResource(R.mipmap.arrow_black);
         arrow4.setImageResource(R.mipmap.arrow_black);

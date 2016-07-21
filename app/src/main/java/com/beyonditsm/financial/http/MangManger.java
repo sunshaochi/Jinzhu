@@ -30,8 +30,9 @@ public class MangManger extends RequestManager {
     /**
      * 通过产品表筛选参数查询产品信息
      */
-    public void findProductByParam(String area, String orgType, String productOrder, String moneyScope, String loanTerm, int currentPage, int rows ,CallBack callBack) {
+    public void findProductByParam(String userName,String area, String orgType, String productOrder, String moneyScope, String loanTerm, int currentPage, int rows ,CallBack callBack) {
         Map<String,String> params= new HashMap<>();
+        params.put("userName",userName+"");
         params.put("area", area + "");
         params.put("orgType", orgType + "");
         params.put("productOrder", productOrder + "");

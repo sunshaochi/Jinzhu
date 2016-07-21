@@ -2,6 +2,7 @@ package com.beyonditsm.financial.util;
 
 import android.app.Activity;
 
+import com.beyonditsm.financial.entity.ProductSortEntity;
 import com.beyonditsm.financial.entity.UserLoginEntity;
 
 import org.apache.http.NameValuePair;
@@ -35,6 +36,15 @@ public class ParamsUtil {
     private String changedCity;
     private boolean cityGet;
     private boolean firstLocated = true;
+    private List<ProductSortEntity.OrgTypeBean> orgTypeInfos;
+
+    public List<ProductSortEntity.OrgTypeBean> getOrgTypeInfos() {
+        return orgTypeInfos;
+    }
+
+    public void setOrgTypeInfos(List<ProductSortEntity.OrgTypeBean> orgTypeInfos) {
+        this.orgTypeInfos = orgTypeInfos;
+    }
 
     public boolean isFirstLocated() {
         return firstLocated;
@@ -141,6 +151,10 @@ public class ParamsUtil {
     }
 
     public UserLoginEntity getUle() {
+        if (null == ule) {
+            ule = new UserLoginEntity();
+            return ule;
+        }
         return ule;
     }
 

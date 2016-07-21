@@ -20,6 +20,7 @@ public interface IFinancialUrl {
 //    String GAME_URL = "http://myjinzhu.com:5011/";
     /*正式地址*/
 //    String BASE_URL = "http://option.myjinzhu.com";
+
 //        /*正式游戏地址*/
     String GAME_URL = "http://m.farm.myjinzhu.com/";
 

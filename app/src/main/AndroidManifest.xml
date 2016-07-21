@@ -242,6 +242,7 @@
             android:screenOrientation="portrait" />
         <!-- 选择性别界面 -->
 
+
         <!-- 信用耕耘界面 -->
         <!-- 做上传照片的任务 -->
         <activity
@@ -512,8 +513,10 @@
             </intent-filter>
         </service>
         <!-- 百度定位服务 -->
-        <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
-        </service>
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote"></service>
         <!-- Required SDK核心功能 -->
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
@@ -587,8 +590,10 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="SCD6ctOISQ4TtbuHj2bus7xG6rN6zgVu" />
+
         <activity android:name=".activity.credit.CreditWebView" />
-        <activity android:name=".activity.user.JinZhuIndexWeb"></activity>
+        <activity android:name=".activity.user.JinZhuIndexWeb" />
+        <activity android:name=".activity.OrgTypeListAct"></activity>
     </application>
 
 </manifest>
