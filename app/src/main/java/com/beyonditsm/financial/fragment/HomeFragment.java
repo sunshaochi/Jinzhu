@@ -36,6 +36,8 @@ import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
+import com.beyonditsm.financial.util.gps.GPSAddressUtils;
+import com.beyonditsm.financial.util.gps.LocationListener;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
@@ -65,7 +67,7 @@ import java.util.List;
 /**
  * Created by liwk on 2015/12/8
  */
-public class HomeFragment extends BaseFragment implements BDLocationListener{
+public class HomeFragment extends BaseFragment implements LocationListener {
     @ViewInject(R.id.plv_hotCredit)
     private LoadRefreshView plvHotCredit;
     @ViewInject(R.id.loadingView)
@@ -87,21 +89,33 @@ public class HomeFragment extends BaseFragment implements BDLocationListener{
 
     }
 
+//    @Override
+//    public void onHiddenChanged(boolean hidden) {
+//        super.onHiddenChanged(hidden);
+//        if (!hidden){
+//
+//        }
+//    }
+
     @Override
     public void onStart() {
-//        loadingView.loading();
-//        llWork.setClickable(false);
 
-//        mLocationClient = new LocationClient(getActivity().getApplicationContext());     //声明LocationClient类
-//        initLocation();
-//        mLocationClient.registerLocationListener( new MyLocationListener());    //注册监听函数
-//        mLocationClient.start();
         super.onStart();
         if (ParamsUtil.getInstance().isFirstLocated()){
             ParamsUtil.getInstance().setFirstLocated(false);
             initLocation();
         }
+        if(ParamsUtil.getInstance().isReLogin()){
+            ParamsUtil.getInstance().setReLogin(false);
+            getLocation();
+        }
         getUserLoginInfo();
+
+    }
+
+    private void getLocation() {
+        GPSAddressUtils.getInstance().setLocationListener(this);
+        GPSAddressUtils.getInstance().getLocation(getActivity());
 
     }
 
@@ -174,9 +188,7 @@ public class HomeFragment extends BaseFragment implements BDLocationListener{
             }
         });
 
-
     }
-
 
     @Override
     public void setListener() {
@@ -277,9 +289,12 @@ public class HomeFragment extends BaseFragment implements BDLocationListener{
         }
     }
 
-    @Override
-    public void onReceiveLocation(BDLocation bdLocation) {
 
+    @Override
+    public void onChanged(boolean isGet, String city) {
+        ParamsUtil.getInstance().setChangedCity(city);
+        ParamsUtil.getInstance().setCityGet(isGet);
+        initLocation();
     }
 
     public class ToSwitchEvent{
@@ -372,6 +387,7 @@ public class HomeFragment extends BaseFragment implements BDLocationListener{
     }
 
     private void initLocation() {
+        tvCity.setText("——");
         if (ParamsUtil.getInstance().isCityGet()){
             if (SpUtils.getCity(MyApplication.getInstance().getApplicationContext()).equals(ParamsUtil.getInstance().getChangedCity())){
                 tvCity.setText(ParamsUtil.getInstance().getChangedCity());

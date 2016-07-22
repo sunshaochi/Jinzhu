@@ -296,7 +296,7 @@ public class CreditFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 LinearLayout linearLayout = (LinearLayout) view;
                 TextView textView = (TextView) linearLayout.getChildAt(0); //获取到点击的TextView
-                MyToastUtils.showShortToast(context, textView.getText().toString() + "");
+//                MyToastUtils.showShortToast(context, textView.getText().toString() + "");
                 switch (clickType) {
                     case ProductSortAdapter.BANK:
 //                        if (textView.getText().toString().length() > 4) {
@@ -336,9 +336,9 @@ public class CreditFragment extends BaseFragment {
 
                 }
                 sbp.hide();
-                lvCreditSort.setClickable(false);
+//                lvCreditSort.setEnabled(false);
 
-
+                sbp.setClickable(false);
                 getCredit(ParamsUtil.getInstance().getUle().getUsername(), SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
 
             }
@@ -400,6 +400,7 @@ public class CreditFragment extends BaseFragment {
             case R.id.rb_bank:
                 intent = new Intent(getActivity(), OrgTypeListAct.class);
                 startActivityForResult(intent, ORGQUEST);
+                sbp.hide();
 //                listItem = orgTypeInfos;
                 clearArrow();
                 clearTextColor();
@@ -424,7 +425,7 @@ public class CreditFragment extends BaseFragment {
                 rbMoney.setTextColor(context.getResources().getColor(R.color.tv_money_color));
                 arrow3.setImageResource(R.mipmap.arrow_orienge_up);
                 sbp.reOpen();
-                lvCreditSort.setClickable(true);
+                lvCreditSort.setEnabled(true);
 //                showActionSheet(new String []{"全部","0-10万","10-15万","15万以上"},rbMoney,arrow3);
                 break;
             case R.id.rb_range:
@@ -438,7 +439,7 @@ public class CreditFragment extends BaseFragment {
                 rbRange.setTextColor(context.getResources().getColor(R.color.tv_money_color));
                 arrow2.setImageResource(R.mipmap.arrow_orienge_up);
                 sbp.reOpen();
-
+                lvCreditSort.setEnabled(true);
 //                showActionSheet(new String []{"综合排序","按利率","按月供"},rbRange,arrow2);
                 break;
             case R.id.rb_time:
@@ -452,6 +453,7 @@ public class CreditFragment extends BaseFragment {
                 rbTime.setTextColor(context.getResources().getColor(R.color.tv_money_color));
                 arrow4.setImageResource(R.mipmap.arrow_orienge_up);
                 sbp.reOpen();
+                lvCreditSort.setEnabled(true);
 //                showActionSheet(new String []{"全部","0-6个月","6-12个月","12个月以上"},rbTime,arrow4);
                 break;
             case R.id.rlMonth://选择月份
@@ -555,7 +557,7 @@ public class CreditFragment extends BaseFragment {
                         adapter.setNotifyChange(datas, creditTotal, creditTime);
                     }
                 } else if (TextUtils.isEmpty(etAmount.getText().toString().trim()) || TextUtils.isEmpty(tvM.getText().toString().trim())) {
-                    MyToastUtils.showShortToast(getActivity(), "请输入贷款金额或贷款期限");
+//                    MyToastUtils.showShortToast(getActivity(), "请输入贷款金额或贷款期限");
                     return;
                 } else {
                     double creditTotal = Double.valueOf(etAmount.getText().toString().trim()) * 10000;

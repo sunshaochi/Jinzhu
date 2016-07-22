@@ -27,7 +27,7 @@ public class DownLoadManager {
             File file = new File(Environment.getExternalStorageDirectory(), "jinzhu_11.apk");
             FileOutputStream fos = new FileOutputStream(file);
             BufferedInputStream bis = new BufferedInputStream(is);
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[64];
             int len;
             int total = 0;
             while ((len = bis.read(buffer)) != -1) {

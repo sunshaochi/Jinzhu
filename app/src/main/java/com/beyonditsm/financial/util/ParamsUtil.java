@@ -37,6 +37,15 @@ public class ParamsUtil {
     private boolean cityGet;
     private boolean firstLocated = true;
     private List<ProductSortEntity.OrgTypeBean> orgTypeInfos;
+    private boolean isReLogin = false;
+
+    public boolean isReLogin() {
+        return isReLogin;
+    }
+
+    public void setReLogin(boolean reLogin) {
+        isReLogin = reLogin;
+    }
 
     public List<ProductSortEntity.OrgTypeBean> getOrgTypeInfos() {
         return orgTypeInfos;

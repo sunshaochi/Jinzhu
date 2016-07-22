@@ -213,6 +213,7 @@ public class LoginAct extends BaseActivity{
             public void onSucess(String result) {
 
                 try {
+                    ParamsUtil.getInstance().setReLogin(true);
                     TestinAgent.setUserInfo(ue.getUserName()+"");
                     JSONObject objects = new JSONObject(result);
                     JSONObject datas = objects.getJSONObject("data");
