@@ -38,6 +38,15 @@ public class ParamsUtil {
     private boolean firstLocated = true;
     private List<ProductSortEntity.OrgTypeBean> orgTypeInfos;
     private boolean isReLogin = false;
+    private boolean isClosing = false;
+
+    public boolean isClosing() {
+        return isClosing;
+    }
+
+    public void setClosing(boolean closing) {
+        isClosing = closing;
+    }
 
     public boolean isReLogin() {
         return isReLogin;

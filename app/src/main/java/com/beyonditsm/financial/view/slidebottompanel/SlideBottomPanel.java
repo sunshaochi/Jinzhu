@@ -22,6 +22,7 @@ import android.widget.FrameLayout;
 import android.widget.ScrollView;
 
 import com.beyonditsm.financial.R;
+import com.beyonditsm.financial.util.ParamsUtil;
 import com.tandong.sa.animation.ViewHelper;
 
 
@@ -155,22 +156,27 @@ public class SlideBottomPanel extends FrameLayout {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        initVelocityTracker(ev);
-        boolean isConsume = false;
-        switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                isConsume = handleActionDown(ev);
-                break;
-            case MotionEvent.ACTION_MOVE:
-                handleActionMove(ev);
-                break;
-            case MotionEvent.ACTION_UP:
-                handleActionUp(ev);
-                releaseVelocityTracker();
-                break;
+        if (ParamsUtil.getInstance().isClosing()) {
+            return false;
+        }else {
+            initVelocityTracker(ev);
+            boolean isConsume = false;
+            switch (ev.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    isConsume = handleActionDown(ev);
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    handleActionMove(ev);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    handleActionUp(ev);
+                    releaseVelocityTracker();
+                    break;
+            }
+            Log.d("dispatchTouchEvent", "" + (isConsume || super.dispatchTouchEvent(ev)));
+            return isConsume || super.dispatchTouchEvent(ev);
         }
-        Log.d("dispatchTouchEvent", "" + (isConsume || super.dispatchTouchEvent(ev)));
-        return isConsume || super.dispatchTouchEvent(ev);
+
     }
 
     private void initBackgroundView() {
@@ -308,6 +314,7 @@ public class SlideBottomPanel extends FrameLayout {
         animator.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
+                ParamsUtil.getInstance().setClosing(true);
                 isAnimating = true;
             }
 
@@ -315,6 +322,7 @@ public class SlideBottomPanel extends FrameLayout {
             public void onAnimationEnd(Animator animation) {
                 isAnimating = false;
                 isPanelShowing = false;
+                ParamsUtil.getInstance().setClosing(false);
                 mOnStateChangeListener.Hidden(true);
 //                showPanelTitle(mPanel);
             }
@@ -324,6 +332,7 @@ public class SlideBottomPanel extends FrameLayout {
                 isAnimating = false;
                 isPanelShowing = false;
                 mOnStateChangeListener.Hidden(true);
+                ParamsUtil.getInstance().setClosing(false);
 //                showPanelTitle(mPanel);
             }
 

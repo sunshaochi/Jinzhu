@@ -279,7 +279,33 @@ public class LoginAct extends BaseActivity{
                                 }
                             });
                                 connect(SpUtils.getToken(getApplicationContext()));
+                            if ("ROLE_CREDIT_MANAGER".equals(SpUtils.getRoleName(getApplicationContext()))) {
+                                sendBroadcast(new Intent(ManagerMainAct.UPDATATAB));
+                                gotoActivity(ManagerMainAct.class, true);
+                            } else if (SpUtils.getRoleName(getApplicationContext()).equals("ROLE_COMMON_CLIENT")) {
+                                sendBroadcast(new Intent(MainActivity.UPDATATAB));
+                                sendBroadcast(new Intent(MineFragment.UPDATE_USER));
+                                if(null != ParamsUtil.getInstance().getServiceMainAct()){
+                                    ParamsUtil.getInstance().getServiceMainAct().finish();
+                                }
+                                gotoActivity(MainActivity.class, true);
+                            } else {
+                                sendBroadcast(new Intent(MainActivity.UPDATATAB));
+                                sendBroadcast(new Intent(MineFragment.UPDATE_USER));
+                                if(null != ParamsUtil.getInstance().getServiceMainAct()){
+                                    ParamsUtil.getInstance().getServiceMainAct().finish();
+                                }
+                                gotoActivity(MainActivity.class, true);
+//                                sendBroadcast(new Intent(ServiceMainAct.UPDATATAB));
+//                                if(null != ParamsUtil.getInstance().getMainAct()){
+//                                    ParamsUtil.getInstance().getMainAct().finish();
+//                                }
+//
+//                                gotoActivity(ServiceMainAct.class, true);
 
+                            }
+                            loginBtn.setEnabled(true);
+                            progressBar1.setVisibility(View.GONE);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -327,100 +353,7 @@ public class LoginAct extends BaseActivity{
                 @Override
                 public void onSuccess(String userid) {
                     Log.d("LoginActivity", "--onSuccess" + userid);
-                    if ("ROLE_CREDIT_MANAGER".equals(SpUtils.getRoleName(getApplicationContext()))) {
-                        sendBroadcast(new Intent(ManagerMainAct.UPDATATAB));
-                        gotoActivity(ManagerMainAct.class, true);
-                    } else if (SpUtils.getRoleName(getApplicationContext()).equals("ROLE_COMMON_CLIENT")) {
-                        sendBroadcast(new Intent(MainActivity.UPDATATAB));
-                        sendBroadcast(new Intent(MineFragment.UPDATE_USER));
-                        if(null != ParamsUtil.getInstance().getServiceMainAct()){
-                            ParamsUtil.getInstance().getServiceMainAct().finish();
-                        }
-                        gotoActivity(MainActivity.class, true);
-                    } else {
-                        sendBroadcast(new Intent(MainActivity.UPDATATAB));
-                        sendBroadcast(new Intent(MineFragment.UPDATE_USER));
-                        if(null != ParamsUtil.getInstance().getServiceMainAct()){
-                            ParamsUtil.getInstance().getServiceMainAct().finish();
-                        }
-                        gotoActivity(MainActivity.class, true);
-//                                sendBroadcast(new Intent(ServiceMainAct.UPDATATAB));
-//                                if(null != ParamsUtil.getInstance().getMainAct()){
-//                                    ParamsUtil.getInstance().getMainAct().finish();
-//                                }
-//
-//                                gotoActivity(ServiceMainAct.class, true);
 
-                    }
-                    loginBtn.setEnabled(true);
-                    progressBar1.setVisibility(View.GONE);
-//                    if (ConstantValue.STEP == 10) {
-//                        sendBroadcast(new Intent(CreditStepAct.UPDATA));
-//                        JSONObject jsonObject = null;
-//                        try {
-//                            jsonObject = new JSONObject(result);
-//                            JSONObject data = jsonObject.getJSONObject("data");
-//                            String roleName = data.getString("roleName");
-//                            String accountId=data.optString("accountAlias");
-//                            String agencyIdTag=data.optString("agencyIdTag");
-//                            SpUtils.setRoleName(getApplicationContext(), roleName);
-//                            SpUtils.setToken(getApplicationContext(), token);
-//
-//                            if(JPushInterface.isPushStopped(getApplicationContext())){
-//                                JPushInterface.resumePush(getApplicationContext());
-//                            }
-//                            Set<String> set=new HashSet<String>();
-//                            if(!TextUtils.isEmpty(agencyIdTag)){
-//                                set.add(agencyIdTag);
-//                            }
-//
-//                            JPushInterface.setAliasAndTags(getApplicationContext(),accountId, set, new TagAliasCallback() {
-//                                @Override
-//                                public void gotResult(int arg0, String arg1, Set<String> arg2) {
-//                                    // TODO Auto-generated method stub
-//
-//                                }
-//                            });
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//
-//                        finish();
-//                        ConstantValue.STEP = 0;
-//                    } else {
-//                        EventBus.getDefault().post(new LoginEvent(1));
-//                        try {
-//
-//                            JSONObject jsonObject = new JSONObject(result);
-//                            JSONObject data = jsonObject.getJSONObject("data");
-//                            roleName = data.getString("roleName");
-//                            String accountId=data.optString("accountAlias");
-//                            String agencyIdTag=data.optString("agencyIdTag");
-//                            SpUtils.setRoleName(getApplicationContext(), roleName);
-//                            SpUtils.setToken(getApplicationContext(), token);
-//
-//                            if(JPushInterface.isPushStopped(getApplicationContext())){
-//                                JPushInterface.resumePush(getApplicationContext());
-//                            }
-//                            Set<String> set=new HashSet<String>();
-//                            if(!TextUtils.isEmpty(agencyIdTag)){
-//                                set.add(agencyIdTag);
-//                            }
-//                            JPushInterface.setAliasAndTags(getApplicationContext(),accountId, set, new TagAliasCallback() {
-//                                @Override
-//                                public void gotResult(int arg0, String arg1, Set<String> arg2) {
-//                                    // TODO Auto-generated method stub
-//
-//                                }
-//                            });
-//                            getUserLoginInfo();
-//
-//
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                        RongCloudEvent.getInstance().setOtherListener();
-//                    }
                 }
 
                 /**

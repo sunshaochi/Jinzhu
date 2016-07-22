@@ -71,13 +71,13 @@ public class CreditFragment extends BaseFragment {
     @ViewInject(R.id.ivSuspen)
     private ImageView ivSuspen;
     @ViewInject(R.id.rb_bank)
-    private RadioButton rbBank; // 银行
+    private TextView rbBank; // 银行
     @ViewInject(R.id.rb_range)
-    private RadioButton rbRange;//排序方式
+    private TextView rbRange;//排序方式
     @ViewInject(R.id.rb_money)
-    private RadioButton rbMoney; //按金额
+    private TextView rbMoney; //按金额
     @ViewInject(R.id.rb_time)
-    private RadioButton rbTime; //按时间
+    private TextView rbTime; //按时间
     @ViewInject(R.id.arrow2)
     private ImageView arrow2;
     @ViewInject(R.id.arrow3)
@@ -283,10 +283,6 @@ public class CreditFragment extends BaseFragment {
         rbRange.setText("综合排序");
         rbMoney.setText("金额范围");
         rbTime.setText("贷款期限");
-        rbBank.setSelected(true);
-        rbRange.setSelected(true);
-        rbMoney.setSelected(true);
-        rbTime.setSelected(true);
     }
 
     @Override
@@ -294,41 +290,42 @@ public class CreditFragment extends BaseFragment {
         lvCreditSort.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 LinearLayout linearLayout = (LinearLayout) view;
                 TextView textView = (TextView) linearLayout.getChildAt(0); //获取到点击的TextView
 //                MyToastUtils.showShortToast(context, textView.getText().toString() + "");
                 switch (clickType) {
                     case ProductSortAdapter.BANK:
-//                        if (textView.getText().toString().length() > 4) {
-//                            rbBank.setText(textView.getText().toString().substring(0, 4) + "...");
-//                        } else {
+                        if (textView.getText().toString().length() > 4) {
+                            rbBank.setText(textView.getText().toString().substring(0, 4) + "..");
+                        } else {
                         rbBank.setText(textView.getText().toString() + "");
-//                        }
+                        }
 
                         cBank = orgTypeInfos.get(position).getOrgId();
                         break;
                     case ProductSortAdapter.MONEY:
-//                        if (textView.getText().toString().length() > 4) {
-//                            rbMoney.setText(textView.getText().toString().substring(0, 4) + "...");
-//                        } else {
+                        if (textView.getText().toString().length() > 4) {
+                            rbMoney.setText(textView.getText().toString().substring(0, 4) + "..");
+                        } else {
                         rbMoney.setText(textView.getText().toString() + "");
-//                        }
+                        }
                         cMoney = moneyScopeInfos.get(position).getMoneyKey();
                         break;
                     case ProductSortAdapter.SORT:
-//                        if (textView.getText().toString().length() > 4){
-//                            rbRange.setText(textView.getText().toString().substring(0,4)+"...");
-//                        }else {
+                        if (textView.getText().toString().length() > 4){
+                            rbRange.setText(textView.getText().toString().substring(0,3)+"..");
+                        }else {
                         rbRange.setText(textView.getText().toString() + "");
-//                        }
+                        }
                         cSort = productInfos.get(position).getOrderKey();
                         break;
                     case ProductSortAdapter.TIME:
-//                        if (textView.getText().toString().length() > 4) {
-//                            rbTime.setText(textView.getText().toString().substring(0, 4) + "...");
-//                        } else {
+                        if (textView.getText().toString().length() > 4) {
+                            rbTime.setText(textView.getText().toString().substring(0, 4) + "..");
+                        } else {
                         rbTime.setText(textView.getText().toString() + "");
-//                        }
+                        }
                         cTime = loanTermInfos.get(position).getTermKey();
                         break;
                     default:
@@ -587,7 +584,14 @@ public class CreditFragment extends BaseFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ORGQUEST && null != data) {
             int position = data.getIntExtra("org", 0);
-            rbBank.setText(orgTypeInfos.get(position).getOrgName());
+            String name = orgTypeInfos.get(position).getOrgName();
+            if (name.length() > 4){
+                rbBank.setText(name.substring(0,4)+"..");
+            }else {
+                rbBank.setText(name);
+            }
+
+
             cBank = orgTypeInfos.get(position).getOrgId();
             getCredit(ParamsUtil.getInstance().getUle().getUsername(), SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
         }
