@@ -88,7 +88,7 @@ public class RegisterAct extends BaseActivity {
         //        regPwd2 = (EditText) findViewById(R.id.reg_pwd2);
         regYqm = (EditText) findViewById(R.id.reg_yqm);
         TextView intro = (TextView) findViewById(R.id.intro);
-        intro.setText(Html.fromHtml("<u>"+"《金蛛服务条款》"+"</u>"));
+        intro.setText(Html.fromHtml("<u>"+"《金蛛金服用户协议》"+"</u>"));
         intro.setTextColor(getResources().getColor(R.color.blue_color));
     }
 
@@ -153,7 +153,7 @@ public class RegisterAct extends BaseActivity {
                             ue.setReferralCode(yqm);
                         toRegister(ue, phone, yzm);
                     }else {
-                        MyToastUtils.showShortToast(getApplicationContext(),"请首先同意金蛛条款！");
+                        MyToastUtils.showShortToast(getApplicationContext(),"请首先同意金蛛金服用户协议");
                     }
 
                 }

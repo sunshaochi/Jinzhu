@@ -28,7 +28,7 @@ public class ClauseJinzhu extends BaseActivity {
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     public void init(Bundle savedInstanceState) {
-        setTopTitle("金蛛服务条款");
+        setTopTitle("金蛛金服用户协议");
         setLeftTv("返回");
         //如果访问的页面中有javascript，则webview必须设置支持javascript
         clause.getSettings().setJavaScriptEnabled(true);

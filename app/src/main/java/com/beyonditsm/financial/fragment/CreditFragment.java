@@ -37,6 +37,7 @@ import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GsonUtils;
+import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
@@ -133,12 +134,24 @@ public class CreditFragment extends BaseFragment {
         super.onHiddenChanged(hidden);
         if (!hidden) {
             getCredit(ParamsUtil.getInstance().getUle().getUsername(), SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
+            String city = SpUtils.getCity(MyApplication.getInstance().getApplicationContext());
+            if (TextUtils.isEmpty(city)){
+                getSortParam(ParamsUtil.getInstance().getChangedCity());
+            }else{
+                getSortParam(city);
+            }
         }
     }
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        getSortParam();
+        String city = SpUtils.getCity(MyApplication.getInstance().getApplicationContext());
+        if (TextUtils.isEmpty(city)){
+            getSortParam(ParamsUtil.getInstance().getChangedCity());
+        }else{
+            getSortParam(city);
+        }
+
         tvTitle.setText("贷款");
         initTit();
         loadView.setNoContentTxt("暂无此类产品，换个条件试试");
@@ -198,8 +211,8 @@ public class CreditFragment extends BaseFragment {
         etAmount.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
     }
 
-    private void getSortParam() {
-        RequestManager.getCommManager().findSortParam("",new RequestManager.CallBack() {
+    private void getSortParam(String cityName) {
+        RequestManager.getCommManager().findSortParam(cityName,new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
                 ResultData<ProductSortEntity> rd = (ResultData<ProductSortEntity>) GsonUtils.json(result, ProductSortEntity.class);

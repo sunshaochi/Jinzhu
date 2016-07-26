@@ -3,12 +3,12 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/bg_color">
-    <include layout="@layout/title_act_layout"></include>
+    <include layout="@layout/title_act_layout"/>
 
     <WebView
         android:id="@+id/clause"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        ></WebView>
+        />
 
 </LinearLayout>
