@@ -199,7 +199,7 @@ public class CreditFragment extends BaseFragment {
     }
 
     private void getSortParam() {
-        RequestManager.getCommManager().findSortParam(new RequestManager.CallBack() {
+        RequestManager.getCommManager().findSortParam("",new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
                 ResultData<ProductSortEntity> rd = (ResultData<ProductSortEntity>) GsonUtils.json(result, ProductSortEntity.class);

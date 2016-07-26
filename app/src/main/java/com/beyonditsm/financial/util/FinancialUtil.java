@@ -59,7 +59,6 @@ public class FinancialUtil {
 
     /**
      * 获取当前时间
-     *
      */
     public static String getCurrentTime() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -709,34 +708,36 @@ public class FinancialUtil {
 
     /**
      * 打开输入法
+     *
      * @param context
      * @param editText
      */
-    public static  void openIM(Context context, View editText){
+    public static void openIM(Context context, View editText) {
         InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.showSoftInput(editText, 0);
     }
 
     /**
      * 关闭输入法
+     *
      * @param context
      * @param editText
      */
-    public static void closeIM(Context context, View editText){
+    public static void closeIM(Context context, View editText) {
         InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
     }
 
 
-
     /**
      * 校验银行卡卡号
+     *
      * @param cardId
      * @return
      */
     public static boolean checkBankCard(String cardId) {
         char bit = getBankCardCheckCode(cardId.substring(0, cardId.length() - 1));
-        if(bit == 'N'){
+        if (bit == 'N') {
             return false;
         }
         return cardId.charAt(cardId.length() - 1) == bit;
@@ -744,47 +745,50 @@ public class FinancialUtil {
 
     /**
      * 从不含校验位的银行卡卡号采用 Luhm 校验算法获得校验位
+     *
      * @param nonCheckCodeCardId
      * @return
      */
-    public static char getBankCardCheckCode(String nonCheckCodeCardId){
-        if(nonCheckCodeCardId == null || nonCheckCodeCardId.trim().length() == 0
+    public static char getBankCardCheckCode(String nonCheckCodeCardId) {
+        if (nonCheckCodeCardId == null || nonCheckCodeCardId.trim().length() == 0
                 || !nonCheckCodeCardId.matches("\\d+")) {
             //如果传的不是数据返回N
             return 'N';
         }
         char[] chs = nonCheckCodeCardId.trim().toCharArray();
         int luhmSum = 0;
-        for(int i = chs.length - 1, j = 0; i >= 0; i--, j++) {
+        for (int i = chs.length - 1, j = 0; i >= 0; i--, j++) {
             int k = chs[i] - '0';
-            if(j % 2 == 0) {
+            if (j % 2 == 0) {
                 k *= 2;
                 k = k / 10 + k % 10;
             }
             luhmSum += k;
         }
-        return (luhmSum % 10 == 0) ? '0' : (char)((10 - luhmSum % 10) + '0');
+        return (luhmSum % 10 == 0) ? '0' : (char) ((10 - luhmSum % 10) + '0');
     }
 
     /**
      * 判断输入是否是中文
+     *
      * @param input
      * @return
      */
-    public static boolean isInputChinese(String input){
+    public static boolean isInputChinese(String input) {
         Pattern pattern = Pattern.compile("^[\u4e00-\u9fa5]*$");
         Matcher matcher = pattern.matcher(input);
-        return  matcher.matches();//true全部为汉字，否则是false
+        return matcher.matches();//true全部为汉字，否则是false
     }
 
     /**
      * 获取文件
+     *
      * @param file
      * @return
      * @throws Exception
      */
-    public static long getFolderSize(File file) throws Exception{
-        long size =0;
+    public static long getFolderSize(File file) throws Exception {
+        long size = 0;
         try {
             File[] fileList = file.listFiles();
             for (int i = 0; i < fileList.length; i++) {
@@ -841,6 +845,7 @@ public class FinancialUtil {
 
     /**
      * 查询缓存大小
+     *
      * @param context
      * @return
      * @throws Exception
@@ -869,6 +874,7 @@ public class FinancialUtil {
 
     /**
      * 清除缓存
+     *
      * @param context
      */
     public static void clearAllCache(Context context) {

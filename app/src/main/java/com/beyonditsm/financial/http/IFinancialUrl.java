@@ -9,7 +9,7 @@ public interface IFinancialUrl {
     /*吕建明*/
 //    String BASE_URL = "http://172.16.6.236:8080";
     /*吕东测试*/
-//    String BASE_URL = "http://172.16.6.216";
+//    String BASE_URL = "http://172.16.5.57";
 //    String BASE_URL ="http://172.16.6.228:8080";
     /*袁峰测试*/
 //    String BASE_URL = "http://172.16.5.197:8080";
@@ -219,4 +219,6 @@ public interface IFinancialUrl {
     String ROLE_INTO = BASE_URL+API_VERSION+"/servant/login/getRoleInfo.do";
     /*Vip信息*/
     String VIP_INFO = BASE_URL+API_VERSION+"/manager/unlogin/findVipInfo.do";
+    /*更新位置*/
+    String UPDATE_LOCATION = BASE_URL+API_VERSION +"/platform/login/updateLocation.do";
 }

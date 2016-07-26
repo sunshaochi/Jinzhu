@@ -48,9 +48,9 @@ public class CityPicker extends LinearLayout {
     private int temCityIndex = -1;
     private int tempCounyIndex = -1;
     private Context context;
-    private List<Cityinfo> province_list = new ArrayList<Cityinfo>();
-    private HashMap<String, List<Cityinfo>> city_map = new HashMap<String, List<Cityinfo>>();
-    private HashMap<String, List<Cityinfo>> couny_map = new HashMap<String, List<Cityinfo>>();
+    private List<Cityinfo> province_list = new ArrayList<>();
+    private HashMap<String, List<Cityinfo>> city_map = new HashMap<>();
+    private HashMap<String, List<Cityinfo>> couny_map = new HashMap<>();
     private static ArrayList<String> province_list_code = new ArrayList<String>();
     private static ArrayList<String> city_list_code = new ArrayList<String>();
     private static ArrayList<String> couny_list_code = new ArrayList<String>();

@@ -101,11 +101,11 @@ public class HomeFragment extends BaseFragment implements LocationListener {
     public void onStart() {
 
         super.onStart();
-        if (ParamsUtil.getInstance().isFirstLocated()){
+        if (ParamsUtil.getInstance().isFirstLocated()) {
             ParamsUtil.getInstance().setFirstLocated(false);
             initLocation();
         }
-        if(ParamsUtil.getInstance().isReLogin()){
+        if (ParamsUtil.getInstance().isReLogin()) {
             ParamsUtil.getInstance().setReLogin(false);
             getLocation();
         }
@@ -123,15 +123,15 @@ public class HomeFragment extends BaseFragment implements LocationListener {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (null != ule){
-            outState.putParcelable("userLogin",ule);
+        if (null != ule) {
+            outState.putParcelable("userLogin", ule);
         }
     }
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-        if (null != savedInstanceState){
+        if (null != savedInstanceState) {
             ule = savedInstanceState.getParcelable("userLogin");
         }
     }
@@ -141,7 +141,7 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 //        getHotProductList(currentPage);
 
         String roleName = SpUtils.getRoleName(context);
-        MyLogUtils.info("ROLENAME="+roleName);
+        MyLogUtils.info("ROLENAME=" + roleName);
         plvHotCredit.setPullRefreshEnabled(true);
         plvHotCredit.setScrollLoadEnabled(false);
         plvHotCredit.setPullLoadEnabled(true);
@@ -196,22 +196,22 @@ public class HomeFragment extends BaseFragment implements LocationListener {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), HomeCreditDetailAct.class);
-                if(datas.size()>position){
+                if (datas.size() > position) {
                     intent.putExtra(HomeCreditDetailAct.PRODUCTINFO, datas.get(position).getProductId());
-                    intent.putExtra(HomeCreditDetailAct.CREDIT_NAME,datas.get(position).getProductName());
+                    intent.putExtra(HomeCreditDetailAct.CREDIT_NAME, datas.get(position).getProductName());
                 }
 
 //                intent.putExtra(HomeCreditDetailAct.CREDIT_MIN,ConstantValue.CREDIT_MIN_MONEY+"");
 //                intent.putExtra(HomeCreditDetailAct.CREDIT_TIME_MIN,ConstantValue.CREDIT_MIN_MONTH+"");
-                intent.putExtra(HomeCreditDetailAct.CREDIT_AMOUNT, ConstantValue.CREDIT_MONEY+"");
-                intent.putExtra(HomeCreditDetailAct.CREDIT_TIME,ConstantValue.CREDIT_MONTH+"");
+                intent.putExtra(HomeCreditDetailAct.CREDIT_AMOUNT, ConstantValue.CREDIT_MONEY + "");
+                intent.putExtra(HomeCreditDetailAct.CREDIT_TIME, ConstantValue.CREDIT_MONTH + "");
 
                 startActivity(intent);
             }
         });
     }
 
-    @OnClick({R.id.ll_credit, R.id.ll_tillage, R.id.ll_work,R.id.ivSuspen,R.id.ll_creditCard,R.id.ll_gps})
+    @OnClick({R.id.ll_credit, R.id.ll_tillage, R.id.ll_work, R.id.ivSuspen, R.id.ll_creditCard, R.id.ll_gps})
     public void toClick(View v) {
         Intent intent;
         switch (v.getId()) {
@@ -219,36 +219,36 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                 EventBus.getDefault().post(new ToSwitchEvent());
                 break;
             case R.id.ll_tillage://信用耕耘
-                if(TextUtils.isEmpty(SpUtils.getRoleName(context)+"")){
-                    Intent goLog = new Intent(context,LoginAct.class);
+                if (TextUtils.isEmpty(SpUtils.getRoleName(context) + "")) {
+                    Intent goLog = new Intent(context, LoginAct.class);
                     context.startActivity(goLog);
-                }else{
+                } else {
                     intent = new Intent(getActivity(), GameActivity.class);
                     startActivity(intent);
                 }
                 break;
             case R.id.ll_work://打工挣钱
-                if(!"".equals(SpUtils.getRoleName(getActivity()))) {
+                if (!"".equals(SpUtils.getRoleName(getActivity()))) {
 //                    intent = new Intent(getActivity(), NewWorkAct.class);//跳转打工挣钱页面
                     intent = new Intent(getActivity(), MyRecommAct.class);//跳转代言人页面
-                    if(null!=ule && !"".equals(ule.getReferralCode())){
+                    if (null != ule && !"".equals(ule.getReferralCode())) {
                         intent.putExtra("userLogin", ule);
-                    }else {
+                    } else {
                         intent.putExtra("userLogin", ParamsUtil.getInstance().getUle());
                     }
 
                     startActivity(intent);
-                }else{
-                    Intent goLog = new Intent(context,LoginAct.class);
+                } else {
+                    Intent goLog = new Intent(context, LoginAct.class);
                     context.startActivity(goLog);
                 }
                 break;
             case R.id.ivSuspen://浮窗
-                intent=new Intent(getContext(), CreditGuideAct.class);
+                intent = new Intent(getContext(), CreditGuideAct.class);
                 startActivity(intent);
                 break;
             case R.id.ll_creditCard://信用卡
-                MyToastUtils.showShortToast(getContext(),"敬请期待");
+                MyToastUtils.showShortToast(getContext(), "敬请期待");
 //                if(TextUtils.isEmpty(SpUtils.getRoleName(context).toString())){
 //                    MyToastUtils.showShortToast(getContext(),"请先登录金蛛账号");
 //                    Intent goLog = new Intent(context,LoginAct.class);
@@ -264,21 +264,26 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                 dialogChooseAdress1.setOnSheetItemClickListener(new DialogChooseCity.SexClickListener() {
                     @Override
                     public void getAdress(final List<String> adress) {
+                        MyLogUtils.info("选择的地址:" + adress.get(1));
+
                         String city = SpUtils.getCity(getContext());
-                        if (addressChange(city,adress.get(1))){
+                        if (addressChange(city, adress.get(1))) {
                             GPSAlertDialog gpsAlertDialog = new GPSAlertDialog(context);
-                            gpsAlertDialog.builder().setCancelable(false).setMsg("您目前所在的区域更改","是否将所在的城市切换为：",adress.get(1)).setPositiveButton("确认切换", new View.OnClickListener() {
+                            gpsAlertDialog.builder().setCancelable(false).setMsg("您目前所在的区域更改", "是否将所在的城市切换为：", adress.get(1)).setPositiveButton("确认切换", new View.OnClickListener() {
                                 @SuppressLint("SetTextI18n")
                                 @Override
                                 public void onClick(View v) {
-                                    if (adress.get(1).length()>4){
-                                        tvCity.setText(adress.get(1).substring(0,4)+"...");
-                                    }else {
+                                    if (!"".equals(SpUtils.getRoleName(getActivity()))) {
+                                        updateLocation(adress.get(1));
+                                    }
+                                    if (adress.get(1).length() > 4) {
+                                        tvCity.setText(adress.get(1).substring(0, 4) + "...");
+                                    } else {
                                         tvCity.setText(adress.get(1));
                                     }
-                                    SpUtils.setCity(MyApplication.getInstance().getApplicationContext(),adress.get(1));
+                                    SpUtils.setCity(MyApplication.getInstance().getApplicationContext(), adress.get(1));
                                 }
-                            }).setNegativeButton("取消",null).show();
+                            }).setNegativeButton("取消", null).show();
 
                         }
 //                        userInfo.setNativePlaceAddr(adress.get(0)+adress.get(1)+adress.get(2));
@@ -297,11 +302,12 @@ public class HomeFragment extends BaseFragment implements LocationListener {
         initLocation();
     }
 
-    public class ToSwitchEvent{
+    public class ToSwitchEvent {
 
     }
 
     private List<HomeHotProductEntity> datas = new ArrayList<>();
+
     private void getHotProductList(final int Page) {
         HotProduct hp = new HotProduct();
         hp.setPage(Page);
@@ -335,7 +341,7 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                 }
                 datas.addAll(hotList);
                 if (adapter == null) {
-                    if (null != getContext()){
+                    if (null != getContext()) {
                         adapter = new HomeCreditAdapter(getContext(), hotList);
                         plvHotCredit.getRefreshableView().setAdapter(adapter);
                     }
@@ -364,7 +370,7 @@ public class HomeFragment extends BaseFragment implements LocationListener {
             public void onSucess(String result) throws JSONException {
                 JSONObject obj = new JSONObject(result);
                 int status = obj.getInt("status");
-                if (status == 200){
+                if (status == 200) {
                     ResultData<UserLoginEntity> rd = (ResultData<UserLoginEntity>) GsonUtils.json(result, UserLoginEntity.class);
                     ule = rd.getData();
                     ParamsUtil.getInstance().setUle(ule);
@@ -382,38 +388,62 @@ public class HomeFragment extends BaseFragment implements LocationListener {
     }
 
 
-    private boolean addressChange(String locationCity,String selectCity){
+    private boolean addressChange(String locationCity, String selectCity) {
         return !locationCity.equals(selectCity);
     }
 
     private void initLocation() {
-        tvCity.setText("——");
-        if (ParamsUtil.getInstance().isCityGet()){
-            if (SpUtils.getCity(MyApplication.getInstance().getApplicationContext()).equals(ParamsUtil.getInstance().getChangedCity())){
-                tvCity.setText(ParamsUtil.getInstance().getChangedCity());
-            }else {
-                GPSAlertDialog gpsAlertDialog = new GPSAlertDialog(context);
-                gpsAlertDialog.builder().setCancelable(true).setMsg("您目前所处区域发生变更","是否将所在城市切换为",ParamsUtil.getInstance().getChangedCity()).setPositiveButton("确认切换", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        tvCity.setText(ParamsUtil.getInstance().getChangedCity());
-                        SpUtils.setCity(MyApplication.getInstance().getApplicationContext(), ParamsUtil.getInstance().getChangedCity());
-                    }
-                }).setNegativeButton("取消",null).show();
-                tvCity.setText(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()));
+        if (!TextUtils.isEmpty(ParamsUtil.getInstance().getChangedCity())) {
+            tvCity.setText(ParamsUtil.getInstance().getChangedCity());
+        }
+//        tvCity.setText("——");
+//        MyLogUtils.info("是否是定位获取城市："+ParamsUtil.getInstance().getChangedCity());
+        if (ParamsUtil.getInstance().isCityGet()) {
+            MyLogUtils.info("getCity:" + SpUtils.getCity(MyApplication.getInstance().getApplicationContext()) + "," + ParamsUtil.getInstance().getChangedCity());
+            if (!TextUtils.isEmpty(SpUtils.getCity(MyApplication.getInstance().getApplicationContext())) && !TextUtils.isEmpty(ParamsUtil.getInstance().getChangedCity())) {
+                if (SpUtils.getCity(MyApplication.getInstance().getApplicationContext()).equals(ParamsUtil.getInstance().getChangedCity())) {
+                    tvCity.setText(ParamsUtil.getInstance().getChangedCity());
+                } else {
+                    GPSAlertDialog gpsAlertDialog = new GPSAlertDialog(context);
+                    gpsAlertDialog.builder().setCancelable(false).setMsg("您目前所处区域发生变更", "是否将所在城市切换为", ParamsUtil.getInstance().getChangedCity()).setPositiveButton("确认切换", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (!"".equals(SpUtils.getRoleName(getActivity()))) {
+                                updateLocation(ParamsUtil.getInstance().getChangedCity());
+                            }
+                            tvCity.setText(ParamsUtil.getInstance().getChangedCity());
+                            SpUtils.setCity(MyApplication.getInstance().getApplicationContext(), ParamsUtil.getInstance().getChangedCity());
+                        }
+                    }).setNegativeButton("取消", null).show();
+                    tvCity.setText(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()));
+                }
             }
-        }else {
+        } else {
             tvCity.setText("——");
             ParamsUtil.getInstance().setFirstLocated(true);
             GPSAlertDialog gpsAlertDialog = new GPSAlertDialog(context);
-            gpsAlertDialog.builder().setCancelable(true).setMsg("无法获取当前位置，请检查设置","或直接切换城市",null).setPositiveButton("去设置", new View.OnClickListener() {
+            gpsAlertDialog.builder().setCancelable(false).setMsg("无法获取当前位置，请检查设置", "或直接切换城市", null).setPositiveButton("去设置", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(Settings.ACTION_SETTINGS);
                     startActivity(intent);
                 }
-            }).setNegativeButton("知道了",null).show();
+            }).setNegativeButton("知道了", null).show();
         }
+    }
+
+    private void updateLocation(String area) {
+        RequestManager.getCommManager().updateLocation(area, new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
+            }
+        });
     }
 
     @Override

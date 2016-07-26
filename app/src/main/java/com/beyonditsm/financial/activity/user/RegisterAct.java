@@ -125,8 +125,8 @@ public class RegisterAct extends BaseActivity {
             case R.id.reg_yzm_btn:
                 if (isPhoneEnable()) {
                     phone = regPhone.getText().toString().trim();
-                    String mobile = regPhone.getText().toString().trim();
-                    generalUtil.getCode(mobile);
+//                    String mobile = regPhone.getText().toString().trim();
+                    generalUtil.getCode(phone);
                     generalUtil.setiCode(new GeneralUtils.ICode() {
                         @Override
                         public void isSucess(int flag) {
@@ -184,64 +184,6 @@ public class RegisterAct extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
-//                sendBroadcast(new Intent(MineFragment.UPDATE_USER));
-//                sendBroadcast(new Intent(MainActivity.UPDATATAB));
-//                SpUtils.setRoleName(getApplicationContext(), "ROLE_COMMON_CLIENT");
-//                SpUtils.setToken(getApplicationContext(), token);
-//
-//                SpUtils.setToken(getApplicationContext(), token);
-//                SpUtils.setToken(getApplicationContext(), token);
-//                JSONObject jsonObject = null;
-//                try {
-//                    jsonObject = new JSONObject(result);
-//                    JSONObject data = jsonObject.getJSONObject("data");
-////                        String roleName = data.getString("roleName");
-//                    String accountId = data.optString("accountAlias");
-//                    String agencyIdTag = data.optString("agencyIdTag");
-//                    SpUtils.setRoleName(getApplicationContext(),"ROLE_COMMON_CLIENT");
-//
-//                    if (JPushInterface.isPushStopped(getApplicationContext())) {
-//                        JPushInterface.resumePush(getApplicationContext());
-//                    }
-//                    Set<String> set = new HashSet<String>();
-//                    if (!TextUtils.isEmpty(agencyIdTag)) {
-//                        set.add(agencyIdTag);
-//                    }
-//                    JPushInterface.setAliasAndTags(getApplicationContext(), accountId, set, new TagAliasCallback() {
-//                        @Override
-//                        public void gotResult(int arg0, String arg1, Set<String> arg2) {
-//                        }
-//                    });
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//                if (ConstantValue.STEP == 10) {
-//                    sendBroadcast(new Intent(CreditStepAct.UPDATA));
-//                    AppManager.getAppManager().finishActivity(LoginAct.class);
-//                    MyToastUtils.showShortToast(getApplicationContext(), "注册成功");
-//                    ConstantValue.STEP = 0;
-//                    finish();
-//                } else {
-//                    gotoActivity(MainActivity.class, true);
-//                    AppManager.getAppManager().finishActivity(LoginAct.class);
-//                    MyToastUtils.showShortToast(getApplicationContext(), "注册成功");
-//                }
-//
-//                if (!TextUtils.isEmpty(yqm)) {
-//                    RequestManager.getCommManager().myReferralCode(yqm, new RequestManager.CallBack() {
-//                        @Override
-//                        public void onSucess(String result) throws JSONException {
-//
-//                        }
-//
-//                        @Override
-//                        public void onError(int status, String msg) {
-//
-//                        }
-//                    });
-//                }
 
             }
 
@@ -312,7 +254,6 @@ public class RegisterAct extends BaseActivity {
     @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
 
-        @SuppressLint("SetTextI18n")
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);

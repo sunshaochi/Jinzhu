@@ -75,8 +75,9 @@ public class CommManager extends RequestManager {
     /**
      * 获取产品列表的筛选参数
      */
-    public void findSortParam(final CallBack callBack){
+    public void findSortParam(String cityName,final CallBack callBack){
         List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("cityName",cityName));
         doPost(IFinancialUrl.FIND_PRODUCT_SORT_PARA, params, callBack);
     }
     /**
@@ -472,5 +473,12 @@ public class CommManager extends RequestManager {
         params.put("userName",username);
         MyLogUtils.info("用户名是否为空："+username);
         doPost(IFinancialUrl.VIP_INFO, params, callBack);
+    }
+
+    public void updateLocation(String area,CallBack callBack){
+        Map<String,String> params = new HashMap<>();
+        params.put("area",area);
+        MyLogUtils.info("地址："+area);
+        doPost(IFinancialUrl.UPDATE_LOCATION, params, callBack);
     }
 }

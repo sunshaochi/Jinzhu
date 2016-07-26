@@ -68,18 +68,23 @@ public class GPSAddressUtils {
         public void onReceiveLocation(BDLocation location) {
             //Receive Location
 //
-            if (location.getLocType() == BDLocation.TypeGpsLocation) {// GPS定位结果
+            switch (location.getLocType()) {
+                case BDLocation.TypeGpsLocation: // GPS定位结果
 
-            } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {// 网络定位结果
-                locationListener.onChanged(true,location.getCity());
-                GPSAddressUtils.getInstance().mLocationClient.stop();
+                    break;
+                case BDLocation.TypeNetWorkLocation: // 网络定位结果
+                    locationListener.onChanged(true, location.getCity());
+                    GPSAddressUtils.getInstance().mLocationClient.stop();
 
-            } else if (location.getLocType() == BDLocation.TypeNetWorkException) {
-                GPSAddressUtils.getInstance().mLocationClient.stop();
-                locationListener.onChanged(false,"");
-            } else if (location.getLocType() == BDLocation.TypeCriteriaException) {
-                locationListener.onChanged(false,"");
-                GPSAddressUtils.getInstance().mLocationClient.stop();
+                    break;
+                case BDLocation.TypeNetWorkException:
+                    GPSAddressUtils.getInstance().mLocationClient.stop();
+                    locationListener.onChanged(false, "");
+                    break;
+                case BDLocation.TypeCriteriaException:
+                    locationListener.onChanged(false, "");
+                    GPSAddressUtils.getInstance().mLocationClient.stop();
+                    break;
             }
 
         }

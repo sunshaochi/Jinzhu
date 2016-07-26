@@ -213,6 +213,8 @@ public class LoginAct extends BaseActivity{
             public void onSucess(String result) {
 
                 try {
+
+                    updateLocation(ParamsUtil.getInstance().getChangedCity());
                     ParamsUtil.getInstance().setReLogin(true);
                     TestinAgent.setUserInfo(ue.getUserName()+"");
                     JSONObject objects = new JSONObject(result);
@@ -412,5 +414,20 @@ public class LoginAct extends BaseActivity{
         public LoginEvent(int suce) {
             sucess = suce;
         }
+    }
+
+
+    private void updateLocation(String area){
+        RequestManager.getCommManager().updateLocation(area, new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
+            }
+        });
     }
 }

@@ -120,8 +120,6 @@ public class AddressUtil {
         return countryName;
     }
 
-
-
     public static class JSONParser {
 
         public HashMap<String, String> getJSONParserResult(String JSONString, String key) {
@@ -140,14 +138,14 @@ public class AddressUtil {
 
         public HashMap<String,HashMap<String, String>> getJSONParserResultArray(
                 String JSONString, String key) {
-            HashMap<String, HashMap<String, String>> hashMap = new HashMap<String, HashMap<String, String>>();
+            HashMap<String, HashMap<String, String>> hashMap = new HashMap<>();
             JsonObject result = new JsonParser().parse(JSONString)
                     .getAsJsonObject().getAsJsonObject(key);
             Iterator iterator = result.entrySet().iterator();
             while (iterator.hasNext()) {
                 Map.Entry<String, JsonElement> entry = (Map.Entry<String, JsonElement>) iterator
                         .next();
-                HashMap<String, String> list = new HashMap<String, String>();
+                HashMap<String, String> list = new HashMap<>();
                 JsonArray array = entry.getValue().getAsJsonArray();
                 for (int i = 0; i < array.size(); i++) {
                     list.put(array.get(i).getAsJsonArray().get(1)
@@ -196,11 +194,5 @@ public class AddressUtil {
         }
 
     }
-
-
-
-
-
-
 
 }
