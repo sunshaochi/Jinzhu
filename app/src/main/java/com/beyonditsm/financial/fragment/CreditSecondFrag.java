@@ -18,6 +18,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.credit.CreditDetailAct;
 import com.beyonditsm.financial.activity.credit.CreditStepAct;
@@ -588,7 +589,7 @@ public class CreditSecondFrag extends BaseFragment {
             RequestManager.getCommManager().updateData(user, new RequestManager.CallBack() {
                 @Override
                 public void onSucess(String result) throws JSONException {
-                    String roleName = SpUtils.getRoleName(getActivity());
+                    String roleName = SpUtils.getRoleName(context);
                     if (roleName.equals("ROLE_COMMON_CLIENT")) {
                         Intent intent = new Intent(MineFragment.UPDATE_USER);
                         intent.putExtra(MineFragment.USER_KEY, user);

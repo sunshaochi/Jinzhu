@@ -341,6 +341,9 @@ public class CreditUploadAct extends BaseActivity {
         super.onSaveInstanceState(outState);
 //        outState.putString("photoSavePath",photoSavePath);
         outState.putString("photoSaveName", path);
+        if (null!=upLoadData){
+            outState.putParcelable("upLoadData",upLoadData);
+        }
 //        Log.d(TAG, "onSaveInstanceState");
     }
 
@@ -350,9 +353,19 @@ public class CreditUploadAct extends BaseActivity {
 //        if (TextUtils.isEmpty(photoSavePath)) {
 //            photoSavePath = savedInstanceState.getString("photoSavePath");
 //        }
-        if (TextUtils.isEmpty(path)) {
-            path = savedInstanceState.getString("photoSaveName");
+        if (null!=savedInstanceState){
+            if (TextUtils.isEmpty(path)) {
+                path = savedInstanceState.getString("photoSaveName");
+            }
+            if (null!= savedInstanceState.getParcelable("upLoadData")){
+                upLoadData = savedInstanceState.getParcelable("upLoadData");
+                creDatas = upLoadData.getItems();
+                imageMap = getImageMap(creDatas);
+            }
+
         }
+
+
     }
 
     private void skipFlow(String orderId, String flowId) {

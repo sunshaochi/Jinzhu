@@ -138,7 +138,7 @@ public class MineFragment extends BaseFragment {
             ivRedPoint.setVisibility(View.VISIBLE);
             msg_top_point.setVisibility(View.VISIBLE);
         }
-        if ("".equals(SpUtils.getRoleName(getActivity()))) {
+        if ("".equals(SpUtils.getRoleName(context))) {
             isLogin = false;
             tvName.setText("去登录");
             tvExit.setVisibility(View.GONE);
