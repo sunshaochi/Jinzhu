@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -136,7 +137,8 @@ public class MainActivity extends BaseActivity {
         manager = getSupportFragmentManager();
         ParamsUtil.getInstance().setMainAct(this);
         GeneralUtils gUtils = new GeneralUtils();
-
+        //强制关闭键盘
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         //注册EventBus
         EventBus.getDefault().register(this);
