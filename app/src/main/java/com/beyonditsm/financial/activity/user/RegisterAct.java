@@ -88,7 +88,7 @@ public class RegisterAct extends BaseActivity {
         //        regPwd2 = (EditText) findViewById(R.id.reg_pwd2);
         regYqm = (EditText) findViewById(R.id.reg_yqm);
         TextView intro = (TextView) findViewById(R.id.intro);
-        intro.setText(Html.fromHtml("<u>"+"《金蛛金服用户协议》"+"</u>"));
+        intro.setText(Html.fromHtml("《金蛛金服用户协议》"));
         intro.setTextColor(getResources().getColor(R.color.blue_color));
     }
 
