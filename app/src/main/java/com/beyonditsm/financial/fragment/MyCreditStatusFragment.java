@@ -78,6 +78,12 @@ public class MyCreditStatusFragment extends BaseFragment {
 
             }
         });
+        loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
+            @Override
+            public void OnRetry() {
+                findOrderDealHisory(rowe.getId());
+            }
+        });
     }
 
 

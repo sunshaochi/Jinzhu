@@ -71,7 +71,7 @@ public class CreditFirstFrag extends BaseFragment {
         creYqm = (EditText) view.findViewById(R.id.cre_yqm);
         creTk = (CheckBox) view.findViewById(R.id.cre_tk);
         TextView intro = (TextView) view.findViewById(R.id.intro);
-        intro.setText(Html.fromHtml("<u>" + "《金蛛服务条款》" + "</u>"));
+        intro.setText(Html.fromHtml("<u>" + "《金蛛金服用户协议》" + "</u>"));
         intro.setTextColor(ContextCompat.getColor(getActivity(),R.color.blue_color));
     }
 

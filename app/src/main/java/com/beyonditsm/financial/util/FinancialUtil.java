@@ -380,7 +380,7 @@ public class FinancialUtil {
      *
      * @param context
      */
-    public void hideSoftKeyboard(Context context) {
+    public static void hideSoftKeyboard(Context context) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         View view = ((Activity) context).getWindow().getDecorView();
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);

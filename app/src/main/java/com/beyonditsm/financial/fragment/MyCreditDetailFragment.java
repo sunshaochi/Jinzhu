@@ -39,6 +39,7 @@ import com.beyonditsm.financial.util.AddressUtil;
 import com.beyonditsm.financial.util.Arith;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.widget.FinalLoadDialog;
 import com.leaf.library.widget.MyListView;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -142,10 +143,12 @@ public class MyCreditDetailFragment extends BaseFragment {
     private TextView total;
     @ViewInject(R.id.time)
     private TextView time;
-
-
     @ViewInject(R.id.start_bj)
     private RelativeLayout rlbj;//补件
+    @ViewInject(R.id.ll_creditDetail)
+    private LinearLayout llCreditDetail;
+    @ViewInject(R.id.loadingView)
+    private LoadingView loadingView;
     private MyCreditBean.RowsEntity rowe;
 
     private Map<Integer, Boolean> map = new HashMap<>();
@@ -244,6 +247,12 @@ public class MyCreditDetailFragment extends BaseFragment {
 
                     }
                 }
+            }
+        });
+        loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
+            @Override
+            public void OnRetry() {
+                getOrderDetail(rowe.getId());
             }
         });
     }
@@ -356,6 +365,7 @@ public class MyCreditDetailFragment extends BaseFragment {
             @SuppressLint("SetTextI18n")
             @Override
             public void onSucess(String result) throws JSONException {
+                loadingView.loadComplete();
                 OrderDetailInfo info = GsonUtils.json2Bean(result, OrderDetailInfo.class);
                 if (info != null) {
                     data = info.getData();
@@ -541,6 +551,7 @@ public class MyCreditDetailFragment extends BaseFragment {
             @Override
             public void onError(int status, String msg) {
                 MyToastUtils.showShortToast(getContext(), msg);
+                loadingView.loadError();
             }
         });
     }
