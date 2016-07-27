@@ -86,6 +86,7 @@ public class MainActivity extends BaseActivity {
     private DisplayRedPointReceiver displayRedReceiver;
     private HideRedPointReceiver hideRedPointReceiver;
 
+    private static MainActivity activityInstance;
     private static final int READ_CONTACTS_REQUEST_CODE = 2;
 
     /**/
@@ -122,6 +123,12 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+
+    public static MainActivity getInstance() {
+        return activityInstance;
+    }
+
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
 //        super.onSaveInstanceState(outState);
@@ -135,6 +142,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public void init(Bundle savedInstanceState) {
         manager = getSupportFragmentManager();
+        activityInstance=this;
         ParamsUtil.getInstance().setMainAct(this);
         GeneralUtils gUtils = new GeneralUtils();
         //强制关闭键盘

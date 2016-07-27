@@ -1,19 +1,16 @@
 package com.beyonditsm.financial.fragment;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.hardware.input.InputManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,6 +18,7 @@ import android.widget.TextView;
 import com.beyonditsm.financial.ConstantValue;
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
+import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.credit.CreditGuideAct;
 import com.beyonditsm.financial.activity.user.GameActivity;
 import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
@@ -81,6 +79,7 @@ public class HomeFragment extends BaseFragment implements LocationListener {
     private HomeCreditAdapter adapter;
     private List<HomeHotProductEntity> hotList;
     private UserLoginEntity ule;
+    private Activity mParentActivity;
 
 //    public LocationClient mLocationClient = null;
 
@@ -117,7 +116,7 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 
     private void getLocation() {
         GPSAddressUtils.getInstance().setLocationListener(this);
-        GPSAddressUtils.getInstance().getLocation(getActivity());
+        GPSAddressUtils.getInstance().getLocation(mParentActivity);
 
     }
 
@@ -193,11 +192,20 @@ public class HomeFragment extends BaseFragment implements LocationListener {
     }
 
     @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof MainActivity)
+            mParentActivity = (MainActivity) activity;
+        if (mParentActivity == null)
+            mParentActivity = MainActivity.getInstance();
+    }
+
+    @Override
     public void setListener() {
         plvHotCredit.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), HomeCreditDetailAct.class);
+                Intent intent = new Intent(mParentActivity, HomeCreditDetailAct.class);
                 if (datas.size() > position) {
                     intent.putExtra(HomeCreditDetailAct.PRODUCTINFO, datas.get(position).getProductId());
                     intent.putExtra(HomeCreditDetailAct.CREDIT_NAME, datas.get(position).getProductName());
@@ -225,14 +233,14 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                     Intent goLog = new Intent(context, LoginAct.class);
                     context.startActivity(goLog);
                 } else {
-                    intent = new Intent(getActivity(), GameActivity.class);
+                    intent = new Intent(mParentActivity, GameActivity.class);
                     startActivity(intent);
                 }
                 break;
             case R.id.ll_work://打工挣钱
                 if (!"".equals(SpUtils.getRoleName(context))) {
-//                    intent = new Intent(getActivity(), NewWorkAct.class);//跳转打工挣钱页面
-                    intent = new Intent(getActivity(), MyRecommAct.class);//跳转代言人页面
+//                    intent = new Intent(mParentActivity, NewWorkAct.class);//跳转打工挣钱页面
+                    intent = new Intent(mParentActivity, MyRecommAct.class);//跳转代言人页面
                     if (null != ule && !"".equals(ule.getReferralCode())) {
                         intent.putExtra("userLogin", ule);
                     } else {
@@ -256,7 +264,7 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 //                    Intent goLog = new Intent(context,LoginAct.class);
 //                    context.startActivity(goLog);
 //                }else{
-//                    intent = new Intent(getActivity(), CreditCardAct.class);
+//                    intent = new Intent(mParentActivity, CreditCardAct.class);
 //                    startActivity(intent);
 //                }
                 break;
@@ -275,7 +283,7 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                                 @SuppressLint("SetTextI18n")
                                 @Override
                                 public void onClick(View v) {
-                                    if (!"".equals(SpUtils.getRoleName(getActivity()))) {
+                                    if (!"".equals(SpUtils.getRoleName(mParentActivity))) {
                                         updateLocation(adress.get(1));
                                     }
                                     if (adress.get(1).length() > 4) {
@@ -397,11 +405,13 @@ public class HomeFragment extends BaseFragment implements LocationListener {
     private void initLocation() {
         if (!TextUtils.isEmpty(ParamsUtil.getInstance().getChangedCity())) {
             tvCity.setText(ParamsUtil.getInstance().getChangedCity());
+            SpUtils.setCity(MyApplication.getInstance().getApplicationContext(), ParamsUtil.getInstance().getChangedCity());
         }
+
 //        tvCity.setText("——");
 //        MyLogUtils.info("是否是定位获取城市："+ParamsUtil.getInstance().getChangedCity());
         if (ParamsUtil.getInstance().isCityGet()) {
-            MyLogUtils.info("getCity:" + SpUtils.getCity(MyApplication.getInstance().getApplicationContext()) + "," + ParamsUtil.getInstance().getChangedCity());
+//            MyLogUtils.info("getCity:" + SpUtils.getCity(MyApplication.getInstance().getApplicationContext()) + "," + ParamsUtil.getInstance().getChangedCity());
             if (!TextUtils.isEmpty(SpUtils.getCity(MyApplication.getInstance().getApplicationContext())) && !TextUtils.isEmpty(ParamsUtil.getInstance().getChangedCity())) {
                 if (SpUtils.getCity(MyApplication.getInstance().getApplicationContext()).equals(ParamsUtil.getInstance().getChangedCity())) {
                     tvCity.setText(ParamsUtil.getInstance().getChangedCity());
@@ -410,7 +420,7 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                     gpsAlertDialog.builder().setCancelable(false).setMsg("您目前所处区域发生变更", "是否将所在城市切换为", ParamsUtil.getInstance().getChangedCity()).setPositiveButton("确认切换", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (!"".equals(SpUtils.getRoleName(getActivity()))) {
+                            if (!"".equals(SpUtils.getRoleName(mParentActivity))) {
                                 updateLocation(ParamsUtil.getInstance().getChangedCity());
                             }
                             tvCity.setText(ParamsUtil.getInstance().getChangedCity());

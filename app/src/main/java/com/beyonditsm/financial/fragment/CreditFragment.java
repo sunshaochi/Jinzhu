@@ -548,8 +548,9 @@ public class CreditFragment extends BaseFragment {
                     return;
                 }
                 if (currentPage == 1) {
-                    datas.clear();
-                }
+                datas.clear();
+               }
+
                 datas.addAll(list);
 
                 if (TextUtils.isEmpty(etAmount.getText().toString().trim()) && TextUtils.isEmpty(tvM.getText().toString().trim())) {
