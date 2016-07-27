@@ -230,7 +230,7 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                 }
                 break;
             case R.id.ll_work://打工挣钱
-                if (!"".equals(SpUtils.getRoleName(getActivity()))) {
+                if (!"".equals(SpUtils.getRoleName(context))) {
 //                    intent = new Intent(getActivity(), NewWorkAct.class);//跳转打工挣钱页面
                     intent = new Intent(getActivity(), MyRecommAct.class);//跳转代言人页面
                     if (null != ule && !"".equals(ule.getReferralCode())) {

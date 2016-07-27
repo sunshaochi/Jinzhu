@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
@@ -87,6 +88,22 @@ public class UpdateAct extends BaseActivity {
     private TextView tvLocal;
 
     private AddressUtil addressUtil;
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (null!=userInfo){
+            outState.putParcelable("UserEntity",userInfo);
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (null!=savedInstanceState){
+            userInfo = savedInstanceState.getParcelable("UserEntity");
+        }
+    }
 
     @Override
     public void setLayout() {
