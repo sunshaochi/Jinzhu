@@ -9,6 +9,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -198,6 +199,8 @@ public class HomeCreditDetailAct extends BaseActivity {
 
     @Override
     public void init(Bundle savedInstanceState) {
+        //强制关闭键盘
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         assignViews();
         initAnim();
         getUserLoginInfo();

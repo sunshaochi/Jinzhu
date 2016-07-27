@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -64,7 +65,8 @@ public class MyCreditAct extends BaseActivity {
     public void init(Bundle savedInstanceState) {
         setTopTitle("我的贷款");
         setLeftTv("返回");
-
+        //强制关闭键盘
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         loadingView.setNoContentTxt("暂无贷款");
         orderId = SpUtils.getOrderId(MyApplication.getInstance());
         MyLogUtils.info("保存的orderID:"+ orderId);

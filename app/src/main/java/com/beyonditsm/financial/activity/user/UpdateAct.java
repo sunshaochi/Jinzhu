@@ -11,6 +11,7 @@ import android.os.PersistableBundle;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
@@ -114,6 +115,8 @@ public class UpdateAct extends BaseActivity {
     public void init(Bundle savedInstanceState) {
         setTopTitle("我的资料");
         setLeftTv("返回");
+        //强制关闭键盘
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         addressUtil = new AddressUtil(this);
         userInfo = getIntent().getParcelableExtra(MineFragment.USER_KEY);
         //把用户信息放进去

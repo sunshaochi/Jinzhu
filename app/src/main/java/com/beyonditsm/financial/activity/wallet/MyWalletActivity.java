@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -82,6 +83,8 @@ public class MyWalletActivity extends BaseActivity {
         ParamsUtil.getInstance().setWalletEnter(false);
         setLeftTv("返回");
         setTopTitle("我的钱包");
+        //强制关闭键盘
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         ule = getIntent().getParcelableExtra("userLogin");
         user = getIntent().getParcelableExtra("userInfo");
         String isUpgrade = SpUtils.getIsUpgrade(getApplicationContext());

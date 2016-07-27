@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -78,6 +79,8 @@ public class SettingAct extends BaseActivity {
         try {
             setLeftTv("返回");
             setTopTitle("设置");
+            //强制关闭键盘
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
             gUtils = new GeneralUtils();
             totalCacheSize = FinancialUtil.getTotalCacheSize(getApplicationContext());
             tvCacheSize.setText(totalCacheSize);
