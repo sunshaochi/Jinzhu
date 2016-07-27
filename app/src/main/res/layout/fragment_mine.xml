@@ -255,6 +255,7 @@
 
                     <RelativeLayout
                         android:id="@+id/rlVip"
+                        android:visibility="gone"
                         style="@style/rl_mine_style">
 
                         <ImageView

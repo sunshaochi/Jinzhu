@@ -51,6 +51,7 @@ public class GPSAddressUtils {
         option.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系
         int span = 0;
         option.setScanSpan(span);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
+        option.setTimeOut(6000);
         option.setIsNeedAddress(true);//可选，设置是否需要地址信息，默认不需要
         option.setOpenGps(false);//可选，默认false,设置是否使用gps
         option.setLocationNotify(false);//可选，默认false，设置是否当gps有效时按照1S1次频率输出GPS结果
@@ -64,26 +65,30 @@ public class GPSAddressUtils {
     }
 
     class MyLocationListener implements BDLocationListener {
+
         @Override
         public void onReceiveLocation(BDLocation location) {
             //Receive Location
 //
             switch (location.getLocType()) {
                 case BDLocation.TypeGpsLocation: // GPS定位结果
-
+                    locationListener.onChanged(true, location.getCity());
+                    GPSAddressUtils.getInstance().mLocationClient.stop();
                     break;
                 case BDLocation.TypeNetWorkLocation: // 网络定位结果
                     locationListener.onChanged(true, location.getCity());
                     GPSAddressUtils.getInstance().mLocationClient.stop();
-
                     break;
                 case BDLocation.TypeNetWorkException:
-                    GPSAddressUtils.getInstance().mLocationClient.stop();
                     locationListener.onChanged(false, "");
+                    GPSAddressUtils.getInstance().mLocationClient.stop();
                     break;
                 case BDLocation.TypeCriteriaException:
                     locationListener.onChanged(false, "");
                     GPSAddressUtils.getInstance().mLocationClient.stop();
+                    break;
+                default:
+                    locationListener.onChanged(false, "");
                     break;
             }
 

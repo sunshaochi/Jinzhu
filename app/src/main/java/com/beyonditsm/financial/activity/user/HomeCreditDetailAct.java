@@ -636,6 +636,12 @@ public class HomeCreditDetailAct extends BaseActivity {
                         tvDetail.setText(productEntity.getDetailDescribe());
                     }
                     if (!TextUtils.isEmpty(productEntity.getDisposableRateMax()) || !TextUtils.isEmpty(productEntity.getDisposableRateMin())) {
+                        if (TextUtils.isEmpty(productEntity.getDisposableRateMax())){
+                            productEntity.setDisposableRateMax("0.0");
+                        }
+                        if (TextUtils.isEmpty(productEntity.getDisposableRateMin())){
+                            productEntity.setDisposableRateMin("0.0");
+                        }
                         if (Double.valueOf(productEntity.getDisposableRateMax()) - Double.valueOf(productEntity.getDisposableRateMin()) == 0) {
                             tvOnePay.setText("一次性收费：" + productEntity.getDisposableRateMax() + "%");
                         } else {

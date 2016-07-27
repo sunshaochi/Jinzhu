@@ -24,7 +24,7 @@
 
         <ImageView
             android:id="@+id/arrow1"
-            android:layout_width="15dp"
+            android:layout_width="12dp"
             android:layout_height="match_parent"
             android:src="@mipmap/arrow_black" />
 
@@ -46,7 +46,7 @@
 
         <ImageView
             android:id="@+id/arrow2"
-            android:layout_width="15dp"
+            android:layout_width="12dp"
             android:layout_height="match_parent"
             android:src="@mipmap/arrow_black" />
 
@@ -69,7 +69,7 @@
 
         <ImageView
             android:id="@+id/arrow3"
-            android:layout_width="15dp"
+            android:layout_width="12dp"
             android:layout_height="match_parent"
             android:src="@mipmap/arrow_black" />
 
@@ -92,7 +92,7 @@
 
         <ImageView
             android:id="@+id/arrow4"
-            android:layout_width="15dp"
+            android:layout_width="12dp"
             android:layout_height="match_parent"
             android:src="@mipmap/arrow_black" />
     </LinearLayout>
