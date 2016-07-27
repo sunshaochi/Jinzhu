@@ -19,7 +19,7 @@ public interface IFinancialUrl {
 ////        /*验收环境游戏地址*/
 //    String GAME_URL = "http://myjinzhu.com:5011/";
     /*正式地址*/
-//    String BASE_URL = "http://option.myjinzhu.com";
+    String BASE_URL = "http://option.myjinzhu.com";
 
 //        /*正式游戏地址*/
     String GAME_URL = "http://m.farm.myjinzhu.com/";
@@ -29,7 +29,7 @@ public interface IFinancialUrl {
     /*测试地址3*/
 //    String BASE_URL="http://test.myjinzhu.com:60";
     //内网地址（测试钱包功能）
-    String BASE_URL = "http://172.16.8.22:8082";
+//    String BASE_URL = "http://172.16.8.22:8082";
     /*测试游戏地址2*/
 //    String GAME_URL = "http://test.myjinzhu.com:63";
     //调试地址

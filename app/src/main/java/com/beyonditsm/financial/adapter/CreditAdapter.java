@@ -113,6 +113,12 @@ public class CreditAdapter extends BaseAdapter {
             viewHolder.tvReim.setText(df.format(Double.valueOf(productEntity.get_monthlyPayment())) );
         }
         if (!TextUtils.isEmpty(productEntity.getDisposableRateMax())||!TextUtils.isEmpty(productEntity.getDisposableRateMin())) {
+            if(TextUtils.isEmpty(productEntity.getDisposableRateMin())){
+                productEntity.setDisposableRateMin("0.0");
+            }
+            if (TextUtils.isEmpty(productEntity.getDisposableRateMax())){
+                productEntity.setDisposableRateMax("0.0");
+            }
             if (Double.valueOf(productEntity.getDisposableRateMax()) - Double.valueOf(productEntity.getDisposableRateMin()) == 0) {
                 viewHolder.onepay.setText("一次性收费:" + productEntity.getDisposableRateMax() + "%");
             } else {

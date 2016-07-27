@@ -16,14 +16,13 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="30dp"
-            android:layout_centerVertical="true"
             android:layout_weight="1"
-            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tv_productName"
                 android:layout_width="80dp"
+                android:layout_marginLeft="10dp"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:ellipsize="marquee"
@@ -36,7 +35,8 @@
             <ImageView
                 android:id="@+id/ivMs"
                 style="@style/red_oval_style"
-                android:layout_toRightOf="@id/tv_productName"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
                 android:visibility="gone" />
         </RelativeLayout>
 

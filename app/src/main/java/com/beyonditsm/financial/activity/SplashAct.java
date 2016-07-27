@@ -109,7 +109,6 @@ public class SplashAct extends BaseActivity implements LocationListener{
                     startActivity(intent);
                     finish();
                 } else {
-
                     if ("".equals(SpUtils.getRoleName(getApplicationContext()))) {
                         gotoActivity(MainActivity.class, true);
                         int version = Integer.valueOf(android.os.Build.VERSION.SDK);

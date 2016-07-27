@@ -14,8 +14,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
 import com.beyonditsm.financial.ConstantValue;
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
@@ -103,7 +101,7 @@ public class HomeFragment extends BaseFragment implements LocationListener {
         super.onStart();
         if (ParamsUtil.getInstance().isFirstLocated()) {
             ParamsUtil.getInstance().setFirstLocated(false);
-            initLocation();
+            getLocation();
         }
         if (ParamsUtil.getInstance().isReLogin()) {
             ParamsUtil.getInstance().setReLogin(false);
@@ -279,7 +277,7 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                                     if (adress.get(1).length() > 4) {
                                         tvCity.setText(adress.get(1).substring(0, 4) + "...");
                                     } else {
-                                        tvCity.setText(adress.get(1));
+                                        tvCity.setText(adress.get(1 ));
                                     }
                                     SpUtils.setCity(MyApplication.getInstance().getApplicationContext(), adress.get(1));
                                 }
@@ -420,11 +418,11 @@ public class HomeFragment extends BaseFragment implements LocationListener {
             }
         } else {
             tvCity.setText("——");
-            ParamsUtil.getInstance().setFirstLocated(true);
             GPSAlertDialog gpsAlertDialog = new GPSAlertDialog(context);
             gpsAlertDialog.builder().setCancelable(false).setMsg("无法获取当前位置，请检查设置", "或直接切换城市", null).setPositiveButton("去设置", new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    ParamsUtil.getInstance().setFirstLocated(true);
                     Intent intent = new Intent(Settings.ACTION_SETTINGS);
                     startActivity(intent);
                 }
