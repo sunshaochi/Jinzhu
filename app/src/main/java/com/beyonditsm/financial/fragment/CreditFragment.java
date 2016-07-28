@@ -129,6 +129,7 @@ public class CreditFragment extends BaseFragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
+            initTit();
             getCredit(ParamsUtil.getInstance().getUle().getUsername(), SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
             String city = SpUtils.getCity(MyApplication.getInstance().getApplicationContext());
             if (TextUtils.isEmpty(city)){
@@ -292,6 +293,10 @@ public class CreditFragment extends BaseFragment {
         rbRange.setText("综合排序");
         rbMoney.setText("金额范围");
         rbTime.setText("贷款期限");
+        cBank = "";
+        cSort = "";
+        cTime = "";
+        cMoney = "";
     }
 
     @Override
