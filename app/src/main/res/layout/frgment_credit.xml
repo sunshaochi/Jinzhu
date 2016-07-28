@@ -7,42 +7,30 @@
     android:orientation="vertical">
 
     <include layout="@layout/title_act_layout" />
-    <FrameLayout
+
+    <include layout="@layout/search_tit" />
+
+    <View style="@style/view_line" />
+
+    <com.beyonditsm.financial.view.slidebottompanel.SlideBottomPanel
+        android:id="@+id/sbp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
+        android:layout_height="match_parent"
+        app:sbp_background_layout="@layout/background_layout"
+        app:sbp_panel_height="200dp"
+        app:sbp_title_height_no_display="0dp">
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
-            <include layout="@layout/search_tit" />
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:orientation="vertical">
 
-            <View style="@style/view_line" />
-
-            <com.beyonditsm.financial.view.slidebottompanel.SlideBottomPanel
-                android:id="@+id/sbp"
+            <ListView
+                android:id="@+id/lv_credit_sort"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:sbp_background_layout="@layout/background_layout"
-                app:sbp_panel_height="200dp"
-                app:sbp_title_height_no_display="0dp">
+                android:layout_height="match_parent" />
+        </FrameLayout>
+    </com.beyonditsm.financial.view.slidebottompanel.SlideBottomPanel>
 
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#ffffff"
-                    android:orientation="vertical">
-
-                    <ListView
-                        android:id="@+id/lv_credit_sort"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                </FrameLayout>
-            </com.beyonditsm.financial.view.slidebottompanel.SlideBottomPanel>
-        </LinearLayout>
-        <com.beyonditsm.financial.view.LoadingView
-            android:id="@+id/loadView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </FrameLayout>
 </LinearLayout>

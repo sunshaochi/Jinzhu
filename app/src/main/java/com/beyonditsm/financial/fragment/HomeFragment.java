@@ -403,10 +403,10 @@ public class HomeFragment extends BaseFragment implements LocationListener {
     }
 
     private void initLocation() {
-        if (!TextUtils.isEmpty(ParamsUtil.getInstance().getChangedCity())) {
-            tvCity.setText(ParamsUtil.getInstance().getChangedCity());
-            SpUtils.setCity(MyApplication.getInstance().getApplicationContext(), ParamsUtil.getInstance().getChangedCity());
-        }
+//        if (!TextUtils.isEmpty(ParamsUtil.getInstance().getChangedCity())) {
+//            tvCity.setText(ParamsUtil.getInstance().getChangedCity());
+//            SpUtils.setCity(MyApplication.getInstance().getApplicationContext(), ParamsUtil.getInstance().getChangedCity());
+//        }
 
 //        tvCity.setText("——");
 //        MyLogUtils.info("是否是定位获取城市："+ParamsUtil.getInstance().getChangedCity());
@@ -429,6 +429,9 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                     }).setNegativeButton("取消", null).show();
                     tvCity.setText(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()));
                 }
+            }else{
+                tvCity.setText(ParamsUtil.getInstance().getChangedCity());
+                SpUtils.setCity(MyApplication.getInstance().getApplicationContext(), ParamsUtil.getInstance().getChangedCity());
             }
         } else {
             tvCity.setText("——");

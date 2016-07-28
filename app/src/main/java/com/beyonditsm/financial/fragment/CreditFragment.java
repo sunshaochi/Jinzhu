@@ -96,7 +96,8 @@ public class CreditFragment extends BaseFragment {
 
     @ViewInject(R.id.loadView)
     private LoadingView loadView;
-
+    @ViewInject(R.id.ll_searchTitle)
+    private LinearLayout llSearchTitle;
     //    private String cMoney=ConstantValue.CREDIT_MONEY+"";
 //    private String cTime=ConstantValue.CREDIT_MONTH+"";
     private String cBank = "";
@@ -136,6 +137,7 @@ public class CreditFragment extends BaseFragment {
                 getSortParam(ParamsUtil.getInstance().getChangedCity());
             }else{
                 getSortParam(city);
+                initTit();
             }
         }
     }
@@ -143,10 +145,12 @@ public class CreditFragment extends BaseFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         String city = SpUtils.getCity(MyApplication.getInstance().getApplicationContext());
+        llSearchTitle.setVisibility(View.GONE);
         if (TextUtils.isEmpty(city)){
             getSortParam(ParamsUtil.getInstance().getChangedCity());
         }else{
             getSortParam(city);
+            initTit();
         }
 
         tvTitle.setText("贷款");
@@ -201,7 +205,8 @@ public class CreditFragment extends BaseFragment {
         loadView.setOnRetryListener(new LoadingView.OnRetryListener() {
             @Override
             public void OnRetry() {
-                getCredit(ParamsUtil.getInstance().getUle().getUsername(), SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
+                getSortParam(SpUtils.getCity(MyApplication.getInstance().getApplicationContext())+"");
+                getCredit(ParamsUtil.getInstance().getUle().getUsername(), SpUtils.getCity(MyApplication.getInstance().getApplicationContext())+"", cBank, cSort, cMoney, cTime, currentP, pageSize);
             }
         });
         /*把回车键换成搜索*/
@@ -212,9 +217,10 @@ public class CreditFragment extends BaseFragment {
         RequestManager.getCommManager().findSortParam(cityName,new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
+
                 ResultData<ProductSortEntity> rd = (ResultData<ProductSortEntity>) GsonUtils.json(result, ProductSortEntity.class);
                 ProductSortEntity productSortEntity = rd.getData();
-
+                llSearchTitle.setVisibility(View.VISIBLE);
                 orgTypeInfos = productSortEntity.getOrgType();
                 ProductSortEntity.OrgTypeBean orgTypeBean = new ProductSortEntity.OrgTypeBean();
                 orgTypeBean.setOrgId("");
@@ -467,55 +473,7 @@ public class CreditFragment extends BaseFragment {
                 lvCreditSort.setEnabled(true);
 //                showActionSheet(new String []{"全部","0-6个月","6-12个月","12个月以上"},rbTime,arrow4);
                 break;
-            case R.id.rlMonth://选择月份
-//                int postition;
-//                if (TextUtils.isEmpty(tvM.getText().toString().trim())) {
-//                    postition = 0;
-//                } else {
-//                    postition = Integer.valueOf(tvM.getText().toString().trim()) - 1;
-//                }
-//                DialogChooseMonth dialogChooseMonth = new DialogChooseMonth(context, null).builder(postition);
-//                dialogChooseMonth.show();
-//                dialogChooseMonth.setOnSheetItemClickListener(new DialogChooseMonth.SexClickListener() {
-//                    @Override
-//                    public void getAdress(String adress) {
-//
-//                        cTime = adress.substring(0, adress.length() - 2);
-//                        tvM.setText(cTime);
-//                        if (TextUtils.isEmpty(etAmount.getText().toString().trim())) {
-////                            cMoney = ConstantValue.CREDIT_MONEY + "";
-////                            etAmount.setText(ConstantValue.CREDIT_MONEY + "");
-//                            MyToastUtils.showShortToast(getActivity(), "请输入金额");
-//                            return;
-//                        } else {
-//                            cMoney = etAmount.getText().toString().trim();
-//                        }
-//                        currentP = 1;
-////                        MyLogUtils.info("cccccccmoney+"+cMoney+"+cccccccTime+"+cTime);
-//                        getCredit(ParamsUtil.getInstance().getUle().getUsername(),SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),rbBank.getText().toString()+"",rbRange.getText().toString()+"",rbMoney.getText().toString()+"",rbTime.getText().toString()+"",currentP,pageSize);
-//
-//                    }
-//                });
-                break;
-            case R.id.tvSearch:
-//                if (TextUtils.isEmpty(etAmount.getText().toString().trim()) || TextUtils.isEmpty(tvM.getText().toString().trim())) {
-//                    MyToastUtils.showShortToast(getActivity(), "请检查贷款金额和贷款期限是否输入完整");
-//                    return;
-//                }
-//                FinancialUtil.closeIM(getActivity(), etAmount);
-//                loadView.loading();
-//                if (TextUtils.isEmpty(etAmount.getText().toString().trim())) {
-//                    etAmount.setText(ConstantValue.CREDIT_MONEY + "");
-//                }
-//                if (TextUtils.isEmpty(tvM.getText().toString().trim())) {
-//                    tvM.setText(ConstantValue.CREDIT_MONTH + "");
-//                }
-//                currentP = 1;
-//                cMoney = etAmount.getText().toString().trim();
-//                cTime = tvM.getText().toString().trim();
-//                getCredit(ParamsUtil.getInstance().getUle().getUsername(),SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),rbBank.getText().toString()+"",rbRange.getText().toString()+"",rbMoney.getText().toString()+"",rbTime.getText().toString()+"",currentP,pageSize);
 
-                break;
             case R.id.ivSuspen:
                 intent = new Intent(getContext(), CreditGuideAct.class);
                 startActivity(intent);
@@ -525,7 +483,6 @@ public class CreditFragment extends BaseFragment {
 
 
     private List<ProductInfo> datas = new ArrayList<ProductInfo>();
-
 
     private void getCredit(String userName, String area, String orgType, String productOrder, String moneyScope, String loanTerm, final int currentPage, int rows) {
 
@@ -589,7 +546,6 @@ public class CreditFragment extends BaseFragment {
                 plv.onPullDownRefreshComplete();
                 plv.onPullUpRefreshComplete();
                 loadView.loadError();
-
             }
         });
     }
