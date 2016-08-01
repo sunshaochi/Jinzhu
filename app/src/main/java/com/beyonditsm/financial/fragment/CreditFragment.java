@@ -11,7 +11,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -28,6 +27,7 @@ import com.beyonditsm.financial.activity.credit.CreditGuideAct;
 import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
 import com.beyonditsm.financial.adapter.CreditAdapter;
 import com.beyonditsm.financial.adapter.ProductSortAdapter;
+import com.beyonditsm.financial.entity.OrgEvent;
 import com.beyonditsm.financial.entity.ProductInfo;
 import com.beyonditsm.financial.entity.ProductResult;
 import com.beyonditsm.financial.entity.ProductSortEntity;
@@ -35,6 +35,7 @@ import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GsonUtils;
+import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.util.Uitls;
@@ -45,6 +46,7 @@ import com.beyonditsm.financial.view.slidebottompanel.SlideBottomPanel;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.animation.ViewHelper;
+import com.tandong.sa.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -133,9 +135,9 @@ public class CreditFragment extends BaseFragment {
             initTit();
             getCredit(ParamsUtil.getInstance().getUle().getUsername(), SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
             String city = SpUtils.getCity(MyApplication.getInstance().getApplicationContext());
-            if (TextUtils.isEmpty(city)){
+            if (TextUtils.isEmpty(city)) {
                 getSortParam(ParamsUtil.getInstance().getChangedCity());
-            }else{
+            } else {
                 getSortParam(city);
                 initTit();
             }
@@ -146,17 +148,18 @@ public class CreditFragment extends BaseFragment {
     public void initData(Bundle savedInstanceState) {
         String city = SpUtils.getCity(MyApplication.getInstance().getApplicationContext());
         llSearchTitle.setVisibility(View.GONE);
-        if (TextUtils.isEmpty(city)){
+        if (TextUtils.isEmpty(city)) {
             getSortParam(ParamsUtil.getInstance().getChangedCity());
-        }else{
+        } else {
             getSortParam(city);
             initTit();
         }
 
+        EventBus.getDefault().register(this);
         tvTitle.setText("贷款");
         initTit();
         loadView.setNoContentTxt("暂无此类产品，换个条件试试");
-        etAmount.setSelection(etAmount.getText().length());
+//        etAmount.setSelection(etAmount.getText().length());
         rl_back.setVisibility(View.GONE);
         plv.setPullRefreshEnabled(true);
         plv.setScrollLoadEnabled(true);
@@ -167,29 +170,11 @@ public class CreditFragment extends BaseFragment {
         plv.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
         plv.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
 
-//        plv.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                switch (event.getAction()) {
-//                    case MotionEvent.ACTION_MOVE:
-//                        handlerMove();
-//                        break;
-//                    case MotionEvent.ACTION_UP:
-//                        break;
-//                }
-//                return false;
-//            }
-//
-//
-//        });
-
-
         plv.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 plv.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
                 currentP = 1;
-//                getCredit(currentP, cMoney, cTime);
                 getCredit(ParamsUtil.getInstance().getUle().getUsername(), SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
 
             }
@@ -197,7 +182,6 @@ public class CreditFragment extends BaseFragment {
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 currentP++;
-//                getCredit(currentP, cMoney, cTime);
                 getCredit(ParamsUtil.getInstance().getUle().getUsername(), SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
             }
         });
@@ -205,16 +189,16 @@ public class CreditFragment extends BaseFragment {
         loadView.setOnRetryListener(new LoadingView.OnRetryListener() {
             @Override
             public void OnRetry() {
-                getSortParam(SpUtils.getCity(MyApplication.getInstance().getApplicationContext())+"");
-                getCredit(ParamsUtil.getInstance().getUle().getUsername(), SpUtils.getCity(MyApplication.getInstance().getApplicationContext())+"", cBank, cSort, cMoney, cTime, currentP, pageSize);
+                getSortParam(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()) + "");
+                getCredit(ParamsUtil.getInstance().getUle().getUsername(), SpUtils.getCity(MyApplication.getInstance().getApplicationContext()) + "", cBank, cSort, cMoney, cTime, currentP, pageSize);
             }
         });
-        /*把回车键换成搜索*/
-        etAmount.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+//        /*把回车键换成搜索*/
+//        etAmount.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
     }
 
     private void getSortParam(String cityName) {
-        RequestManager.getCommManager().findSortParam(cityName,new RequestManager.CallBack() {
+        RequestManager.getCommManager().findSortParam(cityName, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
 
@@ -313,40 +297,42 @@ public class CreditFragment extends BaseFragment {
 
                 LinearLayout linearLayout = (LinearLayout) view;
                 TextView textView = (TextView) linearLayout.getChildAt(0); //获取到点击的TextView
-//                MyToastUtils.showShortToast(context, textView.getText().toString() + "");
                 switch (clickType) {
-                    case ProductSortAdapter.BANK:
-                        if (textView.getText().toString().length() > 4) {
-                            rbBank.setText(textView.getText().toString().substring(0, 4) + "..");
-                        } else {
-                        rbBank.setText(textView.getText().toString() + "");
-                        }
-
-                        cBank = orgTypeInfos.get(position).getOrgId();
-                        break;
+//                    case ProductSortAdapter.BANK:
+//                        if (textView.getText().toString().length() > 4) {
+//                            rbBank.setText(textView.getText().toString().substring(0, 4) + "..");
+//                        } else {
+//                        rbBank.setText(textView.getText().toString() + "");
+//                        }
+//
+//                        cBank = orgTypeInfos.get(position).getOrgId();
+//                        break;
                     case ProductSortAdapter.MONEY:
                         if (textView.getText().toString().length() > 4) {
                             rbMoney.setText(textView.getText().toString().substring(0, 4) + "..");
                         } else {
-                        rbMoney.setText(textView.getText().toString() + "");
+                            rbMoney.setText(textView.getText().toString() + "");
                         }
                         cMoney = moneyScopeInfos.get(position).getMoneyKey();
+                        currentP = 1;
                         break;
                     case ProductSortAdapter.SORT:
-                        if (textView.getText().toString().length() > 4){
-                            rbRange.setText(textView.getText().toString().substring(0,3)+"..");
-                        }else {
-                        rbRange.setText(textView.getText().toString() + "");
+                        if (textView.getText().toString().length() > 4) {
+                            rbRange.setText(textView.getText().toString().substring(0, 3) + "..");
+                        } else {
+                            rbRange.setText(textView.getText().toString() + "");
                         }
                         cSort = productInfos.get(position).getOrderKey();
+                        currentP = 1;
                         break;
                     case ProductSortAdapter.TIME:
                         if (textView.getText().toString().length() > 4) {
                             rbTime.setText(textView.getText().toString().substring(0, 4) + "..");
                         } else {
-                        rbTime.setText(textView.getText().toString() + "");
+                            rbTime.setText(textView.getText().toString() + "");
                         }
                         cTime = loanTermInfos.get(position).getTermKey();
+                        currentP = 1;
                         break;
                     default:
                         break;
@@ -373,30 +359,10 @@ public class CreditFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), HomeCreditDetailAct.class);
-//                intent.putExtra(CreditDetailAct.PRODUCTINFO,datas.get(position));
-//                if (TextUtils.isEmpty(etAmount.getText().toString().trim()) && !TextUtils.isEmpty(tvM.getText().toString().trim())) {
-//                    MyToastUtils.showShortToast(getActivity(), "请输入金额");
-//                    etAmount.requestFocus();
-//                    return;
-//                } else if (!TextUtils.isEmpty(etAmount.getText().toString().trim()) && TextUtils.isEmpty(tvM.getText().toString().trim())) {
-//                    MyToastUtils.showShortToast(getActivity(), "请选择月份");
-//                    return;
-//                }
-//                if (TextUtils.isEmpty(etAmount.getText().toString().trim()) && TextUtils.isEmpty(tvM.getText().toString().trim())) {
-//                    cMoney= ConstantValue.CREDIT_MONEY+"";
                 intent.putExtra(HomeCreditDetailAct.PRODUCTINFO, datas.get(position).getProductId());
                 intent.putExtra(HomeCreditDetailAct.CREDIT_AMOUNT, ConstantValue.CREDIT_MONEY + "");
                 intent.putExtra(HomeCreditDetailAct.CREDIT_TIME, ConstantValue.CREDIT_MONTH + "");
                 intent.putExtra(HomeCreditDetailAct.CREDIT_NAME, datas.get(position).getProductName());
-//                } else {
-//                    intent.putExtra(HomeCreditDetailAct.PRODUCTINFO, datas.get(position).getProductId());
-////                    intent.putExtra(HomeCreditDetailAct.CREDIT_AMOUNT, cMoney);
-////                    intent.putExtra(HomeCreditDetailAct.CREDIT_TIME, cTime);
-//                    //// TODO: 2016/7/16 Here Some Bug
-//                    intent.putExtra(HomeCreditDetailAct.CREDIT_AMOUNT, etAmount.getText().toString());
-//                    intent.putExtra(HomeCreditDetailAct.CREDIT_TIME, tvM.getText().toString());
-//                    intent.putExtra(HomeCreditDetailAct.CREDIT_NAME, datas.get(position).getProductName());
-//                }
                 getActivity().startActivity(intent);
             }
         });
@@ -404,16 +370,10 @@ public class CreditFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.tvSearch, R.id.rlMonth, R.id.ivSuspen, R.id.rb_bank, R.id.rb_time, R.id.rb_money, R.id.rb_range})
+    @OnClick({R.id.rlMonth, R.id.ivSuspen, R.id.rb_bank, R.id.rb_time, R.id.rb_money, R.id.rb_range})
     public void toClick(View v) {
         Intent intent;
         switch (v.getId()) {
-//            case R.id.rlMoney:
-//                showSpinWindow();
-//                break;
-//            case R.id.rlDate:
-//                showDateSpinWindow();
-//                break;
             case R.id.rb_bank:
                 intent = new Intent(getActivity(), OrgTypeListAct.class);
                 startActivityForResult(intent, ORGQUEST);
@@ -421,15 +381,6 @@ public class CreditFragment extends BaseFragment {
 //                listItem = orgTypeInfos;
                 clearArrow();
                 clearTextColor();
-//                clickType = ProductSortAdapter.BANK;
-//                lvCreditSort.setAdapter(new ProductSortAdapter(listItem, context, clickType));
-//                Uitls.setListViewHeightBasedOnChildren(lvCreditSort);
-//                rbBank.setTextColor(context.getResources().getColor(R.color.tv_money_color));
-//                arrow1.setImageResource(R.mipmap.arrow_orienge_up);
-//                sbp.setmPanelHeight(Uitls.getListViewHeight(lvCreditSort));
-//                sbp.reOpen();
-//                lvCreditSort.setClickable(true);
-//                showActionSheet(new String []{"全部","光大银行","浦发银行","宜人贷"},rbBank,arrow1);
                 break;
             case R.id.rb_money:
                 listItem = moneyScopeInfos;
@@ -443,7 +394,6 @@ public class CreditFragment extends BaseFragment {
                 arrow3.setImageResource(R.mipmap.arrow_orienge_up);
                 sbp.reOpen();
                 lvCreditSort.setEnabled(true);
-//                showActionSheet(new String []{"全部","0-10万","10-15万","15万以上"},rbMoney,arrow3);
                 break;
             case R.id.rb_range:
                 listItem = productInfos;
@@ -457,7 +407,6 @@ public class CreditFragment extends BaseFragment {
                 arrow2.setImageResource(R.mipmap.arrow_orienge_up);
                 sbp.reOpen();
                 lvCreditSort.setEnabled(true);
-//                showActionSheet(new String []{"综合排序","按利率","按月供"},rbRange,arrow2);
                 break;
             case R.id.rb_time:
                 listItem = loanTermInfos;
@@ -471,7 +420,6 @@ public class CreditFragment extends BaseFragment {
                 arrow4.setImageResource(R.mipmap.arrow_orienge_up);
                 sbp.reOpen();
                 lvCreditSort.setEnabled(true);
-//                showActionSheet(new String []{"全部","0-6个月","6-12个月","12个月以上"},rbTime,arrow4);
                 break;
 
             case R.id.ivSuspen:
@@ -484,12 +432,13 @@ public class CreditFragment extends BaseFragment {
 
     private List<ProductInfo> datas = new ArrayList<ProductInfo>();
 
-    private void getCredit(String userName, String area, String orgType, String productOrder, String moneyScope, String loanTerm, final int currentPage, int rows) {
+    private void getCredit(String userName, final String area, final String orgType, String productOrder, String moneyScope, String loanTerm, final int currentPage, int rows) {
 
         RequestManager.getMangManger().findProductByParam(userName, area, orgType, productOrder, moneyScope, loanTerm, currentPage, rows, new RequestManager.CallBack() {
 
             @Override
             public void onSucess(String result) {
+                MyLogUtils.info("获取列表时传的机构类型：" + orgType);
                 loadView.loadComplete();
                 plv.onPullDownRefreshComplete();
                 plv.onPullUpRefreshComplete();
@@ -497,47 +446,25 @@ public class CreditFragment extends BaseFragment {
                 ProductResult pr = rd.getData();
                 List<ProductInfo> list = pr.getRows();
 
-//                if (pr.getTotal() == 0) {
-//                    loadView.noContent();
-//                    return;
-//                }
                 if (list == null || list.size() == 0) {
-                    if (currentPage == 1)
+                    if (currentPage == 1) {
                         loadView.noContent();
-                    else
+                    } else {
                         plv.setHasMoreData(false);
-
+                    }
                     return;
                 }
                 if (currentPage == 1) {
-                datas.clear();
-               }
+                    datas.clear();
+                }
 
                 datas.addAll(list);
 
-                if (TextUtils.isEmpty(etAmount.getText().toString().trim()) && TextUtils.isEmpty(tvM.getText().toString().trim())) {
-                    String creditTotal = "";
-
-                    String creditTime = "";
-                    if (adapter == null) {
-                        adapter = new CreditAdapter(getActivity(), datas, creditTotal, creditTime);
-                        plv.getRefreshableView().setAdapter(adapter);
-                    } else {
-                        adapter.setNotifyChange(datas, creditTotal, creditTime);
-                    }
-                } else if (TextUtils.isEmpty(etAmount.getText().toString().trim()) || TextUtils.isEmpty(tvM.getText().toString().trim())) {
-//                    MyToastUtils.showShortToast(getActivity(), "请输入贷款金额或贷款期限");
-                    return;
+                if (adapter == null) {
+                    adapter = new CreditAdapter(getActivity(), datas);
+                    plv.getRefreshableView().setAdapter(adapter);
                 } else {
-                    double creditTotal = Double.valueOf(etAmount.getText().toString().trim()) * 10000;
-
-                    double creditTime = Double.valueOf(tvM.getText().toString().trim());
-                    if (adapter == null) {
-                        adapter = new CreditAdapter(getActivity(), datas, creditTotal, creditTime);
-                        plv.getRefreshableView().setAdapter(adapter);
-                    } else {
-                        adapter.notifyChange(datas, creditTotal, creditTime);
-                    }
+                    adapter.notifyChange(datas);
                 }
             }
 
@@ -550,20 +477,31 @@ public class CreditFragment extends BaseFragment {
         });
     }
 
+    public void onEvent(OrgEvent orgEvent) {
+        String name = orgTypeInfos.get(orgEvent.position).getOrgName();
+        if (name.length() > 4) {
+            rbBank.setText(name.substring(0, 4) + "..");
+        } else {
+            rbBank.setText(name);
+        }
+        cBank = orgTypeInfos.get(orgEvent.position).getOrgId();
+        currentP = 1;
+        getCredit(ParamsUtil.getInstance().getUle().getUsername(), SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ORGQUEST && null != data) {
             int position = data.getIntExtra("org", 0);
             String name = orgTypeInfos.get(position).getOrgName();
-            if (name.length() > 4){
-                rbBank.setText(name.substring(0,4)+"..");
-            }else {
+            if (name.length() > 4) {
+                rbBank.setText(name.substring(0, 4) + "..");
+            } else {
                 rbBank.setText(name);
             }
-
-
             cBank = orgTypeInfos.get(position).getOrgId();
+            currentP = 1;
             getCredit(ParamsUtil.getInstance().getUle().getUsername(), SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
         }
     }
@@ -580,5 +518,11 @@ public class CreditFragment extends BaseFragment {
         arrow2.setImageResource(R.mipmap.arrow_black);
         arrow3.setImageResource(R.mipmap.arrow_black);
         arrow4.setImageResource(R.mipmap.arrow_black);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

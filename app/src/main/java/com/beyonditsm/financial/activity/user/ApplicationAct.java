@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 申请贷款
  * Created by liwk on 2016/5/26
  */
 public class ApplicationAct extends BaseActivity {
@@ -55,6 +56,7 @@ public class ApplicationAct extends BaseActivity {
     private String cTime = "";
     private int currentP = 1;
     private CreditAdapter adapter;
+
     @Override
     public void setLayout() {
         setContentView(R.layout.act_application);
@@ -206,8 +208,8 @@ public class ApplicationAct extends BaseActivity {
     }
 
     @OnClick({R.id.tvSearch, R.id.rlMonth, R.id.ivSuspen})
-    public void toClick(View v){
-        switch (v.getId()){
+    public void toClick(View v) {
+        switch (v.getId()) {
             case R.id.rlMonth://选择月份
                 int postition;
                 if (TextUtils.isEmpty(tvM.getText().toString().trim())) {
@@ -239,6 +241,7 @@ public class ApplicationAct extends BaseActivity {
                 break;
         }
     }
+
     private List<ProductInfo> datas = new ArrayList<>();
 
     private void getCredit(final int currentPage, String creditMoney, String creditTime) {
@@ -280,29 +283,29 @@ public class ApplicationAct extends BaseActivity {
                 }
                 datas.addAll(list);
 
-                if (TextUtils.isEmpty(etAmount.getText().toString().trim()) && TextUtils.isEmpty(tvM.getText().toString().trim())) {
-                    String creditTotal = "";
-
-                    String creditTime = "";
-                    if (adapter == null) {
-                        adapter = new CreditAdapter(ApplicationAct.this, datas, creditTotal, creditTime);
-                        plv.getRefreshableView().setAdapter(adapter);
-                    } else {
-                        adapter.setNotifyChange(datas, creditTotal, creditTime);
-                    }
-                }else if (TextUtils.isEmpty(etAmount.getText().toString().trim())||TextUtils.isEmpty(tvM.getText().toString().trim())){
-                    MyToastUtils.showShortToast(ApplicationAct.this, "请输入贷款金额或贷款期限");
+//                if (TextUtils.isEmpty(etAmount.getText().toString().trim()) && TextUtils.isEmpty(tvM.getText().toString().trim())) {
+//                    String creditTotal = "";
+//
+//                    String creditTime = "";
+                if (adapter == null) {
+                    adapter = new CreditAdapter(ApplicationAct.this, datas);
+                    plv.getRefreshableView().setAdapter(adapter);
                 } else {
-                    double creditTotal = Double.valueOf(etAmount.getText().toString().trim()) * 10000;
-
-                    double creditTime = Double.valueOf(tvM.getText().toString().trim());
-                    if (adapter == null) {
-                        adapter = new CreditAdapter(ApplicationAct.this, datas, creditTotal, creditTime);
-                        plv.getRefreshableView().setAdapter(adapter);
-                    } else {
-                        adapter.notifyChange(datas, creditTotal, creditTime);
-                    }
+                    adapter.notifyChange(datas);
                 }
+//                }else if (TextUtils.isEmpty(etAmount.getText().toString().trim())||TextUtils.isEmpty(tvM.getText().toString().trim())){
+//                    MyToastUtils.showShortToast(ApplicationAct.this, "请输入贷款金额或贷款期限");
+//                } else {
+//                    double creditTotal = Double.valueOf(etAmount.getText().toString().trim()) * 10000;
+//
+//                    double creditTime = Double.valueOf(tvM.getText().toString().trim());
+//                    if (adapter == null) {
+//                        adapter = new CreditAdapter(ApplicationAct.this, datas, creditTime);
+//                        plv.getRefreshableView().setAdapter(adapter);
+//                    } else {
+//                        adapter.notifyChange(datas, creditTotal, creditTime);
+//                    }
+//                }
             }
 
             @Override

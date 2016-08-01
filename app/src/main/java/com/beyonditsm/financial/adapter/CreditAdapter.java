@@ -26,9 +26,6 @@ public class CreditAdapter extends BaseAdapter {
 
     private List<ProductInfo> list;
 
-    private double creditMoney,creditTime;
-    private String creditMoney2,creditTime2;
-
     java.text.DecimalFormat df = new java.text.DecimalFormat("#0.00");//保留小数
     private DisplayImageOptions options = new DisplayImageOptions.Builder()
             .showStubImage(R.mipmap.pro_default) // 设置图片下载期间显示的图片
@@ -39,29 +36,12 @@ public class CreditAdapter extends BaseAdapter {
             .build(); // 创建配置过得DisplayImageOption对象
 
 
-    public CreditAdapter(Context contex,List<ProductInfo> list,double creditMoney,double creditTime) {
+    public CreditAdapter(Context contex, List<ProductInfo> list) {
         this.context = contex;
         this.list=list;
-        this.creditMoney=creditMoney;
-        this.creditTime=creditTime;
     }
-
-    public CreditAdapter(Context contex,List<ProductInfo> list,String creditMoney,String creditTime) {
-        this.context = contex;
+    public void notifyChange(List<ProductInfo> list){
         this.list=list;
-        this.creditMoney2=creditMoney;
-        this.creditTime2=creditTime;
-    }
-    public void notifyChange(List<ProductInfo> list,double creditMoney,double creditTime){
-        this.list=list;
-        this.creditMoney=creditMoney;
-        this.creditTime=creditTime;
-        notifyDataSetChanged();;
-    }
-    public void setNotifyChange(List<ProductInfo> list,String creditMoney,String creditTime){
-        this.list=list;
-        this.creditMoney2=creditMoney;
-        this.creditTime2=creditTime;
         notifyDataSetChanged();;
     }
 

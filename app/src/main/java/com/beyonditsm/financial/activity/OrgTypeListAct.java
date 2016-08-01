@@ -8,9 +8,11 @@ import android.widget.ListView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.adapter.OrgTypeAdapter;
+import com.beyonditsm.financial.entity.OrgEvent;
 import com.beyonditsm.financial.fragment.CreditFragment;
 import com.beyonditsm.financial.util.ParamsUtil;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.tandong.sa.eventbus.EventBus;
 
 public class OrgTypeListAct extends BaseActivity {
 
@@ -32,6 +34,7 @@ public class OrgTypeListAct extends BaseActivity {
                 Intent intent = new Intent();
                 intent.putExtra("org",position);
                 setResult(0, intent);
+                EventBus.getDefault().post(new OrgEvent(position));
                 finish();
             }
         });
