@@ -32,7 +32,7 @@ public class CreditWebView extends BaseActivity {
         webView.removeJavascriptInterface("searchBoxJavaBredge_");
 //        webView.requestFocusFromTouch();
 //        wvCreditCard.loadUrl("http://www.baidu.com");
-        webView.loadUrl("https://mbank.spdbccc.com.cn/creditcard/indexActivity.htm?data=756023011");
+        webView.loadUrl("https://xyk.cebbank.com/cebmms/apply/ps/apply-card-list.htm?pro_code=FHTG17000SJC01FZQH");
 //        webView.setWebViewClient(new WebViewClient(){
 //            public boolean shouldOverrideUrlLoading(WebView view, String url) {
 //                // 重写此方法表明点击网页里面的链接还是在当前的webview里跳转，不跳到浏览器那边

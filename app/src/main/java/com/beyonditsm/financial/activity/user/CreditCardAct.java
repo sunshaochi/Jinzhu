@@ -87,9 +87,9 @@ public class CreditCardAct extends BaseActivity {
     @SuppressWarnings("deprecation")
     private void setWalletPic() {
         if (ParamsUtil.getInstance().isWalletEnter()){
-            ivWallet.setImageDrawable(getResources().getDrawable(R.mipmap.money_bag_red));
-        }else {
             ivWallet.setImageDrawable(getResources().getDrawable(R.mipmap.money_bag));
+        }else {
+            ivWallet.setImageDrawable(getResources().getDrawable(R.mipmap.money_bag_unred));
         }
     }
 

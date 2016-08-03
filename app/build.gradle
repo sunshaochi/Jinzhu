@@ -10,8 +10,8 @@ android {
         applicationId "com.beyonditsm.financial"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 27
-        versionName "v1.1.4"
+        versionCode 28
+        versionName "v1.1.5"
         multiDexEnabled true
     }
 //

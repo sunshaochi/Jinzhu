@@ -61,8 +61,9 @@ public class AboutOurs extends BaseActivity {
             if(clause.canGoBack()) {
                 clause.goBack();// 返回前一个页面
             }else {
-                System.exit(0);//退出程序
+                finish();
             }
+//                System.exit(0);//退出程序
             return true;
         }
         return super.onKeyDown(keyCode, event);

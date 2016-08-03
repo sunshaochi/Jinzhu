@@ -20,6 +20,7 @@ import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.credit.CreditGuideAct;
+import com.beyonditsm.financial.activity.user.CreditCardAct;
 import com.beyonditsm.financial.activity.user.GameActivity;
 import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
 import com.beyonditsm.financial.activity.user.LoginAct;
@@ -258,15 +259,15 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                 startActivity(intent);
                 break;
             case R.id.ll_creditCard://信用卡
-                MyToastUtils.showShortToast(getContext(), "敬请期待");
-//                if(TextUtils.isEmpty(SpUtils.getRoleName(context).toString())){
-//                    MyToastUtils.showShortToast(getContext(),"请先登录金蛛账号");
-//                    Intent goLog = new Intent(context,LoginAct.class);
-//                    context.startActivity(goLog);
-//                }else{
-//                    intent = new Intent(mParentActivity, CreditCardAct.class);
-//                    startActivity(intent);
-//                }
+//                MyToastUtils.showShortToast(getContext(), "敬请期待");
+                if(TextUtils.isEmpty(SpUtils.getRoleName(context).toString())){
+                    MyToastUtils.showShortToast(getContext(),"请先登录金蛛账号");
+                    Intent goLog = new Intent(context,LoginAct.class);
+                    context.startActivity(goLog);
+                }else{
+                    intent = new Intent(mParentActivity, CreditCardAct.class);
+                    startActivity(intent);
+                }
                 break;
             case R.id.ll_gps://GPS
                 DialogChooseCity dialogChooseAdress1 = new DialogChooseCity(context).builder();

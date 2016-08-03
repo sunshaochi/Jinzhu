@@ -15,6 +15,7 @@ import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.entity.ProductInfo;
 import com.beyonditsm.financial.entity.UpLoadEntity;
 import com.beyonditsm.financial.fragment.CreditFirstFrag;
+import com.beyonditsm.financial.fragment.CreditOfflineFrag;
 import com.beyonditsm.financial.fragment.CreditSecondFrag;
 import com.beyonditsm.financial.fragment.CreditFourthFrag;
 import com.beyonditsm.financial.fragment.CreditThirFrag;
@@ -33,6 +34,7 @@ public class CreditStepAct extends BaseActivity {
     private CreditFirstFrag firstFrag;//第一步
     private CreditSecondFrag secondFrag;//第二步
     private CreditThirFrag thrFrag;//第三步
+    private CreditOfflineFrag offlineFrag;//第三步
     private CreditFourthFrag fourthFrag;//第四步
 
     public static String orderId;//订单id
