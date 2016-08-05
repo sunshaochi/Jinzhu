@@ -43,7 +43,7 @@ public class HttpManager {
 	static {
 		headers = new Header[2];
 		headers[0] = new BasicHeader("cookie",SpUtils.getCookie(MyApplication.getInstance()));
-		headers[1] = new BasicHeader("User-Agent","Jinzhu Android Client "+ FinancialUtil.getAppVer(MyApplication.getInstance()));
+		headers[1] = new BasicHeader("User-Agent","Jinzhu Android Client "+ FinancialUtil.getAppVer(MyApplication.getInstance())+"&");
 	}
 
 	@SuppressWarnings("deprecation")

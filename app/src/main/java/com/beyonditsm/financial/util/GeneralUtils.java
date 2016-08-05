@@ -30,13 +30,13 @@ public class GeneralUtils {
         RequestManager.getCommManager().getCode(phoneNum, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
-                MyToastUtils.showShortToast(MyApplication.getInstance(), "验证码发送成功");
+                MyToastUtils.showShortToast(MyApplication.getInstance().getApplicationContext(), "验证码发送成功");
                 iCode.isSucess(1);
             }
 
             @Override
             public void onError(int status, String msg) {
-                MyToastUtils.showShortToast(MyApplication.getInstance(), msg);
+                MyToastUtils.showShortToast(MyApplication.getInstance().getApplicationContext(), msg);
                 iCode.isSucess(-1);
             }
         });
@@ -81,7 +81,7 @@ public class GeneralUtils {
     }
 
 
-    /**
+     /**
      * 从服务器中下载APK
      */
     protected void downLoadApk(final Context context, final String url) {

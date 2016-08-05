@@ -259,6 +259,7 @@ public class CreditFirstFrag extends BaseFragment {
                 creBtnYzm.setEnabled(true);
                 creBtnYzm.setText("重新发送");
                 timer.cancel();
+                timer.purge();
                 myTask.cancel();
             } else {
                 creBtnYzm.setText(msg.what + "秒");
