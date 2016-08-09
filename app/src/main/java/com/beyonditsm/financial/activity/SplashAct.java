@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +12,7 @@ import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.manager.ManagerMainAct;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.ParamsUtil;
+import com.beyonditsm.financial.util.PermissionsChecker;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.util.gps.GPSAddressUtils;
 import com.beyonditsm.financial.util.gps.LocationListener;
@@ -26,6 +28,12 @@ import io.rong.imlib.RongIMClient;
 public class SplashAct extends BaseActivity implements LocationListener{
 //    @ViewInject(R.id.ivSplash)
 //    private ImageView ivSplash;
+// 所需的全部权限
+//static final String[] PERMISSIONS = new String[]{
+//        Manifest.permission.READ_PHONE_STATE,
+////        Manifest.permission.MODIFY_AUDIO_SETTINGS
+//};
+
     @Override
     public void setLayout() {
         setContentView(R.layout.activity_splash);
@@ -49,6 +57,7 @@ public class SplashAct extends BaseActivity implements LocationListener{
     @Override
     protected void onResume() {
         super.onResume();
+
         GPSAddressUtils.getInstance().setLocationListener(this);
         GPSAddressUtils.getInstance().getLocation(SplashAct.this);
 

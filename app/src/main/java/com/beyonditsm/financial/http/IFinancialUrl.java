@@ -12,20 +12,20 @@ public interface IFinancialUrl {
 //    String BASE_URL = "http://172.16.5.57";
 //    String BASE_URL ="http://172.16.6.228:8080";
     /*袁峰测试*/
-//    String BASE_URL = "http://172.16.5.197:8080";
+//    String BASE_URL = "http://172.16.6.153:8080";
 //    String BASE_URL = "http://172.16.6.228:8080";
     /*验收环境地址*/
 //    String BASE_URL = "http://139.196.111.82:5018";
 ////        /*验收环境游戏地址*/
 //    String GAME_URL = "http://myjinzhu.com:5011/";
     /*正式地址*/
-    String BASE_URL = "http://option.myjinzhu.com";
+//    String BASE_URL = "http://option.myjinzhu.com";
 
 //        /*正式游戏地址*/
     String GAME_URL = "http://m.farm.myjinzhu.com/";
 
 
-//    String BASE_URL = "http://test.myjinzhu.com:8082";
+    String BASE_URL = "http://test.myjinzhu.com:8082";
     /*测试地址3*/
 //    String BASE_URL="http://test.myjinzhu.com:60";
     //内网地址（测试钱包功能）

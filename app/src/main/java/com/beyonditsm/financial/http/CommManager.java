@@ -300,10 +300,11 @@ public class CommManager extends RequestManager {
      * @param platform       平台 ANDROID IOS
      * @param callBack  回调
      */
-    public void toVersion(int currentVersion, String platform, CallBack callBack) {
+    public void toVersion(String marketCode,int currentVersion, String platform, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
         params.put("currentVersion", currentVersion + "");
         params.put("platform", platform);
+        params.put("marketCode", marketCode);
         doPost(IFinancialUrl.VERSION_URL, params, callBack);
     }
 

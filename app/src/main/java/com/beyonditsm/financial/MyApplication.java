@@ -1,13 +1,19 @@
 package com.beyonditsm.financial;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.support.multidex.MultiDex;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.beyonditsm.financial.activity.SplashAct;
 import com.lidroid.xutils.util.LogUtils;
 import com.tandong.sa.zUImageLoader.cache.disc.naming.Md5FileNameGenerator;
 import com.tandong.sa.zUImageLoader.core.ImageLoader;
@@ -47,6 +53,7 @@ public class MyApplication extends Application {
         }
         return instance;
     }
+    final public static int REQUEST_CODE_ASK_CALL_PHONE = 123;
 
     @Override
     public void onCreate() {
@@ -54,6 +61,20 @@ public class MyApplication extends Application {
         instance = this;
         isDownload = false;
         MultiDex.install(this);
+//        if (Build.VERSION.SDK_INT >= 23) {
+//            int checkCallPhonePermission = ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.READ_PHONE_STATE);
+//            if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED) {
+//                ActivityCompat.requestPermissions(SplashAct, new String[]{android.Manifest.permission.READ_PHONE_STATE}, REQUEST_CODE_ASK_CALL_PHONE);
+//                return;
+//            } else {
+//                initPragram();
+//            }
+//        }
+        initPragram();
+
+    }
+
+    private void initPragram() {
         /**
          * OnCreate 会被多个进程重入，这段保护代码，确保只有您需要使用 RongIM 的进程和 Push 进程执行了 init。
          * io.rong.push 为融云 push 进程名称，不可修改。
@@ -71,13 +92,13 @@ public class MyApplication extends Application {
         JPushInterface.init(this);            // 初始化 JPush
         initImageLoader(this);
         initTestIn();
-
     }
+
 
 //    public void getLocation() {
 //        mLocationClient = new LocationClient(getApplicationContext());     //声明LocationClient类
 //        GPSAddressUtils.initLocation(mLocationClient);
-//        mLocationClient.registerLocationListener(myListener);    //注册监听函数
+//        mLocationClient.registerLocatixonListener(myListener);    //注册监听函数
 //        mLocationClient.start();
 //    }
 

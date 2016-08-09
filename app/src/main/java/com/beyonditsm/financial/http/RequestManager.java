@@ -16,6 +16,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.MyLogUtils;
+import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -253,7 +254,7 @@ public class RequestManager {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> localHashMap = new HashMap<>();
                 localHashMap.put("Cookie", SpUtils.getCookie(MyApplication.getInstance()));
-                localHashMap.put("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance()));
+                localHashMap.put("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance())+"&"+ ParamsUtil.getInstance().getMicoRiceMarketCode());
                 return localHashMap;
             }
 
@@ -296,9 +297,9 @@ public class RequestManager {
         }
         if (params == null) {
             params = new RequestParams();
-            params.addHeader("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance()));
+            params.addHeader("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance())+"&"+ParamsUtil.getInstance().getMicoRiceMarketCode());
         } else {
-            params.addHeader("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance()));
+            params.addHeader("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance())+"&"+ParamsUtil.getInstance().getMicoRiceMarketCode());
         }
 
         httpUtils.send(HttpRequest.HttpMethod.POST, url, params, new RequestCallBack() {

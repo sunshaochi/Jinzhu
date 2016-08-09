@@ -20,6 +20,8 @@ import java.util.List;
  */
 public class ParamsUtil {
 
+
+    private String micoRiceMarketCode = "xiaomi";
     public static ParamsUtil util;
     private boolean walletEnter = false;
     private UserLoginEntity ule;
@@ -39,6 +41,14 @@ public class ParamsUtil {
     private List<ProductSortEntity.OrgTypeBean> orgTypeInfos;
     private boolean isReLogin = false;
     private boolean isClosing = false;
+
+    public String getMicoRiceMarketCode() {
+        return micoRiceMarketCode;
+    }
+
+    public void setMicoRiceMarketCode(String micoRiceMarketCode) {
+        this.micoRiceMarketCode = micoRiceMarketCode;
+    }
 
     public boolean isClosing() {
         return isClosing;

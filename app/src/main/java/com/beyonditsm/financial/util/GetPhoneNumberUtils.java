@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.util;
 
+import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
@@ -23,11 +24,12 @@ public class GetPhoneNumberUtils {
 
 
     public static List<PhoneInfo> getNumber(Context context){
-        Cursor cursor=context.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
+        @SuppressLint("Recycle") Cursor cursor=context.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
         String phoneNumber;
         String phoneName;
         Bitmap image;
         lists=new ArrayList<PhoneInfo>();
+        assert cursor != null;
         while(cursor.moveToNext()){
             phoneNumber=cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
             phoneName=cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));

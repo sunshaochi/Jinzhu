@@ -54,7 +54,7 @@ public class GeneralUtils {
 
 
     public void toVersion(final Context context, final int currentVersion, final int type) {
-        RequestManager.getCommManager().toVersion(currentVersion, "ANDROID", new RequestManager.CallBack() {
+        RequestManager.getCommManager().toVersion(ParamsUtil.getInstance().getMicoRiceMarketCode(),currentVersion, "ANDROID", new RequestManager.CallBack() {
             @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) throws JSONException {

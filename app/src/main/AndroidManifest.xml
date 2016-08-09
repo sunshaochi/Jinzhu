@@ -516,7 +516,7 @@
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote"></service>
+            android:process=":remote" />
         <!-- Required SDK核心功能 -->
         <receiver
             android:name="cn.jpush.android.service.PushReceiver"
@@ -593,7 +593,8 @@
 
         <activity android:name=".activity.credit.CreditWebView" />
         <activity android:name=".activity.user.JinZhuIndexWeb" />
-        <activity android:name=".activity.OrgTypeListAct"></activity>
+        <activity android:name=".activity.OrgTypeListAct" />
+        <activity android:name=".activity.PermissionsActivity"></activity>
     </application>
 
 </manifest>
