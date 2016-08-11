@@ -1,7 +1,5 @@
 package com.beyonditsm.financial.fragment;
 
-import android.animation.Animator;
-import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,9 +8,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -45,7 +41,6 @@ import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
 import com.beyonditsm.financial.view.slidebottompanel.SlideBottomPanel;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
-import com.tandong.sa.animation.ViewHelper;
 import com.tandong.sa.eventbus.EventBus;
 
 import java.util.ArrayList;
@@ -63,12 +58,6 @@ public class CreditFragment extends BaseFragment {
     private TextView tvTitle;
     @ViewInject(R.id.rl_back)
     private RelativeLayout rl_back;
-    @ViewInject(R.id.etAmount)
-    private EditText etAmount;//输入金额
-    @ViewInject(R.id.tvM)
-    private TextView tvM;//月份
-    @ViewInject(R.id.ivSuspen)
-    private ImageView ivSuspen;
     @ViewInject(R.id.rb_bank)
     private TextView rbBank; // 银行
     @ViewInject(R.id.rb_range)
@@ -111,10 +100,7 @@ public class CreditFragment extends BaseFragment {
     private int currentP = 1;
     private int pageSize = 10;
     private CreditAdapter adapter;
-    private boolean isButtonShowing = false;
-    private boolean isAnimating = false;
 
-    private List<?> listItem;
     private List<ProductSortEntity.OrgTypeBean> orgTypeInfos;
     private List<ProductSortEntity.ProductOrderBean> productInfos;
     private List<ProductSortEntity.MoneyScopeBean> moneyScopeInfos;
@@ -236,48 +222,6 @@ public class CreditFragment extends BaseFragment {
         });
     }
 
-    private void handlerMove() {
-        if (!isButtonShowing && !isAnimating) {
-
-            ValueAnimator animator = ValueAnimator.ofFloat(ViewHelper.getX(ivSuspen), 99)
-                    .setDuration(250);
-            animator.setTarget(ivSuspen);
-            animator.setInterpolator(new AccelerateInterpolator());
-//        animator.setInterpolator(mOpenAnimationInterpolator);
-            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    float value = (float) animation.getAnimatedValue();
-                    ViewHelper.setX(ivSuspen, value);
-
-                }
-            });
-            animator.addListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animation) {
-                    isAnimating = true;
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    isAnimating = false;
-                }
-
-                @Override
-                public void onAnimationCancel(Animator animation) {
-                    isAnimating = false;
-                }
-
-                @Override
-                public void onAnimationRepeat(Animator animation) {
-                }
-            });
-            animator.start();
-            isButtonShowing = true;
-        }
-    }
-
-
     private void initTit() {
         rbBank.setText("机构类型");
         rbRange.setText("综合排序");
@@ -292,6 +236,7 @@ public class CreditFragment extends BaseFragment {
     @Override
     public void setListener() {
         lvCreditSort.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -383,7 +328,7 @@ public class CreditFragment extends BaseFragment {
                 clearTextColor();
                 break;
             case R.id.rb_money:
-                listItem = moneyScopeInfos;
+                List<?> listItem = moneyScopeInfos;
                 clearArrow();
                 clearTextColor();
                 clickType = ProductSortAdapter.MONEY;
@@ -430,7 +375,7 @@ public class CreditFragment extends BaseFragment {
     }
 
 
-    private List<ProductInfo> datas = new ArrayList<ProductInfo>();
+    private List<ProductInfo> datas = new ArrayList<>();
 
     private void getCredit(String userName, final String area, final String orgType, String productOrder, String moneyScope, String loanTerm, final int currentPage, int rows) {
 
@@ -477,6 +422,7 @@ public class CreditFragment extends BaseFragment {
         });
     }
 
+    @SuppressLint("SetTextI18n")
     public void onEvent(OrgEvent orgEvent) {
         String name = orgTypeInfos.get(orgEvent.position).getOrgName();
         if (name.length() > 4) {
@@ -489,6 +435,7 @@ public class CreditFragment extends BaseFragment {
         getCredit(ParamsUtil.getInstance().getUle().getUsername(), SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
