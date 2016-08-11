@@ -31,7 +31,7 @@
                 style="@style/zc_et"
                 android:layout_marginLeft="15dp"
                 android:layout_toRightOf="@+id/phone"
-                android:hint="请输入手机号"
+                android:hint="@string/phone_name"
                 android:inputType="number"
                 android:maxLength="13"
                 android:textSize="15sp" />
@@ -63,7 +63,7 @@
                 style="@style/zc_et"
                 android:layout_marginLeft="30dp"
                 android:layout_toRightOf="@+id/psw"
-                android:hint="请输入密码"
+                android:hint="@string/password"
                 android:inputType="textPassword"
                 android:maxLength="20"
                 android:singleLine="true"
@@ -76,48 +76,6 @@
             android:layout_marginRight="25dp"/>
 
     </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/input_corners"
-        android:orientation="vertical"
-        android:visibility="gone">
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <com.beyonditsm.financial.widget.ClearEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/text_input_layout_style"
-                android:hint="@string/phone_name"/>
-        </android.support.design.widget.TextInputLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone">
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/til_phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <com.beyonditsm.financial.widget.ClearEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="请输入手机号"/>
-        </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/til_pwd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <com.beyonditsm.financial.widget.ClearEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:hint="请输入密码"/>
-        </android.support.design.widget.TextInputLayout>
-    </LinearLayout>
     <RelativeLayout
         android:id="@+id/login_btn"
         style="@style/zc_btn"
@@ -128,7 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="登录"
+            android:text="@string/login"
             android:textColor="@color/white"
             android:textSize="16sp" />
 

@@ -46,9 +46,7 @@ public class FindPwdAct extends BaseActivity {
     @Override
     public void setLayout() {
         setContentView(R.layout.activity_findpw);
-
     }
-
 
     @Override
     public void init(Bundle savedInstanceState) {

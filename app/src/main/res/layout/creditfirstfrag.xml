@@ -26,28 +26,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <TextView
-                style="@style/tv_primary_style"
-                android:layout_centerVertical="true"
-                android:text="姓名" />
-
-            <EditText
-                android:id="@+id/cre_name"
-                style="@style/cre_et"
-                android:hint="您的称呼"
-                android:maxLength="20" />
-
-        </RelativeLayout>
-
-        <View style="@style/view_line"></View>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
@@ -55,16 +33,16 @@
                 android:layout_centerVertical="true"
                 android:text="手机号" />
 
-            <EditText
+            <com.beyonditsm.financial.widget.ClearEditText
                 android:id="@+id/cre_phone"
                 style="@style/cre_et"
-                android:hint="手机号码"
+                android:hint="@string/phone_name"
                 android:inputType="phone"
                 android:maxLength="11" />
 
         </RelativeLayout>
 
-        <View style="@style/view_line"></View>
+        <View style="@style/view_line"/>
 
 
         <RelativeLayout
@@ -76,67 +54,21 @@
                 android:layout_centerVertical="true"
                 android:text="验证码" />
 
-            <EditText
+            <com.beyonditsm.financial.widget.ClearEditText
                 android:id="@+id/cre_yzm"
                 style="@style/cre_et"
-                android:hint="请输入验证码"
+                android:hint="@string/code"
                 android:inputType="number"
                 android:maxLength="6" />
 
             <TextView
                 android:id="@+id/cre_btn_yzm"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:layout_alignParentRight="true"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:gravity="center"
-                android:text="发送验证码"
-                android:textColor="#f63"
-                android:textSize="16sp" />
-        </RelativeLayout>
-
-        <View style="@style/view_line"></View>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone">
-
-            <TextView
-                style="@style/tv_primary_style"
+                style="@style/send_code_style"
                 android:layout_centerVertical="true"
-                android:text="密码" />
-
-            <EditText
-                android:id="@+id/cre_pwd"
-                style="@style/cre_et"
-                android:hint="请输入密码"
-                android:inputType="textPassword"
-                android:maxLength="20" />
+                android:layout_alignParentRight="true" />
         </RelativeLayout>
 
-        <View style="@style/view_line"></View>
-
-        <!--<RelativeLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
-
-        <!--<TextView-->
-        <!--style="@style/tv_primary_style"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:text="确认密码" />-->
-
-
-        <!--<EditText-->
-        <!--android:id="@+id/cre_pwd2"-->
-        <!--style="@style/cre_et"-->
-        <!--android:hint="确认密码"-->
-        <!--android:inputType="textPassword"-->
-        <!--android:maxLength="20" />-->
-        <!--</RelativeLayout>-->
-
-        <!--<View style="@style/view_line"></View>-->
+        <View style="@style/view_line"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -147,15 +79,15 @@
                 android:layout_centerVertical="true"
                 android:text="邀请码" />
 
-            <EditText
+            <com.beyonditsm.financial.widget.ClearEditText
                 android:id="@+id/cre_yqm"
                 style="@style/cre_et"
-                android:hint="请输入好友邀请码（非必填）"
+                android:hint="@string/invite_code"
                 android:maxLength="20" />
 
         </RelativeLayout>
 
-        <View style="@style/view_line"></View>
+        <View style="@style/view_line"/>
 
 
         <LinearLayout
@@ -171,7 +103,7 @@
                 android:button="@drawable/checkbox"
                 android:checked="true"
                 android:gravity="center_vertical"
-                android:paddingStart="4dp"
+                android:paddingStart="8dp"
                 android:text="同意"
                 android:textColor="#333333"
                 android:textSize="14sp" />
@@ -182,7 +114,6 @@
                 android:layout_height="30dp"
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
-                android:text="《金蛛条款说明》"
                 android:textColor="#333333"
                 android:textSize="14sp" />
 
@@ -190,15 +121,8 @@
 
         <Button
             android:id="@+id/first_btn_next"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/button_gen"
-            android:text="下一步"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
+            style="@style/zc_btn"
+            android:text="@string/next" />
 
         <TextView
             android:id="@+id/cre_tv_login"
@@ -213,13 +137,5 @@
             android:textColor="#fead00"
             android:textSize="14sp" />
     </LinearLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none">
-
-    </ScrollView>
-
 
 </LinearLayout>

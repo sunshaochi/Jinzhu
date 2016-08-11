@@ -27,6 +27,7 @@ import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.GeneralUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.SpUtils;
+import com.beyonditsm.financial.widget.ClearEditText;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.eventbus.EventBus;
 
@@ -48,11 +49,11 @@ import io.rong.imlib.RongIMClient;
  * Created by Yang on 2015/11/12 0012.
  */
 public class CreditFirstFrag extends BaseFragment {
-    private EditText crePhone;
+    private ClearEditText crePhone;
     private TextView creBtnYzm;
-    private EditText creYzm;
+    private ClearEditText creYzm;
     //    private EditText crePwd2;
-    private EditText creYqm;
+    private ClearEditText creYqm;
     private CheckBox creTk;
     private View view;
 
@@ -64,11 +65,11 @@ public class CreditFirstFrag extends BaseFragment {
     private MyTimerTask myTask;
 
     private void assignViews() {
-        crePhone = (EditText) view.findViewById(R.id.cre_phone);
+        crePhone = (ClearEditText) view.findViewById(R.id.cre_phone);
         creBtnYzm = (TextView) view.findViewById(R.id.cre_btn_yzm);
-        creYzm = (EditText) view.findViewById(R.id.cre_yzm);
+        creYzm = (ClearEditText) view.findViewById(R.id.cre_yzm);
         //        crePwd2 = (EditText) view.findViewById(R.id.cre_pwd2);
-        creYqm = (EditText) view.findViewById(R.id.cre_yqm);
+        creYqm = (ClearEditText) view.findViewById(R.id.cre_yqm);
         creTk = (CheckBox) view.findViewById(R.id.cre_tk);
         TextView intro = (TextView) view.findViewById(R.id.intro);
         intro.setText(Html.fromHtml( "《金蛛金服用户协议》" ));
