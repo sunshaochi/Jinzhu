@@ -21,7 +21,7 @@ import java.util.List;
 public class ParamsUtil {
 
 
-    private String micoRiceMarketCode = "xiaomi";
+    private String micoRiceMarketCode = "qudao4";
     public static ParamsUtil util;
     private boolean walletEnter = false;
     private UserLoginEntity ule;

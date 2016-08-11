@@ -140,7 +140,6 @@ public class ApplicationAct extends BaseActivity {
             initTit();
         }
 
-        EventBus.getDefault().register(this);
         tvTitle.setText("贷款");
         initTit();
         loadView.setNoContentTxt("暂无此类产品，换个条件试试");
@@ -193,19 +192,19 @@ public class ApplicationAct extends BaseActivity {
         cMoney = "";
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        initTit();
-        getCredit(ParamsUtil.getInstance().getUle().getUsername(), SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
-        String city = SpUtils.getCity(MyApplication.getInstance().getApplicationContext());
-        if (TextUtils.isEmpty(city)) {
-            getSortParam(ParamsUtil.getInstance().getChangedCity());
-        } else {
-            getSortParam(city);
-            initTit();
-        }
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        initTit();
+//        getCredit(ParamsUtil.getInstance().getUle().getUsername(), SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
+//        String city = SpUtils.getCity(MyApplication.getInstance().getApplicationContext());
+//        if (TextUtils.isEmpty(city)) {
+//            getSortParam(ParamsUtil.getInstance().getChangedCity());
+//        } else {
+//            getSortParam(city);
+//            initTit();
+//        }
+//    }
 
     private void getSortParam(String cityName) {
         RequestManager.getCommManager().findSortParam(cityName, new RequestManager.CallBack() {
