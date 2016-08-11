@@ -8,4 +8,15 @@
 
     <string name="submit_image">提交相关图片</string>
     <string name="phone_name">请输入手机号</string>
+    <string name="password">请输入密码</string>
+    <string name="old_password">请输入原密码</string>
+    <string name="new_password">请输入新密码</string>
+    <string name="confirm_new_password">确认新密码</string>
+    <string name="code">请输入验证码</string>
+    <string name="send_code">发送验证码</string>
+    <string name="next">下一步</string>
+    <string name="register">注册</string>
+    <string name="invite_code">请输入好友邀请码（非必填）</string>
+    <string name="login">登录</string>
+    <string name="confirm">确认</string>
 </resources>

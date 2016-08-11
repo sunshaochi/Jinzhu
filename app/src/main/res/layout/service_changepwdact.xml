@@ -5,49 +5,41 @@
     android:background="@color/bg_color"
     android:orientation="vertical">
 
-    <include layout="@layout/title_act_layout"></include>
-
+    <include layout="@layout/title_act_layout" />
 
     <LinearLayout
         style="@style/input_corners"
         android:orientation="vertical">
 
+        <com.beyonditsm.financial.widget.ClearEditText
+            android:id="@+id/old_pwd"
+            style="@style/update_et"
+            android:layout_marginTop="6dp"
+            android:hint="@string/old_password"
+            android:inputType="textPassword"
+            android:maxLength="20" />
 
-    <com.beyonditsm.financial.widget.ClearEditText
-        android:hint="请输入原密码"
-        android:id="@+id/old_pwd"
-        style="@style/update_et"
-        android:layout_marginTop="6dp"
-        android:inputType="textPassword"
-        android:maxLength="20" />
+        <View style="@style/view_line" />
 
-    <View style="@style/view_line"></View>
+        <com.beyonditsm.financial.widget.ClearEditText
+            android:id="@+id/new_pwd"
+            style="@style/update_et"
+            android:hint="@string/new_password"
+            android:maxLength="20" />
 
-    <com.beyonditsm.financial.widget.ClearEditText
-        android:hint="请输入新密码"
-        android:id="@+id/new_pwd"
-        style="@style/update_et"
-        android:maxLength="20" />
-    <View style="@style/view_line"></View>
+        <View style="@style/view_line" />
 
-    <com.beyonditsm.financial.widget.ClearEditText
-        android:hint="确认新密码"
-        android:id="@+id/new_pwd2"
-        style="@style/update_et"
-        android:maxLength="20"
-        android:layout_marginBottom="6dp"/>
+        <com.beyonditsm.financial.widget.ClearEditText
+            android:id="@+id/new_pwd2"
+            style="@style/update_et"
+            android:layout_marginBottom="6dp"
+            android:hint="@string/confirm_new_password"
+            android:maxLength="20" />
     </LinearLayout>
 
     <Button
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
         android:id="@+id/commit_btn"
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/button_gen"
-        android:text="提交"
-        android:textColor="@color/white"
-        android:textSize="16sp" />
+        style="@style/zc_btn"
+        android:text="@string/confirm" />
 
 </LinearLayout>
