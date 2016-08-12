@@ -29,6 +29,7 @@ import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyBitmapUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.widget.FinalLoadDialog;
 import com.leaf.library.widget.MyListView;
@@ -66,6 +67,9 @@ public class CreditUploadAct extends BaseActivity {
     private TextView tvRemarks;
     @ViewInject(R.id.tvSave)
     private TextView tvSave;
+
+    @ViewInject(R.id.loadingView)
+    private LoadingView loadingView;
     private String orderId;
     private String flowId;
 
@@ -130,6 +134,13 @@ public class CreditUploadAct extends BaseActivity {
         photoSavePath = Environment.getExternalStorageDirectory() + "/upload/cache/";
 
         findFlowDetail(orderId, flowId);
+
+        loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
+            @Override
+            public void OnRetry() {
+                findFlowDetail(orderId,flowId);
+            }
+        });
     }
 
     @OnClick({R.id.tvBack, R.id.tvSave, R.id.tvSkip})
@@ -180,6 +191,7 @@ public class CreditUploadAct extends BaseActivity {
         RequestManager.getCommManager().findFlowDetail(orderId, flowId, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
+                loadingView.loadComplete();
                 JSONObject jsonObject = new JSONObject(result);
                 JSONObject data = jsonObject.getJSONObject("data");
                 upLoadData = GsonUtils.json2Bean(data.toString(), UpLoadEntity.class);
@@ -198,7 +210,7 @@ public class CreditUploadAct extends BaseActivity {
 
             @Override
             public void onError(int status, String msg) {
-
+                loadingView.loadError();
             }
         });
     }

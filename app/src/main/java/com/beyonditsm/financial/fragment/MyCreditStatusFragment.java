@@ -105,7 +105,7 @@ public class MyCreditStatusFragment extends BaseFragment {
                 }
                 Collections.reverse(orderList);
                 if (detailAdapter == null) {
-                    detailAdapter = new OrderDetailAdapter(getContext(), orderList);
+                    detailAdapter = new OrderDetailAdapter(getActivity(), orderList);
                     plvCreditStatus.getRefreshableView().setAdapter(detailAdapter);
                 } else {
                     detailAdapter.setDatas();
