@@ -136,8 +136,8 @@ public class UserManager extends RequestManager {
      * @param callBack  回调
      */
     public void findUserLoginInfo(CallBack callBack) {
-//        Map<String, String> params = new HashMap<String, String>();
-        List<NameValuePair> params = new ArrayList<>();
+        Map<String, String> params = new HashMap<String, String>();
+//        List<NameValuePair> params = new ArrayList<>();
         doPost(IFinancialUrl.USER_LOGIN_URL, params, callBack);
     }
 

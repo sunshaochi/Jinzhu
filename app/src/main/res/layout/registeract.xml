@@ -40,7 +40,7 @@
                     android:id="@+id/reg_phone"
                     style="@style/zc_et"
                     android:layout_gravity="center_vertical"
-                    android:hint="请输入手机号"
+                    android:hint="@string/phone_name"
                     android:inputType="phone"
                     android:maxLength="11"
                     android:textSize="15sp" />
@@ -74,7 +74,7 @@
                     android:layout_marginLeft="0dp"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:hint="请输入验证码"
+                    android:hint="@string/code"
                     android:inputType="number"
                     android:maxLength="6"
                     android:singleLine="true"
@@ -83,56 +83,11 @@
 
                 <TextView
                     android:id="@+id/reg_yzm_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="发送验证码"
-                    android:textColor="#f58b35"
-                    android:textSize="15sp" />
+                    style="@style/send_code_style" />
 
             </LinearLayout>
 
-            <View style="@style/zc_line"></View>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="15dp"
-                    android:text="密码"
-                    android:textColor="#333333"
-                    android:textSize="15sp" />
-
-                <EditText
-                    android:id="@+id/reg_pwd"
-                    style="@style/zc_et"
-                    android:layout_gravity="center_vertical"
-                    android:hint="请输入密码"
-                    android:inputType="textPassword"
-                    android:maxLength="20"
-                    android:textSize="15sp" />
-
-            </LinearLayout>
-
-            <View style="@style/zc_line"></View>
-
-            <!-- -->
-            <!--<EditText-->
-            <!--android:id="@+id/reg_pwd2"-->
-            <!--style="@style/zc_et"-->
-            <!--android:hint="确定密码"-->
-            <!--android:inputType="textPassword"-->
-            <!--android:maxLength="20" />-->
-
-
-            <!--<View style="@style/zc_line"></View>-->
+            <View style="@style/zc_line"/>
 
             <LinearLayout
                 android:id="@+id/llYqm"
@@ -146,7 +101,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-
                     android:text="邀请码"
                     android:textColor="#333333"
                     android:textSize="15sp" />
@@ -155,7 +109,7 @@
                     android:id="@+id/reg_yqm"
                     style="@style/zc_et"
                     android:layout_gravity="center_vertical"
-                    android:hint="请输入好友邀请码（非必填）"
+                    android:hint="@string/invite_code"
                     android:textSize="15sp" />
 
             </LinearLayout>
@@ -214,7 +168,6 @@
             android:layout_below="@+id/cre_tk"
             android:layout_marginLeft="0dp"
             android:layout_marginRight="0dp"
-            android:background="@drawable/button_gen"
-            android:text="注册" />
+            android:text="@string/register" />
     </RelativeLayout>
 </LinearLayout>
