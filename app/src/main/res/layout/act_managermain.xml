@@ -31,7 +31,7 @@
                 android:id="@+id/ivQd"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:background="@mipmap/tab_package_nor" />
+                android:background="@drawable/tab_package_nor" />
 
             <TextView
                 android:id="@+id/tvQd"
@@ -47,7 +47,7 @@
                 android:id="@+id/ivdd"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:background="@mipmap/tab_order_nor" />
+                android:background="@drawable/tab_order_nor" />
 
             <TextView
                 android:id="@+id/tvdd"
@@ -69,7 +69,7 @@
                     android:id="@+id/ivMes"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:background="@mipmap/tab_chat_nor" />
+                    android:background="@drawable/tab_chat_nor" />
 
                 <TextView
                     android:id="@+id/tvMes"
@@ -96,7 +96,7 @@
                 android:id="@+id/ivMine"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:background="@mipmap/tab_me_nor" />
+                android:background="@drawable/tab_me_nor" />
 
             <TextView
                 android:id="@+id/tvMine"

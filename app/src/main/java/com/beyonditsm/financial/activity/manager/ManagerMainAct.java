@@ -380,32 +380,32 @@ public class ManagerMainAct extends BaseActivity{
      * 底部全部切换普通
      */
     private void setAllTabNor() {
-        ivQd.setBackgroundResource(R.mipmap.tab_package_nor);
+        ivQd.setBackgroundResource(R.drawable.tab_package_nor);
         tvQd.setTextColor(Color.parseColor("#666666"));
-        ivDd.setBackgroundResource(R.mipmap.tab_order_nor);
+        ivDd.setBackgroundResource(R.drawable.tab_order_nor);
         tvDd.setTextColor(Color.parseColor("#666666"));
-        ivMes.setBackgroundResource(R.mipmap.tab_chat_nor);
+        ivMes.setBackgroundResource(R.drawable.tab_chat_nor);
         tvMes.setTextColor(Color.parseColor("#666666"));
-        ivMine.setBackgroundResource(R.mipmap.tab_me_nor);
+        ivMine.setBackgroundResource(R.drawable.tab_me_nor);
         tvMine.setTextColor(Color.parseColor("#666666"));
     }
 
     private void setCheckItem(int position) {
         switch (position) {
             case 0:
-                ivQd.setBackgroundResource(R.mipmap.tab_package_h);
+                ivQd.setBackgroundResource(R.drawable.tab_package_h);
                 tvQd.setTextColor(Color.parseColor("#f49626"));
                 break;
             case 1:
-                ivDd.setBackgroundResource(R.mipmap.tab_order_h);
+                ivDd.setBackgroundResource(R.drawable.tab_order_h);
                 tvDd.setTextColor(Color.parseColor("#f49626"));
                 break;
             case 2:
-                ivMes.setBackgroundResource(R.mipmap.tab_chat_h);
+                ivMes.setBackgroundResource(R.drawable.tab_chat_h);
                 tvMes.setTextColor(Color.parseColor("#f49626"));
                 break;
             case 3:
-                ivMine.setBackgroundResource(R.mipmap.tab_me_h);
+                ivMine.setBackgroundResource(R.drawable.tab_me_h);
                 tvMine.setTextColor(Color.parseColor("#f49626"));
                 break;
         }

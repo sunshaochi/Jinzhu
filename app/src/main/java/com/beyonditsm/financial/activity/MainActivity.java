@@ -307,11 +307,11 @@ public class MainActivity extends BaseActivity {
     private void setAllTabNor() {
         ivMyCredit.setBackgroundResource(R.drawable.tab_home_nor);
         tvMyCredit.setTextColor(Color.parseColor("#666666"));
-        ivCredit.setBackgroundResource(R.mipmap.tab_credit_nor);
+        ivCredit.setBackgroundResource(R.drawable.tab_credit_nor);
         tvCredit.setTextColor(Color.parseColor("#666666"));
-        ivMes.setBackgroundResource(R.mipmap.tab_chat_nor);
+        ivMes.setBackgroundResource(R.drawable.tab_chat_nor);
         tvMes.setTextColor(Color.parseColor("#666666"));
-        ivMine.setBackgroundResource(R.mipmap.tab_me_nor);
+        ivMine.setBackgroundResource(R.drawable.tab_me_nor);
         tvMine.setTextColor(Color.parseColor("#666666"));
     }
 
@@ -448,15 +448,15 @@ public class MainActivity extends BaseActivity {
                 tvMyCredit.setTextColor(Color.parseColor("#f49626"));
                 break;
             case 1:
-                ivCredit.setBackgroundResource(R.mipmap.tab_credit_h);
+                ivCredit.setBackgroundResource(R.drawable.tab_credit_h);
                 tvCredit.setTextColor(Color.parseColor("#f49626"));
                 break;
             case 2:
-                ivMes.setBackgroundResource(R.mipmap.tab_chat_h);
+                ivMes.setBackgroundResource(R.drawable.tab_chat_h);
                 tvMes.setTextColor(Color.parseColor("#f49626"));
                 break;
             case 3:
-                ivMine.setBackgroundResource(R.mipmap.tab_me_h);
+                ivMine.setBackgroundResource(R.drawable.tab_me_h);
                 tvMine.setTextColor(Color.parseColor("#f49626"));
                 break;
         }
