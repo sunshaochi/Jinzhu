@@ -304,7 +304,7 @@ public class CommManager extends RequestManager {
         Map<String, String> params = new HashMap<>();
         params.put("currentVersion", currentVersion + "");
         params.put("platform", platform);
-        if("".equals(marketCode)){
+        if(!"".equals(marketCode)){
             params.put("marketCode", marketCode);
         }
         doPost(IFinancialUrl.VERSION_URL, params, callBack);
