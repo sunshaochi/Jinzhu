@@ -79,14 +79,14 @@ public class FooterLoadingLayout extends LoadingLayout {
     @Override
     protected void onStateChanged(State curState, State oldState) {
         mProgressBar.setVisibility(View.GONE);
-        mHintView.setVisibility(View.INVISIBLE);
-        
+//        mHintView.setText("继续下拉加载更多");
+
         super.onStateChanged(curState, oldState);
     }
     
     @Override
     protected void onReset() {
-        mHintView.setText(R.string.pull_to_refresh_header_hint_loading);
+        mHintView.setText("继续下拉加载更多");
     }
 
     @Override
@@ -105,7 +105,7 @@ public class FooterLoadingLayout extends LoadingLayout {
     protected void onRefreshing() {
         mProgressBar.setVisibility(View.VISIBLE);
         mHintView.setVisibility(View.VISIBLE);
-        mHintView.setText(R.string.pull_to_refresh_header_hint_loading);
+        mHintView.setText("正在加载");
     }
     
     @Override
