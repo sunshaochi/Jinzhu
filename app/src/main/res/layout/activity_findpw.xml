@@ -17,7 +17,7 @@
             android:layout_gravity="center_vertical"
             android:hint="@string/phone_name"
             android:inputType="phone"
-            android:maxLength="11"
+            android:maxLength="13"
             android:textSize="15sp"/>
 
         <View android:layout_marginLeft="15dp"
@@ -31,7 +31,7 @@
 
             <com.beyonditsm.financial.widget.ClearEditText
                 android:id="@+id/findetpwd"
-                android:maxLength="20"
+                android:maxLength="6"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
