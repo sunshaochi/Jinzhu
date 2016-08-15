@@ -48,7 +48,7 @@
                 android:id="@+id/ivCredit"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:background="@mipmap/tab_credit_nor" />
+                android:background="@drawable/tab_credit_nor" />
 
             <TextView
                 android:id="@+id/tvCredit"
@@ -71,7 +71,7 @@
                     android:id="@+id/ivMes"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:background="@mipmap/tab_chat_nor" />
+                    android:background="@drawable/tab_chat_nor" />
 
                 <TextView
                     android:id="@+id/tvMes"
@@ -105,7 +105,7 @@
                     android:id="@+id/ivMine"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
-                    android:background="@mipmap/tab_me_nor" />
+                    android:background="@drawable/tab_me_nor" />
                 <ImageView
                     android:id="@+id/ivMs"
                     style="@style/red_oval_style"

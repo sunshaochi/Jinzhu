@@ -33,9 +33,9 @@ public class ScrollerNumberPicker extends View {
 	/** 是否滑动中 */
 	private boolean isScrolling = false;
 	/** 选择的内容 */
-	private ArrayList<ItemObject> itemList = new ArrayList<ItemObject>();
+	private ArrayList<ItemObject> itemList = new ArrayList<>();
 	/** 设置数据 */
-	private ArrayList<String> dataList = new ArrayList<String>();
+	private ArrayList<String> dataList = new ArrayList<>();
 	/** 按下的坐标 */
 	private int downY;
 	/** 按下的时间 */
@@ -714,7 +714,7 @@ public class ScrollerNumberPicker extends View {
 		 * @param id
 		 * @param text
 		 */
-		public void endSelect(int id, String text);
+		 void endSelect(int id, String text);
 
 		/**
 		 * 选中的内容
@@ -722,7 +722,7 @@ public class ScrollerNumberPicker extends View {
 		 * @param id
 		 * @param text
 		 */
-		public void selecting(int id, String text);
+		 void selecting(int id, String text);
 
 	}
 }
