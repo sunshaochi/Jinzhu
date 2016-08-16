@@ -20,6 +20,8 @@ public interface IFinancialUrl {
 //    String GAME_URL = "http://myjinzhu.com:5011/";
     /*正式地址*/
     String BASE_URL = "http://option.myjinzhu.com";
+    /*王建*/
+//    String BASE_URL = "http://172.16.5.191:8081";
 
 //        /*正式游戏地址*/
     String GAME_URL = "http://m.farm.myjinzhu.com/";
@@ -36,8 +38,10 @@ public interface IFinancialUrl {
 //    String BASE_URL = "http://172.16.5.250:8080";
 //    String BASE_URL="http://172.16.6.216";
 //    String BASE_URL = "http://172.16.6.227:8080";
-
-
+    /**
+     * @MARKEY_CODE 渠道号设置，默认渠道设置为空字符串
+     */
+    String MARKET_CODE = "";
     String API_VERSION = "/easyplay";
 
     String BASE_IMAGE_URL = BASE_URL + API_VERSION + "/";

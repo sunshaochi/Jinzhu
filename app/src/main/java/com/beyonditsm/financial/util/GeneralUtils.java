@@ -13,6 +13,7 @@ import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.VersionInfo;
+import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.widget.MyAlertDialog;
 
@@ -54,7 +55,7 @@ public class GeneralUtils {
 
 
     public void toVersion(final Context context, final int currentVersion, final int type) {
-        RequestManager.getCommManager().toVersion(ParamsUtil.getInstance().getMicoRiceMarketCode(),currentVersion, "ANDROID", new RequestManager.CallBack() {
+        RequestManager.getCommManager().toVersion(IFinancialUrl.MARKET_CODE, currentVersion, "ANDROID", new RequestManager.CallBack() {
             @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) throws JSONException {
@@ -81,7 +82,7 @@ public class GeneralUtils {
     }
 
 
-     /**
+    /**
      * 从服务器中下载APK
      */
     protected void downLoadApk(final Context context, final String url) {

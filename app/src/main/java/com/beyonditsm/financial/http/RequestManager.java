@@ -254,10 +254,10 @@ public class RequestManager {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> localHashMap = new HashMap<>();
                 localHashMap.put("Cookie", SpUtils.getCookie(MyApplication.getInstance()));
-                if("".equals(ParamsUtil.getInstance().getMicoRiceMarketCode())){
+                if("".equals(IFinancialUrl.MARKET_CODE)){
                     localHashMap.put("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance()));
                 }else {
-                    localHashMap.put("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance())+"&"+ ParamsUtil.getInstance().getMicoRiceMarketCode());
+                    localHashMap.put("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance())+"&"+ IFinancialUrl.MARKET_CODE);
                 }
                 return localHashMap;
             }
@@ -301,16 +301,16 @@ public class RequestManager {
         }
         if (params == null) {
             params = new RequestParams();
-            if ("".equals(ParamsUtil.getInstance().getMicoRiceMarketCode())){
+            if ("".equals( IFinancialUrl.MARKET_CODE)){
                 params.addHeader("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance()));
             }else {
-                params.addHeader("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance())+"&"+ParamsUtil.getInstance().getMicoRiceMarketCode());
+                params.addHeader("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance())+"&"+ IFinancialUrl.MARKET_CODE);
             }
         } else {
-            if ("".equals(ParamsUtil.getInstance().getMicoRiceMarketCode())){
+            if ("".equals( IFinancialUrl.MARKET_CODE)){
                 params.addHeader("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance()));
             }else {
-                params.addHeader("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance())+"&"+ParamsUtil.getInstance().getMicoRiceMarketCode());
+                params.addHeader("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance())+"&"+ IFinancialUrl.MARKET_CODE);
             }
         }
 
