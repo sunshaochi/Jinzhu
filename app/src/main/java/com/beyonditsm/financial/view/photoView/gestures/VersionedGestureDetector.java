@@ -1,4 +1,4 @@
-package com.beyonditsm.financial.view.photoView.gestures;
+package com.beyonditsm.financial.view.photoview.gestures;
 
 /*******************************************************************************
  * Copyright 2011, 2012 Chris Banes.

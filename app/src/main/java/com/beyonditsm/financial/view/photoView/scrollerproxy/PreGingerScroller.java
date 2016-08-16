@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package com.beyonditsm.financial.view.photoView.scrollerproxy;
+package com.beyonditsm.financial.view.photoview.scrollerproxy;
 
 import android.content.Context;
 import android.widget.Scroller;

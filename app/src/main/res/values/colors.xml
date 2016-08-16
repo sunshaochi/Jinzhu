@@ -64,4 +64,5 @@
     <color name="delete_red">#FF3a31</color>
     <color name="upload_org">#ff6600</color>
     <color name="send_code_color">#f58b35</color>
+    <color name="credit_offline_divder_org">#ff761a</color>
 </resources>

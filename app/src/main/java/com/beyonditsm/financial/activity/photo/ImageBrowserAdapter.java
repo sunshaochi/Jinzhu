@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 
 import com.beyonditsm.financial.entity.ImageBean;
-import com.beyonditsm.financial.view.photoView.PhotoView;
+import com.beyonditsm.financial.view.photoview.PhotoView;
 
 import java.io.IOException;
 import java.util.ArrayList;

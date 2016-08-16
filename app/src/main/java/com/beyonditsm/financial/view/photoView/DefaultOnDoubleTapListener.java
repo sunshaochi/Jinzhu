@@ -1,4 +1,4 @@
-package com.beyonditsm.financial.view.photoView;
+package com.beyonditsm.financial.view.photoview;
 
 import android.annotation.SuppressLint;
 import android.graphics.RectF;

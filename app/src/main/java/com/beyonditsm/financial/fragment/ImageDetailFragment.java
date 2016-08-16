@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.http.IFinancialUrl;
-import com.beyonditsm.financial.view.photoView.PhotoViewAttacher;
+import com.beyonditsm.financial.view.photoview.PhotoViewAttacher;
 import com.tandong.sa.zUImageLoader.core.ImageLoader;
 import com.tandong.sa.zUImageLoader.core.assist.FailReason;
 import com.tandong.sa.zUImageLoader.core.listener.SimpleImageLoadingListener;

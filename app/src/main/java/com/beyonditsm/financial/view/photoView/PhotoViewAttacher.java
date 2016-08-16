@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package com.beyonditsm.financial.view.photoView;
+package com.beyonditsm.financial.view.photoview;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -33,9 +33,9 @@ import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
-import com.beyonditsm.financial.view.photoView.gestures.OnGestureListener;
-import com.beyonditsm.financial.view.photoView.gestures.VersionedGestureDetector;
-import com.beyonditsm.financial.view.photoView.scrollerproxy.ScrollerProxy;
+import com.beyonditsm.financial.view.photoview.gestures.OnGestureListener;
+import com.beyonditsm.financial.view.photoview.gestures.VersionedGestureDetector;
+import com.beyonditsm.financial.view.photoview.scrollerproxy.ScrollerProxy;
 
 import java.lang.ref.WeakReference;
 
@@ -122,7 +122,7 @@ public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener,
 
     // Gesture Detectors
     private GestureDetector mGestureDetector;
-    private com.beyonditsm.financial.view.photoView.gestures.GestureDetector mScaleDragDetector;
+    private com.beyonditsm.financial.view.photoview.gestures.GestureDetector mScaleDragDetector;
 
     // These are set so we don't keep allocating them on the heap
     private final Matrix mBaseMatrix = new Matrix();

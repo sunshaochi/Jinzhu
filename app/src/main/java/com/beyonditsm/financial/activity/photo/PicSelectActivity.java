@@ -39,9 +39,9 @@ import com.beyonditsm.financial.entity.AlbumBean;
 import com.beyonditsm.financial.entity.ImageBean;
 import com.beyonditsm.financial.util.NativeImageLoader;
 import com.beyonditsm.financial.util.Uitls;
-import com.beyonditsm.financial.view.photoView.MyImageView;
-import com.beyonditsm.financial.view.photoView.tools.AlbumHelper;
-import com.beyonditsm.financial.view.photoView.tools.Config;
+import com.beyonditsm.financial.view.photoview.MyImageView;
+import com.beyonditsm.financial.view.photoview.tools.AlbumHelper;
+import com.beyonditsm.financial.view.photoview.tools.Config;
 
 import java.io.File;
 import java.io.Serializable;

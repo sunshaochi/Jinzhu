@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package com.beyonditsm.financial.view.photoView;
+package com.beyonditsm.financial.view.photoview;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -25,9 +25,9 @@ import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.widget.ImageView;
 
-import com.beyonditsm.financial.view.photoView.PhotoViewAttacher.OnMatrixChangedListener;
-import com.beyonditsm.financial.view.photoView.PhotoViewAttacher.OnPhotoTapListener;
-import com.beyonditsm.financial.view.photoView.PhotoViewAttacher.OnViewTapListener;
+import com.beyonditsm.financial.view.photoview.PhotoViewAttacher.OnMatrixChangedListener;
+import com.beyonditsm.financial.view.photoview.PhotoViewAttacher.OnPhotoTapListener;
+import com.beyonditsm.financial.view.photoview.PhotoViewAttacher.OnViewTapListener;
 
 
 public class PhotoView extends ImageView implements IPhotoView {

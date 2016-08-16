@@ -21,7 +21,7 @@ import com.beyonditsm.financial.activity.photo.PicSelectActivity;
 import com.beyonditsm.financial.entity.AlbumBean;
 import com.beyonditsm.financial.entity.ImageBean;
 import com.beyonditsm.financial.util.NativeImageLoader;
-import com.beyonditsm.financial.view.photoView.MyImageView;
+import com.beyonditsm.financial.view.photoview.MyImageView;
 
 
 public class PicSelectAdapter extends BaseAdapter {

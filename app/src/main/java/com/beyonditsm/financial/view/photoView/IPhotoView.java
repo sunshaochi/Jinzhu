@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package com.beyonditsm.financial.view.photoView;
+package com.beyonditsm.financial.view.photoview;
 
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -33,7 +33,7 @@ public interface IPhotoView {
     /**
      * Returns true if the PhotoView is set to allow zooming of Photos.
      *
-     * @return true if the PhotoView allows zooming.
+     * @return true if the photoview allows zooming.
      */
     boolean canZoom();
 

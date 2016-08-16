@@ -1,4 +1,4 @@
-package com.beyonditsm.financial.view.photoView;
+package com.beyonditsm.financial.view.photoview;
 
 import android.annotation.SuppressLint;
 import android.support.v4.view.ViewPager.PageTransformer;

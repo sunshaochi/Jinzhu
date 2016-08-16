@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package com.beyonditsm.financial.view.photoView.gestures;
+package com.beyonditsm.financial.view.photoview.gestures;
 
 
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.view.MotionEvent;
 
-import com.beyonditsm.financial.view.photoView.Compat;
+import com.beyonditsm.financial.view.photoview.Compat;
 
 
 @TargetApi(5)

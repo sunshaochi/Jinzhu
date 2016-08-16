@@ -2,8 +2,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle"
     >
-    <corners android:radius="5dp"/>
-    <stroke android:color="#ff5023"
-        android:width="0.5dp"
-        />
+<stroke android:color="@color/credit_offline_divder_org"
+    android:width="0.5dp"
+    />
 </shape>

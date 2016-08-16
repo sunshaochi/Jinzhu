@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bg_credit_offline_reupload"
+    >
+    <TextView
+        android:background="#ffddc6"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:layout_width="match_parent"
+        android:layout_height="44dp" />
+    <View
+        android:id="@+id/v_divider"
+        android:background="@color/credit_offline_divder_org"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
+    <LinearLayout
+        android:background="#fff2e9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <ImageView
+            android:id="@+id/iv_uploaded"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:scaleType="centerCrop"
+            />
+        <Button
+            android:gravity="center"
+            android:text="重新上传"
+            android:textColor="@color/white"
+            android:id="@+id/btn_reUpload"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="44dp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
+    </LinearLayout>
+
+</LinearLayout>

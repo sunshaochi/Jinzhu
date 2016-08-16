@@ -1,4 +1,4 @@
-package com.beyonditsm.financial.view.photoView;
+package com.beyonditsm.financial.view.photoview;
 
 import android.content.Context;
 import android.util.AttributeSet;

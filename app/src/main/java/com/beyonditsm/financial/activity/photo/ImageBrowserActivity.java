@@ -14,9 +14,9 @@ import android.widget.RelativeLayout;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.entity.ImageBean;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
-import com.beyonditsm.financial.view.photoView.DepthPageTransformer;
-import com.beyonditsm.financial.view.photoView.PhotoTextView;
-import com.beyonditsm.financial.view.photoView.ScrollViewPager;
+import com.beyonditsm.financial.view.photoview.DepthPageTransformer;
+import com.beyonditsm.financial.view.photoview.PhotoTextView;
+import com.beyonditsm.financial.view.photoview.ScrollViewPager;
 
 import java.io.Serializable;
 import java.util.List;

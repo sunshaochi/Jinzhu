@@ -1,4 +1,4 @@
-package com.beyonditsm.financial.view.photoView.tools;
+package com.beyonditsm.financial.view.photoview.tools;
 
 import android.content.ContentResolver;
 import android.content.Context;
