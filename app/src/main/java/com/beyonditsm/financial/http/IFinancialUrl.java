@@ -10,7 +10,7 @@ public interface IFinancialUrl {
 //    String BASE_URL = "http://172.16.6.236:8080";
     /*吕东测试*/
     String BASE_URL = "http://172.16.6.218";
-//    String BASE_URL ="http://172.16.6.228:8080";
+//    String BASE_URL ="http://172.16.6.218:8080";
     /*袁峰测试*/
 //    String BASE_URL = "http://172.16.6.153:8080";
 //    String BASE_URL = "http://172.16.6.228:8080";
@@ -190,7 +190,8 @@ public interface IFinancialUrl {
     String ADD_BANK_CARD = BASE_URL + API_VERSION + "/wallet/login/addBankCard.do";
     /*修改银行卡状态*/
     String MODIFY_BANK_CARD_STATUS = BASE_URL + API_VERSION + "/wallet/login/modifyBankCard.do";
-
+    /*线下订单资料列表*/
+    String CREDIT_OFFLINE_LIST_URL = BASE_URL + API_VERSION + "/platform/login/getOfflineOrderDetail.do";
     /*上传资料列表*/
     String UPLOAD_LIST_URL = BASE_URL + API_VERSION + "/platform/login/findOrderFlow.do";
     /*查找上传详情*/
@@ -225,4 +226,6 @@ public interface IFinancialUrl {
     String VIP_INFO = BASE_URL+API_VERSION+"/manager/unlogin/findVipInfo.do";
     /*更新位置*/
     String UPDATE_LOCATION = BASE_URL+API_VERSION +"/platform/login/updateLocation.do";
+    /*线下订单上传资料*/
+    String SAVE_OR_UPDATE_ORDER_IMAGE = BASE_URL+API_VERSION +"/platform/login/saveOrUpdateOrderImage.do";
 }

@@ -2,8 +2,13 @@ package com.beyonditsm.financial.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Parcelable;
+import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,14 +29,26 @@ import com.beyonditsm.financial.activity.credit.CreditUploadAct;
 import com.beyonditsm.financial.activity.credit.SubFlowAct;
 import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
 import com.beyonditsm.financial.activity.user.MyCreditAct;
+import com.beyonditsm.financial.adapter.CreditOfflineAdapter;
 import com.beyonditsm.financial.entity.CreditEvent;
+import com.beyonditsm.financial.entity.CreditOfflineDetil;
+import com.beyonditsm.financial.entity.ProductSortEntity;
+import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UpLoadEntity;
+import com.beyonditsm.financial.fragment.listener.CreditOfflineDialogListener;
+import com.beyonditsm.financial.fragment.listener.CreditOfflineReloadListener;
 import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.GsonUtils;
+import com.beyonditsm.financial.util.MyBitmapUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.view.AutoDismissDialog;
 import com.beyonditsm.financial.view.LoadingView;
+import com.beyonditsm.financial.view.MySelfSheetDialog;
+import com.beyonditsm.financial.widget.FinalLoadDialog;
+import com.lidroid.xutils.http.client.multipart.content.FileBody;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.eventbus.EventBus;
 import com.tandong.sa.json.Gson;
 import com.tandong.sa.json.reflect.TypeToken;
@@ -40,13 +57,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by xuleyuan on 2016/8/1.
  */
-public class CreditOfflineFrag extends BaseFragment {
+public class CreditOfflineFrag extends BaseFragment implements CreditOfflineReloadListener,CreditOfflineDialogListener {
     @ViewInject(R.id.gv_upload)
     private GridView gvUpload;
     @ViewInject(R.id.tvCredit)
@@ -65,17 +87,25 @@ public class CreditOfflineFrag extends BaseFragment {
     private TextView tvNo;//不需要增信材料
     @ViewInject(R.id.llHas)
     private LinearLayout llHas;//需要增信材料
-//    @ViewInject(R.id.lv_credit_third)
-//    private LoadingView lvCreditThird;
+    @ViewInject(R.id.lv_credit_third)
+    private LoadingView lvCreditThird;
+    @ViewInject(R.id.tv_description)
+    private TextView tvDescription;
+    @ViewInject(R.id.tv_upload)
+    private TextView tvUpload;
     private Gson gson = new Gson();
-    private MyAdapter adapter;
-
-    List<UpLoadEntity> datas;
+    private CreditOfflineAdapter adapter;
     private String orderId;
 
     private int act_type;
     private String orderStatus;
     private String orderSts;
+    private String photoSaveName = "";
+    private String path = "";
+    private String photoSavePath;
+    public static final int ZOOM = 0;
+    public static final int TAKE = 1;
+    private FinalLoadDialog dialog;
 
     @SuppressLint("InflateParams")
     @Override
@@ -98,6 +128,9 @@ public class CreditOfflineFrag extends BaseFragment {
             ivProgress.setBackgroundResource(R.mipmap.progress_04);
             tvCredit.setVisibility(View.GONE);
         }
+        dialog = new FinalLoadDialog(context);
+        dialog.setTitle("努力上传中");
+        dialog.setCancelable(false);
         getUploadList(orderId);
 //        lvCredit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
@@ -139,42 +172,46 @@ public class CreditOfflineFrag extends BaseFragment {
      */
     private void getUploadList(final String orderId) {
 
-        RequestManager.getCommManager().getUpLoadList(orderId, new RequestManager.CallBack() {
+        RequestManager.getCommManager().getCreditOfflineDetil(orderId, new RequestManager.CallBack() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onSucess(String result) throws JSONException {
 
-//                lvCreditThird.loadComplete();
-                JSONObject jsonObject = new JSONObject(result);
+                lvCreditThird.loadComplete();
+                ResultData<CreditOfflineDetil> rd = (ResultData<CreditOfflineDetil>) GsonUtils.json(result, CreditOfflineDetil.class);
+                CreditOfflineDetil creditOfflineDetil = rd.getData();
+                tvDescription.setText(creditOfflineDetil.getOrderRemark() + "");
+                if ("REJECT".equals(creditOfflineDetil.getOrderSts())) {
+                    tvUpload.setVisibility(View.VISIBLE);
+                } else {
+                    tvUpload.setVisibility(View.GONE);
+                }
 
-                if (jsonObject.get("data") instanceof JSONArray) {
-                    JSONArray array = jsonObject.getJSONArray("data");
-                    datas = gson.fromJson(array.toString(), new TypeToken<List<UpLoadEntity>>() {
-                    }.getType());
-                    applayStatus(orderId);
-                    setIsTvClick(datas);
+                List<CreditOfflineDetil.ImagesBean> list = creditOfflineDetil.getImages();
+                assert list != null;
+                if (list.size() > 0) {
                     if (adapter == null) {
-                        adapter = new MyAdapter(datas);
-//                        lvCredit.setAdapter(adapter);
+                        adapter = new CreditOfflineAdapter(context, list);
                     } else {
-                        adapter.notifyChange(datas);
+                        adapter.notifyDataChange(list);
                     }
-                }else{
-//                    lvCreditThird.noContent();
-                    applayStatus(orderId);
-                    new AutoDismissDialog(getContext()).builder().show();
+                    adapter.setCreditListener(CreditOfflineFrag.this);
+                    gvUpload.setAdapter(adapter);
+                } else {
+                    lvCreditThird.noContent();
                 }
 
             }
 
             @Override
             public void onError(int status, String msg) {
-//                lvCreditThird.loadError();
-//                lvCreditThird.setOnRetryListener(new LoadingView.OnRetryListener() {
-//                    @Override
-//                    public void OnRetry() {
-//                        getUploadList(orderId);
-//                    }
-//                });
+                lvCreditThird.loadError();
+                lvCreditThird.setOnRetryListener(new LoadingView.OnRetryListener() {
+                    @Override
+                    public void OnRetry() {
+                        getUploadList(orderId);
+                    }
+                });
 
             }
         });
@@ -199,41 +236,6 @@ public class CreditOfflineFrag extends BaseFragment {
         });
     }
 
-    private void setIsTvClick(List<UpLoadEntity> list) {
-        boolean isClick = true;
-        if (list != null && list.size() > 0) {
-            for (int i = 0; i < list.size(); i++) {
-                isClick = isClick && ("1".equals(list.get(i).getIsComplete()));
-            }
-        }
-//        if (!TextUtils.isEmpty(orderStatus)) {
-//            MyLogUtils.info("订单状态：" + orderStatus);
-//            if ("CREDIT_MANAGER_APPROVAL".equals(orderStatus)||
-//                    "CREDIT_MANAGER_GRAB".equals(orderStatus) ||
-//                    "ORGANIZATION_APPROVAL".equals(orderStatus) ||
-//                    "WAIT_BACKGROUND_APPROVAL".equals(orderStatus)||
-//                    "CANCEL_REQUET".equals(orderStatus)) {//审批中状态,待审批，已取消
-//                isClick = false;
-//            }else if ("SUPPLEMENT_DATA".equals(orderStatus)){
-//                isClick= true;
-//            }
-//        }
-
-        if (isClick) {
-            tvCredit.setBackgroundResource(R.drawable.button_gen);
-            tvCredit.setEnabled(true);
-            tvCredit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    applayCredit(orderId);
-                }
-            });
-        } else {
-            tvCredit.setBackgroundResource(R.drawable.button_grey);
-            tvCredit.setEnabled(false);
-        }
-
-    }
 
     /**
      * 是否需要增信资料
@@ -310,6 +312,15 @@ public class CreditOfflineFrag extends BaseFragment {
         });
     }
 
+    @OnClick({R.id.tv_upload})
+    public void todo(View v) {
+        switch (v.getId()){
+            case R.id.tv_upload:
+
+                break;
+        }
+    }
+
 
     private void applayStatus(final String orderId) {
         RequestManager.getCommManager().applayStatus(orderId, new RequestManager.CallBack() {
@@ -342,108 +353,117 @@ public class CreditOfflineFrag extends BaseFragment {
         });
     }
 
-    /**
-     * 适配器
-     */
-    private class MyAdapter extends BaseAdapter {
 
-        private List<UpLoadEntity> list;
-
-        public MyAdapter(List<UpLoadEntity> list) {
-            this.list = list;
-        }
-
-        public void notifyChange(List<UpLoadEntity> list) {
-            this.list = list;
-            notifyDataSetChanged();
-        }
-
-        @Override
-        public int getCount() {
-            return list.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return list.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder;
-            if (convertView == null) {
-                convertView = View.inflate(getContext(), R.layout.lv_upload_item, null);
-                holder = new ViewHolder(convertView);
-                convertView.setTag(holder);
-            } else {
-                holder = (ViewHolder) convertView.getTag();
-            }
-            holder.tvContent.setText(list.get(position).getDisplayName());
-            if ("0".equals(list.get(position).getIsComplete())) {
-//                holder.ivUpload.setImageResource(R.mipmap.cm_btn_more_nor);
-                holder.tvIsLoad.setText("未上传");
-                holder.tvState.setVisibility(View.GONE);
-            } else {
-//                holder.ivUpload.setImageResource(R.mipmap.load_sucess);
-//                holder.tvState.setVisibility(View.VISIBLE);
-                holder.tvIsLoad.setText("已上传");
-                holder.tvIsLoad.setBackgroundResource(R.drawable.btn_bg_green);
+    @Override
+    public void onReload(String id, String name, String imageUrl) {
+        RequestManager.getCommManager().saveOrUpdateOrderImage(orderId, id, name, imageUrl, new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
 
             }
-            if ("DRAFT".equals(orderStatus)) {
-                holder.tvState.setVisibility(View.GONE);
-            } else if ("WAIT_BACKGROUND_APPROVAL".equals(orderStatus) ||//待审批
-                    "CANCEL_REQUET".equals(orderStatus) ||//取消订单
-                    "NO_PASS".equals(orderStatus) ||//审批不通过
-                    "REJECT".equals(orderStatus) ||//驳回
-                    "PASS".equals(orderStatus) ||//通过
-                    "SUPPLEMENT_DATA".equals(orderStatus) ||//补件中
-                    "ORGANIZATION_APPROVAL".equals(orderStatus) ||//机构审批中
-                    "CREDIT_MANAGER_GRAB".equals(orderStatus) ||//待抢单
-                    "CREDIT_MANAGER_APPROVAL".equals(orderStatus)) {//已抢单
-                holder.tvState.setVisibility(View.VISIBLE);
-            }
-//            else if () {
-//                holder.tvState.setVisibility(View.VISIBLE);
-//            }
-//            if (!"DRAFT".equals(orderSts)){
-//                holder.tvState.setVisibility(View.VISIBLE);
-//            }
 
-            if (list.get(position).getStatus() != null) {
-                if (list.get(position).getStatus() == 0) {
-                    holder.tvState.setText("驳回");
-                    holder.tvState.setBackgroundResource(R.drawable.btn_bg_false);
-                } else if (list.get(position).getStatus() == 1) {
-                    holder.tvState.setText("通过");
-                    holder.tvState.setBackgroundResource(R.drawable.btn_bg_green);
-                } else if (list.get(position).getStatus() == 2) {
-                    holder.tvState.setText("审核中");
-                    holder.tvState.setBackgroundResource(R.drawable.button_gen);
+            @Override
+            public void onError(int status, String msg) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onPickImage(String imageName, final String uItemId) {
+
+            MySelfSheetDialog dialog = new MySelfSheetDialog(context);
+            dialog.builder().addSheetItem("拍照", null, new MySelfSheetDialog.OnSheetItemClickListener() {
+                @Override
+                public void onClick(int which) {
+                    //执行拍照前，应该先判断SD卡是否存在
+                    String SDState = Environment.getExternalStorageState();
+                    if (SDState.equals(Environment.MEDIA_MOUNTED)) {
+                        photoSaveName = String.valueOf(System.currentTimeMillis()) + ".png";
+                        path = photoSavePath + photoSaveName;
+                        Uri imageUri;
+                        Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        imageUri = Uri.fromFile(new File(photoSavePath, photoSaveName));
+                        openCameraIntent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
+                        openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                        startActivityForResult(openCameraIntent, TAKE);
+                    } else {
+                        MyToastUtils.showShortToast(context, "SD卡不存在");
+                    }
+
                 }
-            }
+            }).addSheetItem("从相册选取", null, new MySelfSheetDialog.OnSheetItemClickListener() {
+                @Override
+                public void onClick(int which) {
+                    Intent openAlbumIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                    openAlbumIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                    startActivityForResult(openAlbumIntent, ZOOM);
+                }
+            }).show();
+    }
 
-            return convertView;
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        try {
+            if (resultCode != getActivity().RESULT_OK) {
+                return;
+            }
+            Uri uri;
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");//设置日期格式
+            String time = df.format(new Date());
+            switch (requestCode) {
+                case ZOOM:// 相册
+                    if (data == null || "".equals(data.toString())) {
+                        return;
+                    }
+                    uri = data.getData();
+                    if (null != uri && !"".equals(uri.toString())) {
+                        Bitmap compressB = MyBitmapUtils.zoomImgKeepWH(MyBitmapUtils.decodeUriAsBitmap(context, uri), 300, 300, true);
+                        MyBitmapUtils.saveBitmap(compressB, "upload/cache/credit_upload" + time + ".png");
+                    }
+
+                    break;
+                case TAKE:// 拍照
+//                    path = photoSavePath + photoSaveName;
+                    MyBitmapUtils.saveBitmap(MyBitmapUtils.LoadBigImg(path, 300, 300), "upload/cache/credit_upload" + time + ".png");
+                    break;
+            }
+            path = Environment.getExternalStorageDirectory() + "/upload/cache/credit_upload" + time + ".png";
+            uploadFile(path);
+            super.onActivityResult(requestCode, resultCode, data);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
 
-        public class ViewHolder {
-            public final View root;
-            public final TextView tvContent;
-            public final TextView tvIsLoad;
-            public final TextView tvState;
+    }
 
-            public ViewHolder(View root) {
-                tvContent = (TextView) root.findViewById(R.id.tvContent);
-                tvIsLoad = (TextView) root.findViewById(R.id.tvIsLoad);
-                tvState = (TextView) root.findViewById(R.id.tvState);
-                this.root = root;
+    /**
+     * 上传图片
+     *
+     * @param file 图片地址
+     */
+    private void uploadFile(final String file) {
+        dialog.show();
+        Map<String, FileBody> fileMaps = new HashMap<>();
+        FileBody fb = new FileBody(new File(file));
+        fileMaps.put("file", fb);
+
+        RequestManager.getCommManager().toUpLoadFile(fileMaps, new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) {
+                dialog.cancel();
+
+                MyLogUtils.degug(result);
+
+
             }
-        }
+
+            @Override
+            public void onError(int status, String msg) {
+                dialog.cancel();
+                MyLogUtils.info(msg);
+            }
+        });
     }
 
 
