@@ -8,31 +8,24 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.AppManager;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.credit.CreditStepAct;
-import com.beyonditsm.financial.activity.credit.CreditUploadAct;
 import com.beyonditsm.financial.activity.credit.SubFlowAct;
 import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
 import com.beyonditsm.financial.activity.user.MyCreditAct;
 import com.beyonditsm.financial.adapter.CreditOfflineAdapter;
 import com.beyonditsm.financial.entity.CreditEvent;
 import com.beyonditsm.financial.entity.CreditOfflineDetil;
-import com.beyonditsm.financial.entity.ProductSortEntity;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UpLoadEntity;
 import com.beyonditsm.financial.fragment.listener.CreditOfflineDialogListener;
@@ -42,13 +35,12 @@ import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyBitmapUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
-import com.beyonditsm.financial.view.AutoDismissDialog;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
+import com.beyonditsm.financial.widget.DialogEditText;
 import com.beyonditsm.financial.widget.FinalLoadDialog;
 import com.lidroid.xutils.http.client.multipart.content.FileBody;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.eventbus.EventBus;
 import com.tandong.sa.json.Gson;
 import com.tandong.sa.json.reflect.TypeToken;
@@ -107,6 +99,8 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
     public static final int TAKE = 1;
     private FinalLoadDialog dialog;
 
+    private String imageId = "";
+    private String imageName = "";
     @SuppressLint("InflateParams")
     @Override
     public View initView(LayoutInflater inflater) {
@@ -150,7 +144,6 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
      */
     public void onEvent(CreditEvent event) {
         getUploadList(orderId);
-        applayStatus(orderId);
     }
 
     @Override
@@ -181,8 +174,20 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
                 ResultData<CreditOfflineDetil> rd = (ResultData<CreditOfflineDetil>) GsonUtils.json(result, CreditOfflineDetil.class);
                 CreditOfflineDetil creditOfflineDetil = rd.getData();
                 tvDescription.setText(creditOfflineDetil.getOrderRemark() + "");
+
                 if ("REJECT".equals(creditOfflineDetil.getOrderSts())) {
+                    if (creditOfflineDetil.getImages().size()>0){
+                        enableApplyCredit();
+                    }else {
+                        tvCredit.setVisibility(View.GONE);
+                    }
                     tvUpload.setVisibility(View.VISIBLE);
+                    tvUpload.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            new DialogEditText(context,"").builder().setCreditOfflineDialogListener(CreditOfflineFrag.this).show();
+                        }
+                    });
                 } else {
                     tvUpload.setVisibility(View.GONE);
                 }
@@ -215,6 +220,17 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
 
             }
         });
+    }
+
+    private void enableApplyCredit() {
+        tvCredit.setBackgroundResource(R.drawable.button_gen);
+                    tvCredit.setEnabled(true);
+                    tvCredit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            applayCredit(orderId);
+                        }
+                    });
     }
 
     /**
@@ -312,94 +328,80 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
         });
     }
 
-    @OnClick({R.id.tv_upload})
-    public void todo(View v) {
-        switch (v.getId()){
-            case R.id.tv_upload:
-
-                break;
-        }
-    }
 
 
-    private void applayStatus(final String orderId) {
-        RequestManager.getCommManager().applayStatus(orderId, new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
-                JSONObject object = new JSONObject(result);
-                JSONObject data = object.getJSONObject("data");
-                int r = data.getInt("result");
-                orderSts = data.getString("orderSts");
-                MyLogUtils.info("返回的结果：" + r + ",orderSts:" + orderSts);
-                if (r == 1) {
-                    tvCredit.setBackgroundResource(R.drawable.button_gen);
-                    tvCredit.setEnabled(true);
-                    tvCredit.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            applayCredit(orderId);
-                        }
-                    });
-                } else if (r == 0) {
-                    tvCredit.setBackgroundResource(R.drawable.button_grey);
-                    tvCredit.setEnabled(false);
-                }
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-
-            }
-        });
-    }
+//    private void applayStatus(final String orderId) {
+//        RequestManager.getCommManager().applayStatus(orderId, new RequestManager.CallBack() {
+//            @Override
+//            public void onSucess(String result) throws JSONException {
+//                JSONObject object = new JSONObject(result);
+//                JSONObject data = object.getJSONObject("data");
+//                int r = data.getInt("result");
+//                orderSts = data.getString("orderSts");
+//                MyLogUtils.info("返回的结果：" + r + ",orderSts:" + orderSts);
+//                if (r == 1) {
+//                    tvCredit.setBackgroundResource(R.drawable.button_gen);
+//                    tvCredit.setEnabled(true);
+//                    tvCredit.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            applayCredit(orderId);
+//                        }
+//                    });
+//                } else if (r == 0) {
+//                    tvCredit.setBackgroundResource(R.drawable.button_grey);
+//                    tvCredit.setEnabled(false);
+//                }
+//            }
+//
+//            @Override
+//            public void onError(int status, String msg) {
+//
+//            }
+//        });
+//    }
 
 
     @Override
     public void onReload(String id, String name, String imageUrl) {
-        RequestManager.getCommManager().saveOrUpdateOrderImage(orderId, id, name, imageUrl, new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
-
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-
-            }
-        });
+        new DialogEditText(context,id).builder().setCreditOfflineDialogListener(CreditOfflineFrag.this).show();
     }
 
+    public void prepareImage(String imageName){
+        MySelfSheetDialog dialog = new MySelfSheetDialog(context);
+        dialog.builder().addSheetItem("拍照", null, new MySelfSheetDialog.OnSheetItemClickListener() {
+            @Override
+            public void onClick(int which) {
+                //执行拍照前，应该先判断SD卡是否存在
+                String SDState = Environment.getExternalStorageState();
+                if (SDState.equals(Environment.MEDIA_MOUNTED)) {
+                    photoSaveName = String.valueOf(System.currentTimeMillis()) + ".png";
+                    path = photoSavePath + photoSaveName;
+                    Uri imageUri;
+                    Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    imageUri = Uri.fromFile(new File(photoSavePath, photoSaveName));
+                    openCameraIntent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
+                    openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                    startActivityForResult(openCameraIntent, TAKE);
+                } else {
+                    MyToastUtils.showShortToast(context, "SD卡不存在");
+                }
+
+            }
+        }).addSheetItem("从相册选取", null, new MySelfSheetDialog.OnSheetItemClickListener() {
+            @Override
+            public void onClick(int which) {
+                Intent openAlbumIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                openAlbumIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                startActivityForResult(openAlbumIntent, ZOOM);
+            }
+        }).show();
+    }
     @Override
     public void onPickImage(String imageName, final String uItemId) {
-
-            MySelfSheetDialog dialog = new MySelfSheetDialog(context);
-            dialog.builder().addSheetItem("拍照", null, new MySelfSheetDialog.OnSheetItemClickListener() {
-                @Override
-                public void onClick(int which) {
-                    //执行拍照前，应该先判断SD卡是否存在
-                    String SDState = Environment.getExternalStorageState();
-                    if (SDState.equals(Environment.MEDIA_MOUNTED)) {
-                        photoSaveName = String.valueOf(System.currentTimeMillis()) + ".png";
-                        path = photoSavePath + photoSaveName;
-                        Uri imageUri;
-                        Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        imageUri = Uri.fromFile(new File(photoSavePath, photoSaveName));
-                        openCameraIntent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
-                        openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                        startActivityForResult(openCameraIntent, TAKE);
-                    } else {
-                        MyToastUtils.showShortToast(context, "SD卡不存在");
-                    }
-
-                }
-            }).addSheetItem("从相册选取", null, new MySelfSheetDialog.OnSheetItemClickListener() {
-                @Override
-                public void onClick(int which) {
-                    Intent openAlbumIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                    openAlbumIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                    startActivityForResult(openAlbumIntent, ZOOM);
-                }
-            }).show();
+        prepareImage(uItemId);
+        this.imageId = uItemId;
+        this.imageName = imageName;
     }
 
     @Override
@@ -429,7 +431,7 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
                     break;
             }
             path = Environment.getExternalStorageDirectory() + "/upload/cache/credit_upload" + time + ".png";
-            uploadFile(path);
+            uploadFile(path,imageId,imageName);
             super.onActivityResult(requestCode, resultCode, data);
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -442,7 +444,7 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
      *
      * @param file 图片地址
      */
-    private void uploadFile(final String file) {
+    private void uploadFile(final String file, final String imageId, final String imageName) {
         dialog.show();
         Map<String, FileBody> fileMaps = new HashMap<>();
         FileBody fb = new FileBody(new File(file));
@@ -452,8 +454,19 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
             @Override
             public void onSucess(String result) {
                 dialog.cancel();
+                RequestManager.getCommManager().saveOrUpdateOrderImage(orderId, imageId, imageName, result, new RequestManager.CallBack() {
+                    @Override
+                    public void onSucess(String result) throws JSONException {
+                          getUploadList(orderId);
+                    }
 
-                MyLogUtils.degug(result);
+                    @Override
+                    public void onError(int status, String msg) {
+
+                    }
+                });
+
+
 
 
             }

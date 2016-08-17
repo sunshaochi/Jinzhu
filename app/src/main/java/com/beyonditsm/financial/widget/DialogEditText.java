@@ -38,8 +38,9 @@ public class DialogEditText implements View.OnClickListener {
         Display display = windowManager.getDefaultDisplay();
     }
 
-    public void setCreditOfflineDialogListener(CreditOfflineDialogListener creditOfflineDialogListener) {
+    public DialogEditText setCreditOfflineDialogListener(CreditOfflineDialogListener creditOfflineDialogListener) {
         this.creditOfflineDialogListener = creditOfflineDialogListener;
+        return this;
     }
 
     @SuppressLint("InflateParams")
@@ -65,7 +66,6 @@ public class DialogEditText implements View.OnClickListener {
 
     public void show() {
         dialog.show();
-        mThread.start();
     }
 
     public void dismiss() {
@@ -73,39 +73,13 @@ public class DialogEditText implements View.OnClickListener {
         flag = false;
     }
 
-    private Thread mThread = new Thread() {
-        @Override
-        public void run() {
-            super.run();
-            while (flag) {
-                try {
-                    Thread.sleep(2000);
-                    Message msg = mHandler.obtainMessage();
-                    msg.what = FLAG_DISMISS;
-                    mHandler.sendMessage(msg);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    };
-
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (msg.what == FLAG_DISMISS)
-                dismiss();
-        }
-
-    };
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_pick:
                 if (!TextUtils.isEmpty(edName.getText().toString())) {
                     creditOfflineDialogListener.onPickImage(edName.getText().toString() + "",imageId);
+                    dismiss();
                 }
                 break;
             default:

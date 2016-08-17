@@ -9,8 +9,8 @@ public interface IFinancialUrl {
     /*吕建明*/
 //    String BASE_URL = "http://172.16.6.236:8080";
     /*吕东测试*/
-    String BASE_URL = "http://172.16.6.218";
-//    String BASE_URL ="http://172.16.6.218:8080";
+//    String BASE_URL = "http://172.16.5.59";
+    String BASE_URL ="http://172.16.6.218";
     /*袁峰测试*/
 //    String BASE_URL = "http://172.16.6.153:8080";
 //    String BASE_URL = "http://172.16.6.228:8080";

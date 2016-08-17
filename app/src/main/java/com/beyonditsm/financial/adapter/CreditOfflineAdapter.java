@@ -93,6 +93,13 @@ public class CreditOfflineAdapter extends BaseAdapter {
     private void unChangeableGetView(final int position, View convertView, ViewGroup parent, ViewHolder holder) {
         holder.tvTag.setText(list.get(position).getName());
         ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + list.get(position).getImgUrl(), holder.ivPic, options);
+        holder.btnReload.setVisibility(View.GONE);
+
+    }
+
+    private void changeableGetView(final int position, View convertView, ViewGroup parent, ViewHolder holder) {
+        holder.tvTag.setText(list.get(position).getName());
+        ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + list.get(position).getImgUrl(), holder.ivPic, options);
         holder.btnReload.setVisibility(View.VISIBLE);
         holder.btnReload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,12 +107,6 @@ public class CreditOfflineAdapter extends BaseAdapter {
                 creditListener.onReload(list.get(position).getId(),list.get(position).getName(),list.get(position).getImgUrl());
             }
         });
-    }
-
-    private void changeableGetView(int position, View convertView, ViewGroup parent, ViewHolder holder) {
-        holder.tvTag.setText(list.get(position).getName());
-        ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + list.get(position).getImgUrl(), holder.ivPic, options);
-        holder.btnReload.setVisibility(View.GONE);
     }
 
 

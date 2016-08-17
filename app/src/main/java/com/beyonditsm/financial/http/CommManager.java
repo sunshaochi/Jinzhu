@@ -3,13 +3,16 @@ package com.beyonditsm.financial.http;
 import android.text.TextUtils;
 
 import com.beyonditsm.financial.entity.ChangePwdEntity;
+import com.beyonditsm.financial.entity.CreditOfflineUploadEntity;
 import com.beyonditsm.financial.entity.MyCreditEntity;
 import com.beyonditsm.financial.entity.OrderBean;
 import com.beyonditsm.financial.entity.SumLoadEntity;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
+import com.beyonditsm.financial.util.ParamsUtil;
 import com.lidroid.xutils.http.client.multipart.content.FileBody;
+import com.tandong.sa.json.JsonObject;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -31,8 +34,8 @@ public class CommManager extends RequestManager {
     /**
      * 登录
      *
-     * @param ue 用户实体类
-     * @param callBack  回调
+     * @param ue       用户实体类
+     * @param callBack 回调
      */
     public void toLogin(UserEntity ue, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
@@ -44,14 +47,14 @@ public class CommManager extends RequestManager {
     /**
      * 注册
      *
-     * @param ue 用户entity
-     * @param callBack  回调
+     * @param ue       用户entity
+     * @param callBack 回调
      */
     public void toRegister(UserEntity ue, String phoneNumber, String captcha, CallBack callBack) {
         List<NameValuePair> queryParams = new ArrayList<>();
-        queryParams.add(new BasicNameValuePair("phoneNumber",phoneNumber));
-        queryParams.add(new BasicNameValuePair("username",ue.getUsername()));
-        queryParams.add(new BasicNameValuePair("captcha",captcha));
+        queryParams.add(new BasicNameValuePair("phoneNumber", phoneNumber));
+        queryParams.add(new BasicNameValuePair("username", ue.getUsername()));
+        queryParams.add(new BasicNameValuePair("captcha", captcha));
         if (!TextUtils.isEmpty(ue.getReferralCode())) {
             queryParams.add(new BasicNameValuePair("referralCode", ue.getReferralCode()));
 
@@ -64,7 +67,7 @@ public class CommManager extends RequestManager {
      * 获取验证码
      *
      * @param phoneNumber 手机号
-     * @param callBack  回调
+     * @param callBack    回调
      */
     public void getCode(String phoneNumber, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
@@ -75,15 +78,16 @@ public class CommManager extends RequestManager {
     /**
      * 获取产品列表的筛选参数
      */
-    public void findSortParam(String cityName,final CallBack callBack){
+    public void findSortParam(String cityName, final CallBack callBack) {
         List<NameValuePair> params = new ArrayList<>();
-        params.add(new BasicNameValuePair("cityName",cityName));
+        params.add(new BasicNameValuePair("cityName", cityName));
         doPost(IFinancialUrl.FIND_PRODUCT_SORT_PARA, params, callBack);
     }
+
     /**
      * 查看用户资料
      *
-     * @param callBack  回调
+     * @param callBack 回调
      */
     public void findUserInfo(final CallBack callBack) {
 //        Map<String, String> params = new HashMap<String, String>();
@@ -94,8 +98,8 @@ public class CommManager extends RequestManager {
     /**
      * 修改密码
      *
-     * @param cpe 修改密码实体类
-     * @param callBack  回调
+     * @param cpe      修改密码实体类
+     * @param callBack 回调
      */
     public void toChangePwd(ChangePwdEntity cpe, final CallBack callBack) {
         Map<String, String> params = new HashMap<>();
@@ -107,7 +111,7 @@ public class CommManager extends RequestManager {
     /**
      * 退出
      *
-     * @param callBack  回调
+     * @param callBack 回调
      */
     public void toLoginOut(final CallBack callBack) {
         Map<String, String> params = new HashMap<>();
@@ -117,8 +121,8 @@ public class CommManager extends RequestManager {
     /**
      * 我的贷款
      *
-     * @param mce 我的贷款实体类
-     * @param callBack  回调
+     * @param mce      我的贷款实体类
+     * @param callBack 回调
      */
     public void myCredit(MyCreditEntity mce, final CallBack callBack) {
         Map<String, String> params = new HashMap<>();
@@ -130,8 +134,8 @@ public class CommManager extends RequestManager {
     /**
      * 更新资料
      *
-     * @param ue 用户entity
-     * @param callBack  回调
+     * @param ue       用户entity
+     * @param callBack 回调
      */
     public void updateData(UserEntity ue, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
@@ -165,6 +169,7 @@ public class CommManager extends RequestManager {
 
     /**
      * 上传图片
+     *
      * @param fileMaps 图片
      * @param callBack 回调
      */
@@ -190,6 +195,7 @@ public class CommManager extends RequestManager {
 
     /**
      * 下载小图片
+     *
      * @param fileMaps 参数集合
      * @param callBack 回调
      */
@@ -201,7 +207,7 @@ public class CommManager extends RequestManager {
      * 忘记密码
      *
      * @param newPassword 新密码
-     * @param callBack  回调
+     * @param callBack    回调
      */
     public void fogetPwd(String phoneNumber, String captcha, String newPassword, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
@@ -215,7 +221,7 @@ public class CommManager extends RequestManager {
      * 发送验证码找回密码验证码
      *
      * @param phoneNumber 手机号
-     * @param callBack  回调
+     * @param callBack    回调
      */
     public void findpwbyCode(String phoneNumber, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
@@ -228,7 +234,7 @@ public class CommManager extends RequestManager {
      * 用户查看订单详情
      *
      * @param orderId  订单id
-     * @param callBack  回调
+     * @param callBack 回调
      */
     public void checkMyOrderDetail(String orderId, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
@@ -240,7 +246,7 @@ public class CommManager extends RequestManager {
      * 通过推荐码加好友
      *
      * @param myReferralCode 推荐码
-     * @param callBack  回调
+     * @param callBack       回调
      */
     public void myReferralCode(String myReferralCode, final CallBack callBack) {
         Map<String, String> params = new HashMap<>();
@@ -251,7 +257,7 @@ public class CommManager extends RequestManager {
     /**
      * 通过账户id获取好友列表
      *
-     * @param callBack  回调
+     * @param callBack 回调
      */
     public void getFriendList(final CallBack callBack) {
         Map<String, String> params = new HashMap<>();
@@ -262,7 +268,7 @@ public class CommManager extends RequestManager {
      * 信贷经理抢单成功后 添加订单里的客户为好友
      *
      * @param clientId 订单里面的客户id
-     * @param callBack  回调
+     * @param callBack 回调
      */
     public void addFriendAboutOrder(String clientId, final CallBack callBack) {
         Map<String, String> params = new HashMap<>();
@@ -273,9 +279,9 @@ public class CommManager extends RequestManager {
     /**
      * 提交附件
      *
-     * @param orderNo 订单号
+     * @param orderNo  订单号
      * @param fileMaps 图片集合
-     * @param callBack  回调
+     * @param callBack 回调
      */
     public void submitFujian(String orderNo, String isSupplementFile, Map<String, List<FileBody>> fileMaps, CallBack callBack) {
         submitFujian(IFinancialUrl.SUBMIT_FUJIAN_URL, orderNo, isSupplementFile, fileMaps, callBack);
@@ -284,8 +290,8 @@ public class CommManager extends RequestManager {
     /**
      * 添加好友
      *
-     * @param phone 好友手机号
-     * @param callBack  回调
+     * @param phone    好友手机号
+     * @param callBack 回调
      */
     public void addFriend(String phone, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
@@ -298,13 +304,13 @@ public class CommManager extends RequestManager {
      *
      * @param currentVersion 当前版本
      * @param platform       平台 ANDROID IOS
-     * @param callBack  回调
+     * @param callBack       回调
      */
-    public void toVersion(String marketCode,int currentVersion, String platform, CallBack callBack) {
+    public void toVersion(String marketCode, int currentVersion, String platform, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
         params.put("currentVersion", currentVersion + "");
         params.put("platform", platform);
-        if(!"".equals(marketCode)){
+        if (!"".equals(marketCode)) {
             params.put("marketCode", marketCode);
         }
         doPost(IFinancialUrl.VERSION_URL, params, callBack);
@@ -333,9 +339,10 @@ public class CommManager extends RequestManager {
 
     /**
      * 获取上传资料列表
+     *
      * @param orderId 订单id
      */
-    public void getUpLoadList(String orderId,CallBack callBack){
+    public void getUpLoadList(String orderId, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
         params.put("orderId", orderId);
         doPost(IFinancialUrl.UPLOAD_LIST_URL, params, callBack);
@@ -343,11 +350,12 @@ public class CommManager extends RequestManager {
 
     /**
      * 获取需要上传图片详情
-     * @param orderId 订单id
-     * @param flowId 流程id
-     * @param callBack  回调
+     *
+     * @param orderId  订单id
+     * @param flowId   流程id
+     * @param callBack 回调
      */
-    public void findFlowDetail(String orderId,String flowId,CallBack callBack){
+    public void findFlowDetail(String orderId, String flowId, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
         params.put("orderId", orderId);
         params.put("flowId", flowId);
@@ -356,10 +364,11 @@ public class CommManager extends RequestManager {
 
     /**
      * 提交上传图片
-     * @param data 提交上传图片资料实体类
-     * @param callBack  回调
+     *
+     * @param data     提交上传图片资料实体类
+     * @param callBack 回调
      */
-    public void submitOrderFlow(SumLoadEntity data,CallBack callBack){
+    public void submitOrderFlow(SumLoadEntity data, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
         params.put("json", GsonUtils.bean2Json(data));
         doPost(IFinancialUrl.SUBIT_ORDER_FLOW_URL, params, callBack);
@@ -367,87 +376,95 @@ public class CommManager extends RequestManager {
 
     /**
      * 提交审核
-     * @param orderId 订单id
-     * @param callBack  回调
+     *
+     * @param orderId  订单id
+     * @param callBack 回调
      */
-    public void applyCredit(String orderId,CallBack callBack){
+    public void applyCredit(String orderId, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
-        params.put("orderId",orderId);
+        params.put("orderId", orderId);
         doPost(IFinancialUrl.APPLAY_CREDIT_URL, params, callBack);
     }
 
     /**
      * 查看是否需要增信资料
-     * @param orderId 订单id
-     * @param callBack  回调
+     *
+     * @param orderId  订单id
+     * @param callBack 回调
      */
-    public  void findOrderFlow(String orderId,CallBack callBack){
+    public void findOrderFlow(String orderId, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
-        params.put("orderId",orderId);
+        params.put("orderId", orderId);
         doPost(IFinancialUrl.FIND_EXTRA_FlOW_URL, params, callBack);
     }
+
     /**
      * 移动端获取上次使用的地区
-     *
      */
-    public void getLastRegion(CallBack callBack){
-        Map<String,String> params = new HashMap<>();
-        doPost(IFinancialUrl.GET_MOBILE_LAST_REGION_URL,params,callBack);
+    public void getLastRegion(CallBack callBack) {
+        Map<String, String> params = new HashMap<>();
+        doPost(IFinancialUrl.GET_MOBILE_LAST_REGION_URL, params, callBack);
     }
+
     /**
      * 订单状态
-     * @param orderId 订单id
-     * @param callBack  回调
+     *
+     * @param orderId  订单id
+     * @param callBack 回调
      */
-    public void applayStatus(String orderId,CallBack callBack){
-        Map<String,String> params = new HashMap<>();
-        params.put("orderId",orderId);
-        doPost(IFinancialUrl.APPLAY_CREDIT_STATUS,params,callBack);
+    public void applayStatus(String orderId, CallBack callBack) {
+        Map<String, String> params = new HashMap<>();
+        params.put("orderId", orderId);
+        doPost(IFinancialUrl.APPLAY_CREDIT_STATUS, params, callBack);
     }
 
     /**
      * 跳过流程
-     * @param orderId 订单id
-     * @param flowId 流程id
-     * @param callBack  回调
+     *
+     * @param orderId  订单id
+     * @param flowId   流程id
+     * @param callBack 回调
      */
-    public void skipFlow(String orderId,String flowId,CallBack callBack){
-        Map<String,String> params = new HashMap<>();
-        params.put("orderId",orderId);
-        params.put("flowId",flowId);
-        doPost(IFinancialUrl.SKIP_FLOW,params,callBack);
+    public void skipFlow(String orderId, String flowId, CallBack callBack) {
+        Map<String, String> params = new HashMap<>();
+        params.put("orderId", orderId);
+        params.put("flowId", flowId);
+        doPost(IFinancialUrl.SKIP_FLOW, params, callBack);
     }
 
 
     /**
      * 服务和推荐信息获取
-     * @param callBack  回调
+     *
+     * @param callBack 回调
      */
-    public void getServantRmdInfo(CallBack callBack){
-        Map<String,String> params = new HashMap<>();
-        doPost(IFinancialUrl.SERVANT_RMD_INFO,params,callBack);
+    public void getServantRmdInfo(CallBack callBack) {
+        Map<String, String> params = new HashMap<>();
+        doPost(IFinancialUrl.SERVANT_RMD_INFO, params, callBack);
     }
 
     /**
      * 领取奖励
+     *
      * @param callBack 回调
      */
-    public void getServantReward(CallBack callBack){
-        Map<String,String> params = new HashMap<>();
-        doPost(IFinancialUrl.SERVANT_GET_REWARD,params,callBack);
+    public void getServantReward(CallBack callBack) {
+        Map<String, String> params = new HashMap<>();
+        doPost(IFinancialUrl.SERVANT_GET_REWARD, params, callBack);
     }
 
     /**
      * 最低提现额度
-     * @param callBack  回调
+     *
+     * @param callBack 回调
      */
-    public void getMinExchange(CallBack callBack){
-        Map<String,String> params = new HashMap<>();
-        doPost(IFinancialUrl.MIN_EXCHANGE,params,callBack);
+    public void getMinExchange(CallBack callBack) {
+        Map<String, String> params = new HashMap<>();
+        doPost(IFinancialUrl.MIN_EXCHANGE, params, callBack);
     }
 
     /*领取奖励或者修改资料*/
-    public void getReceiveReward(UserEntity ue,CallBack callBack) {
+    public void getReceiveReward(UserEntity ue, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
         params.put("userName", ue.getUserName());
         params.put("accountId", ue.getAccountId());
@@ -470,23 +487,24 @@ public class CommManager extends RequestManager {
                 + "," + ue.getHaveHours() + "," + ue.getProFund() + "," + ue.getTowYearCred() + "," + ue.getProvince() + "," + ue.getCity() + "," + ue.getDistrict());
         doPost(IFinancialUrl.RECEIVE_REWARD, params, callBack);
     }
+
     /*获取vip信息*/
-    public void findVipInfo(String username,CallBack callBack){
-        Map<String,String> params = new HashMap<>();
-        params.put("userName",username);
-        MyLogUtils.info("用户名是否为空："+username);
+    public void findVipInfo(String username, CallBack callBack) {
+        Map<String, String> params = new HashMap<>();
+        params.put("userName", username);
+        MyLogUtils.info("用户名是否为空：" + username);
         doPost(IFinancialUrl.VIP_INFO, params, callBack);
     }
 
-    public void updateLocation(String area,CallBack callBack){
-        Map<String,String> params = new HashMap<>();
-        params.put("area",area);
-        MyLogUtils.info("地址："+area);
+    public void updateLocation(String area, CallBack callBack) {
+        Map<String, String> params = new HashMap<>();
+        params.put("area", area);
+        MyLogUtils.info("地址：" + area);
         doPost(IFinancialUrl.UPDATE_LOCATION, params, callBack);
     }
 
     /**
-     * @param orderId 订单id
+     * @param orderId  订单id
      * @param callBack 回调
      */
     public void getCreditOfflineDetil(String orderId, CallBack callBack) {
@@ -496,18 +514,20 @@ public class CommManager extends RequestManager {
     }
 
     /**
-     * @param orderId   订单id
-     * @param id    图片id
-     * @param name  图片名称
-     * @param imageUrl  图片地址
-     * @param callBack  回调
+     * @param orderId  订单id
+     * @param id       图片id
+     * @param name     图片名称
+     * @param imageUrl 图片地址
+     * @param callBack 回调
      */
     public void saveOrUpdateOrderImage(String orderId, String id, String name, String imageUrl, CallBack callBack) {
+        CreditOfflineUploadEntity co = new CreditOfflineUploadEntity();
+        co.setId(id);
+        co.setImageUrl(imageUrl);
+        co.setName(name);
+        co.setOrderId(orderId);
         Map<String, String> params = new HashMap<>();
-        params.put("orderId", orderId);
-        params.put("id", imageUrl);
-        params.put("name", name);
-        params.put("imageUrl", imageUrl);
+        params.put("params", GsonUtils.bean2Json(co));
         doPost(IFinancialUrl.SAVE_OR_UPDATE_ORDER_IMAGE, params, callBack);
     }
 }

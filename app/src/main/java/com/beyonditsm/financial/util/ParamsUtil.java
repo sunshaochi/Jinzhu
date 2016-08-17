@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 实体类转表单
@@ -39,6 +40,19 @@ public class ParamsUtil {
     private List<ProductSortEntity.OrgTypeBean> orgTypeInfos;
     private boolean isReLogin = false;
     private boolean isClosing = false;
+
+
+    public String transMapToString(Map map){
+        java.util.Map.Entry entry;
+        StringBuffer sb = new StringBuffer();
+        for(Iterator iterator = map.entrySet().iterator(); iterator.hasNext();)
+        {
+            entry = (java.util.Map.Entry)iterator.next();
+            sb.append(entry.getKey().toString()).append( "\":\"" ).append(null==entry.getValue()?"":
+                    entry.getValue().toString()).append (iterator.hasNext() ? "\",\"" : "");
+        }
+        return sb.toString();
+    }
 
     public boolean isClosing() {
         return isClosing;
