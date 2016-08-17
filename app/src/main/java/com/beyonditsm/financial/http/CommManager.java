@@ -484,4 +484,30 @@ public class CommManager extends RequestManager {
         MyLogUtils.info("地址："+area);
         doPost(IFinancialUrl.UPDATE_LOCATION, params, callBack);
     }
+
+    /**
+     * @param orderId 订单id
+     * @param callBack 回调
+     */
+    public void getCreditOfflineDetil(String orderId, CallBack callBack) {
+        Map<String, String> params = new HashMap<>();
+        params.put("orderId", orderId);
+        doPost(IFinancialUrl.CREDIT_OFFLINE_LIST_URL, params, callBack);
+    }
+
+    /**
+     * @param orderId   订单id
+     * @param id    图片id
+     * @param name  图片名称
+     * @param imageUrl  图片地址
+     * @param callBack  回调
+     */
+    public void saveOrUpdateOrderImage(String orderId, String id, String name, String imageUrl, CallBack callBack) {
+        Map<String, String> params = new HashMap<>();
+        params.put("orderId", orderId);
+        params.put("id", imageUrl);
+        params.put("name", name);
+        params.put("imageUrl", imageUrl);
+        doPost(IFinancialUrl.SAVE_OR_UPDATE_ORDER_IMAGE, params, callBack);
+    }
 }

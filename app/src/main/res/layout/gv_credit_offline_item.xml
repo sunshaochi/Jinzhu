@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_credit_offline_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/bg_credit_offline_reupload"
     >
     <TextView
+        android:id="@+id/tv_tag"
         android:background="#ffddc6"
         android:gravity="center"
         android:textSize="14sp"
@@ -32,10 +34,10 @@
             android:scaleType="centerCrop"
             />
         <Button
+            android:id="@+id/btn_reUpload"
             android:gravity="center"
             android:text="重新上传"
             android:textColor="@color/white"
-            android:id="@+id/btn_reUpload"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
