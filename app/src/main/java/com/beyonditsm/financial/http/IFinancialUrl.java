@@ -9,7 +9,7 @@ public interface IFinancialUrl {
     /*吕建明*/
 //    String BASE_URL = "http://172.16.6.236:8080";
     /*吕东测试*/
-//    String BASE_URL = "http://172.16.5.57";
+    String BASE_URL = "http://172.16.6.218";
 //    String BASE_URL ="http://172.16.6.228:8080";
     /*袁峰测试*/
 //    String BASE_URL = "http://172.16.6.153:8080";
@@ -19,7 +19,7 @@ public interface IFinancialUrl {
 ////        /*验收环境游戏地址*/
 //    String GAME_URL = "http://myjinzhu.com:5011/";
     /*正式地址*/
-    String BASE_URL = "http://option.myjinzhu.com";
+//    String BASE_URL = "http://option.myjinzhu.com";
     /*王建*/
 //    String BASE_URL = "http://172.16.5.191:8081";
 

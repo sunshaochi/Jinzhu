@@ -65,8 +65,8 @@ public class CreditOfflineFrag extends BaseFragment {
     private TextView tvNo;//不需要增信材料
     @ViewInject(R.id.llHas)
     private LinearLayout llHas;//需要增信材料
-    @ViewInject(R.id.lv_credit_third)
-    private LoadingView lvCreditThird;
+//    @ViewInject(R.id.lv_credit_third)
+//    private LoadingView lvCreditThird;
     private Gson gson = new Gson();
     private MyAdapter adapter;
 
@@ -93,7 +93,7 @@ public class CreditOfflineFrag extends BaseFragment {
 //        if(act_type==1){
 //            tvCredit.setVisibility(View.GONE);
 //        }
-        lvCreditThird.setNoContentTxt("暂无上传资料项");
+//        lvCreditThird.setNoContentTxt("暂无上传资料项");
         if ("PASS".equals(orderStatus)) {
             ivProgress.setBackgroundResource(R.mipmap.progress_04);
             tvCredit.setVisibility(View.GONE);
@@ -143,7 +143,7 @@ public class CreditOfflineFrag extends BaseFragment {
             @Override
             public void onSucess(String result) throws JSONException {
 
-                lvCreditThird.loadComplete();
+//                lvCreditThird.loadComplete();
                 JSONObject jsonObject = new JSONObject(result);
 
                 if (jsonObject.get("data") instanceof JSONArray) {
@@ -159,7 +159,7 @@ public class CreditOfflineFrag extends BaseFragment {
                         adapter.notifyChange(datas);
                     }
                 }else{
-                    lvCreditThird.noContent();
+//                    lvCreditThird.noContent();
                     applayStatus(orderId);
                     new AutoDismissDialog(getContext()).builder().show();
                 }
@@ -168,13 +168,13 @@ public class CreditOfflineFrag extends BaseFragment {
 
             @Override
             public void onError(int status, String msg) {
-                lvCreditThird.loadError();
-                lvCreditThird.setOnRetryListener(new LoadingView.OnRetryListener() {
-                    @Override
-                    public void OnRetry() {
-                        getUploadList(orderId);
-                    }
-                });
+//                lvCreditThird.loadError();
+//                lvCreditThird.setOnRetryListener(new LoadingView.OnRetryListener() {
+//                    @Override
+//                    public void OnRetry() {
+//                        getUploadList(orderId);
+//                    }
+//                });
 
             }
         });

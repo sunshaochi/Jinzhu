@@ -54,6 +54,7 @@ public class CreditStepAct extends BaseActivity {
     public void init(Bundle savedInstanceState) {
         setLeftTv("返回");
         orderId=getIntent().getStringExtra("orderId");
+        String orderType = getIntent().getStringExtra("orderType");
         productInfo = getIntent().getParcelableExtra(CreditDetailAct.PRODUCTINFO);
         EventBus.getDefault().register(this);
         fragmentManager = getSupportFragmentManager();
@@ -62,8 +63,10 @@ public class CreditStepAct extends BaseActivity {
         else
             setTabSelection(1);
 
-        if(getIntent().getIntExtra("credit_upload",0)==1){
+        if(Integer.valueOf(orderType)==1&&getIntent().getIntExtra("credit_upload",0)==1){
             setTabSelection(2);
+        }else{
+            setTabSelection(4);
         }
     }
 
@@ -146,6 +149,23 @@ public class CreditStepAct extends BaseActivity {
                     fragmentTransaction.show(fourthFrag);
                 }
                 break;
+            case 4:
+                setTopTitle("上传资质图片");
+                Bundle bundle1 = new Bundle();
+                bundle1.putInt("act_type",getIntent().getIntExtra("credit_upload",0));
+                String orderStatus1 = getIntent().getStringExtra("orderStatus");
+                if (!TextUtils.isEmpty(orderStatus1)) {
+                    bundle1.putString("orderStatus", orderStatus1);
+                }
+                if (offlineFrag==null){
+                    offlineFrag = new CreditOfflineFrag();
+                    offlineFrag.setArguments(bundle1);
+                    fragmentTransaction.add(R.id.credit_fl,offlineFrag);
+                }else{
+                    fragmentTransaction.show(offlineFrag);
+                }
+
+                break;
         }
         fragmentTransaction.commitAllowingStateLoss();
     }
@@ -165,6 +185,9 @@ public class CreditStepAct extends BaseActivity {
         }
         if (fourthFrag != null) {
             transaction.hide(fourthFrag);
+        }
+        if (offlineFrag!=null){
+            transaction.hide(offlineFrag);
         }
     }
 
