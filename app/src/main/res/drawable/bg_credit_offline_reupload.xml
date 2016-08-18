@@ -3,6 +3,6 @@
     android:shape="rectangle"
     >
 <stroke android:color="@color/credit_offline_divder_org"
-    android:width="0.5dp"
+    android:width="1dp"
     />
 </shape>

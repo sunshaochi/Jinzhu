@@ -1,6 +1,7 @@
 package com.beyonditsm.financial.adapter;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -13,6 +14,7 @@ import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.entity.CreditOfflineDetil;
 import com.beyonditsm.financial.fragment.listener.CreditOfflineReloadListener;
 import com.beyonditsm.financial.http.IFinancialUrl;
+import com.beyonditsm.financial.util.Uitls;
 import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
 import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
@@ -39,10 +41,12 @@ public class CreditOfflineAdapter extends BaseAdapter {
         this.context = context;
         this.list = list;
     }
+
     public void notifyDataChange(List<CreditOfflineDetil.ImagesBean> list) {
         this.list = list;
         this.notifyDataSetChanged();
     }
+
     @Override
     public int getCount() {
         return list != null ? list.size() : 0;
@@ -68,6 +72,7 @@ public class CreditOfflineAdapter extends BaseAdapter {
             holder.ivPic = (ImageView) convertView.findViewById(R.id.iv_uploaded);
             holder.btnReload = (Button) convertView.findViewById(R.id.btn_reUpload);
             holder.llBg = (LinearLayout) convertView.findViewById(R.id.ll_credit_offline_bg);
+            holder.llDownBg = (LinearLayout) convertView.findViewById(R.id.ll_down_bg);
             holder.divider = convertView.findViewById(R.id.v_divider);
             convertView.setTag(holder);
         } else {
@@ -75,36 +80,44 @@ public class CreditOfflineAdapter extends BaseAdapter {
         }
         switch (list.get(position).getSts()) {
             case CHANGEABLE:
-                changeableGetView(position,convertView,parent,holder);
+                changeableGetView(position, holder);
                 break;
             case UNCHANGEABLE:
-                unChangeableGetView(position,convertView,parent,holder);
+                unChangeableGetView(position, holder);
                 break;
             default:
-                unChangeableGetView(position,convertView,parent,holder);
+                unChangeableGetView(position, holder);
                 break;
         }
 
         return convertView;
     }
-    public void setCreditListener(CreditOfflineReloadListener creditOfflineReloadListener){
+
+    public void setCreditListener(CreditOfflineReloadListener creditOfflineReloadListener) {
         this.creditListener = creditOfflineReloadListener;
     }
-    private void unChangeableGetView(final int position, View convertView, ViewGroup parent, ViewHolder holder) {
+
+    private void unChangeableGetView(final int position, ViewHolder holder) {
+
+        holder.llBg.setBackgroundResource(R.drawable.bg_black_stroke);
+        holder.tvTag.setBackgroundResource(R.color.address_color);
+        holder.divider.setBackgroundResource(R.color.tv_third_color);
+        holder.llDownBg.setBackgroundResource(R.color.gray_rom);
+
         holder.tvTag.setText(list.get(position).getName());
         ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + list.get(position).getImgUrl(), holder.ivPic, options);
         holder.btnReload.setVisibility(View.GONE);
 
     }
 
-    private void changeableGetView(final int position, View convertView, ViewGroup parent, ViewHolder holder) {
+    private void changeableGetView(final int position, ViewHolder holder) {
         holder.tvTag.setText(list.get(position).getName());
         ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + list.get(position).getImgUrl(), holder.ivPic, options);
         holder.btnReload.setVisibility(View.VISIBLE);
         holder.btnReload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                creditListener.onReload(list.get(position).getId(),list.get(position).getName(),list.get(position).getImgUrl());
+                creditListener.onReload(list.get(position).getId(), list.get(position).getName(), list.get(position).getImgUrl());
             }
         });
     }
@@ -115,6 +128,7 @@ public class CreditOfflineAdapter extends BaseAdapter {
         ImageView ivPic;
         Button btnReload;
         LinearLayout llBg;
+        LinearLayout llDownBg;
         View divider;
     }
 }

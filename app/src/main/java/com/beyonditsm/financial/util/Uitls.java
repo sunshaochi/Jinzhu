@@ -1,6 +1,9 @@
 package com.beyonditsm.financial.util;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
@@ -53,5 +56,12 @@ public class Uitls {
 		final float scale = context.getResources().getDisplayMetrics().density;
 		return (int) (pxValue / scale + 0.5f);
 	}
-
+	public static final Drawable getDrawable(Context context, int id) {
+		final int version = Build.VERSION.SDK_INT;
+		if (version >= 21) {
+			return ContextCompat.getDrawable(context, id);
+		} else {
+			return context.getResources().getDrawable(id);
+		}
+	}
 }

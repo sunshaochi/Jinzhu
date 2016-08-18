@@ -1,51 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ll_credit_offline_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/bg_credit_offline_reupload"
     >
-    <TextView
-        android:id="@+id/tv_tag"
-        android:background="#ffddc6"
-        android:gravity="center"
-        android:textSize="14sp"
-        android:layout_width="match_parent"
-        android:layout_height="44dp" />
-    <View
-        android:id="@+id/v_divider"
-        android:background="@color/credit_offline_divder_org"
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"/>
     <LinearLayout
-        android:background="#fff2e9"
+        android:id="@+id/ll_credit_offline_bg"
+        android:padding="1dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:background="@drawable/bg_credit_offline_reupload"
         >
-        <ImageView
-            android:id="@+id/iv_uploaded"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:scaleType="centerCrop"
-            />
-        <Button
-            android:id="@+id/btn_reUpload"
+        <TextView
+            android:id="@+id/tv_tag"
+            android:background="@color/credit_org"
             android:gravity="center"
-            android:text="重新上传"
-            android:textColor="@color/white"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:textSize="14sp"
             android:layout_width="match_parent"
-            android:layout_height="44dp" />
+            android:layout_height="35dp" />
         <View
+            android:id="@+id/v_divider"
+            android:background="@color/credit_offline_divder_org"
             android:layout_width="match_parent"
-            android:layout_height="10dp"/>
+            android:layout_height="0.5dp"/>
+        <LinearLayout
+            android:id="@+id/ll_down_bg"
+            android:background="@color/credit_down_org"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <ImageView
+                android:id="@+id/iv_uploaded"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:scaleType="centerCrop"
+                />
+            <Button
+                android:id="@+id/btn_reUpload"
+                android:gravity="center"
+                android:text="重新上传"
+                android:background="@drawable/button_gen"
+                android:textColor="@color/white"
+                android:layout_marginTop="7dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="44dp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"/>
+        </LinearLayout>
     </LinearLayout>
+
 
 </LinearLayout>

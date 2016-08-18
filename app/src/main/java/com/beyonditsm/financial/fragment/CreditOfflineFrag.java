@@ -60,7 +60,7 @@ import java.util.Map;
 /**
  * Created by xuleyuan on 2016/8/1.
  */
-public class CreditOfflineFrag extends BaseFragment implements CreditOfflineReloadListener,CreditOfflineDialogListener {
+public class CreditOfflineFrag extends BaseFragment implements CreditOfflineReloadListener, CreditOfflineDialogListener {
     @ViewInject(R.id.gv_upload)
     private GridView gvUpload;
     @ViewInject(R.id.tvCredit)
@@ -101,6 +101,7 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
 
     private String imageId = "";
     private String imageName = "";
+
     @SuppressLint("InflateParams")
     @Override
     public View initView(LayoutInflater inflater) {
@@ -110,7 +111,7 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
     @Override
     public void initData(Bundle savedInstanceState) {
 
-        EventBus.getDefault().register(this);
+//        EventBus.getDefault().register(this);
         act_type = getArguments().getInt("act_type", 0);
         orderStatus = getArguments().getString("orderStatus");
         orderId = CreditStepAct.orderId;
@@ -139,17 +140,17 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
     }
 
 
-    /**
-     * 提交成功，刷新
-     */
-    public void onEvent(CreditEvent event) {
-        getUploadList(orderId);
-    }
+//    /**
+//     * 提交成功，刷新
+//     */
+//    public void onEvent(CreditEvent event) {
+//        getUploadList(orderId);
+//    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+//        EventBus.getDefault().unregister(this);
     }
 
 
@@ -176,16 +177,16 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
                 tvDescription.setText(creditOfflineDetil.getOrderRemark() + "");
 
                 if ("REJECT".equals(creditOfflineDetil.getOrderSts())) {
-                    if (creditOfflineDetil.getImages().size()>0){
+                    if (creditOfflineDetil.getImages().size() > 0) {
                         enableApplyCredit();
-                    }else {
+                    } else {
                         tvCredit.setVisibility(View.GONE);
                     }
                     tvUpload.setVisibility(View.VISIBLE);
                     tvUpload.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            new DialogEditText(context,"").builder().setCreditOfflineDialogListener(CreditOfflineFrag.this).show();
+                            new DialogEditText(context, "").builder().setCreditOfflineDialogListener(CreditOfflineFrag.this).show();
                         }
                     });
                 } else {
@@ -222,15 +223,18 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
         });
     }
 
+    /**
+     * 当上传过一张图片，并订单状态允许提交时调用方法
+     */
     private void enableApplyCredit() {
         tvCredit.setBackgroundResource(R.drawable.button_gen);
-                    tvCredit.setEnabled(true);
-                    tvCredit.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            applayCredit(orderId);
-                        }
-                    });
+        tvCredit.setEnabled(true);
+        tvCredit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                applayCredit(orderId);
+            }
+        });
     }
 
     /**
@@ -242,7 +246,12 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
         RequestManager.getCommManager().applyCredit(orderId, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-                findOrderFlow(orderId);
+//                getUploadList(orderId);
+                MyToastUtils.showShortToast(getContext(), "订单已提交，请耐心等待审批");
+                getActivity().sendBroadcast(new Intent(MyCreditAct.CREDIT_RECEIVER));
+                getActivity().sendBroadcast(new Intent(MyCreditDetailFragment.UPDATE_ORDER));
+                getActivity().sendBroadcast(new Intent(MyCreditStatusFragment.UPDATE_DEAL));
+                getActivity().finish();
             }
 
             @Override
@@ -278,11 +287,7 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
                     llUpload.setVisibility(View.GONE);
                     findUploadSuccess();
                 } else {
-                    MyToastUtils.showShortToast(getContext(), "订单已提交，请耐心等待审批");
-                    getActivity().sendBroadcast(new Intent(MyCreditAct.CREDIT_RECEIVER));
-                    getActivity().sendBroadcast(new Intent(MyCreditDetailFragment.UPDATE_ORDER));
-                    getActivity().sendBroadcast(new Intent(MyCreditStatusFragment.UPDATE_DEAL));
-                    getActivity().finish();
+
                 }
             }
 
@@ -293,6 +298,9 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
         });
     }
 
+    /**
+     * 寻找是否需要增信资料
+     */
     private void findUploadSuccess() {
         if (CreditStepAct.upList != null && CreditStepAct.upList.size() > 0) {
             crethrBtn1.setText("提交增信材料");
@@ -329,7 +337,6 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
     }
 
 
-
 //    private void applayStatus(final String orderId) {
 //        RequestManager.getCommManager().applayStatus(orderId, new RequestManager.CallBack() {
 //            @Override
@@ -361,13 +368,24 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
 //        });
 //    }
 
-
+    /**
+     * 监听了用户点击重新上传的事件
+     *
+     * @param id       图片id
+     * @param name     图片名称
+     * @param imageUrl 图片地址
+     */
     @Override
     public void onReload(String id, String name, String imageUrl) {
-        new DialogEditText(context,id).builder().setCreditOfflineDialogListener(CreditOfflineFrag.this).show();
+        new DialogEditText(context, id).builder().setCreditOfflineDialogListener(CreditOfflineFrag.this).show();
     }
 
-    public void prepareImage(String imageName){
+    /**
+     * 弹出窗口，用户选择图片，并上传
+     *
+     * @param imageName 图片名称
+     */
+    public void prepareImage(String imageName) {
         MySelfSheetDialog dialog = new MySelfSheetDialog(context);
         dialog.builder().addSheetItem("拍照", null, new MySelfSheetDialog.OnSheetItemClickListener() {
             @Override
@@ -397,6 +415,13 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
             }
         }).show();
     }
+
+    /**
+     * 监听DialogEditText的上传按钮事件(仅当输入有效图片名称后调用)
+     *
+     * @param imageName 图片名称
+     * @param uItemId   图片id
+     */
     @Override
     public void onPickImage(String imageName, final String uItemId) {
         prepareImage(uItemId);
@@ -404,6 +429,13 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
         this.imageName = imageName;
     }
 
+    /**
+     * 图片挑选完毕的回调事件
+     *
+     * @param requestCode requestCode
+     * @param resultCode  resultCode
+     * @param data        data
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         try {
@@ -423,7 +455,6 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
                         Bitmap compressB = MyBitmapUtils.zoomImgKeepWH(MyBitmapUtils.decodeUriAsBitmap(context, uri), 300, 300, true);
                         MyBitmapUtils.saveBitmap(compressB, "upload/cache/credit_upload" + time + ".png");
                     }
-
                     break;
                 case TAKE:// 拍照
 //                    path = photoSavePath + photoSaveName;
@@ -431,7 +462,7 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
                     break;
             }
             path = Environment.getExternalStorageDirectory() + "/upload/cache/credit_upload" + time + ".png";
-            uploadFile(path,imageId,imageName);
+            uploadFile(path, imageId, imageName);
             super.onActivityResult(requestCode, resultCode, data);
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -457,7 +488,7 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
                 RequestManager.getCommManager().saveOrUpdateOrderImage(orderId, imageId, imageName, result, new RequestManager.CallBack() {
                     @Override
                     public void onSucess(String result) throws JSONException {
-                          getUploadList(orderId);
+                        getUploadList(orderId);
                     }
 
                     @Override
@@ -465,9 +496,6 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
 
                     }
                 });
-
-
-
 
             }
 

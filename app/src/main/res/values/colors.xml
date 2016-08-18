@@ -57,7 +57,8 @@
 
     <drawable name="transparent">#f58b35</drawable>
     <drawable name="default_pressed">#e86c07</drawable>
-
+    <color name="credit_org">#ffddc6</color>
+    <color name="credit_down_org">#fff2e9</color>
     <color name="dialog_bg">#77000000</color>
     <color name="green_order">#64cd6a</color>
     <color name="backed">#ff000c</color>
