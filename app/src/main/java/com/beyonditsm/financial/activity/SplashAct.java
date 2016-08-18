@@ -57,9 +57,65 @@ public class SplashAct extends BaseActivity implements LocationListener{
     @Override
     protected void onResume() {
         super.onResume();
+        boolean isFirst = SpUtils.getIsFirst(getApplicationContext());
+        Intent intent;
+        JPushInterface.onResume(getApplicationContext());
+        if (isFirst) {
+            // 第一次进入应用
+            intent = new Intent(SplashAct.this, GuideActivity.class);
+            SpUtils.setIsFirst(SplashAct.this, false);
+            startActivity(intent);
+            finish();
+        } else {
+            if ("".equals(SpUtils.getRoleName(getApplicationContext()))) {
+                gotoActivity(MainActivity.class, true);
+                int version = Integer.valueOf(android.os.Build.VERSION.SDK);
+                if(version  >= 5) {
+                    overridePendingTransition(R.anim.fade, R.anim.hold);;  //此为自定义的动画效果，下面两个为系统的动画效果
+                    //overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                    //overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
+                }
+            } else {
+                String roleName = SpUtils.getRoleName(getApplicationContext());
+                switch (roleName) {
+                    case "ROLE_CREDIT_MANAGER":
+                        sendBroadcast(new Intent(ManagerMainAct.UPDATATAB));
+                        gotoActivity(ManagerMainAct.class, true);
+                        int version = Integer.valueOf(android.os.Build.VERSION.SDK);
+                        if(version  >= 5) {
+                            overridePendingTransition(R.anim.fade, R.anim.hold);;  //此为自定义的动画效果，下面两个为系统的动画效果
+                            //overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                            //overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
+                        }
+                        break;
+                    case "ROLE_COMMON_CLIENT":
+                        sendBroadcast(new Intent(MainActivity.UPDATATAB));
+                        gotoActivity(MainActivity.class, true);
+                        version = Integer.valueOf(android.os.Build.VERSION.SDK);
+                        if(version  >= 5) {
+                            overridePendingTransition(R.anim.fade, R.anim.hold);;  //此为自定义的动画效果，下面两个为系统的动画效果
+                            //overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                            //overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
+                        }
+                        break;
+                    default:
+//                            sendBroadcast(new Intent(ServiceMainAct.UPDATATAB));
+//                            gotoActivity(ServiceMainAct.class, true);
+                        sendBroadcast(new Intent(MainActivity.UPDATATAB));
+                        gotoActivity(MainActivity.class, true);
+                        overridePendingTransition(R.anim.fade, R.anim.hold);
+                        break;
+                }
+                String token = SpUtils.getToken(getApplicationContext());
+                if (!TextUtils.isEmpty(token)) {
 
-        GPSAddressUtils.getInstance().setLocationListener(this);
-        GPSAddressUtils.getInstance().getLocation(SplashAct.this);
+                    connect(token);
+
+                }
+            }
+        }
+//        GPSAddressUtils.getInstance().setLocationListener(this);
+//        GPSAddressUtils.getInstance().getLocation(SplashAct.this);
 
     }
 
@@ -108,63 +164,7 @@ public class SplashAct extends BaseActivity implements LocationListener{
         ParamsUtil.getInstance().setChangedCity(city);
         ParamsUtil.getInstance().setCityGet(isGet);
 //                gotoActivity(MainActivity.class, true);
-                boolean isFirst = SpUtils.getIsFirst(getApplicationContext());
-                Intent intent;
-                JPushInterface.onResume(getApplicationContext());
-                if (isFirst) {
-                    // 第一次进入应用
-                    intent = new Intent(SplashAct.this, GuideActivity.class);
-                    SpUtils.setIsFirst(SplashAct.this, false);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    if ("".equals(SpUtils.getRoleName(getApplicationContext()))) {
-                        gotoActivity(MainActivity.class, true);
-                        int version = Integer.valueOf(android.os.Build.VERSION.SDK);
-                        if(version  >= 5) {
-                            overridePendingTransition(R.anim.fade, R.anim.hold);;  //此为自定义的动画效果，下面两个为系统的动画效果
-                            //overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
-                            //overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
-                        }
-                    } else {
-                        String roleName = SpUtils.getRoleName(getApplicationContext());
-                        switch (roleName) {
-                            case "ROLE_CREDIT_MANAGER":
-                                sendBroadcast(new Intent(ManagerMainAct.UPDATATAB));
-                                gotoActivity(ManagerMainAct.class, true);
-                                int version = Integer.valueOf(android.os.Build.VERSION.SDK);
-                                if(version  >= 5) {
-                                    overridePendingTransition(R.anim.fade, R.anim.hold);;  //此为自定义的动画效果，下面两个为系统的动画效果
-                                    //overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
-                                    //overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
-                                }
-                                break;
-                            case "ROLE_COMMON_CLIENT":
-                                sendBroadcast(new Intent(MainActivity.UPDATATAB));
-                                gotoActivity(MainActivity.class, true);
-                                version = Integer.valueOf(android.os.Build.VERSION.SDK);
-                                if(version  >= 5) {
-                                    overridePendingTransition(R.anim.fade, R.anim.hold);;  //此为自定义的动画效果，下面两个为系统的动画效果
-                                    //overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
-                                    //overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
-                                }
-                                break;
-                            default:
-//                            sendBroadcast(new Intent(ServiceMainAct.UPDATATAB));
-//                            gotoActivity(ServiceMainAct.class, true);
-                                sendBroadcast(new Intent(MainActivity.UPDATATAB));
-                                gotoActivity(MainActivity.class, true);
-                                overridePendingTransition(R.anim.fade, R.anim.hold);
-                                break;
-                        }
-                        String token = SpUtils.getToken(getApplicationContext());
-                        if (!TextUtils.isEmpty(token)) {
 
-                            connect(token);
-
-                        }
-                    }
-                }
 
     }
 }
