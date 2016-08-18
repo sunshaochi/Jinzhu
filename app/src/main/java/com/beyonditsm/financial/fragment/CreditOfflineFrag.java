@@ -114,6 +114,7 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
 //        EventBus.getDefault().register(this);
         act_type = getArguments().getInt("act_type", 0);
         orderStatus = getArguments().getString("orderStatus");
+        lvCreditThird.setBackground(R.color.white);
         orderId = CreditStepAct.orderId;
 //        if(act_type==1){
 //            tvCredit.setVisibility(View.GONE);

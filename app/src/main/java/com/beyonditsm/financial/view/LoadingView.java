@@ -28,6 +28,7 @@ public class LoadingView extends RelativeLayout {
 	private AutoAnimImageView mLoadingIco;
 	private LinearLayout mLoadError;
 	private OnRetryListener mOnRetryListener;
+	private RelativeLayout mLoadView;
 
 	public LoadingView(Context context) {
 		super(context, null);
@@ -75,6 +76,7 @@ public class LoadingView extends RelativeLayout {
 		mLoadingIco = (AutoAnimImageView) findViewById(R.id.loading_ico);
 		
 		mLoadError = (LinearLayout) findViewById(R.id.loaderror);
+		mLoadView = (RelativeLayout) findViewById(R.id.rl_loadingview);
 		mLoadError.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -106,6 +108,9 @@ public class LoadingView extends RelativeLayout {
 
 	public void setNoContentIco(int r) {
 		mNoContentIco.setImageResource(r);
+	}
+	public void setBackground(int r){
+		mLoadView.setBackgroundResource(r);
 	}
 
 	public void loading() {
