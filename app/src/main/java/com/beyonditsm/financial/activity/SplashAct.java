@@ -57,10 +57,16 @@ public class SplashAct extends BaseActivity implements LocationListener{
     @Override
     protected void onResume() {
         super.onResume();
-
-        GPSAddressUtils.getInstance().setLocationListener(this);
-        GPSAddressUtils.getInstance().getLocation(SplashAct.this);
-
+        boolean isFirst = SpUtils.getIsFirst(getApplicationContext());
+        if (isFirst){
+            Intent intent = new Intent(SplashAct.this, GuideActivity.class);
+            SpUtils.setIsFirst(SplashAct.this, false);
+            startActivity(intent);
+            finish();
+        }else {
+            GPSAddressUtils.getInstance().setLocationListener(this);
+            GPSAddressUtils.getInstance().getLocation(SplashAct.this);
+        }
     }
 
     /**

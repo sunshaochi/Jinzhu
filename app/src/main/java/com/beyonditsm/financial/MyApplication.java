@@ -3,24 +3,36 @@ package com.beyonditsm.financial;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.multidex.MultiDex;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.beyonditsm.financial.activity.LoadResActivity;
 import com.beyonditsm.financial.activity.SplashAct;
+import com.beyonditsm.financial.util.PackageUtil;
 import com.lidroid.xutils.util.LogUtils;
+import com.tandong.sa.sql.util.Log;
 import com.tandong.sa.zUImageLoader.cache.disc.naming.Md5FileNameGenerator;
 import com.tandong.sa.zUImageLoader.core.ImageLoader;
 import com.tandong.sa.zUImageLoader.core.ImageLoaderConfiguration;
 import com.tandong.sa.zUImageLoader.core.assist.QueueProcessingType;
 import com.testin.agent.TestinAgent;
 import com.testin.agent.TestinAgentConfig;
+
+import java.util.Map;
+import java.util.jar.*;
 
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
@@ -30,6 +42,7 @@ import io.rong.imlib.ipc.RongExceptionHandler;
  * Created by wangbin on 15/11/11
  */
 public class MyApplication extends Application {
+    public static final String KEY_DEX2_SHA1 = "dex2-SHA1-Digest";
     private static MyApplication instance;
 
     public static int screenWith;
@@ -56,11 +69,50 @@ public class MyApplication extends Application {
     final public static int REQUEST_CODE_ASK_CALL_PHONE = 123;
 
     @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        Log.d( "loadDex", "App attachBaseContext ");
+        if (!quickStart() && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {//>=5.0的系统默认对dex进行oat优化
+            if (needWait(base)){
+                waitForDexopt(base);
+            }
+            MultiDex.install (this );
+        } else {
+            return;
+        }
+    }
+    //neead wait for dexopt ?
+    private boolean needWait(Context context){
+        String flag = get2thDexSHA1(context);
+        Log.d( "loadDex", "dex2-sha1 "+flag);
+        SharedPreferences sp = context.getSharedPreferences(
+                PackageUtil.getPackageInfo(context). versionName, MODE_MULTI_PROCESS);
+        String saveValue = sp.getString(KEY_DEX2_SHA1, "");
+        return !TextUtils.equals(flag,saveValue);
+    }
+    public boolean quickStart() {
+        if (getCurProcessName(this).contains(":mini")) {
+            Log.d( "loadDex", ":mini start!");
+            return true;
+        }
+        return false ;
+    }
+    @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
         isDownload = false;
-        MultiDex.install(this);
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                initPragram();
+            }
+        }.start();
+        if (quickStart()) {
+            return;
+        }
+//        MultiDex.install(this);
 //        if (Build.VERSION.SDK_INT >= 23) {
 //            int checkCallPhonePermission = ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.READ_PHONE_STATE);
 //            if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED) {
@@ -70,10 +122,58 @@ public class MyApplication extends Application {
 //                initPragram();
 //            }
 //        }
-        initPragram();
 
     }
-
+    public void waitForDexopt(Context base) {
+        Intent intent = new Intent();
+        ComponentName componentName = new
+                ComponentName( "com.beyounditsm", LoadResActivity.class.getName());
+        intent.setComponent(componentName);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        base.startActivity(intent);
+        long startWait = System.currentTimeMillis ();
+        long waitTime = 10 * 1000 ;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB_MR1 ) {
+            waitTime = 20 * 1000 ;//实测发现某些场景下有些2.3版本有可能10s都不能完成optdex
+        }
+        while (needWait(base)) {
+            try {
+                long nowWait = System.currentTimeMillis() - startWait;
+                Log.d("loadDex" , "wait ms :" + nowWait);
+                if (nowWait >= waitTime) {
+                    return;
+                }
+                Thread.sleep(200 );
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    /**
+     * Get classes.dex file signature
+     * @param context
+     * @return
+     */
+    private String get2thDexSHA1(Context context) {
+        ApplicationInfo ai = context.getApplicationInfo();
+        String source = ai.sourceDir;
+        try {
+            JarFile jar = new JarFile(source);
+            java.util.jar.Manifest mf = jar.getManifest();
+            Map<String, Attributes> map = mf.getEntries();
+            Attributes a = map.get("classes2.dex");
+            return a.getValue("SHA1-Digest");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null ;
+    }
+    // optDex finish
+    public void installFinish(Context context){
+        SharedPreferences sp = context.getSharedPreferences(
+                PackageUtil.getPackageInfo(context).versionName, MODE_MULTI_PROCESS);
+        sp.edit().putString(KEY_DEX2_SHA1,get2thDexSHA1(context)).commit();
+    }
     private void initPragram() {
         /**
          * OnCreate 会被多个进程重入，这段保护代码，确保只有您需要使用 RongIM 的进程和 Push 进程执行了 init。
