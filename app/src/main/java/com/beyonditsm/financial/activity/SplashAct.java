@@ -117,8 +117,8 @@ public class SplashAct extends BaseActivity implements LocationListener{
 //        GPSAddressUtils.getInstance().setLocationListener(this);
 //        GPSAddressUtils.getInstance().getLocation(SplashAct.this);
 
-
     }
+
 
     /**
      * 建立与融云服务器的连接

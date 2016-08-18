@@ -121,7 +121,7 @@ public class MyApplication extends Application {
     public void waitForDexopt(Context base) {
         Intent intent = new Intent();
         ComponentName componentName = new
-                ComponentName( "com.beyounditsm", LoadResActivity.class.getName());
+                ComponentName("com.beyonditsm.financial", LoadResActivity.class.getName());
         intent.setComponent(componentName);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         base.startActivity(intent);
