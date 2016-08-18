@@ -102,13 +102,7 @@ public class MyApplication extends Application {
         super.onCreate();
         instance = this;
         isDownload = false;
-        new Thread(){
-            @Override
-            public void run() {
-                super.run();
-                initPragram();
-            }
-        }.start();
+        initPragram();
         if (quickStart()) {
             return;
         }
