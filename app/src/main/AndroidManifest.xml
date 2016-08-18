@@ -594,7 +594,8 @@
         <activity android:name=".activity.credit.CreditWebView" />
         <activity android:name=".activity.user.JinZhuIndexWeb" />
         <activity android:name=".activity.OrgTypeListAct" />
-        <activity android:name=".activity.PermissionsActivity"></activity>
+        <activity android:name=".activity.PermissionsActivity" />
+        <activity android:name=".activity.LoadResActivity"></activity>
     </application>
 
 </manifest>
