@@ -32,7 +32,7 @@ public class LoadResActivity extends Activity {
             try {
                 MultiDex.install(getApplication());
                 Log.d("loadDex", "install finish");
-                //// TODO: 2016/8/18 someThingMyHappen
+                //// TODO: 2016/8/18 someThingMayHappen
                 MyApplication.getInstance().installFinish(getApplication());
             } catch (Exception e) {
                 Log.e("loadDex", e.getLocalizedMessage());
