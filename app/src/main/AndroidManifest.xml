@@ -599,6 +599,7 @@
         <activity
             android:name= "com.beyonditsm.financial.activity.LoadResActivity"
             android:launchMode= "singleTask"
+            android:theme="@style/Theme.Start"
             android:process= ":mini"
             android:alwaysRetainTaskState= "false"
             android:excludeFromRecents= "true"
