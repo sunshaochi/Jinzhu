@@ -117,6 +117,7 @@ public class SplashAct extends BaseActivity implements LocationListener{
 //        GPSAddressUtils.getInstance().setLocationListener(this);
 //        GPSAddressUtils.getInstance().getLocation(SplashAct.this);
 
+
     }
 
 
