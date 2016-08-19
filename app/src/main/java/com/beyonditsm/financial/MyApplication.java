@@ -102,10 +102,10 @@ public class MyApplication extends Application {
         super.onCreate();
         instance = this;
         isDownload = false;
-        initPragram();
         if (quickStart()) {
             return;
         }
+        initPragram();
 //        MultiDex.install(this);
 //        if (Build.VERSION.SDK_INT >= 23) {
 //            int checkCallPhonePermission = ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.READ_PHONE_STATE);
