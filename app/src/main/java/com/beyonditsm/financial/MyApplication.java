@@ -1,6 +1,5 @@
 package com.beyonditsm.financial;
 
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.ComponentName;
@@ -8,19 +7,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.multidex.MultiDex;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.beyonditsm.financial.activity.LoadResActivity;
-import com.beyonditsm.financial.activity.SplashAct;
 import com.beyonditsm.financial.util.PackageUtil;
 import com.lidroid.xutils.util.LogUtils;
 import com.tandong.sa.sql.util.Log;
@@ -227,22 +221,21 @@ public class MyApplication extends Application {
      * @return 进程号
      */
     public static String getCurProcessName(Context context) {
-
-        int pid = android.os.Process.myPid();
-
-        ActivityManager activityManager = (ActivityManager) context
-                .getSystemService(Context.ACTIVITY_SERVICE);
-
-        for (ActivityManager.RunningAppProcessInfo appProcess : activityManager
-                .getRunningAppProcesses()) {
-
-            if (appProcess.pid == pid) {
-                return appProcess.processName;
+        try {
+            int pid = android.os.Process.myPid();
+            ActivityManager mActivityManager = (ActivityManager) context
+                    .getSystemService(Context. ACTIVITY_SERVICE);
+            for (ActivityManager.RunningAppProcessInfo appProcess : mActivityManager
+                    .getRunningAppProcesses()) {
+                if (appProcess.pid == pid) {
+                    return appProcess. processName;
+                }
             }
+        } catch (Exception e) {
+            // ignore
         }
-        return null;
+        return null ;
     }
-
     /**
      * 初始化ImageLoader
      *
