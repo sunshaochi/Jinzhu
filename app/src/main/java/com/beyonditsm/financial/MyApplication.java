@@ -139,8 +139,8 @@ public class MyApplication extends Application {
     }
     /**
      * Get classes.dex file signature
-     * @param context
-     * @return
+     * @param context context
+     * @return return
      */
     private String get2thDexSHA1(Context context) {
         ApplicationInfo ai = context.getApplicationInfo();

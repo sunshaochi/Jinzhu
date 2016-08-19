@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -61,8 +64,8 @@ import java.util.Map;
  * Created by xuleyuan on 2016/8/1.
  */
 public class CreditOfflineFrag extends BaseFragment implements CreditOfflineReloadListener, CreditOfflineDialogListener {
-    @ViewInject(R.id.gv_upload)
-    private GridView gvUpload;
+    @ViewInject(R.id.rv_upload)
+    private RecyclerView rvUpload;
     @ViewInject(R.id.tvCredit)
     private TextView tvCredit;
     @ViewInject(R.id.iv_progress)
@@ -203,7 +206,10 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
                         adapter.notifyDataChange(list);
                     }
                     adapter.setCreditListener(CreditOfflineFrag.this);
-                    gvUpload.setAdapter(adapter);
+                    rvUpload.setLayoutManager(new StaggeredGridLayoutManager(2,
+                            StaggeredGridLayoutManager.VERTICAL));
+                    rvUpload.setAdapter(adapter);
+                    rvUpload.setItemAnimator(new DefaultItemAnimator());
                 } else {
                     lvCreditThird.noContent();
                 }
