@@ -40,6 +40,7 @@ import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
+import com.beyonditsm.financial.view.recycleview.DividerGridItemDecoration;
 import com.beyonditsm.financial.widget.DialogEditText;
 import com.beyonditsm.financial.widget.FinalLoadDialog;
 import com.lidroid.xutils.http.client.multipart.content.FileBody;
@@ -208,6 +209,7 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
                     adapter.setCreditListener(CreditOfflineFrag.this);
                     rvUpload.setLayoutManager(new StaggeredGridLayoutManager(2,
                             StaggeredGridLayoutManager.VERTICAL));
+                    rvUpload.addItemDecoration(new DividerGridItemDecoration(context));
                     rvUpload.setAdapter(adapter);
                     rvUpload.setItemAnimator(new DefaultItemAnimator());
                 } else {
