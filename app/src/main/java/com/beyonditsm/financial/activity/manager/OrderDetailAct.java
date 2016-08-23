@@ -56,6 +56,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 /**
  * 信贷经理订单详情界面
@@ -350,7 +351,7 @@ public class OrderDetailAct extends BaseActivity {
                 }
                 break;
             case R.id.tv_tochat:
-                if (RongIM.getInstance() != null) {
+                if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
                     if (!TextUtils.isEmpty(accountId)) {
                         RongIM.getInstance().startPrivateChat(this, accountId, tv_tochat.getText().toString());
                     }

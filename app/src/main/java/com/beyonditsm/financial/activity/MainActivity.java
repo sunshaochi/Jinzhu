@@ -50,6 +50,7 @@ import com.tandong.sa.eventbus.EventBus;
 
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
 
@@ -170,7 +171,7 @@ public class MainActivity extends BaseActivity {
         String token = SpUtils.getToken(MainActivity.this);
         if (!TextUtils.isEmpty(token)) {
             getUserInfo();
-            if (RongIM.getInstance() != null) {
+            if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
                 RongIM.getInstance().setOnReceiveUnreadCountChangedListener
                         (new MyReceiveUnreadCountChangedListener(), Conversation.ConversationType.PRIVATE);
             }
@@ -192,7 +193,7 @@ public class MainActivity extends BaseActivity {
                 ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
                 UserEntity user = rd.getData();
                 if (user != null) {
-                    if (RongIM.getInstance() != null) {
+                    if (RongIM.getInstance().getCurrentConnectionStatus().equals(ConnectionStatus.CONNECTED)) {
                         if (!TextUtils.isEmpty(user.getAccountId())) {
                             RongIM.getInstance().setCurrentUserInfo(new UserInfo(user.getAccountId(), user.getUserName(),
                                     Uri.parse(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon())));
@@ -469,7 +470,7 @@ public class MainActivity extends BaseActivity {
             Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show();
             touchTime = currentTime;
         } else {
-            if (RongIM.getInstance() != null)
+            if (RongIM.getInstance().getCurrentConnectionStatus().equals(ConnectionStatus.CONNECTED))
                 RongIM.getInstance().disconnect();
             finish();
             try {
@@ -524,7 +525,7 @@ public class MainActivity extends BaseActivity {
     protected void onDestroy() {
         EventBus.getDefault().unregister(this);
         this.unregisterReceiver(myReceiver);
-        if (RongIM.getInstance() != null) {
+        if (RongIM.getInstance().getCurrentConnectionStatus().equals(ConnectionStatus.CONNECTED)) {
             RongIM.getInstance().logout();
         }
         myReceiver = null;
@@ -553,7 +554,7 @@ public class MainActivity extends BaseActivity {
                 setCheckItem(0);
                 String token = SpUtils.getToken(MainActivity.this);
                 if (!TextUtils.isEmpty(token)) {
-                    if (RongIM.getInstance() != null) {
+                    if (RongIM.getInstance().getCurrentConnectionStatus().equals(ConnectionStatus.CONNECTED)) {
                         RongCloudEvent.getInstance().getFriendList();
                         RongIM.getInstance().setOnReceiveUnreadCountChangedListener
                                 (new MyReceiveUnreadCountChangedListener(), Conversation.ConversationType.PRIVATE);

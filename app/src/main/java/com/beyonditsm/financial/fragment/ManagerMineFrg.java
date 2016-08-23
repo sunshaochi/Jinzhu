@@ -45,6 +45,7 @@ import java.util.Set;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
 
 /**
@@ -149,7 +150,7 @@ public class ManagerMineFrg extends BaseFragment {
                         RequestManager.getCommManager().toLoginOut(new RequestManager.CallBack() {
                             @Override
                             public void onSucess(String result) {
-                                if (RongIM.getInstance() != null) {
+                                if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
                                     RongIM.getInstance().logout();
                                 }
                             }
@@ -185,7 +186,7 @@ public class ManagerMineFrg extends BaseFragment {
               /*  RequestManager.getCommManager().toLoginOut(new RequestManager.CallBack() {
                     @Override
                     public void onSucess(String result) {
-                        if (RongIM.getInstance() != null) {
+                        if (RongIM.getInstance().getCurrentConnectionStatus().equals(ConnectionStatus.CONNECTED)) {
                             RongIM.getInstance().logout();
                         }
                     }
@@ -225,7 +226,7 @@ public class ManagerMineFrg extends BaseFragment {
                     cm = cme.getCreditManager();
                     tvCreditManaName.setText(cme.getUsername());
                     ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL+cm.getRcHeadPic(),civHead,options);
-                    if (RongIM.getInstance() != null) {
+                    if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
                         if (!TextUtils.isEmpty(cm.getAccountId())) {
                             RongIM.getInstance().setCurrentUserInfo(new UserInfo(cm.getAccountId(), cme.getUsername(),
                                     null));

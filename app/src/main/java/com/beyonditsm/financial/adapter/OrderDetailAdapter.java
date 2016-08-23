@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.List;
 
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 /**
  * 我的贷款——贷款详情Adapter
@@ -164,7 +165,7 @@ public class OrderDetailAdapter extends BaseAdapter implements View.OnClickListe
                 int position = (int) view.getTag();
                 String userId = orderList.get(position).getUserId();
                 String roleName = orderList.get(position).getNickName();
-                if (RongIM.getInstance() != null) {
+                if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
                     RongIM.getInstance().startPrivateChat(context, userId, roleName);
                     FriendBean friendBean = new FriendBean();
                     friendBean.setUserId(userId);

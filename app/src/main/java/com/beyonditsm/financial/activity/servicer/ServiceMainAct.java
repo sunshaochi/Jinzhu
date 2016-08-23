@@ -45,6 +45,7 @@ import org.json.JSONException;
 
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
 
@@ -131,7 +132,7 @@ public class ServiceMainAct extends BaseActivity{
         if (!TextUtils.isEmpty(token)) {
             findServantInfo();
 //            getFriendList();
-            if (RongIM.getInstance() != null) {
+            if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
                 RongIM.getInstance().setOnReceiveUnreadCountChangedListener
                         (new MyReceiveUnreadCountChangedListener(), Conversation.ConversationType.PRIVATE);
             }
@@ -149,7 +150,7 @@ public class ServiceMainAct extends BaseActivity{
                 UserEntity ue = rd.getData();
                 if (ue != null) {
                     if (ue.getServantId() != null) {
-                        if (RongIM.getInstance() != null) {
+                        if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
                             if (!TextUtils.isEmpty(ue.getAccountId())) {
                                 RongIM.getInstance().setCurrentUserInfo(new UserInfo(ue.getAccountId(), ue.getUserName(),
                                         Uri.parse(IFinancialUrl.BASE_IMAGE_URL + ue.getHeadIcon())));
@@ -539,7 +540,7 @@ public class ServiceMainAct extends BaseActivity{
             String token = SpUtils.getToken(ServiceMainAct.this);
             if (!TextUtils.isEmpty(token)) {
 //                getFriendList();
-                if (RongIM.getInstance() != null) {
+                if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
                     RongCloudEvent.getInstance().getFriendList();
                     RongIM.getInstance().setOnReceiveUnreadCountChangedListener
                             (new MyReceiveUnreadCountChangedListener(), Conversation.ConversationType.PRIVATE);
