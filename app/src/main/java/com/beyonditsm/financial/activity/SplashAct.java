@@ -106,7 +106,7 @@ public class SplashAct extends BaseActivity implements LocationListener{
                         overridePendingTransition(R.anim.fade, R.anim.hold);
                         break;
                 }
-                String token = SpUtils.getToken(getApplicationContext());
+                String token = SpUtils.getToken(MyApplication.getInstance().getApplicationContext());
                 if (!TextUtils.isEmpty(token)) {
 
                     connect(token);
@@ -117,7 +117,9 @@ public class SplashAct extends BaseActivity implements LocationListener{
 //        GPSAddressUtils.getInstance().setLocationListener(this);
 //        GPSAddressUtils.getInstance().getLocation(SplashAct.this);
 
+
     }
+
 
     /**
      * 建立与融云服务器的连接

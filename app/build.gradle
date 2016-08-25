@@ -10,8 +10,8 @@ android {
         applicationId "com.beyonditsm.financial"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 31
-        versionName "v1.1.8"
+        versionCode 33
+        versionName "v1.2.0"
         multiDexEnabled true
     }
 //
@@ -63,7 +63,6 @@ dependencies {
     provided fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:design:23.1.0'
     compile 'com.android.support:appcompat-v7:23.1.0'
-    compile project(':IMKit')
     compile files('libs/SmartAndroid2.0.jar')
     compile files('libs/AndroidCodeGenerator.jar')
     compile files('libs/togglebuttonlib.jar')
@@ -88,6 +87,7 @@ dependencies {
     compile files('libs/commons-io-2.5.jar')
     compile files('libs/commons-io-2.5-javadoc.jar')
     compile files('libs/BaiduLBS_Android.jar')
+    compile project(':IMKit')
 }
 
 buildscript {

@@ -60,6 +60,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
 
 /**
@@ -635,7 +636,7 @@ public class MyCreditDetailFragment extends BaseFragment {
     public void todo(View v) {
         switch (v.getId()) {
             case R.id.start_msg:
-                if (RongIM.getInstance() != null) {
+                if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
                     if (!TextUtils.isEmpty(accountId)) {
                         if (!TextUtils.isEmpty(creditName)) {
                             RongIM.getInstance().startPrivateChat(getContext(), accountId, creditName);

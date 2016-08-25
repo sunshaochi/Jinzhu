@@ -36,7 +36,6 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
 import io.rong.message.ImageMessage;
-import io.rong.notification.PushNotificationMessage;
 
 
 /**
@@ -110,7 +109,7 @@ public final class RongCloudEvent implements RongIM.UserInfoProvider, RongIM.Con
         RongIM.setUserInfoProvider(this, true);//设置用户信息提供者。
         RongIM.setConversationBehaviorListener(this);//设置会话界面操作的监听器。
         RongIM.setConversationListBehaviorListener(this);
-        RongIM.setOnReceivePushMessageListener(new MyReceivePushMessageListener());
+//        RongIM.setOnReceivePushMessageListener(new MyReceivePushMessageListener());
         //消息体内是否有 userinfo 这个属性
         RongIM.getInstance().setMessageAttachedUserInfo(true);
     }
@@ -195,7 +194,7 @@ public final class RongCloudEvent implements RongIM.UserInfoProvider, RongIM.Con
         if (message.getContent() instanceof ImageMessage) {
             ImageMessage imageMessage = (ImageMessage) message.getContent();
             Intent intent = new Intent(context, PhotoActivity.class);
-
+            intent.putExtra("message",message);
             intent.putExtra("photo", imageMessage.getLocalUri() == null ? imageMessage.getRemoteUri() : imageMessage.getLocalUri());
             if (imageMessage.getThumUri() != null)
                 intent.putExtra("thumbnail", imageMessage.getThumUri());
@@ -216,6 +215,16 @@ public final class RongCloudEvent implements RongIM.UserInfoProvider, RongIM.Con
     }
 
     @Override
+    public boolean onConversationPortraitClick(Context context, Conversation.ConversationType conversationType, String s) {
+        return false;
+    }
+
+    @Override
+    public boolean onConversationPortraitLongClick(Context context, Conversation.ConversationType conversationType, String s) {
+        return false;
+    }
+
+    @Override
     public boolean onConversationLongClick(Context context, View view, UIConversation uiConversation) {
         return false;
     }
@@ -225,19 +234,19 @@ public final class RongCloudEvent implements RongIM.UserInfoProvider, RongIM.Con
         return false;
     }
 
-    private class MyReceivePushMessageListener implements RongIMClient.OnReceivePushMessageListener {
-
-        /**
-         * 收到 push 消息的处理。
-         *
-         * @param pushNotificationMessage push 消息实体。
-         * @return true 自己来弹通知栏提示，false 融云 SDK 来弹通知栏提示。
-         */
-        @Override
-        public boolean onReceivePushMessage(PushNotificationMessage pushNotificationMessage) {
-            return false;
-        }
-    }
+//    private class MyReceivePushMessageListener implements RongIMClient.OnReceivePushMessageListener {
+//
+//        /**
+//         * 收到 push 消息的处理。
+//         *
+//         * @param pushNotificationMessage push 消息实体。
+//         * @return true 自己来弹通知栏提示，false 融云 SDK 来弹通知栏提示。
+//         */
+//        @Override
+//        public boolean onReceivePushMessage(PushNotificationMessage pushNotificationMessage) {
+//            return false;
+//        }
+//    }
 
 
     /**

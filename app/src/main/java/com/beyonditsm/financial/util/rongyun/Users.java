@@ -3,7 +3,7 @@ package com.beyonditsm.financial.util.rongyun;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.sea_monster.common.ParcelUtils;
+//import com.sea_monster.common.ParcelUtils;
 
 import java.io.Serializable;
 
@@ -35,12 +35,24 @@ public class Users implements Parcelable, Serializable {
     }
 
     public Users(Parcel in) {
-        userId = ParcelUtils.readFromParcel(in);
-
-        passwd = ParcelUtils.readFromParcel(in);
+//        userId = ParcelUtils.readFromParcel(in);
+//
+//        passwd = ParcelUtils.readFromParcel(in);
 
     }
 
+
+    public static final Creator<Users> CREATOR = new Creator<Users>() {
+        @Override
+        public Users createFromParcel(Parcel in) {
+            return new Users(in);
+        }
+
+        @Override
+        public Users[] newArray(int size) {
+            return new Users[size];
+        }
+    };
 
     @Override
     public int describeContents() {
@@ -52,9 +64,9 @@ public class Users implements Parcelable, Serializable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
 
-        ParcelUtils.writeToParcel(dest, userId);
-
-        ParcelUtils.writeToParcel(dest, passwd);
+//        ParcelUtils.writeToParcel(dest, userId);
+//
+//        ParcelUtils.writeToParcel(dest, passwd);
 
     }
 

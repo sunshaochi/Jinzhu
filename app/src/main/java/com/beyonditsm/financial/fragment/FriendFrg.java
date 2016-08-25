@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.db.FriendDao;
 import com.beyonditsm.financial.entity.FriendBean;
@@ -28,6 +29,7 @@ import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.MyLogUtils;
+import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -43,7 +45,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
 
 /**
@@ -93,11 +97,11 @@ public class FriendFrg extends BaseFragment {
         } else {
             getFriendList();
         }
-//            getManaFriendList();
+        initFriendList();
+        //            getManaFriendList();
 //            getFriendList();
 
 //        getFriendList();
-        initFriendList();
     }
 
     private void initFriendList() {
@@ -130,7 +134,7 @@ public class FriendFrg extends BaseFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (tag.equals("mana")){
                     UserEntity user = (UserEntity) myFriendAdapter.getItem(i);
-                    if (RongIM.getInstance() != null) {
+                    if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
                         if (TextUtils.isEmpty(user.getUserName())) {
                             RongIM.getInstance().startPrivateChat(context, user.getAccountId(), user.getAccountName());
                             RongIM.getInstance().refreshUserInfoCache(new UserInfo(user.getAccountId(), user.getAccountName(), Uri.parse(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon())));
@@ -151,7 +155,9 @@ public class FriendFrg extends BaseFragment {
                     }
                 }else{
                     FriendEntity friend = (FriendEntity) myFriendsAdapter.getItem(i);
-                    if (RongIM.getInstance() != null) {
+                    RongIMClient.ConnectionStatusListener.ConnectionStatus d = RongIM.getInstance().getCurrentConnectionStatus();
+                    String token = SpUtils.getToken(MyApplication.getInstance().getApplicationContext());
+                    if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
 //                        if (TextUtils.isEmpty(user.getUserName())) {
 //                            RongIM.getInstance().startPrivateChat(context, user.getAccountId(), user.getAccountName());
 //                            RongIM.getInstance().refreshUserInfoCache(new UserInfo(user.getAccountId(), user.getAccountName(), Uri.parse(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon())));

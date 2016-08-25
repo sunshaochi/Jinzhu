@@ -132,7 +132,7 @@ public class SettingAct extends BaseActivity {
                                 SpUtils.setSleep(SettingAct.this, true);
                                 JPushInterface.setSilenceTime(getApplicationContext(), 0, 0, 23, 59);
                                 if (null != RongIM.getInstance()) {
-                                    RongIM.getInstance().getRongIMClient().setNotificationQuietHours("00:00:00", 1399, new RongIMClient.OperationCallback() {
+                                    RongIM.getInstance().setNotificationQuietHours("00:00:00", 1399, new RongIMClient.OperationCallback() {
                                         @Override
                                         public void onSuccess() {
 
@@ -156,7 +156,7 @@ public class SettingAct extends BaseActivity {
                                 SpUtils.setSleep(SettingAct.this, false);
                                 JPushInterface.setSilenceTime(getApplicationContext(), 0, 0, 0, 0);
                                 if (null != RongIM.getInstance()) {
-                                    RongIM.getInstance().getRongIMClient().removeNotificationQuietHours(new RongIMClient.OperationCallback() {
+                                    RongIM.getInstance().removeNotificationQuietHours(new RongIMClient.OperationCallback() {
                                         @Override
                                         public void onSuccess() {
 

@@ -53,6 +53,7 @@ import java.util.Set;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
 
 /**
@@ -204,7 +205,7 @@ public class ServiceMineFrg extends BaseFragment {
                         RequestManager.getCommManager().toLoginOut(new RequestManager.CallBack() {
                             @Override
                             public void onSucess(String result) {
-                                if (RongIM.getInstance() != null) {
+                                if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
                                     RongIM.getInstance().logout();
                                 }
                             }
@@ -249,7 +250,7 @@ public class ServiceMineFrg extends BaseFragment {
                /* RequestManager.getCommManager().toLoginOut(new RequestManager.CallBack() {
                     @Override
                     public void onSucess(String result) {
-                        if (RongIM.getInstance() != null) {
+                        if (RongIM.getInstance().getCurrentConnectionStatus().equals(ConnectionStatus.CONNECTED)) {
                             RongIM.getInstance().logout();
                         }
                     }
@@ -306,7 +307,7 @@ public class ServiceMineFrg extends BaseFragment {
 
                             ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + ue.getHeadIcon(), civHead, options);
 
-                        if (RongIM.getInstance() != null) {
+                        if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
                             if(!TextUtils.isEmpty(ue.getAccountId())){
                                 RongIM.getInstance().setCurrentUserInfo(new UserInfo(ue.getAccountId(), ue.getUserName(),
                                         Uri.parse(IFinancialUrl.BASE_IMAGE_URL + ue.getHeadIcon())));

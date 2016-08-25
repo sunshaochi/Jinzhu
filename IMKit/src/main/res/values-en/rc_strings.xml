@@ -44,9 +44,14 @@
     <string name="rc_message_content_rich_text">[RichContent]</string>
     <string name="rc_message_content_location">[Location]</string>
     <string name="rc_message_content_draft">[Draft]</string>
+    <string name="rc_message_content_mentioned">[You were mentioned]</string>
 
     <string name="rc_dialog_item_message_delete">Delete</string>
     <string name="rc_dialog_item_message_copy">Copy</string>
+    <string name="rc_dialog_item_message_recall">Recall</string>
+    <string name="rc_recall_failed">Recall failed</string>
+    <string name="rc_you_recalled_a_message">You recalled a message</string>
+    <string name="rc_recalled_a_message">&#160;recalled a message</string>
 
     <string name="rc_message_unread_count">"···"</string>
     <string name="rc_input_voice">Hold to Talk</string>
@@ -92,16 +97,18 @@
     <string name="rc_notice_select_one_picture_at_last">Please select at least a picture</string>
 
     <string name="rc_message_unknown">The current version does not support viewing this message</string>
-
+    <string name="rc_new_messages">&#160;new messages</string>
     <string name="rc_info_not_in_discussion">You are not in current discussion</string>
     <string name="rc_info_not_in_group">You are not in current group</string>
     <string name="rc_info_not_in_chatroom">You are not in current chat room</string>
     <string name="rc_rejected_by_blacklist_prompt">Your message have sent out, but rejected by the receiver</string>
     <string name="rc_info_forbidden_to_talk">You were forbidden to send message in current group</string>
+    <string name="rc_forbidden_in_chatroom">You were forbidden to send message in current chatroom</string>
+    <string name="rc_kicked_from_chatroom">You were kicked from current chatroom</string>
 
     <string name="rc_send_format">Send(%1$s)</string>
     <string name="rc_yesterday_format">Yesterday</string>
-    <string name="rc_waiting">Connecting...</string>
+    <string name="rc_waiting">Connecting</string>
     <string name="rc_file_not_exist">File does not exist</string>
     <string name="rc_network_is_busy">Network is busy</string>
     <string name="rc_network_error">Network connection error</string>
@@ -117,8 +124,55 @@
 
     <string name="rc_voip_cpu_error">Sorry  Function temporarily does not support your models</string>
 
-<string name="rc_notification_send">&#160;sent&#160; </string>
-<string name="rc_notification_msg">&#160;messages</string>
-<string name="rc_notification_contact"> &#160;contacts </string>
-<string name="rc_notification_ticker_text">You have a new message</string>
+    <string name="rc_cs_evaluate_human">Please comment on our services</string>
+    <string name="rc_cs_evaluate_robot">Whether the robot solves your problem?</string>
+    <string name="rc_cs_submit">Submit</string>
+    <string name="rc_cs_cancel">Cancel</string>
+
+    <!-- PictureSelectorActivity -->
+    <string name="rc_picsel_toolbar">Picture</string>
+    <string name="rc_picsel_toolbar_send">Send</string>
+    <string name="rc_picsel_toolbar_send_num">Send(%d/9)</string>
+    <string name="rc_picsel_pictype">Picture</string>
+    <string name="rc_picsel_toolbar_preview">Preview</string>
+    <string name="rc_picsel_toolbar_preview_num">Preview(%d)</string>
+    <string name="rc_picsel_selected_max">You can only choose 9 pictures at most.</string>
+    <string name="rc_picsel_take_picture">Take picture</string>
+    <string name="rc_picsel_catalog_allpic">All pictures</string>
+    <string name="rc_picsel_catalog_number">%d</string>
+
+    <!-- PicturePreviewActivity -->
+    <string name="rc_picprev_origin">Full Image</string>
+    <string name="rc_picprev_origin_size">Full Image(%s)</string>
+    <string name="rc_picprev_select">Select</string>
+
+    <!-- LargePictureActivity -->
+    <string name="rc_save_picture">Save Picture</string>
+    <string name="rc_save_picture_at">Picture saved at %s</string>
+    <string name="rc_src_file_not_found">Source file not found.</string>
+
+    <string name="rc_confirm">confirm</string>
+    <string name="rc_cancel">cancel</string>
+
+    <string name="rc_permission_grant_needed">You have to grant permissions in setting</string>
+    <string name="rc_permission_microphone">(Microphone).</string>
+    <string name="rc_permission_microphone_and_camera">(Microphone, Camera).</string>
+    <string name="rc_permission_camera">(Camera).</string>
+    <string name="rc_blacklist_prompt">You have been added to blacklist</string>
+
+
+    <string name="rc_join_chatroom_failure">Join chatroom failure</string>
+    <string name="rc_cs_select_group">Please select the contents</string>
+    <string name="rc_search">Search</string>
+    <string name="rc_choose_members">Select Member</string>
+
+
+    <string name="rc_quit_custom_service">Custom Service Have Quit</string>
+    <string name="rc_init_failed">Failed Connect Custom Service</string>
+
+    <string name="rc_notification_ticker_text">You have a new message</string>
+
+    <string name="rc_notification_new_msg">%1$s&#160;sent&#160;%2$d&#160;messages</string>
+    <string name="rc_notification_new_plural_msg">%1$d&#160;contacts&#160;sent&#160;%2$d&#160;messages</string>
+
 </resources>

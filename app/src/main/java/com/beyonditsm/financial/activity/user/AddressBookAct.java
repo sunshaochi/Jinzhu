@@ -35,6 +35,7 @@ import java.util.Collections;
 import java.util.List;
 
 import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 /**
  * Created by gxy on 2015/11/24
@@ -148,7 +149,7 @@ public class AddressBookAct extends BaseActivity {
                     String rcHeadPic = data.optString("rcHeadPic");
                     String id = data.optString("id");
                     LogUtils.i(id+rcHeadPic+rcNickname);
-                    if (RongIM.getInstance() != null) {
+                    if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
                         RongIM.getInstance().startPrivateChat(AddressBookAct.this, id, rcNickname);
                     }
                     FriendBean friendBean = new FriendBean();

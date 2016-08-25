@@ -16,6 +16,8 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 
 import io.rong.imkit.tools.PhotoFragment;
+import io.rong.imlib.model.Message;
+import io.rong.message.ImageMessage;
 
 /**
  * 融云聊天查看图片
@@ -110,10 +112,10 @@ public class PhotoActivity extends BaseActivity {
     protected void initData() {
         Uri uri = getIntent().getParcelableExtra("photo");
         Uri thumbUri = getIntent().getParcelableExtra("thumbnail");
-
+        Message message = getIntent().getParcelableExtra("message");
         mUri = uri;
         if (uri != null)
-            mPhotoFragment.initPhoto(uri, thumbUri, new PhotoFragment.PhotoDownloadListener() {
+            mPhotoFragment.initPhoto(message, new PhotoFragment.PhotoDownloadListener() {
                 @Override
                 public void onDownloaded(Uri uri) {
                     mDownloaded = uri;
