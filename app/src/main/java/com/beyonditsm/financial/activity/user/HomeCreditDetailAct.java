@@ -391,6 +391,7 @@ public class HomeCreditDetailAct extends BaseActivity {
                         AppManager.getAppManager().addActivity(HomeCreditDetailAct.this);
                         Bundle bundle = new Bundle();
                         bundle.putParcelable(PRODUCTINFO, productEntity);
+//                        bundle.putString(CreditStepAct.TAG_TYPE,"comm");
                         gotoActivity(CreditStepAct.class, false, bundle);
                     }
                 }

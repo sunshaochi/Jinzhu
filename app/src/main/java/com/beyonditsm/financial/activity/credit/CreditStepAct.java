@@ -43,6 +43,7 @@ public class CreditStepAct extends BaseActivity {
     private FragmentManager fragmentManager;
 
     private ProductInfo productInfo;
+    public static final String TAG_TYPE = "tag_type";
 
 
     @Override
@@ -63,11 +64,14 @@ public class CreditStepAct extends BaseActivity {
         else
             setTabSelection(1);
 
-        if(Integer.valueOf(orderType)==1&&getIntent().getIntExtra("credit_upload",0)==1){
-            setTabSelection(2);
-        }else{
-            setTabSelection(4);
+        if (!TextUtils.isEmpty(orderType)){
+            if(Integer.valueOf(orderType)==1&&getIntent().getIntExtra("credit_upload",0)==1){
+                setTabSelection(2);
+            }else{
+                setTabSelection(4);
+            }
         }
+
     }
 
 
