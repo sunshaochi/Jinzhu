@@ -194,7 +194,7 @@ public class CreditFirstFrag extends BaseFragment {
                     String agencyIdTag=data.optString("agencyIdTag");
                     String token = data.optString("rcToken");
                     SpUtils.setRoleName(getActivity(), "ROLE_COMMON_CLIENT");
-                    SpUtils.setToken(getActivity(), token);
+                    SpUtils.setToken(MyApplication.getInstance().getApplicationContext(), token);
                     connect(token);
                     if (JPushInterface.isPushStopped(getActivity())) {
                         JPushInterface.resumePush(getActivity());

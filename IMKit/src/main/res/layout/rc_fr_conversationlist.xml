@@ -37,10 +37,10 @@
         android:orientation="vertical"
         android:layout_marginTop="127dp">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/rc_conversation_list_empty"/>
+        <!--<ImageView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:src="@drawable/rc_conversation_list_empty"/>-->
 
         <TextView
             android:id="@+id/rc_empty_tv"

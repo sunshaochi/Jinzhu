@@ -3,7 +3,6 @@ package com.beyonditsm.financial.activity;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.support.multidex.MultiDex;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
@@ -11,9 +10,7 @@ import android.view.WindowManager;
 
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
-import com.lidroid.xutils.util.LogUtils;
 
-import scala.App;
 
 public class LoadResActivity extends Activity {
     @Override

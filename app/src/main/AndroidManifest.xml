@@ -481,6 +481,7 @@
                 <category android:name="com.beyonditsm.financial" />
             </intent-filter>
         </activity>
+
         <!-- Required  SDK核心功能 -->
         <service
             android:name="cn.jpush.android.service.DownloadService"
@@ -568,7 +569,16 @@
                 <category android:name="com.beyonditsm.financial" />
             </intent-filter>
         </receiver>
-
+        <receiver
+            android:exported="true"
+            android:name=".receiver.RongNotificationReceiver">
+            <intent-filter>
+                <action android:name="io.rong.push.intent.MESSAGE_ARRIVED" />
+                <action android:name="io.rong.push.intent.MI_MESSAGE_ARRIVED" />
+                <action android:name="io.rong.push.intent.MESSAGE_CLICKED" />
+                <action android:name="io.rong.push.intent.MI_MESSAGE_CLICKED" />
+            </intent-filter>
+        </receiver>
         <!-- Required  . Enable it you can get statistics data with channel -->
         <meta-data
             android:name="JPUSH_CHANNEL"

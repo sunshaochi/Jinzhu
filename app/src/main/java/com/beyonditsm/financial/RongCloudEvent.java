@@ -194,7 +194,7 @@ public final class RongCloudEvent implements RongIM.UserInfoProvider, RongIM.Con
         if (message.getContent() instanceof ImageMessage) {
             ImageMessage imageMessage = (ImageMessage) message.getContent();
             Intent intent = new Intent(context, PhotoActivity.class);
-
+            intent.putExtra("message",message);
             intent.putExtra("photo", imageMessage.getLocalUri() == null ? imageMessage.getRemoteUri() : imageMessage.getLocalUri());
             if (imageMessage.getThumUri() != null)
                 intent.putExtra("thumbnail", imageMessage.getThumUri());

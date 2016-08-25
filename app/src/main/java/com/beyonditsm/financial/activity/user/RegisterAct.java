@@ -180,6 +180,7 @@ public class RegisterAct extends BaseActivity {
                     JSONObject object = new JSONObject(result);
                     JSONObject data = object.getJSONObject("data");
                     String token = data.optString("rcToken");
+                    SpUtils.setToken(getApplicationContext(), token);
                     connect(token, result);
                 } catch (JSONException e) {
                     e.printStackTrace();

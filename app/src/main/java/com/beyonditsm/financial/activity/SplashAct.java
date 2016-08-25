@@ -106,7 +106,7 @@ public class SplashAct extends BaseActivity implements LocationListener{
                         overridePendingTransition(R.anim.fade, R.anim.hold);
                         break;
                 }
-                String token = SpUtils.getToken(getApplicationContext());
+                String token = SpUtils.getToken(MyApplication.getInstance().getApplicationContext());
                 if (!TextUtils.isEmpty(token)) {
 
                     connect(token);
