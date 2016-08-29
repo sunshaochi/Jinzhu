@@ -8,6 +8,7 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.NumberKeyListener;
 import android.view.View;
 
 import com.beyonditsm.financial.R;
@@ -88,8 +89,10 @@ public class EditAct extends BaseActivity {
                                 userInfo.setUserSex(0);
                             }
                         }
-                        if(TextUtils.isEmpty(userInfo.getNativePlace()))
-                        userInfo.setNativePlace(IdcardUtils.getProvinceByIdCard(content));
+                        if(TextUtils.isEmpty(userInfo.getNativePlace())) {
+                            userInfo.setNativePlace(IdcardUtils.getProvinceByIdCard(content));
+                        }
+
                         break;
                     case 8:
                         if (!TextUtils.isEmpty(content)) {
@@ -142,6 +145,18 @@ public class EditAct extends BaseActivity {
                 setTopTitle("身份证号");
                 etM.setHint("请输入身份证号");
                 etM.setFilters(new InputFilter[]{new InputFilter.LengthFilter(18)});
+//                etM.setInputType(InputType.TYPE_CLASS_NUMBER);
+                etM.setKeyListener(new NumberKeyListener() {
+                    @Override
+                    protected char[] getAcceptedChars() {
+                        return new char[]{'0','1','2','3','4','5','6','7','8','9','x','X'};
+                    }
+
+                    @Override
+                    public int getInputType() {
+                        return InputType.TYPE_CLASS_NUMBER;
+                    }
+                });
 //                etM.setKeyListener(new DigitsKeyListener(false,true));
                 if(userInfo!=null&&!TextUtils.isEmpty(userInfo.getIdentCard())){
                     etM.setText(userInfo.getIdentCard());

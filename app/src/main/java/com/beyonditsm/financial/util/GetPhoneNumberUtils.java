@@ -24,19 +24,21 @@ public class GetPhoneNumberUtils {
 
 
     public static List<PhoneInfo> getNumber(Context context){
-        @SuppressLint("Recycle") Cursor cursor=context.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
+        @SuppressLint("Recycle")
+        Cursor cursor=context.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
         String phoneNumber;
         String phoneName;
         Bitmap image;
-        lists=new ArrayList<PhoneInfo>();
-        assert cursor != null;
-        while(cursor.moveToNext()){
-            phoneNumber=cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-            phoneName=cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-        //    image=getHighPhoto(cursor.getPosition() + "", context.getContentResolver());
-        //    PhoneInfo phoneInfo=new PhoneInfo(phoneName, phoneNumber,image);
-            PhoneInfo phoneInfo=new PhoneInfo(phoneName,phoneNumber);
-            lists.add(phoneInfo);
+        lists= new ArrayList<>();
+        if (cursor!=null) {
+            while (cursor.moveToNext()) {
+                phoneNumber = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                phoneName = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+                //    image=getHighPhoto(cursor.getPosition() + "", context.getContentResolver());
+                //    PhoneInfo phoneInfo=new PhoneInfo(phoneName, phoneNumber,image);
+                PhoneInfo phoneInfo = new PhoneInfo(phoneName, phoneNumber);
+                lists.add(phoneInfo);
+            }
         }
         return lists;
     }

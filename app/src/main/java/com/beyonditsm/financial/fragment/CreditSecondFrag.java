@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -111,6 +112,8 @@ public class CreditSecondFrag extends BaseFragment {
     private String haveJobName;
     private String creditName;
 
+    private Activity mParentActivity;
+
     @Override
     public View initView(LayoutInflater inflater) {
         view = View.inflate(context, R.layout.creditsecondfrag, null);
@@ -120,7 +123,7 @@ public class CreditSecondFrag extends BaseFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        addressUtil = new AddressUtil(getActivity());
+        addressUtil = new AddressUtil(mParentActivity);
         getDictionaryContent(0, "job_identity");//职业身份
         getDictionaryContent(1, "under_own_car");//名下车产
         getDictionaryContent(2, "under_own_hour");//名下房产
@@ -205,7 +208,7 @@ public class CreditSecondFrag extends BaseFragment {
                 upData();
                 break;
             case R.id.rlPosition://常住地
-                DialogChooseAdress dialogChooseAdress = new DialogChooseAdress(getActivity()).builder();
+                DialogChooseAdress dialogChooseAdress = new DialogChooseAdress(mParentActivity).builder();
                 dialogChooseAdress.show();
                 dialogChooseAdress.setOnSheetItemClickListener(new DialogChooseAdress.SexClickListener() {
                     @Override
@@ -223,7 +226,7 @@ public class CreditSecondFrag extends BaseFragment {
                 });
                 break;
             case R.id.rlNative://籍贯
-                DialogChooseProvince dialogChooseProvince = new DialogChooseProvince(getActivity()).builder();
+                DialogChooseProvince dialogChooseProvince = new DialogChooseProvince(mParentActivity).builder();
                 dialogChooseProvince.show();
                 dialogChooseProvince.setOnSheetItemClickListener(new DialogChooseProvince.SexClickListener() {
                     @Override
@@ -233,7 +236,7 @@ public class CreditSecondFrag extends BaseFragment {
                 });
                 break;
             case R.id.rlAddress://户籍地址
-                DialogChooseAdress dialogChooseAdress1 = new DialogChooseAdress(getActivity()).builder();
+                DialogChooseAdress dialogChooseAdress1 = new DialogChooseAdress(mParentActivity).builder();
                 dialogChooseAdress1.show();
                 dialogChooseAdress1.setOnSheetItemClickListener(new DialogChooseAdress.SexClickListener() {
                     @Override
@@ -255,7 +258,7 @@ public class CreditSecondFrag extends BaseFragment {
                 }
                 break;
             case R.id.rl_marrayed://是否结婚
-                MySelfSheetDialog dialog = new MySelfSheetDialog(getActivity()).builder();
+                MySelfSheetDialog dialog = new MySelfSheetDialog(mParentActivity).builder();
                 dialog.addSheetItem("未婚", null, new MySelfSheetDialog.OnSheetItemClickListener() {
                     @Override
                     public void onClick(int which) {
@@ -273,7 +276,7 @@ public class CreditSecondFrag extends BaseFragment {
                 dialog.show();
                 break;
             case R.id.rl_sb:
-                dialog = new MySelfSheetDialog(getActivity()).builder();
+                dialog = new MySelfSheetDialog(mParentActivity).builder();
                 dialog.addSheetItem("否，没有", null, new MySelfSheetDialog.OnSheetItemClickListener() {
                     @Override
                     public void onClick(int which) {
@@ -291,7 +294,7 @@ public class CreditSecondFrag extends BaseFragment {
                 dialog.show();
                 break;
             case R.id.rl_gjj:
-                dialog = new MySelfSheetDialog(getActivity()).builder();
+                dialog = new MySelfSheetDialog(mParentActivity).builder();
                 dialog.addSheetItem("否，没有", null, new MySelfSheetDialog.OnSheetItemClickListener() {
                     @Override
                     public void onClick(int which) {
@@ -310,7 +313,7 @@ public class CreditSecondFrag extends BaseFragment {
                 break;
             case R.id.rl_work:
                 //企业主、个体户、上班族、无固定职业
-                dialog = new MySelfSheetDialog(getActivity()).builder();
+                dialog = new MySelfSheetDialog(mParentActivity).builder();
                 if (jobList.size() != 0) {
                     for (int i = 0; i < jobList.size(); i++) {
                         dialog.addSheetItem(jobList.get(i).getName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
@@ -328,7 +331,7 @@ public class CreditSecondFrag extends BaseFragment {
             case R.id.rl_home:
                 //无房产、商品房、 住宅、 商铺、 办公楼、 厂房、经济/限价房、房改/危改房
 
-                dialog = new MySelfSheetDialog(getActivity()).builder();
+                dialog = new MySelfSheetDialog(mParentActivity).builder();
                 if (hourseList.size() != 0) {
                     for (int i = 0; i < hourseList.size(); i++) {
                         dialog.addSheetItem(hourseList.get(i).getName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
@@ -345,7 +348,7 @@ public class CreditSecondFrag extends BaseFragment {
                 break;
             case R.id.rl_car:
                 //无车 、名下有车 、有车，但车已被抵押 、无车，准备购买
-                dialog = new MySelfSheetDialog(getActivity()).builder();
+                dialog = new MySelfSheetDialog(mParentActivity).builder();
 
                 if (carList.size() != 0) {
                     for (int i = 0; i < carList.size(); i++) {
@@ -363,7 +366,7 @@ public class CreditSecondFrag extends BaseFragment {
                 break;
             case R.id.rl_xy:
                 //无信用卡活贷款 、信用良好
-                dialog = new MySelfSheetDialog(getActivity()).builder();
+                dialog = new MySelfSheetDialog(mParentActivity).builder();
                 if (creditList.size() != 0) {
                     for (int i = 0; i < creditList.size(); i++) {
                         dialog.addSheetItem(creditList.get(i).getName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
@@ -383,6 +386,18 @@ public class CreditSecondFrag extends BaseFragment {
                 i=-1;
                 EventBus.getDefault().post(new CreditStepAct.FirstEvent(2,reOrderId));
                 break;
+        }
+    }
+
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof CreditStepAct){
+            mParentActivity = activity;
+        }
+        if (mParentActivity ==null){
+            mParentActivity = CreditStepAct.getInstance();
         }
     }
     private void getDictionaryContent(final int pos, String key) {
@@ -417,7 +432,7 @@ public class CreditSecondFrag extends BaseFragment {
             @Override
             public void onError(int status, String msg) {
                 secondBtnNext.setClickable(true);
-                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mParentActivity, msg, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -533,7 +548,7 @@ public class CreditSecondFrag extends BaseFragment {
             @Override
             public void onError(int status, String msg) {
                 loadView.loadError();
-                MyToastUtils.showShortToast(getActivity(), msg);
+                MyToastUtils.showShortToast(mParentActivity, msg);
             }
         });
     }
@@ -593,13 +608,13 @@ public class CreditSecondFrag extends BaseFragment {
                     if (roleName.equals("ROLE_COMMON_CLIENT")) {
                         Intent intent = new Intent(MineFragment.UPDATE_USER);
                         intent.putExtra(MineFragment.USER_KEY, user);
-                        getActivity().sendBroadcast(intent);
-                        getActivity().sendBroadcast(new Intent(MineFragment.UPDATE_SCORE));
+                        mParentActivity.sendBroadcast(intent);
+                        mParentActivity.sendBroadcast(new Intent(MineFragment.UPDATE_SCORE));
                     } else {
                         Intent intent = new Intent(ServiceMineFrg.UPDATE_SERVANT);
                         intent.putExtra(ServiceMineFrg.SERVANT_INFO, user);
-                        getActivity().sendBroadcast(intent);
-                        getActivity().sendBroadcast(new Intent(ServiceMineFrg.UPDATE_SCORE));
+                        mParentActivity.sendBroadcast(intent);
+                        mParentActivity.sendBroadcast(new Intent(ServiceMineFrg.UPDATE_SCORE));
                     }
 
                     toSubmitOrder();
@@ -614,96 +629,96 @@ public class CreditSecondFrag extends BaseFragment {
     }
     private boolean isHaveData() {
         if (!FinancialUtil.isInputChinese(name.getText().toString())) {
-            MyToastUtils.showShortToast(getActivity(), "真实姓名必须为中文！");
+            MyToastUtils.showShortToast(mParentActivity, "真实姓名必须为中文！");
             secondBtnNext.setClickable(true);
             name.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(name.getText().toString())) {
-            MyToastUtils.showShortToast(context, "请输入真实姓名");
+            MyToastUtils.showShortToast(mParentActivity, "请输入真实姓名");
             secondBtnNext.setClickable(true);
             name.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(IdCard.getText().toString())) {
-            MyToastUtils.showShortToast(context, "请输入身份证号");
+            MyToastUtils.showShortToast(mParentActivity, "请输入身份证号");
             secondBtnNext.setClickable(true);
             IdCard.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(position.getText().toString())) {
-            MyToastUtils.showShortToast(context, "请选择常住地址");
+            MyToastUtils.showShortToast(mParentActivity, "请选择常住地址");
             secondBtnNext.setClickable(true);
             position.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(tvMarrayed.getText().toString())) {
-            MyToastUtils.showShortToast(context, "请选择婚姻状况");
+            MyToastUtils.showShortToast(mParentActivity, "请选择婚姻状况");
             secondBtnNext.setClickable(true);
             return false;
         }
         if (TextUtils.isEmpty(tvJiguan.getText().toString())) {
-            MyToastUtils.showShortToast(context, "请填写籍贯");
+            MyToastUtils.showShortToast(mParentActivity, "请填写籍贯");
             secondBtnNext.setClickable(true);
             tvJiguan.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(tvAddress.getText().toString())) {
-            MyToastUtils.showShortToast(context, "请填写户籍地址");
+            MyToastUtils.showShortToast(mParentActivity, "请填写户籍地址");
             secondBtnNext.setClickable(true);
             tvAddress.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(tvWork.getText().toString())) {
-            MyToastUtils.showShortToast(context, "请选择职业身份");
+            MyToastUtils.showShortToast(mParentActivity, "请选择职业身份");
             secondBtnNext.setClickable(true);
             return false;
         }
         if (TextUtils.isEmpty(companyName.getText().toString())) {
-            MyToastUtils.showShortToast(context, "请填写公司名称");
+            MyToastUtils.showShortToast(mParentActivity, "请填写公司名称");
             secondBtnNext.setClickable(true);
             companyName.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(zhiwu.getText().toString())) {
-            MyToastUtils.showShortToast(context, "请填写您的职务");
+            MyToastUtils.showShortToast(mParentActivity, "请填写您的职务");
             secondBtnNext.setClickable(true);
             zhiwu.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(age.getText().toString())) {
-            MyToastUtils.showShortToast(context, "请填写您的年龄");
+            MyToastUtils.showShortToast(mParentActivity, "请填写您的年龄");
             secondBtnNext.setClickable(true);
             age.requestFocus();
             return false;
         }
         if (TextUtils.isEmpty(tvSb.getText().toString())) {
-            MyToastUtils.showShortToast(context, "请选择是否有社保");
+            MyToastUtils.showShortToast(mParentActivity, "请选择是否有社保");
             secondBtnNext.setClickable(true);
             return false;
         }
         if (TextUtils.isEmpty(tvGjj.getText().toString())) {
-            MyToastUtils.showShortToast(context, "请选择是否有公积金");
+            MyToastUtils.showShortToast(mParentActivity, "请选择是否有公积金");
             secondBtnNext.setClickable(true);
             return false;
         }
         if (TextUtils.isEmpty(tvHome.getText().toString())) {
-            MyToastUtils.showShortToast(context, "请选择房产类型");
+            MyToastUtils.showShortToast(mParentActivity, "请选择房产类型");
             secondBtnNext.setClickable(true);
             return false;
         }
         if (TextUtils.isEmpty(tvCar.getText().toString())) {
-            MyToastUtils.showShortToast(context, "请选择车产类型");
+            MyToastUtils.showShortToast(mParentActivity, "请选择车产类型");
             secondBtnNext.setClickable(true);
             return false;
         }
         if (TextUtils.isEmpty(tvXy.getText().toString())) {
-            MyToastUtils.showShortToast(context, "请选择您的信用状况");
+            MyToastUtils.showShortToast(mParentActivity, "请选择您的信用状况");
             secondBtnNext.setClickable(true);
             return false;
         }
         if (!IdcardUtils.validateCard(IdCard.getText().toString())) {
-            MyToastUtils.showShortToast(context, "请输入合法的身份证号码");
+            MyToastUtils.showShortToast(mParentActivity, "请输入合法的身份证号码");
             secondBtnNext.setClickable(true);
             return false;
 
@@ -719,7 +734,7 @@ public class CreditSecondFrag extends BaseFragment {
         OrderBean orderBean = new OrderBean();
         orderBean.setProductId(productInfo.getProductId());
         if (null == HomeCreditDetailAct.creditMoney){
-            MyToastUtils.showShortToast(getContext(),"网络不给力，请返回重新提交");
+            MyToastUtils.showShortToast(mParentActivity,"网络不给力，请返回重新提交");
             secondBtnNext.setClickable(true);
         }else {
             orderBean.setTotalAmount(Double.parseDouble(HomeCreditDetailAct.creditMoney) * 10000 + "");//总金额
@@ -759,7 +774,7 @@ public class CreditSecondFrag extends BaseFragment {
                 @Override
                 public void onError(int status, String msg) {
                     secondBtnNext.setClickable(true);
-                    MyToastUtils.showShortToast(context, msg);
+                    MyToastUtils.showShortToast(mParentActivity, msg);
                 }
             });
         }

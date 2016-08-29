@@ -1,6 +1,7 @@
 package com.beyonditsm.financial.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -76,6 +77,8 @@ public class CreditThirFrag extends BaseFragment {
     private int act_type;
     private String orderStatus;
     private String orderSts;
+    
+    private Activity mParentActivity;
 
     @SuppressLint("InflateParams")
     @Override
@@ -102,11 +105,11 @@ public class CreditThirFrag extends BaseFragment {
         lvCredit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getContext(), CreditUploadAct.class);
+                Intent intent = new Intent(mParentActivity, CreditUploadAct.class);
                 intent.putExtra("orderId", orderId);
                 intent.putExtra("flowId", datas.get(position).getFlowId());
                 intent.putExtra("status", datas.get(position).getStatus());
-                getActivity().startActivity(intent);
+                mParentActivity.startActivity(intent);
             }
         });
     }
@@ -235,6 +238,17 @@ public class CreditThirFrag extends BaseFragment {
 
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof CreditStepAct){
+            mParentActivity = activity;
+        }
+        if (mParentActivity ==null){
+            mParentActivity = CreditStepAct.getInstance();
+        }
+    }
+
     /**
      * 是否需要增信资料
      *
@@ -261,10 +275,10 @@ public class CreditThirFrag extends BaseFragment {
                     findUploadSuccess();
                 } else {
                     MyToastUtils.showShortToast(getContext(), "订单已提交，请耐心等待审批");
-                    getActivity().sendBroadcast(new Intent(MyCreditAct.CREDIT_RECEIVER));
-                    getActivity().sendBroadcast(new Intent(MyCreditDetailFragment.UPDATE_ORDER));
-                    getActivity().sendBroadcast(new Intent(MyCreditStatusFragment.UPDATE_DEAL));
-                    getActivity().finish();
+                    mParentActivity.sendBroadcast(new Intent(MyCreditAct.CREDIT_RECEIVER));
+                    mParentActivity.sendBroadcast(new Intent(MyCreditDetailFragment.UPDATE_ORDER));
+                    mParentActivity.sendBroadcast(new Intent(MyCreditStatusFragment.UPDATE_DEAL));
+                    mParentActivity.finish();
                 }
             }
 
@@ -289,13 +303,13 @@ public class CreditThirFrag extends BaseFragment {
             @Override
             public void onClick(View v) {
                 if (CreditStepAct.upList != null && CreditStepAct.upList.size() > 0) {
-                    Intent intent = new Intent(getActivity(), SubFlowAct.class);
+                    Intent intent = new Intent(mParentActivity, SubFlowAct.class);
                     intent.putParcelableArrayListExtra("sub_list", (ArrayList<? extends Parcelable>) CreditStepAct.upList);
                     intent.putExtra("order_id", orderId);
-                    getActivity().startActivity(intent);
-                    getActivity().finish();
+                    mParentActivity.startActivity(intent);
+                    mParentActivity.finish();
                 } else {
-                    getActivity().finish();
+                    mParentActivity.finish();
                     AppManager.getAppManager().finishActivity(HomeCreditDetailAct.class);
                 }
             }
@@ -303,8 +317,8 @@ public class CreditThirFrag extends BaseFragment {
         crethrBtn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.sendBroadcast(new Intent(MainActivity.UPDATATAB));
-                getActivity().finish();
+                mParentActivity.sendBroadcast(new Intent(MainActivity.UPDATATAB));
+                mParentActivity.finish();
                 AppManager.getAppManager().finishActivity(HomeCreditDetailAct.class);
             }
         });

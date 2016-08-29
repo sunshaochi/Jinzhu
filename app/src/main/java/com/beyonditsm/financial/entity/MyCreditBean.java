@@ -56,7 +56,7 @@ public class MyCreditBean implements Parcelable {
         private String productName;
         private String manaName;
         private String id;
-        private String orderType;
+//        private String orderType;
         public void setTotalAmount(String totalAmount) {
             this.totalAmount = totalAmount;
         }
@@ -136,14 +136,14 @@ public class MyCreditBean implements Parcelable {
         public void setId(String id) {
             this.id = id;
         }
-
-        public String getOrderType() {
-            return orderType;
-        }
-
-        public void setOrderType(String orderType) {
-            this.orderType = orderType;
-        }
+//
+//        public String getOrderType() {
+//            return orderType;
+//        }
+//
+//        public void setOrderType(String orderType) {
+//            this.orderType = orderType;
+//        }
 
         @Override
         public int describeContents() {
@@ -162,7 +162,7 @@ public class MyCreditBean implements Parcelable {
             dest.writeString(this.productName);
             dest.writeString(this.manaName);
             dest.writeString(this.id);
-            dest.writeString(this.orderType);
+//            dest.writeString(this.orderType);
         }
 
         public RowsEntity() {
@@ -179,7 +179,7 @@ public class MyCreditBean implements Parcelable {
             this.productName = in.readString();
             this.manaName = in.readString();
             this.id = in.readString();
-            this.orderType = in.readString();
+//            this.orderType = in.readString();
         }
 
         public static final Parcelable.Creator<RowsEntity> CREATOR = new Parcelable.Creator<RowsEntity>() {

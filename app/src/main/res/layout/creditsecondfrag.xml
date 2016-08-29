@@ -101,7 +101,9 @@
                             android:id="@+id/IdCard"
                             style="@style/cre_et"
                             android:hint="请输入身份证号码"
-                            android:maxLength="18" />
+                            android:maxLength="18"
+                            android:inputType="number"
+                            android:digits="0123456789xX"/>
                     </RelativeLayout>
 
                     <View style="@style/view_line"></View>

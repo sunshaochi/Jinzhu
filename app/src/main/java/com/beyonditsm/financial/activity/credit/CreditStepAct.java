@@ -45,6 +45,7 @@ public class CreditStepAct extends BaseActivity {
     private ProductInfo productInfo;
     public static final String TAG_TYPE = "tag_type";
 
+    private static CreditStepAct activityInstance;
 
     @Override
     public void setLayout() {
@@ -54,8 +55,9 @@ public class CreditStepAct extends BaseActivity {
     @Override
     public void init(Bundle savedInstanceState) {
         setLeftTv("返回");
+        activityInstance = this;
         orderId=getIntent().getStringExtra("orderId");
-        String orderType = getIntent().getStringExtra("orderType");
+//        String orderType = getIntent().getStringExtra("orderType");
         productInfo = getIntent().getParcelableExtra(CreditDetailAct.PRODUCTINFO);
         EventBus.getDefault().register(this);
         fragmentManager = getSupportFragmentManager();
@@ -64,17 +66,22 @@ public class CreditStepAct extends BaseActivity {
         else
             setTabSelection(1);
 
-        if (!TextUtils.isEmpty(orderType)){
-            if(Integer.valueOf(orderType)==1&&getIntent().getIntExtra("credit_upload",0)==1){
+//        if (!TextUtils.isEmpty(orderType)){
+//            if(Integer.valueOf(orderType)==1&&getIntent().getIntExtra("credit_upload",0)==1){
+            if (getIntent().getIntExtra("credit_upload",0)==1){
                 setTabSelection(2);
-            }else{
-                setTabSelection(4);
             }
-        }
+//            else{
+//                setTabSelection(4);
+//            }
+//        }
 
     }
 
 
+    public static CreditStepAct getInstance(){
+        return activityInstance;
+    }
 
 
     public void onEventMainThread(FirstEvent event) {
