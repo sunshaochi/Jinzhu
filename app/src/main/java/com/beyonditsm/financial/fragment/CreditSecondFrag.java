@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -99,7 +100,7 @@ public class CreditSecondFrag extends BaseFragment {
     private boolean carSelect = false;
     private boolean hourseSelect = false;
     private boolean creditSelect = false;
-
+    public static final String USER_KEY = "user_info";
     private Map<Integer, Boolean> map = new HashMap<>();
     private UserEntity user;
     private String haveHoursId;
@@ -118,6 +119,17 @@ public class CreditSecondFrag extends BaseFragment {
         return view;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(USER_KEY, user);
+    }
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (null != savedInstanceState)
+        {user = savedInstanceState.getParcelable(USER_KEY);}
+    }
     @Override
     public void initData(Bundle savedInstanceState) {
         addressUtil = new AddressUtil(getActivity());

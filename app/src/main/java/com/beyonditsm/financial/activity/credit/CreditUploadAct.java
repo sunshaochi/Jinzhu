@@ -97,8 +97,7 @@ public class CreditUploadAct extends BaseActivity {
     private int imagePosi;//记录位置
     //    private int imageLimit;//记录每次的限制
 //    private String creUpName;
-    private LinkedHashMap<String, List<CreditImageBean>> imageMap = new LinkedHashMap<>();//存放
-
+    private LinkedHashMap<String, List<CreditImageBean>> imageMap;
     private List<CreditUplEntity> creDatas;//请求结果data；
     private List<CreditUplEntity> resultData;//最终生成的data
     private MyAdapter myAdapter;
@@ -113,6 +112,7 @@ public class CreditUploadAct extends BaseActivity {
     @Override
     public void init(Bundle savedInstanceState) {
         setTopTitle("上传资料图片");
+        imageMap = new LinkedHashMap<>();//存放
         orderId = getIntent().getStringExtra("orderId");
         flowId = getIntent().getStringExtra("flowId");
         int status = getIntent().getIntExtra("status", 0);
@@ -302,39 +302,44 @@ public class CreditUploadAct extends BaseActivity {
             public void onSucess(String result) {
                 dialog.cancel();
                 CreditImageBean cib = new CreditImageBean();
-                if (imageMap.get(uploadItemId).size() == 0) {
-                    cib.setImageUrl(result);
-                    imageMap.get(uploadItemId).add(cib);
-                } else if (imageMap.get(uploadItemId).size() <= imagePosi) {
-                    cib.setImageUrl(result);
-                    if (imageIsPass != null)
-                        cib.setIsPass(imageIsPass);
-                    cib.setId(imageId);
-                    imageMap.get(uploadItemId).add(cib);
-                } else {
-                    cib.setImageUrl(result);
-                    if (imageIsPass != null)
-                        cib.setIsPass(imageIsPass);
-                    cib.setId(imageId);
-                    if (imageMap.get(uploadItemId).size() - 1 == imagePosi) {
-                        imageMap.get(uploadItemId).remove(imagePosi);
+                try{
+                    if (imageMap.get(uploadItemId).size() == 0) {
+                        cib.setImageUrl(result);
+                        imageMap.get(uploadItemId).add(cib);
+                    } else if (imageMap.get(uploadItemId).size() <= imagePosi) {
+                        cib.setImageUrl(result);
+                        if (imageIsPass != null)
+                            cib.setIsPass(imageIsPass);
+                        cib.setId(imageId);
                         imageMap.get(uploadItemId).add(cib);
                     } else {
-                        imageMap.get(uploadItemId).remove(imagePosi);
-                        imageMap.get(uploadItemId).add(imagePosi, cib);
+                        cib.setImageUrl(result);
+                        if (imageIsPass != null)
+                            cib.setIsPass(imageIsPass);
+                        cib.setId(imageId);
+                        if (imageMap.get(uploadItemId).size() - 1 == imagePosi) {
+                            imageMap.get(uploadItemId).remove(imagePosi);
+                            imageMap.get(uploadItemId).add(cib);
+                        } else {
+                            imageMap.get(uploadItemId).remove(imagePosi);
+                            imageMap.get(uploadItemId).add(imagePosi, cib);
+                        }
                     }
+                    resultData = new ArrayList<>();
+                    int i = 0;
+                    for (LinkedHashMap.Entry<String, List<CreditImageBean>> entry : imageMap.entrySet()) {
+                        CreditUplEntity ce = new CreditUplEntity();
+                        ce.setLimit(creDatas.get(i).getLimit());
+                        ce.setUploadItemId(entry.getKey());
+                        ce.setImage(entry.getValue());
+                        ce.setUploadDisplayName(creDatas.get(i).getUploadDisplayName());
+                        resultData.add(ce);
+                        i++;
+                    }
+                }catch (NullPointerException e){
+                    e.printStackTrace();
                 }
-                resultData = new ArrayList<>();
-                int i = 0;
-                for (LinkedHashMap.Entry<String, List<CreditImageBean>> entry : imageMap.entrySet()) {
-                    CreditUplEntity ce = new CreditUplEntity();
-                    ce.setLimit(creDatas.get(i).getLimit());
-                    ce.setUploadItemId(entry.getKey());
-                    ce.setImage(entry.getValue());
-                    ce.setUploadDisplayName(creDatas.get(i).getUploadDisplayName());
-                    resultData.add(ce);
-                    i++;
-                }
+
                 myAdapter.notifyDataChange(resultData);
 
 
@@ -371,6 +376,7 @@ public class CreditUploadAct extends BaseActivity {
             }
             if (null!= savedInstanceState.getParcelable("upLoadData")){
                 upLoadData = savedInstanceState.getParcelable("upLoadData");
+                assert upLoadData != null;
                 creDatas = upLoadData.getItems();
                 imageMap = getImageMap(creDatas);
             }
