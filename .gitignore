@@ -7,3 +7,4 @@ gradlew
 *.apk
 .idea/
 .gradle/
+buildsrc/libs/dx.jar
