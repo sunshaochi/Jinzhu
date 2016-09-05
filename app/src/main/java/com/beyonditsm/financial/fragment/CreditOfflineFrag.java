@@ -217,7 +217,8 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
                     adapter.setCreditListener(CreditOfflineFrag.this);
                     rvUpload.setLayoutManager(new StaggeredGridLayoutManager(2,
                             StaggeredGridLayoutManager.VERTICAL));
-                    rvUpload.addItemDecoration(new DividerGridItemDecoration(context));
+                    int itemSpace = getResources().getDimensionPixelSize(R.dimen.offline_item_space);
+                    rvUpload.addItemDecoration(new DividerGridItemDecoration(context,itemSpace));
                     rvUpload.setAdapter(adapter);
                     rvUpload.setItemAnimator(new DefaultItemAnimator());
                 } else {

@@ -59,6 +59,7 @@ import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.CSCustomServiceInfo;
 import io.rong.imlib.model.UserInfo;
 
 /**
@@ -204,7 +205,7 @@ public class MineFragment extends BaseFragment {
     }
 
     @OnClick({R.id.rlMyCode, R.id.rlRecomm, R.id.rlLines, R.id.rlMyCredit, R.id.rlSet, R.id.tvExit,
-            R.id.rlWork, R.id.rlMyData, R.id.msg_top, R.id.rlWallet, R.id.rlVip})
+            R.id.rlWork, R.id.rlMyData, R.id.msg_top, R.id.rlWallet, R.id.rlVip,R.id.rlCustom})
     public void toClick(View v) {
         Intent intent;
         switch (v.getId()) {
@@ -322,6 +323,29 @@ public class MineFragment extends BaseFragment {
                 intent.putExtra("user", ule);
                 getActivity().startActivity(intent);
                 break;
+            case R.id.rlCustom: //在线客服
+
+                CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
+                CSCustomServiceInfo csInfo;
+                if (user !=null){
+                    csInfo = csBuilder.nickName(user.getRoleName() == null ||user.getRoleName().equals("")?tvName.getText().toString():user.getRoleName()+"")
+                            .city(user.getCity()+"")
+                            .address(user.getDetailAddr()+"")
+                            .age(user.getUserAge()+"")
+                            .email(user.getEmail()+"").build();
+                }else {
+                    csInfo = csBuilder.nickName(tvName.getText().toString()).build();
+                }
+                /**
+                 * 启动客户服聊天界面。
+                 *
+                 * @param context           应用上下文。
+                 * @param customerServiceId 要与之聊天的客服 Id。
+                 * @param title             聊天的标题，如果传入空值，则默认显示与之聊天的客服名称。
+                 * @param customServiceInfo 当前使用客服者的用户信息。{@link io.rong.imlib.model.CSCustomServiceInfo}
+                 */
+                RongIM.getInstance().startCustomerServiceChat(getActivity(), "KEFU147280950773537", "在线客服",csInfo);
+
         }
     }
 
