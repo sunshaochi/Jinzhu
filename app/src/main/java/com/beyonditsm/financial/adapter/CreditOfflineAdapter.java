@@ -72,7 +72,7 @@ public class CreditOfflineAdapter extends RecyclerView.Adapter<CreditOfflineAdap
 //        lp.height = mHeights.get(position);
 
 //        holder.llBg.setLayoutParams(lp);
-        switch (list.get(position).getSts()) {
+        switch (list.get(position).getSts()) {   //图片是否可重新上传的选择 2为不可重新上传 3为可重新上传
             case CHANGEABLE:
                 changeableGetView(position, holder);
                 break;

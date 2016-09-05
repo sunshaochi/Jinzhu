@@ -189,12 +189,6 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
 
                 if ("REJECT".equals(creditOfflineDetil.getOrderSts())) {
                     tvCredit.setVisibility(View.GONE);
-                    for (int i=0;i<creditOfflineDetil.getImages().size();i++){
-                        if (CreditOfflineAdapter.CHANGEABLE.equals(creditOfflineDetil.getImages().get(i).getSts())){
-                            enableApplyCredit();
-                            break;
-                        }
-                    }
                     tvUpload.setVisibility(View.VISIBLE);
                     tvUpload.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -209,6 +203,12 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
                 List<CreditOfflineDetil.ImagesBean> list = creditOfflineDetil.getImages();
                 assert list != null;
                 if (list.size() > 0) {
+                    for (int i=0;i<list.size();i++) {
+                        if (CreditOfflineAdapter.CHANGEABLE.equals(list.get(i).getSts())) {
+                            enableApplyCredit();
+                            break;
+                        }
+                    }
                     if (adapter == null) {
                         adapter = new CreditOfflineAdapter(context, list);
                     } else {
