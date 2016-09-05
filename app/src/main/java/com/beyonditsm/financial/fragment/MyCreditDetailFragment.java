@@ -327,7 +327,7 @@ public class MyCreditDetailFragment extends BaseFragment {
                 intent2.putExtra("credit_upload", 1);
                 intent2.putExtra("orderId", rowe.getId());
                 intent2.putExtra("orderStatus",data.getOrderSts());
-//                intent2.putExtra("orderType",rowe.getOrderType());
+                intent2.putExtra("orderType",rowe.getOrderType());
                 getActivity().startActivity(intent2);
                 break;
             case R.id.tvUpCredit://增信上传

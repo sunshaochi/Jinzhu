@@ -19,6 +19,7 @@ import com.beyonditsm.financial.fragment.CreditOfflineFrag;
 import com.beyonditsm.financial.fragment.CreditSecondFrag;
 import com.beyonditsm.financial.fragment.CreditFourthFrag;
 import com.beyonditsm.financial.fragment.CreditThirFrag;
+import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.tandong.sa.eventbus.EventBus;
 
@@ -56,8 +57,9 @@ public class CreditStepAct extends BaseActivity {
     public void init(Bundle savedInstanceState) {
         setLeftTv("返回");
         activityInstance = this;
-        orderId=getIntent().getStringExtra("orderId");
-//        String orderType = getIntent().getStringExtra("orderType");
+        orderId = getIntent().getStringExtra("orderId");
+        // 1 线上  2线下
+        String orderType = getIntent().getStringExtra("orderType");
         productInfo = getIntent().getParcelableExtra(CreditDetailAct.PRODUCTINFO);
         EventBus.getDefault().register(this);
         fragmentManager = getSupportFragmentManager();
@@ -66,26 +68,25 @@ public class CreditStepAct extends BaseActivity {
         else
             setTabSelection(1);
 
-//        if (!TextUtils.isEmpty(orderType)){
-//            if(Integer.valueOf(orderType)==1&&getIntent().getIntExtra("credit_upload",0)==1){
-            if (getIntent().getIntExtra("credit_upload",0)==1){
+        if (getIntent().getIntExtra("credit_upload", 0) == 1) {
+            MyLogUtils.error("orderType===="+orderType);
+            if (!TextUtils.isEmpty(orderType)&&Integer.valueOf(orderType) == 2) {
+                setTabSelection(4);
+            } else if (TextUtils.isEmpty(orderType)||Integer.valueOf(orderType) == 1) {
                 setTabSelection(2);
             }
-//            else{
-//                setTabSelection(4);
-//            }
-//        }
+        }
 
     }
 
 
-    public static CreditStepAct getInstance(){
+    public static CreditStepAct getInstance() {
         return activityInstance;
     }
 
 
     public void onEventMainThread(FirstEvent event) {
-        orderId=event.orderId;
+        orderId = event.orderId;
         switch (event.flag) {
             case 1:
                 setTabSelection(1);
@@ -102,8 +103,9 @@ public class CreditStepAct extends BaseActivity {
     public static class FirstEvent {
         public int flag;
         public String orderId;
-        public FirstEvent(int change,String orderId) {
-            this.orderId=orderId;
+
+        public FirstEvent(int change, String orderId) {
+            this.orderId = orderId;
             flag = change;
         }
     }
@@ -127,7 +129,7 @@ public class CreditStepAct extends BaseActivity {
                 if (secondFrag == null) {
                     secondFrag = new CreditSecondFrag();
                     Bundle bundle = new Bundle();
-                    bundle.putParcelable(CreditDetailAct.PRODUCTINFO,productInfo);
+                    bundle.putParcelable(CreditDetailAct.PRODUCTINFO, productInfo);
                     secondFrag.setArguments(bundle);
                     fragmentTransaction.add(R.id.credit_fl, secondFrag);
                 } else {
@@ -137,8 +139,8 @@ public class CreditStepAct extends BaseActivity {
                 break;
             case 2:
                 setTopTitle("上传资质图片");
-                Bundle bundle=new Bundle();
-                bundle.putInt("act_type",getIntent().getIntExtra("credit_upload",0));
+                Bundle bundle = new Bundle();
+                bundle.putInt("act_type", getIntent().getIntExtra("credit_upload", 0));
                 String orderStatus = getIntent().getStringExtra("orderStatus");
                 if (!TextUtils.isEmpty(orderStatus)) {
                     bundle.putString("orderStatus", orderStatus);
@@ -163,16 +165,16 @@ public class CreditStepAct extends BaseActivity {
             case 4:
                 setTopTitle("上传资质图片");
                 Bundle bundle1 = new Bundle();
-                bundle1.putInt("act_type",getIntent().getIntExtra("credit_upload",0));
+                bundle1.putInt("act_type", getIntent().getIntExtra("credit_upload", 0));
                 String orderStatus1 = getIntent().getStringExtra("orderStatus");
                 if (!TextUtils.isEmpty(orderStatus1)) {
                     bundle1.putString("orderStatus", orderStatus1);
                 }
-                if (offlineFrag==null){
+                if (offlineFrag == null) {
                     offlineFrag = new CreditOfflineFrag();
                     offlineFrag.setArguments(bundle1);
-                    fragmentTransaction.add(R.id.credit_fl,offlineFrag);
-                }else{
+                    fragmentTransaction.add(R.id.credit_fl, offlineFrag);
+                } else {
                     fragmentTransaction.show(offlineFrag);
                 }
 
@@ -197,7 +199,7 @@ public class CreditStepAct extends BaseActivity {
         if (fourthFrag != null) {
             transaction.hide(fourthFrag);
         }
-        if (offlineFrag!=null){
+        if (offlineFrag != null) {
             transaction.hide(offlineFrag);
         }
     }
@@ -220,8 +222,8 @@ public class CreditStepAct extends BaseActivity {
         EventBus.getDefault().unregister(this);//反注册EventBus
         unregisterReceiver(myRevice);
         myRevice = null;
-        orderId=null;
-        upList=null;
+        orderId = null;
+        upList = null;
     }
 
 

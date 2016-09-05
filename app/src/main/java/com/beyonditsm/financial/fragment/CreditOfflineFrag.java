@@ -11,6 +11,7 @@ import android.provider.MediaStore;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -105,7 +106,7 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
 
     private String imageId = "";
     private String imageName = "";
-
+    private boolean orderPass = false;
     @SuppressLint("InflateParams")
     @Override
     public View initView(LayoutInflater inflater) {
@@ -179,9 +180,12 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
                 lvCreditThird.loadComplete();
                 ResultData<CreditOfflineDetil> rd = (ResultData<CreditOfflineDetil>) GsonUtils.json(result, CreditOfflineDetil.class);
                 CreditOfflineDetil creditOfflineDetil = rd.getData();
-                tvDescription.setText(creditOfflineDetil.getOrderRemark() + "");
+                if (!TextUtils.isEmpty(creditOfflineDetil.getOrderRemark())){
+                    tvDescription.setText(creditOfflineDetil.getOrderRemark() + "");
+                }
 
                 if ("REJECT".equals(creditOfflineDetil.getOrderSts())) {
+                    orderPass = false;
                     if (creditOfflineDetil.getImages().size() > 0) {
                         enableApplyCredit();
                     } else {
@@ -194,7 +198,11 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
                             new DialogEditText(context, "").builder().setCreditOfflineDialogListener(CreditOfflineFrag.this).show();
                         }
                     });
-                } else {
+                } else if ("PASS".equals(creditOfflineDetil.getOrderSts())){
+                    orderPass = true;
+                    tvUpload.setVisibility(View.GONE);
+                }else {
+                    orderPass = false;
                     tvUpload.setVisibility(View.GONE);
                 }
 
@@ -202,14 +210,15 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
                 assert list != null;
                 if (list.size() > 0) {
                     if (adapter == null) {
-                        adapter = new CreditOfflineAdapter(context, list);
+                        adapter = new CreditOfflineAdapter(context, list,orderPass);
                     } else {
                         adapter.notifyDataChange(list);
                     }
                     adapter.setCreditListener(CreditOfflineFrag.this);
                     rvUpload.setLayoutManager(new StaggeredGridLayoutManager(2,
                             StaggeredGridLayoutManager.VERTICAL));
-                    rvUpload.addItemDecoration(new DividerGridItemDecoration(context));
+                    int itemSpace = getResources().getDimensionPixelSize(R.dimen.offline_item_space);
+                    rvUpload.addItemDecoration(new DividerGridItemDecoration(context,itemSpace));
                     rvUpload.setAdapter(adapter);
                     rvUpload.setItemAnimator(new DefaultItemAnimator());
                 } else {

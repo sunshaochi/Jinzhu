@@ -13,12 +13,12 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         su:itemNumber="3"
-        su:lineColor="@color/black"
+        su:lineColor="@color/main_color"
         su:maskHight="32dp"
         su:noEmpty="true"
         su:normalTextColor="#777"
-        su:normalTextSize="14sp"
-        su:selecredTextColor="#ff000000"
+        su:normalTextSize="12sp"
+        su:selecredTextColor="@color/main_color"
         su:selecredTextSize="16sp"
         su:unitHight="50dp" />
 
@@ -28,12 +28,12 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         su:itemNumber="3"
-        su:lineColor="@color/black"
+        su:lineColor="@color/main_color"
         su:maskHight="32dp"
         su:noEmpty="true"
         su:normalTextColor="#777"
-        su:normalTextSize="14sp"
-        su:selecredTextColor="#ff000000"
+        su:normalTextSize="12sp"
+        su:selecredTextColor="@color/main_color"
         su:selecredTextSize="16sp"
         su:unitHight="50dp" />
 
@@ -43,12 +43,12 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         su:itemNumber="3"
-        su:lineColor="@color/black"
+        su:lineColor="@color/main_color"
         su:maskHight="32dp"
         su:noEmpty="true"
         su:normalTextColor="#777"
-        su:normalTextSize="14sp"
-        su:selecredTextColor="#ff000000"
+        su:normalTextSize="12sp"
+        su:selecredTextColor="@color/main_color"
         su:selecredTextSize="16sp"
         su:unitHight="50dp" />
 

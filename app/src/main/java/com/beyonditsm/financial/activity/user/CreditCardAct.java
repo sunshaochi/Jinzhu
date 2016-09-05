@@ -31,6 +31,7 @@ public class CreditCardAct extends BaseActivity {
     private ImageView ivWallet;
     private UserEntity user;//用户信息
     private UserLoginEntity ule;//用户登陆信息
+    public static final String BANK_NAME = "bank_name";
     @Override
     public void setLayout() {
         setContentView(R.layout.act_creditcard);
@@ -93,7 +94,7 @@ public class CreditCardAct extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.iv_wallet,R.id.iv_application,R.id.iv_receiveReward,R.id.qrcode_layout})
+    @OnClick({R.id.iv_wallet,R.id.iv_application,R.id.iv_receiveReward,R.id.qrcode_layout,R.id.pfCreditCard})
     public void todo(View view){
         Intent intent;
         switch (view.getId()){
@@ -113,7 +114,14 @@ public class CreditCardAct extends BaseActivity {
                 break;
             case R.id.qrcode_layout:
                 intent = new Intent(CreditCardAct.this, CreditWebView.class);
+                intent.putExtra(BANK_NAME,"guangda");
                 startActivity(intent);
+                break;
+            case R.id.pfCreditCard:
+                intent = new Intent(CreditCardAct.this, CreditWebView.class);
+                intent.putExtra(BANK_NAME,"pufa");
+                startActivity(intent);
+                break;
         }
     }
 

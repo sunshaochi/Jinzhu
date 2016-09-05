@@ -28,6 +28,7 @@
                 android:src="@mipmap/creditcard_page1" />
 
             <ImageView
+                android:id="@+id/pfCreditCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="0dp"

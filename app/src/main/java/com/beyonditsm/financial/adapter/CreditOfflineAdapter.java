@@ -32,6 +32,7 @@ public class CreditOfflineAdapter extends RecyclerView.Adapter<CreditOfflineAdap
     private List<Integer> mHeights;
     private final String CHANGEABLE = "3";
     private final String UNCHANGEABLE = "2";
+    private boolean orderPass = false;
     CreditOfflineReloadListener creditListener;
     private LayoutInflater mInflater;
     private DisplayImageOptions options = new DisplayImageOptions.Builder()
@@ -42,10 +43,11 @@ public class CreditOfflineAdapter extends RecyclerView.Adapter<CreditOfflineAdap
             .cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
             .build(); // 创建配置过得DisplayImageOption对象
 
-    public CreditOfflineAdapter(Context context, List<CreditOfflineDetil.ImagesBean> list) {
+    public CreditOfflineAdapter(Context context, List<CreditOfflineDetil.ImagesBean> list,boolean orderPass) {
         mInflater = LayoutInflater.from(context);
         this.context = context;
         this.list = list;
+        this.orderPass = orderPass;
     }
 
     public void notifyDataChange(List<CreditOfflineDetil.ImagesBean> list) {
@@ -80,7 +82,7 @@ public class CreditOfflineAdapter extends RecyclerView.Adapter<CreditOfflineAdap
                 unChangeableGetView(position, holder);
                 break;
             default:
-                unChangeableGetView(position, holder);
+                defaultGetView(position, holder);
                 break;
         }
     }
@@ -130,6 +132,16 @@ public class CreditOfflineAdapter extends RecyclerView.Adapter<CreditOfflineAdap
         this.creditListener = creditOfflineReloadListener;
     }
 
+    private void defaultGetView(final  int  position,ViewHolder holder){
+        holder.llBg.setBackgroundResource(R.drawable.bg_black_stroke);
+        holder.tvTag.setBackgroundResource(R.color.address_color);
+        holder.divider.setBackgroundResource(R.color.tv_third_color);
+        holder.llDownBg.setBackgroundResource(R.color.gray_rom);
+
+        holder.tvTag.setText(list.get(position).getName());
+        ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + list.get(position).getImgUrl(), holder.ivPic, options);
+        holder.btnReload.setVisibility(View.GONE);
+    }
     private void unChangeableGetView(final int position, ViewHolder holder) {
 
         holder.llBg.setBackgroundResource(R.drawable.bg_black_stroke);
@@ -139,7 +151,14 @@ public class CreditOfflineAdapter extends RecyclerView.Adapter<CreditOfflineAdap
 
         holder.tvTag.setText(list.get(position).getName());
         ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + list.get(position).getImgUrl(), holder.ivPic, options);
-        holder.btnReload.setVisibility(View.GONE);
+        holder.btnReload.setVisibility(View.VISIBLE);
+        if (orderPass){
+            holder.btnReload.setText("审核通过");
+        }else {
+            holder.btnReload.setText("审核中");
+        }
+        holder.btnReload.setBackgroundResource(R.drawable.offline_unupload_btn);
+        holder.btnReload.setClickable(false);
 
     }
 
@@ -151,6 +170,9 @@ public class CreditOfflineAdapter extends RecyclerView.Adapter<CreditOfflineAdap
         holder.tvTag.setText(list.get(position).getName());
         ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + list.get(position).getImgUrl(), holder.ivPic, options);
         holder.btnReload.setVisibility(View.VISIBLE);
+        holder.btnReload.setText("重新上传");
+        holder.btnReload.setBackgroundResource(R.drawable.button_gen);
+        holder.btnReload.setClickable(true);
         holder.btnReload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
