@@ -208,7 +208,7 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
                     orderPass = true;
                     tvUpload.setVisibility(View.GONE);
                 }else {
-                    tvDescription.setVisibility(View.VISIBLE);
+                    tvDescription.setVisibility(View.GONE);
                     orderPass = false;
                     tvUpload.setVisibility(View.GONE);
                 }
