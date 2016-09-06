@@ -144,9 +144,9 @@ public class CityPicker extends LinearLayout {
         cityPicker = (ScrollerNumberPicker) findViewById(R.id.city);
         counyPicker = (ScrollerNumberPicker) findViewById(R.id.couny);
         provincePicker.setData(citycodeUtil.getProvince(province_list));
-        provincePicker.setDefault(1);
+        provincePicker.setDefault(0);
         cityPicker.setData(citycodeUtil.getCity(city_map, citycodeUtil
-                .getProvince_list_code().get(1)));
+                .getProvince_list_code().get(0)));
         cityPicker.setDefault(0);
         counyPicker.setData(citycodeUtil.getCouny(couny_map, citycodeUtil
                 .getCity_list_code().get(0)));
