@@ -11,7 +11,6 @@ import android.provider.MediaStore;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -39,6 +38,7 @@ import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyBitmapUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.view.recycleview.DividerGridItemDecoration;
@@ -106,7 +106,8 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
 
     private String imageId = "";
     private String imageName = "";
-    private boolean orderPass = false;
+
+
     @SuppressLint("InflateParams")
     @Override
     public View initView(LayoutInflater inflater) {
@@ -180,17 +181,14 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
                 lvCreditThird.loadComplete();
                 ResultData<CreditOfflineDetil> rd = (ResultData<CreditOfflineDetil>) GsonUtils.json(result, CreditOfflineDetil.class);
                 CreditOfflineDetil creditOfflineDetil = rd.getData();
-                if (!TextUtils.isEmpty(creditOfflineDetil.getOrderRemark())){
+                if (creditOfflineDetil.getOrderRemark() == null){
+                    tvDescription.setText("暂无上传项");
+                }else {
                     tvDescription.setText(creditOfflineDetil.getOrderRemark() + "");
                 }
 
                 if ("REJECT".equals(creditOfflineDetil.getOrderSts())) {
-                    orderPass = false;
-                    if (creditOfflineDetil.getImages().size() > 0) {
-                        enableApplyCredit();
-                    } else {
-                        tvCredit.setVisibility(View.GONE);
-                    }
+                    tvCredit.setVisibility(View.GONE);
                     tvUpload.setVisibility(View.VISIBLE);
                     tvUpload.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -198,19 +196,21 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
                             new DialogEditText(context, "").builder().setCreditOfflineDialogListener(CreditOfflineFrag.this).show();
                         }
                     });
-                } else if ("PASS".equals(creditOfflineDetil.getOrderSts())){
-                    orderPass = true;
-                    tvUpload.setVisibility(View.GONE);
-                }else {
-                    orderPass = false;
+                } else {
                     tvUpload.setVisibility(View.GONE);
                 }
 
                 List<CreditOfflineDetil.ImagesBean> list = creditOfflineDetil.getImages();
                 assert list != null;
                 if (list.size() > 0) {
+                    for (int i=0;i<list.size();i++) {
+                        if (CreditOfflineAdapter.CHANGEABLE.equals(list.get(i).getSts())) {
+                            enableApplyCredit();
+                            break;
+                        }
+                    }
                     if (adapter == null) {
-                        adapter = new CreditOfflineAdapter(context, list,orderPass);
+                        adapter = new CreditOfflineAdapter(context, list);
                     } else {
                         adapter.notifyDataChange(list);
                     }
@@ -245,6 +245,7 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
      * 当上传过一张图片，并订单状态允许提交时调用方法
      */
     private void enableApplyCredit() {
+        tvCredit.setVisibility(View.VISIBLE);
         tvCredit.setBackgroundResource(R.drawable.button_gen);
         tvCredit.setEnabled(true);
         tvCredit.setOnClickListener(new View.OnClickListener() {
