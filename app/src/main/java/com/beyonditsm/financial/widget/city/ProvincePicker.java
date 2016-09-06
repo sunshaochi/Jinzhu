@@ -23,7 +23,7 @@ import java.util.Map;
  * 获取省信息
  * Created by Yang on 2015/11/30 0030.
  */
-public class ProvincePicker extends LinearLayout{
+public class ProvincePicker extends LinearLayout {
     /**
      * 滑动控件
      */
@@ -45,6 +45,7 @@ public class ProvincePicker extends LinearLayout{
     private String city_string;
     private String city_code_string;
     private CitycodeUtil citycodeUtil;
+
     public ProvincePicker(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
@@ -87,6 +88,7 @@ public class ProvincePicker extends LinearLayout{
             return list;
         }
     }
+
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
@@ -94,9 +96,9 @@ public class ProvincePicker extends LinearLayout{
         citycodeUtil = CitycodeUtil.getSingleton();
         // 获取控件引用
         provincePicker = (ScrollerNumberPicker) findViewById(R.id.province_select);
-LogUtils.i(province_list+"");
+        LogUtils.i(province_list + "");
         provincePicker.setData(citycodeUtil.getProvince(province_list));
-        provincePicker.setDefault(1);
+        provincePicker.setDefault(0);
         provincePicker.setOnSelectListener(new ScrollerNumberPicker.OnSelectListener() {
 
             public void endSelect(int id, String text) {

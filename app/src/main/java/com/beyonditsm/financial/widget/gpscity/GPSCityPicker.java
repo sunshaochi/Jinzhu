@@ -145,37 +145,25 @@ public class GPSCityPicker extends LinearLayout {
         provincePicker = (ScrollerNumberPicker) findViewById(R.id.province);
 
         cityPicker = (ScrollerNumberPicker) findViewById(R.id.city);
-//        counyPicker = (ScrollerNumberPicker) findViewById(R.id.couny);
         provincePicker.setData(citycodeUtil.getProvince(province_list));
-        provincePicker.setDefault(1);
+        provincePicker.setDefault(0);
         cityPicker.setData(citycodeUtil.getCity(city_map, citycodeUtil
-                .getProvince_list_code().get(1)));
+                .getProvince_list_code().get(0)));
         cityPicker.setDefault(0);
-//        counyPicker.setData(citycodeUtil.getCouny(couny_map, citycodeUtil
-//                .getCity_list_code().get(0)));
-//        counyPicker.setDefault(0);
         provincePicker.setOnSelectListener(new ScrollerNumberPicker.OnSelectListener() {
 
             public void endSelect(int id, String text) {
                 // TODO Auto-generated method stub
-//                System.out.println("id-->" + id + "text----->" + text);
                 if (text.equals("") || text == null)
                     return;
                 if (tempProvinceIndex != id) {
-//                    System.out.println("endselect");
                     String selectDay = cityPicker.getSelectedText();
                     if (selectDay == null || selectDay.equals(""))
                         return;
-//                    String selectMonth = counyPicker.getSelectedText();
-//                    if (selectMonth == null || selectMonth.equals(""))
-//                        return;
                     // 城市数组
                     cityPicker.setData(citycodeUtil.getCity(city_map,
                             citycodeUtil.getProvince_list_code().get(id)));
                     cityPicker.setDefault(0);
-//                    counyPicker.setData(citycodeUtil.getCouny(couny_map,
-//                            citycodeUtil.getCity_list_code().get(0)));
-//                    counyPicker.setDefault(0);
                     int lastDay = Integer.valueOf(provincePicker.getListSize());
                     if (id > lastDay) {
                         provincePicker.setDefault(lastDay - 1);
@@ -203,12 +191,6 @@ public class GPSCityPicker extends LinearLayout {
                     String selectDay = provincePicker.getSelectedText();
                     if (selectDay == null || selectDay.equals(""))
                         return;
-//                    String selectMonth = counyPicker.getSelectedText();
-//                    if (selectMonth == null || selectMonth.equals(""))
-//                        return;
-//                    counyPicker.setData(citycodeUtil.getCouny(couny_map,
-//                            citycodeUtil.getCity_list_code().get(id)));
-//                    counyPicker.setDefault(0);
                     int lastDay = Integer.valueOf(cityPicker.getListSize());
                     if (id > lastDay) {
                         cityPicker.setDefault(lastDay - 1);
@@ -226,41 +208,6 @@ public class GPSCityPicker extends LinearLayout {
 
             }
         });
-//        counyPicker.setOnSelectListener(new ScrollerNumberPicker.OnSelectListener() {
-//
-//            @Override
-//            public void endSelect(int id, String text) {
-//                // TODO Auto-generated method stub
-//
-//                if (text.equals("") || text == null)
-//                    return;
-//                if (tempCounyIndex != id) {
-//                    String selectDay = provincePicker.getSelectedText();
-//                    if (selectDay == null || selectDay.equals(""))
-//                        return;
-//                    String selectMonth = cityPicker.getSelectedText();
-//                    if (selectMonth == null || selectMonth.equals(""))
-//                        return;
-//                    // 城市数组
-//                    city_code_string = citycodeUtil.getCouny_list_code()
-//                            .get(id);
-//                    int lastDay = Integer.valueOf(counyPicker.getListSize());
-//                    if (id > lastDay) {
-//                        counyPicker.setDefault(lastDay - 1);
-//                    }
-//                }
-//                tempCounyIndex = id;
-//                Message message = new Message();
-//                message.what = REFRESH_VIEW;
-//                handler.sendMessage(message);
-//            }
-//
-//            @Override
-//            public void selecting(int id, String text) {
-//                // TODO Auto-generated method stub
-//
-//            }
-//        });
     }
 
     @SuppressLint("HandlerLeak")
@@ -306,6 +253,6 @@ public class GPSCityPicker extends LinearLayout {
 
     public interface OnSelectingListener {
 
-        public void selected(boolean selected);
+        void selected(boolean selected);
     }
 }

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
@@ -34,18 +35,19 @@ public class CreditWebView extends BaseActivity {
         webView.removeJavascriptInterface("searchBoxJavaBredge_");
 //        webView.requestFocusFromTouch();
 //        wvCreditCard.loadUrl("http://www.baidu.com");
+        webView.setWebViewClient(new WebViewClient(){
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                // 重写此方法表明点击网页里面的链接还是在当前的webview里跳转，不跳到浏览器那边
+                view.loadUrl(url);
+                return true;
+            }
+        });
         if ("guangda".equals(bankName)){
             webView.loadUrl("https://xyk.cebbank.com/cebmms/apply/ps/apply-card-list.htm?pro_code=FHTG17000SJC01FZQH");
         }else{
             webView.loadUrl("https://ecentre.spdbccc.com.cn/creditcard/indexActivity.htm?data=P730548");
         }
-//        webView.setWebViewClient(new WebViewClient(){
-//            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//                // 重写此方法表明点击网页里面的链接还是在当前的webview里跳转，不跳到浏览器那边
-//                view.loadUrl(url);
-//                return true;
-//            }
-//        });
+
 //        webView.reload();
 
     }
