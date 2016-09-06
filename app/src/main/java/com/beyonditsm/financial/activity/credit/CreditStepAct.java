@@ -12,6 +12,7 @@ import android.text.TextUtils;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
+import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
 import com.beyonditsm.financial.entity.ProductInfo;
 import com.beyonditsm.financial.entity.UpLoadEntity;
 import com.beyonditsm.financial.fragment.CreditFirstFrag;
@@ -60,7 +61,7 @@ public class CreditStepAct extends BaseActivity {
         orderId = getIntent().getStringExtra("orderId");
         // 1 线上  2线下
         String orderType = getIntent().getStringExtra("orderType");
-        productInfo = getIntent().getParcelableExtra(CreditDetailAct.PRODUCTINFO);
+        productInfo = getIntent().getParcelableExtra(HomeCreditDetailAct.PRODUCTINFO);
         EventBus.getDefault().register(this);
         fragmentManager = getSupportFragmentManager();
         if (TextUtils.isEmpty(SpUtils.getRoleName(this)))
@@ -70,11 +71,14 @@ public class CreditStepAct extends BaseActivity {
 
         if (getIntent().getIntExtra("credit_upload", 0) == 1) {
             MyLogUtils.error("orderType===="+orderType);
-            if (!TextUtils.isEmpty(orderType)&&Integer.valueOf(orderType) == 2) {
-                setTabSelection(4);
-            } else if (TextUtils.isEmpty(orderType)||Integer.valueOf(orderType) == 1) {
-                setTabSelection(2);
+            if(!TextUtils.isEmpty(orderType)){
+                if (Integer.valueOf(orderType) == 2) {
+                    setTabSelection(4);
+                } else  {
+                    setTabSelection(2);
+                }
             }
+
         }
 
     }

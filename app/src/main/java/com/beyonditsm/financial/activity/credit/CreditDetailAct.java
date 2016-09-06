@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -80,7 +81,7 @@ public class CreditDetailAct extends BaseActivity {
     public static String creditMonth;
     public static String monthlyPayments;//月供
     private String totalRath;
-
+    public static final String PRODUCT_KEY = "product_info";
     java.text.DecimalFormat df = new java.text.DecimalFormat("#0.0");//保留小数
 
 
@@ -174,6 +175,20 @@ public class CreditDetailAct extends BaseActivity {
     protected void onResume() {
         ParamsUtil.getInstance().setCurrentAct(CreditDetailAct.this);
         super.onResume();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(PRODUCT_KEY, productInfo);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState!=null){
+            productInfo = savedInstanceState.getParcelable(PRODUCT_KEY);
+        }
     }
 
     @Override

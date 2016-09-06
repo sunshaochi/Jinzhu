@@ -102,6 +102,7 @@ public class CreditSecondFrag extends BaseFragment {
     private boolean hourseSelect = false;
     private boolean creditSelect = false;
     public static final String USER_KEY = "user_info";
+    public static final String PRODUCT_KEY = "product_info";
     private Map<Integer, Boolean> map = new HashMap<>();
     private UserEntity user;
     private String haveHoursId;
@@ -126,13 +127,19 @@ public class CreditSecondFrag extends BaseFragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable(USER_KEY, user);
+        outState.putParcelable(PRODUCT_KEY, productInfo);
     }
+
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-        if (null != savedInstanceState)
-        {user = savedInstanceState.getParcelable(USER_KEY);}
+        if (null != savedInstanceState) {
+            user = savedInstanceState.getParcelable(USER_KEY);
+            productInfo = savedInstanceState.getParcelable(PRODUCT_KEY);
+        }
+
     }
+
     @Override
     public void initData(Bundle savedInstanceState) {
         addressUtil = new AddressUtil(mParentActivity);
@@ -187,6 +194,7 @@ public class CreditSecondFrag extends BaseFragment {
             }
         });
     }
+
     private void assignViews() {
         criSv = (ScrollView) view.findViewById(R.id.criSv);
         name = (EditText) view.findViewById(R.id.name);
@@ -208,10 +216,11 @@ public class CreditSecondFrag extends BaseFragment {
         secondBtnNext = (Button) view.findViewById(R.id.second_btn_next);
         cbSelectSex = (CheckBox) view.findViewById(R.id.cb_select_sex);
     }
+
     @OnClick({R.id.cb_select_sex, R.id.second_btn_next, R.id.zz_tv, R.id.rlNative, R.id.rl_marrayed, R.id.rl_sb, R.id.rl_gjj, R.id.rl_work
-            , R.id.rl_home, R.id.rl_car, R.id.rl_xy, R.id.rlAddress, R.id.rlPosition, R.id.commit_file,R.id.tvSure})
-    public void todo(View v){
-        switch (v.getId()){
+            , R.id.rl_home, R.id.rl_car, R.id.rl_xy, R.id.rlAddress, R.id.rlPosition, R.id.commit_file, R.id.tvSure})
+    public void todo(View v) {
+        switch (v.getId()) {
             case R.id.cb_select_sex:
 
                 break;
@@ -395,8 +404,8 @@ public class CreditSecondFrag extends BaseFragment {
                 break;
 
             case R.id.tvSure://确定
-                i=-1;
-                EventBus.getDefault().post(new CreditStepAct.FirstEvent(2,reOrderId));
+                i = -1;
+                EventBus.getDefault().post(new CreditStepAct.FirstEvent(2, reOrderId));
                 break;
         }
     }
@@ -405,13 +414,14 @@ public class CreditSecondFrag extends BaseFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (activity instanceof CreditStepAct){
+        if (activity instanceof CreditStepAct) {
             mParentActivity = activity;
         }
-        if (mParentActivity ==null){
+        if (mParentActivity == null) {
             mParentActivity = CreditStepAct.getInstance();
         }
     }
+
     private void getDictionaryContent(final int pos, String key) {
 
         RequestManager.getCommManager().getDicMap(key, new RequestManager.CallBack() {
@@ -448,10 +458,11 @@ public class CreditSecondFrag extends BaseFragment {
             }
         });
     }
+
     /**
      * 获取个人资料
      */
-    private void getData(){
+    private void getData() {
         RequestManager.getCommManager().findUserInfo(new RequestManager.CallBack() {
             @SuppressWarnings("unchecked")
             @Override
@@ -535,7 +546,7 @@ public class CreditSecondFrag extends BaseFragment {
                             tvSb.setText("是");
                     }
 
-                    if (!TextUtils.isEmpty(user.getHaveHoursName())&&!TextUtils.isEmpty(user.getHaveHours())) {//房产类型
+                    if (!TextUtils.isEmpty(user.getHaveHoursName()) && !TextUtils.isEmpty(user.getHaveHours())) {//房产类型
                         tvHome.setText(user.getHaveHoursName());
                     }
 
@@ -564,48 +575,49 @@ public class CreditSecondFrag extends BaseFragment {
             }
         });
     }
+
     /**
      * 更新个人资料
      */
-    private void upData(){
-        if (isHaveData()){
+    private void upData() {
+        if (isHaveData()) {
             user.setIdentCard(IdCard.getText().toString());
             user.setDetailAddr(address.getText().toString());
             user.setNativePlace(tvJiguan.getText().toString());
             user.setNativePlaceAddr(tvAddress.getText().toString());
             user.setUserAge(Integer.parseInt(age.getText().toString()));
-            if (carSelect){
+            if (carSelect) {
                 user.setHaveCar(carList.get(carPos).getId());//车产
                 user.setHaveCarName(carList.get(carPos).getName());
-            }else{
-                if (!TextUtils.isEmpty(haveCarId)&&!TextUtils.isEmpty(haveCarName)) {
+            } else {
+                if (!TextUtils.isEmpty(haveCarId) && !TextUtils.isEmpty(haveCarName)) {
                     user.setHaveCar(haveCarId);
                     user.setHaveCarName(haveCarName);
                 }
             }
-            if (jobSelect){
+            if (jobSelect) {
                 user.setJobId(jobList.get(jobPos).getId());//职业身份
                 user.setHavaJobName(jobList.get(jobPos).getName());
-            }else{
-                if (!TextUtils.isEmpty(jobId)&&!TextUtils.isEmpty(haveJobName)) {
+            } else {
+                if (!TextUtils.isEmpty(jobId) && !TextUtils.isEmpty(haveJobName)) {
                     user.setJobId(jobId);
                     user.setHavaJobName(haveJobName);
                 }
             }
-            if (hourseSelect){
+            if (hourseSelect) {
                 user.setHaveHours(hourseList.get(hoursePos).getId());//房产
                 user.setHaveHoursName(hourseList.get(hoursePos).getName());
-            }else{
-                if (!TextUtils.isEmpty(haveHoursId)&&!TextUtils.isEmpty(haveHoursName)) {
+            } else {
+                if (!TextUtils.isEmpty(haveHoursId) && !TextUtils.isEmpty(haveHoursName)) {
                     user.setHaveHours(haveHoursId);
                     user.setHaveHoursName(haveHoursName);
                 }
             }
-            if (creditSelect){
+            if (creditSelect) {
                 user.setTowYearCred(creditList.get(creditPos).getId());//信用状况
                 user.setTowYearCredName(creditList.get(creditPos).getName());
-            }else{
-                if (!TextUtils.isEmpty(creditId)&&!TextUtils.isEmpty(creditName)) {
+            } else {
+                if (!TextUtils.isEmpty(creditId) && !TextUtils.isEmpty(creditName)) {
                     user.setTowYearCred(creditId);
                     user.setTowYearCredName(creditName);
                 }
@@ -639,6 +651,7 @@ public class CreditSecondFrag extends BaseFragment {
             });
         }
     }
+
     private boolean isHaveData() {
         if (!FinancialUtil.isInputChinese(name.getText().toString())) {
             MyToastUtils.showShortToast(mParentActivity, "真实姓名必须为中文！");
@@ -737,18 +750,20 @@ public class CreditSecondFrag extends BaseFragment {
         }
         return true;
     }
+
     private int i = 5;
     private String reOrderId;
+
     /**
      * 提交订单
      */
-    private void toSubmitOrder(){
+    private void toSubmitOrder() {
         OrderBean orderBean = new OrderBean();
         orderBean.setProductId(productInfo.getProductId());
-        if (null == HomeCreditDetailAct.creditMoney){
-            MyToastUtils.showShortToast(mParentActivity,"网络不给力，请返回重新提交");
+        if (null == HomeCreditDetailAct.creditMoney) {
+            MyToastUtils.showShortToast(mParentActivity, "网络不给力，请返回重新提交");
             secondBtnNext.setClickable(true);
-        }else {
+        } else {
             orderBean.setTotalAmount(Double.parseDouble(HomeCreditDetailAct.creditMoney) * 10000 + "");//总金额
             orderBean.setTotalPeriods(HomeCreditDetailAct.creditMonth);//总期数
             orderBean.setPeriodsAmount(HomeCreditDetailAct.monthlyPayments);//单期还款金额
@@ -760,15 +775,15 @@ public class CreditSecondFrag extends BaseFragment {
                     criSv.setVisibility(View.GONE);
 
                     try {
-                        JSONObject jsonObject=new JSONObject(result);
-                        reOrderId=jsonObject.getString("data");
+                        JSONObject jsonObject = new JSONObject(result);
+                        reOrderId = jsonObject.getString("data");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            while (i>0){
+                            while (i > 0) {
                                 try {
                                     Thread.sleep(1000);
                                 } catch (InterruptedException e) {
@@ -793,6 +808,7 @@ public class CreditSecondFrag extends BaseFragment {
 
 
     }
+
     /**
      * 倒计时
      */
@@ -800,13 +816,14 @@ public class CreditSecondFrag extends BaseFragment {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if(msg.what>0) {
+            if (msg.what > 0) {
                 tvSecond.setText(msg.what + "");
-            }else {
-                EventBus.getDefault().post(new CreditStepAct.FirstEvent(2,reOrderId));
+            } else {
+                EventBus.getDefault().post(new CreditStepAct.FirstEvent(2, reOrderId));
             }
         }
     };
+
     private void scrollDown() {
         new Handler().post(new Runnable() {
             @Override
