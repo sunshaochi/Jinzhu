@@ -107,6 +107,7 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
     private String imageId = "";
     private String imageName = "";
 
+    private boolean orderPass = false;
 
     @SuppressLint("InflateParams")
     @Override
@@ -188,7 +189,13 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
                 }
 
                 if ("REJECT".equals(creditOfflineDetil.getOrderSts())) {
-                    tvCredit.setVisibility(View.GONE);
+                    tvDescription.setVisibility(View.VISIBLE);
+                    orderPass = false;
+                    if (creditOfflineDetil.getImages().size() > 0) {
+                        enableApplyCredit();
+                    } else {
+                        tvCredit.setVisibility(View.GONE);
+                    }
                     tvUpload.setVisibility(View.VISIBLE);
                     tvUpload.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -196,7 +203,13 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
                             new DialogEditText(context, "").builder().setCreditOfflineDialogListener(CreditOfflineFrag.this).show();
                         }
                     });
-                } else {
+                } else if ("PASS".equals(creditOfflineDetil.getOrderSts())){
+                    tvDescription.setVisibility(View.GONE);
+                    orderPass = true;
+                    tvUpload.setVisibility(View.GONE);
+                }else {
+                    tvDescription.setVisibility(View.VISIBLE);
+                    orderPass = false;
                     tvUpload.setVisibility(View.GONE);
                 }
 
@@ -210,7 +223,7 @@ public class CreditOfflineFrag extends BaseFragment implements CreditOfflineRelo
                         }
                     }
                     if (adapter == null) {
-                        adapter = new CreditOfflineAdapter(context, list);
+                        adapter = new CreditOfflineAdapter(context, list,orderPass);
                     } else {
                         adapter.notifyDataChange(list);
                     }
