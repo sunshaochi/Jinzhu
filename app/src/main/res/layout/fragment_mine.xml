@@ -434,11 +434,13 @@
 
                     </RelativeLayout>
                     <View
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         android:layout_marginLeft="45dp"
                         android:background="@color/line_color"></View>
                     <RelativeLayout
+                        android:visibility="gone"
                         android:id="@+id/rlCustom"
                         style="@style/rl_mine_style">
 
