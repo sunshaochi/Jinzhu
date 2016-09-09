@@ -230,7 +230,7 @@ public class PullToRefreshListView extends PullToRefreshBase<ListView>
 	 * 
 	 * @return true表示还有更多数据
 	 */
-	private boolean hasMoreData() {
+	public boolean hasMoreData() {
 		if ((null != mLoadMoreFooterLayout)
 				&& (mLoadMoreFooterLayout.getState() == State.NO_MORE_DATA)) {
 			return false;

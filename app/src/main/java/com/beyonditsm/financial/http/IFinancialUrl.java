@@ -10,7 +10,7 @@ public interface IFinancialUrl {
 //    String BASE_URL = "http://172.16.6.236:8080";
     /*吕东测试*/
 //    String BASE_URL = "http://172.16.5.59";
-    String BASE_URL ="http://172.16.6.218";
+//    String BASE_URL ="http://172.16.6.218";
     /*袁峰测试*/
 //    String BASE_URL = "http://172.16.6.153:8080";
 //    String BASE_URL = "http://172.16.6.228:8080";
@@ -27,7 +27,7 @@ public interface IFinancialUrl {
     String GAME_URL = "http://m.farm.myjinzhu.com/";
 
 
-//    String BASE_URL = "http://test.myjinzhu.com:8082";
+    String BASE_URL = "http://test.myjinzhu.com:8082";
     /*测试地址3*/
 //    String BASE_URL="http://test.myjinzhu.com:60";
     //内网地址（测试钱包功能）

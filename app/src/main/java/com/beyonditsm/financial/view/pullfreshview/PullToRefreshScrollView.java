@@ -59,7 +59,7 @@ public class PullToRefreshScrollView extends PullToRefreshBase<ScrollView> {
     }
 
     /**
-     * @see com.
+     * @see com
      */
     @Override
     protected boolean isReadyForPullUp() {

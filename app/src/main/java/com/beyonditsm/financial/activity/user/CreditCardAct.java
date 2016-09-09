@@ -2,25 +2,38 @@ package com.beyonditsm.financial.activity.user;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.credit.CreditWebView;
 import com.beyonditsm.financial.activity.wallet.MyWalletActivity;
+import com.beyonditsm.financial.adapter.CreditCardItemAdp;
+import com.beyonditsm.financial.entity.CredirCardEntity;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.entity.UserLoginEntity;
 import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
+import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
+import com.beyonditsm.financial.view.pullfreshview.PullToRefreshListView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 信用卡专题页面
@@ -32,6 +45,10 @@ public class CreditCardAct extends BaseActivity {
     private UserEntity user;//用户信息
     private UserLoginEntity ule;//用户登陆信息
     public static final String BANK_NAME = "bank_name";
+    @ViewInject(R.id.lv_creditCard)
+    private PullToRefreshListView lvCreditCard;
+    @ViewInject(R.id.ll_creditCardBottom)
+    private LinearLayout llCreditCardBottom;
     @Override
     public void setLayout() {
         setContentView(R.layout.act_creditcard);
@@ -81,8 +98,41 @@ public class CreditCardAct extends BaseActivity {
     @Override
     public void init(Bundle savedInstanceState) {
         setTopTitle("信用卡专题");
-        getUserLoginInfo();
-        getUserInfo();
+//        getUserLoginInfo();
+//        getUserInfo();
+        lvCreditCard.setPullRefreshEnabled(false);
+        lvCreditCard.setScrollLoadEnabled(false);
+        lvCreditCard.setPullLoadEnabled(true);
+        lvCreditCard.setHasMoreData(false);
+        lvCreditCard.getRefreshableView().setDivider(null);
+        lvCreditCard.getRefreshableView().setVerticalScrollBarEnabled(false);
+        lvCreditCard.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
+        lvCreditCard.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
+        lvCreditCard.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+               if (!lvCreditCard.hasMoreData()){
+                   llCreditCardBottom.setVisibility(View.VISIBLE);
+               }
+            }
+        });
+        List<CredirCardEntity> list = new ArrayList<>();
+        for (int i = 0;i<4;i++){
+            CredirCardEntity credirCardEntity = new CredirCardEntity();
+//            credirCardEntity.setItem("https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=3169350942,1785088152&fm=58&s=E812709CDCB0BE09081EDED4030030BC&bpow=1000&bpoh=387");
+//            credirCardEntity.setItem("http://img2.imgtn.bdimg.com/it/u=1346329280,89502990&fm=11&gp=0.jpg");
+//            credirCardEntity.setItem("http://img0.imgtn.bdimg.com/it/u=1658719497,248833683&fm=11&gp=0.jpg");
+//            credirCardEntity.setItem("http://img2.imgtn.bdimg.com/it/u=76984323,1456456319&fm=11&gp=0.jpg");
+            credirCardEntity.setItem("http://img1.imgtn.bdimg.com/it/u=286138895,4263255804&fm=11&gp=0.jpg");
+            list.add(credirCardEntity);
+        }
+        CreditCardItemAdp creditCardItemAdp = new CreditCardItemAdp(CreditCardAct.this, list);
+        lvCreditCard.getRefreshableView().setAdapter(creditCardItemAdp);
     }
 
     @SuppressWarnings("deprecation")
