@@ -7,9 +7,9 @@
 
     <include layout="@layout/title_act_layout"/>
 
-    <!--<FrameLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -225,9 +225,9 @@
 
         </LinearLayout>
 
-        <!--<com.beyonditsm.financial.view.LoadingView-->
-            <!--android:id="@+id/loadView"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"></com.beyonditsm.financial.view.LoadingView>-->
-    <!--</FrameLayout>-->
+        <com.beyonditsm.financial.view.LoadingView
+            android:id="@+id/loadView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </FrameLayout>
 </LinearLayout>

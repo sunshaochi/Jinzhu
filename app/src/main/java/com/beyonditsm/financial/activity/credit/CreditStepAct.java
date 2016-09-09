@@ -70,14 +70,17 @@ public class CreditStepAct extends BaseActivity {
             setTabSelection(1);
 
         if (getIntent().getIntExtra("credit_upload", 0) == 1) {
-            MyLogUtils.error("orderType===="+orderType);
+//            MyLogUtils.error("orderType===="+orderType);
             if(!TextUtils.isEmpty(orderType)){
                 if (Integer.valueOf(orderType) == 2) {
                     setTabSelection(4);
                 } else  {
                     setTabSelection(2);
                 }
+            }else{
+                setTabSelection(2);
             }
+
 
         }
 
