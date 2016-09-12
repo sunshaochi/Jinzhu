@@ -19,7 +19,7 @@ public interface IFinancialUrl {
 ////        /*验收环境游戏地址*/
 //    String GAME_URL = "http://myjinzhu.com:5011/";
     /*正式地址*/
-    String BASE_URL = "http://option.myjinzhu.com";
+//    String BASE_URL = "http://option.myjinzhu.com";
     /*王建*/
 //    String BASE_URL = "http://172.16.5.191:8081";
 
@@ -228,4 +228,8 @@ public interface IFinancialUrl {
     String UPDATE_LOCATION = BASE_URL+API_VERSION +"/platform/login/updateLocation.do";
     /*线下订单上传资料*/
     String SAVE_OR_UPDATE_ORDER_IMAGE = BASE_URL+API_VERSION +"/platform/login/saveOrUpdateOrderImage.do";
+    /*获得信用卡列表页面的信用卡数据*/
+    String GET_CREDIT_CARD_INFO = BASE_URL+API_VERSION + "/platform/unlogin/getCreditCards.do";
+    /*在登录状态，点击申卡时,调用统计函数*/
+    String APPLY_CREDIT_CARD_CLICK = BASE_URL+API_VERSION + "platform/login/applyCreditCardClick.do";
 }

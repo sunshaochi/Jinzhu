@@ -96,7 +96,7 @@ buildscript {
     repositories {
         jcenter()
     }
-    dependencies {
+    dependencies {  
         classpath 'com.android.tools.build:gradle:2.1.0'
 ////添加这行
 //        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'

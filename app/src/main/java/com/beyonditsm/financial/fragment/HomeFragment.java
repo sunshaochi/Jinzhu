@@ -20,7 +20,7 @@ import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.credit.CreditGuideAct;
-import com.beyonditsm.financial.activity.user.CreditCardAct;
+import com.beyonditsm.financial.activity.user.creditcard.CreditCardAct;
 import com.beyonditsm.financial.activity.user.GameActivity;
 import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
 import com.beyonditsm.financial.activity.user.LoginAct;
@@ -416,6 +416,8 @@ public class HomeFragment extends BaseFragment implements LocationListener {
             if (!TextUtils.isEmpty(SpUtils.getCity(MyApplication.getInstance().getApplicationContext())) && !TextUtils.isEmpty(ParamsUtil.getInstance().getChangedCity())) {
                 if (SpUtils.getCity(MyApplication.getInstance().getApplicationContext()).equals(ParamsUtil.getInstance().getChangedCity())) {
                     tvCity.setText(ParamsUtil.getInstance().getChangedCity());
+                    currentPage = 1;
+                    getHotProductList(currentPage);
                 } else {
                     GPSAlertDialog gpsAlertDialog = new GPSAlertDialog(context);
                     gpsAlertDialog.builder().setCancelable(false).setMsg("您目前所处区域发生变更", "是否将所在城市切换为", ParamsUtil.getInstance().getChangedCity()).setPositiveButton("确认切换", new View.OnClickListener() {
@@ -426,9 +428,12 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                             }
                             tvCity.setText(ParamsUtil.getInstance().getChangedCity());
                             SpUtils.setCity(MyApplication.getInstance().getApplicationContext(), ParamsUtil.getInstance().getChangedCity());
+                            currentPage = 1;
+                            getHotProductList(currentPage);
                         }
                     }).setNegativeButton("取消", null).show();
                     tvCity.setText(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()));
+
                 }
             }else{
                 tvCity.setText(ParamsUtil.getInstance().getChangedCity());
