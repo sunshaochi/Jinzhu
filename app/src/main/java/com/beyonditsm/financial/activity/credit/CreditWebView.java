@@ -8,7 +8,7 @@ import android.webkit.WebViewClient;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
-import com.beyonditsm.financial.activity.user.CreditCardAct;
+import com.beyonditsm.financial.activity.user.creditcard.CreditCardAct;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 public class CreditWebView extends BaseActivity {
