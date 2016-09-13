@@ -399,11 +399,11 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                 datas.addAll(hotList);
                 if (adapter == null) {
                     if (null != getContext()) {
-                        adapter = new HomeCreditAdapter(getContext(), hotList);
+                        adapter = new HomeCreditAdapter(getContext(), datas);
                         plvHotCredit.setAdapter(adapter);
                     }
                 } else {
-                    adapter.setDatas(hotList);
+                    adapter.setDatas(datas);
                 }
             }
 
