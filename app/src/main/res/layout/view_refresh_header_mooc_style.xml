@@ -5,7 +5,7 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <cn.bingoogolapple.refreshlayout.BGAMoocStyleRefreshView
+    <com.beyonditsm.financial.view.refreshlayout.BGAMoocStyleRefreshView
         android:id="@+id/moocView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

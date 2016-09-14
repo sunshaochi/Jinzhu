@@ -46,7 +46,7 @@ public class CreditCardAct extends BaseActivity implements CreditCardInterface{
     private LoadRefreshView lvCreditCard;
     @ViewInject(R.id.ll_creditCardBottom)
     private LinearLayout llCreditCardBottom;
-    @ViewInject(R.id.loadingView)
+    @ViewInject(R.id.loadView)
     private LoadingView loadingView;
     private List<CreditCardEntity.CreditCardsBean> cardList;
     private CreditCardItemAdp adapter;

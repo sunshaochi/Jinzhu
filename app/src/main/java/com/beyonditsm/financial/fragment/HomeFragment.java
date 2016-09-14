@@ -2,6 +2,7 @@ package com.beyonditsm.financial.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -50,6 +51,10 @@ import com.beyonditsm.financial.view.banner.OnItemClickListener;
 import com.beyonditsm.financial.view.banner.Transformer;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
+import com.beyonditsm.financial.view.refreshlayout.BGAMeiTuanRefreshViewHolder;
+import com.beyonditsm.financial.view.refreshlayout.BGAMoocStyleRefreshViewHolder;
+import com.beyonditsm.financial.view.refreshlayout.BGARefreshLayout;
+import com.beyonditsm.financial.view.refreshlayout.BGARefreshViewHolder;
 import com.beyonditsm.financial.widget.GPSAlertDialog;
 import com.beyonditsm.financial.widget.gpscity.DialogChooseCity;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -78,7 +83,7 @@ import java.util.List;
 /**
  * Created by liwk on 2015/12/8
  */
-public class HomeFragment extends BaseFragment implements LocationListener {
+public class HomeFragment extends BaseFragment implements LocationListener,BGARefreshLayout.BGARefreshLayoutDelegate {
     @ViewInject(R.id.plv_hotCredit)
     private ListViewForScrollView plvHotCredit;
     @ViewInject(R.id.loadingView)
@@ -90,6 +95,8 @@ public class HomeFragment extends BaseFragment implements LocationListener {
     private ConvenientBanner cbHomeBanner;
     @ViewInject(R.id.sv_home)
     private ScrollView svHome;
+    @ViewInject(R.id.rl_BGA)
+    private BGARefreshLayout mRefreshLayout;
     private int currentPage = 1;
     private HomeCreditAdapter adapter;
     private List<HomeHotProductEntity> hotList;
@@ -235,6 +242,7 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                 MyToastUtils.showShortToast(context,"点击了第"+position+"个");
             }
         });
+        initRefreshLayout(convenientBanner);
     }
 
     @Override
@@ -356,6 +364,16 @@ public class HomeFragment extends BaseFragment implements LocationListener {
         ParamsUtil.getInstance().setChangedCity(city);
         ParamsUtil.getInstance().setCityGet(isGet);
         initLocation();
+    }
+
+    @Override
+    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+
+    }
+
+    @Override
+    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
+        return false;
     }
 
     public class ToSwitchEvent {
@@ -512,12 +530,41 @@ public class HomeFragment extends BaseFragment implements LocationListener {
             }
         });
     }
+    private void initRefreshLayout(ConvenientBanner convenientBanner) {
+        // 为BGARefreshLayout设置代理
+        mRefreshLayout.setDelegate(this);
+        // 设置下拉刷新和上拉加载更多的风格     参数1：应用程序上下文，参数2：是否具有上拉加载更多功能
+        BGAMeiTuanRefreshViewHolder refreshViewHolder = new BGAMeiTuanRefreshViewHolder(context, true);
+        // 设置下拉刷新和上拉加载更多的风格
+//        refreshViewHolder.(R.mipmap.arrow_orienge_up);
+//        refreshViewHolder.setUltimateColor(R.color.tv_black);
+        refreshViewHolder.setPullDownImageResource(R.mipmap.logo);
+        refreshViewHolder.setChangeToReleaseRefreshAnimResId(R.drawable.load_anim);
+        refreshViewHolder.setRefreshingAnimResId(R.drawable.load_anim);
+        // 为了增加下拉刷新头部和加载更多的通用性，提供了以下可选配置选项  -------------START
+        // 设置正在加载更多时不显示加载更多控件
+        // mRefreshLayout.setIsShowLoadingMoreView(false);
+        // 设置正在加载更多时的文本
+        refreshViewHolder.setLoadingMoreText("正在加载中");
+        // 设置整个加载更多控件的背景颜色资源id
+        refreshViewHolder.setLoadMoreBackgroundColorRes(R.color.tv_black);
+        // 设置整个加载更多控件的背景drawable资源id
+//        refreshViewHolder.setLoadMoreBackgroundDrawableRes(loadMoreBackgroundDrawableRes);
+        // 设置下拉刷新控件的背景颜色资源id
+//        refreshViewHolder.setRefreshViewBackgroundColorRes(refreshViewBackgroundColorRes);
+        // 设置下拉刷新控件的背景drawable资源id
+//        refreshViewHolder.setRefreshViewBackgroundDrawableRes(refreshViewBackgroundDrawableRes);
+        // 设置自定义头部视图（也可以不用设置）     参数1：自定义头部视图（例如广告位）， 参数2：上拉加载更多是否可用
+//        mRefreshLayout.setCustomHeaderView(convenientBanner, false);
+        // 可选配置  -------------END
+        mRefreshLayout.setRefreshViewHolder(refreshViewHolder);
+
+    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         ParamsUtil.getInstance().setFirstLocated(true);
     }
-
 
 }
