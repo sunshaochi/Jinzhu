@@ -346,6 +346,8 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
                                         tvCity.setText(adress.get(1 ));
                                     }
                                     SpUtils.setCity(MyApplication.getInstance().getApplicationContext(), adress.get(1));
+                                    currentPage = 1;
+                                    getHotProductList(currentPage);
                                 }
                             }).setNegativeButton("取消", null).show();
 
