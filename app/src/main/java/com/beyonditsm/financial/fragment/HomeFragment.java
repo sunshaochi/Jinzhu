@@ -56,6 +56,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -145,6 +146,9 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 
         String roleName = SpUtils.getRoleName(context);
         MyLogUtils.info("ROLENAME=" + roleName);
+        plvHotCredit.setDivider(null);
+        plvHotCredit.setVerticalScrollBarEnabled(false);
+        plvHotCredit.setSelector(new ColorDrawable(Color.TRANSPARENT));
 //        plvHotCredit.setPullRefreshEnabled(true);
 //        plvHotCredit.setScrollLoadEnabled(false);
 //        plvHotCredit.setPullLoadEnabled(true);
@@ -153,20 +157,20 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 //        plvHotCredit.getRefreshableView().setVerticalScrollBarEnabled(false);
 //        plvHotCredit.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
 //        plvHotCredit.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
-        plvHotCredit.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
-            @Override
-            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-                plvHotCredit.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
-                currentPage = 1;
-                getHotProductList(currentPage);
-            }
-
-            @Override
-            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-                currentPage++;
-                getHotProductList(currentPage);
-            }
-        });
+//        plvHotCredit.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+//            @Override
+//            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+//                plvHotCredit.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
+//                currentPage = 1;
+//                getHotProductList(currentPage);
+//            }
+//
+//            @Override
+//            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+//                currentPage++;
+//                getHotProductList(currentPage);
+//            }
+//        });
 
 //        MaterialRippleLayout.on(llCredit)
 //                .rippleColor(Color.parseColor("#919191"))
@@ -192,6 +196,7 @@ public class HomeFragment extends BaseFragment implements LocationListener {
         });
 
     }
+
 
     @Override
     public void onAttach(Activity activity) {
