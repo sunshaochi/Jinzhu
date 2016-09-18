@@ -1,8 +1,12 @@
 package com.beyonditsm.financial.http;
 
+import android.text.TextUtils;
+
+import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.entity.HotProduct;
 import com.beyonditsm.financial.entity.MyRecommeEntity;
 import com.beyonditsm.financial.entity.TaskEntity;
+import com.beyonditsm.financial.util.SpUtils;
 
 import org.apache.http.NameValuePair;
 
@@ -114,6 +118,12 @@ public class UserManager extends RequestManager {
         Map<String, String> params = new HashMap<>();
         params.put("page", hp.getPage() + "");
         params.put("rows", hp.getRows() + "");
+        if (!TextUtils.isEmpty(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()))){
+            params.put("cityName", SpUtils.getCity(MyApplication.getInstance().getApplicationContext()));
+        }else {
+            params.put("cityName", "全国");
+        }
+
         doPost(IFinancialUrl.FIND_HOT_PRODUCT_LIST, params, callBack);
     }
 

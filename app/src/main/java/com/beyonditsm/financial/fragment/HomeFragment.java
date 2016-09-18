@@ -293,6 +293,8 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                                         tvCity.setText(adress.get(1 ));
                                     }
                                     SpUtils.setCity(MyApplication.getInstance().getApplicationContext(), adress.get(1));
+                                    currentPage = 1;
+                                    getHotProductList(currentPage);
                                 }
                             }).setNegativeButton("取消", null).show();
 
@@ -327,8 +329,8 @@ public class HomeFragment extends BaseFragment implements LocationListener {
             @Override
             public void onSucess(String result) throws JSONException {
                 loadingView.loadComplete();
-                plvHotCredit.onPullUpRefreshComplete();
-                plvHotCredit.onPullDownRefreshComplete();
+//                plvHotCredit.onPullUpRefreshComplete();
+//                plvHotCredit.onPullDownRefreshComplete();
 
                 JSONObject object = new JSONObject(result);
                 JSONArray data = object.getJSONArray("data");
@@ -342,9 +344,10 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                 if (hotList == null || hotList.size() == 0) {
                     if (Page == 1) {
                         loadingView.noContent();
-                    } else {
-                        plvHotCredit.setHasMoreData(false);
                     }
+//                    else {
+////                        plvHotCredit.setHasMoreData(false);
+//                    }
                     return;
                 }
                 if (Page == 1) {
@@ -353,22 +356,23 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                 datas.addAll(hotList);
                 if (adapter == null) {
                     if (null != getContext()) {
-                        adapter = new HomeCreditAdapter(getContext(), hotList);
-                        plvHotCredit.getRefreshableView().setAdapter(adapter);
+                        adapter = new HomeCreditAdapter(getContext(), datas);
+                        plvHotCredit.setAdapter(adapter);
                     }
                 } else {
-                    adapter.setDatas(hotList);
+                    adapter.setDatas(datas);
                 }
             }
 
             @Override
             public void onError(int status, String msg) {
-                plvHotCredit.onPullUpRefreshComplete();
-                plvHotCredit.onPullDownRefreshComplete();
+//                plvHotCredit.onPullUpRefreshComplete();
+//                plvHotCredit.onPullDownRefreshComplete();
                 loadingView.loadError();
             }
         });
     }
+
 
     /**
      * 获取用户的角色信息
@@ -416,6 +420,8 @@ public class HomeFragment extends BaseFragment implements LocationListener {
             if (!TextUtils.isEmpty(SpUtils.getCity(MyApplication.getInstance().getApplicationContext())) && !TextUtils.isEmpty(ParamsUtil.getInstance().getChangedCity())) {
                 if (SpUtils.getCity(MyApplication.getInstance().getApplicationContext()).equals(ParamsUtil.getInstance().getChangedCity())) {
                     tvCity.setText(ParamsUtil.getInstance().getChangedCity());
+                    currentPage = 1;
+                    getHotProductList(currentPage);
                 } else {
                     GPSAlertDialog gpsAlertDialog = new GPSAlertDialog(context);
                     gpsAlertDialog.builder().setCancelable(false).setMsg("您目前所处区域发生变更", "是否将所在城市切换为", ParamsUtil.getInstance().getChangedCity()).setPositiveButton("确认切换", new View.OnClickListener() {
@@ -426,15 +432,16 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                             }
                             tvCity.setText(ParamsUtil.getInstance().getChangedCity());
                             SpUtils.setCity(MyApplication.getInstance().getApplicationContext(), ParamsUtil.getInstance().getChangedCity());
+                            currentPage = 1;
+                            getHotProductList(currentPage);
                         }
                     }).setNegativeButton("取消", null).show();
                     tvCity.setText(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()));
+
                 }
-            }else{
-                tvCity.setText(ParamsUtil.getInstance().getChangedCity());
-                SpUtils.setCity(MyApplication.getInstance().getApplicationContext(), ParamsUtil.getInstance().getChangedCity());
             }
-        } else {
+
+            } else {
             tvCity.setText("——");
             GPSAlertDialog gpsAlertDialog = new GPSAlertDialog(context);
             gpsAlertDialog.builder().setCancelable(false).setMsg("无法获取当前位置，请检查设置", "或直接切换城市", null).setPositiveButton("去设置", new View.OnClickListener() {
