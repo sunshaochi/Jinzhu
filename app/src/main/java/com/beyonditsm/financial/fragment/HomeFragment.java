@@ -39,6 +39,7 @@ import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.util.gps.GPSAddressUtils;
 import com.beyonditsm.financial.util.gps.LocationListener;
+import com.beyonditsm.financial.view.ListViewForScrollView;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
@@ -70,7 +71,7 @@ import java.util.List;
  */
 public class HomeFragment extends BaseFragment implements LocationListener {
     @ViewInject(R.id.plv_hotCredit)
-    private LoadRefreshView plvHotCredit;
+    private ListViewForScrollView plvHotCredit;
     @ViewInject(R.id.loadingView)
     private LoadingView loadingView;
 
@@ -144,14 +145,14 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 
         String roleName = SpUtils.getRoleName(context);
         MyLogUtils.info("ROLENAME=" + roleName);
-        plvHotCredit.setPullRefreshEnabled(true);
-        plvHotCredit.setScrollLoadEnabled(false);
-        plvHotCredit.setPullLoadEnabled(true);
-        plvHotCredit.setHasMoreData(true);
-        plvHotCredit.getRefreshableView().setDivider(null);
-        plvHotCredit.getRefreshableView().setVerticalScrollBarEnabled(false);
-        plvHotCredit.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
-        plvHotCredit.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
+//        plvHotCredit.setPullRefreshEnabled(true);
+//        plvHotCredit.setScrollLoadEnabled(false);
+//        plvHotCredit.setPullLoadEnabled(true);
+//        plvHotCredit.setHasMoreData(true);
+//        plvHotCredit.getRefreshableView().setDivider(null);
+//        plvHotCredit.getRefreshableView().setVerticalScrollBarEnabled(false);
+//        plvHotCredit.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
+//        plvHotCredit.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
         plvHotCredit.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
