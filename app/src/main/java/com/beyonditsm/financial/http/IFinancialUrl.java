@@ -229,7 +229,7 @@ public interface IFinancialUrl {
     /*线下订单上传资料*/
     String SAVE_OR_UPDATE_ORDER_IMAGE = BASE_URL+API_VERSION +"/platform/login/saveOrUpdateOrderImage.do";
     /*获得信用卡列表页面的信用卡数据*/
-    String GET_CREDIT_CARD_INFO = BASE_URL+API_VERSION + "/platform/unlogin/getCreditCards.do";
+    String GET_CREDIT_CARD_INFO = BASE_URL+API_VERSION + "/creditCard/unlogin/getCreditCards.do";
     /*在登录状态，点击申卡时,调用统计函数*/
-    String APPLY_CREDIT_CARD_CLICK = BASE_URL+API_VERSION + "platform/login/applyCreditCardClick.do";
+    String APPLY_CREDIT_CARD_CLICK = BASE_URL+API_VERSION + "/platform/login/applyCreditCardClick.do";
 }
