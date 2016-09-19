@@ -10,7 +10,7 @@ public interface IFinancialUrl {
 //    String BASE_URL = "http://172.16.6.236:8080";
     /*吕东测试*/
 //    String BASE_URL = "http://172.16.5.59";
-//    String BASE_URL ="http://172.16.6.218";
+    String BASE_URL ="http://172.16.6.218";
     /*袁峰测试*/
 //    String BASE_URL = "http://172.16.6.153:8080";
 //    String BASE_URL = "http://172.16.6.228:8080";
@@ -27,7 +27,7 @@ public interface IFinancialUrl {
     String GAME_URL = "http://m.farm.myjinzhu.com/";
 
 
-    String BASE_URL = "http://test.myjinzhu.com:8082";
+//    String BASE_URL = "http://test.myjinzhu.com:8082";
     /*测试地址3*/
 //    String BASE_URL="http://test.myjinzhu.com:60";
     //内网地址（测试钱包功能）
@@ -229,7 +229,7 @@ public interface IFinancialUrl {
     /*线下订单上传资料*/
     String SAVE_OR_UPDATE_ORDER_IMAGE = BASE_URL+API_VERSION +"/platform/login/saveOrUpdateOrderImage.do";
     /*获得信用卡列表页面的信用卡数据*/
-    String GET_CREDIT_CARD_INFO = BASE_URL+API_VERSION + "/platform/unlogin/getCreditCards.do";
+    String GET_CREDIT_CARD_INFO = BASE_URL+API_VERSION + "/creditCard/unlogin/getCreditCards.do";
     /*在登录状态，点击申卡时,调用统计函数*/
-    String APPLY_CREDIT_CARD_CLICK = BASE_URL+API_VERSION + "platform/login/applyCreditCardClick.do";
+    String APPLY_CREDIT_CARD_CLICK = BASE_URL+API_VERSION + "/platform/login/applyCreditCardClick.do";
 }
