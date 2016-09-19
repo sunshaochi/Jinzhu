@@ -112,7 +112,7 @@ public class HomeCreditAdapter extends BaseAdapter {
         }
 
          HomeHotProductEntity hotProductEntity =  list.get(position);
-         ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + hotProductEntity.getImageLogoPath(), holder.ivProductLogo, options);
+         ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + hotProductEntity.getAndroidProductLogo(), holder.ivProductLogo, options);
 
         if(hotProductEntity.getMonthlyRateMin().equals(hotProductEntity.getMonthlyRateMax())){
             holder.tvRate.setText(hotProductEntity.getMonthlyRateMin()+"");

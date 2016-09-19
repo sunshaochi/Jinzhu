@@ -153,9 +153,9 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 //        plvHotCredit.setScrollLoadEnabled(false);
 //        plvHotCredit.setPullLoadEnabled(true);
 //        plvHotCredit.setHasMoreData(true);
-//        plvHotCredit.getRefreshableView().setDivider(null);
-//        plvHotCredit.getRefreshableView().setVerticalScrollBarEnabled(false);
-//        plvHotCredit.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
+        plvHotCredit.setDivider(null);
+        plvHotCredit.setVerticalScrollBarEnabled(false);
+        plvHotCredit.setSelector(new ColorDrawable(Color.TRANSPARENT));
 //        plvHotCredit.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
 //        plvHotCredit.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
 //            @Override
@@ -209,7 +209,7 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 
     @Override
     public void setListener() {
-        plvHotCredit.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        plvHotCredit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(mParentActivity, HomeCreditDetailAct.class);

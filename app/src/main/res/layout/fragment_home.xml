@@ -141,11 +141,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.beyonditsm.financial.view.pullfreshview.LoadRefreshView
+            <com.beyonditsm.financial.view.ListViewForScrollView
                 android:id="@+id/plv_hotCredit"
                 style="@style/pullrefresh_style">
 
-            </com.beyonditsm.financial.view.pullfreshview.LoadRefreshView>
+            </com.beyonditsm.financial.view.ListViewForScrollView>
 
             <com.beyonditsm.financial.view.LoadingView
                 android:id="@+id/loadingView"

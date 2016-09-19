@@ -43,7 +43,7 @@ public class HomeHotProductEntity implements Parcelable{
      * loanPeriod : 5
      */
 
-    private String imageLogoPath;
+    private String androidProductLogo;
     private String compositiveRate;
     private String productName;
     private String loanPeriod;
@@ -114,12 +114,12 @@ public class HomeHotProductEntity implements Parcelable{
         this.productCharas = productCharas;
     }
 
-    public String getImageLogoPath() {
-        return imageLogoPath;
+    public String getAndroidProductLogo() {
+        return androidProductLogo;
     }
 
-    public void setImageLogoPath(String imageLogoPath) {
-        this.imageLogoPath = imageLogoPath;
+    public void setAndroidProductLogo(String androidProductLogo) {
+        this.androidProductLogo = androidProductLogo;
     }
 
     public String getCompositiveRate() {
@@ -163,7 +163,7 @@ public class HomeHotProductEntity implements Parcelable{
         dest.writeString(this.productId);
         dest.writeString(this.productChara);
         dest.writeParcelable((Parcelable) this.productCharas, flags);
-        dest.writeString(this.imageLogoPath);
+        dest.writeString(this.androidProductLogo);
         dest.writeString(this.compositiveRate);
         dest.writeString(this.productName);
         dest.writeString(this.loanPeriod);
@@ -177,7 +177,7 @@ public class HomeHotProductEntity implements Parcelable{
         this.hotRank = in.readInt();
         this.productId = in.readString();
         this.productChara = in.readString();
-        this.imageLogoPath = in.readString();
+        this.androidProductLogo = in.readString();
         this.compositiveRate = in.readString();
         this.productName = in.readString();
         this.loanPeriod = in.readString();
