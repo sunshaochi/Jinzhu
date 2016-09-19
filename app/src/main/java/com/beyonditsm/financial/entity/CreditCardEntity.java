@@ -30,7 +30,7 @@ public class CreditCardEntity {
         private String creditcardName;
         private String mobileUrl;
         private String mobileCreditcardImg;
-        private List<String> mobileCreditcardDesc;
+        private String mobileCreditcardDesc;
 
         public String getId() {
             return id;
@@ -64,11 +64,11 @@ public class CreditCardEntity {
             this.mobileCreditcardImg = mobileCreditcardImg;
         }
 
-        public List<String> getMobileCreditcardDesc() {
+        public String getMobileCreditcardDesc() {
             return mobileCreditcardDesc;
         }
 
-        public void setMobileCreditcardDesc(List<String> mobileCreditcardDesc) {
+        public void setMobileCreditcardDesc(String mobileCreditcardDesc) {
             this.mobileCreditcardDesc = mobileCreditcardDesc;
         }
     }

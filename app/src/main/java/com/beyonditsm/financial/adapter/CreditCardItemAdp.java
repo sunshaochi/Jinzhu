@@ -78,16 +78,15 @@ public class CreditCardItemAdp extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         ImageLoader.getInstance().displayImage(datas.get(position).getMobileCreditcardImg(),holder.iv_creditCard,options);
-        for (int i =0;i<datas.get(position).getMobileCreditcardDesc().size();i++){
-            holder.tv_description.setText(holder.tv_description.getText().toString()+""+datas.get(position).getMobileCreditcardDesc().get(i)+"/n");
-        }
+            holder.tv_description.setText(holder.tv_description.getText().toString()+""+datas.get(position).getMobileCreditcardDesc());
+
         holder.btn_applyCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cardInterface.onApply(datas.get(position).getId(),datas.get(position).getMobileUrl());
             }
         });
-        if (isLastPage && position == datas.size()){
+        if (isLastPage && position == datas.size()-1){
             holder.ll_creditCardBottom.setVisibility(View.VISIBLE);
             holder.iv_application.setOnClickListener(new View.OnClickListener() {
                 @Override

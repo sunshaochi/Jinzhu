@@ -10,6 +10,7 @@ import android.widget.ListView;
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
+import com.beyonditsm.financial.activity.credit.CreditWebView;
 import com.beyonditsm.financial.activity.user.ApplicationAct;
 import com.beyonditsm.financial.adapter.CreditCardItemAdp;
 import com.beyonditsm.financial.entity.CreditCardEntity;
@@ -36,7 +37,7 @@ import java.util.List;
  * 信用卡专题页面
  * Created by xuleyuan on 2016/5/25.
  */
-public class CreditCardAct extends BaseActivity implements CreditCardInterface{
+public class CreditCardAct extends BaseActivity implements CreditCardInterface {
     //    @ViewInject(R.id.iv_wallet)
 //    private ImageView ivWallet;
     private UserEntity user;//用户信息
@@ -50,7 +51,8 @@ public class CreditCardAct extends BaseActivity implements CreditCardInterface{
     private LoadingView loadingView;
     private List<CreditCardEntity.CreditCardsBean> cardList;
     private CreditCardItemAdp adapter;
-    private int currentPage ;
+    private int currentPage;
+
     @Override
     public void setLayout() {
         setContentView(R.layout.act_creditcard);
@@ -131,7 +133,7 @@ public class CreditCardAct extends BaseActivity implements CreditCardInterface{
 //        }
 //    }
 
-//    @OnClick({R.id.iv_wallet,R.id.iv_application,R.id.iv_receiveReward,R.id.qrcode_layout,R.id.pfCreditCard})
+    //    @OnClick({R.id.iv_wallet,R.id.iv_application,R.id.iv_receiveReward,R.id.qrcode_layout,R.id.pfCreditCard})
 //    public void todo(View view){
 //        Intent intent;
 //        switch (view.getId()){
@@ -161,28 +163,32 @@ public class CreditCardAct extends BaseActivity implements CreditCardInterface{
 //                break;
 //        }
 //    }
-private List<CreditCardEntity.CreditCardsBean> datas = new ArrayList<>();
+    private List<CreditCardEntity.CreditCardsBean> datas = new ArrayList<>();
 
     /**
      * 获取信用卡列表数据的方法
+     *
      * @param Page 当前需要请求的页
      * @param area 用户所在区域
      */
-    public void getCreditCard(final int Page,String area) {
-        if (area == null || "".equals(area)){
+    public void getCreditCard(final int Page, String area) {
+        if (area == null || "".equals(area)) {
             area = "全国";
         }
         HotProduct hp = new HotProduct();
         hp.setPage(Page);
         hp.setRows(5);
-        RequestManager.getCommManager().getCreditCards(hp,area, new RequestManager.CallBack() {
+        RequestManager.getCommManager().getCreditCards(hp, area, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
                 loadingView.loadComplete();
+                lvCreditCard.onPullDownRefreshComplete();
+                lvCreditCard.onPullUpRefreshComplete();
                 JSONObject object = new JSONObject(result);
-                JSONArray data = object.getJSONArray("data");
+                JSONObject data = object.getJSONObject("data");
+                JSONArray rows = data.getJSONArray("rows");
                 Gson gson = new Gson();
-                cardList = gson.fromJson(data.toString(), new TypeToken<List<CreditCardEntity>>() {
+                cardList = gson.fromJson(rows.toString(), new TypeToken<List<CreditCardEntity.CreditCardsBean>>() {
                 }.getType());
 //                if (data == null) {
 //                    loadingView.noContent();
@@ -201,13 +207,17 @@ private List<CreditCardEntity.CreditCardsBean> datas = new ArrayList<>();
                 }
                 datas.addAll(cardList);
                 if (adapter == null) {
-                        adapter = new CreditCardItemAdp(CreditCardAct.this, datas,isLast(cardList));
-                        lvCreditCard.getRefreshableView().setAdapter(adapter);
+                    adapter = new CreditCardItemAdp(CreditCardAct.this, datas, isLast(cardList));
+                    adapter.setOnCreditCardListner(CreditCardAct.this);
+                    lvCreditCard.getRefreshableView().setAdapter(adapter);
 
                 } else {
                     adapter.setDatas(datas);
+                    adapter.setOnCreditCardListner(CreditCardAct.this);
                 }
+
             }
+
             @Override
             public void onError(int status, String msg) {
                 lvCreditCard.onPullDownRefreshComplete();
@@ -216,10 +226,12 @@ private List<CreditCardEntity.CreditCardsBean> datas = new ArrayList<>();
             }
         });
     }
+
     /*判断是否是最后一页数据*/
     private boolean isLast(List<CreditCardEntity.CreditCardsBean> cardList) {
-        return cardList == null || cardList.size() == 0;
+        return cardList == null || cardList.size() < 5;
     }
+
     /*该方法请求后台用于记录用户点击信用卡数据*/
     public void applyCreditCardClick(String creditCardId) {
         RequestManager.getCommManager().applyCreditCardClick(creditCardId, new RequestManager.CallBack() {
@@ -237,11 +249,15 @@ private List<CreditCardEntity.CreditCardsBean> datas = new ArrayList<>();
 
     /**
      * 当点击信用卡申请调用的方法
-     * @param id 信用卡id
+     *
+     * @param id        信用卡id
      * @param mobileUrl 对应的信用卡Web链接
      */
     @Override
     public void onApply(String id, String mobileUrl) {
+        Intent intent = new Intent(CreditCardAct.this, CreditWebView.class);
+                intent.putExtra(BANK_NAME,mobileUrl);
+                startActivity(intent);
         applyCreditCardClick(id);
     }
 
@@ -250,6 +266,6 @@ private List<CreditCardEntity.CreditCardsBean> datas = new ArrayList<>();
      */
     @Override
     public void onClickApplyCredit() {
-        startActivity(new Intent(CreditCardAct.this,ApplicationAct.class));
+        startActivity(new Intent(CreditCardAct.this, ApplicationAct.class));
     }
 }
