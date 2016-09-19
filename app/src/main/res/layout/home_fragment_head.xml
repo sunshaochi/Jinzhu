@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cb="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.beyonditsm.financial.view.banner.ConvenientBanner
+            android:id="@+id/cb_homeBanner"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            cb:canLoop="true"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#f58b35">
+
+            <LinearLayout
+                android:id="@+id/ll_credit"
+                style="@style/home_head_layout">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/button_home_01" />
+
+                <TextView
+                    style="@style/home_text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="我要贷款" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_tillage"
+                style="@style/home_head_layout">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/button_home_02" />
+
+                <TextView
+                    style="@style/home_text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="信用耕耘" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_work"
+                style="@style/home_head_layout">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/button_home_03" />
+
+                <TextView
+                    style="@style/home_text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="代言人" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_creditCard"
+                style="@style/home_head_layout">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="45dp"
+                    android:src="@drawable/credit" />
+
+                <TextView
+                    style="@style/home_text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="信用卡" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

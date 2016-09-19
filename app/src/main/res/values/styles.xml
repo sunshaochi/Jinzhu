@@ -265,7 +265,7 @@
     <style name="home_text_style">
         <item name="android:textColor">#ffffff</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginTop">10dp</item>
     </style>
     <style name="home_head_layout">
         <item name="android:layout_width">0dp</item>
@@ -276,6 +276,8 @@
         <item name="android:background">@drawable/home_btn_bg</item>
         <item name="android:paddingTop">10dp</item>
         <item name="android:paddingBottom">10dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
     </style>
 
     <!-- 信贷经理订单管理自定义指示器-->

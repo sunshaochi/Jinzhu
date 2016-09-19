@@ -13,8 +13,11 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -44,6 +47,7 @@ import com.beyonditsm.financial.util.gps.GPSAddressUtils;
 import com.beyonditsm.financial.util.gps.LocationListener;
 import com.beyonditsm.financial.view.ListViewForScrollView;
 import com.beyonditsm.financial.view.LoadingView;
+import com.beyonditsm.financial.view.MyScrollView;
 import com.beyonditsm.financial.view.banner.CBViewHolderCreator;
 import com.beyonditsm.financial.view.banner.ConvenientBanner;
 import com.beyonditsm.financial.view.banner.HolderView;
@@ -94,9 +98,13 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
     @ViewInject(R.id.cb_homeBanner)
     private ConvenientBanner cbHomeBanner;
     @ViewInject(R.id.sv_home)
-    private ScrollView svHome;
-    @ViewInject(R.id.rl_BGA)
-    private BGARefreshLayout mRefreshLayout;
+    private MyScrollView svHome;
+//    @ViewInject(R.id.rl_BGA)
+//    private BGARefreshLayout mRefreshLayout;
+    @ViewInject(R.id.ll_header)
+    private LinearLayout llHeader;
+    @ViewInject(R.id.rl_title_layout)
+    private RelativeLayout rlTitleLayout;
     private int currentPage = 1;
     private HomeCreditAdapter adapter;
     private List<HomeHotProductEntity> hotList;
@@ -114,23 +122,12 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
     };
 
 
-
-//    public LocationClient mLocationClient = null;
-
     @SuppressLint("InflateParams")
     @Override
     public View initView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.fragment_home, null);
 
     }
-
-//    @Override
-//    public void onHiddenChanged(boolean hidden) {
-//        super.onHiddenChanged(hidden);
-//        if (!hidden){
-//
-//        }
-//    }
 
     @Override
     public void onStart() {
@@ -154,7 +151,6 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
 
     }
 
-
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -171,10 +167,27 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
         }
     }
 
+    //fragment切换时scrollview加载到顶部
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden){
+            svHome.smoothScrollTo(0,0);
+        }
+    }
+
+    //返回fragment时scrollview加载到顶部
+    @Override
+    public void onResume() {
+        super.onResume();
+        svHome.smoothScrollTo(0,0);
+    }
+
     @Override
     public void initData(Bundle savedInstanceState) {
-//        getHotProductList(currentPage);
 
+        //头部布局的初始化时透明
+//        rlTitleLayout.setBackgroundColor(Color.argb(0,0xf5,0x8b,0x35));
         String roleName = SpUtils.getRoleName(context);
         MyLogUtils.info("ROLENAME=" + roleName);
         svHome.smoothScrollTo(0,0);
@@ -204,21 +217,6 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
 //            }
 //        });
 
-//        MaterialRippleLayout.on(llCredit)
-//                .rippleColor(Color.parseColor("#919191"))
-//                .rippleAlpha(0.2f)
-//                .rippleHover(true)
-//                .create();
-//        MaterialRippleLayout.on(llTillage)
-//                .rippleColor(Color.parseColor("#919191"))
-//                .rippleAlpha(0.2f)
-//                .rippleHover(true)
-//                .create();
-//        MaterialRippleLayout.on(llWork)
-//                .rippleColor(Color.parseColor("#919191"))
-//                .rippleAlpha(0.2f)
-//                .rippleHover(true)
-//                .create();
         getHotProductList(currentPage);
         loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
             @Override
@@ -227,7 +225,7 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
             }
         });
         networkImages = Arrays.asList(images);
-        ConvenientBanner convenientBanner = cbHomeBanner.setPages(new CBViewHolderCreator<HolderView>() {
+        final ConvenientBanner convenientBanner = cbHomeBanner.setPages(new CBViewHolderCreator<HolderView>() {
 
             @Override
             public HolderView createHolder() {
@@ -242,7 +240,25 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
                 MyToastUtils.showShortToast(context,"点击了第"+position+"个");
             }
         });
-        initRefreshLayout(convenientBanner);
+        //这是用来scrollview滑动时顶部布局由透明逐渐变色
+//        convenientBanner.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                convenientBanner.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+//                final int height = convenientBanner.getHeight();
+//                svHome.setOnScrollListener(new MyScrollView.OnScrollListener() {
+//                    @Override
+//                    public void onScroll(MyScrollView myScrollView, int x, int y, int oldx, int oldy) {
+//                        if (y<=height){
+//                            float scale = (float)y/height;
+//                            float alpha = (255*scale);
+//                            rlTitleLayout.setBackgroundColor(Color.argb((int)alpha,0xf5,0x8b,0x35));
+//                        }
+//                    }
+//                });
+//            }
+//        });
+//        initRefreshLayout(convenientBanner);
     }
 
     @Override
@@ -352,8 +368,6 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
                             }).setNegativeButton("取消", null).show();
 
                         }
-//                        userInfo.setNativePlaceAddr(adress.get(0)+adress.get(1)+adress.get(2));
-//                        updateData(us
                     }
                 });
                 break;
@@ -384,6 +398,10 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
 
     private List<HomeHotProductEntity> datas = new ArrayList<>();
 
+    /**
+     * 获取热门产品列表
+     * @param Page
+     */
     private void getHotProductList(final int Page) {
         HotProduct hp = new HotProduct();
         hp.setPage(Page);
@@ -534,7 +552,7 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
     }
     private void initRefreshLayout(ConvenientBanner convenientBanner) {
         // 为BGARefreshLayout设置代理
-        mRefreshLayout.setDelegate(this);
+//        mRefreshLayout.setDelegate(this);
         // 设置下拉刷新和上拉加载更多的风格     参数1：应用程序上下文，参数2：是否具有上拉加载更多功能
         BGAMeiTuanRefreshViewHolder refreshViewHolder = new BGAMeiTuanRefreshViewHolder(context, true);
         // 设置下拉刷新和上拉加载更多的风格
@@ -559,7 +577,7 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
         // 设置自定义头部视图（也可以不用设置）     参数1：自定义头部视图（例如广告位）， 参数2：上拉加载更多是否可用
 //        mRefreshLayout.setCustomHeaderView(convenientBanner, false);
         // 可选配置  -------------END
-        mRefreshLayout.setRefreshViewHolder(refreshViewHolder);
+//        mRefreshLayout.setRefreshViewHolder(refreshViewHolder);
 
     }
 

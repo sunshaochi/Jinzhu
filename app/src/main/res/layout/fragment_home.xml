@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/rl_title_layout"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="#f58b35">
@@ -40,30 +41,30 @@
             android:textColor="#ffffff"
             android:textSize="20sp" />
     </RelativeLayout>
-    <com.beyonditsm.financial.view.refreshlayout.BGARefreshLayout
-        android:id="@+id/rl_BGA"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ScrollView
+
+    <!--<com.beyonditsm.financial.view.refreshlayout.BGARefreshLayout-->
+        <!--android:id="@+id/rl_BGA"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+        <com.beyonditsm.financial.view.MyScrollView
             android:id="@+id/sv_home"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:scrollbars="none">
 
 
             <LinearLayout
+                android:id="@+id/ll_header"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:orientation="vertical">
-
-
 
                     <com.beyonditsm.financial.view.banner.ConvenientBanner
                         android:id="@+id/cb_homeBanner"
@@ -181,7 +182,8 @@
                 </FrameLayout>
             </LinearLayout>
 
-        </ScrollView>
-    </com.beyonditsm.financial.view.refreshlayout.BGARefreshLayout>
+        </com.beyonditsm.financial.view.MyScrollView>
+  <!--  </com.beyonditsm.financial.view.refreshlayout.BGARefreshLayout>-->
+
 
 </LinearLayout>
