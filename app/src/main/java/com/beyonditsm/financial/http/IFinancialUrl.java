@@ -8,6 +8,7 @@ package com.beyonditsm.financial.http;
 public interface IFinancialUrl {
     /*吕建明*/
 //    String BASE_URL = "http://172.16.6.236:8080";
+    String BASE_URL = "http://172.16.6.95:8080";
     /*吕东测试*/
 //    String BASE_URL = "http://172.16.5.59";
 //    String BASE_URL ="http://172.16.6.218";
@@ -232,4 +233,6 @@ public interface IFinancialUrl {
     String GET_CREDIT_CARD_INFO = BASE_URL+API_VERSION + "/creditCard/unlogin/getCreditCards.do";
     /*在登录状态，点击申卡时,调用统计函数*/
     String APPLY_CREDIT_CARD_CLICK = BASE_URL+API_VERSION + "/creditCard/login/applyCreditCardClick.do";
+    /*获取首页Banner*/
+    String GET_BANNER = BASE_URL+API_VERSION+"/platform/unLogin/getPublishedMobileBanners.do";
 }

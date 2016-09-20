@@ -26,12 +26,14 @@ import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.credit.CreditGuideAct;
+import com.beyonditsm.financial.activity.user.BannerDetailAct;
 import com.beyonditsm.financial.activity.user.creditcard.CreditCardAct;
 import com.beyonditsm.financial.activity.user.GameActivity;
 import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
 import com.beyonditsm.financial.activity.user.LoginAct;
 import com.beyonditsm.financial.activity.user.MyRecommAct;
 import com.beyonditsm.financial.adapter.HomeCreditAdapter;
+import com.beyonditsm.financial.entity.BannerEntity;
 import com.beyonditsm.financial.entity.HomeHotProductEntity;
 import com.beyonditsm.financial.entity.HotProduct;
 import com.beyonditsm.financial.entity.ResultData;
@@ -110,16 +112,19 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
     private List<HomeHotProductEntity> hotList;
     private UserLoginEntity ule;
     private Activity mParentActivity;
+    public static final String BANNER_NAME = "banner_name";
+    public static final String HREF_ADDR = "href_addr";
 
-    private List<String> networkImages;
-    private String[] images = {"http://img2.imgtn.bdimg.com/it/u=3093785514,1341050958&fm=21&gp=0.jpg",
-            "http://img2.3lian.com/2014/f2/37/d/40.jpg",
-            "http://d.3987.com/sqmy_131219/001.jpg",
-            "http://img2.3lian.com/2014/f2/37/d/39.jpg",
-            "http://www.8kmm.com/UploadFiles/2012/8/201208140920132659.jpg",
-            "http://f.hiphotos.baidu.com/image/h%3D200/sign=1478eb74d5a20cf45990f9df460b4b0c/d058ccbf6c81800a5422e5fdb43533fa838b4779.jpg",
-            "http://f.hiphotos.baidu.com/image/pic/item/09fa513d269759ee50f1971ab6fb43166c22dfba.jpg"
-    };
+    private List<String> networkImages = new ArrayList<>();
+//    private String[] images = {"http://img2.imgtn.bdimg.com/it/u=3093785514,1341050958&fm=21&gp=0.jpg",
+//            "http://img2.3lian.com/2014/f2/37/d/40.jpg",
+//            "http://d.3987.com/sqmy_131219/001.jpg",
+//            "http://img2.3lian.com/2014/f2/37/d/39.jpg",
+//            "http://www.8kmm.com/UploadFiles/2012/8/201208140920132659.jpg",
+//            "http://f.hiphotos.baidu.com/image/h%3D200/sign=1478eb74d5a20cf45990f9df460b4b0c/d058ccbf6c81800a5422e5fdb43533fa838b4779.jpg",
+//            "http://f.hiphotos.baidu.com/image/pic/item/09fa513d269759ee50f1971ab6fb43166c22dfba.jpg"
+//    };
+    private List<BannerEntity> bannerList;
 
 
     @SuppressLint("InflateParams")
@@ -218,48 +223,19 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
 //        });
 
         getHotProductList(currentPage);
+        getBanner();
         loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
             @Override
             public void OnRetry() {
                 getHotProductList(currentPage);
             }
         });
-        networkImages = Arrays.asList(images);
-        final ConvenientBanner convenientBanner = cbHomeBanner.setPages(new CBViewHolderCreator<HolderView>() {
 
-            @Override
-            public HolderView createHolder() {
-                return new HolderView();
-            }
-        }, networkImages);
-        convenientBanner.setPageTransformer(new Transformer(Transformer.TransformerType.ACCORDION));
-        convenientBanner.setPageIndicator(new int[]{R.mipmap.ic_page_indicator,R.mipmap.ic_page_indicator_focused});
-        convenientBanner.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                MyToastUtils.showShortToast(context,"点击了第"+position+"个");
-            }
-        });
-        //这是用来scrollview滑动时顶部布局由透明逐渐变色
-//        convenientBanner.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-//            @Override
-//            public void onGlobalLayout() {
-//                convenientBanner.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-//                final int height = convenientBanner.getHeight();
-//                svHome.setOnScrollListener(new MyScrollView.OnScrollListener() {
-//                    @Override
-//                    public void onScroll(MyScrollView myScrollView, int x, int y, int oldx, int oldy) {
-//                        if (y<=height){
-//                            float scale = (float)y/height;
-//                            float alpha = (255*scale);
-//                            rlTitleLayout.setBackgroundColor(Color.argb((int)alpha,0xf5,0x8b,0x35));
-//                        }
-//                    }
-//                });
-//            }
-//        });
+
 //        initRefreshLayout(convenientBanner);
     }
+
+
 
     @Override
     public void onAttach(Activity activity) {
@@ -587,4 +563,73 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
         ParamsUtil.getInstance().setFirstLocated(true);
     }
 
+
+    private void initBanner() {
+        //        networkImages = Arrays.asList(images);
+        final ConvenientBanner convenientBanner = cbHomeBanner.setPages(new CBViewHolderCreator<HolderView>() {
+
+            @Override
+            public HolderView createHolder() {
+                return new HolderView();
+            }
+        }, networkImages);
+        convenientBanner.setPageTransformer(new Transformer(Transformer.TransformerType.ACCORDION));
+        convenientBanner.setPageIndicator(new int[]{R.mipmap.ic_page_indicator,R.mipmap.ic_page_indicator_focused});
+        convenientBanner.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+//                MyToastUtils.showShortToast(context,"点击了第"+position+"个");
+                String bannerName = bannerList.get(position).getBannerName();
+                String hrefAddr = bannerList.get(position).getHrefAddr();
+                Intent intent = new Intent(mParentActivity, BannerDetailAct.class);
+                intent.putExtra(BANNER_NAME,bannerName);
+                intent.putExtra(HREF_ADDR,hrefAddr);
+                startActivity(intent);
+            }
+        });
+        //这是用来scrollview滑动时顶部布局由透明逐渐变色
+//        convenientBanner.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                convenientBanner.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+//                final int height = convenientBanner.getHeight();
+//                svHome.setOnScrollListener(new MyScrollView.OnScrollListener() {
+//                    @Override
+//                    public void onScroll(MyScrollView myScrollView, int x, int y, int oldx, int oldy) {
+//                        if (y<=height){
+//                            float scale = (float)y/height;
+//                            float alpha = (255*scale);
+//                            rlTitleLayout.setBackgroundColor(Color.argb((int)alpha,0xf5,0x8b,0x35));
+//                        }
+//                    }
+//                });
+//            }
+//        });
+    }
+
+    private void getBanner(){
+        RequestManager.getCommManager().getBanner(new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                JSONObject jsonObject = new JSONObject(result);
+                JSONArray data = jsonObject.getJSONArray("data");
+                Gson gson = new Gson();
+                bannerList = gson.fromJson(data.toString(), new TypeToken<List<BannerEntity>>() {
+                }.getType());
+                for (int i = 0; i< bannerList.size(); i++){
+                    BannerEntity bannerEntity = bannerList.get(i);
+//                    String bannerName = bannerEntity.getBannerName();
+                    String imgSrc = bannerEntity.getImgSrc();
+//                    String hrefAddr = bannerEntity.getHrefAddr();
+                    networkImages.add(imgSrc);
+                }
+                initBanner();
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
+            }
+        });
+    }
 }

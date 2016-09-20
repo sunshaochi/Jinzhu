@@ -551,4 +551,13 @@ public class CommManager extends RequestManager {
         params.put("creditCardId",creditCardId);
         doPost(IFinancialUrl.APPLY_CREDIT_CARD_CLICK, params, callBack);
     }
+
+    /**
+     * 获取首页banner
+     * @param callBack
+     */
+    public void getBanner(CallBack callBack){
+        Map<String, String> params = new HashMap<>();
+        doPost(IFinancialUrl.GET_BANNER,params,callBack);
+    }
 }
