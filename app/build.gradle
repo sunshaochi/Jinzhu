@@ -65,6 +65,7 @@ dependencies {
     provided fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:design:23.1.0'
     compile 'com.android.support:appcompat-v7:23.1.0'
+    compile 'com.android.support:cardview-v7:23.1.0'
     compile files('libs/SmartAndroid2.0.jar')
     compile files('libs/AndroidCodeGenerator.jar')
     compile files('libs/togglebuttonlib.jar')
