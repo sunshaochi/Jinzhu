@@ -19,7 +19,7 @@ public interface IFinancialUrl {
 ////        /*验收环境游戏地址*/
 //    String GAME_URL = "http://myjinzhu.com:5011/";
     /*正式地址*/
-//    String BASE_URL = "http://option.myjinzhu.com";
+    String BASE_URL = "http://option.myjinzhu.com";
     /*王建*/
 //    String BASE_URL = "http://172.16.5.191:8081";
 
@@ -27,7 +27,7 @@ public interface IFinancialUrl {
     String GAME_URL = "http://m.farm.myjinzhu.com/";
 
 
-    String BASE_URL = "http://test.myjinzhu.com:8082";
+//    String BASE_URL = "http://test.myjinzhu.com:8082";
     /*测试地址3*/
 //    String BASE_URL="http://test.myjinzhu.com:60";
     //内网地址（测试钱包功能）
@@ -41,7 +41,7 @@ public interface IFinancialUrl {
     /**
      * @MARKEY_CODE 渠道号设置，默认渠道设置为空字符串
      */
-    String MARKET_CODE = "qudao4";
+    String MARKET_CODE = "";
     String API_VERSION = "/easyplay";
 
     String BASE_IMAGE_URL = BASE_URL + API_VERSION + "/";
