@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.beyonditsm.financial.R;
+import com.beyonditsm.financial.http.IFinancialUrl;
 import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
 import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
@@ -33,6 +34,11 @@ public class HolderView implements Holder<String> {
     @Override
     public void UpdateUI(Context context, int position, String data) {
 //        imageView.setImageResource(R.mipmap.ic_default_adimage);
-        ImageLoader.getInstance().displayImage(data,imageView,options);
+        if (data.startsWith("http://")){
+            ImageLoader.getInstance().displayImage(data,imageView,options);
+        }else{
+            ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL+data,imageView,options);
+        }
+
     }
 }
