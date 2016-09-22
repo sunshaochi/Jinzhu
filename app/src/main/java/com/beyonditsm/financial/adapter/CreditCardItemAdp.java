@@ -101,8 +101,9 @@ public class CreditCardItemAdp extends BaseAdapter {
         return convertView;
     }
 
-    public void setDatas(List<CreditCardEntity.CreditCardsBean> datas) {
+    public void setDatas(List<CreditCardEntity.CreditCardsBean> datas,boolean isLastPage) {
         this.datas = datas;
+        this.isLastPage = isLastPage;
     }
 
     class ViewHolder{
