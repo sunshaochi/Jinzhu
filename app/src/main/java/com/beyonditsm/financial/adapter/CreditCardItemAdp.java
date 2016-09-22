@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.user.creditcard.CreditCardInterface;
 import com.beyonditsm.financial.entity.CreditCardEntity;
+import com.beyonditsm.financial.http.IFinancialUrl;
 import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
 import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
@@ -77,7 +78,7 @@ public class CreditCardItemAdp extends BaseAdapter {
         }else{
             holder = (ViewHolder) convertView.getTag();
         }
-        ImageLoader.getInstance().displayImage(datas.get(position).getMobileCreditcardImg(),holder.iv_creditCard,options);
+        ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL+datas.get(position).getMobileCreditcardImg(),holder.iv_creditCard,options);
             holder.tv_description.setText(datas.get(position).getMobileCreditcardDesc());
 
         holder.btn_applyCard.setOnClickListener(new View.OnClickListener() {
@@ -86,7 +87,7 @@ public class CreditCardItemAdp extends BaseAdapter {
                 cardInterface.onApply(datas.get(position).getId(),datas.get(position).getMobileUrl());
             }
         });
-        if (isLastPage && position == datas.size()-1){
+        if (position == datas.size()-1){
             holder.ll_creditCardBottom.setVisibility(View.VISIBLE);
             holder.iv_application.setOnClickListener(new View.OnClickListener() {
                 @Override
