@@ -78,7 +78,7 @@ public class CreditCardItemAdp extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         ImageLoader.getInstance().displayImage(datas.get(position).getMobileCreditcardImg(),holder.iv_creditCard,options);
-            holder.tv_description.setText(holder.tv_description.getText().toString()+""+datas.get(position).getMobileCreditcardDesc());
+            holder.tv_description.setText(datas.get(position).getMobileCreditcardDesc());
 
         holder.btn_applyCard.setOnClickListener(new View.OnClickListener() {
             @Override
