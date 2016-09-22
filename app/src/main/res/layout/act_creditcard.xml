@@ -12,6 +12,7 @@
         <com.beyonditsm.financial.view.pullfreshview.LoadRefreshView
             android:id="@+id/lv_creditCard"
             style="@style/pullrefresh_style"
+            android:divider="@null"
             />
         <com.beyonditsm.financial.view.LoadingView
             android:id="@+id/loadView"

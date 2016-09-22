@@ -22,7 +22,7 @@ public interface IFinancialUrl {
     /*正式地址*/
 //    String BASE_URL = "http://option.myjinzhu.com";
     /*王建*/
-//    String BASE_URL = "http://172.16.5.191:8081";
+//    String BASE_URL = "http://172.16.6.121:8080";
 
 //        /*正式游戏地址*/
     String GAME_URL = "http://m.farm.myjinzhu.com/";

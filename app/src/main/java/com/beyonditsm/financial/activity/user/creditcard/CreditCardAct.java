@@ -18,6 +18,7 @@ import com.beyonditsm.financial.entity.HotProduct;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.entity.UserLoginEntity;
 import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
@@ -108,6 +109,12 @@ public class CreditCardAct extends BaseActivity implements CreditCardInterface {
                 getCreditCard(currentPage, SpUtils.getCity(MyApplication.getInstance().getApplicationContext()));
             }
         });
+        lvCreditCard.setPullRefreshEnabled(true);
+        lvCreditCard.setScrollLoadEnabled(true);
+        lvCreditCard.setPullLoadEnabled(false);
+        lvCreditCard.setHasMoreData(true);
+        lvCreditCard.getRefreshableView().setDivider(null);
+        lvCreditCard.getRefreshableView().setVerticalScrollBarEnabled(false);
         lvCreditCard.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
@@ -194,6 +201,7 @@ public class CreditCardAct extends BaseActivity implements CreditCardInterface {
 //                    loadingView.noContent();
 //                    return;
 //                }
+                MyLogUtils.degug("cardListInfo: "+cardList+"");
                 if (cardList == null || cardList.size() == 0) {
                     if (Page == 1) {
                         loadingView.noContent();
