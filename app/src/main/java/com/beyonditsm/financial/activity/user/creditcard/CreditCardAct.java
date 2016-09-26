@@ -203,9 +203,9 @@ public class CreditCardAct extends BaseActivity implements CreditCardInterface {
 //                }
                 MyLogUtils.degug("cardListInfo: "+cardList+"");
                 if (cardList == null || cardList.size() == 0) {
-                    adapter.setDatas(datas ,isLast(cardList));
-                    adapter.setOnCreditCardListner(CreditCardAct.this);
-                    adapter.notifyDataSetChanged();
+//                    adapter.setDatas(datas ,isLast(cardList));
+//                    adapter.setOnCreditCardListner(CreditCardAct.this);
+//                    adapter.notifyDataSetChanged();
                     if (Page == 1) {
                         loadingView.noContent();
                     } else {
@@ -225,6 +225,7 @@ public class CreditCardAct extends BaseActivity implements CreditCardInterface {
                 } else {
                     adapter.setDatas(datas ,isLast(cardList));
                     adapter.setOnCreditCardListner(CreditCardAct.this);
+                    adapter.notifyDataSetChanged();
                 }
 
             }
