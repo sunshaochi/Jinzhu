@@ -247,12 +247,12 @@ public class CreditSecondFrag extends BaseFragment {
                 });
                 break;
             case R.id.rlNative://籍贯
-                DialogChooseProvince dialogChooseProvince = new DialogChooseProvince(mParentActivity).builder();
+                DialogChooseAdress dialogChooseProvince = new DialogChooseAdress(mParentActivity).builder();
                 dialogChooseProvince.show();
-                dialogChooseProvince.setOnSheetItemClickListener(new DialogChooseProvince.SexClickListener() {
+                dialogChooseProvince.setOnSheetItemClickListener(new DialogChooseAdress.SexClickListener() {
                     @Override
-                    public void getAdress(String adress) {
-                        tvJiguan.setText(adress);
+                    public void getAdress(List<String> adress) {
+                        tvJiguan.setText(adress.get(0)+adress.get(1)+adress.get(2));
                     }
                 });
                 break;

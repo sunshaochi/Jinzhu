@@ -233,15 +233,16 @@ public class UpdateAct extends BaseActivity {
                 });
                 break;
             case R.id.rlNative://籍贯
-                DialogChooseProvince dialogChooseProvince = new DialogChooseProvince(this).builder();
+                DialogChooseAdress dialogChooseProvince = new DialogChooseAdress(this).builder();
                 dialogChooseProvince.show();
-                dialogChooseProvince.setOnSheetItemClickListener(new DialogChooseProvince.SexClickListener() {
+                dialogChooseProvince.setOnSheetItemClickListener(new DialogChooseAdress.SexClickListener() {
                     @Override
-                    public void getAdress(String adress) {
-                        userInfo.setNativePlace(adress);
+                    public void getAdress(List<String> adress) {
+                        userInfo.setNativePlace(adress.get(0)+adress.get(1)+adress.get(2));
                         updateData(userInfo, 4);
                     }
                 });
+
                 break;
             case R.id.rlHouseHold://户籍地址
                 DialogChooseAdress dialogChooseAdress1 = new DialogChooseAdress(this).builder();
