@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_color"
@@ -8,29 +8,22 @@
 
     <include layout="@layout/title_act_layout" />
 
-    <include layout="@layout/search_tit" />
+    <com.beyonditsm.financial.view.tablayout.SlidingTabLayout
+        android:id="@+id/tl_creditType"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        tl:tl_indicator_color="@color/main_color"
+        tl:tl_indicator_height="2dp"
+        tl:tl_tab_padding="0dp"
+        tl:tl_tab_space_equal="true"
+        tl:tl_textSelectColor="@color/main_color"
+        tl:tl_textUnselectColor="@color/tv_primary_color"
+        tl:tl_textsize="16sp" />
 
-    <View style="@style/view_line" />
 
-    <com.beyonditsm.financial.view.slidebottompanel.SlideBottomPanel
-        android:id="@+id/sbp"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/credit_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:sbp_background_layout="@layout/background_layout"
-        app:sbp_panel_height="200dp"
-        app:sbp_title_height_no_display="0dp">
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#ffffff"
-            android:orientation="vertical">
-
-            <ListView
-                android:id="@+id/lv_credit_sort"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </FrameLayout>
-    </com.beyonditsm.financial.view.slidebottompanel.SlideBottomPanel>
-
+        android:background="@color/bg_color" />
 </LinearLayout>

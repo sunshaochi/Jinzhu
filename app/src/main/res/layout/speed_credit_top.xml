@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivBank"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="3dp"
+            android:src="@mipmap/pro_default" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/ivBank"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvProName"
+                style="@style/tv_primary_style"/>
+
+            <TextView
+                android:id="@+id/tv_speedRemarks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="--急速借贷，一张身份证就可以申请，最快半小时审批放贷"
+                android:textColor="@color/red_color"
+                android:textSize="10sp" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_speed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:background="@drawable/et_back"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:id="@+id/tv_speedAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="金额"
+                    android:textColor="#333333"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_speedUnit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="万"
+                    android:textColor="#333333"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/et_speedAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/tv_speedUnit"
+                    android:layout_toRightOf="@id/tv_speedAmount"
+                    android:background="@null"
+                    android:cursorVisible="false"
+                    android:gravity="center"
+                    android:inputType="numberDecimal"
+                    android:textColor="#ff6633"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/rl_speedMonth"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/et_back"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:id="@+id/tv_speedTerm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="期限"
+                    android:textColor="#333333"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tvspeedMonth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:text="周"
+                    android:textColor="#333333"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_speedWeek"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/tvspeedMonth"
+                    android:layout_toRightOf="@id/tv_speedTerm"
+                    android:gravity="center"
+                    android:maxLength="3"
+                    android:textColor="#ff6633"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/rl_purpose"
+            android:layout_width="170dp"
+            android:layout_height="30dp"
+            android:background="@drawable/et_back"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/tv_use"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="借款用途"
+                android:textColor="#333333"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_purpose"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/tv_use"
+                android:gravity="center"
+                android:maxLength="3"
+                android:textColor="#ff6633"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/tvScope"
+            style="@style/tv_second_style"
+            android:layout_width="0dp"
+            android:layout_alignParentRight="true"
+            android:layout_weight="1"
+            android:singleLine="true"
+            android:text="额度范围：" />
+
+
+        <TextView
+            android:id="@+id/tvLim"
+            style="@style/tv_second_style"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="期限范围：" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/tv_second_style"
+                android:text="月供：" />
+
+            <TextView
+                android:id="@+id/tvMonthPay"
+                style="@style/tv_red_style"
+                android:text="" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvPaytype"
+            style="@style/tv_second_style"
+            android:layout_width="0dp"
+            android:layout_alignParentRight="true"
+            android:layout_weight="1"
+            android:singleLine="true"
+            android:text="还款方式：" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+
+                style="@style/tv_second_style"
+                android:text="总利息：" />
+
+            <TextView
+                android:id="@+id/tvTotal"
+                style="@style/tv_red_style"
+                android:text="" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/tv_second_style"
+                android:text="放款时间：" />
+
+            <TextView
+                android:id="@+id/tvLoan"
+                style="@style/tv_red_style" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvRate"
+            style="@style/tv_second_style"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="利率：" />
+
+        <TextView
+            android:id="@+id/onpay"
+            style="@style/tv_second_style"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="一次性收费：" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

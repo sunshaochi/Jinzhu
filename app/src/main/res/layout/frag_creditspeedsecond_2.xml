@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/item_back"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout style="@style/speed_credit_linearlayout_in_scrollview">
+
+            <TextView
+                android:id="@+id/tv_speed_top_2"
+                style="@style/speed_credit_second_top_text" />
+            <!--单位名称-->
+            <LinearLayout
+                style="@style/speed_credit_second_horizontal_linearlayout"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/tv_speedCompanyName"
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true" />
+
+                <EditText
+                    android:id="@+id/et_speedCompanyName"
+                    style="@style/cre_et"
+                    android:layout_marginLeft="10dp"/>
+            </LinearLayout>
+
+            <View style="@style/view_line" />
+            <!--单位电话-->
+            <LinearLayout
+                style="@style/speed_credit_second_horizontal_linearlayout">
+
+                <TextView
+                    android:id="@+id/tv_speedCompanyPhone"
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true" />
+
+                <EditText
+                    android:id="@+id/et_speedCompanyPhone"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/cre_et_bg"
+                    android:layout_marginLeft="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="—"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"/>
+                <EditText
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/cre_et_bg"/>
+            </LinearLayout>
+
+            <View style="@style/view_line" />
+
+            <!--单位地址-->
+            <RelativeLayout
+                android:id="@+id/rl_speedCompanyAddress"
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+                <TextView
+                    android:id="@+id/tv_speedCompanyAddress"
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true" />
+
+                <TextView
+                    android:id="@+id/tv_speedSelectCompanyAddress"
+                    style="@style/tv_select_style"
+                    android:drawableRight="@mipmap/button_select"
+                    android:textColor="#f63" />
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <!--单位详细地址-->
+            <EditText
+                android:id="@+id/et_speedCompanyAddressDetail"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="right"
+                android:textSize="14sp"
+                android:background="@null"/>
+            <View
+                style="@style/view_line"/>
+            <!--部门-->
+            <LinearLayout
+                style="@style/speed_credit_second_horizontal_linearlayout">
+
+                <TextView
+                    android:id="@+id/tv_speedDepartment"
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true" />
+
+                <EditText
+                    android:id="@+id/et_speedDepartment"
+                    style="@style/cre_et"
+                    android:layout_marginLeft="10dp"/>
+            </LinearLayout>
+
+            <View style="@style/view_line" />
+
+            <!--单位性质-->
+            <RelativeLayout
+                android:id="@+id/rl_speedCompanyType"
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+                <TextView
+                    android:id="@+id/tv_speedCompanyType"
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true" />
+
+                <TextView
+                    android:id="@+id/tv_speedSelectCompanyType"
+                    style="@style/tv_select_style"
+                    android:drawableRight="@mipmap/button_select"
+                    android:textColor="#f63" />
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <!--工作性质-->
+            <RelativeLayout
+                android:id="@+id/rl_speedWorkType"
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+                <TextView
+                    android:id="@+id/tv_speedWorkType"
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true" />
+
+                <TextView
+                    android:id="@+id/tv_speedSelectWorkType"
+                    style="@style/tv_select_style"
+                    android:drawableRight="@mipmap/button_select"
+                    android:textColor="#f63" />
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <!--月基本薪水-->
+            <LinearLayout
+                style="@style/speed_credit_second_horizontal_linearlayout">
+
+                <TextView
+                    android:id="@+id/tv_speedSalary"
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true" />
+
+                <EditText
+                    android:id="@+id/et_speedSalary"
+                    style="@style/cre_et"
+                    android:layout_marginLeft="10dp"/>
+            </LinearLayout>
+
+            <View style="@style/view_line" />
+
+            <!--月薪发放形式-->
+            <RelativeLayout
+                android:id="@+id/rl_speedSalaryType"
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+                <TextView
+                    android:id="@+id/tv_speedSalaryType"
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true" />
+
+                <TextView
+                    android:id="@+id/tv_speedSelectSalaryType"
+                    style="@style/tv_select_style"
+                    android:drawableRight="@mipmap/button_select"
+                    android:textColor="#f63" />
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <!--月发薪日-->
+            <RelativeLayout
+                android:id="@+id/rl_speedSalaryDay"
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+                <TextView
+                    android:id="@+id/tv_speedSalaryDay"
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true" />
+
+                <TextView
+                    android:id="@+id/tv_speedSelectSalaryDay"
+                    style="@style/tv_select_style"
+                    android:drawableRight="@mipmap/button_select"
+                    android:textColor="#f63" />
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <!--其他月收入-->
+            <LinearLayout
+                style="@style/speed_credit_second_horizontal_linearlayout">
+
+                <TextView
+                    android:id="@+id/tv_speedOtherSalary"
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true"
+                    android:text="其他月收入"/>
+
+                <EditText
+                    android:id="@+id/et_speedOtherSalary"
+                    style="@style/cre_et"
+                    android:layout_marginLeft="10dp"/>
+            </LinearLayout>
+
+            <View style="@style/view_line" />
+
+            <!--其他收入发放形式-->
+            <RelativeLayout
+                android:id="@+id/rl_speedOtherSalaryDay"
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+                <TextView
+                    android:id="@+id/tv_speedOtherSalaryDay"
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true"
+                    android:text="其他收入发放形式"/>
+
+                <TextView
+                    android:id="@+id/tv_speedSelectOtherSalaryDay"
+                    style="@style/tv_select_style"
+                    android:drawableRight="@mipmap/button_select"
+                    android:textColor="#f63" />
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+
+            <TextView
+                android:id="@+id/tv_speed_toTwo"
+                style="@style/speed_credit_next_btn"
+                android:text="下一步" />
+            <TextView
+                android:text="2/3"
+                style="@style/speed_credit_second_bottom_text"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

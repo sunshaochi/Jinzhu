@@ -63,6 +63,12 @@ public class HomeCreditDetailAct extends BaseActivity {
     private TextView tvM;//月份
     @ViewInject(R.id.tv_title)
     private TextView tvTitle;
+    @ViewInject(R.id.tv_speedRemarks)
+    private TextView tvSpeedRemarks;
+    @ViewInject(R.id.ll_speed)
+    private LinearLayout llSpeed;
+    @ViewInject(R.id.ll_mm)
+    private LinearLayout llMM;
 
 
     private Map<Integer, Boolean> map = new HashMap<>();
@@ -109,6 +115,8 @@ public class HomeCreditDetailAct extends BaseActivity {
     public static final String CREDIT_AMOUNT = "credit_mount";
     public static final String CREDIT_TIME = "credit_time";
     public static final String CREDIT_NAME = "credit_name";
+
+    public static final String CREIT_TYPE = "credit_type";
 
 
     private DisplayImageOptions options = new DisplayImageOptions.Builder()
@@ -206,7 +214,7 @@ public class HomeCreditDetailAct extends BaseActivity {
         getUserLoginInfo();
         String creditName = getIntent().getStringExtra(CREDIT_NAME);
         setTopTitle(creditName);
-        if (creditName.length() > 14) {
+        if (!TextUtils.isEmpty(creditName)&&creditName.length() > 14) {
             tvTitle.setTextSize(14);
         }
 

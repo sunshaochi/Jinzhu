@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/search_tit" />
+
+    <View style="@style/view_line" />
+
+    <com.beyonditsm.financial.view.slidebottompanel.SlideBottomPanel
+        android:id="@+id/sbp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:sbp_background_layout="@layout/background_layout"
+        app:sbp_panel_height="200dp"
+        app:sbp_title_height_no_display="0dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/lv_credit_sort"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
+    </com.beyonditsm.financial.view.slidebottompanel.SlideBottomPanel>
+
+</LinearLayout>

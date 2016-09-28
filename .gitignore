@@ -8,3 +8,4 @@ gradlew
 .idea/
 .gradle/
 buildsrc/libs/dx.jar
+*.log

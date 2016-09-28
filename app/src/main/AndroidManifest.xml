@@ -409,7 +409,9 @@
         <activity android:name=".activity.user.BannerDetailAct"
             android:screenOrientation="portrait"/>
 
-
+        <!--极速贷详情页面-->
+        <activity android:name=".activity.credit.CreditSpeedDetailAct"
+            android:screenOrientation="portrait"/>
         <!-- 上传身份证照片 -->
         <!-- ###################注册SDK使用的Activity###################### -->
         <!-- 分享编辑页 -->

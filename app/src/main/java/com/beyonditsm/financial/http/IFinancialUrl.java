@@ -27,7 +27,6 @@ public interface IFinancialUrl {
 //        /*正式游戏地址*/
     String GAME_URL = "http://m.farm.myjinzhu.com/";
 
-
     String BASE_URL = "http://test.myjinzhu.com:8082";
     /*测试地址3*/
 //    String BASE_URL="http://test.myjinzhu.com:60";
@@ -235,4 +234,5 @@ public interface IFinancialUrl {
     String APPLY_CREDIT_CARD_CLICK = BASE_URL+API_VERSION + "/creditCard/login/applyCreditCardClick.do";
     /*获取首页Banner*/
     String GET_BANNER = BASE_URL+API_VERSION+"/platform/unLogin/getPublishedMobileBanners.do";
+
 }

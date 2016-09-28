@@ -131,6 +131,7 @@
                     android:visibility="gone" />
 
             </LinearLayout>
+
         </LinearLayout>
 
     </RelativeLayout>
@@ -140,7 +141,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
-
 
         <TextView
             android:id="@+id/tvScope"
