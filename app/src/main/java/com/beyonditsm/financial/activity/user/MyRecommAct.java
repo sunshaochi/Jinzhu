@@ -60,9 +60,6 @@ import java.util.List;
  * Created by wangbin on 15/11/16
  */
 public class MyRecommAct extends BaseActivity {
-
-    @ViewInject(R.id.fr_tj_list)
-    private PullToRefreshListView fr_tj_list;
     @ViewInject(R.id.ivtuijianma)
     private ImageView ivTuiJianMa;
     @ViewInject(R.id.tuijianma)
@@ -75,7 +72,7 @@ public class MyRecommAct extends BaseActivity {
     private ImageView ivWeibo;
     @ViewInject(R.id.iv_qq)
     private ImageView ivQQ;
-//    @ViewInject(R.id.tvRoleName)
+    //    @ViewInject(R.id.tvRoleName)
 //    private TextView RoleName;
 //    @ViewInject(R.id.tv_BecomeServant)
 //    private TextView BecomeServant;
@@ -83,7 +80,7 @@ public class MyRecommAct extends BaseActivity {
     private TextView tvServant;
     @ViewInject(R.id.rl_servant)
     private RelativeLayout rlServant;
-//    @ViewInject(R.id.tv_recommedUserCount)
+    //    @ViewInject(R.id.tv_recommedUserCount)
 //    private TextView tvRecommedUserCount;
     @ViewInject(R.id.recommendedLoanAmount)
     private TextView recommendedLoanAmount;
@@ -98,7 +95,6 @@ public class MyRecommAct extends BaseActivity {
     @ViewInject(R.id.btn_receiveReward)
     private ImageView btnReward;
 
-    private List<MyRecomBean.RowsEntity> datas = new ArrayList<>();
     private MyRecommeEntity fre;
     private UMSocialService mController;
     private Context context;
@@ -107,7 +103,7 @@ public class MyRecommAct extends BaseActivity {
     private int RewardAmount;
     //    private String title = "金蛛金服，业内返佣减利最高，欢迎加入抢钱大队";
     private String title = "成为金蛛代言人，躺着就能赚钱！";
-//    private String content = "金蛛金服－－圆你土豪梦想";
+    //    private String content = "金蛛金服－－圆你土豪梦想";
     private String content = "金蛛金服，业内史无前例的贴息返佣力度，只做最快速、方便、低息的银行贷款。成为代言人，和小伙伴一起赚钱，成为土豪不是梦~";
 
     String yqUrl = "http://m.myjinzhu.com/#/tab/home?redirctUrl=/register/";
@@ -168,13 +164,13 @@ public class MyRecommAct extends BaseActivity {
         ivTuiJianMa.setScaleType(ImageView.ScaleType.FIT_XY);
         ivTuiJianMa.setImageBitmap(bitmap);
 
-        if (ule != null ) {
+        if (ule != null) {
 //            tvTuijianma.setText(ule.getMyReferralCode());
             tvTuijianma.setText(ule.getMyReferralCode());
-        }else if (user != null){
+        } else if (user != null) {
             tvTuijianma.setText(user.getUsername());
         }
-        if(null != ParamsUtil.getInstance().getUserID() && !"".equals(ParamsUtil.getInstance().getUserID())){
+        if (null != ParamsUtil.getInstance().getUserID() && !"".equals(ParamsUtil.getInstance().getUserID())) {
             tvTuijianma.setText(ParamsUtil.getInstance().getUserID());
         }
 
@@ -209,9 +205,8 @@ public class MyRecommAct extends BaseActivity {
 
     /**
      * 点击事件
-     *
      */
-    @OnClick({ R.id.btn_receiveReward, R.id.ll_wallet,R.id.iv_wxpyq})
+    @OnClick({R.id.btn_receiveReward, R.id.ll_wallet, R.id.iv_wxpyq})
     public void toClick(View v) {
         switch (v.getId()) {
             //按钮下方的代言人
@@ -228,14 +223,14 @@ public class MyRecommAct extends BaseActivity {
 
                         try {
                             JSONObject obj = new JSONObject(result);
-                        JSONObject data = obj.getJSONObject("data");
-                        int handledAmount = data.getInt("handledAmount");
-                            if (handledAmount > 0){
-                                MyToastUtils.showShortDebugToast(MyRecommAct.this,"领取奖励成功，奖励已发放到您的钱包中");
-                                handledRewardAmount.setText("¥ "+(RewardAmount + handledAmount) +" 元");
+                            JSONObject data = obj.getJSONObject("data");
+                            int handledAmount = data.getInt("handledAmount");
+                            if (handledAmount > 0) {
+                                MyToastUtils.showShortDebugToast(MyRecommAct.this, "领取奖励成功，奖励已发放到您的钱包中");
+                                handledRewardAmount.setText("¥ " + (RewardAmount + handledAmount) + " 元");
                                 sendBroadcast(new Intent(MineFragment.WALLET_POINT));
-                            }else{
-                                MyToastUtils.showShortDebugToast(MyRecommAct.this,"您已在其他终端领取，不可重复领取");
+                            } else {
+                                MyToastUtils.showShortDebugToast(MyRecommAct.this, "您已在其他终端领取，不可重复领取");
                             }
 
                             alreadyImg.setVisibility(View.VISIBLE);
@@ -250,15 +245,15 @@ public class MyRecommAct extends BaseActivity {
 
                     @Override
                     public void onError(int status, String msg) {
-                        MyToastUtils.showShortToast(MyRecommAct.this,msg);
+                        MyToastUtils.showShortToast(MyRecommAct.this, msg);
                     }
                 });
                 break;
             //累计收益进入我的钱包
             case R.id.ll_wallet:
-                Intent intent2 = new Intent(MyRecommAct.this,  MyWalletActivity.class);
-                intent2.putExtra("userLogin",ule);
-                intent2.putExtra("userInfo",user);
+                Intent intent2 = new Intent(MyRecommAct.this, MyWalletActivity.class);
+                intent2.putExtra("userLogin", ule);
+                intent2.putExtra("userInfo", user);
                 startActivity(intent2);
                 break;
             case R.id.iv_wxpyq:
@@ -454,32 +449,32 @@ public class MyRecommAct extends BaseActivity {
                 RewardAmount = data.getInt("handledRewardAmount");
                 int unhandledAmount = data.getInt("unhandledRewardAmount");
                 JSONArray rewards = data.getJSONArray("rewards");
-                for (int i =0;i<rewards.length();i++){
+                for (int i = 0; i < rewards.length(); i++) {
                     JSONObject jsonObject = rewards.getJSONObject(i);
-                    if(jsonObject.getInt("level") == 1){
+                    if (jsonObject.getInt("level") == 1) {
                         ParamsUtil.getInstance().setFirstWard(jsonObject.getDouble("percentage"));
                         ParamsUtil.getInstance().setFirstCardWard(jsonObject.getDouble("fixedBonus"));
-                    }else if(jsonObject.getInt("level") == 2){
+                    } else if (jsonObject.getInt("level") == 2) {
                         ParamsUtil.getInstance().setSecWard(jsonObject.getDouble("percentage"));
                         ParamsUtil.getInstance().setSecCardWard(jsonObject.getDouble("fixedBonus"));
-                    }else if(jsonObject.getInt("level") == 3){
+                    } else if (jsonObject.getInt("level") == 3) {
                         ParamsUtil.getInstance().setThirdWard(jsonObject.getDouble("percentage"));
                         ParamsUtil.getInstance().setThirdCardWard(jsonObject.getDouble("fixedBonus"));
                     }
                 }
 //                tvRecommedUserCount.setText(recommedUserCnt + "");
-                float num= (float)LoanAmount/10000;
+                float num = (float) LoanAmount / 10000;
                 DecimalFormat df = new DecimalFormat("0.00");//格式化小数
                 String s = df.format(num);//返回的是String类型
-                recommendedLoanAmount.setText("¥ "+s + " 万元");
+                recommendedLoanAmount.setText("¥ " + s + " 万元");
                 recommendedCCardAmount.setText(CCardAmount + "");
-                handledRewardAmount.setText("¥ "+RewardAmount + " 元");
-                unhandledRewardAmount.setText("待领取 "+unhandledAmount + " 元");
-                if (unhandledAmount>0){
+                handledRewardAmount.setText("¥ " + RewardAmount + " 元");
+                unhandledRewardAmount.setText("待领取 " + unhandledAmount + " 元");
+                if (unhandledAmount > 0) {
                     alreadyImg.setVisibility(View.GONE);
                     unhandledRewardAmount.setVisibility(View.VISIBLE);
                     btnReward.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     alreadyImg.setVisibility(View.VISIBLE);
                     unhandledRewardAmount.setVisibility(View.GONE);
                     btnReward.setVisibility(View.GONE);
@@ -492,7 +487,6 @@ public class MyRecommAct extends BaseActivity {
             }
         });
     }
-
 
 
     @Override
@@ -523,18 +517,18 @@ public class MyRecommAct extends BaseActivity {
     }
 
     //获取奖励（修改资料）
-    private void getReceiveReward(UserEntity userEntity){
-        RequestManager.getCommManager().getReceiveReward(userEntity,new RequestManager.CallBack() {
+    private void getReceiveReward(UserEntity userEntity) {
+        RequestManager.getCommManager().getReceiveReward(userEntity, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-                MyToastUtils.showShortToast(getApplicationContext(),"恭喜您已成功领取奖励，请至我的钱包查收");
+                MyToastUtils.showShortToast(getApplicationContext(), "恭喜您已成功领取奖励，请至我的钱包查收");
                 ParamsUtil.getInstance().setWalletEnter(true);
                 finish();
             }
 
             @Override
             public void onError(int status, String msg) {
-                MyToastUtils.showShortToast(getApplicationContext(),"已领取过奖励，用户信息修改成功");
+                MyToastUtils.showShortToast(getApplicationContext(), "已领取过奖励，用户信息修改成功");
                 finish();
             }
         });

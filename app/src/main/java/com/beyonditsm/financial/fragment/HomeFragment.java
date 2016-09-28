@@ -43,6 +43,7 @@ import com.beyonditsm.financial.view.ListViewForScrollView;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
+import com.beyonditsm.financial.view.pullfreshview.PullToRefreshListView;
 import com.beyonditsm.financial.widget.GPSAlertDialog;
 import com.beyonditsm.financial.widget.gpscity.DialogChooseCity;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -72,7 +73,7 @@ import java.util.List;
  */
 public class HomeFragment extends BaseFragment implements LocationListener {
     @ViewInject(R.id.plv_hotCredit)
-    private ListViewForScrollView plvHotCredit;
+    private LoadRefreshView plvHotCredit;
     @ViewInject(R.id.loadingView)
     private LoadingView loadingView;
 
@@ -146,31 +147,31 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 
         String roleName = SpUtils.getRoleName(context);
         MyLogUtils.info("ROLENAME=" + roleName);
-        plvHotCredit.setDivider(null);
+        plvHotCredit.getRefreshableView().setDivider(null);
+//        plvHotCredit.setVerticalScrollBarEnabled(false);
+//        plvHotCredit.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
+        plvHotCredit.setPullRefreshEnabled(true);
+        plvHotCredit.setScrollLoadEnabled(false);
+        plvHotCredit.setPullLoadEnabled(true);
+        plvHotCredit.setHasMoreData(true);
+        plvHotCredit.getRefreshableView().setDivider(null);
         plvHotCredit.setVerticalScrollBarEnabled(false);
-        plvHotCredit.setSelector(new ColorDrawable(Color.TRANSPARENT));
-//        plvHotCredit.setPullRefreshEnabled(true);
-//        plvHotCredit.setScrollLoadEnabled(false);
-//        plvHotCredit.setPullLoadEnabled(true);
-//        plvHotCredit.setHasMoreData(true);
-        plvHotCredit.setDivider(null);
-        plvHotCredit.setVerticalScrollBarEnabled(false);
-        plvHotCredit.setSelector(new ColorDrawable(Color.TRANSPARENT));
-//        plvHotCredit.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
-//        plvHotCredit.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
-//            @Override
-//            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-//                plvHotCredit.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
-//                currentPage = 1;
-//                getHotProductList(currentPage);
-//            }
-//
-//            @Override
-//            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-//                currentPage++;
-//                getHotProductList(currentPage);
-//            }
-//        });
+        plvHotCredit.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
+        plvHotCredit.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
+        plvHotCredit.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+                plvHotCredit.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
+                currentPage = 1;
+                getHotProductList(currentPage);
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+                currentPage++;
+                getHotProductList(currentPage);
+            }
+        });
 
 //        MaterialRippleLayout.on(llCredit)
 //                .rippleColor(Color.parseColor("#919191"))
@@ -209,7 +210,7 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 
     @Override
     public void setListener() {
-        plvHotCredit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        plvHotCredit.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(mParentActivity, HomeCreditDetailAct.class);
@@ -335,25 +336,25 @@ public class HomeFragment extends BaseFragment implements LocationListener {
             @Override
             public void onSucess(String result) throws JSONException {
                 loadingView.loadComplete();
-//                plvHotCredit.onPullUpRefreshComplete();
-//                plvHotCredit.onPullDownRefreshComplete();
+                plvHotCredit.onPullUpRefreshComplete();
+                plvHotCredit.onPullDownRefreshComplete();
 
                 JSONObject object = new JSONObject(result);
                 JSONArray data = object.getJSONArray("data");
                 Gson gson = new Gson();
                 hotList = gson.fromJson(data.toString(), new TypeToken<List<HomeHotProductEntity>>() {
                 }.getType());
-//                if (data == null) {
-//                    loadingView.noContent();
-//                    return;
-//                }
+                if (data == null) {
+                    loadingView.noContent();
+                    return;
+                }
                 if (hotList == null || hotList.size() == 0) {
                     if (Page == 1) {
                         loadingView.noContent();
                     }
-//                    else {
-////                        plvHotCredit.setHasMoreData(false);
-//                    }
+                    else {
+                        plvHotCredit.setHasMoreData(false);
+                    }
                     return;
                 }
                 if (Page == 1) {
@@ -363,7 +364,7 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                 if (adapter == null) {
                     if (null != getContext()) {
                         adapter = new HomeCreditAdapter(getContext(), datas);
-                        plvHotCredit.setAdapter(adapter);
+                        plvHotCredit.getRefreshableView().setAdapter(adapter);
                     }
                 } else {
                     adapter.setDatas(datas);
@@ -372,8 +373,8 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 
             @Override
             public void onError(int status, String msg) {
-//                plvHotCredit.onPullUpRefreshComplete();
-//                plvHotCredit.onPullDownRefreshComplete();
+                plvHotCredit.onPullUpRefreshComplete();
+                plvHotCredit.onPullDownRefreshComplete();
                 loadingView.loadError();
             }
         });
@@ -397,7 +398,7 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                     ParamsUtil.getInstance().setUle(ule);
                 }
 
-//                loadingView.loadComplete();
+                loadingView.loadComplete();
 //                llWork.setClickable(true);
             }
 
