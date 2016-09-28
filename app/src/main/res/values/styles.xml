@@ -510,4 +510,12 @@
         <item name="android:orientation">horizontal</item>
         <item name="android:gravity">center_vertical</item>
     </style>
+
+    <style name="speed_credit_second_detail_address">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:gravity">right|center_vertical</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:background">@null</item>
+    </style>
 </resources>

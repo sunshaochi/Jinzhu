@@ -5,7 +5,8 @@
     android:background="@drawable/item_back">
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbars="none">
         <LinearLayout
             style="@style/speed_credit_linearlayout_in_scrollview">
             <TextView
@@ -25,8 +26,7 @@
 
                 <EditText
                     android:id="@+id/et_speedName"
-                    style="@style/cre_et"
-                    android:maxLength="18" />
+                    style="@style/cre_et" />
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
@@ -126,11 +126,7 @@
             <!--户籍地址详细地址-->
             <EditText
                 android:id="@+id/et_speedPermanentDetail"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:gravity="right"
-                android:textSize="14sp"
-                android:background="@null"/>
+                style="@style/speed_credit_second_detail_address"/>
             <View style="@style/view_line"></View>
             <!--常住地-->
             <RelativeLayout
@@ -154,11 +150,7 @@
             <!--常住地详细地址-->
             <EditText
                 android:id="@+id/et_speedResidentDetail"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:gravity="right"
-                android:textSize="14sp"
-                android:background="@null"/>
+                style="@style/speed_credit_second_detail_address"/>
             <View style="@style/view_line"></View>
             <!--居住状况-->
             <RelativeLayout
