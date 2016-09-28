@@ -115,44 +115,7 @@
 
                     </LinearLayout>
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/ll_share"
-                    android:layout_marginTop="15dp"
-                    android:orientation="vertical"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp">
-
-                    <com.beyonditsm.financial.view.ListViewForScrollView
-                        android:id="@+id/lv_servantCond"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        android:scrollbars="none"/>
-
-                </LinearLayout>
             </RelativeLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_tj_bg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="#ffffff"
-                android:orientation="vertical"
-                android:paddingBottom="20dp"
-                android:visibility="gone">
-
-                <TextView
-                    style="@style/tv_primary_style"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="20dp"
-                    android:text="我推荐的用户"
-                    android:textColor="#333"
-                    android:textSize="16sp" />
-            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

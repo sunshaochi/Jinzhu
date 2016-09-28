@@ -109,7 +109,6 @@ public class MyRecommAct extends BaseActivity {
     private String title = "成为金蛛代言人，躺着就能赚钱！";
 //    private String content = "金蛛金服－－圆你土豪梦想";
     private String content = "金蛛金服，业内史无前例的贴息返佣力度，只做最快速、方便、低息的银行贷款。成为代言人，和小伙伴一起赚钱，成为土豪不是梦~";
-    private FrAdapter frAdapter;
 
     String yqUrl = "http://m.myjinzhu.com/#/tab/home?redirctUrl=/register/";
     //    String codeUrl = "http://www.myjinzhu.com/#/activity/spring-festival";
@@ -181,31 +180,6 @@ public class MyRecommAct extends BaseActivity {
 
     }
 
-//    private void getRoleName() {
-////        String roleName = SpUtils.getRoleName(this);
-//        if ("ROLE_COMMON_CLIENT".equals(roleName)) {//普通用户
-//            llServantCondInfo.setVisibility(View.GONE);
-////            BecomeServant.setVisibility(View.VISIBLE);
-//            RoleName.setVisibility(View.GONE);
-////            BecomeServant.setOnClickListener(new View.OnClickListener() {
-////                @Override
-////                public void onClick(View v) {
-////                    applyServant();
-////                }
-////            });
-//
-//        } else if ("ROLE_SERVANT_PRIMARY".equals(roleName)) {//初级代言人
-//            RoleName.setVisibility(View.VISIBLE);
-//        } else if ("ROLE_SERVANT_MIDDLE".equals(roleName)) {//中级代言人
-//            RoleName.setVisibility(View.VISIBLE);
-//            llMiddleServant.setVisibility(View.GONE);
-//        } else {//高级代言人
-//            RoleName.setVisibility(View.VISIBLE);
-//            llServantCondInfo.setVisibility(View.GONE);
-//        }
-//
-//    }
-
     private void shareListener() {
         ivWeixin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -233,44 +207,6 @@ public class MyRecommAct extends BaseActivity {
         });
     }
 
-    //获得推荐的好友列表
-    private void findFriendList() {
-        RequestManager.getUserManager().findFriendList(fre, new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) {
-//                ResultData<MyRecomBean> myRecomBean = (ResultData<MyRecomBean>) GsonUtils.json(result, MyRecomBean.class);
-//                MyRecomBean data = myRecomBean.getData();
-//                datas = data.getRows();
-                try {
-                    JSONObject object = new JSONObject(result);
-                    JSONObject data = object.getJSONObject("data");
-                    JSONObject easyuiPagination = data.getJSONObject("easyuiPagination");
-                    JSONArray rows = easyuiPagination.getJSONArray("rows");
-                    for (int i = 0; i < rows.length(); i++) {
-                        MyRecomBean.RowsEntity myRecomBean = new MyRecomBean.RowsEntity();
-                        myRecomBean.setUserName(rows.getJSONObject(i).getString("userName"));
-                        myRecomBean.setMobile(rows.getJSONObject(i).getString("mobile"));
-                        datas.add(myRecomBean);
-                        LogUtils.i(rows.getJSONObject(i).getString("mobile"));
-                        LogUtils.i(datas.size() + "");
-                    }
-                    if (frAdapter == null) {
-                        frAdapter = new FrAdapter();
-                        fr_tj_list.getRefreshableView().setAdapter(frAdapter);
-                    } else {
-                        frAdapter.notifyDataSetChanged();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-
-            }
-        });
-    }
     /**
      * 点击事件
      *
@@ -504,184 +440,6 @@ public class MyRecommAct extends BaseActivity {
         }
     }
 
-    class FrAdapter extends BaseAdapter {
-
-        @Override
-        public int getCount() {
-            if (datas == null || datas.size() == 0)
-                return 1;
-            else
-                return datas.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return datas.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder vh;
-            if (convertView == null) {
-                convertView = View.inflate(context, R.layout.myrecommend_item, null);
-                vh = new ViewHolder();
-                vh.nameTv = (TextView) convertView.findViewById(R.id.recommend_name);
-                vh.phoneTv = (TextView) convertView.findViewById(R.id.recommend_phone);
-                vh.ll = convertView.findViewById(R.id.content_recommend);
-                vh.iv_ewm = (ImageView) convertView.findViewById(R.id.ivtuijianma);
-                vh.ll_tj_bg = (LinearLayout) convertView.findViewById(R.id.ll_tj_bg);
-                vh.tvMyReferralCode = (TextView) convertView.findViewById(R.id.tuijianma);
-                vh.iv_weixin = (ImageView) convertView.findViewById(R.id.iv_weixin);
-                vh.iv_wxpyq = (ImageView) convertView.findViewById(R.id.iv_wxpyq);
-                vh.iv_weibo = (ImageView) convertView.findViewById(R.id.iv_weibo);
-                vh.iv_qq = (ImageView) convertView.findViewById(R.id.iv_qq);
-                convertView.setTag(vh);
-            } else {
-                vh = (ViewHolder) convertView.getTag();
-            }
-            if (position == 0) {
-                vh.ll_tj_bg.setVisibility(View.GONE);
-                vh.ll.setVisibility(View.VISIBLE);
-                Bitmap bitmap;
-                if (ule != null)
-                    bitmap = FinancialUtil.createQRImage(yqUrl + ule.getMyReferralCode());
-                else
-                    bitmap = FinancialUtil.createQRImage(yqUrl);
-                vh.iv_ewm.setScaleType(ImageView.ScaleType.FIT_XY);
-                vh.iv_ewm.setImageBitmap(bitmap);
-                if (ule != null)
-                    vh.tvMyReferralCode.setText(ule.getMyReferralCode());
-                if (datas != null && datas.size() > 0) {
-                    vh.ll_tj_bg.setVisibility(View.VISIBLE);
-//                    MyRecomBean.RowsEntity us = datas.get(position);
-                    vh.nameTv.setText(datas.get(0).getUserName());
-                    vh.phoneTv.setText(datas.get(0).getMobile());
-                }
-            } else if (position > 0) {
-                vh.ll.setVisibility(View.GONE);
-                if (datas != null && datas.size() > 0) {
-                    vh.ll_tj_bg.setVisibility(View.VISIBLE);
-//                    MyRecomBean.RowsEntity us = datas.get(position);
-                    vh.nameTv.setText(datas.get(position).getUserName());
-                    vh.phoneTv.setText(datas.get(position).getMobile());
-                } else {
-                    vh.ll_tj_bg.setVisibility(View.GONE);
-                }
-            }
-            vh.iv_weixin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    weixinShare();
-                }
-            });
-            vh.iv_wxpyq.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    weixinCircleShare();
-                }
-            });
-            vh.iv_weibo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    weiboShare();
-                }
-            });
-            vh.iv_qq.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    qqShare();
-                }
-            });
-            return convertView;
-        }
-    }
-
-    class ViewHolder {
-        TextView nameTv;
-        TextView phoneTv;
-        View ll;
-        LinearLayout ll_tj_bg;
-        ImageView iv_weixin;
-        ImageView iv_wxpyq;
-        ImageView iv_weibo;
-        ImageView iv_qq;
-        ImageView iv_ewm;
-        TextView tvMyReferralCode;
-    }
-
-//    /**
-//     * 代言人条件获取
-//     */
-//    private void getServantCondInfo() {
-//        RequestManager.getCommManager().getServantCondInfo(new RequestManager.CallBack() {
-//            @Override
-//            public void onSucess(String result) throws JSONException {
-//                JSONObject object = new JSONObject(result);
-//                JSONArray data = object.getJSONArray("data");
-//                Gson gson = new Gson();
-//                List<ServantCondEntity> list = gson.fromJson(data.toString(), new TypeToken<List<ServantCondEntity>>() {
-//                }.getType());
-//                String mServantName = list.get(1).getServantName();
-//                String hServantName = list.get(2).getServantName();
-//                if (!TextUtils.isEmpty(mServantName)&&!TextUtils.isEmpty(hServantName)){
-//                    tvmServantName.setText(mServantName);
-//                    tvhServantName.setText(hServantName);
-//                }
-//                String mServantDesc = list.get(1).getServantDesc();
-//                String hServantDesc = list.get(2).getServantDesc();
-//                if (!TextUtils.isEmpty(mServantDesc)&&!TextUtils.isEmpty(hServantDesc)){
-//                    tvmServantDesc.setText(mServantDesc);
-//                    tvhServantDesc.setText(hServantDesc);
-//                }
-//                int mServantPassCond = list.get(1).getServantPassCond();
-//                int hServantPassCond = list.get(2).getServantPassCond();
-//                if (!TextUtils.isEmpty(String.valueOf(mServantPassCond))&&!TextUtils.isEmpty(String.valueOf(hServantPassCond))){
-//                    tvmServantPassCond.setText(mServantPassCond+"");
-//                    tvhServantPassCond.setText(hServantPassCond+"");
-//                }
-//                int mServantTotalCond = list.get(1).getServantTotalCond();
-//                int hServantTotalCond = list.get(2).getServantTotalCond();
-//                if (!TextUtils.isEmpty(String.valueOf(mServantTotalCond))&&!TextUtils.isEmpty(String.valueOf(hServantTotalCond))){
-//                    tvmServantTotalCond.setText(mServantTotalCond+"");
-//                    tvhServantTotalCond.setText(hServantTotalCond+"");
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onError(int status, String msg) {
-//
-//            }
-//        });
-//    }
-//
-//    /*我要成为代言人*/
-//    private void applyServant() {
-//        RequestManager.getCommManager().applyServant(new RequestManager.CallBack() {
-//            @Override
-//            public void onSucess(String result) throws JSONException {
-//                BecomeServant.setVisibility(View.GONE);
-//                JSONObject object = new JSONObject(result);
-//                String message = object.getString("message");
-//                MyToastUtils.showShortToast(getApplicationContext(), "恭喜成为代言人，请重新登录");
-//                SpUtils.setRoleName(getApplicationContext(), "ROLE_SERVANT_PRIMARY");
-////                getRoleInfo();
-////                Intent intent = new Intent(MyRecommAct.this, LoginAct.class);
-////                startActivity(intent);
-//                logout();
-//            }
-//
-//            @Override
-//            public void onError(int status, String msg) {
-//
-//            }
-//        });
-//    }
 
     //获取代言人推荐信息
     private void getServantRmdIfo() {
@@ -781,28 +539,4 @@ public class MyRecommAct extends BaseActivity {
             }
         });
     }
-    //    //获取角色信息
-//    private void getRoleInfo() {
-//        RequestManager.getCommManager().getRoleInfo(new RequestManager.CallBack() {
-//            @Override
-//            public void onSucess(String result) throws JSONException {
-//                JSONObject object = new JSONObject(result);
-//                JSONObject data = object.getJSONObject("data");
-//                roleName = data.getString("name");
-//                description = data.getString("description");
-//                SpUtils.setRoleName(getApplicationContext(), roleName);
-//                if (!TextUtils.isEmpty(description)) {
-//                    RoleName.setText(description);
-//                }
-////                getServantCondInfo();
-//                getRoleName();
-//
-//            }
-//
-//            @Override
-//            public void onError(int status, String msg) {
-//
-//            }
-//        });
-//    }
 }
