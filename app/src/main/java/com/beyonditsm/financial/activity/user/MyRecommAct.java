@@ -113,7 +113,7 @@ public class MyRecommAct extends BaseActivity {
 
     String yqUrl = "http://m.myjinzhu.com/#/tab/home?redirctUrl=/register/";
     //    String codeUrl = "http://www.myjinzhu.com/#/activity/spring-festival";
-    String codeUrl = "http://m.myjinzhu.com/#/tab/home?redirctUrl=%2Ftab%2Fhome%2Factivity%2Ffestival";
+//    String codeUrl = "http://m.myjinzhu.com/#/tab/home?redirctUrl=%2Ftab%2Fhome%2Factivity%2Ffestival";
 
     @Override
     public void setLayout() {
@@ -342,13 +342,13 @@ public class MyRecommAct extends BaseActivity {
         //设置微信朋友圈分享内容
         CircleShareContent circleMedia = new CircleShareContent();
 //        circleMedia.setShareContent(content + codeUrl + ule.getMyReferralCode());
-        circleMedia.setShareContent(content + codeUrl);
+        circleMedia.setShareContent(content + yqUrl);
         //设置朋友圈title
         circleMedia.setTitle(title);
         UMImage localImage = new UMImage(MyRecommAct.this, R.mipmap.logo);
         circleMedia.setShareImage(localImage);
-//        circleMedia.setTargetUrl(codeUrl + ule.getMyReferralCode());
-        circleMedia.setTargetUrl(codeUrl);
+        circleMedia.setTargetUrl(yqUrl + ule.getMyReferralCode());
+//        circleMedia.setTargetUrl(yqUrl+tvTuijianma.getText().toString()+"");
         mController.setShareMedia(circleMedia);
         //分享到朋友圈
         mController.postShare(getApplicationContext(), SHARE_MEDIA.WEIXIN_CIRCLE, new SocializeListeners.SnsPostListener() {
@@ -387,8 +387,8 @@ public class MyRecommAct extends BaseActivity {
         weixinContent.setTitle(title);
         UMImage localImage = new UMImage(MyRecommAct.this, R.mipmap.logo);
         weixinContent.setShareImage(localImage);
-//        weixinContent.setTargetUrl(codeUrl + ule.getMyReferralCode());
-        weixinContent.setTargetUrl(codeUrl);
+        weixinContent.setTargetUrl(yqUrl + ule.getMyReferralCode());
+//        weixinContent.setTargetUrl(yqUrl+tvTuijianma.getText().toString()+"");
         mController.setShareMedia(weixinContent);
         //分享到微信
         mController.postShare(getApplicationContext(), SHARE_MEDIA.WEIXIN, new SocializeListeners.SnsPostListener() {
@@ -421,8 +421,8 @@ public class MyRecommAct extends BaseActivity {
 
         //设置分享内容
         SinaShareContent sinaContent = new SinaShareContent();
-//        sinaContent.setShareContent(content + codeUrl + ule.getMyReferralCode());
-        sinaContent.setShareContent(content + codeUrl);
+        sinaContent.setShareContent(content + yqUrl + ule.getMyReferralCode());
+//        sinaContent.setShareContent(content + yqUrl);
         sinaContent.setShareImage(new UMImage(MyRecommAct.this, R.mipmap.logo));
         mController.setShareMedia(sinaContent);
         //分享到新浪微博
@@ -465,9 +465,9 @@ public class MyRecommAct extends BaseActivity {
         qqContent.setTitle(title);
         qqContent.setShareContent(content);
 //        qqContent.setShareContent(content+codeUrl+ule.getMyReferralCode());
-//        qqContent.setTargetUrl(codeUrl + ule.getMyReferralCode());
+        qqContent.setTargetUrl(yqUrl + ule.getMyReferralCode());
 //        qqContent.setAppWebSite(codeUrl);
-        qqContent.setTargetUrl(codeUrl);
+//        qqContent.setTargetUrl(yqUrl+tvTuijianma.getText().toString()+"");
         qqContent.setShareImage(new UMImage(MyRecommAct.this, R.mipmap.logo));
 
         mController.setShareMedia(qqContent);
