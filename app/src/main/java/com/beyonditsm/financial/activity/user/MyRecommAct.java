@@ -449,19 +449,6 @@ public class MyRecommAct extends BaseActivity {
                 RewardAmount = data.getInt("handledRewardAmount");
                 int unhandledAmount = data.getInt("unhandledRewardAmount");
                 JSONArray rewards = data.getJSONArray("rewards");
-                for (int i = 0; i < rewards.length(); i++) {
-                    JSONObject jsonObject = rewards.getJSONObject(i);
-                    if (jsonObject.getInt("level") == 1) {
-                        ParamsUtil.getInstance().setFirstWard(jsonObject.getDouble("percentage"));
-                        ParamsUtil.getInstance().setFirstCardWard(jsonObject.getDouble("fixedBonus"));
-                    } else if (jsonObject.getInt("level") == 2) {
-                        ParamsUtil.getInstance().setSecWard(jsonObject.getDouble("percentage"));
-                        ParamsUtil.getInstance().setSecCardWard(jsonObject.getDouble("fixedBonus"));
-                    } else if (jsonObject.getInt("level") == 3) {
-                        ParamsUtil.getInstance().setThirdWard(jsonObject.getDouble("percentage"));
-                        ParamsUtil.getInstance().setThirdCardWard(jsonObject.getDouble("fixedBonus"));
-                    }
-                }
 //                tvRecommedUserCount.setText(recommedUserCnt + "");
                 float num = (float) LoanAmount / 10000;
                 DecimalFormat df = new DecimalFormat("0.00");//格式化小数
@@ -478,6 +465,19 @@ public class MyRecommAct extends BaseActivity {
                     alreadyImg.setVisibility(View.VISIBLE);
                     unhandledRewardAmount.setVisibility(View.GONE);
                     btnReward.setVisibility(View.GONE);
+                }
+                for (int i =0;i<rewards.length();i++){
+                    JSONObject jsonObject = rewards.getJSONObject(i);
+                    if(jsonObject.getInt("level") == 1){
+                        ParamsUtil.getInstance().setFirstWard(jsonObject.getDouble("percentage"));
+                        ParamsUtil.getInstance().setFirstCardWard(jsonObject.getDouble("fixedBonus"));
+                    }else if(jsonObject.getInt("level") == 2){
+                        ParamsUtil.getInstance().setSecWard(jsonObject.getDouble("percentage"));
+                        ParamsUtil.getInstance().setSecCardWard(jsonObject.getDouble("fixedBonus"));
+                    }else if(jsonObject.getInt("level") == 3){
+                        ParamsUtil.getInstance().setThirdWard(jsonObject.getDouble("percentage"));
+                        ParamsUtil.getInstance().setThirdCardWard(jsonObject.getDouble("fixedBonus"));
+                    }
                 }
             }
 
