@@ -384,7 +384,7 @@
             android:screenOrientation="portrait" />
         <!-- 信用卡专题 -->
         <activity
-            android:name=".activity.user.CreditCardAct"
+            android:name=".activity.user.creditcard.CreditCardAct"
             android:screenOrientation="portrait" />
         <!-- 领取奖励页面 -->
         <activity
