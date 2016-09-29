@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.beyonditsm.financial.entity.ChangePwdEntity;
 import com.beyonditsm.financial.entity.CreditOfflineUploadEntity;
+import com.beyonditsm.financial.entity.HotProduct;
 import com.beyonditsm.financial.entity.MyCreditEntity;
 import com.beyonditsm.financial.entity.OrderBean;
 import com.beyonditsm.financial.entity.SumLoadEntity;
@@ -530,4 +531,26 @@ public class CommManager extends RequestManager {
         params.put("params", GsonUtils.bean2Json(co));
         doPost(IFinancialUrl.SAVE_OR_UPDATE_ORDER_IMAGE, params, callBack);
     }
+
+    /**
+     * 获取信用卡数据
+     */
+    public void getCreditCards(HotProduct hp, String area, CallBack callBack) {
+        Map<String, String> params = new HashMap<>();
+        params.put("area",area);
+        params.put("page", hp.getPage() + "");
+        params.put("rows", hp.getRows() + "");
+        doPost(IFinancialUrl.GET_CREDIT_CARD_INFO, params, callBack);
+    }
+
+    /**
+     * 获取信用卡数据
+     */
+    public void applyCreditCardClick(String creditCardId,CallBack callBack)  {
+        Map<String, String> params = new HashMap<>();
+        params.put("creditCardId",creditCardId);
+        doPost(IFinancialUrl.APPLY_CREDIT_CARD_CLICK, params, callBack);
+    }
+
+  
 }

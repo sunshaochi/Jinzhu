@@ -20,7 +20,7 @@ import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.credit.CreditGuideAct;
-import com.beyonditsm.financial.activity.user.CreditCardAct;
+import com.beyonditsm.financial.activity.user.creditcard.CreditCardAct;
 import com.beyonditsm.financial.activity.user.GameActivity;
 import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
 import com.beyonditsm.financial.activity.user.LoginAct;

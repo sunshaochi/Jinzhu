@@ -21,7 +21,7 @@ public interface IFinancialUrl {
     /*正式地址*/
     String BASE_URL = "http://option.myjinzhu.com";
     /*王建*/
-//    String BASE_URL = "http://172.16.5.191:8081";
+//    String BASE_URL = "http://139.196.227.53:8082";
 
 //        /*正式游戏地址*/
     String GAME_URL = "http://m.farm.myjinzhu.com/";
@@ -41,7 +41,7 @@ public interface IFinancialUrl {
     /**
      * @MARKEY_CODE 渠道号设置，默认渠道设置为空字符串
      */
-    String MARKET_CODE = "qudao4";
+    String MARKET_CODE = "";
     String API_VERSION = "/easyplay";
 
     String BASE_IMAGE_URL = BASE_URL + API_VERSION + "/";
@@ -228,4 +228,8 @@ public interface IFinancialUrl {
     String UPDATE_LOCATION = BASE_URL+API_VERSION +"/platform/login/updateLocation.do";
     /*线下订单上传资料*/
     String SAVE_OR_UPDATE_ORDER_IMAGE = BASE_URL+API_VERSION +"/platform/login/saveOrUpdateOrderImage.do";
+    /*获得信用卡列表页面的信用卡数据*/
+    String GET_CREDIT_CARD_INFO = BASE_URL+API_VERSION + "/creditCard/unlogin/getCreditCards.do";
+    /*在登录状态，点击申卡时,调用统计函数*/
+    String APPLY_CREDIT_CARD_CLICK = BASE_URL+API_VERSION + "/creditCard/login/applyCreditCardClick.do";
 }
