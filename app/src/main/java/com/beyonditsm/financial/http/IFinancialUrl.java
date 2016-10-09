@@ -231,5 +231,9 @@ public interface IFinancialUrl {
     /*获得信用卡列表页面的信用卡数据*/
     String GET_CREDIT_CARD_INFO = BASE_URL+API_VERSION + "/creditCard/unlogin/getCreditCards.do";
     /*在登录状态，点击申卡时,调用统计函数*/
-    String APPLY_CREDIT_CARD_CLICK = BASE_URL+API_VERSION + "/creditCard/login/applyCreditCardClick.do";
+    String FIND_NEWS_MOBILE_INDEX = BASE_URL+API_VERSION + "/platform/information/findNewsMobileIndex.do";
+    /*查询移动/H5首页前5条端咨询信息 */
+    String FIND_NEWS_MOBILE_MORE = BASE_URL+API_VERSION + "/platform/information/findNewsMobileMore.do";
+    /* 查询移动/H5端更多咨询信息 */
+
 }
