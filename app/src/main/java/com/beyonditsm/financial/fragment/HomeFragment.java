@@ -542,7 +542,7 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                     hotNewsAdapter.setOnCreditCardListner(mParentActivity);
                     adapter.notifyDataSetChanged();
                 }
-                ;5
+                
             }
 
             @Override
