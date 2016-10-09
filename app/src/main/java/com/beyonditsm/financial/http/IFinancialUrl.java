@@ -19,7 +19,7 @@ public interface IFinancialUrl {
 ////        /*验收环境游戏地址*/
 //    String GAME_URL = "http://myjinzhu.com:5011/";
     /*正式地址*/
-    String BASE_URL = "http://option.myjinzhu.com";
+//    String BASE_URL = "http://option.myjinzhu.com";
     /*王建*/
 //    String BASE_URL = "http://139.196.227.53:8082";
 
@@ -30,6 +30,7 @@ public interface IFinancialUrl {
 //    String BASE_URL = "http://test.myjinzhu.com:8082";
     /*测试地址3*/
 //    String BASE_URL="http://test.myjinzhu.com:60";
+    String BASE_URL="http://172.16.6.55:8080";
     //内网地址（测试钱包功能）
 //    String BASE_URL = "http://172.16.8.22:8082";
     /*测试游戏地址2*/
@@ -231,9 +232,11 @@ public interface IFinancialUrl {
     /*获得信用卡列表页面的信用卡数据*/
     String GET_CREDIT_CARD_INFO = BASE_URL+API_VERSION + "/creditCard/unlogin/getCreditCards.do";
     /*在登录状态，点击申卡时,调用统计函数*/
-    String FIND_NEWS_MOBILE_INDEX = BASE_URL+API_VERSION + "/platform/information/findNewsMobileIndex.do";
+    String APPLY_CREDIT_CARD_CLICK = BASE_URL+API_VERSION + "/creditCard/login/applyCreditCardClick.do";
     /*查询移动/H5首页前5条端咨询信息 */
-    String FIND_NEWS_MOBILE_MORE = BASE_URL+API_VERSION + "/platform/information/findNewsMobileMore.do";
+    String FIND_NEWS_MOBILE_INDEX = BASE_URL+API_VERSION + "/platform/information/findNewsMobileIndex.do";
     /* 查询移动/H5端更多咨询信息 */
+    String FIND_NEWS_MOBILE_MORE = BASE_URL+API_VERSION + "/platform/information/findNewsMobileMore.do";
+
 
 }

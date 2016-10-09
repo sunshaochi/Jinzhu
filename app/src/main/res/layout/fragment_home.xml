@@ -121,37 +121,102 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#efeff4">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="20dp"
-                android:text="热门贷款"
-                android:textColor="#333333"
-                android:textSize="16sp" />
-        </LinearLayout>
-
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.beyonditsm.financial.view.pullfreshview.LoadRefreshView
-                android:id="@+id/plv_hotCredit"
-                android:scrollbars="none"
-                style="@style/pullrefresh_style">
+            <ScrollView
+                android:background="#efeff4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            </com.beyonditsm.financial.view.pullfreshview.LoadRefreshView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                     >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="20dp"
+                            android:text="热门贷款"
+                            android:textColor="#333333"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+
+                    <ListView
+                        android:id="@+id/plv_hotCredit"
+                        style="@style/pullrefresh_style"
+                        android:scrollbars="none">
+
+                    </ListView>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="15dp"
+                            android:text="热点资讯"
+                            android:textColor="#333333"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/tv_checkMore"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentRight="true"
+                            android:gravity="center"
+                            android:text="查看更多    "
+                            android:textColor="@color/gray_color"
+                            android:textSize="14sp" />
+                    </RelativeLayout>
+                    <LinearLayout
+                        android:background="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+
+                        <ImageView
+                            android:id="@+id/iv_firstNews"
+                            android:layout_weight="1"
+                            android:layout_width="1dp"
+                            android:scaleType="fitXY"
+                            android:adjustViewBounds="true"
+                            android:layout_height="wrap_content" />
+                        <ImageView
+                            android:id="@+id/iv_secNews"
+                            android:layout_weight="1"
+                            android:layout_width="1dp"
+                            android:scaleType="fitXY"
+                            android:adjustViewBounds="true"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <ListView
+                        android:id="@+id/lv_newsCenter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </ScrollView>
 
             <com.beyonditsm.financial.view.LoadingView
-                android:id="@+id/loadingView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+            android:id="@+id/loadingView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
             <ImageView
                 android:id="@+id/ivSuspen"
@@ -159,6 +224,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:background="@mipmap/suspension_icon" />
+
         </FrameLayout>
     </LinearLayout>
 </FrameLayout>

@@ -542,15 +542,30 @@ public class CommManager extends RequestManager {
         params.put("rows", hp.getRows() + "");
         doPost(IFinancialUrl.GET_CREDIT_CARD_INFO, params, callBack);
     }
-
     /**
-     * 获取信用卡数据
+     * 监听点击次数
      */
     public void applyCreditCardClick(String creditCardId,CallBack callBack)  {
         Map<String, String> params = new HashMap<>();
         params.put("creditCardId",creditCardId);
         doPost(IFinancialUrl.APPLY_CREDIT_CARD_CLICK, params, callBack);
     }
+    /**
+     * 获取咨询中心初始数据
+     */
+    public void findNewsMobileIndex(CallBack callBack)  {
+        Map<String, String> params = new HashMap<>();
+        doPost(IFinancialUrl.FIND_NEWS_MOBILE_INDEX, params, callBack);
+    }
 
-  
+
+    /**
+     * 获取自寻中心更多数据
+     */
+    public void findNewsMobileMore(CallBack callBack)  {
+        Map<String, String> params = new HashMap<>();
+        doPost(IFinancialUrl.FIND_NEWS_MOBILE_MORE, params, callBack);
+    }
+
+
 }

@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,10 +27,14 @@ import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
 import com.beyonditsm.financial.activity.user.LoginAct;
 import com.beyonditsm.financial.activity.user.MyRecommAct;
 import com.beyonditsm.financial.adapter.HomeCreditAdapter;
+import com.beyonditsm.financial.adapter.HotNewsAdapter;
 import com.beyonditsm.financial.entity.HomeHotProductEntity;
+import com.beyonditsm.financial.entity.HotNewsEntity;
 import com.beyonditsm.financial.entity.HotProduct;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserLoginEntity;
+import com.beyonditsm.financial.http.CommManager;
+import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GsonUtils;
@@ -37,6 +42,7 @@ import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
+import com.beyonditsm.financial.util.Uitls;
 import com.beyonditsm.financial.util.gps.GPSAddressUtils;
 import com.beyonditsm.financial.util.gps.LocationListener;
 import com.beyonditsm.financial.view.ListViewForScrollView;
@@ -51,6 +57,8 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.eventbus.EventBus;
 import com.tandong.sa.json.Gson;
 import com.tandong.sa.json.reflect.TypeToken;
+import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
+import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -73,17 +81,34 @@ import java.util.List;
  */
 public class HomeFragment extends BaseFragment implements LocationListener {
     @ViewInject(R.id.plv_hotCredit)
-    private LoadRefreshView plvHotCredit;
+    private ListView plvHotCredit;
     @ViewInject(R.id.loadingView)
     private LoadingView loadingView;
 
     @ViewInject(R.id.tv_city)
     private TextView tvCity;
+    @ViewInject(R.id.tv_checkMore)
+    private TextView tvCheckMore;
+    @ViewInject(R.id.lv_newsCenter)
+    private ListView lvNewsCenter;
+    @ViewInject(R.id.iv_firstNews)
+    private ImageView ivFirstNews;
+    @ViewInject(R.id.iv_secNews)
+    private ImageView ivSecNews;
     private int currentPage = 1;
     private HomeCreditAdapter adapter;
     private List<HomeHotProductEntity> hotList;
     private UserLoginEntity ule;
     private Activity mParentActivity;
+    private List<HotNewsEntity> hotNewsList;
+    private HotNewsAdapter hotNewsAdapter;
+    private DisplayImageOptions options = new DisplayImageOptions.Builder()
+            .showStubImage(R.mipmap.pro_default) // 设置图片下载期间显示的图片
+            .showImageForEmptyUri(R.mipmap.pro_default) // 设置图片Uri为空或是错误的时候显示的图片
+            .showImageOnFail(R.mipmap.pro_default) // 设置图片加载或解码过程中发生错误显示的图片
+            .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
+            .cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
+            .build(); // 创建配置过得DisplayImageOption对象
 
 //    public LocationClient mLocationClient = null;
 
@@ -147,31 +172,31 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 
         String roleName = SpUtils.getRoleName(context);
         MyLogUtils.info("ROLENAME=" + roleName);
-//        plvHotCredit.getRefreshableView().setDivider(null);
-//        plvHotCredit.setVerticalScrollBarEnabled(false);
-//        plvHotCredit.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
-        plvHotCredit.setPullRefreshEnabled(true);
-        plvHotCredit.setScrollLoadEnabled(false);
-        plvHotCredit.setPullLoadEnabled(true);
-        plvHotCredit.setHasMoreData(true);
-        plvHotCredit.getRefreshableView().setDivider(null);
+        plvHotCredit.setDivider(null);
         plvHotCredit.setVerticalScrollBarEnabled(false);
-        plvHotCredit.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
-        plvHotCredit.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
-        plvHotCredit.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
-            @Override
-            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-                plvHotCredit.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
-                currentPage = 1;
-                getHotProductList(currentPage);
-            }
-
-            @Override
-            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-                currentPage++;
-                getHotProductList(currentPage);
-            }
-        });
+        plvHotCredit.setSelector(new ColorDrawable(Color.TRANSPARENT));
+//        plvHotCredit.setPullRefreshEnabled(true);
+//        plvHotCredit.setScrollLoadEnabled(false);
+//        plvHotCredit.setPullLoadEnabled(true);
+//        plvHotCredit.setHasMoreData(true);
+//        plvHotCredit.getRefreshableView().setDivider(null);
+        plvHotCredit.setVerticalScrollBarEnabled(false);
+//        plvHotCredit.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
+//        plvHotCredit.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
+//        plvHotCredit.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+//            @Override
+//            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+//                plvHotCredit.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
+//                currentPage = 1;
+//                getHotProductList(currentPage);
+//            }
+//
+//            @Override
+//            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+//                currentPage++;
+//                getHotProductList(currentPage);
+//            }
+//        });
 
 //        MaterialRippleLayout.on(llCredit)
 //                .rippleColor(Color.parseColor("#919191"))
@@ -189,9 +214,11 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 //                .rippleHover(true)
 //                .create();
         getHotProductList(currentPage);
+        getNewsIndex();
         loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
             @Override
             public void OnRetry() {
+                getNewsIndex();
                 getHotProductList(currentPage);
             }
         });
@@ -210,7 +237,7 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 
     @Override
     public void setListener() {
-        plvHotCredit.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        plvHotCredit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(mParentActivity, HomeCreditDetailAct.class);
@@ -229,7 +256,7 @@ public class HomeFragment extends BaseFragment implements LocationListener {
         });
     }
 
-    @OnClick({R.id.ll_credit, R.id.ll_tillage, R.id.ll_work, R.id.ivSuspen, R.id.ll_creditCard, R.id.ll_gps})
+    @OnClick({R.id.ll_credit, R.id.ll_tillage, R.id.ll_work, R.id.ivSuspen, R.id.ll_creditCard, R.id.ll_gps, R.id.tv_checkMore})
     public void toClick(View v) {
         Intent intent;
         switch (v.getId()) {
@@ -267,14 +294,17 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                 break;
             case R.id.ll_creditCard://信用卡
 //                MyToastUtils.showShortToast(getContext(), "敬请期待");
-                if(TextUtils.isEmpty(SpUtils.getRoleName(context).toString())){
-                    MyToastUtils.showShortToast(getContext(),"请先登录金蛛账号");
-                    Intent goLog = new Intent(context,LoginAct.class);
+                if (TextUtils.isEmpty(SpUtils.getRoleName(context).toString())) {
+                    MyToastUtils.showShortToast(getContext(), "请先登录金蛛账号");
+                    Intent goLog = new Intent(context, LoginAct.class);
                     context.startActivity(goLog);
-                }else{
+                } else {
                     intent = new Intent(mParentActivity, CreditCardAct.class);
                     startActivity(intent);
                 }
+                break;
+            case R.id.tv_checkMore://咨询中心查看更多
+                findNewsMore();
                 break;
             case R.id.ll_gps://GPS
                 DialogChooseCity dialogChooseAdress1 = new DialogChooseCity(context).builder();
@@ -297,7 +327,7 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                                     if (adress.get(1).length() > 4) {
                                         tvCity.setText(adress.get(1).substring(0, 4) + "...");
                                     } else {
-                                        tvCity.setText(adress.get(1 ));
+                                        tvCity.setText(adress.get(1));
                                     }
                                     SpUtils.setCity(MyApplication.getInstance().getApplicationContext(), adress.get(1));
                                     currentPage = 1;
@@ -336,8 +366,8 @@ public class HomeFragment extends BaseFragment implements LocationListener {
             @Override
             public void onSucess(String result) throws JSONException {
                 loadingView.loadComplete();
-                plvHotCredit.onPullUpRefreshComplete();
-                plvHotCredit.onPullDownRefreshComplete();
+//                plvHotCredit.onPullUpRefreshComplete();
+//                plvHotCredit.onPullDownRefreshComplete();
 
                 JSONObject object = new JSONObject(result);
                 JSONArray data = object.getJSONArray("data");
@@ -352,9 +382,9 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                     if (Page == 1) {
                         loadingView.noContent();
                     }
-                    else {
-                        plvHotCredit.setHasMoreData(false);
-                    }
+//                    else {
+////                        plvHotCredit.setHasMoreData(false);
+//                    }
                     return;
                 }
                 if (Page == 1) {
@@ -364,17 +394,19 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                 if (adapter == null) {
                     if (null != getContext()) {
                         adapter = new HomeCreditAdapter(getContext(), datas);
-                        plvHotCredit.getRefreshableView().setAdapter(adapter);
+                        plvHotCredit.setAdapter(adapter);
+                        Uitls.setListViewHeightBasedOnChildren(plvHotCredit);
                     }
                 } else {
                     adapter.setDatas(datas);
+                    Uitls.setListViewHeightBasedOnChildren(plvHotCredit);
                 }
             }
 
             @Override
             public void onError(int status, String msg) {
-                plvHotCredit.onPullUpRefreshComplete();
-                plvHotCredit.onPullDownRefreshComplete();
+//                plvHotCredit.onPullUpRefreshComplete();
+//                plvHotCredit.onPullDownRefreshComplete();
                 loadingView.loadError();
             }
         });
@@ -448,7 +480,7 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                 }
             }
 
-            } else {
+        } else {
             tvCity.setText("——");
             GPSAlertDialog gpsAlertDialog = new GPSAlertDialog(context);
             gpsAlertDialog.builder().setCancelable(false).setMsg("无法获取当前位置，请检查设置", "或直接切换城市", null).setPositiveButton("去设置", new View.OnClickListener() {
@@ -464,6 +496,64 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 
     private void updateLocation(String area) {
         RequestManager.getCommManager().updateLocation(area, new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
+            }
+        });
+    }
+
+    public void getNewsIndex() {
+        CommManager.getCommManager().findNewsMobileIndex(new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                JSONObject object = new JSONObject(result);
+                JSONObject data = object.getJSONObject("data");
+                Gson gson = new Gson();
+                hotNewsList = gson.fromJson(data.toString(), new TypeToken<List<HotNewsEntity>>() {
+                }.getType());
+                if (hotNewsList == null || hotNewsList.size() == 0) {
+//                    adapter.setDatas(datas ,isLast(cardList));
+//                    adapter.setOnCreditCardListner(CreditCardAct.this);
+//                    adapter.notifyDataSetChanged();
+                    loadingView.noContent();
+                    return;
+                }
+                for (int i = 0; i < hotNewsList.size(); i++) {
+                    if (hotNewsList.get(i).getWeights() == 6) {
+                        ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + hotNewsList.get(i).getPictrue(), ivFirstNews, options);
+                        hotNewsList.remove(i);
+                    } else if (hotNewsList.get(i).getWeights() == 7) {
+                        ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + hotNewsList.get(i).getPictrue(), ivSecNews, options);
+                        hotNewsList.remove(i);
+                    }
+                }
+                if (hotNewsAdapter == null) {
+                    hotNewsAdapter = new HotNewsAdapter(mParentActivity, hotNewsList);
+                    hotNewsAdapter.setOnCreditCardListner(mParentActivity);
+
+                } else {
+                    hotNewsAdapter.setDatas(hotNewsList);
+                    hotNewsAdapter.setOnCreditCardListner(mParentActivity);
+                    adapter.notifyDataSetChanged();
+                }
+                ;5
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
+            }
+        });
+    }
+
+    public void findNewsMore() {
+        CommManager.getCommManager().findNewsMobileMore(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
 
