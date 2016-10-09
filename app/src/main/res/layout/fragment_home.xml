@@ -143,6 +143,7 @@
 
             <com.beyonditsm.financial.view.pullfreshview.LoadRefreshView
                 android:id="@+id/plv_hotCredit"
+                android:scrollbars="none"
                 style="@style/pullrefresh_style">
 
             </com.beyonditsm.financial.view.pullfreshview.LoadRefreshView>

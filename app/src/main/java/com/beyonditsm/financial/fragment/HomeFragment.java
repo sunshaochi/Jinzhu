@@ -147,7 +147,7 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 
         String roleName = SpUtils.getRoleName(context);
         MyLogUtils.info("ROLENAME=" + roleName);
-        plvHotCredit.getRefreshableView().setDivider(null);
+//        plvHotCredit.getRefreshableView().setDivider(null);
 //        plvHotCredit.setVerticalScrollBarEnabled(false);
 //        plvHotCredit.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
         plvHotCredit.setPullRefreshEnabled(true);
