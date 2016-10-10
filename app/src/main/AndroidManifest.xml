@@ -119,6 +119,10 @@
         <activity
             android:name=".activity.user.UpdateAct"
             android:screenOrientation="portrait" />
+        <!-- banner详情页 -->
+        <activity
+            android:name=".activity.user.BannerDetailAct"
+            android:screenOrientation="portrait" />
         <!-- 找回密码 -->
         <activity
             android:name=".activity.user.FindPwdAct"
