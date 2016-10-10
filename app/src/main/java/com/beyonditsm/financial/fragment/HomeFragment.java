@@ -513,10 +513,12 @@ public class HomeFragment extends BaseFragment implements LocationListener {
             @Override
             public void onSucess(String result) throws JSONException {
                 JSONObject object = new JSONObject(result);
-                JSONObject data = object.getJSONObject("data");
+                JSONArray data = object.getJSONArray("data");
                 Gson gson = new Gson();
+
                 hotNewsList = gson.fromJson(data.toString(), new TypeToken<List<HotNewsEntity>>() {
                 }.getType());
+
                 if (hotNewsList == null || hotNewsList.size() == 0) {
 //                    adapter.setDatas(datas ,isLast(cardList));
 //                    adapter.setOnCreditCardListner(CreditCardAct.this);
@@ -526,21 +528,26 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                 }
                 for (int i = 0; i < hotNewsList.size(); i++) {
                     if (hotNewsList.get(i).getWeights() == 6) {
+                        MyLogUtils.info("BASE_IMAGE_URL:" + hotNewsList.get(i).getPictrue()+"");
                         ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + hotNewsList.get(i).getPictrue(), ivFirstNews, options);
                         hotNewsList.remove(i);
                     } else if (hotNewsList.get(i).getWeights() == 7) {
+                        MyLogUtils.info("BASE_IMAGE_URL:" + hotNewsList.get(i).getPictrue()+"");
                         ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + hotNewsList.get(i).getPictrue(), ivSecNews, options);
                         hotNewsList.remove(i);
                     }
                 }
                 if (hotNewsAdapter == null) {
                     hotNewsAdapter = new HotNewsAdapter(mParentActivity, hotNewsList);
-                    hotNewsAdapter.setOnCreditCardListner(mParentActivity);
+                    lvNewsCenter.setAdapter(hotNewsAdapter);
+                    Uitls.setListViewHeightBasedOnChildren(lvNewsCenter);
+//                    hotNewsAdapter.setOnCreditCardListner(mParentActivity);
 
                 } else {
                     hotNewsAdapter.setDatas(hotNewsList);
-                    hotNewsAdapter.setOnCreditCardListner(mParentActivity);
+//                    hotNewsAdapter.setOnCreditCardListner(mParentActivity);
                     adapter.notifyDataSetChanged();
+                    Uitls.setListViewHeightBasedOnChildren(lvNewsCenter);
                 }
                 
             }

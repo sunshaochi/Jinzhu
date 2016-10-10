@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.entity.HotNewsEntity;
+import com.beyonditsm.financial.util.MyLogUtils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -60,7 +61,9 @@ public class HotNewsAdapter extends BaseAdapter {
         }else{
             holder = (ViewHolder) convertView.getTag();
         }
-
+        MyLogUtils.info("tvTitle:" + list.get(position).getTitle()+"");
+        holder.tvTitle = (TextView) convertView.findViewById(R.id.title);
+        holder.tvTime = (TextView) convertView.findViewById(R.id.time);
         holder.tvTitle.setText(list.get(position).getTitle());
         Date date = new Date(list.get(position).getCreateTime());
         @SuppressLint("SimpleDateFormat") DateFormat df=new SimpleDateFormat("yyyy-MM-dd");
