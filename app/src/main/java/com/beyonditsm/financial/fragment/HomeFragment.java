@@ -12,7 +12,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.ConstantValue;
@@ -20,18 +21,19 @@ import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.credit.CreditGuideAct;
-import com.beyonditsm.financial.activity.user.creditcard.CreditCardAct;
+import com.beyonditsm.financial.activity.user.BannerDetailAct;
 import com.beyonditsm.financial.activity.user.GameActivity;
 import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
 import com.beyonditsm.financial.activity.user.LoginAct;
 import com.beyonditsm.financial.activity.user.MyRecommAct;
+import com.beyonditsm.financial.activity.user.creditcard.CreditCardAct;
 import com.beyonditsm.financial.adapter.HomeCreditAdapter;
+import com.beyonditsm.financial.entity.BannerEntity;
 import com.beyonditsm.financial.entity.HomeHotProductEntity;
 import com.beyonditsm.financial.entity.HotProduct;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserLoginEntity;
 import com.beyonditsm.financial.http.RequestManager;
-import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
@@ -41,9 +43,14 @@ import com.beyonditsm.financial.util.gps.GPSAddressUtils;
 import com.beyonditsm.financial.util.gps.LocationListener;
 import com.beyonditsm.financial.view.ListViewForScrollView;
 import com.beyonditsm.financial.view.LoadingView;
-import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
-import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
-import com.beyonditsm.financial.view.pullfreshview.PullToRefreshListView;
+import com.beyonditsm.financial.view.MyScrollView;
+import com.beyonditsm.financial.view.banner.CBViewHolderCreator;
+import com.beyonditsm.financial.view.banner.ConvenientBanner;
+import com.beyonditsm.financial.view.banner.HolderView;
+import com.beyonditsm.financial.view.banner.OnItemClickListener;
+import com.beyonditsm.financial.view.banner.Transformer;
+import com.beyonditsm.financial.view.refreshlayout.BGAMeiTuanRefreshViewHolder;
+import com.beyonditsm.financial.view.refreshlayout.BGARefreshLayout;
 import com.beyonditsm.financial.widget.GPSAlertDialog;
 import com.beyonditsm.financial.widget.gpscity.DialogChooseCity;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -57,7 +64,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -71,21 +77,43 @@ import java.util.List;
 /**
  * Created by liwk on 2015/12/8
  */
-public class HomeFragment extends BaseFragment implements LocationListener {
+public class HomeFragment extends BaseFragment implements LocationListener,BGARefreshLayout.BGARefreshLayoutDelegate {
     @ViewInject(R.id.plv_hotCredit)
-    private LoadRefreshView plvHotCredit;
+    private ListViewForScrollView plvHotCredit;
     @ViewInject(R.id.loadingView)
     private LoadingView loadingView;
 
     @ViewInject(R.id.tv_city)
     private TextView tvCity;
+    @ViewInject(R.id.cb_homeBanner)
+    private ConvenientBanner cbHomeBanner;
+    @ViewInject(R.id.sv_home)
+    private MyScrollView svHome;
+//    @ViewInject(R.id.rl_BGA)
+//    private BGARefreshLayout mRefreshLayout;
+    @ViewInject(R.id.ll_header)
+    private LinearLayout llHeader;
+    @ViewInject(R.id.rl_title_layout)
+    private RelativeLayout rlTitleLayout;
     private int currentPage = 1;
     private HomeCreditAdapter adapter;
     private List<HomeHotProductEntity> hotList;
     private UserLoginEntity ule;
     private Activity mParentActivity;
+    public static final String BANNER_NAME = "banner_name";
+    public static final String HREF_ADDR = "href_addr";
 
-//    public LocationClient mLocationClient = null;
+    private List<String> networkImages = new ArrayList<>();
+//    private String[] images = {"http://img2.imgtn.bdimg.com/it/u=3093785514,1341050958&fm=21&gp=0.jpg",
+//            "http://img2.3lian.com/2014/f2/37/d/40.jpg",
+//            "http://d.3987.com/sqmy_131219/001.jpg",
+//            "http://img2.3lian.com/2014/f2/37/d/39.jpg",
+//            "http://www.8kmm.com/UploadFiles/2012/8/201208140920132659.jpg",
+//            "http://f.hiphotos.baidu.com/image/h%3D200/sign=1478eb74d5a20cf45990f9df460b4b0c/d058ccbf6c81800a5422e5fdb43533fa838b4779.jpg",
+//            "http://f.hiphotos.baidu.com/image/pic/item/09fa513d269759ee50f1971ab6fb43166c22dfba.jpg"
+//    };
+    private List<BannerEntity> bannerList;
+
 
     @SuppressLint("InflateParams")
     @Override
@@ -93,14 +121,6 @@ public class HomeFragment extends BaseFragment implements LocationListener {
         return inflater.inflate(R.layout.fragment_home, null);
 
     }
-
-//    @Override
-//    public void onHiddenChanged(boolean hidden) {
-//        super.onHiddenChanged(hidden);
-//        if (!hidden){
-//
-//        }
-//    }
 
     @Override
     public void onStart() {
@@ -115,7 +135,7 @@ public class HomeFragment extends BaseFragment implements LocationListener {
             getLocation();
         }
         getUserLoginInfo();
-
+        cbHomeBanner.startTurning(5000);
     }
 
     private void getLocation() {
@@ -123,7 +143,6 @@ public class HomeFragment extends BaseFragment implements LocationListener {
         GPSAddressUtils.getInstance().getLocation(mParentActivity);
 
     }
-
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -141,54 +160,58 @@ public class HomeFragment extends BaseFragment implements LocationListener {
         }
     }
 
+    //fragment切换时scrollview加载到顶部
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden){
+            svHome.smoothScrollTo(0,0);
+        }
+    }
+
+    //返回fragment时scrollview加载到顶部
+    @Override
+    public void onResume() {
+        super.onResume();
+        svHome.smoothScrollTo(0,0);
+    }
+
     @Override
     public void initData(Bundle savedInstanceState) {
-//        getHotProductList(currentPage);
 
+        //头部布局的初始化时透明
+//        rlTitleLayout.setBackgroundColor(Color.argb(0,0xf5,0x8b,0x35));
         String roleName = SpUtils.getRoleName(context);
         MyLogUtils.info("ROLENAME=" + roleName);
-//        plvHotCredit.getRefreshableView().setDivider(null);
-//        plvHotCredit.setVerticalScrollBarEnabled(false);
-//        plvHotCredit.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
-        plvHotCredit.setPullRefreshEnabled(true);
-        plvHotCredit.setScrollLoadEnabled(false);
-        plvHotCredit.setPullLoadEnabled(true);
-        plvHotCredit.setHasMoreData(true);
-        plvHotCredit.getRefreshableView().setDivider(null);
+        svHome.smoothScrollTo(0,0);
+        plvHotCredit.setDivider(null);
         plvHotCredit.setVerticalScrollBarEnabled(false);
-        plvHotCredit.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
-        plvHotCredit.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
-        plvHotCredit.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
-            @Override
-            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-                plvHotCredit.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
-                currentPage = 1;
-                getHotProductList(currentPage);
-            }
+        plvHotCredit.setSelector(new ColorDrawable(Color.TRANSPARENT));
+//        plvHotCredit.setPullRefreshEnabled(true);
+//        plvHotCredit.setScrollLoadEnabled(false);
+//        plvHotCredit.setPullLoadEnabled(true);
+//        plvHotCredit.setHasMoreData(true);
+//        plvHotCredit.getRefreshableView().setDivider(null);
+//        plvHotCredit.getRefreshableView().setVerticalScrollBarEnabled(false);
+//        plvHotCredit.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
+//        plvHotCredit.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
+//        plvHotCredit.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+//            @Override
+//            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+//                plvHotCredit.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
+//                currentPage = 1;
+//                getHotProductList(currentPage);
+//            }
+//
+//            @Override
+//            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+//                currentPage++;
+//                getHotProductList(currentPage);
+//            }
+//        });
 
-            @Override
-            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-                currentPage++;
-                getHotProductList(currentPage);
-            }
-        });
-
-//        MaterialRippleLayout.on(llCredit)
-//                .rippleColor(Color.parseColor("#919191"))
-//                .rippleAlpha(0.2f)
-//                .rippleHover(true)
-//                .create();
-//        MaterialRippleLayout.on(llTillage)
-//                .rippleColor(Color.parseColor("#919191"))
-//                .rippleAlpha(0.2f)
-//                .rippleHover(true)
-//                .create();
-//        MaterialRippleLayout.on(llWork)
-//                .rippleColor(Color.parseColor("#919191"))
-//                .rippleAlpha(0.2f)
-//                .rippleHover(true)
-//                .create();
         getHotProductList(currentPage);
+        getBanner();
         loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
             @Override
             public void OnRetry() {
@@ -196,7 +219,10 @@ public class HomeFragment extends BaseFragment implements LocationListener {
             }
         });
 
+
+//        initRefreshLayout(convenientBanner);
     }
+
 
 
     @Override
@@ -210,7 +236,7 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 
     @Override
     public void setListener() {
-        plvHotCredit.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        plvHotCredit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(mParentActivity, HomeCreditDetailAct.class);
@@ -306,8 +332,6 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                             }).setNegativeButton("取消", null).show();
 
                         }
-//                        userInfo.setNativePlaceAddr(adress.get(0)+adress.get(1)+adress.get(2));
-//                        updateData(us
                     }
                 });
                 break;
@@ -322,12 +346,26 @@ public class HomeFragment extends BaseFragment implements LocationListener {
         initLocation();
     }
 
+    @Override
+    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+
+    }
+
+    @Override
+    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
+        return false;
+    }
+
     public class ToSwitchEvent {
 
     }
 
     private List<HomeHotProductEntity> datas = new ArrayList<>();
 
+    /**
+     * 获取热门产品列表
+     * @param Page
+     */
     private void getHotProductList(final int Page) {
         HotProduct hp = new HotProduct();
         hp.setPage(Page);
@@ -336,25 +374,25 @@ public class HomeFragment extends BaseFragment implements LocationListener {
             @Override
             public void onSucess(String result) throws JSONException {
                 loadingView.loadComplete();
-                plvHotCredit.onPullUpRefreshComplete();
-                plvHotCredit.onPullDownRefreshComplete();
+//                plvHotCredit.onPullUpRefreshComplete();
+//                plvHotCredit.onPullDownRefreshComplete();
 
                 JSONObject object = new JSONObject(result);
                 JSONArray data = object.getJSONArray("data");
                 Gson gson = new Gson();
                 hotList = gson.fromJson(data.toString(), new TypeToken<List<HomeHotProductEntity>>() {
                 }.getType());
-                if (data == null) {
-                    loadingView.noContent();
-                    return;
-                }
+//                if (data == null) {
+//                    loadingView.noContent();
+//                    return;
+//                }
                 if (hotList == null || hotList.size() == 0) {
                     if (Page == 1) {
                         loadingView.noContent();
                     }
-                    else {
-                        plvHotCredit.setHasMoreData(false);
-                    }
+//                    else {
+////                        plvHotCredit.setHasMoreData(false);
+//                    }
                     return;
                 }
                 if (Page == 1) {
@@ -364,7 +402,7 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                 if (adapter == null) {
                     if (null != getContext()) {
                         adapter = new HomeCreditAdapter(getContext(), datas);
-                        plvHotCredit.getRefreshableView().setAdapter(adapter);
+                        plvHotCredit.setAdapter(adapter);
                     }
                 } else {
                     adapter.setDatas(datas);
@@ -373,13 +411,12 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 
             @Override
             public void onError(int status, String msg) {
-                plvHotCredit.onPullUpRefreshComplete();
-                plvHotCredit.onPullDownRefreshComplete();
+//                plvHotCredit.onPullUpRefreshComplete();
+//                plvHotCredit.onPullDownRefreshComplete();
                 loadingView.loadError();
             }
         });
     }
-
 
     /**
      * 获取用户的角色信息
@@ -398,7 +435,7 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                     ParamsUtil.getInstance().setUle(ule);
                 }
 
-                loadingView.loadComplete();
+//                loadingView.loadComplete();
 //                llWork.setClickable(true);
             }
 
@@ -446,9 +483,11 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                     tvCity.setText(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()));
 
                 }
+            }else{
+                tvCity.setText(ParamsUtil.getInstance().getChangedCity());
+                SpUtils.setCity(MyApplication.getInstance().getApplicationContext(), ParamsUtil.getInstance().getChangedCity());
             }
-
-            } else {
+        } else {
             tvCity.setText("——");
             GPSAlertDialog gpsAlertDialog = new GPSAlertDialog(context);
             gpsAlertDialog.builder().setCancelable(false).setMsg("无法获取当前位置，请检查设置", "或直接切换城市", null).setPositiveButton("去设置", new View.OnClickListener() {
@@ -475,10 +514,110 @@ public class HomeFragment extends BaseFragment implements LocationListener {
             }
         });
     }
+    private void initRefreshLayout(ConvenientBanner convenientBanner) {
+        // 为BGARefreshLayout设置代理
+//        mRefreshLayout.setDelegate(this);
+        // 设置下拉刷新和上拉加载更多的风格     参数1：应用程序上下文，参数2：是否具有上拉加载更多功能
+        BGAMeiTuanRefreshViewHolder refreshViewHolder = new BGAMeiTuanRefreshViewHolder(context, true);
+        // 设置下拉刷新和上拉加载更多的风格
+//        refreshViewHolder.(R.mipmap.arrow_orienge_up);
+//        refreshViewHolder.setUltimateColor(R.color.tv_black);
+        refreshViewHolder.setPullDownImageResource(R.mipmap.logo);
+        refreshViewHolder.setChangeToReleaseRefreshAnimResId(R.drawable.load_anim);
+        refreshViewHolder.setRefreshingAnimResId(R.drawable.load_anim);
+        // 为了增加下拉刷新头部和加载更多的通用性，提供了以下可选配置选项  -------------START
+        // 设置正在加载更多时不显示加载更多控件
+        // mRefreshLayout.setIsShowLoadingMoreView(false);
+        // 设置正在加载更多时的文本
+        refreshViewHolder.setLoadingMoreText("正在加载中");
+        // 设置整个加载更多控件的背景颜色资源id
+        refreshViewHolder.setLoadMoreBackgroundColorRes(R.color.tv_black);
+        // 设置整个加载更多控件的背景drawable资源id
+//        refreshViewHolder.setLoadMoreBackgroundDrawableRes(loadMoreBackgroundDrawableRes);
+        // 设置下拉刷新控件的背景颜色资源id
+//        refreshViewHolder.setRefreshViewBackgroundColorRes(refreshViewBackgroundColorRes);
+        // 设置下拉刷新控件的背景drawable资源id
+//        refreshViewHolder.setRefreshViewBackgroundDrawableRes(refreshViewBackgroundDrawableRes);
+        // 设置自定义头部视图（也可以不用设置）     参数1：自定义头部视图（例如广告位）， 参数2：上拉加载更多是否可用
+//        mRefreshLayout.setCustomHeaderView(convenientBanner, false);
+        // 可选配置  -------------END
+//        mRefreshLayout.setRefreshViewHolder(refreshViewHolder);
+
+    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         ParamsUtil.getInstance().setFirstLocated(true);
+    }
+
+
+    private void initBanner() {
+        //        networkImages = Arrays.asList(images);
+        final ConvenientBanner convenientBanner = cbHomeBanner.setPages(new CBViewHolderCreator<HolderView>() {
+
+            @Override
+            public HolderView createHolder() {
+                return new HolderView();
+            }
+        }, networkImages);
+        convenientBanner.setPageTransformer(new Transformer(Transformer.TransformerType.DEFAULT));
+        convenientBanner.setPageIndicator(new int[]{R.mipmap.ic_page_indicator,R.mipmap.ic_page_indicator_focused});
+        convenientBanner.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+//                MyToastUtils.showShortToast(context,"点击了第"+position+"个");
+                String bannerName = bannerList.get(position).getBannerName();
+                String hrefAddr = bannerList.get(position).getHrefAddr();
+                Intent intent = new Intent(mParentActivity, BannerDetailAct.class);
+                intent.putExtra(BANNER_NAME,bannerName);
+                intent.putExtra(HREF_ADDR,hrefAddr);
+                startActivity(intent);
+            }
+        });
+        //这是用来scrollview滑动时顶部布局由透明逐渐变色
+//        convenientBanner.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                convenientBanner.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+//                final int height = convenientBanner.getHeight();
+//                svHome.setOnScrollListener(new MyScrollView.OnScrollListener() {
+//                    @Override
+//                    public void onScroll(MyScrollView myScrollView, int x, int y, int oldx, int oldy) {
+//                        if (y<=height){
+//                            float scale = (float)y/height;
+//                            float alpha = (255*scale);
+//                            rlTitleLayout.setBackgroundColor(Color.argb((int)alpha,0xf5,0x8b,0x35));
+//                        }
+//                    }
+//                });
+//            }
+//        });
+    }
+
+    private void getBanner(){
+        RequestManager.getCommManager().getBanner(new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                JSONObject jsonObject = new JSONObject(result);
+                JSONArray data = jsonObject.getJSONArray("data");
+                Gson gson = new Gson();
+                bannerList = gson.fromJson(data.toString(), new TypeToken<List<BannerEntity>>() {
+                }.getType());
+                for (int i = 0; i< bannerList.size(); i++){
+                    BannerEntity bannerEntity = bannerList.get(i);
+//                    String bannerName = bannerEntity.getBannerName();
+                    String imgSrc = bannerEntity.getImgSrc();
+//                    String hrefAddr = bannerEntity.getHrefAddr();
+                    networkImages.add(imgSrc);
+                }
+                initBanner();
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
+            }
+        });
     }
 }
