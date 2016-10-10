@@ -21,6 +21,8 @@ import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.credit.CreditGuideAct;
+import com.beyonditsm.financial.activity.newscenter.NewsCenterActivity;
+import com.beyonditsm.financial.activity.newscenter.NewsDetailActivity;
 import com.beyonditsm.financial.activity.user.creditcard.CreditCardAct;
 import com.beyonditsm.financial.activity.user.GameActivity;
 import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
@@ -304,7 +306,8 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                 }
                 break;
             case R.id.tv_checkMore://咨询中心查看更多
-                findNewsMore();
+                intent = new Intent(mParentActivity, NewsCenterActivity.class);
+                startActivity(intent);
                 break;
             case R.id.ll_gps://GPS
                 DialogChooseCity dialogChooseAdress1 = new DialogChooseCity(context).builder();
@@ -546,10 +549,18 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                 } else {
                     hotNewsAdapter.setDatas(hotNewsList);
 //                    hotNewsAdapter.setOnCreditCardListner(mParentActivity);
-                    adapter.notifyDataSetChanged();
+                    hotNewsAdapter.notifyDataSetChanged();
                     Uitls.setListViewHeightBasedOnChildren(lvNewsCenter);
                 }
-                
+
+                lvNewsCenter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(mParentActivity, NewsDetailActivity.class);
+                        intent.putExtra("hotnews",hotNewsList.get(position));
+                        startActivity(intent);
+                    }
+                });
             }
 
             @Override
@@ -559,19 +570,7 @@ public class HomeFragment extends BaseFragment implements LocationListener {
         });
     }
 
-    public void findNewsMore() {
-        CommManager.getCommManager().findNewsMobileMore(new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
 
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-
-            }
-        });
-    }
 
     @Override
     public void onDestroy() {

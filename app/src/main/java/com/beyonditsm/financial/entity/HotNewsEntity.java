@@ -1,10 +1,13 @@
 package com.beyonditsm.financial.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by xuleyuan on 2016/10/9.
  */
 
-public class HotNewsEntity{
+public class HotNewsEntity implements Parcelable{
 
     /**
      * createTime : 1475218743000
@@ -23,6 +26,28 @@ public class HotNewsEntity{
     private String title;
     private int weights;
     private String urlPath;
+
+    protected HotNewsEntity(Parcel in) {
+        createTime = in.readLong();
+        pictrue = in.readString();
+        description = in.readString();
+        id = in.readString();
+        title = in.readString();
+        weights = in.readInt();
+        urlPath = in.readString();
+    }
+
+    public static final Creator<HotNewsEntity> CREATOR = new Creator<HotNewsEntity>() {
+        @Override
+        public HotNewsEntity createFromParcel(Parcel in) {
+            return new HotNewsEntity(in);
+        }
+
+        @Override
+        public HotNewsEntity[] newArray(int size) {
+            return new HotNewsEntity[size];
+        }
+    };
 
     public long getCreateTime() {
         return createTime;
@@ -80,4 +105,19 @@ public class HotNewsEntity{
         this.urlPath = urlPath;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(createTime);
+        dest.writeString(pictrue);
+        dest.writeString(description);
+        dest.writeString(id);
+        dest.writeString(title);
+        dest.writeInt(weights);
+        dest.writeString(urlPath);
+    }
 }
