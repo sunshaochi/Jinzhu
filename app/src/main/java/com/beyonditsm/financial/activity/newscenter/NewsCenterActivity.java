@@ -50,6 +50,7 @@ public class NewsCenterActivity extends BaseActivity implements LoadRefreshView.
         newsList.getRefreshableView().setVerticalScrollBarEnabled(false);
         newsList.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
         newsList.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
+        newsList.setOnRefreshListener(this);
         loadingView.setOnRetryListener(this);
         newsList.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -78,10 +79,11 @@ public class NewsCenterActivity extends BaseActivity implements LoadRefreshView.
                 newsList.onPullUpRefreshComplete();
                 loadingView.loadComplete();
                 JSONObject object = new JSONObject(result);
-                JSONArray data = object.getJSONArray("data");
+                JSONObject data = object.getJSONObject("data");
+                JSONArray rows = data.getJSONArray("rows");
                 Gson gson = new Gson();
 
-                hotNewsList = gson.fromJson(data.toString(), new TypeToken<List<HotNewsEntity>>() {
+                hotNewsList = gson.fromJson(rows.toString(), new TypeToken<List<HotNewsEntity>>() {
                 }.getType());
 
                 if (hotNewsList == null || hotNewsList.size() == 0) {

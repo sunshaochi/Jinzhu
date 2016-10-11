@@ -89,7 +89,7 @@ import java.util.List;
 /**
  * Created by liwk on 2015/12/8
  */
-public class HomeFragment extends BaseFragment implements LocationListener,BGARefreshLayout.BGARefreshLayoutDelegate {
+public class HomeFragment extends BaseFragment implements LocationListener, BGARefreshLayout.BGARefreshLayoutDelegate {
     @ViewInject(R.id.plv_hotCredit)
     private ListViewForScrollView plvHotCredit;
     @ViewInject(R.id.loadingView)
@@ -101,7 +101,7 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
     private ConvenientBanner cbHomeBanner;
     @ViewInject(R.id.sv_home)
     private MyScrollView svHome;
-//    @ViewInject(R.id.rl_BGA)
+    //    @ViewInject(R.id.rl_BGA)
 //    private BGARefreshLayout mRefreshLayout;
     @ViewInject(R.id.ll_header)
     private LinearLayout llHeader;
@@ -128,7 +128,7 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
     public static final String HREF_ADDR = "href_addr";
 
     private List<String> networkImages = new ArrayList<>();
-//    private String[] images = {"http://img2.imgtn.bdimg.com/it/u=3093785514,1341050958&fm=21&gp=0.jpg",
+    //    private String[] images = {"http://img2.imgtn.bdimg.com/it/u=3093785514,1341050958&fm=21&gp=0.jpg",
 //            "http://img2.3lian.com/2014/f2/37/d/40.jpg",
 //            "http://d.3987.com/sqmy_131219/001.jpg",
 //            "http://img2.3lian.com/2014/f2/37/d/39.jpg",
@@ -197,8 +197,8 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (!hidden){
-            svHome.smoothScrollTo(0,0);
+        if (!hidden) {
+            svHome.smoothScrollTo(0, 0);
         }
     }
 
@@ -206,7 +206,7 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
     @Override
     public void onResume() {
         super.onResume();
-        svHome.smoothScrollTo(0,0);
+        svHome.smoothScrollTo(0, 0);
     }
 
     @Override
@@ -216,7 +216,7 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
 //        rlTitleLayout.setBackgroundColor(Color.argb(0,0xf5,0x8b,0x35));
         String roleName = SpUtils.getRoleName(context);
         MyLogUtils.info("ROLENAME=" + roleName);
-        svHome.smoothScrollTo(0,0);
+        svHome.smoothScrollTo(0, 0);
         plvHotCredit.setDivider(null);
         plvHotCredit.setVerticalScrollBarEnabled(false);
         plvHotCredit.setSelector(new ColorDrawable(Color.TRANSPARENT));
@@ -260,7 +260,6 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
     }
 
 
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -291,7 +290,7 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
         });
     }
 
-    @OnClick({R.id.ll_credit, R.id.ll_tillage, R.id.ll_work, R.id.ivSuspen, R.id.ll_creditCard, R.id.ll_gps, R.id.tv_checkMore,R.id.iv_firstNews,R.id.iv_secNews})
+    @OnClick({R.id.ll_credit, R.id.ll_tillage, R.id.ll_work, R.id.ivSuspen, R.id.ll_creditCard, R.id.ll_gps, R.id.tv_checkMore, R.id.iv_firstNews, R.id.iv_secNews})
     public void toClick(View v) {
         Intent intent;
         switch (v.getId()) {
@@ -377,12 +376,12 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
                 break;
             case R.id.iv_firstNews:
                 Intent intent2 = new Intent(mParentActivity, NewsDetailActivity.class);
-                intent2.putExtra("hotnews",firstNews);
+                intent2.putExtra("hotnews", firstNews);
                 startActivity(intent2);
                 break;
             case R.id.iv_secNews:
                 Intent intent3 = new Intent(mParentActivity, NewsDetailActivity.class);
-                intent3.putExtra("hotnews",secNews);
+                intent3.putExtra("hotnews", secNews);
                 startActivity(intent3);
                 break;
         }
@@ -414,6 +413,7 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
 
     /**
      * 获取热门产品列表
+     *
      * @param Page
      */
     private void getHotProductList(final int Page) {
@@ -425,7 +425,7 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
             public void onSucess(String result) throws JSONException {
                 loadingView.loadComplete();
                 productLoaded = true;
-                if (newsLoaded){
+                if (newsLoaded) {
                     loadingView.loadComplete();
                 }
 //                plvHotCredit.onPullUpRefreshComplete();
@@ -540,7 +540,7 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
                     tvCity.setText(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()));
 
                 }
-            }else{
+            } else {
                 tvCity.setText(ParamsUtil.getInstance().getChangedCity());
                 SpUtils.setCity(MyApplication.getInstance().getApplicationContext(), ParamsUtil.getInstance().getChangedCity());
             }
@@ -572,6 +572,7 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
             }
         });
     }
+
     private void initRefreshLayout(ConvenientBanner convenientBanner) {
         // 为BGARefreshLayout设置代理
 //        mRefreshLayout.setDelegate(this);
@@ -608,7 +609,7 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
             @Override
             public void onSucess(String result) throws JSONException {
                 newsLoaded = true;
-                if (productLoaded){
+                if (productLoaded) {
                     loadingView.loadComplete();
                 }
                 JSONObject object = new JSONObject(result);
@@ -626,15 +627,15 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
                     return;
                 }
                 for (int i = 0; i < hotNewsList.size(); i++) {
-                    MyLogUtils.info("Weights:" + hotNewsList.get(i).getWeights()+"");
+                    MyLogUtils.info("Weights:" + hotNewsList.get(i).getWeights() + "");
                     if (hotNewsList.get(i).getWeights() == 6) {
-                        MyLogUtils.info("BASE_IMAGE_URL:" + hotNewsList.get(i).getPictrue()+"");
+                        MyLogUtils.info("BASE_IMAGE_URL:" + hotNewsList.get(i).getPictrue() + "");
                         ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + hotNewsList.get(i).getPictrue(), ivFirstNews, options);
                         firstNews = hotNewsList.get(i);
                         hotNewsList.remove(i);
                         i--;
                     } else if (hotNewsList.get(i).getWeights() == 7) {
-                        MyLogUtils.info("BASE_IMAGE_URL:" + hotNewsList.get(i).getPictrue()+"");
+                        MyLogUtils.info("BASE_IMAGE_URL:" + hotNewsList.get(i).getPictrue() + "");
                         ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + hotNewsList.get(i).getPictrue(), ivSecNews, options);
                         secNews = hotNewsList.get(i);
                         hotNewsList.remove(i);
@@ -657,7 +658,7 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent intent = new Intent(mParentActivity, NewsDetailActivity.class);
-                        intent.putExtra("hotnews",hotNewsList.get(position));
+                        intent.putExtra("hotnews", hotNewsList.get(position));
                         startActivity(intent);
                     }
                 });
@@ -670,7 +671,6 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
             }
         });
     }
-
 
 
     @Override
@@ -690,7 +690,7 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
             }
         }, networkImages);
         convenientBanner.setPageTransformer(new Transformer(Transformer.TransformerType.DEFAULT));
-        convenientBanner.setPageIndicator(new int[]{R.mipmap.ic_page_indicator,R.mipmap.ic_page_indicator_focused});
+        convenientBanner.setPageIndicator(new int[]{R.mipmap.ic_page_indicator, R.mipmap.ic_page_indicator_focused});
         convenientBanner.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -698,8 +698,8 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
                 String bannerName = bannerList.get(position).getBannerName();
                 String hrefAddr = bannerList.get(position).getHrefAddr();
                 Intent intent = new Intent(mParentActivity, BannerDetailAct.class);
-                intent.putExtra(BANNER_NAME,bannerName);
-                intent.putExtra(HREF_ADDR,hrefAddr);
+                intent.putExtra(BANNER_NAME, bannerName);
+                intent.putExtra(HREF_ADDR, hrefAddr);
                 startActivity(intent);
             }
         });
@@ -723,7 +723,7 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
 //        });
     }
 
-    private void getBanner(){
+    private void getBanner() {
         RequestManager.getCommManager().getBanner(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
@@ -732,7 +732,7 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
                 Gson gson = new Gson();
                 bannerList = gson.fromJson(data.toString(), new TypeToken<List<BannerEntity>>() {
                 }.getType());
-                for (int i = 0; i< bannerList.size(); i++){
+                for (int i = 0; i < bannerList.size(); i++) {
                     BannerEntity bannerEntity = bannerList.get(i);
 //                    String bannerName = bannerEntity.getBannerName();
                     String imgSrc = bannerEntity.getImgSrc();
