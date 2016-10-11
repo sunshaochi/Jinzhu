@@ -625,7 +625,9 @@
             android:process=":mini"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Start" />
-
+        
+        <activity android:name=".activity.newscenter.NewsCenterActivity" />
+        <activity android:name=".activity.newscenter.NewsDetailActivity"></activity>
     </application>
 
 </manifest>

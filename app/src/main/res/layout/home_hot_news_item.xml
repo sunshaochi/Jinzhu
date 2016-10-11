@@ -19,5 +19,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/tv_gray"
         android:textSize="14sp"
+        android:layout_marginBottom="10dp"
         />
+
 </LinearLayout>

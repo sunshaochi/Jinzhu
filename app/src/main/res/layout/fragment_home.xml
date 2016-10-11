@@ -179,7 +179,7 @@
                             android:layout_height="match_parent"
                             android:layout_alignParentRight="true"
                             android:gravity="center"
-                            android:text="查看更多    "
+                            android:text="查看更多 >    "
                             android:textColor="@color/gray_color"
                             android:textSize="14sp" />
                     </RelativeLayout>
@@ -188,16 +188,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
+                        android:paddingTop="10dp"
                         >
 
                         <ImageView
+                            android:layout_marginLeft="15dp"
                             android:id="@+id/iv_firstNews"
                             android:layout_weight="1"
                             android:layout_width="1dp"
                             android:scaleType="fitXY"
                             android:adjustViewBounds="true"
                             android:layout_height="wrap_content" />
+                        <View
+                            android:layout_width="10dp"
+                            android:layout_height="match_parent" />
                         <ImageView
+                            android:layout_marginRight="15dp"
                             android:id="@+id/iv_secNews"
                             android:layout_weight="1"
                             android:layout_width="1dp"
