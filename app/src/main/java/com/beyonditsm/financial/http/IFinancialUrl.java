@@ -41,7 +41,7 @@ public interface IFinancialUrl {
     /**
      * @MARKEY_CODE 渠道号设置，默认渠道设置为空字符串
      */
-    String MARKET_CODE = "qudao4";
+    String MARKET_CODE = "";
     String API_VERSION = "/easyplay";
 
     String BASE_IMAGE_URL = BASE_URL + API_VERSION + "/";
