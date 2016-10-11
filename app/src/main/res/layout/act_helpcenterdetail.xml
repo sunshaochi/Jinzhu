@@ -3,4 +3,10 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include layout="@layout/title_act_layout"/>
+
+    <WebView
+        android:id="@+id/wv_helpCenterDetail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

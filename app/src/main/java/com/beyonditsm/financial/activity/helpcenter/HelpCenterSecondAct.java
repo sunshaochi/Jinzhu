@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
+import com.beyonditsm.financial.entity.ActicleListBean;
 import com.beyonditsm.financial.entity.HelpSecondBean;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.http.RequestManager;
@@ -34,7 +35,7 @@ public class HelpCenterSecondAct extends BaseActivity {
     private LoadRefreshView lrvHelpSecond;
     @ViewInject(R.id.loadingView_helpSecond)
     private LoadingView loadHelpSecond;
-    private List<HelpSecondBean.ActicleListBean> acticleList;
+    private List<ActicleListBean> acticleList;
 
     @Override
     public void setLayout() {
@@ -101,7 +102,11 @@ public class HelpCenterSecondAct extends BaseActivity {
             lrvHelpSecond.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("helpSecond",acticleList.get(position));
+//                    bundle.putString("title",acticleList.get(position).getTitle());
+//                    bundle.putString("content",acticleList.get(position).getContent());
+                    gotoActivity(HelpCenterDetailAct.class,true,bundle);
                 }
             });
             return null;
