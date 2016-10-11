@@ -11,9 +11,7 @@ import com.beyonditsm.financial.entity.SumLoadEntity;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
-import com.beyonditsm.financial.util.ParamsUtil;
 import com.lidroid.xutils.http.client.multipart.content.FileBody;
-import com.tandong.sa.json.JsonObject;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -542,9 +540,8 @@ public class CommManager extends RequestManager {
         params.put("rows", hp.getRows() + "");
         doPost(IFinancialUrl.GET_CREDIT_CARD_INFO, params, callBack);
     }
-
     /**
-     * 获取信用卡数据
+     * 监听点击次数
      */
     public void applyCreditCardClick(String creditCardId,CallBack callBack)  {
         Map<String, String> params = new HashMap<>();
@@ -559,6 +556,47 @@ public class CommManager extends RequestManager {
         Map<String, String> params = new HashMap<>();
         doPost(IFinancialUrl.GET_BANNER,params,callBack);
     }
+    /**
+     * 获取资讯中心初始数据
+     */
+    public void findNewsMobileIndex(CallBack callBack)  {
+        Map<String, String> params = new HashMap<>();
+        doPost(IFinancialUrl.FIND_NEWS_MOBILE_INDEX, params, callBack);
+    }
 
-  
+
+    /**
+     * 获取资讯中心更多数据
+     */
+    public void findNewsMobileMore(CallBack callBack)  {
+        Map<String, String> params = new HashMap<>();
+        doPost(IFinancialUrl.FIND_NEWS_MOBILE_MORE, params, callBack);
+    }
+
+    /**
+     * 资讯详情根据当前文章ID查询前后文章信息实现翻页
+     * @param curId 当前文章ID
+     * @param callBack 回调
+     */
+    public void findUpAndDownRow(String curId,CallBack callBack){
+        Map<String,String> params = new HashMap<>();
+        params.put("curId",curId);
+        doPost(IFinancialUrl.FIND_UP_AND_DOWN_ROW,params,callBack);
+    }
+
+     /** 获取帮助中心
+     * @param callBack 回调
+     */
+    public void findHelpAlls(CallBack callBack){
+        Map<String, String> params = new HashMap<>();
+        doPost(IFinancialUrl.FIND_HELP_ALLS, params, callBack);
+    }
+
+    public void findHelpDetail(String id,CallBack callBack){
+        Map<String, String> params = new HashMap<>();
+        params.put("themeId",id);
+        doPost(IFinancialUrl.FIND_HELP_DETAIL, params, callBack);
+    }
+
+
 }
