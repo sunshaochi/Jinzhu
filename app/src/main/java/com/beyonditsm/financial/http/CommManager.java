@@ -551,7 +551,7 @@ public class CommManager extends RequestManager {
         doPost(IFinancialUrl.APPLY_CREDIT_CARD_CLICK, params, callBack);
     }
     /**
-     * 获取咨询中心初始数据
+     * 获取资讯中心初始数据
      */
     public void findNewsMobileIndex(CallBack callBack)  {
         Map<String, String> params = new HashMap<>();
@@ -560,12 +560,21 @@ public class CommManager extends RequestManager {
 
 
     /**
-     * 获取自寻中心更多数据
+     * 获取资讯中心更多数据
      */
     public void findNewsMobileMore(CallBack callBack)  {
         Map<String, String> params = new HashMap<>();
         doPost(IFinancialUrl.FIND_NEWS_MOBILE_MORE, params, callBack);
     }
 
-
+    /**
+     * 资讯详情根据当前文章ID查询前后文章信息实现翻页
+     * @param curId 当前文章ID
+     * @param callBack 回调
+     */
+    public void findUpAndDownRow(String curId,CallBack callBack){
+        Map<String,String> params = new HashMap<>();
+        params.put("curId",curId);
+        doPost(IFinancialUrl.FIND_UP_AND_DOWN_ROW,params,callBack);
+    }
 }

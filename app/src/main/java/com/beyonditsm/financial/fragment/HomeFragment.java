@@ -97,10 +97,14 @@ public class HomeFragment extends BaseFragment implements LocationListener {
     private ImageView ivFirstNews;
     @ViewInject(R.id.iv_secNews)
     private ImageView ivSecNews;
+    private HotNewsEntity firstNews;
+    private HotNewsEntity secNews;
     private int currentPage = 1;
     private HomeCreditAdapter adapter;
     private List<HomeHotProductEntity> hotList;
     private UserLoginEntity ule;
+    private boolean productLoaded = false;
+    private boolean newsLoaded = false;
     private Activity mParentActivity;
     private List<HotNewsEntity> hotNewsList;
     private HotNewsAdapter hotNewsAdapter;
@@ -258,7 +262,7 @@ public class HomeFragment extends BaseFragment implements LocationListener {
         });
     }
 
-    @OnClick({R.id.ll_credit, R.id.ll_tillage, R.id.ll_work, R.id.ivSuspen, R.id.ll_creditCard, R.id.ll_gps, R.id.tv_checkMore})
+    @OnClick({R.id.ll_credit, R.id.ll_tillage, R.id.ll_work, R.id.ivSuspen, R.id.ll_creditCard, R.id.ll_gps, R.id.tv_checkMore,R.id.iv_firstNews,R.id.iv_secNews})
     public void toClick(View v) {
         Intent intent;
         switch (v.getId()) {
@@ -344,6 +348,16 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                     }
                 });
                 break;
+            case R.id.iv_firstNews:
+                Intent intent2 = new Intent(mParentActivity, NewsDetailActivity.class);
+                intent2.putExtra("hotnews",firstNews);
+                startActivity(intent2);
+                break;
+            case R.id.iv_secNews:
+                Intent intent3 = new Intent(mParentActivity, NewsDetailActivity.class);
+                intent3.putExtra("hotnews",secNews);
+                startActivity(intent3);
+                break;
         }
     }
 
@@ -368,7 +382,10 @@ public class HomeFragment extends BaseFragment implements LocationListener {
         RequestManager.getUserManager().findHotProductList(hp, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-                loadingView.loadComplete();
+                productLoaded = true;
+                if (newsLoaded){
+                    loadingView.loadComplete();
+                }
 //                plvHotCredit.onPullUpRefreshComplete();
 //                plvHotCredit.onPullDownRefreshComplete();
 
@@ -410,6 +427,7 @@ public class HomeFragment extends BaseFragment implements LocationListener {
             public void onError(int status, String msg) {
 //                plvHotCredit.onPullUpRefreshComplete();
 //                plvHotCredit.onPullDownRefreshComplete();
+                productLoaded = false;
                 loadingView.loadError();
             }
         });
@@ -515,6 +533,10 @@ public class HomeFragment extends BaseFragment implements LocationListener {
         CommManager.getCommManager().findNewsMobileIndex(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
+                newsLoaded = true;
+                if (productLoaded){
+                    loadingView.loadComplete();
+                }
                 JSONObject object = new JSONObject(result);
                 JSONArray data = object.getJSONArray("data");
                 Gson gson = new Gson();
@@ -530,13 +552,17 @@ public class HomeFragment extends BaseFragment implements LocationListener {
                     return;
                 }
                 for (int i = 0; i < hotNewsList.size(); i++) {
+                    MyLogUtils.info("Weights:" + hotNewsList.get(i).getWeights()+"");
                     if (hotNewsList.get(i).getWeights() == 6) {
                         MyLogUtils.info("BASE_IMAGE_URL:" + hotNewsList.get(i).getPictrue()+"");
                         ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + hotNewsList.get(i).getPictrue(), ivFirstNews, options);
+                        firstNews = hotNewsList.get(i);
                         hotNewsList.remove(i);
+                        i--;
                     } else if (hotNewsList.get(i).getWeights() == 7) {
                         MyLogUtils.info("BASE_IMAGE_URL:" + hotNewsList.get(i).getPictrue()+"");
                         ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + hotNewsList.get(i).getPictrue(), ivSecNews, options);
+                        secNews = hotNewsList.get(i);
                         hotNewsList.remove(i);
                     }
                 }
@@ -565,7 +591,8 @@ public class HomeFragment extends BaseFragment implements LocationListener {
 
             @Override
             public void onError(int status, String msg) {
-
+                newsLoaded = false;
+                loadingView.loadError();
             }
         });
     }
