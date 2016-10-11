@@ -20,6 +20,7 @@ import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.MessageActivity;
+import com.beyonditsm.financial.activity.helpcenter.HelpCenterActivity;
 import com.beyonditsm.financial.activity.user.CreditPointAct;
 import com.beyonditsm.financial.activity.user.HardCreditAct;
 import com.beyonditsm.financial.activity.user.LoginAct;
@@ -100,6 +101,9 @@ public class MineFragment extends BaseFragment {
     private ScrollView svMine;
     @ViewInject(R.id.mplv_mine)
     private MinePageLoadingView minePageLoadingView;
+
+    @ViewInject(R.id.rlHelp)
+    private RelativeLayout rlHelp;
     private UserEntity user;//用户信息
     public static final String USER_KEY = "user_info";
     private boolean isLogin;
@@ -205,7 +209,7 @@ public class MineFragment extends BaseFragment {
     }
 
     @OnClick({R.id.rlMyCode, R.id.rlRecomm, R.id.rlLines, R.id.rlMyCredit, R.id.rlSet, R.id.tvExit,
-            R.id.rlWork, R.id.rlMyData, R.id.msg_top, R.id.rlWallet, R.id.rlVip,R.id.rlCustom})
+            R.id.rlWork, R.id.rlMyData, R.id.msg_top, R.id.rlWallet, R.id.rlVip,R.id.rlCustom,R.id.rlHelp})
     public void toClick(View v) {
         Intent intent;
         switch (v.getId()) {
@@ -345,7 +349,12 @@ public class MineFragment extends BaseFragment {
                  * @param customServiceInfo 当前使用客服者的用户信息。{@link io.rong.imlib.model.CSCustomServiceInfo}
                  */
                 RongIM.getInstance().startCustomerServiceChat(getActivity(), "KEFU147280950773537", "在线客服",csInfo);
-
+                break;
+            //帮助中心
+            case R.id.rlHelp:
+                intent = new Intent(getActivity(), HelpCenterActivity.class);
+                getActivity().startActivity(intent);
+                break;
         }
     }
 

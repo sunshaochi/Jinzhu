@@ -8,148 +8,19 @@
 
     <include layout="@layout/title_act_layout" />
 
-    <View
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="6dp"
-        android:background="@color/gray_item" />
-    <RelativeLayout
-        android:id="@+id/rlUserHelp"
-        style="@style/rl_mine_style"
-        android:visibility="visible"
+        android:layout_height="match_parent">
 
-        >
+        <com.beyonditsm.financial.view.pullfreshview.LoadRefreshView
+            android:id="@+id/lpv_helpAlls"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none" />
 
-        <ImageView
-            android:id="@+id/ivUserHelp"
-            style="@style/iv_mine"
-            android:src="@mipmap/icon_user_help" />
-
-        <!--<TextView-->
-        <!--style="@style/tv_second_style"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:layout_marginLeft="5dp"-->
-        <!--android:layout_toRightOf="@id/ivMyWallet"-->
-        <!--android:text="我的钱包" />-->
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@id/ivUserHelp"
-            android:orientation="horizontal">
-
-            <TextView
-                style="@style/tv_second_style"
-                android:layout_centerVertical="true"
-                android:text="借款人帮助" />
-
-            <ImageView
-                android:id="@+id/ivUserHelpRed"
-                style="@style/red_oval_style"
-                android:layout_marginLeft="5dp"
-                android:visibility="gone" />
-        </LinearLayout>
-
-        <ImageView
-            style="@style/arrow_right_style"
-            android:layout_alignParentRight="true" />
-
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="6dp"
-        android:background="@color/gray_item" />
-    <RelativeLayout
-        android:id="@+id/rlServiceHelp"
-        style="@style/rl_mine_style"
-        android:visibility="visible"
-
-        >
-
-        <ImageView
-            android:id="@+id/ivServiceHelp"
-            style="@style/iv_mine"
-            android:src="@mipmap/icon_service_help" />
-
-        <!--<TextView-->
-        <!--style="@style/tv_second_style"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:layout_marginLeft="5dp"-->
-        <!--android:layout_toRightOf="@id/ivMyWallet"-->
-        <!--android:text="我的钱包" />-->
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@id/ivServiceHelp"
-            android:orientation="horizontal">
-
-            <TextView
-                style="@style/tv_second_style"
-                android:layout_centerVertical="true"
-                android:text="平台服务者帮助" />
-
-            <ImageView
-                android:id="@+id/ivServiceHelpRed"
-                style="@style/red_oval_style"
-                android:layout_marginLeft="5dp"
-                android:visibility="gone" />
-        </LinearLayout>
-
-        <ImageView
-            style="@style/arrow_right_style"
-            android:layout_alignParentRight="true" />
-
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="6dp"
-        android:background="@color/gray_item" />
-    <RelativeLayout
-        android:id="@+id/rlNormalHelp"
-        style="@style/rl_mine_style"
-        android:visibility="visible"
-
-        >
-
-        <ImageView
-            android:id="@+id/ivNormalHelp"
-            style="@style/iv_mine"
-            android:src="@mipmap/icon_normal_help" />
-
-        <!--<TextView-->
-        <!--style="@style/tv_second_style"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:layout_marginLeft="5dp"-->
-        <!--android:layout_toRightOf="@id/ivMyWallet"-->
-        <!--android:text="我的钱包" />-->
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@id/ivNormalHelp"
-            android:orientation="horizontal">
-
-            <TextView
-                style="@style/tv_second_style"
-                android:layout_centerVertical="true"
-                android:text="常见问题" />
-
-            <ImageView
-                android:id="@+id/ivNormalHelpRed"
-                style="@style/red_oval_style"
-                android:layout_marginLeft="5dp"
-                android:visibility="gone" />
-        </LinearLayout>
-
-        <ImageView
-            style="@style/arrow_right_style"
-            android:layout_alignParentRight="true" />
-
-    </RelativeLayout>
+        <com.beyonditsm.financial.view.LoadingView
+            android:id="@+id/loadingView_help"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
 </LinearLayout>

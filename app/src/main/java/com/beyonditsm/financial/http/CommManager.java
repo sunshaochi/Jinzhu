@@ -11,9 +11,7 @@ import com.beyonditsm.financial.entity.SumLoadEntity;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
-import com.beyonditsm.financial.util.ParamsUtil;
 import com.lidroid.xutils.http.client.multipart.content.FileBody;
-import com.tandong.sa.json.JsonObject;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -577,4 +575,20 @@ public class CommManager extends RequestManager {
         params.put("curId",curId);
         doPost(IFinancialUrl.FIND_UP_AND_DOWN_ROW,params,callBack);
     }
+
+     /** 获取帮助中心
+     * @param callBack 回调
+     */
+    public void findHelpAlls(CallBack callBack){
+        Map<String, String> params = new HashMap<>();
+        doPost(IFinancialUrl.FIND_HELP_ALLS, params, callBack);
+    }
+
+    public void findHelpDetail(String id,CallBack callBack){
+        Map<String, String> params = new HashMap<>();
+        params.put("themeId",id);
+        doPost(IFinancialUrl.FIND_HELP_DETAIL, params, callBack);
+    }
+
+
 }

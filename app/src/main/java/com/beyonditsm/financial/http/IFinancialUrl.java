@@ -30,7 +30,11 @@ public interface IFinancialUrl {
     //    String BASE_URL = "http://test.myjinzhu.com:8082";
     /*测试地址3*/
 //    String BASE_URL="http://test.myjinzhu.com:60";
-    String BASE_URL = "http://172.16.6.55:8080";
+
+//    String BASE_URL="http://172.16.6.55:8080";
+    //帮助中心测试地址
+    String BASE_URL="http://172.16.6.135:8080";
+
     //内网地址（测试钱包功能）
 //    String BASE_URL = "http://172.16.8.22:8082";
     /*测试游戏地址2*/
@@ -236,8 +240,13 @@ public interface IFinancialUrl {
     /*查询移动/H5首页前5条端咨询信息 */
     String FIND_NEWS_MOBILE_INDEX = BASE_URL + API_VERSION + "/platform/information/findNewsMobileIndex.do";
     /* 查询移动/H5端更多咨询信息 */
-    String FIND_NEWS_MOBILE_MORE = BASE_URL + API_VERSION + "/platform/information/findNewsMobileMore.do";
+    String FIND_NEWS_MOBILE_MORE = BASE_URL+API_VERSION + "/platform/information/findNewsMobileMore.do";
     /*根据ID进行文章翻页接口*/
     String FIND_UP_AND_DOWN_ROW = BASE_URL + API_VERSION + "/platform/information/findUpAndDownRow.do";
+    /*查询帮助主题*/
+    String FIND_HELP_ALLS =  BASE_URL+API_VERSION+"/platform/information/findAlls.do";
+    /*查询帮助文章（根据主题id（themeId）查询文章信息接口）*/
+    String FIND_HELP_DETAIL = BASE_URL +API_VERSION +"/platform/information/findActicleByThemeIdInter.do";
+
 
 }
