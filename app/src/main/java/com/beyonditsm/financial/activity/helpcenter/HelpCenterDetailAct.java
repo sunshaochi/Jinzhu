@@ -29,9 +29,7 @@ public class HelpCenterDetailAct extends BaseActivity {
         setTopTitle(title);
         setLeftTv("返回");
         ActicleListBean acticleListBean = getIntent().getParcelableExtra("helpSecond");
-        String content = getIntent().getStringExtra("content");
-
-
+        setTopTitle(acticleListBean.getTitle());
         WebSettings settings = wvHelpCenterDetail.getSettings();
         settings.setUseWideViewPort(false);// 设置此属性，可任意比例缩放
         settings.setLoadWithOverviewMode(true);
@@ -52,7 +50,7 @@ public class HelpCenterDetailAct extends BaseActivity {
 //        if ("".equals(content) || null == content) {
 ////            wvHelpCenterDetail.loadUrl(hotNewsEntity.getUrlPath());
 //        } else {
-            wvHelpCenterDetail.loadData(acticleListBean.getContent(), "text/html", "UTF-8");
+            wvHelpCenterDetail.loadData(acticleListBean.getContent(), "text/html; charset=UTF-8", null);//这种写法可以正确解码
 //        }
     }
 }
