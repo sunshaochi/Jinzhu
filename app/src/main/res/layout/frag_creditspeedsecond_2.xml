@@ -185,7 +185,8 @@
             <RelativeLayout
                 android:id="@+id/rl_speedSalaryDay"
                 android:layout_width="match_parent"
-                android:layout_height="40dp">
+                android:layout_height="40dp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_speedSalaryDay"
@@ -199,11 +200,13 @@
                     android:textColor="#f63" />
             </RelativeLayout>
 
-            <View style="@style/view_line"></View>
+            <View style="@style/view_line"
+                android:visibility="gone"></View>
 
             <!--其他月收入-->
             <LinearLayout
-                style="@style/speed_credit_second_horizontal_linearlayout">
+                style="@style/speed_credit_second_horizontal_linearlayout"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_speedOtherSalary"
@@ -217,13 +220,15 @@
                     android:layout_marginLeft="10dp"/>
             </LinearLayout>
 
-            <View style="@style/view_line" />
+            <View style="@style/view_line"
+                android:visibility="gone"/>
 
             <!--其他收入发放形式-->
             <RelativeLayout
                 android:id="@+id/rl_speedOtherSalaryDay"
                 android:layout_width="match_parent"
-                android:layout_height="40dp">
+                android:layout_height="40dp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_speedOtherSalaryDay"
@@ -238,11 +243,12 @@
                     android:textColor="#f63" />
             </RelativeLayout>
 
-            <View style="@style/view_line"></View>
+            <View style="@style/view_line"
+                android:visibility="gone"></View>
 
 
             <TextView
-                android:id="@+id/tv_speed_toTwo"
+                android:id="@+id/tv_speed_toThere"
                 style="@style/speed_credit_next_btn"
                 android:text="下一步" />
             <TextView

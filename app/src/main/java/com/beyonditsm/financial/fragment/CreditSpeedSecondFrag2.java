@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
 
 /**
  * 急速贷款第二步，资质
@@ -79,5 +81,16 @@ public class CreditSpeedSecondFrag2 extends BaseFragment {
     @Override
     public void setListener() {
 
+    }
+
+    @OnClick({R.id.tv_speed_toThere})
+    public void todo(View view){
+        switch (view.getId()){
+            case R.id.tv_speed_toThere:
+                Intent intent = new Intent(CreditSpeedSecondFrag.NEXT);
+                intent.putExtra("item",2);
+                getActivity().sendBroadcast(intent);
+                break;
+        }
     }
 }

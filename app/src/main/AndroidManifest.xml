@@ -408,7 +408,9 @@
         <!--首页Banner详情页面-->
         <activity android:name=".activity.user.BannerDetailAct"
             android:screenOrientation="portrait"/>
-
+        <!--极速贷主流程-->
+        <activity android:name=".activity.credit.CreditSpeedStepAct"
+            android:screenOrientation="portrait"/>
         <!--极速贷详情页面-->
         <activity android:name=".activity.credit.CreditSpeedDetailAct"
             android:screenOrientation="portrait"/>
@@ -421,6 +423,7 @@
             android:launchMode="singleTask"
             android:noHistory="true"
             android:windowSoftInputMode="stateVisible|adjustResize" />
+
 
         <!-- 腾讯SSO授权的Activity注册 -->
         <activity

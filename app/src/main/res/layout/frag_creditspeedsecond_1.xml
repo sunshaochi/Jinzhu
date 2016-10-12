@@ -175,7 +175,8 @@
             <RelativeLayout
                 android:id="@+id/rl_speedBank"
                 android:layout_width="match_parent"
-                android:layout_height="40dp">
+                android:layout_height="40dp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_speedBank"
@@ -189,11 +190,13 @@
                     android:textColor="#f63" />
             </RelativeLayout>
 
-            <View style="@style/view_line"></View>
+            <View style="@style/view_line"
+                android:visibility="gone"></View>
             <!--银行卡号-->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_speedBankCard"
@@ -206,11 +209,13 @@
                     android:inputType="number"/>
             </RelativeLayout>
 
-            <View style="@style/view_line"></View>
+            <View style="@style/view_line"
+                android:visibility="gone"></View>
             <!--银行预留手机号-->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_speedBankPhone"
@@ -224,7 +229,8 @@
                     android:maxLength="11" />
             </RelativeLayout>
 
-            <View style="@style/view_line"></View>
+            <View style="@style/view_line"
+                android:visibility="gone"></View>
 
             <TextView
                 android:id="@+id/tv_speed_toTwo"

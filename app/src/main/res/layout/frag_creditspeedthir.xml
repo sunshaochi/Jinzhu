@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/bg_color">
+
+        <ImageView
+            android:id="@+id/iv_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@mipmap/progress_03" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+
+        <LinearLayout style="@style/speed_credit_linearlayout_in_scrollview">
+
+            <TextView
+                android:id="@+id/tv_rereq"
+                style="@style/speed_credit_second_top_text"
+                android:layout_marginTop="5dp" />
+
+            <View
+                style="@style/view_line"
+                android:layout_marginTop="10dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <LinearLayout
+                    android:id="@+id/ll_positiveState"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_positiveIsLoad"
+                        style="@style/tv_upload_style" />
+
+                    <TextView
+                        android:id="@+id/tv_positiveState"
+                        style="@style/tv_upload_style"
+                        android:layout_marginLeft="10dp"
+                        android:text="审核中"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_positiveCard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/ll_positiveState"
+                    android:textColor="#333333"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+
+            <View
+                style="@style/view_line"
+                android:layout_marginTop="5dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <LinearLayout
+                    android:id="@+id/ll_negativeState"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_negativeIsLoad"
+                        style="@style/tv_upload_style" />
+
+                    <TextView
+                        android:id="@+id/tv_negativeState"
+                        style="@style/tv_upload_style"
+                        android:layout_marginLeft="10dp"
+                        android:text="审核中"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_negativeCard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/ll_negativeState"
+                    android:textColor="#333333"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+
+            <View
+                style="@style/view_line"
+                android:layout_marginTop="5dp" />
+
+            <!--选择门店-->
+            <TextView
+                android:id="@+id/tv_selectStore"
+                style="@style/speed_credit_second_top_text"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp" />
+
+            <View style="@style/view_line"></View>
+            <!--所在城市-->
+            <RelativeLayout
+                android:id="@+id/rl_selectStoreCity"
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+                <TextView
+                    android:id="@+id/tv_StoreCity"
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true" />
+
+                <TextView
+                    android:id="@+id/tv_selectStoreCity"
+                    style="@style/tv_select_style"
+                    android:drawableRight="@mipmap/button_select"
+                    android:textColor="#f63" />
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <!--门店地址-->
+            <RelativeLayout
+                android:id="@+id/rl_selectStoreAddr"
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+                <TextView
+                    android:id="@+id/tv_StoreAddr"
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true" />
+
+                <TextView
+                    android:id="@+id/tv_selectStoreAddr"
+                    style="@style/tv_select_style"
+                    android:drawableRight="@mipmap/button_select"
+                    android:textColor="#f63" />
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <LinearLayout
+                android:id="@+id/ll_noStoreInCity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/no_store_in_city"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:visibility="invisible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="您所在的城市暂无门店"
+                    android:textColor="#ff0000"
+                    android:textSize="12sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="我们竭诚为您推荐其他更为合适的产品供您选择"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_seeMore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="点击查看"
+                        android:textColor="#ff0000" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/tv_speed_toTwo"
+                style="@style/speed_credit_next_btn"
+                android:text="下一步" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -15,7 +15,7 @@
             android:src="@mipmap/progress_02" />
     </RelativeLayout>
 
-    <android.support.v4.view.ViewPager
+    <com.beyonditsm.financial.widget.SpeedCreditViewPager
         android:id="@+id/vp_speedCredit"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

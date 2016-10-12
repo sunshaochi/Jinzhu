@@ -1,15 +1,20 @@
 package com.beyonditsm.financial.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.beyonditsm.financial.R;
+import com.beyonditsm.financial.util.MyLogUtils;
+import com.beyonditsm.financial.widget.SpeedCreditViewPager;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
@@ -22,7 +27,9 @@ import java.util.List;
 
 public class CreditSpeedSecondFrag extends  BaseFragment {
     @ViewInject(R.id.vp_speedCredit)
-    private ViewPager vpSpeedCredit;
+    private SpeedCreditViewPager vpSpeedCredit;
+    private GoToNextReceiver goToNextReceiver;
+
     @Override
     public View initView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.frag_creditspeedsecond,null);
@@ -31,6 +38,25 @@ public class CreditSpeedSecondFrag extends  BaseFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         initViewPager();
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (goToNextReceiver==null) {
+            goToNextReceiver = new GoToNextReceiver();
+        }
+
+        getActivity().registerReceiver(goToNextReceiver,new IntentFilter(NEXT));
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (goToNextReceiver!=null){
+            getActivity().unregisterReceiver(goToNextReceiver);
+        }
     }
 
     private void initViewPager() {
@@ -43,6 +69,7 @@ public class CreditSpeedSecondFrag extends  BaseFragment {
         fragmentList.add(creditSpeedSecondFrag3);
         vpSpeedCredit.setAdapter(new MyAdapter(getChildFragmentManager(),fragmentList));
         vpSpeedCredit.setCurrentItem(0);
+        vpSpeedCredit.setScrollble(false);
     }
 
     @Override
@@ -84,6 +111,17 @@ public class CreditSpeedSecondFrag extends  BaseFragment {
 //            super.destroyItem(container, position, object);
             Fragment fragment = fragmentList.get(position);
             fm.beginTransaction().hide(fragment).commit();
+        }
+    }
+
+    public static final String NEXT = "go_to_next";
+    public class GoToNextReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int item = intent.getIntExtra("item", 0);
+            MyLogUtils.info("点击下一步："+item);
+            vpSpeedCredit.setCurrentItem(item);
         }
     }
 }

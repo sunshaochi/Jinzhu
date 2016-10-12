@@ -33,7 +33,7 @@ public class SpeedCreditViewPager extends ViewPager {
                     break;
                 case MotionEvent.ACTION_MOVE:
                     float motionValue = ev.getX()-beforeX;
-                    if (motionValue>0){//禁止右滑
+                    if (motionValue<0){//禁止右滑
                         return true;
                     }
                     beforeX = ev.getX();//手指移动时，再把当前的坐标作为下一次的‘上次坐标’，解决上述问题

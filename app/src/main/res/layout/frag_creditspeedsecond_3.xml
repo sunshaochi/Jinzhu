@@ -69,7 +69,8 @@
             <!--单位名称-->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp">
+                android:layout_height="40dp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_speedRelativesWork_1"
@@ -82,13 +83,15 @@
                     style="@style/cre_et" />
             </RelativeLayout>
 
-            <View style="@style/view_line"></View>
+            <View style="@style/view_line"
+                android:visibility="gone"></View>
 
             <!--家庭/单位地址-->
             <RelativeLayout
                 android:id="@+id/rl_speedRelativesWoH_1"
                 android:layout_width="match_parent"
-                android:layout_height="40dp">
+                android:layout_height="40dp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_speedRelativesWoH_1"
@@ -102,12 +105,14 @@
                     android:textColor="#f63" />
             </RelativeLayout>
 
-            <View style="@style/view_line"></View>
+            <View style="@style/view_line"
+                android:visibility="gone"></View>
 
             <!--家庭/单位详细地址-->
             <EditText
                 android:id="@+id/et_speedRelativesWoHDetail_1"
-                style="@style/speed_credit_second_detail_address"/>
+                style="@style/speed_credit_second_detail_address"
+                android:visibility="gone"/>
             <View style="@style/view_line"></View>
 
             <TextView
@@ -153,7 +158,8 @@
             <!--单位名称-->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp">
+                android:layout_height="40dp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_speedColleagueWork_1"
@@ -166,13 +172,15 @@
                     style="@style/cre_et" />
             </RelativeLayout>
 
-            <View style="@style/view_line"></View>
+            <View style="@style/view_line"
+                android:visibility="gone"></View>
 
             <!--家庭/单位地址-->
             <RelativeLayout
                 android:id="@+id/rl_speedColleagueWoH_1"
                 android:layout_width="match_parent"
-                android:layout_height="40dp">
+                android:layout_height="40dp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_speedColleagueWoH_1"
@@ -186,12 +194,14 @@
                     android:textColor="#f63" />
             </RelativeLayout>
 
-            <View style="@style/view_line"></View>
+            <View style="@style/view_line"
+                android:visibility="gone"></View>
 
             <!--家庭/单位详细地址-->
             <EditText
                 android:id="@+id/et_speedColleagueWoHDetail_1"
-                style="@style/speed_credit_second_detail_address"/>
+                style="@style/speed_credit_second_detail_address"
+                android:visibility="gone"/>
             <View style="@style/view_line"></View>
 
 
@@ -258,7 +268,8 @@
             <!--单位名称-->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp">
+                android:layout_height="40dp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_speedEmergentWork_1"
@@ -271,13 +282,15 @@
                     style="@style/cre_et" />
             </RelativeLayout>
 
-            <View style="@style/view_line"></View>
+            <View style="@style/view_line"
+                android:visibility="gone"></View>
 
             <!--家庭/单位地址-->
             <RelativeLayout
                 android:id="@+id/rl_speedEmergentWoH_1"
                 android:layout_width="match_parent"
-                android:layout_height="40dp">
+                android:layout_height="40dp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_speedEmergentWoH_1"
@@ -292,14 +305,17 @@
                     android:textColor="#f63" />
             </RelativeLayout>
 
-            <View style="@style/view_line"></View>
+            <View style="@style/view_line"
+                android:visibility="gone"></View>
 
             <!--家庭/单位详细地址-->
             <EditText
                 android:id="@+id/et_speedEmergentWoHDetail_1"
                 style="@style/speed_credit_second_detail_address"
-                android:hint="详细地址"/>
-            <View style="@style/view_line"></View>
+                android:hint="详细地址"
+                android:visibility="gone"/>
+            <View style="@style/view_line"
+                android:visibility="gone"></View>
 
             <TextView
                 android:id="@+id/tv_speed_toTwo"
