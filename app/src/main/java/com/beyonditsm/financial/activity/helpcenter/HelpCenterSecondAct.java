@@ -6,19 +6,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.entity.ActicleListBean;
-import com.beyonditsm.financial.entity.HelpSecondBean;
-import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.http.RequestManager;
-import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
+import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.tandong.sa.json.Gson;
+import com.tandong.sa.json.reflect.TypeToken;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,10 +46,28 @@ public class HelpCenterSecondAct extends BaseActivity {
 
     @Override
     public void init(Bundle savedInstanceState) {
-        String themeId = getIntent().getStringExtra("themeId");
+        final String themeId = getIntent().getStringExtra("themeId");
         String themeName = getIntent().getStringExtra("themeName");
         setTopTitle(themeName);
         setLeftTv("返回");
+
+        lrvHelpSecond.setPullRefreshEnabled(true);
+        lrvHelpSecond.setScrollLoadEnabled(false);
+        lrvHelpSecond.setPullLoadEnabled(false);
+        lrvHelpSecond.setHasMoreData(false);
+        lrvHelpSecond.getRefreshableView().setDivider(null);
+        lrvHelpSecond.getRefreshableView().setVerticalScrollBarEnabled(false);
+        lrvHelpSecond.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+                findHelpSecond(themeId);
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+
+            }
+        });
         findHelpSecond(themeId);
     }
 
@@ -56,16 +76,22 @@ public class HelpCenterSecondAct extends BaseActivity {
             @Override
             public void onSucess(String result) throws JSONException {
                 loadHelpSecond.loadComplete();
-                JSONObject jsonObject = new JSONObject();
+                lrvHelpSecond.onPullUpRefreshComplete();
+                lrvHelpSecond.onPullDownRefreshComplete();
+                JSONObject jsonObject = new JSONObject(result);
                 JSONObject data = jsonObject.getJSONObject("data");
-                ResultData<HelpSecondBean> rd = (ResultData<HelpSecondBean>) GsonUtils.json(data.toString(), HelpSecondBean.class);
-                acticleList = rd.getData().getActicleList();
+                JSONArray acticleBean = data.getJSONArray("ActicleList");
+                Gson gson = new Gson();
+                acticleList = gson.fromJson(acticleBean.toString(), new TypeToken<List<ActicleListBean>>() {
+                }.getType());
                 lrvHelpSecond.getRefreshableView().setAdapter(new HelpSecondAdapter());
             }
 
             @Override
             public void onError(int status, String msg) {
                 loadHelpSecond.loadError();
+                lrvHelpSecond.onPullUpRefreshComplete();
+                lrvHelpSecond.onPullDownRefreshComplete();
             }
         });
     }
@@ -106,10 +132,10 @@ public class HelpCenterSecondAct extends BaseActivity {
                     bundle.putParcelable("helpSecond",acticleList.get(position));
 //                    bundle.putString("title",acticleList.get(position).getTitle());
 //                    bundle.putString("content",acticleList.get(position).getContent());
-                    gotoActivity(HelpCenterDetailAct.class,true,bundle);
+                    gotoActivity(HelpCenterDetailAct.class,false,bundle);
                 }
             });
-            return null;
+            return convertView;
         }
         class Holder{
             TextView tvHelpSecondTitle;
