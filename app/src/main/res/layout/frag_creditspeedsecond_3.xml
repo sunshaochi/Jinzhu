@@ -318,7 +318,7 @@
                 android:visibility="gone"></View>
 
             <TextView
-                android:id="@+id/tv_speed_toTwo"
+                android:id="@+id/tv_speed_toEnd"
                 style="@style/speed_credit_next_btn"
                 android:text="下一步" />
             <TextView

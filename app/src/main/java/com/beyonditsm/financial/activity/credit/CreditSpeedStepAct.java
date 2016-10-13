@@ -1,15 +1,27 @@
 package com.beyonditsm.financial.activity.credit;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
+import com.beyonditsm.financial.fragment.CreditSpeedFourthFrag;
 import com.beyonditsm.financial.fragment.CreditSpeedFirstFrag;
 import com.beyonditsm.financial.fragment.CreditSpeedSecondFrag;
 import com.beyonditsm.financial.fragment.CreditSpeedThirFrag;
+import com.beyonditsm.financial.util.SpUtils;
+import com.tandong.sa.eventbus.EventBus;
+
+import static com.beyonditsm.financial.activity.credit.CreditStepAct.orderId;
+import static com.beyonditsm.financial.activity.credit.CreditStepAct.upList;
+
 
 /**
  * 极速贷主流程
@@ -19,9 +31,12 @@ import com.beyonditsm.financial.fragment.CreditSpeedThirFrag;
 public class CreditSpeedStepAct extends BaseActivity {
 
     private FragmentManager fragmentManager;
-    private CreditSpeedFirstFrag speedFirstFrag;
-    private CreditSpeedSecondFrag speedSecondFrag;
-    private CreditSpeedThirFrag speedThirFrag;
+    private CreditSpeedFirstFrag speedFirstFrag;//极速贷第一步
+    private CreditSpeedSecondFrag speedSecondFrag;//极速贷第二步
+    private CreditSpeedThirFrag speedThirFrag;//极速贷第三步
+    private CreditSpeedFourthFrag speedFourthFrag;//极速贷第四步
+    private MySpeedRevice myRevice;
+
     @Override
     public void setLayout() {
         setContentView(R.layout.creditstep);
@@ -30,10 +45,40 @@ public class CreditSpeedStepAct extends BaseActivity {
     @Override
     public void init(Bundle savedInstanceState) {
         setLeftTv("返回");
+        EventBus.getDefault().register(this);
         fragmentManager = getSupportFragmentManager();
+        if (TextUtils.isEmpty(SpUtils.getRoleName(this))) {
+            setTabSelection(0);
+        }else {
+            setTabSelection(1);
+        }
     }
 
 
+    public void onEventMainThread(CreditStepAct.FirstEvent event) {
+        orderId = event.orderId;
+        switch (event.flag) {
+            case 1:
+                setTabSelection(1);
+                break;
+            case 2:
+                setTabSelection(2);
+                break;
+            case 3:
+                setTabSelection(3);
+                break;
+        }
+    }
+
+    public static class FirstEvent {
+        public int flag;
+        public String orderId;
+
+        public FirstEvent(int change, String orderId) {
+            this.orderId = orderId;
+            flag = change;
+        }
+    }
     @SuppressLint("CommitTransaction")
     private void setTabSelection(int position) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -78,13 +123,13 @@ public class CreditSpeedStepAct extends BaseActivity {
                 }
                 break;
             case 3:
-                setTopTitle("申请完毕");
-//                if (fourthFrag == null) {
-//                    fourthFrag = new CreditFourthFrag();
-//                    fragmentTransaction.add(R.id.credit_fl, fourthFrag);
-//                } else {
-//                    fragmentTransaction.show(fourthFrag);
-//                }
+                setTopTitle("信息验证");
+                if (speedFourthFrag == null) {
+                    speedFourthFrag = new CreditSpeedFourthFrag();
+                    fragmentTransaction.add(R.id.credit_fl, speedFourthFrag);
+                } else {
+                    fragmentTransaction.show(speedFourthFrag);
+                }
                 break;
         }
         fragmentTransaction.commitAllowingStateLoss();
@@ -103,8 +148,36 @@ public class CreditSpeedStepAct extends BaseActivity {
         if (speedThirFrag != null) {
             transaction.hide(speedThirFrag);
         }
-//        if (fourthFrag != null) {
-//            transaction.hide(fourthFrag);
-//        }
+        if (speedFourthFrag != null) {
+            transaction.hide(speedFourthFrag);
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (myRevice==null){
+            myRevice = new MySpeedRevice();
+        }
+
+        registerReceiver(myRevice,new IntentFilter(UPDATA));
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);//反注册EventBus
+        orderId = null;
+        upList = null;
+    }
+
+    public static String UPDATA = "com.beyonditsm.creditstepact";
+
+    public class MySpeedRevice extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            setTabSelection(1);
+        }
     }
 }

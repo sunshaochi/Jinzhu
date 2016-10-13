@@ -8,7 +8,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
+import com.beyonditsm.financial.activity.credit.CreditSpeedStepAct;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.tandong.sa.eventbus.EventBus;
 
 /**
  * 急速贷款第三步，联系人信息
@@ -64,5 +67,14 @@ public class CreditSpeedSecondFrag3 extends BaseFragment {
     @Override
     public void setListener() {
 
+    }
+
+    @OnClick({R.id.tv_speed_toEnd})
+    public void todo(View view){
+        switch (view.getId()){
+            case  R.id.tv_speed_toEnd:
+                EventBus.getDefault().post(new CreditSpeedStepAct.FirstEvent(2,null));
+                break;
+        }
     }
 }

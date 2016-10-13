@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 /**
+ * 禁止右滑的viewpager
  * Created by Administrator on 2016/9/28 0028.
  */
 

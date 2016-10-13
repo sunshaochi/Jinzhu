@@ -14,7 +14,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:background="@mipmap/progress_03" />
+            android:background="@mipmap/credit_speed_3" />
     </RelativeLayout>
 
     <ScrollView
@@ -208,7 +208,7 @@
 
 
             <TextView
-                android:id="@+id/tv_speed_toTwo"
+                android:id="@+id/tv_speed_toFourth"
                 style="@style/speed_credit_next_btn"
                 android:text="下一步" />
         </LinearLayout>
