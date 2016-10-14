@@ -20,7 +20,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.credit.CreditDetailAct;
 import com.beyonditsm.financial.activity.credit.CreditStepAct;
@@ -41,7 +40,6 @@ import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.widget.DialogChooseAdress;
-import com.beyonditsm.financial.widget.DialogChooseProvince;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.eventbus.EventBus;
@@ -247,12 +245,12 @@ public class CreditSecondFrag extends BaseFragment {
                 });
                 break;
             case R.id.rlNative://籍贯
-                DialogChooseProvince dialogChooseProvince = new DialogChooseProvince(mParentActivity).builder();
+                DialogChooseAdress dialogChooseProvince = new DialogChooseAdress(mParentActivity).builder();
                 dialogChooseProvince.show();
-                dialogChooseProvince.setOnSheetItemClickListener(new DialogChooseProvince.SexClickListener() {
+                dialogChooseProvince.setOnSheetItemClickListener(new DialogChooseAdress.SexClickListener() {
                     @Override
-                    public void getAdress(String adress) {
-                        tvJiguan.setText(adress);
+                    public void getAdress(List<String> adress) {
+                        tvJiguan.setText(adress.get(0)+adress.get(1)+adress.get(2));
                     }
                 });
                 break;

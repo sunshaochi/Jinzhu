@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
@@ -35,7 +34,6 @@ import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.view.crop.square.CameraUtils;
 import com.beyonditsm.financial.view.crop.square.Crop;
 import com.beyonditsm.financial.widget.DialogChooseAdress;
-import com.beyonditsm.financial.widget.DialogChooseProvince;
 import com.beyonditsm.financial.widget.ScaleAllImageView;
 import com.lidroid.xutils.http.client.multipart.content.FileBody;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -233,12 +231,12 @@ public class UpdateAct extends BaseActivity {
                 });
                 break;
             case R.id.rlNative://籍贯
-                DialogChooseProvince dialogChooseProvince = new DialogChooseProvince(this).builder();
+                DialogChooseAdress dialogChooseProvince = new DialogChooseAdress(this).builder();
                 dialogChooseProvince.show();
-                dialogChooseProvince.setOnSheetItemClickListener(new DialogChooseProvince.SexClickListener() {
+                dialogChooseProvince.setOnSheetItemClickListener(new DialogChooseAdress.SexClickListener() {
                     @Override
-                    public void getAdress(String adress) {
-                        userInfo.setNativePlace(adress);
+                    public void getAdress(List<String> adress) {
+                        userInfo.setNativePlace(adress.get(0)+adress.get(1)+adress.get(2));
                         updateData(userInfo, 4);
                     }
                 });
