@@ -39,6 +39,11 @@ public class CreditSpeedEntity  implements Parcelable{
     private String productNo;//
     private int loanPeriod;//放款周期
     private String costDescribe;//产品要求
+    /**
+     * repaymentPeriod : 15,30,50
+     */
+
+    private String repaymentPeriod;//期限
 
     protected CreditSpeedEntity(Parcel in) {
         timeMaxVal = in.readInt();
@@ -54,6 +59,7 @@ public class CreditSpeedEntity  implements Parcelable{
         productNo = in.readString();
         loanPeriod = in.readInt();
         costDescribe = in.readString();
+        repaymentPeriod = in.readString();
     }
 
     public static final Creator<CreditSpeedEntity> CREATOR = new Creator<CreditSpeedEntity>() {
@@ -192,5 +198,14 @@ public class CreditSpeedEntity  implements Parcelable{
         parcel.writeString(productNo);
         parcel.writeInt(loanPeriod);
         parcel.writeString(costDescribe);
+        parcel.writeString(repaymentPeriod);
+    }
+
+    public String getRepaymentPeriod() {
+        return repaymentPeriod;
+    }
+
+    public void setRepaymentPeriod(String repaymentPeriod) {
+        this.repaymentPeriod = repaymentPeriod;
     }
 }

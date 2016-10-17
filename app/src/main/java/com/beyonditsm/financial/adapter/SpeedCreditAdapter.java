@@ -18,11 +18,18 @@ import java.util.List;
  */
 
 public class SpeedCreditAdapter extends BaseAdapter {
+
+    java.text.DecimalFormat df = new java.text.DecimalFormat("#0.00");//保留小数
     private Context context;
     private List<CreditSpeedEntity> list;
     public SpeedCreditAdapter(Context context, List<CreditSpeedEntity> list) {
         this.context = context;
         this.list = list;
+    }
+
+    public void notifyChange(List<CreditSpeedEntity> list){
+        this.list=list;
+        notifyDataSetChanged();;
     }
 
     @Override
@@ -59,11 +66,13 @@ public class SpeedCreditAdapter extends BaseAdapter {
             holder = (Holder) convertView.getTag();
         }
         CreditSpeedEntity creditSpeedEntity = list.get(position);
+        double minVal = Double.valueOf(creditSpeedEntity.getMinVal());
+        double maxVal = Double.valueOf(creditSpeedEntity.getMaxVal());
         holder.tvProductName.setText(creditSpeedEntity.getProductName());
         holder.tvProductChara.setText(creditSpeedEntity.getProductChara());
         holder.tvCostDescribe.setText(creditSpeedEntity.getCostDescribe());
-        holder.tvTime.setText(creditSpeedEntity.getTimeMinVal()+"-"+ creditSpeedEntity.getTimeMaxVal()+"周");
-        holder.tvValue.setText(creditSpeedEntity.getMinVal()+"-"+creditSpeedEntity.getMaxVal());
+        holder.tvTime.setText(creditSpeedEntity.getRepaymentPeriod()+"周");
+        holder.tvValue.setText(df.format(minVal/10000)+"-"+df.format(maxVal/10000)+"万");
         holder.tvRate.setText(creditSpeedEntity.getMinRate()+"-"+creditSpeedEntity.getMaxRate()+"%(天)");
         holder.tvLoanPeriod.setText(creditSpeedEntity.getLoanPeriod()+"个工作日");
 

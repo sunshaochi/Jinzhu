@@ -21,9 +21,21 @@
         tl:tl_textsize="16sp" />
 
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/credit_viewpager"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/bg_color" />
+        android:layout_height="match_parent">
+        <android.support.v4.view.ViewPager
+            android:id="@+id/credit_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg_color" />
+        <ImageView
+            android:id="@+id/ivSuspen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="60dp"
+            android:background="@mipmap/suspension_icon" />
+    </FrameLayout>
+
 </LinearLayout>

@@ -238,5 +238,32 @@ public interface IFinancialUrl {
     String GET_BANNER = BASE_URL+API_VERSION+"/platform/unLogin/getPublishdMobileBanners.do";
 
     /*急借通列表*/
-    String GET_CREDIT_SPEED = BASE_URL + API_VERSION +"/platform/unlogin/queryJdtProducts.do";
+    String GET_CREDIT_SPEED = BASE_URL + API_VERSION +"/platform/unlogin/fingProductPager.do";
+
+    /*借款用途接口*/
+    String QUERY_LOAN_USE  = BASE_URL +API_VERSION +"/platform/unlogin/queryLoanUse.do";
+    /*婚姻状况下拉接口*/
+    String MARITALE = BASE_URL+API_VERSION+"/platform/unlogin/Maritale.do";
+    /*学历状况下拉接口*/
+    String EDUCATION = BASE_URL + API_VERSION +"/platform/unlogin/Education.do";
+    /*居住状况下拉接口*/
+    String LIVE = BASE_URL  + API_VERSION +"/platform/unlogin/Live.do";
+    /*单位性质*/
+    String QUERY_UNIT_PROPERTY = BASE_URL +API_VERSION +"/platform/unlogin/queryUnitProperty.do";
+    /*工作性质*/
+    String QUERY_WORK_PROPERTY = BASE_URL +API_VERSION +"/platform/unlogin/queryWorkingProperty.do";
+    /*月薪发放形式*/
+    String QUERY_SALARY = BASE_URL +API_VERSION +"/platform/unlogin/querySalary.do";
+    /*银行机构*/
+    String QUERY_SPEED_BANK = BASE_URL +API_VERSION +"/platform/unlogin/queryBank.do";
+    /*还款期限下拉*/
+    String LOAN_DEAD_LINE = BASE_URL +API_VERSION +"/platform/unlogin/LoanDeadLine.do";
+    /*紧急联系人*/
+    String CONTACT = BASE_URL +API_VERSION +"/platform/unlogin/Contact.do";
+    /*省份接口*/
+    String QUERY_ALL_PROVINCE = BASE_URL +API_VERSION +"/platform/unlogin/queryAllProvince.do";
+    /*区域接口*/
+    String QUERY_ALL_AREA = BASE_URL +API_VERSION +"/platform/unlogin/queryAllArea.do";
+    /*城市接口*/
+    String QUERY_ALL_CITY = BASE_URL +API_VERSION +"/platform/unlogin/queryAllCity.do";
 }

@@ -3,18 +3,18 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-   <!-- <FrameLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">-->
+        android:layout_height="match_parent">
 
         <com.beyonditsm.financial.view.pullfreshview.LoadRefreshView
             android:id="@+id/lv_speedCredit"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <!--<com.beyonditsm.financial.view.LoadingView
+        <com.beyonditsm.financial.view.LoadingView
             android:id="@+id/loading_speedCredit"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </FrameLayout>-->
+    </FrameLayout>
 </LinearLayout>

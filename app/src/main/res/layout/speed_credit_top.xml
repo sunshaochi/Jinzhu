@@ -28,14 +28,93 @@
                 android:id="@+id/tvProName"
                 style="@style/tv_primary_style"/>
 
-            <TextView
-                android:id="@+id/tv_speedRemarks"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="--急速借贷，一张身份证就可以申请，最快半小时审批放贷"
-                android:textColor="@color/red_color"
-                android:textSize="10sp" />
+                android:orientation="horizontal">
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/et_back"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
 
+                    <TextView
+                        android:id="@+id/tv_speedAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="金额"
+                        android:textColor="#333333"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tv_speedUnit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:text="万"
+                        android:textColor="#333333"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/et_speedAmount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/tv_speedUnit"
+                        android:layout_toRightOf="@id/tv_speedAmount"
+                        android:background="@null"
+                        android:cursorVisible="false"
+                        android:gravity="center"
+                        android:inputType="numberDecimal"
+                        android:textColor="#ff6633"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/rl_speedMonth"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/et_back"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <TextView
+                        android:id="@+id/tv_speedTerm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="期限"
+                        android:textColor="#333333"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tvspeedMonth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:text="周"
+                        android:textColor="#333333"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tv_speedWeek"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/tvspeedMonth"
+                        android:layout_toRightOf="@id/tv_speedTerm"
+                        android:gravity="center"
+                        android:maxLength="3"
+                        android:textColor="#ff6633"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+            </LinearLayout>
         </LinearLayout>
 
     </RelativeLayout>
@@ -44,110 +123,24 @@
         android:id="@+id/ll_speed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_marginTop="10dp">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:background="@drawable/et_back"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
 
-                <TextView
-                    android:id="@+id/tv_speedAmount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="金额"
-                    android:textColor="#333333"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tv_speedUnit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:text="万"
-                    android:textColor="#333333"
-                    android:textSize="14sp" />
-
-                <EditText
-                    android:id="@+id/et_speedAmount"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@id/tv_speedUnit"
-                    android:layout_toRightOf="@id/tv_speedAmount"
-                    android:background="@null"
-                    android:cursorVisible="false"
-                    android:gravity="center"
-                    android:inputType="numberDecimal"
-                    android:textColor="#ff6633"
-                    android:textSize="14sp" />
-            </RelativeLayout>
-            <RelativeLayout
-                android:id="@+id/rl_speedMonth"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/et_back"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
-
-                <TextView
-                    android:id="@+id/tv_speedTerm"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="期限"
-                    android:textColor="#333333"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tvspeedMonth"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:text="周"
-                    android:textColor="#333333"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tv_speedWeek"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@id/tvspeedMonth"
-                    android:layout_toRightOf="@id/tv_speedTerm"
-                    android:gravity="center"
-                    android:maxLength="3"
-                    android:textColor="#ff6633"
-                    android:textSize="14sp" />
-            </RelativeLayout>
-        </LinearLayout>
         <RelativeLayout
             android:id="@+id/rl_purpose"
-            android:layout_width="170dp"
+            android:layout_width="0dp"
             android:layout_height="30dp"
+            android:layout_weight="1"
             android:background="@drawable/et_back"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:layout_marginTop="10dp">
+            android:paddingRight="10dp">
 
             <TextView
                 android:id="@+id/tv_use"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="借款用途"
+                android:text="用途"
                 android:textColor="#333333"
                 android:textSize="14sp" />
 
@@ -163,6 +156,47 @@
                 android:textSize="14sp" />
         </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/rl_speedBearing"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="2"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/et_back"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:id="@+id/tvSpeedBearing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="每周可承受最多还款"
+                android:textColor="#333333"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvspeedBearing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="周"
+                android:textColor="#333333"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_speedBearing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/tvspeedBearing"
+                android:layout_toRightOf="@id/tvSpeedBearing"
+                android:gravity="center"
+                android:maxLength="3"
+                android:textColor="#ff6633"
+                android:textSize="14sp" />
+        </RelativeLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -204,7 +238,7 @@
 
             <TextView
                 style="@style/tv_second_style"
-                android:text="月供：" />
+                android:text="周供：" />
 
             <TextView
                 android:id="@+id/tvMonthPay"
@@ -277,14 +311,7 @@
             style="@style/tv_second_style"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:text="利率：" />
-
-        <TextView
-            android:id="@+id/onpay"
-            style="@style/tv_second_style"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:text="一次性收费：" />
+            android:text="综合费率：" />
 
     </LinearLayout>
 
