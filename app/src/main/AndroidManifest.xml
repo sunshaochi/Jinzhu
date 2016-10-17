@@ -408,6 +408,27 @@
         <!--首页Banner详情页面-->
         <activity android:name=".activity.user.BannerDetailAct"
             android:screenOrientation="portrait"/>
+        <!--极速贷第一步-->
+        <activity android:name=".activity.speedcredit.CreditSpeedFirstAct"
+            android:screenOrientation="portrait"/>
+        <!--极速贷第二步 第一小步-->
+        <activity android:name=".activity.speedcredit.CreditSpeedSecond_1Act"
+            android:screenOrientation="portrait"/>
+        <!--极速贷第二步，第二小步-->
+        <activity android:name=".activity.speedcredit.CreditSpeedSecond_2Act"
+            android:screenOrientation="portrait"/>
+        <!--极速贷第二步，第三小步-->
+        <activity android:name=".activity.speedcredit.CreditSpeedSecond_3Act"
+            android:screenOrientation="portrait"/>
+        <!--极速贷第三步，第一小步-->
+        <activity android:name=".activity.speedcredit.CreditSpeedThird_1Act"
+            android:screenOrientation="portrait"/>
+        <!--极速贷第三步，第二小步-->
+        <activity android:name=".activity.speedcredit.CreditSpeedThird_2Act"
+            android:screenOrientation="portrait"/>
+        <!--极速贷第四步-->
+        <activity android:name=".activity.speedcredit.CreditSpeedFourthAct"
+            android:screenOrientation="portrait"/>
         <!--极速贷主流程-->
         <activity android:name=".activity.credit.CreditSpeedStepAct"
             android:screenOrientation="portrait"/>

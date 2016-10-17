@@ -3,14 +3,17 @@ package com.beyonditsm.financial.activity.credit;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
-import com.beyonditsm.financial.AppManager;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
+import com.beyonditsm.financial.activity.speedcredit.CreditSpeedFirstAct;
+import com.beyonditsm.financial.activity.speedcredit.CreditSpeedSecond_1Act;
+import com.beyonditsm.financial.util.SpUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
@@ -18,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 极速贷贷款详情页
  * Created by Administrator on 2016/9/27 0027.
  */
 
@@ -154,11 +158,17 @@ public class CreditSpeedDetailAct extends BaseActivity {
                 break;
             //免费申请
             case R.id.tvApplay:
-                AppManager.getAppManager().addActivity(CreditSpeedDetailAct.this);
-                Bundle bundle = new Bundle();
-//                bundle.putParcelable(PRODUCTINFO, productInfo);
-                bundle.putString(CREDIT_TYPE,"speed");
-                gotoActivity(CreditStepAct.class, false, bundle);
+//                AppManager.getAppManager().addActivity(CreditSpeedDetailAct.this);
+//                Bundle bundle = new Bundle();
+////                bundle.putParcelable(PRODUCTINFO, productInfo);
+//                bundle.putString(CREDIT_TYPE,"speed");
+//                gotoActivity(CreditStepAct.class, false, bundle);
+                if (TextUtils.isEmpty(SpUtils.getRoleName(this))) {
+                    gotoActivity(CreditSpeedFirstAct.class,false);
+                }else {
+                    gotoActivity(CreditSpeedSecond_1Act.class,false);
+                }
+
                 break;
         }
     }

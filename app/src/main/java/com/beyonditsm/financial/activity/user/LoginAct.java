@@ -20,6 +20,8 @@ import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.credit.CreditStepAct;
 import com.beyonditsm.financial.activity.manager.ManagerMainAct;
+import com.beyonditsm.financial.activity.speedcredit.CreditSpeedFirstAct;
+import com.beyonditsm.financial.activity.speedcredit.CreditSpeedSecond_1Act;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.fragment.MineFragment;
 import com.beyonditsm.financial.http.RequestManager;
@@ -59,6 +61,8 @@ public class LoginAct extends BaseActivity{
 
     public static final String LOGIN_TYPE="login_type";
     private int LTYPE;
+    private String type;
+
     private void assignViews() {
         loginPhone = (ClearEditText) findViewById(R.id.login_phone);
         loginPwd = (ClearEditText) findViewById(R.id.login_pwd);
@@ -77,6 +81,7 @@ public class LoginAct extends BaseActivity{
     public void init(Bundle savedInstanceState) {
         setLeftTv("返回");
         setTopTitle("用户登录");
+        type = getIntent().getStringExtra("TYPE");
         LTYPE=getIntent().getIntExtra(LOGIN_TYPE,0);
         AppManager.getAppManager().addActivity(this);
         assignViews();
@@ -253,6 +258,10 @@ public class LoginAct extends BaseActivity{
                             e.printStackTrace();
                         }
 //                        connect(SpUtils.getT);
+                        if (!TextUtils.isEmpty(type)&&type.equals("speed")){
+                            sendBroadcast(new Intent(CreditSpeedFirstAct.GET_LOGIN_STATUS));
+                            gotoActivity(CreditSpeedSecond_1Act.class,true);
+                        }
                         finish();
                         ConstantValue.STEP = 0;
                     } else {

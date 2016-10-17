@@ -27,7 +27,9 @@ public interface IFinancialUrl {
 //        /*正式游戏地址*/
     String GAME_URL = "http://m.farm.myjinzhu.com/";
 
-    String BASE_URL = "http://test.myjinzhu.com:8082";
+//    String BASE_URL = "http://test.myjinzhu.com:8082";
+    /*测试急借通接口*/
+    String BASE_URL = "http://172.16.5.151:8080";
     /*测试地址3*/
 //    String BASE_URL="http://test.myjinzhu.com:60";
     //内网地址（测试钱包功能）
@@ -233,6 +235,8 @@ public interface IFinancialUrl {
     /*在登录状态，点击申卡时,调用统计函数*/
     String APPLY_CREDIT_CARD_CLICK = BASE_URL+API_VERSION + "/creditCard/login/applyCreditCardClick.do";
     /*获取首页Banner*/
-    String GET_BANNER = BASE_URL+API_VERSION+"/platform/unLogin/getPublishedMobileBanners.do";
+    String GET_BANNER = BASE_URL+API_VERSION+"/platform/unLogin/getPublishdMobileBanners.do";
 
+    /*急借通列表*/
+    String GET_CREDIT_SPEED = BASE_URL + API_VERSION +"/platform/unlogin/queryJdtProducts.do";
 }

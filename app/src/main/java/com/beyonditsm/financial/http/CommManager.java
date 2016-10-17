@@ -11,9 +11,7 @@ import com.beyonditsm.financial.entity.SumLoadEntity;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
-import com.beyonditsm.financial.util.ParamsUtil;
 import com.lidroid.xutils.http.client.multipart.content.FileBody;
-import com.tandong.sa.json.JsonObject;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -559,5 +557,14 @@ public class CommManager extends RequestManager {
     public void getBanner(CallBack callBack){
         Map<String, String> params = new HashMap<>();
         doPost(IFinancialUrl.GET_BANNER,params,callBack);
+    }
+
+    /**
+     * 获取急借通列表
+     * @param callBack
+     */
+    public void getCreditSpeed(CallBack callBack){
+        Map<String, String> params = new HashMap<>();
+        doPost(IFinancialUrl.GET_CREDIT_SPEED,params,callBack);
     }
 }
