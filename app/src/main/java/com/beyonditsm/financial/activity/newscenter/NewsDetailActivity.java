@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,7 @@ public class NewsDetailActivity extends BaseActivity {
     private AlertDialog.Builder builder;
     private UMSocialService mController;
     private NewsRelativeEntity newsRelativeEntity;
-
+    private String currentId;
 
     @Override
     public void setLayout() {
@@ -69,8 +70,11 @@ public class NewsDetailActivity extends BaseActivity {
     @Override
     public void init(Bundle savedInstanceState) {
         intent = getIntent();
-        hotNewsEntity = intent.getParcelableExtra("hotnews");
-        getMoreArticleInfo(hotNewsEntity.getId());
+        if(TextUtils.isEmpty(currentId)){
+            hotNewsEntity = intent.getParcelableExtra("hotnews");
+            currentId = hotNewsEntity.getId();
+        }
+        getMoreArticleInfo(currentId);
         setShareInfo();
         mController = UMServiceFactory.getUMSocialService("com.umeng.share");
         mController.getConfig().closeToast();
@@ -78,6 +82,10 @@ public class NewsDetailActivity extends BaseActivity {
 
     }
 
+    /**
+     * 获取文章详情
+     * @param curId 文章id
+     */
     private void getMoreArticleInfo(String curId) {
         CommManager.getCommManager().findUpAndDownRow(curId, new RequestManager.CallBack() {
             @SuppressLint("SetTextI18n")
@@ -148,6 +156,7 @@ public class NewsDetailActivity extends BaseActivity {
         settings.setUseWideViewPort(false);// 设置此属性，可任意比例缩放
         settings.setLoadWithOverviewMode(true);
         settings.setJavaScriptEnabled(true);
+        settings.setDomStorageEnabled(true);
 //        settings.setBuiltInZoomControls(true);
 //        settings.setSupportZoom(true);
         webView.removeJavascriptInterface("searchBoxJavaBredge_");

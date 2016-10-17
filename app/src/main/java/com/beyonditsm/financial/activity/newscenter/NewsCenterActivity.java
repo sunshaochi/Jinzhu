@@ -25,6 +25,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NewsCenterActivity extends BaseActivity implements LoadRefreshView.OnRefreshListener ,LoadingView.OnRetryListener{
@@ -35,6 +36,9 @@ public class NewsCenterActivity extends BaseActivity implements LoadRefreshView.
     private LoadingView loadingView;
     private List<HotNewsEntity> hotNewsList;
     private HotNewsAdapter hotNewsAdapter;
+    private int currentP = 1;
+    private List<HotNewsEntity> datas = new ArrayList<>();
+    private String rows = "10";
     @Override
     public void setLayout() {
         setContentView(R.layout.act_news_center);
@@ -42,7 +46,7 @@ public class NewsCenterActivity extends BaseActivity implements LoadRefreshView.
 
     @Override
     public void init(Bundle savedInstanceState) {
-        findNewsMore();
+        findNewsMore(currentP);
         newsList.setPullRefreshEnabled(true);
         newsList.setScrollLoadEnabled(true);
         newsList.setPullLoadEnabled(true);
@@ -56,7 +60,7 @@ public class NewsCenterActivity extends BaseActivity implements LoadRefreshView.
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(NewsCenterActivity.this, NewsDetailActivity.class);
-                intent.putExtra("hotnews",hotNewsList.get(position));
+                intent.putExtra("hotnews",datas.get(position));
                 startActivity(intent);
             }
         });
@@ -71,8 +75,10 @@ public class NewsCenterActivity extends BaseActivity implements LoadRefreshView.
     public void setLeftTv(String tv) {
         super.setLeftTv("返回");
     }
-    public void findNewsMore() {
-        CommManager.getCommManager().findNewsMobileMore(new RequestManager.CallBack() {
+
+
+    public void findNewsMore(int page) {
+        CommManager.getCommManager().findNewsMobileMore(page+"",rows,new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
                 newsList.onPullDownRefreshComplete();
@@ -86,22 +92,31 @@ public class NewsCenterActivity extends BaseActivity implements LoadRefreshView.
                 hotNewsList = gson.fromJson(rows.toString(), new TypeToken<List<HotNewsEntity>>() {
                 }.getType());
 
-                if (hotNewsList == null || hotNewsList.size() == 0) {
-//                    adapter.setDatas(datas ,isLast(cardList));
-//                    adapter.setOnCreditCardListner(CreditCardAct.this);
-//                    adapter.notifyDataSetChanged();
 
-                    loadingView.noContent();
+
+
+
+                if (hotNewsList == null || hotNewsList.size() == 0) {
+                    if (currentP == 1) {
+                        loadingView.noContent();
+                    } else {
+//                        .setHasMoreData(false);
+                    }
                     return;
                 }
 
+                if (currentP == 1) {
+                    datas.clear();
+                }
+                datas.addAll(hotNewsList);
+
                 if (hotNewsAdapter == null) {
-                    hotNewsAdapter = new HotNewsAdapter(NewsCenterActivity.this, hotNewsList);
+                    hotNewsAdapter = new HotNewsAdapter(NewsCenterActivity.this, datas);
                     newsList.getRefreshableView().setAdapter(hotNewsAdapter);
 //                    hotNewsAdapter.setOnCreditCardListner(mParentActivity);
 
                 } else {
-                    hotNewsAdapter.setDatas(hotNewsList);
+                    hotNewsAdapter.setDatas(datas);
 //                    hotNewsAdapter.setOnCreditCardListner(mParentActivity);
                     hotNewsAdapter.notifyDataSetChanged();
 
@@ -110,6 +125,7 @@ public class NewsCenterActivity extends BaseActivity implements LoadRefreshView.
 
             @Override
             public void onError(int status, String msg) {
+                currentP = 1;
                 loadingView.loadError();
             }
         });
@@ -119,16 +135,19 @@ public class NewsCenterActivity extends BaseActivity implements LoadRefreshView.
 
     @Override
     public void OnRetry() {
-        findNewsMore();
+        currentP = 1;
+        findNewsMore(currentP);
     }
 
     @Override
     public void onPullDownToRefresh(PullToRefreshBase refreshView) {
-        findNewsMore();
+        currentP = 1;
+        findNewsMore(currentP);
     }
 
     @Override
     public void onPullUpToRefresh(PullToRefreshBase refreshView) {
-        findNewsMore();
+        currentP++;
+        findNewsMore(currentP);
     }
 }
