@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <include layout="@layout/title_act_layout"/>
+    <include layout="@layout/title_act_layout" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
@@ -15,4 +17,189 @@
             android:layout_centerInParent="true"
             android:src="@mipmap/progress_03" />
     </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--申请贷款成功-->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout style="@style/speed_credit_linearlayout_in_scrollview">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/speed_credit_second_top_text"
+                        android:text="申请材料 (" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="19dp"
+                        android:text="*"
+                        android:textColor="@color/delete_red" />
+
+                    <TextView
+                        style="@style/speed_credit_second_top_text"
+                        android:text="为必填 ）" />
+                </LinearLayout>
+
+                <!--申请人身份证正面-->
+                <RelativeLayout
+                    android:id="@+id/rl_top_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="20dp">
+
+                    <TextView
+                        style="@style/tv_primary_style"
+                        android:layout_centerVertical="true"
+                        android:text="申请人身份证正面" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_top_state"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_top_isload"
+                            style="@style/tv_upload_style" />
+
+                        <TextView
+                            android:id="@+id/tv_top_state"
+                            style="@style/tv_upload_style"
+                            android:layout_marginLeft="10dp"
+                            android:text="审核中"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <View style="@style/view_line" />
+
+                <!--申请人身份证正面-->
+                <RelativeLayout
+                    android:id="@+id/rl_back_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        style="@style/tv_primary_style"
+                        android:layout_centerVertical="true"
+                        android:text="申请人身份证反面" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_back_state"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_back_is_load"
+                            style="@style/tv_upload_style" />
+
+                        <TextView
+                            android:id="@+id/tv_back_state"
+                            style="@style/tv_upload_style"
+                            android:layout_marginLeft="10dp"
+                            android:text="审核中"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <View style="@style/view_line" />
+
+
+                <TextView
+                    style="@style/speed_credit_second_top_text"
+                    android:text="选择门店" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        style="@style/tv_primary_style"
+                        android:layout_centerVertical="true"
+                        android:text="所在城市" />
+
+                    <TextView
+                        android:id="@+id/tv_city"
+                        style="@style/tv_select_style" />
+                </RelativeLayout>
+
+                <View style="@style/view_line" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        style="@style/tv_primary_style"
+                        android:layout_centerVertical="true"
+                        android:text="门店地址" />
+
+                    <TextView
+                        android:id="@+id/tv_address"
+                        style="@style/tv_select_style" />
+
+                </RelativeLayout>
+
+                <View style="@style/view_line" />
+
+                <LinearLayout
+                    android:id="@+id/ll_null_shop_tip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="您所在城市暂无门店，我们竭诚为您推荐其他产品"
+                        android:textColor="#cb5f61"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="点击查看"
+                        android:textColor="@color/actionsheet_blue"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvCredit"
+                    style="@style/common_btn"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/button_grey"
+                    android:enabled="false"
+                    android:gravity="center"
+                    android:text="申请贷款" />
+            </LinearLayout>
+        </ScrollView>
+
+        <include layout="@layout/layout_submit_sucess" />
+    </FrameLayout>
+
+
 </LinearLayout>

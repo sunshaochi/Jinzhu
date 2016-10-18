@@ -26,6 +26,7 @@ import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.credit.CreditGuideAct;
+import com.beyonditsm.financial.activity.speedcredit.creditspeedthied.CreditSpeedThird_2Act;
 import com.beyonditsm.financial.activity.user.BannerDetailAct;
 import com.beyonditsm.financial.activity.user.creditcard.CreditCardAct;
 import com.beyonditsm.financial.activity.user.GameActivity;
@@ -300,7 +301,7 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
                 }
                 break;
             case R.id.ivSuspen://浮窗
-                intent = new Intent(getContext(), CreditGuideAct.class);
+                intent = new Intent(getContext(), CreditSpeedThird_2Act.class);
                 startActivity(intent);
                 break;
             case R.id.ll_creditCard://信用卡
