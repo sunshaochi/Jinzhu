@@ -56,7 +56,7 @@ public class DialogSingalPicker {
 
 			@Override
 			public void onClick(View v) {
-				listener.getAdress(citypicker.getCity_string());
+				listener.getAdress(citypicker.getCity_string() , citypicker.getPosition());
 				dialog.dismiss();
 			}
 		});
@@ -94,7 +94,7 @@ public class DialogSingalPicker {
 	}
 
 	public interface SexClickListener {
-		void getAdress(String adress);
+		void getAdress(String adress ,int position);
 	}
 
 	public void setOnSheetItemClickListener(SexClickListener listener){

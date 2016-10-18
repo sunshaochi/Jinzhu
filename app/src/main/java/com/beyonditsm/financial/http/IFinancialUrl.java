@@ -270,4 +270,8 @@ public interface IFinancialUrl {
     String SAVE_USER_ORDER_INFO4 = BASE_URL + API_VERSION + "/platform/login/saveUserOrderInfo4.do";
     /*通过城市查询门店*/
     String QUERY_VENDOR_BY_CITY = BASE_URL + API_VERSION + "/platform/unlogin/queryVendorByCity.do";
+    /*亲属关系接口*/
+    String RELATION = BASE_URL + API_VERSION + "/platform/unlogin/Relation.do";
+    /*上传急借通第三板块信息接口*/
+    String SAVE_USER_ORDER_INFO3 = BASE_URL + API_VERSION + "platform/login/saveUserOrderInfo3.do";
 }

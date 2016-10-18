@@ -9,6 +9,8 @@ import com.beyonditsm.financial.entity.MyCreditEntity;
 import com.beyonditsm.financial.entity.OrderBean;
 import com.beyonditsm.financial.entity.SumLoadEntity;
 import com.beyonditsm.financial.entity.UserEntity;
+import com.beyonditsm.financial.entity.UserOrderInfo3;
+import com.beyonditsm.financial.entity.UserOrderInfoEntity;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.lidroid.xutils.http.client.multipart.content.FileBody;
@@ -576,11 +578,15 @@ public class CommManager extends RequestManager {
      * @param userOrderInfo4
      * @param callBack
      */
-    public void saveUserOrderInfo4(Map<String, String> userOrderInfo4, CallBack callBack) {
-        Map<String, Map<String, String>> params = new HashMap<>();
+    public void saveUserOrderInfo4(UserOrderInfoEntity userOrderInfo4, CallBack callBack) {
+
+
+
+        Map<String, String> params = new HashMap<>();
+        params.put("params", GsonUtils.bean2Json(userOrderInfo4));
+
 //        JSONObject jsonObject =
-        params.put("UserOrderInfo4", userOrderInfo4);
-//        doPost(IFinancialUrl.SAVE_USER_ORDER_INFO4,params,callBack);
+        doPost(IFinancialUrl.SAVE_USER_ORDER_INFO4,params,callBack);
     }
 
     /**
@@ -592,5 +598,25 @@ public class CommManager extends RequestManager {
         Map<String, String> params = new HashMap<>();
         params.put("city",city);
         doPost(IFinancialUrl.QUERY_VENDOR_BY_CITY, params, callBack);
+    }
+
+    /**
+     * 获取亲属关系
+     * @param callBack
+     */
+    public void queryRelation(CallBack callBack){
+        Map<String, String > params = new HashMap<>();
+        doPost(IFinancialUrl.RELATION,params,callBack);
+    }
+
+    /**
+     * 保存急借通第三板块信息
+     * @param entity3
+     * @param callBack
+     */
+    public void saveUserOrderInfo3(UserOrderInfo3 entity3, CallBack callBack){
+        Map<String, String> params = new HashMap<>();
+        params.put("params", GsonUtils.bean2Json(entity3));
+        doPost(IFinancialUrl.SAVE_USER_ORDER_INFO3,params,callBack);
     }
 }

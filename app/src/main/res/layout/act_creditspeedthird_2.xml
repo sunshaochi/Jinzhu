@@ -146,10 +146,11 @@
 
                 <View style="@style/view_line" />
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/rl_address"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp">
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical">
 
                     <TextView
                         style="@style/tv_primary_style"
@@ -158,9 +159,18 @@
 
                     <TextView
                         android:id="@+id/tv_address"
-                        style="@style/tv_select_style" />
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:drawablePadding="5dp"
+                        android:drawableRight="@mipmap/button_select"
+                        android:gravity="right"
+                        android:textColor="#f63"
+                        android:textSize="14sp"
 
-                </RelativeLayout>
+                        />
+
+                </LinearLayout>
 
                 <View style="@style/view_line" />
 
@@ -191,7 +201,7 @@
                     android:id="@+id/tvCredit"
                     style="@style/common_btn"
                     android:layout_marginBottom="20dp"
-                    android:background="@drawable/button_grey"
+                    android:background="@drawable/cre_btn_bg_orange"
                     android:enabled="false"
                     android:gravity="center"
                     android:text="申请贷款" />

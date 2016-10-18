@@ -133,7 +133,10 @@ public class SingalPicker extends LinearLayout {
         city_string = numberPicker.getSelectedText();
         return city_string;
     }
+    public int getPosition() {
+        return  numberPicker.getSelected();
 
+    }
     public interface OnSelectingListener {
 
         public void selected(boolean selected);

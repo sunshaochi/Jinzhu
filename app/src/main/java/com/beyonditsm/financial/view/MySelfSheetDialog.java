@@ -20,6 +20,8 @@ import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +41,7 @@ public class MySelfSheetDialog {
 	private boolean showTitle = false;
 	private List<SheetItem> sheetItemList;
 	private Display display;
-
+	private TextView otherTxt;
 	public MySelfSheetDialog(Context context) {
 		this.context = context;
 		WindowManager windowManager = (WindowManager) context
@@ -144,7 +146,7 @@ public class MySelfSheetDialog {
 			SheetItemColor color = sheetItem.color;
 			final OnSheetItemClickListener listener = sheetItem.itemClickListener;
 
-			TextView textView = new TextView(context);
+			final TextView textView = new TextView(context);
 			textView.setText(strItem);
 			textView.setTextSize(14);
 			textView.setGravity(Gravity.CENTER);
@@ -193,6 +195,9 @@ public class MySelfSheetDialog {
 				@Override
 				public void onClick(View v) {
 					listener.onClick(index);
+					if (otherTxt!=null){
+						otherTxt.setText(textView.getText().toString()+"");
+					}
 					dialog.dismiss();
 				}
 			});
@@ -205,7 +210,11 @@ public class MySelfSheetDialog {
 		setSheetItems();
 		dialog.show();
 	}
-
+	public void show(TextView textView) {
+		this.otherTxt = textView;
+		setSheetItems();
+		dialog.show();
+	}
 	public interface OnSheetItemClickListener {
 		void onClick(int which);
 	}

@@ -1,15 +1,18 @@
 package com.beyonditsm.financial.activity.speedcredit.creditspeedthied;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.credit.CreditUploadAct;
+import com.beyonditsm.financial.entity.UserOrderInfoEntity;
 import com.beyonditsm.financial.entity.VendorEntity;
 import com.beyonditsm.financial.http.CommManager;
 import com.beyonditsm.financial.http.RequestManager;
@@ -46,12 +49,20 @@ public class CreditSpeedThird_2Act extends BaseActivity {
     TextView tvCity;
     @ViewInject(R.id.tv_address)
     TextView tvAddress;
+    @ViewInject(R.id.ll_null_shop_tip)
+    LinearLayout llNullShopTip;
+    @ViewInject(R.id.tvCredit)
+    TextView tvCredit;
+    @ViewInject(R.id.llSucess)
+    LinearLayout llSuccess;
     private ArrayList<String> vendorNameList;
     private String frontCardUrl;//身份证正面url
     private String backCardUrl;//身份证反面url
     public static final int FRONT_CARD = 0;
     public static final int BACK_CARD = 1;
     private List<VendorEntity> vendorList;
+    private VendorEntity curVendero;
+
     @Override
     public void setLayout() {
         setContentView(R.layout.act_creditspeedthird_2);
@@ -87,7 +98,7 @@ public class CreditSpeedThird_2Act extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.tvSure, R.id.rl_back_card, R.id.rl_top_card, R.id.rl_city,R.id.rl_address})
+    @OnClick({R.id.tvSure, R.id.rl_back_card, R.id.rl_top_card, R.id.rl_city, R.id.rl_address, R.id.tvCredit})
     public void todo(View v) {
         switch (v.getId()) {
             case R.id.tvSure:
@@ -121,14 +132,43 @@ public class CreditSpeedThird_2Act extends BaseActivity {
                 });
                 break;
             case R.id.rl_address:
-                MyLogUtils.info("点击成功");
-                DialogSingalPicker dialogChooseMonth = new DialogSingalPicker(CreditSpeedThird_2Act.this, vendorNameList).builder(0);
-                dialogChooseMonth.show();
-                dialogChooseMonth.setOnSheetItemClickListener(new DialogSingalPicker.SexClickListener() {
-                    @Override
-                    public void getAdress(String adress) {
-                        tvAddress.setText(adress);
+                if (vendorList.size() > 0) {
+                    llNullShopTip.setVisibility(View.GONE);
+                    DialogSingalPicker dialogChooseMonth = new DialogSingalPicker(CreditSpeedThird_2Act.this, vendorNameList).builder(0);
+                    dialogChooseMonth.show();
+                    dialogChooseMonth.setOnSheetItemClickListener(new DialogSingalPicker.SexClickListener() {
+                        @SuppressLint("SetTextI18n")
+                        @Override
+                        public void getAdress(String adress, int position) {
+                            curVendero = vendorList.get(position);
+                            tvAddress.setText(vendorList.get(position).getAddr() + "");
 //                        getMOnthPay(creditMoney, productInfo.getMonthlyRathAvg(), creditMonth);
+                        }
+                    });
+                } else {
+                    llNullShopTip.setVisibility(View.VISIBLE);
+                }
+
+
+                break;
+            case R.id.tvCredit:
+
+                UserOrderInfoEntity co = new UserOrderInfoEntity();
+                co.setOrderId("123123"); //id
+                co.setIdcardBack(backCardUrl);
+                co.setIdcardFront(frontCardUrl);
+                co.setStoreAddr(curVendero.getAddr().toString() + "");
+                co.setStoreCity(tvCity.getText().toString());
+                co.setStoreId(curVendero.getId() + "");
+                CommManager.getCommManager().saveUserOrderInfo4(co, new RequestManager.CallBack() {
+                    @Override
+                    public void onSucess(String result) throws JSONException {
+                        llSuccess.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onError(int status, String msg) {
+                        llSuccess.setVisibility(View.GONE);
                     }
                 });
 
@@ -149,8 +189,8 @@ public class CreditSpeedThird_2Act extends BaseActivity {
                 vendorList = gson.fromJson(res.toString(), new TypeToken<List<VendorEntity>>() {
                 }.getType());
                 vendorNameList = new ArrayList<String>();
-                for (int i = 0;i<vendorList.size();i++){
-                    vendorNameList.add(vendorList.get(i).getName()+"");
+                for (int i = 0; i < vendorList.size(); i++) {
+                    vendorNameList.add(vendorList.get(i).getName() + "");
                 }
             }
 
@@ -179,5 +219,17 @@ public class CreditSpeedThird_2Act extends BaseActivity {
         }
     }
 
+    public void checkApplyStatus() {
+        if (!TextUtils.isEmpty(frontCardUrl) && !TextUtils.isEmpty(backCardUrl) && !TextUtils.isEmpty(tvCity.getText().toString()) &&
+                !TextUtils.isEmpty(tvAddress.getText().toString()) && !"null".equals(tvAddress.getText().toString())
+                ) {
+            tvCredit.setClickable(true);
+
+
+//            tvCredit(getResources().getDrawable(R.drawable.cre_btn_bg_orange));
+        } else {
+            tvCredit.setClickable(false);
+        }
+    }
 
 }
