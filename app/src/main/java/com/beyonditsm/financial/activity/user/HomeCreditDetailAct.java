@@ -63,8 +63,6 @@ public class HomeCreditDetailAct extends BaseActivity {
     private TextView tvM;//月份
     @ViewInject(R.id.tv_title)
     private TextView tvTitle;
-    @ViewInject(R.id.tv_speedRemarks)
-    private TextView tvSpeedRemarks;
     @ViewInject(R.id.ll_speed)
     private LinearLayout llSpeed;
     @ViewInject(R.id.ll_mm)

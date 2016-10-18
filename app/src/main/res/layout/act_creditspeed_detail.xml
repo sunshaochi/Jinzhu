@@ -77,8 +77,7 @@
 
                             <TextView
                                 android:id="@+id/tvCon"
-                                style="@style/tv_third_style"
-                                android:text="22-55周岁，月打卡4000以上，信用良好\n1、年龄要求\n2、本地工作\n3、工作6月以上" />
+                                style="@style/tv_third_style" />
 
 
                         </LinearLayout>
@@ -125,8 +124,7 @@
 
                             <TextView
                                 android:id="@+id/tvNeed"
-                                style="@style/tv_third_style"
-                                android:text="22-55周岁，月打卡4000以上，信用良好\n1、年龄要求\n2、本地工作\n3、工作6月以上" />
+                                style="@style/tv_third_style" />
 
                         </LinearLayout>
 
@@ -172,8 +170,7 @@
 
                             <TextView
                                 android:id="@+id/tvDetail"
-                                style="@style/tv_third_style"
-                                android:text="22-55周岁，月打卡4000以上，信用良好\n1、年龄要求\n2、本地工作\n3、工作6月以上" />
+                                style="@style/tv_third_style" />
 
                         </LinearLayout>
 

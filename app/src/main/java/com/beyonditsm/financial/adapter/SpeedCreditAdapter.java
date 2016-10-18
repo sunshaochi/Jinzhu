@@ -1,6 +1,7 @@
 package com.beyonditsm.financial.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -9,6 +10,9 @@ import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.entity.CreditSpeedEntity;
+import com.beyonditsm.financial.http.IFinancialUrl;
+import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
+import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
 import java.util.List;
 
@@ -19,7 +23,15 @@ import java.util.List;
 
 public class SpeedCreditAdapter extends BaseAdapter {
 
-    java.text.DecimalFormat df = new java.text.DecimalFormat("#0.00");//保留小数
+    java.text.DecimalFormat df = new java.text.DecimalFormat("#0.0");//保留小数
+
+    private DisplayImageOptions options = new DisplayImageOptions.Builder()
+            .showStubImage(R.mipmap.pro_default) // 设置图片下载期间显示的图片
+            .showImageForEmptyUri(R.mipmap.pro_default) // 设置图片Uri为空或是错误的时候显示的图片
+            .showImageOnFail(R.mipmap.pro_default) // 设置图片加载或解码过程中发生错误显示的图片
+            .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
+            .cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
+            .build(); // 创建配置过得DisplayImageOption对象
     private Context context;
     private List<CreditSpeedEntity> list;
     public SpeedCreditAdapter(Context context, List<CreditSpeedEntity> list) {
@@ -29,7 +41,7 @@ public class SpeedCreditAdapter extends BaseAdapter {
 
     public void notifyChange(List<CreditSpeedEntity> list){
         this.list=list;
-        notifyDataSetChanged();;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -66,15 +78,28 @@ public class SpeedCreditAdapter extends BaseAdapter {
             holder = (Holder) convertView.getTag();
         }
         CreditSpeedEntity creditSpeedEntity = list.get(position);
+
+        ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + creditSpeedEntity.getImageLogoPath(), holder.ivProductLogo, options);
+
+        if (!TextUtils.isEmpty(creditSpeedEntity.getProductName())) {
+            holder.tvProductName.setText(creditSpeedEntity.getProductName());
+        }
+        if (!TextUtils.isEmpty(creditSpeedEntity.getProductChara())) {
+            holder.tvProductChara.setText(creditSpeedEntity.getProductChara());
+        }
+        if (!TextUtils.isEmpty(creditSpeedEntity.getCostDescribe())) {
+            holder.tvCostDescribe.setText(creditSpeedEntity.getCostDescribe());
+        }
+        if (!TextUtils.isEmpty(creditSpeedEntity.getRepaymentPeriod())) {
+            holder.tvTime.setText(creditSpeedEntity.getRepaymentPeriod() + "周");
+        }
         double minVal = Double.valueOf(creditSpeedEntity.getMinVal());
         double maxVal = Double.valueOf(creditSpeedEntity.getMaxVal());
-        holder.tvProductName.setText(creditSpeedEntity.getProductName());
-        holder.tvProductChara.setText(creditSpeedEntity.getProductChara());
-        holder.tvCostDescribe.setText(creditSpeedEntity.getCostDescribe());
-        holder.tvTime.setText(creditSpeedEntity.getRepaymentPeriod()+"周");
         holder.tvValue.setText(df.format(minVal/10000)+"-"+df.format(maxVal/10000)+"万");
         holder.tvRate.setText(creditSpeedEntity.getMinRate()+"-"+creditSpeedEntity.getMaxRate()+"%(天)");
-        holder.tvLoanPeriod.setText(creditSpeedEntity.getLoanPeriod()+"个工作日");
+        if (!TextUtils.isEmpty(String.valueOf(creditSpeedEntity.getLoanPeriod()))) {
+            holder.tvLoanPeriod.setText(creditSpeedEntity.getLoanPeriod() + "个工作日");
+        }
 
         return convertView;
     }

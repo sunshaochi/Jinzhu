@@ -7,6 +7,7 @@ import com.beyonditsm.financial.entity.CreditOfflineUploadEntity;
 import com.beyonditsm.financial.entity.HotProduct;
 import com.beyonditsm.financial.entity.MyCreditEntity;
 import com.beyonditsm.financial.entity.OrderBean;
+import com.beyonditsm.financial.entity.SubmitCreditSpeedEntity;
 import com.beyonditsm.financial.entity.SumLoadEntity;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.util.GsonUtils;
@@ -566,5 +567,29 @@ public class CommManager extends RequestManager {
     public void getCreditSpeed(CallBack callBack){
         Map<String, String> params = new HashMap<>();
         doPost(IFinancialUrl.GET_CREDIT_SPEED,params,callBack);
+    }
+
+    /**
+     * 借款用途接口
+     * @param callBack
+     */
+    public void queryLoanUse(CallBack callBack){
+        Map<String, String> params = new HashMap<>();
+        doPost(IFinancialUrl.QUERY_LOAN_USE,params,callBack);
+    }
+
+    /**
+     *  点击申贷接口（须传参数：借款用途:purpose;最大承受还款额度:maxRepaymentWeekly;贷款金额:
+     * totalAmount;还款期限: totalPeriods;利息:totalLoanInterest;综合费率:realMonthlyRate）
+     */
+    public void submitSpeedOrder(SubmitCreditSpeedEntity scse, CallBack callBack){
+        Map<String, String> params = new HashMap<>();
+        params.put("purpose",scse.getPurpose());
+        params.put("maxRepaymentWeekly",scse.getMaxRepaymentWeekly());
+        params.put("totalAmount",scse.getTotalAmount());
+        params.put("totalPeriods",scse.getTotalPeriods());
+        params.put("totalLoanInterest",scse.getTotalLoanInterest());
+        params.put("realMonthlyRate",scse.getRealMonthlyRate());
+        doPost(IFinancialUrl.QUERY_LOAN_USE,params,callBack);
     }
 }

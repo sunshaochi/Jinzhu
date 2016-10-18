@@ -31,6 +31,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
                 <RelativeLayout
                     android:layout_width="0dp"
@@ -55,7 +56,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:text="万"
+                        android:text="元"
                         android:textColor="#333333"
                         android:textSize="14sp" />
 
@@ -181,139 +182,118 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:text="周"
+                android:text="元"
                 android:textColor="#333333"
                 android:textSize="14sp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/tv_speedBearing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@id/tvspeedBearing"
                 android:layout_toRightOf="@id/tvSpeedBearing"
+                android:background="@null"
+                android:cursorVisible="false"
                 android:gravity="center"
                 android:maxLength="3"
                 android:textColor="#ff6633"
                 android:textSize="14sp" />
         </RelativeLayout>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
-
-
-        <TextView
-            android:id="@+id/tvScope"
-            style="@style/tv_second_style"
-            android:layout_width="0dp"
-            android:layout_alignParentRight="true"
-            android:layout_weight="1"
-            android:singleLine="true"
-            android:text="额度范围：" />
-
-
-        <TextView
-            android:id="@+id/tvLim"
-            style="@style/tv_second_style"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:text="期限范围：" />
-    </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
-
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="horizontal">
-
+            android:orientation="vertical">
             <TextView
+                android:id="@+id/tvScope"
                 style="@style/tv_second_style"
-                android:text="周供：" />
+                android:layout_width="wrap_content"
+                android:layout_alignParentRight="true"
+                android:singleLine="true"
+                android:text="额度范围：" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:visibility="gone"
+                android:orientation="horizontal">
 
+                <TextView
+                    style="@style/tv_second_style"
+                    android:text="周供：" />
+
+                <TextView
+                    android:id="@+id/tvMonthPay"
+                    style="@style/tv_red_style"
+                    android:text="" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+
+                    style="@style/tv_second_style"
+                    android:text="总利息：" />
+
+                <TextView
+                    android:id="@+id/tvTotal"
+                    style="@style/tv_red_style"
+                    android:text="" />
+
+            </LinearLayout>
             <TextView
-                android:id="@+id/tvMonthPay"
-                style="@style/tv_red_style"
-                android:text="" />
-
+                android:id="@+id/tvRate"
+                style="@style/tv_second_style"
+                android:layout_marginTop="20dp"
+                android:text="综合费率：" />
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvPaytype"
-            style="@style/tv_second_style"
-            android:layout_width="0dp"
-            android:layout_alignParentRight="true"
-            android:layout_weight="1"
-            android:singleLine="true"
-            android:text="还款方式：" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
-
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="horizontal">
-
+            android:orientation="vertical">
             <TextView
-
+                android:id="@+id/tvLim"
                 style="@style/tv_second_style"
-                android:text="总利息：" />
-
+                android:text="期限范围：" />
             <TextView
-                android:id="@+id/tvTotal"
-                style="@style/tv_red_style"
-                android:text="" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <TextView
+                android:id="@+id/tvPaytype"
                 style="@style/tv_second_style"
-                android:text="放款时间：" />
+                android:layout_alignParentRight="true"
+                android:singleLine="true"
+                android:layout_marginTop="20dp"
+                android:text="还款方式：" />
 
-            <TextView
-                android:id="@+id/tvLoan"
-                style="@style/tv_red_style" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
 
+                <TextView
+                    style="@style/tv_second_style"
+                    android:text="放款时间：" />
+
+                <TextView
+                    android:id="@+id/tvLoan"
+                    style="@style/tv_red_style" />
+
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/tvRate"
-            style="@style/tv_second_style"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:text="综合费率：" />
-
-    </LinearLayout>
-
 
 </LinearLayout>

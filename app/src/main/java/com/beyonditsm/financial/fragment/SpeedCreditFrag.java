@@ -41,6 +41,8 @@ public class SpeedCreditFrag extends BaseFragment {
     private int currentP = 1;
     @ViewInject(R.id.loading_speedCredit)
     private LoadingView loadingSpeedCredit;
+
+    public static final String CREDIT_SPEED = "credit_speed";
     @Override
     public View initView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.frag_speedcredit,null);
@@ -103,6 +105,8 @@ public class SpeedCreditFrag extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), CreditSpeedDetailAct.class);
+                CreditSpeedEntity creditSpeedEntity = creditSpeedList.get(position);
+                intent.putExtra(CREDIT_SPEED,creditSpeedEntity);
                 getActivity().startActivity(intent);
             }
         });
