@@ -10,6 +10,8 @@ import com.beyonditsm.financial.entity.OrderBean;
 import com.beyonditsm.financial.entity.SubmitCreditSpeedEntity;
 import com.beyonditsm.financial.entity.SumLoadEntity;
 import com.beyonditsm.financial.entity.UserEntity;
+import com.beyonditsm.financial.entity.UserOrderInfo3;
+import com.beyonditsm.financial.entity.UserOrderInfoEntity;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.lidroid.xutils.http.client.multipart.content.FileBody;
@@ -536,7 +538,7 @@ public class CommManager extends RequestManager {
      */
     public void getCreditCards(HotProduct hp, String area, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
-        params.put("area",area);
+        params.put("area", area);
         params.put("page", hp.getPage() + "");
         params.put("rows", hp.getRows() + "");
         doPost(IFinancialUrl.GET_CREDIT_CARD_INFO, params, callBack);
@@ -545,28 +547,78 @@ public class CommManager extends RequestManager {
     /**
      * 获取信用卡数据
      */
-    public void applyCreditCardClick(String creditCardId,CallBack callBack)  {
+    public void applyCreditCardClick(String creditCardId, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
-        params.put("creditCardId",creditCardId);
+        params.put("creditCardId", creditCardId);
         doPost(IFinancialUrl.APPLY_CREDIT_CARD_CLICK, params, callBack);
     }
 
     /**
      * 获取首页banner
+     *
      * @param callBack
      */
-    public void getBanner(CallBack callBack){
+    public void getBanner(CallBack callBack) {
         Map<String, String> params = new HashMap<>();
-        doPost(IFinancialUrl.GET_BANNER,params,callBack);
+        doPost(IFinancialUrl.GET_BANNER, params, callBack);
     }
 
     /**
      * 获取急借通列表
+     *
      * @param callBack
      */
-    public void getCreditSpeed(CallBack callBack){
+    public void getCreditSpeed(CallBack callBack) {
         Map<String, String> params = new HashMap<>();
-        doPost(IFinancialUrl.GET_CREDIT_SPEED,params,callBack);
+        doPost(IFinancialUrl.GET_CREDIT_SPEED, params, callBack);
+    }
+
+    /**
+     * 保存急借通第四版块信息接口（城市门店、身份证）
+     *
+     * @param userOrderInfo4
+     * @param callBack
+     */
+    public void saveUserOrderInfo4(UserOrderInfoEntity userOrderInfo4, CallBack callBack) {
+
+
+
+        Map<String, String> params = new HashMap<>();
+        params.put("params", GsonUtils.bean2Json(userOrderInfo4));
+
+//        JSONObject jsonObject =
+        doPost(IFinancialUrl.SAVE_USER_ORDER_INFO4,params,callBack);
+    }
+
+    /**
+     * 急借通通过城市名查询门店
+     * @param city
+     * @param callBack
+     */
+    public void queryVendorByCity(String city, CallBack callBack) {
+        Map<String, String> params = new HashMap<>();
+        params.put("city",city);
+        doPost(IFinancialUrl.QUERY_VENDOR_BY_CITY, params, callBack);
+    }
+
+    /**
+     * 获取亲属关系
+     * @param callBack
+     */
+    public void queryRelation(CallBack callBack){
+        Map<String, String > params = new HashMap<>();
+        doPost(IFinancialUrl.RELATION,params,callBack);
+    }
+
+    /**
+     * 保存急借通第三板块信息
+     * @param entity3
+     * @param callBack
+     */
+    public void saveUserOrderInfo3(UserOrderInfo3 entity3, CallBack callBack){
+        Map<String, String> params = new HashMap<>();
+        params.put("params", GsonUtils.bean2Json(entity3));
+        doPost(IFinancialUrl.SAVE_USER_ORDER_INFO3,params,callBack);
     }
 
     /**
@@ -590,6 +642,6 @@ public class CommManager extends RequestManager {
         params.put("totalPeriods",scse.getTotalPeriods());
         params.put("totalLoanInterest",scse.getTotalLoanInterest());
         params.put("realMonthlyRate",scse.getRealMonthlyRate());
-        doPost(IFinancialUrl.QUERY_LOAN_USE,params,callBack);
+        doPost(IFinancialUrl.SUBMIT_SPEED_CREDIT,params,callBack);
     }
 }

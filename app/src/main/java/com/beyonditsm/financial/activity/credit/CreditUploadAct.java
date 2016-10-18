@@ -132,7 +132,6 @@ public class CreditUploadAct extends BaseActivity {
             file.mkdirs();
 
         photoSavePath = Environment.getExternalStorageDirectory() + "/upload/cache/";
-
         findFlowDetail(orderId, flowId);
 
         loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {

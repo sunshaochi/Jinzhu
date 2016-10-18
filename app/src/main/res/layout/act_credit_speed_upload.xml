@@ -29,29 +29,28 @@
                 android:textColor="#333333"
                 android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/tvRemarks"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:textColor="#ff000c"
-                android:textSize="16sp"
-                android:visibility="gone" />
 
-            <ListView
-                android:id="@+id/lvUpLoad"
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="20dp"
+                android:layout_height="1dp"
                 android:layout_weight="1"
-                android:divider="@null" />
+                android:background="@color/bg_color">
+
+                <ImageView
+                    android:id="@+id/ivPhoto"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_centerInParent="true"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/add_image" />
+
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:orientation="vertical">
 
 
@@ -90,9 +89,10 @@
             </LinearLayout>
         </LinearLayout>
 
-        <com.beyonditsm.financial.view.LoadingView
-            android:id="@+id/loadingView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        <!--<com.beyonditsm.financial.view.LoadingView-->
+            <!--android:id="@+id/loadingView"-->
+            <!--android:visibility="gone"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" />-->
     </FrameLayout>
 </LinearLayout>
