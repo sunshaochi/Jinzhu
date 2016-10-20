@@ -88,6 +88,7 @@ public class CreditSpeedSecond_3Act extends BaseActivity {
     @ViewInject(R.id.et_speedEmergentPhone_1)
     private EditText etSpeedEmergentPhone_1; //紧急联系人电话1
     private List<RelationEntity> relationList;
+    private String orderId;
 
     @Override
     public void setLayout() {
@@ -96,6 +97,8 @@ public class CreditSpeedSecond_3Act extends BaseActivity {
 
     @Override
     public void init(Bundle savedInstanceState) {
+        Intent intent = getIntent();
+        orderId = intent.getStringExtra("orderId");
         queryRelation();
         initText();
 
@@ -181,7 +184,7 @@ public class CreditSpeedSecond_3Act extends BaseActivity {
     }
 
     public void saveUserInfo3() {
-        UserOrderInfo3 userOrderInfo3 = new UserOrderInfo3("3c365c0996aa11e696d760eb69a5af72", etSpeedRelativesName_1.getText().toString() + "",
+        UserOrderInfo3 userOrderInfo3 = new UserOrderInfo3(orderId, etSpeedRelativesName_1.getText().toString() + "",
                 tvSpeedSelectRelationship_1.getText().toString() + "",
                 etSpeedRelativesPhone_1.getText().toString() + "", etSpeedRelativesName_2.getText().toString() + "",
                 tvSpeedSelectRelationship_2.getText().toString() + "",
@@ -196,6 +199,7 @@ public class CreditSpeedSecond_3Act extends BaseActivity {
             @Override
             public void onSucess(String result) throws JSONException {
                 Intent intent = new Intent(CreditSpeedSecond_3Act.this, CreditSpeedThird_2Act.class);
+                intent.putExtra("orderId",orderId);
                 startActivity(intent);
             }
 
