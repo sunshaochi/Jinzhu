@@ -6,7 +6,6 @@ import android.os.Parcelable;
 public class Cityinfo implements Parcelable {
     private String id;
     private String city_name;
-
     public String getId() {
         return id;
     }

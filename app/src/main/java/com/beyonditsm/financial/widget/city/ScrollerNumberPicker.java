@@ -226,6 +226,11 @@ public class ScrollerNumberPicker extends View {
 		}
 	}
 
+	public void clearData(){
+		this.dataList.clear();
+		initData();
+	}
+
 	/**
 	 * 初始化数据
 	 */
@@ -463,6 +468,7 @@ public class ScrollerNumberPicker extends View {
 		initData();
 	}
 
+
 	/**
 	 * 获取返回项
 	 * 
@@ -522,8 +528,11 @@ public class ScrollerNumberPicker extends View {
 	 * @param index
 	 */
 	public void setDefault(int index) {
-		float move = itemList.get(index).moveToSelected();
-		defaultMove((int) move);
+		if (itemList.size()>index){
+			float move = itemList.get(index).moveToSelected();
+			defaultMove((int) move);
+		}
+
 	}
 
 	/**
