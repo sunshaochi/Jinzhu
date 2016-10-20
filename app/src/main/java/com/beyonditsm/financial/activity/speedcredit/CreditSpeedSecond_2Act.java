@@ -151,7 +151,9 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
         CommManager.getCommManager().queryUnitProperty(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-
+                JSONObject jsonObject = new JSONObject(result);
+                JSONArray data = jsonObject.getJSONArray("data");
+//                Gson gson
             }
 
             @Override
