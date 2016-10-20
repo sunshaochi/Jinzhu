@@ -11,6 +11,7 @@ import com.beyonditsm.financial.entity.SubmitCreditSpeedEntity;
 import com.beyonditsm.financial.entity.SumLoadEntity;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.entity.UserOrderInfo1;
+import com.beyonditsm.financial.entity.UserOrderInfo2;
 import com.beyonditsm.financial.entity.UserOrderInfo3;
 import com.beyonditsm.financial.entity.UserOrderInfoEntity;
 import com.beyonditsm.financial.util.GsonUtils;
@@ -620,7 +621,19 @@ public class CommManager extends RequestManager {
      */
     public void saveUserOrderInfo3(UserOrderInfo3 entity3, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
-        params.put("params", GsonUtils.bean2Json(entity3));
+        params.put("entity3", GsonUtils.bean2Json(entity3));
+        doPost(IFinancialUrl.SAVE_USER_ORDER_INFO3, params, callBack);
+    }
+
+    /**
+     * 保存急借通第二板块信息
+     *
+     * @param
+     * @param callBack
+     */
+    public void saveUserOrderInfo2(UserOrderInfo2 entity2, CallBack callBack) {
+        Map<String, String> params = new HashMap<>();
+        params.put("entity2", GsonUtils.bean2Json(entity2));
         doPost(IFinancialUrl.SAVE_USER_ORDER_INFO3, params, callBack);
     }
 
@@ -757,5 +770,16 @@ public class CommManager extends RequestManager {
         ",户籍地详细地址："+userInfo1.getDomicileDetail()+",常住地省："+userInfo1.getPermanentProvince()+",常住地市："+userInfo1.getPermanentCity()
         +",常住地区："+userInfo1.getPermanentArea()+"，常住地详细地址："+userInfo1.getPermanentDetail()+",居住状况："+userInfo1.getResSts());
         doPost(IFinancialUrl.SAVE_ESSENTIAL_INFO,params,callBack);
+    }
+
+    /**
+     * 急借通储存第二步信息接口
+     * @param userInfo1
+     * @param callBack
+     */
+    public void saveQualificationsInfo(UserOrderInfo1 userInfo1,CallBack callBack){
+        Map<String,String> params = new HashMap<>();
+        doPost(IFinancialUrl.SAVE_QUALIFICATIONS_INFO,params,callBack);
+
     }
 }

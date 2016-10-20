@@ -285,5 +285,5 @@ public interface IFinancialUrl {
     /*亲属关系接口*/
     String RELATION = BASE_URL + API_VERSION + "/platform/unlogin/Relation.do";
     /*上传急借通第三板块信息接口*/
-    String SAVE_USER_ORDER_INFO3 = BASE_URL + API_VERSION + "platform/login/saveUserOrderInfo3.do";
+    String SAVE_USER_ORDER_INFO3 = BASE_URL + API_VERSION + "/platform/login/saveUserOrderInfo3.do";
 }

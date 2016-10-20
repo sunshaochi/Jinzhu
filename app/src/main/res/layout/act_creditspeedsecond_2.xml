@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <include layout="@layout/title_act_layout"/>
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/title_act_layout" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
@@ -14,6 +17,7 @@
             android:layout_centerInParent="true"
             android:src="@mipmap/progress_02" />
     </RelativeLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -37,13 +41,13 @@
                 <EditText
                     android:id="@+id/et_speedCompanyName"
                     style="@style/cre_et"
-                    android:layout_marginLeft="10dp"/>
+                    android:layout_marginLeft="10dp"
+                    android:hint="请输入单位名称" />
             </LinearLayout>
 
             <View style="@style/view_line" />
             <!--单位电话-->
-            <LinearLayout
-                style="@style/speed_credit_second_horizontal_linearlayout">
+            <LinearLayout style="@style/speed_credit_second_horizontal_linearlayout">
 
                 <TextView
                     android:id="@+id/tv_speedCompanyPhone"
@@ -54,18 +58,22 @@
                     android:id="@+id/et_speedCompanyPhone"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/cre_et_bg"
-                    android:layout_marginLeft="10dp"/>
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:background="@drawable/cre_et_bg" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="—"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"/>
+                    android:layout_marginRight="5dp"
+                    android:text="—" />
+
                 <EditText
                     android:layout_width="100dp"
+                    android:gravity="center"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/cre_et_bg"/>
+                    android:background="@drawable/cre_et_bg" />
             </LinearLayout>
 
             <View style="@style/view_line" />
@@ -85,33 +93,33 @@
                     android:id="@+id/tv_speedSelectCompanyAddress"
                     style="@style/tv_select_style"
                     android:drawableRight="@mipmap/button_select"
+                    android:text="请选择城市"
                     android:textColor="#f63" />
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
 
             <!--单位详细地址-->
-            <EditText
-                android:id="@+id/et_speedCompanyAddressDetail"
-                style="@style/speed_credit_second_detail_address"/>
-            <View
-                style="@style/view_line"/>
-            <!--部门-->
+
             <LinearLayout
-                style="@style/speed_credit_second_horizontal_linearlayout">
+                style="@style/speed_credit_second_horizontal_linearlayout"
+                android:layout_marginTop="20dp">
 
                 <TextView
-                    android:id="@+id/tv_speedDepartment"
+                    android:id="@+id/tv_speedCompanyAddressDetail"
                     style="@style/tv_primary_style"
                     android:layout_centerVertical="true" />
 
                 <EditText
-                    android:id="@+id/et_speedDepartment"
-                    style="@style/cre_et"
-                    android:layout_marginLeft="10dp"/>
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/et_speedCompanyAddressDetail"
+                    style="@style/speed_credit_second_detail_address"
+                    android:hint="请输入详细地址" />
             </LinearLayout>
 
+
             <View style="@style/view_line" />
+
 
             <!--单位性质-->
             <RelativeLayout
@@ -128,6 +136,7 @@
                     android:id="@+id/tv_speedSelectCompanyType"
                     style="@style/tv_select_style"
                     android:drawableRight="@mipmap/button_select"
+                    android:text="请选择"
                     android:textColor="#f63" />
             </RelativeLayout>
 
@@ -148,14 +157,14 @@
                     android:id="@+id/tv_speedSelectWorkType"
                     style="@style/tv_select_style"
                     android:drawableRight="@mipmap/button_select"
+                    android:text="请选择"
                     android:textColor="#f63" />
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
 
             <!--月基本薪水-->
-            <LinearLayout
-                style="@style/speed_credit_second_horizontal_linearlayout">
+            <LinearLayout style="@style/speed_credit_second_horizontal_linearlayout">
 
                 <TextView
                     android:id="@+id/tv_speedSalary"
@@ -165,7 +174,11 @@
                 <EditText
                     android:id="@+id/et_speedSalary"
                     style="@style/cre_et"
-                    android:layout_marginLeft="10dp"/>
+                    android:layout_marginLeft="10dp"
+                    android:hint="请输入基本薪水" />
+
+
+
             </LinearLayout>
 
             <View style="@style/view_line" />
@@ -185,6 +198,7 @@
                     android:id="@+id/tv_speedSelectSalaryType"
                     style="@style/tv_select_style"
                     android:drawableRight="@mipmap/button_select"
+                    android:text="请选择"
                     android:textColor="#f63" />
             </RelativeLayout>
 
@@ -209,7 +223,8 @@
                     android:textColor="#f63" />
             </RelativeLayout>
 
-            <View style="@style/view_line"
+            <View
+                style="@style/view_line"
                 android:visibility="gone"></View>
 
             <!--其他月收入-->
@@ -221,16 +236,17 @@
                     android:id="@+id/tv_speedOtherSalary"
                     style="@style/tv_primary_style"
                     android:layout_centerVertical="true"
-                    android:text="其他月收入"/>
+                    android:text="其他月收入" />
 
                 <EditText
                     android:id="@+id/et_speedOtherSalary"
                     style="@style/cre_et"
-                    android:layout_marginLeft="10dp"/>
+                    android:layout_marginLeft="10dp" />
             </LinearLayout>
 
-            <View style="@style/view_line"
-                android:visibility="gone"/>
+            <View
+                style="@style/view_line"
+                android:visibility="gone" />
 
             <!--其他收入发放形式-->
             <RelativeLayout
@@ -243,7 +259,7 @@
                     android:id="@+id/tv_speedOtherSalaryDay"
                     style="@style/tv_primary_style"
                     android:layout_centerVertical="true"
-                    android:text="其他收入发放形式"/>
+                    android:text="其他收入发放形式" />
 
                 <TextView
                     android:id="@+id/tv_speedSelectOtherSalaryDay"
@@ -252,7 +268,8 @@
                     android:textColor="#f63" />
             </RelativeLayout>
 
-            <View style="@style/view_line"
+            <View
+                style="@style/view_line"
                 android:visibility="gone"></View>
 
 
@@ -260,9 +277,10 @@
                 android:id="@+id/tv_speed_toThere"
                 style="@style/speed_credit_next_btn"
                 android:text="下一步" />
+
             <TextView
-                android:text="2/3"
-                style="@style/speed_credit_second_bottom_text"/>
+                style="@style/speed_credit_second_bottom_text"
+                android:text="2/3" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
