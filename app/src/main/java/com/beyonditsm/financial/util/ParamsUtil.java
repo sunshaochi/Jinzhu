@@ -2,6 +2,9 @@ package com.beyonditsm.financial.util;
 
 import android.app.Activity;
 
+import com.beyonditsm.financial.entity.JJTCityEntity;
+import com.beyonditsm.financial.entity.JJTCounyEntity;
+import com.beyonditsm.financial.entity.JJTProvinceEntity;
 import com.beyonditsm.financial.entity.ProductSortEntity;
 import com.beyonditsm.financial.entity.UserLoginEntity;
 
@@ -40,7 +43,33 @@ public class ParamsUtil {
     private List<ProductSortEntity.OrgTypeBean> orgTypeInfos;
     private boolean isReLogin = false;
     private boolean isClosing = false;
+    private List<JJTProvinceEntity> provinceEntityList;
+    private List<JJTCityEntity> cityEntityList;
+    private List<JJTCounyEntity> counyEntityList;
 
+    public List<JJTCounyEntity> getCounyEntityList() {
+        return counyEntityList;
+    }
+
+    public void setCounyEntityList(List<JJTCounyEntity> counyEntityList) {
+        this.counyEntityList = counyEntityList;
+    }
+
+    public List<JJTProvinceEntity> getProvinceEntityList() {
+        return provinceEntityList;
+    }
+
+    public void setProvinceEntityList(List<JJTProvinceEntity> provinceEntityList) {
+        this.provinceEntityList = provinceEntityList;
+    }
+
+    public List<JJTCityEntity> getCityEntityList() {
+        return cityEntityList;
+    }
+
+    public void setCityEntityList(List<JJTCityEntity> cityEntityList) {
+        this.cityEntityList = cityEntityList;
+    }
 
     public String transMapToString(Map map){
         java.util.Map.Entry entry;

@@ -2,6 +2,10 @@ package com.beyonditsm.financial.widget.city;
 
 import android.content.Context;
 
+import com.beyonditsm.financial.entity.JJTCityEntity;
+import com.beyonditsm.financial.entity.JJTCounyEntity;
+import com.beyonditsm.financial.util.MyLogUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -97,6 +101,44 @@ public class CitycodeUtil {
         }
         return city_list;
 
+    }
+
+    public ArrayList<String> getJJTCity(
+            List<JJTCityEntity> list) {
+
+        if (city_list_code.size() > 0) {
+            city_list_code.clear();
+        }
+        if (city_list.size() > 0) {
+            city_list.clear();
+        }
+
+        for (int i = 0; i < list.size(); i++) {
+            city_list.add(list.get(i).getName());
+            city_list_code.add(list.get(i).getId() + "");
+        }
+
+
+        return city_list;
+    }
+
+
+    public ArrayList<String> getJJTCouny(
+            List<JJTCounyEntity> list) {
+
+        if (city_list_code.size() > 0) {
+            city_list_code.clear();
+        }
+        if (city_list.size() > 0) {
+            city_list.clear();
+        }
+
+        for (int i = 0; i < list.size(); i++) {
+            city_list.add(list.get(i).getName());
+            city_list_code.add(list.get(i).getId() + "");
+        }
+
+        return city_list;
     }
 
     public ArrayList<String> getCouny(
