@@ -39,6 +39,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -108,6 +109,7 @@ public class CreditSpeedDetailAct extends BaseActivity {
     private ObjectAnimator obaOn3;
 
     public static final String CREDIT_TYPE = "credit_type";
+    public static final String SPEED_CREDIT_ORDER_ID = "order_id";
     private List<LoadUseEntity> loadUseEntityList;
 
     java.text.DecimalFormat df = new java.text.DecimalFormat("#0.0");//保留小数
@@ -125,6 +127,8 @@ public class CreditSpeedDetailAct extends BaseActivity {
     private CreditSpeedEntity creditSpeedEntity;
     private String creditMoney;
     private String creditMonth;
+    private List<String> jobIdentitysList = new ArrayList<>();
+    private List<String> propertyTypeList;
 
     @Override
     public void setLayout() {
@@ -134,7 +138,8 @@ public class CreditSpeedDetailAct extends BaseActivity {
     @Override
     public void init(Bundle savedInstanceState) {
 
-
+        propertyTypeList = (List<String>) getIntent().getSerializableExtra(SpeedCreditFrag.PROPERTY_TYPES);
+        jobIdentitysList = (List<String>) getIntent().getSerializableExtra(SpeedCreditFrag.JOB_IDENTITYS);
         creditSpeedEntity = getIntent().getParcelableExtra(SpeedCreditFrag.CREDIT_SPEED);
         if (creditSpeedEntity != null) {
             setTopTitle(creditSpeedEntity.getProductName());
@@ -159,7 +164,7 @@ public class CreditSpeedDetailAct extends BaseActivity {
             tvScope.setText("额度范围：" + df.format(minVal / 10000) + "-" + df.format(maxVal / 10000) + "万");
             tvProName.setText(creditSpeedEntity.getProductName());
 
-            tvLim.setText("期限范围：" + creditSpeedEntity.getRepaymentPeriod() + "周");
+            tvLim.setText("期限范围：" + creditSpeedEntity.getRepaymentPeriod());
             if (!TextUtils.isEmpty(creditSpeedEntity.getPayType())) {
                 tvPayType.setText("还款方式：" + creditSpeedEntity.getPayType());
             }
@@ -168,9 +173,9 @@ public class CreditSpeedDetailAct extends BaseActivity {
             }
             if (!TextUtils.isEmpty(creditSpeedEntity.getMinRate()) || !TextUtils.isEmpty(creditSpeedEntity.getMaxRate())) {
                 if (Double.valueOf(creditSpeedEntity.getMaxRate()) - Double.valueOf(creditSpeedEntity.getMinRate()) == 0) {
-                    tvRate.setText("综合费率：" + creditSpeedEntity.getMinRate() + "%");
+                    tvRate.setText(creditSpeedEntity.getMinRate());
                 } else {
-                    tvRate.setText("综合费率：" + creditSpeedEntity.getMinRate() + "%-" + creditSpeedEntity.getMaxRate() + "%");
+                    tvRate.setText( creditSpeedEntity.getMinRate() + "%-" + creditSpeedEntity.getMaxRate());
                 }
             }
 
@@ -184,8 +189,8 @@ public class CreditSpeedDetailAct extends BaseActivity {
             if (!TextUtils.isEmpty(creditSpeedEntity.getDetailDescribe())) {
                 tvDetail.setText(creditSpeedEntity.getDetailDescribe());
             }
-            if (!TextUtils.isEmpty(creditSpeedEntity.getRepaymentPeriod())) {
-                String repaymentPeriod = creditSpeedEntity.getRepaymentPeriod();
+            if (!TextUtils.isEmpty(creditSpeedEntity.getMortgageType())) {
+                String repaymentPeriod = creditSpeedEntity.getMortgageType();
                 String[] split = repaymentPeriod.split("[,]");
                 for (int i = 0; i < split.length; i++) {
                     String s = split[i];
@@ -198,6 +203,7 @@ public class CreditSpeedDetailAct extends BaseActivity {
 
                 }
             }
+
         }
         initAnim();
         setLeftTv("返回");
@@ -205,7 +211,7 @@ public class CreditSpeedDetailAct extends BaseActivity {
         map.put(1, false);
         map.put(2, false);
 
-        queryLoanUse();
+//        queryLoanUse();
 
         etSpeedAmount.addTextChangedListener(textWatcher);
     }
@@ -412,7 +418,7 @@ public class CreditSpeedDetailAct extends BaseActivity {
                     submitCreditSpeedEntity.setTotalPeriods(tvSpeedWeek.getText().toString());
                     submitCreditSpeedEntity.setTotalLoanInterest(tvTotal.getText().toString());
                     submitCreditSpeedEntity.setRealMonthlyRate(tvRate.getText().toString());
-                    submitOreder(submitCreditSpeedEntity);
+                    submitOreder(creditSpeedEntity.getProductId(),submitCreditSpeedEntity);
                 }
 
 
@@ -422,12 +428,12 @@ public class CreditSpeedDetailAct extends BaseActivity {
             case R.id.rl_purpose:
 
                 MySelfSheetDialog mySelfSheetDialog = new MySelfSheetDialog(CreditSpeedDetailAct.this).builder();
-                if (loadUseEntityList.size() != 0) {
-                    for (int i = 0; i < loadUseEntityList.size(); i++) {
-                        mySelfSheetDialog.addSheetItem(loadUseEntityList.get(i).getName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
+                if (jobIdentitysList.size() != 0) {
+                    for (int i = 0; i < jobIdentitysList.size(); i++) {
+                        mySelfSheetDialog.addSheetItem(jobIdentitysList.get(i), null, new MySelfSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
-                                tvPurpose.setText(loadUseEntityList.get(which - 1).getName());
+                                tvPurpose.setText(jobIdentitysList.get(which - 1));
                             }
                         });
                     }
@@ -527,20 +533,26 @@ public class CreditSpeedDetailAct extends BaseActivity {
         return true;
     }
 
-    private void submitOreder(SubmitCreditSpeedEntity submitEntity) {
-        RequestManager.getCommManager().submitSpeedOrder(submitEntity, new RequestManager.CallBack() {
+    private void submitOreder(String productId,SubmitCreditSpeedEntity submitEntity) {
+        RequestManager.getCommManager().submitSpeedOrder(productId,submitEntity, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
+                JSONObject jsonObject = new JSONObject(result);
+                String orderId = jsonObject.getString("data");
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(SpeedCreditFrag.PROPERTY_TYPES,(Serializable) propertyTypeList);
+                bundle.putString(SPEED_CREDIT_ORDER_ID,orderId);
                 if (TextUtils.isEmpty(SpUtils.getRoleName(CreditSpeedDetailAct.this))) {
                     gotoActivity(CreditSpeedFirstAct.class, false);
                 } else {
-                    gotoActivity(CreditSpeedSecond_1Act.class, false);
+                    gotoActivity(CreditSpeedSecond_1Act.class, false,bundle);
                 }
+
             }
 
             @Override
             public void onError(int status, String msg) {
-
+                MyToastUtils.showShortToast(CreditSpeedDetailAct.this,msg);
             }
         });
     }
