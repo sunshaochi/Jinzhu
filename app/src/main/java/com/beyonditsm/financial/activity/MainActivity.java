@@ -154,6 +154,11 @@ public class MainActivity extends BaseActivity {
         assignViews();
 
 
+        String position = getIntent().getStringExtra("position");
+        if (!TextUtils.isEmpty(position)&&Integer.valueOf(position)==1){
+            setTabSelection(Integer.valueOf(position));
+            setCheckItem(Integer.valueOf(position));
+        }
         if (TextUtils.isEmpty(SpUtils.getRoleName(MainActivity.this))) {
             ivRedPoint.setVisibility(View.GONE);
         } else {

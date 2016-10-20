@@ -58,10 +58,13 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
     private TextView tvSpeedSalaryDay;
     @ViewInject(R.id.et_speedCompanyAddressDetail)
     private EditText etSpeedCompanyAddressDetail;
+    @ViewInject(R.id.tv_speedCompanyAddressDetail)
+    private TextView tvSpeedCompanyAddressDetail;
     private List<JJTProvinceEntity> provinceList;
     private List<JJTCityEntity> cityEntityList;
     private List<JJTCounyEntity> counyEntityList;
     private DialogJJTAddress dialogChooseAdress1;
+    private String orderId;
 
     @Override
     public void setLayout() {
@@ -70,6 +73,7 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
 
     @Override
     public void init(Bundle savedInstanceState) {
+        orderId = getIntent().getStringExtra(CreditSpeedSecond_1Act.ORDER_ID);
         queryUnitProperty();
         queryWorkingProperty();
         querySalary();
@@ -87,20 +91,20 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
         tvSpeedCompanyPhone.setText(Html.fromHtml(speedIdCard));
         String speedPhone = "单位地址<font color='#FF0000'> *</font>:";
         tvSpeedCompantAddress.setText(Html.fromHtml(speedPhone));
-        String speedMarriage = "部&#160;&#160;&#160;&#160;&#160;&#160;门<font color='#FF0000'> *</font>:";
+        String speedMarriage = "部门<font color='#FF0000'> *</font>:";
         tvSpeedDepartment.setText(Html.fromHtml(speedMarriage));
         String speedEdu = "单位性质<font color='#FF0000'> *</font>:";
         tvSpeedCompanyType.setText(Html.fromHtml(speedEdu));
         String speedPermanent = "工作性质<font color='#FF0000'> *</font>:";
         tvSpeedWorkType.setText(Html.fromHtml(speedPermanent));
-        String speedResident = "月基本薪水<font color='#FF0000'> *</font>:";
+        String speedResident = "基本月薪<font color='#FF0000'> *</font>:";
         tvSpeedSalary.setText(Html.fromHtml(speedResident));
-        String speedLiving = "月薪发放形式<font color='#FF0000'>*</font>:";
+        String speedLiving = "发放形式<font color='#FF0000'>*</font>:";
         tvSpeedSalaryType.setText(Html.fromHtml(speedLiving));
         String speedBank = "月发薪日<font color='#FF0000'> *</font>:";
         tvSpeedSalaryDay.setText(Html.fromHtml(speedBank));
         String speedPermanentDetail = "详细地址<font color='#FF0000'> *</font>";
-        etSpeedCompanyAddressDetail.setHint(Html.fromHtml(speedPermanentDetail));
+        tvSpeedCompanyAddressDetail.setHint(Html.fromHtml(speedPermanentDetail));
 
     }
 

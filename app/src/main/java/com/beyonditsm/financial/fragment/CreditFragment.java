@@ -41,12 +41,28 @@ public class CreditFragment extends BaseFragment {
     }
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden){
+            creditViewpager.setCurrentItem(0);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        creditViewpager.setCurrentItem(0);
+    }
+
+    @Override
     public void initData(Bundle savedInstanceState) {
         tvTitle.setText("贷款");
         rl_back.setVisibility(View.GONE);
         initViewPager();
 
     }
+
+
 
     private void initViewPager() {
         ArrayList<Fragment> fragmentList = new ArrayList<>();

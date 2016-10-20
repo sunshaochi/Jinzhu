@@ -37,7 +37,7 @@
                 <EditText
                     android:id="@+id/et_speedCompanyName"
                     style="@style/cre_et"
-                    android:layout_marginLeft="10dp"/>
+                    android:hint="请输入单位名称" />
             </LinearLayout>
 
             <View style="@style/view_line" />
@@ -55,7 +55,7 @@
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/cre_et_bg"
-                    android:layout_marginLeft="10dp"/>
+                    android:layout_marginLeft="75dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -81,23 +81,43 @@
                     style="@style/tv_primary_style"
                     android:layout_centerVertical="true" />
 
-                <TextView
-                    android:id="@+id/tv_speedSelectCompanyAddress"
-                    style="@style/tv_select_style"
-                    android:drawableRight="@mipmap/button_select"
-                    android:textColor="#f63" />
+                <RelativeLayout
+                    android:id="@+id/rl_speedSelectCompanyAddress"
+                    style="@style/speed_credit_second_select_relative">
+                    <TextView
+                        android:id="@+id/tv_speedSelectCompanyAddress"
+                        style="@style/speed_credit_second_select_text"
+                        android:hint="请选择城市"
+                        />
+                    <ImageView
+                        style="@style/speed_credit_sencond_select_imageview"/>
+                </RelativeLayout>
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
 
             <!--单位详细地址-->
-            <EditText
-                android:id="@+id/et_speedCompanyAddressDetail"
-                style="@style/speed_credit_second_detail_address"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_speedCompanyAddressDetail"
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true" />
+
+                <EditText
+                    android:id="@+id/et_speedCompanyAddressDetail"
+                    android:hint="请输入详细单位地址"
+                    style="@style/cre_et"/>
+            </RelativeLayout>
+
             <View
+                android:visibility="gone"
                 style="@style/view_line"/>
             <!--部门-->
             <LinearLayout
+                android:visibility="gone"
                 style="@style/speed_credit_second_horizontal_linearlayout">
 
                 <TextView
@@ -124,11 +144,17 @@
                     style="@style/tv_primary_style"
                     android:layout_centerVertical="true" />
 
-                <TextView
-                    android:id="@+id/tv_speedSelectCompanyType"
-                    style="@style/tv_select_style"
-                    android:drawableRight="@mipmap/button_select"
-                    android:textColor="#f63" />
+                <RelativeLayout
+                    android:id="@+id/rl_speedSelectCompanyType"
+                    style="@style/speed_credit_second_select_relative">
+                    <TextView
+                        android:id="@+id/tv_speedSelectCompanyType"
+                        style="@style/speed_credit_second_select_text"
+                        android:hint="请选择"
+                        />
+                    <ImageView
+                        style="@style/speed_credit_sencond_select_imageview"/>
+                </RelativeLayout>
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
@@ -144,11 +170,17 @@
                     style="@style/tv_primary_style"
                     android:layout_centerVertical="true" />
 
-                <TextView
-                    android:id="@+id/tv_speedSelectWorkType"
-                    style="@style/tv_select_style"
-                    android:drawableRight="@mipmap/button_select"
-                    android:textColor="#f63" />
+                <RelativeLayout
+                    android:id="@+id/rl_speedSelectWorkType"
+                    style="@style/speed_credit_second_select_relative">
+                    <TextView
+                        android:id="@+id/tv_speedSelectWorkType"
+                        style="@style/speed_credit_second_select_text"
+                        android:hint="请选择"
+                        />
+                    <ImageView
+                        style="@style/speed_credit_sencond_select_imageview"/>
+                </RelativeLayout>
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
@@ -162,10 +194,20 @@
                     style="@style/tv_primary_style"
                     android:layout_centerVertical="true" />
 
-                <EditText
-                    android:id="@+id/et_speedSalary"
-                    style="@style/cre_et"
-                    android:layout_marginLeft="10dp"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <EditText
+                        android:id="@+id/et_speedSalary"
+                        android:hint="0000"
+                        style="@style/cre_et" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="元"/>
+                </LinearLayout>
+
             </LinearLayout>
 
             <View style="@style/view_line" />
@@ -181,11 +223,17 @@
                     style="@style/tv_primary_style"
                     android:layout_centerVertical="true" />
 
-                <TextView
-                    android:id="@+id/tv_speedSelectSalaryType"
-                    style="@style/tv_select_style"
-                    android:drawableRight="@mipmap/button_select"
-                    android:textColor="#f63" />
+                <RelativeLayout
+                    android:id="@+id/rl_speedSelectSalaryType"
+                    style="@style/speed_credit_second_select_relative">
+                    <TextView
+                        android:id="@+id/tv_speedSelectSalaryType"
+                        style="@style/speed_credit_second_select_text"
+                        android:hint="请选择"
+                        />
+                    <ImageView
+                        style="@style/speed_credit_sencond_select_imageview"/>
+                </RelativeLayout>
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
