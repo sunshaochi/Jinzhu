@@ -1,5 +1,8 @@
 package com.beyonditsm.financial.activity.speedcredit;
 
+import android.annotation.TargetApi;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
@@ -12,15 +15,22 @@ import android.widget.TextView;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.credit.CreditSpeedDetailAct;
+import com.beyonditsm.financial.entity.JJTCityEntity;
+import com.beyonditsm.financial.entity.JJTCounyEntity;
+import com.beyonditsm.financial.entity.JJTProvinceEntity;
 import com.beyonditsm.financial.entity.RelationEntity;
 import com.beyonditsm.financial.entity.UserOrderInfo1;
 import com.beyonditsm.financial.fragment.SpeedCreditFrag;
+import com.beyonditsm.financial.http.CommManager;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.IdcardUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.util.ParamsUtil;
+import com.beyonditsm.financial.view.CoustomDialog;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
-import com.beyonditsm.financial.widget.DialogChooseAdress;
+import com.beyonditsm.financial.widget.jijietong.DialogJJTAddress;
+import com.beyonditsm.financial.widget.jijietong.JJTInterface;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.json.Gson;
@@ -38,7 +48,7 @@ import java.util.List;
  * Created by Administrator on 2016/10/14 0014.
  */
 
-public class CreditSpeedSecond_1Act extends BaseActivity {
+public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface{
 
     @ViewInject(R.id.tv_speed_top_1)
     private TextView tvSpeedTop_1;//顶部文字
@@ -92,6 +102,8 @@ public class CreditSpeedSecond_1Act extends BaseActivity {
     private TextView tvSpeedSelectPermanent;
     @ViewInject(R.id.tv_speedSelectResident)
     private TextView tvSpeedSelectResident;
+    @ViewInject(R.id.tv_speed_toTwo)
+    private TextView tvSpeedToTwo;
     private String orderId;
     private List<String> propetyTypesList;
 
@@ -105,6 +117,14 @@ public class CreditSpeedSecond_1Act extends BaseActivity {
     private String residentC;
     private String residentA;
 
+    private List<JJTProvinceEntity> provinceList;
+    private List<JJTCityEntity> cityEntityList;
+    private List<JJTCounyEntity> counyEntityList;
+    private DialogJJTAddress dialogChooseAdress1;
+    private List<String> uuntanal;
+
+    public static final String ORDER_ID ="order_id";
+
     @Override
     public void setLayout() {
         setContentView(R.layout.act_creditspeedsecond_1);
@@ -115,7 +135,7 @@ public class CreditSpeedSecond_1Act extends BaseActivity {
         orderId = getIntent().getStringExtra(CreditSpeedDetailAct.SPEED_CREDIT_ORDER_ID);
         propetyTypesList = (List<String>) getIntent().getSerializableExtra(SpeedCreditFrag.PROPERTY_TYPES);
         initText();
-
+        queryAllProvince();
         getMarriage();
         getEdu();
         childNumList = new ArrayList<>();
@@ -217,9 +237,6 @@ public class CreditSpeedSecond_1Act extends BaseActivity {
                     saveEsseatialInfo(userOrderInfo1);
 
                 }
-//                Intent intent = new Intent(CreditSpeedSecondFrag.NEXT);
-//                intent.putExtra("item",1);
-//                getActivity().sendBroadcast(intent);
                 break;
             //选择居住状况
             case R.id.rl_speedSelectLiving:
@@ -269,25 +286,30 @@ public class CreditSpeedSecond_1Act extends BaseActivity {
 
             //选择户籍地城市
             case R.id.rl_speedSelectPermanent:
-                DialogChooseAdress dialogChooseAdress1 = new DialogChooseAdress(CreditSpeedSecond_1Act.this).builder();
                 dialogChooseAdress1.show();
-                dialogChooseAdress1.setOnSheetItemClickListener(new DialogChooseAdress.SexClickListener() {
+                dialogChooseAdress1.setOnSheetItemClickListener(new DialogJJTAddress.SexClickListener() {
                     @Override
-                    public void getAdress(List<String> adress) {
+                    public void getAdress(final List<String> adress) {
+//                        MyLogUtils.info("选择的地址:" + adress.get(1));
+
                         permanentP = adress.get(0);
                         permanentC = adress.get(1);
-                        permanentA = adress.get(2);
+                       permanentA =  adress.get(2);
                         tvSpeedSelectPermanent.setText(permanentP + permanentC + permanentA);
+//                        for (int i=0;i<adress.size();i++){
+//                            MyLogUtils.info("address"+adress.get(i));
+//                        }
                     }
                 });
                 break;
             //选择常住地城市
             case R.id.rl_speedSelectResident:
-                DialogChooseAdress dialogChooseProvince = new DialogChooseAdress(CreditSpeedSecond_1Act.this).builder();
-                dialogChooseProvince.show();
-                dialogChooseProvince.setOnSheetItemClickListener(new DialogChooseAdress.SexClickListener() {
+
+                dialogChooseAdress1.show();
+                dialogChooseAdress1.setOnSheetItemClickListener(new DialogJJTAddress.SexClickListener() {
                     @Override
-                    public void getAdress(List<String> adress) {
+                    public void getAdress(final List<String> adress) {
+
                         residentP = adress.get(0);
                         residentC = adress.get(1);
                         residentA = adress.get(2);
@@ -358,24 +380,35 @@ public class CreditSpeedSecond_1Act extends BaseActivity {
     /**
      * 保存基本信息
      */
-    private void saveEsseatialInfo(UserOrderInfo1 userOrderInfo1){
+    private void saveEsseatialInfo(final UserOrderInfo1 userOrderInfo1){
         RequestManager.getCommManager().saveEssentialInfo(userOrderInfo1,new RequestManager.CallBack() {
+            @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onSucess(String result) throws JSONException {
-//                Intent intent = new Intent(CreditSpeedSecond_1Act.this, CreditSpeedSecond_2Act.class);
-//                startActivity(intent);
+
                 JSONObject jsonObject = new JSONObject(result);
                 if (jsonObject.get("data") instanceof JSONArray){
-
+                    JSONArray data = jsonObject.getJSONArray("data");
+                    Gson gson = new Gson();
+                    uuntanal = gson.fromJson(data.toString(), new TypeToken<List<String>>() {
+                    }.getType());
+                    CoustomDialog coustomDialog = new CoustomDialog(CreditSpeedSecond_1Act.this, uuntanal);
+                    coustomDialog.builder();
+                    coustomDialog.setCanceledOnTouchOutside(false);
+                    coustomDialog.show();
+                    tvSpeedToTwo.setClickable(false);
+                    tvSpeedToTwo.setBackground(getResources().getDrawable(R.drawable.button_grey));
                 }else{
-
+                    Intent intent = new Intent(CreditSpeedSecond_1Act.this, CreditSpeedSecond_2Act.class);
+                    intent.putExtra(ORDER_ID,userOrderInfo1.getOrderId());
+                    startActivity(intent);
                 }
 
             }
 
             @Override
             public void onError(int status, String msg) {
-
+                MyToastUtils.showShortToast(CreditSpeedSecond_1Act.this,msg);
             }
         });
     }
@@ -461,5 +494,94 @@ public class CreditSpeedSecond_1Act extends BaseActivity {
             return false;
         }
         return true;
+    }
+
+    /*省查询*/
+    private void queryAllProvince() {
+        CommManager.getCommManager().queryAllProvince(new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                JSONObject jsonObject = new JSONObject(result);
+                JSONObject data = jsonObject.getJSONObject("data");
+                JSONArray res = data.getJSONArray("result");
+                Gson gson = new Gson();
+                provinceList = gson.fromJson(res.toString(), new TypeToken<List<JJTProvinceEntity>>() {
+                }.getType());
+                ParamsUtil.getInstance().setProvinceEntityList(provinceList);
+
+                if (provinceList != null && provinceList.size() > 0) {
+                    dialogChooseAdress1 = new DialogJJTAddress(CreditSpeedSecond_1Act.this, provinceList).builder();
+                    dialogChooseAdress1.getJJTPicker().setOnSrollListener(CreditSpeedSecond_1Act.this);
+                    queryAllCity(provinceList.get(0).getId() + "");
+                }
+
+            }
+
+
+            @Override
+            public void onError(int status, String msg) {
+
+            }
+        });
+    }
+
+
+    /*市查询*/
+    private void queryAllCity(String parentId) {
+        CommManager.getCommManager().queryAllCity(parentId, new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                JSONObject jsonObject = new JSONObject(result);
+                JSONObject data = jsonObject.getJSONObject("data");
+                JSONArray res = data.getJSONArray("result");
+                Gson gson = new Gson();
+                cityEntityList = gson.fromJson(res.toString(), new TypeToken<List<JJTCityEntity>>() {
+                }.getType());
+                ParamsUtil.getInstance().setCityEntityList(cityEntityList);
+                dialogChooseAdress1.getJJTPicker().setCityList();
+                if (cityEntityList != null && cityEntityList.size() > 0) {
+                    queryAllArea(cityEntityList.get(0).getId() + "");
+                }
+
+
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
+            }
+        });
+    }
+
+    /*区查询*/
+    private void queryAllArea(String parentId) {
+        CommManager.getCommManager().queryAllArea(parentId, new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                JSONObject jsonObject = new JSONObject(result);
+                JSONObject data = jsonObject.getJSONObject("data");
+                JSONArray res = data.getJSONArray("result");
+                Gson gson = new Gson();
+                counyEntityList = gson.fromJson(res.toString(), new TypeToken<List<JJTCounyEntity>>() {
+                }.getType());
+                ParamsUtil.getInstance().setCounyEntityList(counyEntityList);
+                dialogChooseAdress1.getJJTPicker().setCouny();
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onProvinceSelected(JJTProvinceEntity jjtProvinceEntity) {
+        queryAllCity(jjtProvinceEntity.getId()+"");
+    }
+
+    @Override
+    public void onCitySelected(JJTCityEntity jjtCityEntity) {
+        queryAllArea(jjtCityEntity.getId()+"");
     }
 }
