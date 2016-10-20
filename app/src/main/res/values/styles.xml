@@ -514,8 +514,31 @@
     <style name="speed_credit_second_detail_address">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">40dp</item>
-        <item name="android:gravity">right|center_vertical</item>
+        <item name="android:gravity">center_vertical</item>
         <item name="android:textSize">14sp</item>
         <item name="android:background">@null</item>
+    </style>
+
+    <style name="speed_credit_second_select_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:hint">请选择</item>
+        <item name="android:textColor">#f63</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="speed_credit_sencond_select_imageview">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:background">@mipmap/button_select</item>
+    </style>
+
+    <style name="speed_credit_second_select_relative">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">80dp</item>
+        <item name="android:layout_centerVertical">true</item>
     </style>
 </resources>

@@ -32,6 +32,9 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -39,11 +42,13 @@ import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -56,6 +61,29 @@ import java.util.regex.Pattern;
  */
 public class FinancialUtil {
 
+    /**
+     * 将json格式的字符串解析成String字符串平装<li>
+     * json格式：String objString = "{\"aa\":1,\"cc\":2,\"bb\":3}";
+     */
+    @SuppressWarnings({"unchecked"})
+    public static List<String> toAnnotationStr(JSONObject object) {
+        List<String> list = new ArrayList<>();
+        try {
+            if (object != null) {
+                Iterator it = object.keys();
+                while (it.hasNext()) {
+                    String key = String.valueOf(it.next());
+                    String value = null;
+                    value = object.getString(key);
+                    list.add(value);
+                }
+                return list;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 
     /**
      * 获取当前时间

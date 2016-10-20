@@ -108,6 +108,21 @@ public class CreditSpeedEntity  implements Parcelable{
 
     private JobIdentitysBean jobIdentitys;//借款用途
     private String propertyType;
+    /**
+     * productId : a7eae68cce814ad7bd53ae056b1ff5e8
+     * mortgageType : 15,30,50
+     * loanTimes : {"15":"15","50":"50","30":"30"}
+     */
+
+    private String productId;
+    private String mortgageType;
+    /**
+     * 15 : 15
+     * 50 : 50
+     * 30 : 30
+     */
+
+    private LoanTimesBean loanTimes;
 
 
     protected CreditSpeedEntity(Parcel in) {
@@ -129,6 +144,8 @@ public class CreditSpeedEntity  implements Parcelable{
         applyMaterial = in.readString();
         detailDescribe = in.readString();
         payType = in.readString();
+        mortgageType = in.readString();
+        productId = in.readString();
     }
 
     public static final Creator<CreditSpeedEntity> CREATOR = new Creator<CreditSpeedEntity>() {
@@ -272,6 +289,8 @@ public class CreditSpeedEntity  implements Parcelable{
         parcel.writeString(applyMaterial);
         parcel.writeString(detailDescribe);
         parcel.writeString(payType);
+        parcel.writeString(mortgageType);
+        parcel.writeString(productId);
     }
 
     public String getRepaymentPeriod() {
@@ -344,6 +363,30 @@ public class CreditSpeedEntity  implements Parcelable{
 
     public void setPropertyType(String propertyType) {
         this.propertyType = propertyType;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    public String getMortgageType() {
+        return mortgageType;
+    }
+
+    public void setMortgageType(String mortgageType) {
+        this.mortgageType = mortgageType;
+    }
+
+    public LoanTimesBean getLoanTimes() {
+        return loanTimes;
+    }
+
+    public void setLoanTimes(LoanTimesBean loanTimes) {
+        this.loanTimes = loanTimes;
     }
 
     public static class PropertyTypesBean {
@@ -659,6 +702,39 @@ public class CreditSpeedEntity  implements Parcelable{
 
         public void setValue509(String value509) {
             this.value509 = value509;
+        }
+    }
+
+    public static class LoanTimesBean {
+        @SerializedName("15")
+        private String value15;
+        @SerializedName("50")
+        private String value50;
+        @SerializedName("30")
+        private String value30;
+
+        public String getValue15() {
+            return value15;
+        }
+
+        public void setValue15(String value15) {
+            this.value15 = value15;
+        }
+
+        public String getValue50() {
+            return value50;
+        }
+
+        public void setValue50(String value50) {
+            this.value50 = value50;
+        }
+
+        public String getValue30() {
+            return value30;
+        }
+
+        public void setValue30(String value30) {
+            this.value30 = value30;
         }
     }
 }

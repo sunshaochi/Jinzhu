@@ -10,6 +10,7 @@ import com.beyonditsm.financial.entity.OrderBean;
 import com.beyonditsm.financial.entity.SubmitCreditSpeedEntity;
 import com.beyonditsm.financial.entity.SumLoadEntity;
 import com.beyonditsm.financial.entity.UserEntity;
+import com.beyonditsm.financial.entity.UserOrderInfo1;
 import com.beyonditsm.financial.entity.UserOrderInfo3;
 import com.beyonditsm.financial.entity.UserOrderInfoEntity;
 import com.beyonditsm.financial.util.GsonUtils;
@@ -634,14 +635,60 @@ public class CommManager extends RequestManager {
      *  点击申贷接口（须传参数：借款用途:purpose;最大承受还款额度:maxRepaymentWeekly;贷款金额:
      * totalAmount;还款期限: totalPeriods;利息:totalLoanInterest;综合费率:realMonthlyRate）
      */
-    public void submitSpeedOrder(SubmitCreditSpeedEntity scse, CallBack callBack){
+    public void submitSpeedOrder(String productId,SubmitCreditSpeedEntity scse, CallBack callBack){
         Map<String, String> params = new HashMap<>();
-        params.put("purpose",scse.getPurpose());
-        params.put("maxRepaymentWeekly",scse.getMaxRepaymentWeekly());
-        params.put("totalAmount",scse.getTotalAmount());
-        params.put("totalPeriods",scse.getTotalPeriods());
-        params.put("totalLoanInterest",scse.getTotalLoanInterest());
-        params.put("realMonthlyRate",scse.getRealMonthlyRate());
+        params.put("productId",productId);
+        params.put("purpose",scse.getPurpose()+"");
+        params.put("maxRepaymentWeekly",scse.getMaxRepaymentWeekly()+"");
+        params.put("totalAmount",scse.getTotalAmount()+"");
+        params.put("totalPeriods",scse.getTotalPeriods()+"");
+        params.put("totalLoanInterest",scse.getTotalLoanInterest()+"");
+        params.put("realMonthlyRate",scse.getRealMonthlyRate()+"");
+        MyLogUtils.info("借款用途："+scse.getPurpose()+",最大承受还款额度："+scse.getMaxRepaymentWeekly()+",贷款金额："+scse.getTotalAmount()+",还款期限："+scse.getTotalPeriods()+",总利息："+scse.getTotalLoanInterest()+"，综合费率："+scse.getRealMonthlyRate());
         doPost(IFinancialUrl.SUBMIT_SPEED_CREDIT,params,callBack);
+    }
+
+    /**
+     * 获取婚姻状况
+     * @param callBack
+     */
+    public void getMarrias(CallBack callBack){
+        Map<String, String> params = new HashMap<>();
+        doPost(IFinancialUrl.MARITALE,params,callBack);
+    }
+
+    /**
+     * 获取学历状况
+     * @param callBack
+     */
+    public void getEducation(CallBack callBack){
+        Map<String, String> params = new HashMap<>();
+        doPost(IFinancialUrl.EDUCATION,params,callBack);
+    }
+
+    public void saveEssentialInfo(UserOrderInfo1 userInfo1,CallBack callBack){
+        Map<String, String> params = new HashMap<>();
+        params.put("orderId",userInfo1.getOrderId()+"");
+        params.put("name",userInfo1.getName()+"");
+        params.put("contactNum",userInfo1.getContactNum()+"");
+        params.put("idcardno",userInfo1.getIdcardno()+"");
+        params.put("marriagests",userInfo1.getMarriagests()+"");
+        params.put("qualitications",userInfo1.getQualitications()+"");
+        params.put("childNum",userInfo1.getChildNum()+"");
+        params.put("domicileArea",userInfo1.getDomicileArea()+"");
+        params.put("domicileCity",userInfo1.getDomicileCity()+"");
+        params.put("domicileDetail",userInfo1.getDomicileDetail()+"");
+        params.put("domicileProvince",userInfo1.getDomicileProvince()+"");
+        params.put("permanentArea",userInfo1.getPermanentArea()+"");
+        params.put("permanentCity",userInfo1.getPermanentCity()+"");
+        params.put("permanentProvince",userInfo1.getPermanentProvince()+"");
+        params.put("permanentDetail",userInfo1.getPermanentDetail()+"");
+        params.put("resSts",userInfo1.getResSts()+"");
+        MyLogUtils.info("订单id："+userInfo1.getOrderId()+",姓名："+userInfo1.getName()+",身份证号："+userInfo1.getIdcardno()
+                +",联系电话:"+userInfo1.getContactNum()+"，子女数目："+userInfo1.getChildNum()+",学历："+userInfo1.getQualitications()
+        +",户籍地省："+userInfo1.getDomicileProvince()+"户籍地市："+userInfo1.getDomicileCity()+",户籍地区："+userInfo1.getDomicileArea()+
+        ",户籍地详细地址："+userInfo1.getDomicileDetail()+",常住地省："+userInfo1.getPermanentProvince()+",常住地市："+userInfo1.getPermanentCity()
+        +",常住地区："+userInfo1.getPermanentArea()+"，常住地详细地址："+userInfo1.getPermanentDetail()+",居住状况："+userInfo1.getResSts());
+        doPost(IFinancialUrl.SAVE_ESSENTIAL_INFO,params,callBack);
     }
 }

@@ -29,7 +29,8 @@ public interface IFinancialUrl {
 
     //    String BASE_URL = "http://test.myjinzhu.com:8082";
     /*测试急借通接口*/
-    String BASE_URL = "http://139.196.227.38:8080";
+    String BASE_URL = "http://172.16.5.151:8080";
+//    String BASE_URL = "http://139.196.227.38:8080";
     /*测试地址3*/
 //    String BASE_URL="http://test.myjinzhu.com:60";
     //内网地址（测试钱包功能）
@@ -43,7 +44,7 @@ public interface IFinancialUrl {
     /**
      * @MARKEY_CODE 渠道号设置，默认渠道设置为空字符串
      */
-    String MARKET_CODE = "qudao4";
+    String MARKET_CODE = "";
     String API_VERSION = "/easyplay";
 
     String BASE_IMAGE_URL = BASE_URL + API_VERSION + "/";
@@ -275,10 +276,7 @@ public interface IFinancialUrl {
     /*上传资料信息（第四版块）*/
     String SAVE_UPLOAD_INFO = BASE_URL +API_VERSION+"/platform/login/saveUserOrderInfo4.do";
 
-    /**
-     * http://172.16.5.151:8080/easyplay/platform/login/submitExtremeCreditOrder
-
-     */
+    /*提交极速贷接口*/
     String SUBMIT_SPEED_CREDIT =BASE_URL + API_VERSION + "/platform/login/submitExtremeCreditOrder.do";
     /*上传急借通第四板块信息接口*/
     String SAVE_USER_ORDER_INFO4 = BASE_URL + API_VERSION + "/platform/login/saveUserOrderInfo4.do";

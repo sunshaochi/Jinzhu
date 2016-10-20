@@ -23,8 +23,12 @@ import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,15 +41,19 @@ public class SpeedCreditFrag extends BaseFragment {
     private LoadRefreshView lvSpeedCredit;
     private List<CreditSpeedEntity> creditSpeedList;
     private SpeedCreditAdapter speedCreditAdapter;
-
+    private List<List<String>> propertyTypes = new ArrayList<>();
+    private List<List<String>> jobIdentitys = new ArrayList<>();
     private int currentP = 1;
     @ViewInject(R.id.loading_speedCredit)
     private LoadingView loadingSpeedCredit;
 
     public static final String CREDIT_SPEED = "credit_speed";
+    public static final String JOB_IDENTITYS = "job_identitys";
+    public static final String PROPERTY_TYPES = "property_types";
+
     @Override
     public View initView(LayoutInflater inflater) {
-        return inflater.inflate(R.layout.frag_speedcredit,null);
+        return inflater.inflate(R.layout.frag_speedcredit, null);
     }
 
     @Override
@@ -70,21 +78,32 @@ public class SpeedCreditFrag extends BaseFragment {
                 loadingSpeedCredit.loadComplete();
                 lvSpeedCredit.onPullDownRefreshComplete();
                 lvSpeedCredit.onPullUpRefreshComplete();
+                JSONObject jsonObject = new JSONObject(result);
+                JSONObject data = jsonObject.getJSONObject("data");
+                JSONArray rows = data.getJSONArray("rows");
+                for (int i = 0; i < rows.length(); i++) {
+                    JSONObject jsonObject1 = rows.getJSONObject(i);
+                    JSONObject propertyTypesObj = jsonObject1.getJSONObject("propertyTypes");
+                    JSONObject jobIdentitysObj = jsonObject1.getJSONObject("jobIdentitys");
+                    propertyTypes.add(FinancialUtil.toAnnotationStr(propertyTypesObj));
+                    jobIdentitys.add(FinancialUtil.toAnnotationStr(jobIdentitysObj));
+
+                }
                 ResultData<CreditSpeedResult> rd = (ResultData<CreditSpeedResult>) GsonUtils.json(result, CreditSpeedResult.class);
                 CreditSpeedResult pr = rd.getData();
                 creditSpeedList = pr.getRows();
 
-                if (creditSpeedList.size()==0||creditSpeedList==null){
-                    if (page==1){
+                if (creditSpeedList.size() == 0 || creditSpeedList == null) {
+                    if (page == 1) {
                         loadingSpeedCredit.noContent();
-                    }else{
+                    } else {
                         lvSpeedCredit.setHasMoreData(false);
                     }
                 }
-                if (speedCreditAdapter==null) {
-                    speedCreditAdapter = new SpeedCreditAdapter(getActivity(),creditSpeedList);
+                if (speedCreditAdapter == null) {
+                    speedCreditAdapter = new SpeedCreditAdapter(getActivity(), creditSpeedList);
                     lvSpeedCredit.getRefreshableView().setAdapter(speedCreditAdapter);
-                }else{
+                } else {
                     speedCreditAdapter.notifyChange(creditSpeedList);
                 }
 
@@ -106,7 +125,10 @@ public class SpeedCreditFrag extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), CreditSpeedDetailAct.class);
                 CreditSpeedEntity creditSpeedEntity = creditSpeedList.get(position);
-                intent.putExtra(CREDIT_SPEED,creditSpeedEntity);
+//                List<String> jobIdentitysList = jobIdentitys.get(position);
+                intent.putExtra(JOB_IDENTITYS,(Serializable)jobIdentitys.get(position));
+                intent.putExtra(PROPERTY_TYPES,(Serializable) propertyTypes.get(position));
+                intent.putExtra(CREDIT_SPEED, creditSpeedEntity);
                 getActivity().startActivity(intent);
             }
         });
@@ -130,4 +152,5 @@ public class SpeedCreditFrag extends BaseFragment {
             }
         });
     }
+
 }
