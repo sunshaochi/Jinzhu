@@ -129,13 +129,13 @@ public class HelpCenterActivity extends BaseActivity {
             String themeName = helpAllList.get(position).getThemeName();
             holder.tvHelpTitle.setText(themeName);
 
-            if (position == 0) {
-                holder.ivHelpIcon.setBackgroundResource(R.mipmap.icon_user_help);
-            } else if (position == 1) {
-                holder.ivHelpIcon.setBackgroundResource(R.mipmap.icon_service_help);
-            } else if (position == 2) {
-                holder.ivHelpIcon.setBackgroundResource(R.mipmap.icon_normal_help);
-            }
+//            if (position == 0) {
+//                holder.ivHelpIcon.setBackgroundResource(R.mipmap.icon_user_help);
+//            } else if (position == 1) {
+//                holder.ivHelpIcon.setBackgroundResource(R.mipmap.icon_service_help);
+//            } else if (position == 2) {
+//                holder.ivHelpIcon.setBackgroundResource(R.mipmap.icon_normal_help);
+//            }
             lpvHelpAlls.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

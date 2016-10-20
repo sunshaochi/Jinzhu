@@ -129,16 +129,16 @@ public class NewsDetailActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        ShareUtils.getInstance().weixinShare(hotNewsEntity.getTitle(), hotNewsEntity.getTitle(), hotNewsEntity.getUrlPath(), null);
+                        ShareUtils.getInstance().weixinShare("金蛛金服，业内史无前例的贴息返佣力度，只做最快速、方便、低息的银行贷款。成为代言人，和小伙伴一起赚钱，成为土豪不是梦~", hotNewsEntity.getTitle(), hotNewsEntity.getUrlPath(), null);
                         break;
                     case 1:
-                        ShareUtils.getInstance().weixinCircleShare(hotNewsEntity.getTitle(), hotNewsEntity.getTitle(), hotNewsEntity.getUrlPath(), null);
+                        ShareUtils.getInstance().weixinCircleShare("金蛛金服，业内史无前例的贴息返佣力度，只做最快速、方便、低息的银行贷款。成为代言人，和小伙伴一起赚钱，成为土豪不是梦~", hotNewsEntity.getTitle(), hotNewsEntity.getUrlPath(), null);
                         break;
                     case 2:
-                        ShareUtils.getInstance().qqShare(hotNewsEntity.getTitle(), hotNewsEntity.getTitle(), hotNewsEntity.getUrlPath(), null);
+                        ShareUtils.getInstance().qqShare("金蛛金服，业内史无前例的贴息返佣力度，只做最快速、方便、低息的银行贷款。成为代言人，和小伙伴一起赚钱，成为土豪不是梦~", hotNewsEntity.getTitle(), hotNewsEntity.getUrlPath(), null);
                         break;
                     case 3:
-                        ShareUtils.getInstance().weiboShare(hotNewsEntity.getTitle(), hotNewsEntity.getUrlPath(), null);
+                        ShareUtils.getInstance().weiboShare("金蛛金服，业内史无前例的贴息返佣力度，只做最快速、方便、低息的银行贷款。成为代言人，和小伙伴一起赚钱，成为土豪不是梦~", hotNewsEntity.getUrlPath(), null);
                         break;
                     default:
                         break;
@@ -169,13 +169,13 @@ public class NewsDetailActivity extends BaseActivity {
                 return true;
             }
         });
-        if ("".equals(newsRelativeEntity.getCurRow().getDescription()) || null == newsRelativeEntity.getCurRow().getDescription()) {
-            webView.loadUrl(newsRelativeEntity.getCurRow().getUrlPath());
-            rlRight.setVisibility(View.VISIBLE);
+        if ("".equals(newsRelativeEntity.getCurRow().getUrlPath()) || null == newsRelativeEntity.getCurRow().getUrlPath()) {
+            webView.loadData(newsRelativeEntity.getCurRow().getDescription(), "text/html; charset=UTF-8", null);//这种写法可以正确解码
+            rlRight.setVisibility(View.GONE);
 
         } else {
-            rlRight.setVisibility(View.GONE);
-            webView.loadData(newsRelativeEntity.getCurRow().getDescription(), "text/html; charset=UTF-8", null);//这种写法可以正确解码
+            rlRight.setVisibility(View.VISIBLE);
+            webView.loadUrl(newsRelativeEntity.getCurRow().getUrlPath());//这种写法可以正确解码
         }
     }
 
