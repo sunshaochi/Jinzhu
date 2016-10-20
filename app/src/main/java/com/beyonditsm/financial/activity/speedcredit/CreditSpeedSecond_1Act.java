@@ -364,6 +364,13 @@ public class CreditSpeedSecond_1Act extends BaseActivity {
             public void onSucess(String result) throws JSONException {
 //                Intent intent = new Intent(CreditSpeedSecond_1Act.this, CreditSpeedSecond_2Act.class);
 //                startActivity(intent);
+                JSONObject jsonObject = new JSONObject(result);
+                if (jsonObject.get("data") instanceof JSONArray){
+
+                }else{
+
+                }
+
             }
 
             @Override
