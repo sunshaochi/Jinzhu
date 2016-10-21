@@ -62,6 +62,7 @@ public class CreditSpeedThird_2Act extends BaseActivity {
     public static final int BACK_CARD = 1;
     private List<VendorEntity> vendorList;
     private VendorEntity curVendero;
+    private String orderId;
 
     @Override
     public void setLayout() {
@@ -70,6 +71,8 @@ public class CreditSpeedThird_2Act extends BaseActivity {
 
     @Override
     public void init(Bundle savedInstanceState) {
+        Intent intent = getIntent();
+        orderId = intent.getStringExtra("orderId");
         getAddress();  //获取门店信息
         refreshUploadState();
     }
@@ -102,9 +105,8 @@ public class CreditSpeedThird_2Act extends BaseActivity {
     public void todo(View v) {
         switch (v.getId()) {
             case R.id.tvSure:
-                Intent intent = new Intent(CreditSpeedThird_2Act.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+
+                saveUserInfo4();
                 break;
             case R.id.rl_back_card:
                 Intent intent1 = new Intent(CreditSpeedThird_2Act.this, CreditSpeedUploadAct.class);
@@ -160,22 +162,37 @@ public class CreditSpeedThird_2Act extends BaseActivity {
                 co.setStoreAddr(curVendero.getAddr().toString() + "");
                 co.setStoreCity(tvCity.getText().toString());
                 co.setStoreId(curVendero.getId() + "");
-                CommManager.getCommManager().saveUserOrderInfo4(co, new RequestManager.CallBack() {
-                    @Override
-                    public void onSucess(String result) throws JSONException {
-                        llSuccess.setVisibility(View.VISIBLE);
-                    }
-
-                    @Override
-                    public void onError(int status, String msg) {
-                        llSuccess.setVisibility(View.GONE);
-                    }
-                });
+//                CommManager.getCommManager().saveUserOrderInfo4(co, new RequestManager.CallBack() {
+//                    @Override
+//                    public void onSucess(String result) throws JSONException {
+//                        llSuccess.setVisibility(View.VISIBLE);
+//                    }
+//
+//                    @Override
+//                    public void onError(int status, String msg) {
+//                        llSuccess.setVisibility(View.GONE);
+//                    }
+//                });
 
                 break;
             default:
                 break;
         }
+    }
+
+    private void saveUserInfo4() {
+
+        CommManager.getCommManager().saveUserOrderInfo4(orderId,frontCardUrl,backCardUrl,tvCity.getText().toString(),curVendero.getId()+"",curVendero.getAddr()+"", new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
+            }
+        });
     }
 
     private void queryVendorByCity(String city) {

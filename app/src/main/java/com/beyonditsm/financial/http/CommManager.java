@@ -581,12 +581,15 @@ public class CommManager extends RequestManager {
      * @param userOrderInfo4
      * @param callBack
      */
-    public void saveUserOrderInfo4(UserOrderInfoEntity userOrderInfo4, CallBack callBack) {
-
+    public void saveUserOrderInfo4(String orderId,String idCardFront,String idCardBack,String storeCity,String storeId,String StoreAddress,CallBack callBack) {
 
         Map<String, String> params = new HashMap<>();
-        params.put("params", GsonUtils.bean2Json(userOrderInfo4));
-
+        params.put("orderId",orderId);
+        params.put("idcardFront",idCardFront);
+        params.put("idcardBack",idCardBack);
+        params.put("storeCity",storeCity);
+        params.put("storeId",storeId);
+        params.put("storeAddr",StoreAddress);
 //        JSONObject jsonObject =
         doPost(IFinancialUrl.SAVE_USER_ORDER_INFO4, params, callBack);
     }
@@ -621,7 +624,19 @@ public class CommManager extends RequestManager {
      */
     public void saveUserOrderInfo3(UserOrderInfo3 entity3, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
-        params.put("entity3", GsonUtils.bean2Json(entity3));
+        params.put("orderId",entity3.getOrderId());
+        params.put("relatives1Name",entity3.getRelatives1Name());
+        params.put("relatives1Rs",entity3.getRelatives1Rs());
+        params.put("relatives1ContactNum",entity3.getRelatives1ContactNum());
+        params.put("relatives2Name",entity3.getRelatives2Name());
+        params.put("relatives2Rs",entity3.getRelatives2Rs());
+        params.put("relatives2ContactNum", entity3.getRelatives2ContactNum());
+        params.put("colleagueName", entity3.getColleagueName());
+        params.put("colleagueRs", entity3.getColleagueRs());
+        params.put("colleagueContactNum", entity3.getColleagueContactNum());
+        params.put("ecName", entity3.getEcName());
+        params.put("ecRs", entity3.getEcRs());
+        params.put("ecContactNum", entity3.getEcContactNum());
         doPost(IFinancialUrl.SAVE_USER_ORDER_INFO3, params, callBack);
     }
 

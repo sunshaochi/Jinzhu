@@ -315,11 +315,14 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
 
 
     public void saveQualificationsInfo(){
-        //// TODO: 2016/10/20 做到了这个，UserOrderInfo1为空
+
+
         CommManager.getCommManager().saveQualificationsInfo(new UserOrderInfo1(), new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-
+                Intent intent = new Intent(CreditSpeedSecond_2Act.this,CreditSpeedSecond_3Act.class);
+                intent.putExtra("orderId",orderId);
+                startActivity(intent);
             }
 
             @Override
