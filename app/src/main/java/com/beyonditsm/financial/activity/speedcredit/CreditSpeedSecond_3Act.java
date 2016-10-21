@@ -23,7 +23,6 @@ import com.tandong.sa.json.reflect.TypeToken;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -97,6 +96,8 @@ public class CreditSpeedSecond_3Act extends BaseActivity {
 
     @Override
     public void init(Bundle savedInstanceState) {
+        setTopTitle("快速判断资质");
+        setLeftTv("返回");
         Intent intent = getIntent();
         orderId = intent.getStringExtra("orderId");
         queryRelation();

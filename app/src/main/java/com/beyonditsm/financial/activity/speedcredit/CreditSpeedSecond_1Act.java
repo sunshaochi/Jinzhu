@@ -133,6 +133,8 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
 
     @Override
     public void init(Bundle savedInstanceState) {
+        setTopTitle("快速判断资质");
+        setLeftTv("返回");
         orderId = getIntent().getStringExtra(CreditSpeedDetailAct.SPEED_CREDIT_ORDER_ID);
         propetyTypesList = (List<CreditSpeedEntity.PropertyTypesBean>) getIntent().getSerializableExtra(SpeedCreditFrag.PROPERTY_TYPES);
         initText();

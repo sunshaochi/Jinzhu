@@ -209,7 +209,8 @@
                         android:id="@+id/et_speedSalary"
                         android:hint="0000"
                         android:layout_marginLeft="0dp"
-                        style="@style/cre_et" />
+                        style="@style/cre_et"
+                        android:layout_width="wrap_content"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
