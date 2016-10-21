@@ -37,10 +37,11 @@
                     android:layout_centerVertical="true" />
 
                 <EditText
-                    android:tag="单位名称"
+                    android:tag="请输入单位名称"
                     android:id="@+id/et_speedCompanyName"
                     style="@style/cre_et"
-                    android:hint="请输入单位名称" />
+                    android:hint="请输入单位名称"
+                     />
             </RelativeLayout>
 
             <View style="@style/view_line" />
@@ -56,23 +57,36 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="80dp"
+                    android:layout_centerVertical="true"
                     android:orientation="horizontal">
                     <EditText
                         android:id="@+id/et_speedCompanyPhone"
-                        android:layout_width="50dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/cre_et_bg" />
+                        android:tag="请输入单位电话区号"
+                        android:textSize="14sp"
+                        android:maxLength="4"
+                        android:inputType="number"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:hint="0000"
+                        android:background="@null"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="—"
+                        android:text="-"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"/>
                     <EditText
                         android:id="@+id/et_speedCompanyPhoneArea"
-                        android:layout_width="100dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/cre_et_bg"/>
+                        android:textSize="14sp"
+                        android:inputType="number"
+                        android:maxLength="8"
+                        android:hint="00000000"
+                        android:tag="请输入单位电话"
+                        android:background="@null"/>
                 </LinearLayout>
 
 
@@ -95,10 +109,9 @@
                     android:id="@+id/rl_speedSelectCompanyAddress"
                     style="@style/speed_credit_second_select_relative">
                     <TextView
-                        android:tag="城市"
+                        android:tag="请选择城市"
                         android:id="@+id/tv_speedSelectCompanyAddress"
                         style="@style/speed_credit_second_select_text"
-                        android:hint="请选择城市"
                         />
                     <ImageView
                         style="@style/speed_credit_sencond_select_imageview"/>
@@ -119,6 +132,7 @@
 
                 <EditText
                     android:id="@+id/et_speedCompanyAddressDetail"
+                    android:tag="请输入详细单位地址"
                     android:hint="请输入详细单位地址"
                     style="@style/cre_et"/>
             </RelativeLayout>
@@ -159,9 +173,9 @@
                     android:id="@+id/rl_speedSelectCompanyType"
                     style="@style/speed_credit_second_select_relative">
                     <TextView
+                        android:tag="请选择单位性质"
                         android:id="@+id/tv_speedSelectCompanyType"
                         style="@style/speed_credit_second_select_text"
-                        android:hint="请选择"
                         />
                     <ImageView
                         style="@style/speed_credit_sencond_select_imageview"/>
@@ -185,9 +199,9 @@
                     android:id="@+id/rl_speedSelectWorkType"
                     style="@style/speed_credit_second_select_relative">
                     <TextView
+                        android:tag="请选择工作性质"
                         android:id="@+id/tv_speedSelectWorkType"
                         style="@style/speed_credit_second_select_text"
-                        android:hint="请选择"
                         />
                     <ImageView
                         style="@style/speed_credit_sencond_select_imageview"/>
@@ -211,9 +225,10 @@
                     android:layout_marginLeft="80dp"
                     android:orientation="horizontal">
                     <EditText
+                        android:tag="请输入基本月薪"
                         android:id="@+id/et_speedSalary"
-                        android:hint="0000"
                         android:layout_marginLeft="0dp"
+                        android:hint="000000"
                         style="@style/cre_et"
                         android:layout_width="wrap_content"/>
                     <TextView
@@ -241,9 +256,9 @@
                     android:id="@+id/rl_speedSelectSalaryType"
                     style="@style/speed_credit_second_select_relative">
                     <TextView
+                        android:tag="请选择发放形式"
                         android:id="@+id/tv_speedSelectSalaryType"
                         style="@style/speed_credit_second_select_text"
-                        android:hint="请选择"
                         />
                     <ImageView
                         style="@style/speed_credit_sencond_select_imageview"/>

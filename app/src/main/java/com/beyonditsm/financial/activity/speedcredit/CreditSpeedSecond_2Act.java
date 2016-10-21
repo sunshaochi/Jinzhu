@@ -10,12 +10,10 @@ import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
-import com.beyonditsm.financial.activity.speedcredit.creditspeedthied.CreditSpeedThird_2Act;
 import com.beyonditsm.financial.entity.JJTCityEntity;
 import com.beyonditsm.financial.entity.JJTCounyEntity;
 import com.beyonditsm.financial.entity.JJTProvinceEntity;
 import com.beyonditsm.financial.entity.UnitPropertyEntity;
-import com.beyonditsm.financial.entity.UserOrderInfo1;
 import com.beyonditsm.financial.http.CommManager;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.CheckUtil;
@@ -146,12 +144,12 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
                 if (CheckUtil.CheckOutNull(llFatherLayout) != null) {
                     String a = CheckUtil.CheckOutNull(llFatherLayout);
                     MyToastUtils.showShortToast(CreditSpeedSecond_2Act.this,a);
+                } else{
+                    saveQualificationsInfo();
                 }
 
-                saveQualificationsInfo();
-
 //                Intent intent = new Intent(CreditSpeedSecondFrag.NEXT);
-//                intent.putExtra("item",2);
+//                intent.putxtra("item",2);
 //                getActivity().sendBroadcast(intent);
                 break;
             case R.id.rl_speedCompanyAddress:

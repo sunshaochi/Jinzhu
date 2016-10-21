@@ -33,7 +33,7 @@ public class CheckUtil {
                        }
                    }else {
                        TextView textView = (TextView) view;
-                       if (textView.getText().toString().equals("请选择") && textView.getTag() != null && !(textView.getTag()+"").equals("")){
+                       if ((textView.getHint()+"").equals("请选择") && textView.getTag() != null && !(textView.getTag()+"").equals("")){
                            return textView.getTag()+"";
                        }
                    }

@@ -14,6 +14,7 @@
             android:layout_centerInParent="true"
             android:src="@mipmap/progress_02" />
     </RelativeLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -38,7 +39,8 @@
                 <EditText
                     android:tag="请输入直系亲属姓名"
                     android:id="@+id/et_speedRelativesName_1"
-                    style="@style/cre_et" />
+                    style="@style/cre_et"
+                    android:hint="请输入直系亲属姓名"/>
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
@@ -56,7 +58,8 @@
                 <EditText
                     android:tag="请输入直系亲属联系电话"
                     android:id="@+id/et_speedRelativesPhone_1"
-                    style="@style/cre_et" />
+                    style="@style/cre_et"
+                    android:hint="请输入直系亲属联系电话"/>
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
@@ -96,7 +99,8 @@
                 <EditText
                     android:tag="请输入直系亲属2姓名"
                     android:id="@+id/et_speedRelativesName_2"
-                    style="@style/cre_et" />
+                    style="@style/cre_et"
+                    android:hint="请输入直系亲属2姓名"/>
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
@@ -114,7 +118,8 @@
                 <EditText
                     android:tag="请输入直系亲属2联系电话"
                     android:id="@+id/et_speedRelativesPhone_2"
-                    style="@style/cre_et" />
+                    style="@style/cre_et"
+                    android:hint="请输入直系亲属2联系电话"/>
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
@@ -212,7 +217,8 @@
                 <EditText
                     android:tag="请输入同事姓名"
                     android:id="@+id/et_speedColleagueName_1"
-                    style="@style/cre_et" />
+                    style="@style/cre_et"
+                    android:hint="请输入同事姓名"/>
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
@@ -249,7 +255,8 @@
                 <EditText
                     android:tag="请输入同事联系电话"
                     android:id="@+id/et_speedColleaguePhone_1"
-                    style="@style/cre_et" />
+                    style="@style/cre_et"
+                    android:hint="请输入同事联系电话"/>
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
@@ -269,7 +276,8 @@
                 <EditText
                     android:tag="请输入单位名称"
                     android:id="@+id/et_speedColleagueWork_1"
-                    style="@style/cre_et" />
+                    style="@style/cre_et"
+                    android:hint="请输入单位名称"/>
             </RelativeLayout>
 
             <View style="@style/view_line"
@@ -320,12 +328,13 @@
                     android:id="@+id/tv_speedEmergentName_1"
                     style="@style/tv_primary_style"
                     android:layout_centerVertical="true"
-                    android:text="姓        名:"/>
+                    android:text="姓        名:" />
 
                 <EditText
                     android:tag="请输入紧急联系人姓名"
                     android:id="@+id/et_speedEmergentName_1"
-                    style="@style/cre_et" />
+                    style="@style/cre_et"
+                    android:hint="请输入紧急联系人姓名"/>
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
@@ -364,7 +373,8 @@
                 <EditText
                     android:tag="请输入紧急联系人电话"
                     android:id="@+id/et_speedEmergentPhone_1"
-                    style="@style/cre_et" />
+                    style="@style/cre_et"
+                    android:hint="请输入紧急联系人电话"/>
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
