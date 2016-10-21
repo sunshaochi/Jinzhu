@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.beyonditsm.financial.ConstantValue;
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
+import com.beyonditsm.financial.activity.GuideActivity;
 import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.credit.CreditGuideAct;
 import com.beyonditsm.financial.activity.speedcredit.CreditSpeedSecond_2Act;
@@ -303,7 +304,7 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
                 }
                 break;
             case R.id.ivSuspen://浮窗
-                intent = new Intent(getContext(), CreditSpeedSecond_2Act.class);
+                intent = new Intent(getContext(), CreditGuideAct.class);
                 startActivity(intent);
                 break;
             case R.id.ll_creditCard://信用卡

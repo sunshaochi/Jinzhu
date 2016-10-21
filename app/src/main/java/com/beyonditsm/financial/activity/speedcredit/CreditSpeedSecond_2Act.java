@@ -71,6 +71,14 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
     private EditText etSpeedCompanyAddressDetail;
     @ViewInject(R.id.tv_speedCompanyAddressDetail)
     private TextView tvSpeedCompanyAddressDetail;
+    @ViewInject(R.id.et_speedCompanyAddressDetail)
+    private EditText getEtSpeedCompanyAddressDetail;
+    @ViewInject(R.id.et_speedCompanyPhone)
+    private EditText etSpeedCompanyPhone;
+    @ViewInject(R.id.et_speedCompanyPhoneArea)
+    private EditText etSpeedCompanyPhoneArea;
+    @ViewInject(R.id.et_speedSalary)
+    private EditText etSpeedSalary;
     private List<JJTProvinceEntity> provinceList;
     private List<JJTCityEntity> cityEntityList;
     private List<JJTCounyEntity> counyEntityList;
@@ -78,6 +86,9 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
     private List<UnitPropertyEntity> unitPropertyList;
     private List<UnitPropertyEntity> workPropertyList;
     private List<UnitPropertyEntity> salaryPropertyList;
+    private String companyArea;
+    private String companyCity;
+    private String companyProvince;
     private String orderId;
 
     @Override
@@ -127,14 +138,14 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
     public void todo(View view) {
         switch (view.getId()) {
             case R.id.tv_speed_toThere:
-                Intent intent = new Intent(this, CreditSpeedSecond_3Act.class);
-                startActivity(intent);
+                saveQualificationsInfo();
+
 //                Intent intent = new Intent(CreditSpeedSecondFrag.NEXT);
 //                intent.putExtra("item",2);
 //                getActivity().sendBroadcast(intent);
                 break;
-            case R.id.rl_speedCompanyAddress:
-
+            case R.id.rl_speedSelectCompanyAddress:
+                MyLogUtils.info("TAG:"+tvSpeedSelectCompanyAddress.getTag()+"");
                 dialogChooseAdress1.show();
                 dialogChooseAdress1.setOnSheetItemClickListener(new DialogJJTAddress.SexClickListener() {
                     @Override
@@ -144,6 +155,9 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
                         for (int i = 0; i < adress.size(); i++) {
                             sb.append(adress.get(i));
                         }
+                        companyProvince = adress.get(0);
+                        companyCity = adress.get(1);
+                        companyArea = adress.get(2);
                         tvSpeedSelectCompanyAddress.setText(sb.toString());
                     }
                 });
@@ -321,7 +335,14 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
     public void saveQualificationsInfo(){
 
 
-        CommManager.getCommManager().saveQualificationsInfo(new UserOrderInfo1(), new RequestManager.CallBack() {
+        CommManager.getCommManager().saveQualificationsInfo(orderId,etSpeedCompanyName.getText().toString(),companyArea,companyCity,companyProvince,getEtSpeedCompanyAddressDetail.getText().toString(),
+                etSpeedCompanyPhoneArea.getText().toString()+"",
+                etSpeedCompanyPhone.getText().toString()+"",
+                tvSpeedSelectCompanyType.getText().toString()+"",
+                tvSpeedSelectWorkType.getText().toString()+"",
+                etSpeedSalary.getText().toString()+"",
+                tvSpeedSalaryType.getText().toString()+"",
+                new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
                 Intent intent = new Intent(CreditSpeedSecond_2Act.this,CreditSpeedSecond_3Act.class);

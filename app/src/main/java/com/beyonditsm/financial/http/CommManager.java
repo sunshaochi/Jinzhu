@@ -578,7 +578,6 @@ public class CommManager extends RequestManager {
     /**
      * 保存急借通第四版块信息接口（城市门店、身份证）
      *
-     * @param userOrderInfo4
      * @param callBack
      */
     public void saveUserOrderInfo4(String orderId,String idCardFront,String idCardBack,String storeCity,String storeId,String StoreAddress,CallBack callBack) {
@@ -789,11 +788,33 @@ public class CommManager extends RequestManager {
 
     /**
      * 急借通储存第二步信息接口
-     * @param userInfo1
      * @param callBack
      */
-    public void saveQualificationsInfo(UserOrderInfo1 userInfo1,CallBack callBack){
+    public void saveQualificationsInfo(String orderId,
+                                       String CompanyName,
+                                       String CompanyArea,
+                                       String CompanyCity,
+                                       String CompanyProvince,
+                                       String CompanyDetail,
+                                       String areaCode,
+                                       String CompanyPhoneNum,
+                                       String companyNature,
+                                       String workingProp,
+                                       String salary,
+                                       String payout,CallBack callBack){
         Map<String,String> params = new HashMap<>();
+        params.put("orderId",orderId);
+        params.put("CompanyName",CompanyName);
+        params.put("CompanyArea",CompanyArea);
+        params.put("CompanyCity",CompanyCity);
+        params.put("CompanyProvince",CompanyProvince);
+        params.put("CompanyDetail",CompanyDetail);
+        params.put("areaCode",areaCode);
+        params.put("CompanyPhoneNum",CompanyPhoneNum);
+        params.put("companyNature",companyNature);
+        params.put("workingProp",workingProp);
+        params.put("salary",salary);
+        params.put("payout",payout);
         doPost(IFinancialUrl.SAVE_QUALIFICATIONS_INFO,params,callBack);
 
     }

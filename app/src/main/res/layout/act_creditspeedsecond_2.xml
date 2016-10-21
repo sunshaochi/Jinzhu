@@ -51,7 +51,7 @@
                     android:layout_centerVertical="true" />
 
                 <EditText
-                    android:id="@+id/et_speedCompanyPhone"
+                    android:id="@+id/et_speedCompanyPhoneArea"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/cre_et_bg"
@@ -63,6 +63,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"/>
                 <EditText
+                    android:id="@+id/et_speedCompanyPhone"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/cre_et_bg"/>
@@ -85,6 +86,7 @@
                     android:id="@+id/rl_speedSelectCompanyAddress"
                     style="@style/speed_credit_second_select_relative">
                     <TextView
+                        android:tag="城市"
                         android:id="@+id/tv_speedSelectCompanyAddress"
                         style="@style/speed_credit_second_select_text"
                         android:hint="请选择城市"
