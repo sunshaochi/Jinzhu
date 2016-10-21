@@ -149,8 +149,13 @@ public class CreditSpeedSecond_3Act extends BaseActivity {
     public void todo(View view) {
         switch (view.getId()) {
             case R.id.tv_speed_toEnd:
-                MyToastUtils.showShortDebugToast(CreditSpeedSecond_3Act.this,CheckUtil.CheckOutNull(llFatherLayout));
-                saveUserInfo3();
+                String result = CheckUtil.CheckOutNull(llFatherLayout);
+                if (result!=null){
+                    MyToastUtils.showShortDebugToast(CreditSpeedSecond_3Act.this,result);
+                }else {
+                    saveUserInfo3();
+                }
+
 
                 break;
             case R.id.rl_speedMarriage1:
