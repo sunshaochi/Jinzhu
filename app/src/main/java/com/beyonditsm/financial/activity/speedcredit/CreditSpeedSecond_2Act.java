@@ -10,12 +10,10 @@ import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
-import com.beyonditsm.financial.activity.speedcredit.creditspeedthied.CreditSpeedThird_2Act;
 import com.beyonditsm.financial.entity.JJTCityEntity;
 import com.beyonditsm.financial.entity.JJTCounyEntity;
 import com.beyonditsm.financial.entity.JJTProvinceEntity;
 import com.beyonditsm.financial.entity.UnitPropertyEntity;
-import com.beyonditsm.financial.entity.UserOrderInfo1;
 import com.beyonditsm.financial.http.CommManager;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.CheckUtil;
@@ -104,6 +102,8 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
 
     @Override
     public void init(Bundle savedInstanceState) {
+        setTopTitle("快速判断资质");
+        setLeftTv("返回");
         orderId = getIntent().getStringExtra(CreditSpeedSecond_1Act.ORDER_ID);
         queryUnitProperty();
         queryWorkingProperty();
@@ -114,25 +114,25 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
 
     /*初始化页面字体显示*/
     private void initText() {
-        String topTitle = "您的资质（<font color='#FF0000'> * </font>为必填项）";
+        String topTitle = "您的资质（<font color='#FF0000'>*</font>为必填项）";
         tvSpeedTop_2.setText(Html.fromHtml(topTitle));
-        String speedName = "单位名称<font color='#FF0000'> * </font>:";
+        String speedName = "单位名称<font color='#FF0000'>*</font>:";
         tvSpeedCompanyName.setText(Html.fromHtml(speedName));
-        String speedIdCard = "单位电话<font color='#FF0000'> * </font>:";
+        String speedIdCard = "单位电话<font color='#FF0000'>*</font>:";
         tvSpeedCompanyPhone.setText(Html.fromHtml(speedIdCard));
-        String speedPhone = "单位地址<font color='#FF0000'> * </font>:";
+        String speedPhone = "单位地址<font color='#FF0000'>*</font>:";
         tvSpeedCompantAddress.setText(Html.fromHtml(speedPhone));
-        String speedPhone2 = "详细地址<font color='#FF0000'> * </font>:";
+        String speedPhone2 = "详细地址<font color='#FF0000'>*</font>:";
         tvSpeedCompanyAddressDetail.setText(Html.fromHtml(speedPhone2));
-        String speedEdu = "单位性质<font color='#FF0000'> * </font>:";
+        String speedEdu = "单位性质<font color='#FF0000'>*</font>:";
         tvSpeedCompanyType.setText(Html.fromHtml(speedEdu));
-        String speedPermanent = "工作性质<font color='#FF0000'> * </font>:";
+        String speedPermanent = "工作性质<font color='#FF0000'>*</font>:";
         tvSpeedWorkType.setText(Html.fromHtml(speedPermanent));
-        String speedResident = "基本月薪<font color='#FF0000'> *</font>:";
+        String speedResident = "基本月薪<font color='#FF0000'>*</font>:";
         tvSpeedSalary.setText(Html.fromHtml(speedResident));
         String speedLiving = "发放形式<font color='#FF0000'>*</font>:";
         tvSpeedSalaryType.setText(Html.fromHtml(speedLiving));
-        String speedBank = "月发薪日<font color='#FF0000'> * </font>:";
+        String speedBank = "月发薪日<font color='#FF0000'>*</font>:";
         tvSpeedSalaryDay.setText(Html.fromHtml(speedBank));
 
     }
@@ -144,12 +144,12 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
                 if (CheckUtil.CheckOutNull(llFatherLayout) != null) {
                     String a = CheckUtil.CheckOutNull(llFatherLayout);
                     MyToastUtils.showShortToast(CreditSpeedSecond_2Act.this,a);
+                } else{
+                    saveQualificationsInfo();
                 }
 
-                saveQualificationsInfo();
-
 //                Intent intent = new Intent(CreditSpeedSecondFrag.NEXT);
-//                intent.putExtra("item",2);
+//                intent.putxtra("item",2);
 //                getActivity().sendBroadcast(intent);
                 break;
             case R.id.rl_speedCompanyAddress:
