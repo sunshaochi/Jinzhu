@@ -29,8 +29,8 @@ public interface IFinancialUrl {
 
     //    String BASE_URL = "http://test.myjinzhu.com:8082";
     /*测试急借通接口*/
-    String BASE_URL = "http://172.16.5.151:8080";
-//    String BASE_URL = "http://139.196.227.38:8080";
+//    String BASE_URL = "http://172.16.5.151:8080";
+    String BASE_URL = "http://139.196.227.38:8080";
     /*测试地址3*/
 //    String BASE_URL="http://test.myjinzhu.com:60";
     //内网地址（测试钱包功能）

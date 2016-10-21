@@ -16,7 +16,9 @@ import com.beyonditsm.financial.entity.UserOrderInfoEntity;
 import com.beyonditsm.financial.entity.VendorEntity;
 import com.beyonditsm.financial.http.CommManager;
 import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.CheckUtil;
 import com.beyonditsm.financial.util.MyLogUtils;
+import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.widget.DialogSingalPicker;
 import com.beyonditsm.financial.widget.gpscity.DialogChooseCity;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -51,10 +53,12 @@ public class CreditSpeedThird_2Act extends BaseActivity {
     TextView tvAddress;
     @ViewInject(R.id.ll_null_shop_tip)
     LinearLayout llNullShopTip;
-    @ViewInject(R.id.tvCredit)
-    TextView tvCredit;
+    @ViewInject(R.id.tv_submit4)
+    TextView tvSubmit4;
     @ViewInject(R.id.llSucess)
     LinearLayout llSuccess;
+    @ViewInject(R.id.ll_fatherLayout)
+    LinearLayout llFatherLayout;
     private ArrayList<String> vendorNameList;
     private String frontCardUrl;//身份证正面url
     private String backCardUrl;//身份证反面url
@@ -101,21 +105,23 @@ public class CreditSpeedThird_2Act extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.tvSure, R.id.rl_back_card, R.id.rl_top_card, R.id.rl_city, R.id.rl_address, R.id.tvCredit})
+    @OnClick({R.id.tvSure, R.id.rl_back_card, R.id.rl_top_card, R.id.rl_city, R.id.rl_address, R.id.tv_submit4})
     public void todo(View v) {
         switch (v.getId()) {
             case R.id.tvSure:
+                Intent intent = new Intent(CreditSpeedThird_2Act.this,MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
 
-                saveUserInfo4();
-                break;
-            case R.id.rl_back_card:
-                Intent intent1 = new Intent(CreditSpeedThird_2Act.this, CreditSpeedUploadAct.class);
-                intent1.putExtra("desc", "top");
-                startActivityForResult(intent1, FRONT_CARD);
                 break;
             case R.id.rl_top_card:
+                Intent intent1 = new Intent(CreditSpeedThird_2Act.this, CreditSpeedUploadAct.class);
+                intent1.putExtra("desc", "请上传身份证正面");
+                startActivityForResult(intent1, FRONT_CARD);
+                break;
+            case R.id.rl_back_card:
                 Intent intent2 = new Intent(CreditSpeedThird_2Act.this, CreditSpeedUploadAct.class);
-                intent2.putExtra("desc", "back");
+                intent2.putExtra("desc", "请上传身份证反面");
                 startActivityForResult(intent2, BACK_CARD);
                 break;
             case R.id.rl_city:
@@ -153,26 +159,17 @@ public class CreditSpeedThird_2Act extends BaseActivity {
 
 
                 break;
-            case R.id.tvCredit:
+            case R.id.tv_submit4:
 
-                UserOrderInfoEntity co = new UserOrderInfoEntity();
-                co.setOrderId("123123"); //id
-                co.setIdcardBack(backCardUrl);
-                co.setIdcardFront(frontCardUrl);
-                co.setStoreAddr(curVendero.getAddr().toString() + "");
-                co.setStoreCity(tvCity.getText().toString());
-                co.setStoreId(curVendero.getId() + "");
-//                CommManager.getCommManager().saveUserOrderInfo4(co, new RequestManager.CallBack() {
-//                    @Override
-//                    public void onSucess(String result) throws JSONException {
-//                        llSuccess.setVisibility(View.VISIBLE);
-//                    }
-//
-//                    @Override
-//                    public void onError(int status, String msg) {
-//                        llSuccess.setVisibility(View.GONE);
-//                    }
-//                });
+                if (TextUtils.isEmpty(frontCardUrl)) {
+                    MyToastUtils.showShortToast(CreditSpeedThird_2Act.this, "请上传身份证正面");
+                } else if (TextUtils.isEmpty(backCardUrl)) {
+                    MyToastUtils.showShortToast(CreditSpeedThird_2Act.this, "请上传身份证反面");
+                }else if (null!=CheckUtil.CheckOutNull(llFatherLayout)){
+                    MyToastUtils.showShortToast(CreditSpeedThird_2Act.this, CheckUtil.CheckOutNull(llFatherLayout));
+                }else {
+                    saveUserInfo4();
+                }
 
                 break;
             default:
@@ -182,10 +179,10 @@ public class CreditSpeedThird_2Act extends BaseActivity {
 
     private void saveUserInfo4() {
 
-        CommManager.getCommManager().saveUserOrderInfo4(orderId,frontCardUrl,backCardUrl,tvCity.getText().toString(),curVendero.getId()+"",curVendero.getAddr()+"", new RequestManager.CallBack() {
+        CommManager.getCommManager().saveUserOrderInfo4(orderId, frontCardUrl, backCardUrl, tvCity.getText().toString(), curVendero.getId() + "", curVendero.getAddr() + "", new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-
+                llSuccess.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -236,17 +233,5 @@ public class CreditSpeedThird_2Act extends BaseActivity {
         }
     }
 
-    public void checkApplyStatus() {
-        if (!TextUtils.isEmpty(frontCardUrl) && !TextUtils.isEmpty(backCardUrl) && !TextUtils.isEmpty(tvCity.getText().toString()) &&
-                !TextUtils.isEmpty(tvAddress.getText().toString()) && !"null".equals(tvAddress.getText().toString())
-                ) {
-            tvCredit.setClickable(true);
-
-
-//            tvCredit(getResources().getDrawable(R.drawable.cre_btn_bg_orange));
-        } else {
-            tvCredit.setClickable(false);
-        }
-    }
 
 }

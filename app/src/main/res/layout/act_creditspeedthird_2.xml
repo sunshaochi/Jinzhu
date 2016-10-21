@@ -27,7 +27,9 @@
             android:layout_height="match_parent"
             android:scrollbars="none">
 
-            <LinearLayout style="@style/speed_credit_linearlayout_in_scrollview">
+            <LinearLayout
+                android:id="@+id/ll_fatherLayout"
+                style="@style/speed_credit_linearlayout_in_scrollview">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -140,8 +142,10 @@
                         android:text="所在城市" />
 
                     <TextView
+                        android:tag="请选择门店城市"
                         android:id="@+id/tv_city"
-                        style="@style/tv_select_style" />
+                        style="@style/tv_select_style"
+                        android:hint="请选择" />
                 </RelativeLayout>
 
                 <View style="@style/view_line" />
@@ -158,11 +162,14 @@
                         android:text="门店地址" />
 
                     <TextView
+                        android:tag="请选择门店地址"
                         android:id="@+id/tv_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
+                        android:layout_marginLeft="5dp"
                         android:drawablePadding="5dp"
+                        android:hint="请选择"
                         android:drawableRight="@mipmap/button_select"
                         android:gravity="right"
                         android:textColor="#f63"
@@ -198,11 +205,10 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/tvCredit"
+                    android:id="@+id/tv_submit4"
                     style="@style/common_btn"
                     android:layout_marginBottom="20dp"
                     android:background="@drawable/cre_btn_bg_orange"
-                    android:enabled="false"
                     android:gravity="center"
                     android:text="申请贷款" />
             </LinearLayout>
