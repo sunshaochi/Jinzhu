@@ -19,6 +19,7 @@
         android:layout_height="match_parent"
         android:scrollbars="none">
         <LinearLayout
+            android:id="@+id/ll_fatherLayout"
             style="@style/speed_credit_linearlayout_in_scrollview">
             <TextView
                 style="@style/speed_credit_second_top_text"
@@ -35,6 +36,7 @@
                     android:layout_centerVertical="true" />
 
                 <EditText
+                    android:tag="请输入直系亲属姓名"
                     android:id="@+id/et_speedRelativesName_1"
                     style="@style/cre_et" />
             </RelativeLayout>
@@ -52,6 +54,7 @@
                     android:layout_centerVertical="true" />
 
                 <EditText
+                    android:tag="请输入直系亲属联系电话"
                     android:id="@+id/et_speedRelativesPhone_1"
                     style="@style/cre_et" />
             </RelativeLayout>
@@ -70,6 +73,7 @@
                     android:layout_centerVertical="true" />
 
                 <TextView
+                    android:tag="请选择直系亲属关系"
                     android:id="@+id/tv_speedSelectRelationship_1"
                     style="@style/tv_select_style"
                     android:drawableRight="@mipmap/button_select"
@@ -90,6 +94,7 @@
                     android:layout_centerVertical="true" />
 
                 <EditText
+                    android:tag="请输入直系亲属2姓名"
                     android:id="@+id/et_speedRelativesName_2"
                     style="@style/cre_et" />
             </RelativeLayout>
@@ -107,6 +112,7 @@
                     android:layout_centerVertical="true" />
 
                 <EditText
+                    android:tag="请输入直系亲属2联系电话"
                     android:id="@+id/et_speedRelativesPhone_2"
                     style="@style/cre_et" />
             </RelativeLayout>
@@ -125,6 +131,7 @@
                     android:layout_centerVertical="true" />
 
                 <TextView
+                    android:tag="请选择直系亲属2关系"
                     android:id="@+id/tv_speedSelectRelationship_2"
                     style="@style/tv_select_style"
                     android:drawableRight="@mipmap/button_select"
@@ -147,6 +154,7 @@
                     android:text="单位名称:"/>
 
                 <EditText
+                    android:tag="请输入单位名称"
                     android:id="@+id/et_speedRelativesWork_1"
                     style="@style/cre_et" />
             </RelativeLayout>
@@ -167,6 +175,7 @@
                     android:layout_centerVertical="true" />
 
                 <TextView
+                    android:tag="请选择单位地址"
                     android:id="@+id/tv_speedSelectRelativeWoH_1"
                     style="@style/tv_select_style"
                     android:drawableRight="@mipmap/button_select"
@@ -178,6 +187,7 @@
 
             <!--家庭/单位详细地址-->
             <EditText
+                android:tag="请输入单位详细地址"
                 android:id="@+id/et_speedRelativesWoHDetail_1"
                 style="@style/speed_credit_second_detail_address"
                 android:visibility="gone"/>
@@ -200,6 +210,7 @@
                     android:layout_centerVertical="true" />
 
                 <EditText
+                    android:tag="请输入同事姓名"
                     android:id="@+id/et_speedColleagueName_1"
                     style="@style/cre_et" />
             </RelativeLayout>
@@ -217,6 +228,7 @@
                     android:layout_centerVertical="true" />
 
                 <TextView
+                    android:tag="请选择同事关系"
                     android:id="@+id/tv_ColleagueSelectRelationship"
                     style="@style/tv_select_style"
                     android:drawableRight="@mipmap/button_select"
@@ -235,6 +247,7 @@
                     android:layout_centerVertical="true" />
 
                 <EditText
+                    android:tag="请输入同事联系电话"
                     android:id="@+id/et_speedColleaguePhone_1"
                     style="@style/cre_et" />
             </RelativeLayout>
@@ -254,6 +267,7 @@
                     android:text="单位名称:"/>
 
                 <EditText
+                    android:tag="请输入单位名称"
                     android:id="@+id/et_speedColleagueWork_1"
                     style="@style/cre_et" />
             </RelativeLayout>
@@ -274,6 +288,7 @@
                     android:layout_centerVertical="true" />
 
                 <TextView
+                    android:tag="请选择单位地址"
                     android:id="@+id/tv_speedSelectColleagueWoH_1"
                     style="@style/tv_select_style"
                     android:drawableRight="@mipmap/button_select"
@@ -285,6 +300,7 @@
 
             <!--家庭/单位详细地址-->
             <EditText
+                android:tag="请输入单位详细地址"
                 android:id="@+id/et_speedColleagueWoHDetail_1"
                 style="@style/speed_credit_second_detail_address"
                 android:visibility="gone"/>
@@ -307,6 +323,7 @@
                     android:text="姓        名:"/>
 
                 <EditText
+                    android:tag="请输入紧急联系人姓名"
                     android:id="@+id/et_speedEmergentName_1"
                     style="@style/cre_et" />
             </RelativeLayout>
@@ -325,6 +342,7 @@
                     android:text="关        系:"/>
 
                 <TextView
+                    android:tag="请选择紧急联系人关系"
                     android:id="@+id/tv_speedSelectEmergent_1"
                     style="@style/tv_select_style"
                     android:drawableRight="@mipmap/button_select"
@@ -344,6 +362,7 @@
                     android:text="联系电话:"/>
 
                 <EditText
+                    android:tag="请输入紧急联系人电话"
                     android:id="@+id/et_speedEmergentPhone_1"
                     style="@style/cre_et" />
             </RelativeLayout>

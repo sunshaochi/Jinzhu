@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
@@ -14,6 +15,8 @@ import com.beyonditsm.financial.entity.RelationEntity;
 import com.beyonditsm.financial.entity.UserOrderInfo3;
 import com.beyonditsm.financial.http.CommManager;
 import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.CheckUtil;
+import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
@@ -86,6 +89,8 @@ public class CreditSpeedSecond_3Act extends BaseActivity {
     private EditText etSpeedEmergentName_1; //紧急联系人姓名1
     @ViewInject(R.id.et_speedEmergentPhone_1)
     private EditText etSpeedEmergentPhone_1; //紧急联系人电话1
+    @ViewInject(R.id.ll_fatherLayout)
+    private LinearLayout llFatherLayout;
     private List<RelationEntity> relationList;
     private String orderId;
 
@@ -145,7 +150,13 @@ public class CreditSpeedSecond_3Act extends BaseActivity {
     public void todo(View view) {
         switch (view.getId()) {
             case R.id.tv_speed_toEnd:
-                saveUserInfo3();
+                String result = CheckUtil.CheckOutNull(llFatherLayout);
+                if (result!=null){
+                    MyToastUtils.showShortDebugToast(CreditSpeedSecond_3Act.this,result);
+                }else {
+                    saveUserInfo3();
+                }
+
 
                 break;
             case R.id.rl_speedMarriage1:
