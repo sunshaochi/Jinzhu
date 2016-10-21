@@ -40,7 +40,7 @@
                     android:tag="请输入直系亲属姓名"
                     android:id="@+id/et_speedRelativesName_1"
                     style="@style/cre_et"
-                    android:hint="请输入直系亲属姓名"/>
+                    android:hint="请输入姓名"/>
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
@@ -59,7 +59,7 @@
                     android:tag="请输入直系亲属联系电话"
                     android:id="@+id/et_speedRelativesPhone_1"
                     style="@style/cre_et"
-                    android:hint="请输入直系亲属联系电话"/>
+                    android:hint="请输入手机号码"/>
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
@@ -75,12 +75,17 @@
                     style="@style/tv_primary_style"
                     android:layout_centerVertical="true" />
 
-                <TextView
-                    android:tag="请选择直系亲属关系"
-                    android:id="@+id/tv_speedSelectRelationship_1"
-                    style="@style/tv_select_style"
-                    android:drawableRight="@mipmap/button_select"
-                    android:textColor="#f63" />
+                <RelativeLayout
+                    android:id="@+id/rl_speedSelectRelationship_1"
+                    style="@style/speed_credit_second_select_relative">
+                    <TextView
+                        android:tag="请选择直系亲属关系"
+                        android:id="@+id/tv_speedSelectRelationship_1"
+                        style="@style/speed_credit_second_select_text"
+                        />
+                    <ImageView
+                        style="@style/speed_credit_sencond_select_imageview"/>
+                </RelativeLayout>
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
@@ -100,7 +105,7 @@
                     android:tag="请输入直系亲属2姓名"
                     android:id="@+id/et_speedRelativesName_2"
                     style="@style/cre_et"
-                    android:hint="请输入直系亲属2姓名"/>
+                    android:hint="请输入姓名"/>
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
@@ -119,7 +124,7 @@
                     android:tag="请输入直系亲属2联系电话"
                     android:id="@+id/et_speedRelativesPhone_2"
                     style="@style/cre_et"
-                    android:hint="请输入直系亲属2联系电话"/>
+                    android:hint="请输入手机号码"/>
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
@@ -135,12 +140,17 @@
                     style="@style/tv_primary_style"
                     android:layout_centerVertical="true" />
 
-                <TextView
-                    android:tag="请选择直系亲属2关系"
-                    android:id="@+id/tv_speedSelectRelationship_2"
-                    style="@style/tv_select_style"
-                    android:drawableRight="@mipmap/button_select"
-                    android:textColor="#f63" />
+                <RelativeLayout
+                    android:id="@+id/rl_speedSelectRelationship_2"
+                    style="@style/speed_credit_second_select_relative">
+                    <TextView
+                        android:tag="请选择直系亲属关系"
+                        android:id="@+id/tv_speedSelectRelationship_2"
+                        style="@style/speed_credit_second_select_text"
+                        />
+                    <ImageView
+                        style="@style/speed_credit_sencond_select_imageview"/>
+                </RelativeLayout>
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
@@ -218,7 +228,7 @@
                     android:tag="请输入同事姓名"
                     android:id="@+id/et_speedColleagueName_1"
                     style="@style/cre_et"
-                    android:hint="请输入同事姓名"/>
+                    android:hint="请输入姓名"/>
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
@@ -233,12 +243,17 @@
                     style="@style/tv_primary_style"
                     android:layout_centerVertical="true" />
 
-                <TextView
-                    android:tag="请选择同事关系"
-                    android:id="@+id/tv_ColleagueSelectRelationship"
-                    style="@style/tv_select_style"
-                    android:drawableRight="@mipmap/button_select"
-                    android:textColor="#f63" />
+                <RelativeLayout
+                    android:id="@+id/rl_ColleagueSelectRelationship"
+                    style="@style/speed_credit_second_select_relative">
+                    <TextView
+                        android:tag="请选择直系亲属关系"
+                        android:id="@+id/tv_ColleagueSelectRelationship"
+                        style="@style/speed_credit_second_select_text"
+                        />
+                    <ImageView
+                        style="@style/speed_credit_sencond_select_imageview"/>
+                </RelativeLayout>
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
@@ -256,7 +271,7 @@
                     android:tag="请输入同事联系电话"
                     android:id="@+id/et_speedColleaguePhone_1"
                     style="@style/cre_et"
-                    android:hint="请输入同事联系电话"/>
+                    android:hint="请输入手机号码"/>
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
@@ -328,13 +343,13 @@
                     android:id="@+id/tv_speedEmergentName_1"
                     style="@style/tv_primary_style"
                     android:layout_centerVertical="true"
-                    android:text="姓        名:" />
+                    android:text="姓名:" />
 
                 <EditText
                     android:tag="请输入紧急联系人姓名"
                     android:id="@+id/et_speedEmergentName_1"
                     style="@style/cre_et"
-                    android:hint="请输入紧急联系人姓名"/>
+                    android:hint="请输入姓名"/>
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
@@ -348,14 +363,18 @@
                     android:id="@+id/tv_speedEmergent_1"
                     style="@style/tv_primary_style"
                     android:layout_centerVertical="true"
-                    android:text="关        系:"/>
-
-                <TextView
-                    android:tag="请选择紧急联系人关系"
-                    android:id="@+id/tv_speedSelectEmergent_1"
-                    style="@style/tv_select_style"
-                    android:drawableRight="@mipmap/button_select"
-                    android:textColor="#f63" />
+                    android:text="关系:"/>
+                <RelativeLayout
+                    android:id="@+id/rl_speedSelectEmergent_1"
+                    style="@style/speed_credit_second_select_relative">
+                    <TextView
+                        android:tag="请选择直系亲属关系"
+                        android:id="@+id/tv_speedSelectEmergent_1"
+                        style="@style/speed_credit_second_select_text"
+                        />
+                    <ImageView
+                        style="@style/speed_credit_sencond_select_imageview"/>
+                </RelativeLayout>
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
@@ -374,7 +393,7 @@
                     android:tag="请输入紧急联系人电话"
                     android:id="@+id/et_speedEmergentPhone_1"
                     style="@style/cre_et"
-                    android:hint="请输入紧急联系人电话"/>
+                    android:hint="请输入手机号码"/>
             </RelativeLayout>
 
             <View style="@style/view_line"></View>
