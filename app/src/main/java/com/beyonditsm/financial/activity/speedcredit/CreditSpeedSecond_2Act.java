@@ -16,7 +16,6 @@ import com.beyonditsm.financial.entity.UnitPropertyEntity;
 import com.beyonditsm.financial.entity.UserOrderInfo1;
 import com.beyonditsm.financial.http.CommManager;
 import com.beyonditsm.financial.http.RequestManager;
-import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.widget.jijietong.DialogJJTAddress;
@@ -128,9 +127,6 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
         tvSpeedSalaryType.setText(Html.fromHtml(speedLiving));
         String speedBank = "月发薪日<font color='#FF0000'> * </font>:";
         tvSpeedSalaryDay.setText(Html.fromHtml(speedBank));
-
-        String speedPermanentDetail = "详细地址<font color='#FF0000'> *</font>";
-        tvSpeedCompanyAddressDetail.setHint(Html.fromHtml(speedPermanentDetail));
 
     }
 
