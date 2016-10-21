@@ -126,22 +126,22 @@ public class CreditSpeedSecond_3Act extends BaseActivity {
 
 
     private void initText() {
-        String speedName = "姓&#160;&#160;&#160;&#160;&#160;&#160;名<font color='#FF0000'> *</font>:";
+        String speedName = "姓名<font color='#FF0000'>*</font>:";
         tvSpeedRelativesName1.setText(Html.fromHtml(speedName));
         tvSpeedRelativesName2.setText(Html.fromHtml(speedName));
         tvSpeedColleagueName.setText(Html.fromHtml(speedName));
-        String speedPhone = "联系电话<font color='#FF0000'> *</font>:";
+        String speedPhone = "联系电话<font color='#FF0000'>*</font>:";
         tvSpeedRelativePhone1.setText(Html.fromHtml(speedPhone));
         tvSpeedRelativePhone2.setText(Html.fromHtml(speedPhone));
         tvSpeedColleaguePhone.setText(Html.fromHtml(speedPhone));
-        String relationship = "关&#160;&#160;&#160;&#160;&#160;&#160;系<font color='#FF0000'> *</font>:";
+        String relationship = "关系<font color='#FF0000'>*</font>:";
         tvSpeedRelationship1.setText(Html.fromHtml(relationship));
         tvSpeedRelationship2.setText(Html.fromHtml(relationship));
         tvColleagueRelationship.setText(Html.fromHtml(relationship));
-        String homeOrCompany = "家庭/单位地址<font color='#FF0000'> *</font>:";
+        String homeOrCompany = "家庭/单位地址<font color='#FF0000'>*</font>:";
         tvSpeedRelationsWoH.setText(Html.fromHtml(homeOrCompany));
         tvSpeedColleagueWoH.setText(Html.fromHtml(homeOrCompany));
-        String speedPermanentDetail = "详细地址<font color='#FF0000'> *</font>:";
+        String speedPermanentDetail = "详细地址<font color='#FF0000'>*</font>:";
         etSpeedRelativeWoHDetail.setHint(Html.fromHtml(speedPermanentDetail));
         etSpeedColleagueWoHDetail.setHint(Html.fromHtml(speedPermanentDetail));
     }
