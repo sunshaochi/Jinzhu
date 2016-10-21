@@ -19,7 +19,9 @@
         android:layout_height="match_parent"
         android:scrollbars="none">
 
-        <LinearLayout style="@style/speed_credit_linearlayout_in_scrollview">
+        <LinearLayout
+            android:id="@+id/ll_fatherLayout"
+            style="@style/speed_credit_linearlayout_in_scrollview">
 
             <TextView
                 android:id="@+id/tv_speed_top_2"
@@ -35,6 +37,7 @@
                     android:layout_centerVertical="true" />
 
                 <EditText
+                    android:tag="单位名称"
                     android:id="@+id/et_speedCompanyName"
                     style="@style/cre_et"
                     android:hint="请输入单位名称" />
@@ -66,6 +69,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"/>
                     <EditText
+                        android:id="@+id/et_speedCompanyPhoneArea"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/cre_et_bg"/>
@@ -91,6 +95,7 @@
                     android:id="@+id/rl_speedSelectCompanyAddress"
                     style="@style/speed_credit_second_select_relative">
                     <TextView
+                        android:tag="城市"
                         android:id="@+id/tv_speedSelectCompanyAddress"
                         style="@style/speed_credit_second_select_text"
                         android:hint="请选择城市"

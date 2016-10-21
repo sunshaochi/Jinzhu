@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
+import com.beyonditsm.financial.activity.speedcredit.creditspeedthied.CreditSpeedThird_2Act;
 import com.beyonditsm.financial.entity.JJTCityEntity;
 import com.beyonditsm.financial.entity.JJTCounyEntity;
 import com.beyonditsm.financial.entity.JJTProvinceEntity;
@@ -16,6 +18,9 @@ import com.beyonditsm.financial.entity.UnitPropertyEntity;
 import com.beyonditsm.financial.entity.UserOrderInfo1;
 import com.beyonditsm.financial.http.CommManager;
 import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.CheckUtil;
+import com.beyonditsm.financial.util.MyLogUtils;
+import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.widget.jijietong.DialogJJTAddress;
@@ -78,6 +83,8 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
     private EditText etSpeedCompanyPhoneArea;
     @ViewInject(R.id.et_speedSalary)
     private EditText etSpeedSalary;
+    @ViewInject(R.id.ll_fatherLayout)
+    private LinearLayout llFatherLayout;
     private List<JJTProvinceEntity> provinceList;
     private List<JJTCityEntity> cityEntityList;
     private List<JJTCounyEntity> counyEntityList;
@@ -134,14 +141,19 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
     public void todo(View view) {
         switch (view.getId()) {
             case R.id.tv_speed_toThere:
+                if (CheckUtil.CheckOutNull(llFatherLayout) != null) {
+                    String a = CheckUtil.CheckOutNull(llFatherLayout);
+                    MyToastUtils.showShortToast(CreditSpeedSecond_2Act.this,a);
+                }
+
                 saveQualificationsInfo();
 
 //                Intent intent = new Intent(CreditSpeedSecondFrag.NEXT);
 //                intent.putExtra("item",2);
 //                getActivity().sendBroadcast(intent);
                 break;
-            case R.id.rl_speedSelectCompanyAddress:
-                MyLogUtils.info("TAG:"+tvSpeedSelectCompanyAddress.getTag()+"");
+            case R.id.rl_speedCompanyAddress:
+                MyLogUtils.info("TAG:" + tvSpeedSelectCompanyAddress.getTag() + "");
                 dialogChooseAdress1.show();
                 dialogChooseAdress1.setOnSheetItemClickListener(new DialogJJTAddress.SexClickListener() {
                     @Override
@@ -328,28 +340,28 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
     }
 
 
-    public void saveQualificationsInfo(){
+    public void saveQualificationsInfo() {
 
 
-        CommManager.getCommManager().saveQualificationsInfo(orderId,etSpeedCompanyName.getText().toString(),companyArea,companyCity,companyProvince,getEtSpeedCompanyAddressDetail.getText().toString(),
-                etSpeedCompanyPhoneArea.getText().toString()+"",
-                etSpeedCompanyPhone.getText().toString()+"",
-                tvSpeedSelectCompanyType.getText().toString()+"",
-                tvSpeedSelectWorkType.getText().toString()+"",
-                etSpeedSalary.getText().toString()+"",
-                tvSpeedSalaryType.getText().toString()+"",
+        CommManager.getCommManager().saveQualificationsInfo(orderId, etSpeedCompanyName.getText().toString(), companyArea, companyCity, companyProvince, getEtSpeedCompanyAddressDetail.getText().toString(),
+                etSpeedCompanyPhoneArea.getText().toString() + "",
+                etSpeedCompanyPhone.getText().toString() + "",
+                tvSpeedSelectCompanyType.getText().toString() + "",
+                tvSpeedSelectWorkType.getText().toString() + "",
+                etSpeedSalary.getText().toString() + "",
+                tvSpeedSalaryType.getText().toString() + "",
                 new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
-                Intent intent = new Intent(CreditSpeedSecond_2Act.this,CreditSpeedSecond_3Act.class);
-                intent.putExtra("orderId",orderId);
-                startActivity(intent);
-            }
+                    @Override
+                    public void onSucess(String result) throws JSONException {
+                        Intent intent = new Intent(CreditSpeedSecond_2Act.this, CreditSpeedSecond_3Act.class);
+                        intent.putExtra("orderId", orderId);
+                        startActivity(intent);
+                    }
 
-            @Override
-            public void onError(int status, String msg) {
+                    @Override
+                    public void onError(int status, String msg) {
 
-            }
-        });
+                    }
+                });
     }
 }

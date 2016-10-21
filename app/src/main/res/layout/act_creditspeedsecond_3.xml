@@ -19,6 +19,7 @@
         android:layout_height="match_parent"
         android:scrollbars="none">
         <LinearLayout
+            android:id="@+id/ll_fatherLayout"
             style="@style/speed_credit_linearlayout_in_scrollview">
             <TextView
                 style="@style/speed_credit_second_top_text"
@@ -35,6 +36,7 @@
                     android:layout_centerVertical="true" />
 
                 <EditText
+                    android:tag="直系亲属"
                     android:id="@+id/et_speedRelativesName_1"
                     style="@style/cre_et" />
             </RelativeLayout>
