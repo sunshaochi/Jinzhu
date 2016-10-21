@@ -16,6 +16,8 @@ import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
 import java.util.List;
 
+import static com.beyonditsm.financial.R.id.tvRate;
+
 /**
  * 急借通列表adapter
  * Created by Administrator on 2016/9/26 0026.
@@ -91,12 +93,19 @@ public class SpeedCreditAdapter extends BaseAdapter {
             holder.tvCostDescribe.setText(creditSpeedEntity.getCostDescribe());
         }
         if (!TextUtils.isEmpty(creditSpeedEntity.getRepaymentPeriod())) {
-            holder.tvTime.setText(creditSpeedEntity.getRepaymentPeriod() + "周");
+            holder.tvTime.setText(creditSpeedEntity.getRepaymentPeriod());
         }
         double minVal = Double.valueOf(creditSpeedEntity.getMinVal());
         double maxVal = Double.valueOf(creditSpeedEntity.getMaxVal());
         holder.tvValue.setText(df.format(minVal/10000)+"-"+df.format(maxVal/10000)+"万");
-        holder.tvRate.setText(creditSpeedEntity.getMinRate()+"-"+creditSpeedEntity.getMaxRate()+"%(天)");
+//        holder.tvRate.setText(creditSpeedEntity.getMinRate()+"-"+creditSpeedEntity.getMaxRate());
+        if (!TextUtils.isEmpty(creditSpeedEntity.getMinRate()) || !TextUtils.isEmpty(creditSpeedEntity.getMaxRate())) {
+            if (Double.valueOf(creditSpeedEntity.getMaxRate()) - Double.valueOf(creditSpeedEntity.getMinRate()) == 0) {
+                holder.tvRate.setText(creditSpeedEntity.getMinRate()+"%(天)");
+            } else {
+                holder.tvRate.setText( creditSpeedEntity.getMinRate() + "%-" + creditSpeedEntity.getMaxRate()+"%(天)");
+            }
+        }
         if (!TextUtils.isEmpty(String.valueOf(creditSpeedEntity.getLoanPeriod()))) {
             holder.tvLoanPeriod.setText(creditSpeedEntity.getLoanPeriod() + "个工作日");
         }

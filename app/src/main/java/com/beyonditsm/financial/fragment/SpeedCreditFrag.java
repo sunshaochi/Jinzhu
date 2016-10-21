@@ -23,9 +23,7 @@ import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -78,17 +76,17 @@ public class SpeedCreditFrag extends BaseFragment {
                 loadingSpeedCredit.loadComplete();
                 lvSpeedCredit.onPullDownRefreshComplete();
                 lvSpeedCredit.onPullUpRefreshComplete();
-                JSONObject jsonObject = new JSONObject(result);
-                JSONObject data = jsonObject.getJSONObject("data");
-                JSONArray rows = data.getJSONArray("rows");
-                for (int i = 0; i < rows.length(); i++) {
-                    JSONObject jsonObject1 = rows.getJSONObject(i);
-                    JSONObject propertyTypesObj = jsonObject1.getJSONObject("propertyTypes");
-                    JSONObject jobIdentitysObj = jsonObject1.getJSONObject("jobIdentitys");
-                    propertyTypes.add(FinancialUtil.toAnnotationStr(propertyTypesObj));
-                    jobIdentitys.add(FinancialUtil.toAnnotationStr(jobIdentitysObj));
-
-                }
+//                JSONObject jsonObject = new JSONObject(result);
+//                JSONObject data = jsonObject.getJSONObject("data");
+//                JSONArray rows = data.getJSONArray("rows");
+//                for (int i = 0; i < rows.length(); i++) {
+//                    JSONObject jsonObject1 = rows.getJSONObject(i);
+//                    JSONObject propertyTypesObj = jsonObject1.getJSONObject("propertyTypes");
+//                    JSONObject jobIdentitysObj = jsonObject1.getJSONObject("jobIdentitys");
+//                    propertyTypes.add(FinancialUtil.toAnnotationStr(propertyTypesObj));
+//                    jobIdentitys.add(FinancialUtil.toAnnotationStr(jobIdentitysObj));
+//
+//                }
                 ResultData<CreditSpeedResult> rd = (ResultData<CreditSpeedResult>) GsonUtils.json(result, CreditSpeedResult.class);
                 CreditSpeedResult pr = rd.getData();
                 creditSpeedList = pr.getRows();
@@ -126,8 +124,9 @@ public class SpeedCreditFrag extends BaseFragment {
                 Intent intent = new Intent(getActivity(), CreditSpeedDetailAct.class);
                 CreditSpeedEntity creditSpeedEntity = creditSpeedList.get(position);
 //                List<String> jobIdentitysList = jobIdentitys.get(position);
-                intent.putExtra(JOB_IDENTITYS,(Serializable)jobIdentitys.get(position));
-                intent.putExtra(PROPERTY_TYPES,(Serializable) propertyTypes.get(position));
+//                List<CreditSpeedEntity.PropertyTypesBean> propertyTypesList = ;
+                intent.putExtra(JOB_IDENTITYS,(Serializable)creditSpeedEntity.getJobIdentitys());
+                intent.putExtra(PROPERTY_TYPES,(Serializable) creditSpeedEntity.getPropertyTypes());
                 intent.putExtra(CREDIT_SPEED, creditSpeedEntity);
                 getActivity().startActivity(intent);
             }

@@ -25,7 +25,7 @@
                 android:id="@+id/tv_speed_top_2"
                 style="@style/speed_credit_second_top_text" />
             <!--单位名称-->
-            <LinearLayout
+            <RelativeLayout
                 style="@style/speed_credit_second_horizontal_linearlayout"
                 android:layout_marginTop="20dp">
 
@@ -38,35 +38,41 @@
                     android:id="@+id/et_speedCompanyName"
                     style="@style/cre_et"
                     android:hint="请输入单位名称" />
-            </LinearLayout>
+            </RelativeLayout>
 
             <View style="@style/view_line" />
             <!--单位电话-->
-            <LinearLayout
+            <RelativeLayout
                 style="@style/speed_credit_second_horizontal_linearlayout">
 
                 <TextView
                     android:id="@+id/tv_speedCompanyPhone"
                     style="@style/tv_primary_style"
                     android:layout_centerVertical="true" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="80dp"
+                    android:orientation="horizontal">
+                    <EditText
+                        android:id="@+id/et_speedCompanyPhone"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/cre_et_bg" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="—"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"/>
+                    <EditText
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/cre_et_bg"/>
+                </LinearLayout>
 
-                <EditText
-                    android:id="@+id/et_speedCompanyPhone"
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/cre_et_bg"
-                    android:layout_marginLeft="75dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="—"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"/>
-                <EditText
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/cre_et_bg"/>
-            </LinearLayout>
+
+            </RelativeLayout>
 
             <View style="@style/view_line" />
 
@@ -186,7 +192,7 @@
             <View style="@style/view_line"></View>
 
             <!--月基本薪水-->
-            <LinearLayout
+            <RelativeLayout
                 style="@style/speed_credit_second_horizontal_linearlayout">
 
                 <TextView
@@ -195,12 +201,14 @@
                     android:layout_centerVertical="true" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="80dp"
                     android:orientation="horizontal">
                     <EditText
                         android:id="@+id/et_speedSalary"
                         android:hint="0000"
+                        android:layout_marginLeft="0dp"
                         style="@style/cre_et" />
                     <TextView
                         android:layout_width="wrap_content"
@@ -208,7 +216,7 @@
                         android:text="元"/>
                 </LinearLayout>
 
-            </LinearLayout>
+            </RelativeLayout>
 
             <View style="@style/view_line" />
 

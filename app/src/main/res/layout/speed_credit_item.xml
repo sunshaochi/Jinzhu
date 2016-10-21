@@ -58,10 +58,10 @@
 
             <TextView
                 style="@style/speed_credit_top_text"
-                android:text="期限" />
+                android:text="额度" />
 
             <TextView
-                android:id="@+id/tv_time"
+                android:id="@+id/tv_value"
                 style="@style/speed_credit_bottom_yellow_text" />
         </LinearLayout>
 
@@ -71,13 +71,12 @@
 
             <TextView
                 style="@style/speed_credit_top_text"
-                android:text="额度" />
+                android:text="期限" />
 
             <TextView
-                android:id="@+id/tv_value"
+                android:id="@+id/tv_time"
                 style="@style/speed_credit_bottom_yellow_text" />
         </LinearLayout>
-
         <View style="@style/vertical_light_thin_divider" />
 
         <LinearLayout style="@style/speed_credit_linearlayout">

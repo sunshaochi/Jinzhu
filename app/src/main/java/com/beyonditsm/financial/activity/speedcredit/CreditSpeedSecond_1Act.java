@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.credit.CreditSpeedDetailAct;
+import com.beyonditsm.financial.entity.CreditSpeedEntity;
 import com.beyonditsm.financial.entity.JJTCityEntity;
 import com.beyonditsm.financial.entity.JJTCounyEntity;
 import com.beyonditsm.financial.entity.JJTProvinceEntity;
@@ -105,7 +106,7 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
     @ViewInject(R.id.tv_speed_toTwo)
     private TextView tvSpeedToTwo;
     private String orderId;
-    private List<String> propetyTypesList;
+    private List<CreditSpeedEntity.PropertyTypesBean> propetyTypesList;
 
     private List<RelationEntity> marriageList;
     private List<RelationEntity> eduList;
@@ -133,7 +134,7 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
     @Override
     public void init(Bundle savedInstanceState) {
         orderId = getIntent().getStringExtra(CreditSpeedDetailAct.SPEED_CREDIT_ORDER_ID);
-        propetyTypesList = (List<String>) getIntent().getSerializableExtra(SpeedCreditFrag.PROPERTY_TYPES);
+        propetyTypesList = (List<CreditSpeedEntity.PropertyTypesBean>) getIntent().getSerializableExtra(SpeedCreditFrag.PROPERTY_TYPES);
         initText();
         queryAllProvince();
         getMarriage();
@@ -243,10 +244,10 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
                 MySelfSheetDialog mySelfSheetDialog = new MySelfSheetDialog(CreditSpeedSecond_1Act.this).builder();
                 if (propetyTypesList.size() != 0) {
                     for (int i = 0; i < propetyTypesList.size(); i++) {
-                        mySelfSheetDialog.addSheetItem(propetyTypesList.get(i), null, new MySelfSheetDialog.OnSheetItemClickListener() {
+                        mySelfSheetDialog.addSheetItem(propetyTypesList.get(i).getName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
-                                tvSpeedSelectLivingConditions.setText(propetyTypesList.get(which - 1));
+                                tvSpeedSelectLivingConditions.setText(propetyTypesList.get(which - 1).getName());
                             }
                         });
                     }

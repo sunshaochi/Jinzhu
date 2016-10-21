@@ -30,12 +30,9 @@ import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.widget.DialogChooseMonth;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
-import com.tandong.sa.json.Gson;
-import com.tandong.sa.json.reflect.TypeToken;
 import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
 import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -127,8 +124,10 @@ public class CreditSpeedDetailAct extends BaseActivity {
     private CreditSpeedEntity creditSpeedEntity;
     private String creditMoney;
     private String creditMonth;
-    private List<String> jobIdentitysList = new ArrayList<>();
-    private List<String> propertyTypeList;
+    private ArrayList<CreditSpeedEntity.PropertyTypesBean> propertyTypeList;
+    private ArrayList<CreditSpeedEntity.JobIdentitysBean> jobIdentitysList;
+    //    private List<String> jobIdentitysList = new ArrayList<>();
+//    private List<String> propertyTypeList;
 
     @Override
     public void setLayout() {
@@ -138,8 +137,10 @@ public class CreditSpeedDetailAct extends BaseActivity {
     @Override
     public void init(Bundle savedInstanceState) {
 
-        propertyTypeList = (List<String>) getIntent().getSerializableExtra(SpeedCreditFrag.PROPERTY_TYPES);
-        jobIdentitysList = (List<String>) getIntent().getSerializableExtra(SpeedCreditFrag.JOB_IDENTITYS);
+//        propertyTypeList = (List<String>) getIntent().getSerializableExtra(SpeedCreditFrag.PROPERTY_TYPES);
+//        jobIdentitysList = (List<String>) getIntent().getSerializableExtra(SpeedCreditFrag.JOB_IDENTITYS);
+        propertyTypeList = (ArrayList<CreditSpeedEntity.PropertyTypesBean>) getIntent().getSerializableExtra(SpeedCreditFrag.PROPERTY_TYPES);
+        jobIdentitysList = (ArrayList<CreditSpeedEntity.JobIdentitysBean>) getIntent().getSerializableExtra(SpeedCreditFrag.JOB_IDENTITYS);
         creditSpeedEntity = getIntent().getParcelableExtra(SpeedCreditFrag.CREDIT_SPEED);
         if (creditSpeedEntity != null) {
             setTopTitle(creditSpeedEntity.getProductName());
@@ -430,10 +431,10 @@ public class CreditSpeedDetailAct extends BaseActivity {
                 MySelfSheetDialog mySelfSheetDialog = new MySelfSheetDialog(CreditSpeedDetailAct.this).builder();
                 if (jobIdentitysList.size() != 0) {
                     for (int i = 0; i < jobIdentitysList.size(); i++) {
-                        mySelfSheetDialog.addSheetItem(jobIdentitysList.get(i), null, new MySelfSheetDialog.OnSheetItemClickListener() {
+                        mySelfSheetDialog.addSheetItem(jobIdentitysList.get(i).getName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
-                                tvPurpose.setText(jobIdentitysList.get(which - 1));
+                                tvPurpose.setText(jobIdentitysList.get(which - 1).getName());
                             }
                         });
                     }
@@ -469,28 +470,6 @@ public class CreditSpeedDetailAct extends BaseActivity {
                 dialogChooseMonth.show();
                 break;
         }
-    }
-
-    /**
-     * 查询借款用途
-     */
-    private void queryLoanUse() {
-        RequestManager.getCommManager().queryLoanUse(new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
-                JSONObject jsonObject = new JSONObject(result);
-                JSONArray data = jsonObject.getJSONArray("data");
-                Gson gson = new Gson();
-                loadUseEntityList = gson.fromJson(data.toString(), new TypeToken<List<LoadUseEntity>>() {
-                }.getType());
-
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-
-            }
-        });
     }
 
     private boolean isHaveData() {
