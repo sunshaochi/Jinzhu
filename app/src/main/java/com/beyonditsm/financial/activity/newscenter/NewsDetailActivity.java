@@ -82,6 +82,11 @@ public class NewsDetailActivity extends BaseActivity {
 
     }
 
+    @Override
+    public void setLeftTv(String tv) {
+        super.setLeftTv("返回");
+    }
+
     /**
      * 获取文章详情
      * @param curId 文章id
@@ -96,6 +101,7 @@ public class NewsDetailActivity extends BaseActivity {
                 newsRelativeEntity = rd.getData();
                 tvLastTitle.setText("上一篇： " + newsRelativeEntity.getUpRow().getTitle());
                 tvNextTitle.setText("下一篇： " + newsRelativeEntity.getDownRow().getTitle());
+                NewsDetailActivity.super.setTopTitle(newsRelativeEntity.getCurRow().getTitle());
                 setWebView();
             }
 
