@@ -476,7 +476,7 @@ public class CreditUploadAct extends BaseActivity {
 
         @Override
         public int getCount() {
-            return limit;
+            return list.size() < limit ? (list.size()+1):limit;
         }
 
         @Override
