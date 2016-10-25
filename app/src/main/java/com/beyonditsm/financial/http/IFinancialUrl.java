@@ -229,23 +229,23 @@ public interface IFinancialUrl {
     /*查询角色信息*/
     String ROLE_INTO = BASE_URL + API_VERSION + "/servant/login/getRoleInfo.do";
     /*Vip信息*/
-    String VIP_INFO = BASE_URL + API_VERSION + "/manager/unlogin/findVipInfo.do";
+    String VIP_INFO = BASE_URL + API_VERSION + "/manager/unLogin/findVipInfo.do";
     /*更新位置*/
     String UPDATE_LOCATION = BASE_URL + API_VERSION + "/platform/login/updateLocation.do";
     /*线下订单上传资料*/
     String SAVE_OR_UPDATE_ORDER_IMAGE = BASE_URL + API_VERSION + "/platform/login/saveOrUpdateOrderImage.do";
     /*获得信用卡列表页面的信用卡数据*/
-    String GET_CREDIT_CARD_INFO = BASE_URL + API_VERSION + "/creditCard/unlogin/getCreditCards.do";
+    String GET_CREDIT_CARD_INFO = BASE_URL + API_VERSION + "/creditCard/unLogin/getCreditCards.do";
     /*在登录状态，点击申卡时,调用统计函数*/
     String APPLY_CREDIT_CARD_CLICK = BASE_URL + API_VERSION + "/creditCard/login/applyCreditCardClick.do";
     /*查询移动/H5首页前5条端咨询信息 */
-    String FIND_NEWS_MOBILE_INDEX = BASE_URL + API_VERSION + "/platform/information/findNewsMobileIndex.do";
+    String FIND_NEWS_MOBILE_INDEX = BASE_URL + API_VERSION + "/platform/unLogin/findNewsMobileIndex.do";
     /* 查询移动/H5端更多咨询信息 */
-    String FIND_NEWS_MOBILE_MORE = BASE_URL+API_VERSION + "/platform/information/findNewsMobileMore.do";
+    String FIND_NEWS_MOBILE_MORE = BASE_URL+API_VERSION + "/platform/unLogin/findNewsMobileMore.do";
     /*获取首页Banner*/
     String GET_BANNER = BASE_URL+API_VERSION+"/platform/unLogin/getPublishedMobileBanners.do";
     /*根据ID进行文章翻页接口*/
-    String FIND_UP_AND_DOWN_ROW = BASE_URL + API_VERSION + "/platform/information/findUpAndDownRow.do";
+    String FIND_UP_AND_DOWN_ROW = BASE_URL + API_VERSION + "/platform/unLogin/findUpAndDownRow.do";
     /*查询帮助主题*/
     String FIND_HELP_ALLS =  BASE_URL+API_VERSION+"/platform/information/findAlls.do";
     /*查询帮助文章（根据主题id（themeId）查询文章信息接口）*/
