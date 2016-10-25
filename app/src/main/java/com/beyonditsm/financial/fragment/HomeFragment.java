@@ -304,7 +304,7 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
                 }
                 break;
             case R.id.ivSuspen://浮窗
-                intent = new Intent(getContext(), CreditSpeedSecond_2Act.class);
+                intent = new Intent(getContext(), CreditSpeedSecond_3Act.class);
                 startActivity(intent);
                 break;
             case R.id.ll_creditCard://信用卡

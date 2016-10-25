@@ -16,6 +16,7 @@ import com.beyonditsm.financial.entity.UserOrderInfo3;
 import com.beyonditsm.financial.http.CommManager;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.CheckUtil;
+import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -27,7 +28,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 极速贷第二步，第三小步
@@ -37,18 +40,18 @@ import java.util.List;
 public class CreditSpeedSecond_3Act extends BaseActivity {
 
     @ViewInject(R.id.tv_speedRelativesName_1)
-    private TextView tvSpeedRelativesName1;
+    private TextView tvSpeedRelativesName1; //亲属姓名1
     @ViewInject(R.id.tv_speedRelativesPhone_1)
-    private TextView tvSpeedRelativePhone1;
+    private TextView tvSpeedRelativePhone1; //亲属手机1
     @ViewInject(R.id.tv_speedRelationship_1)
-    private TextView tvSpeedRelationship1;
+    private TextView tvSpeedRelationship1;//亲属关系1
 
     @ViewInject(R.id.tv_speedRelativesName_2)
-    private TextView tvSpeedRelativesName2;
+    private TextView tvSpeedRelativesName2; //亲属姓名2
     @ViewInject(R.id.tv_speedRelativesPhone_2)
-    private TextView tvSpeedRelativePhone2;
+    private TextView tvSpeedRelativePhone2; //亲属手机2
     @ViewInject(R.id.tv_speedRelationship_2)
-    private TextView tvSpeedRelationship2;
+    private TextView tvSpeedRelationship2;  //亲属关系2
 
 
     @ViewInject(R.id.tv_speedRelativesWoH_1)
@@ -93,6 +96,11 @@ public class CreditSpeedSecond_3Act extends BaseActivity {
     private LinearLayout llFatherLayout;
     private List<RelationEntity> relationList;
     private String orderId;
+    private int CURRENT_SELECT;
+    private final int RL_SPEEDMARRIAGE1 = 1;
+    private final int RL_SPEEDMARRIAGE2 = 2;
+    private final int RL_SPEEDCOLLEAGUE = 3;
+    private final int RL_SPEEDEMERGENT = 4;
 
     @Override
     public void setLayout() {
@@ -117,7 +125,7 @@ public class CreditSpeedSecond_3Act extends BaseActivity {
             dialog.addSheetItem(relationList.get(i).getName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
                 @Override
                 public void onClick(int which) {
-
+                    MyLogUtils.info(which+"");
                 }
             });
         }
