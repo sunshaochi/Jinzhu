@@ -1,6 +1,8 @@
 package com.beyonditsm.financial.activity;
 
+import android.graphics.Color;
 import android.media.AudioManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -9,9 +11,7 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
-import com.beyonditsm.financial.util.FinancialUtil;
 import com.lidroid.xutils.ViewUtils;
 import com.tandong.sa.activity.SmartFragmentActivity;
 import com.umeng.analytics.MobclickAgent;
@@ -29,10 +29,18 @@ public abstract class BaseActivity extends SmartFragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //禁止EditText自动弹出软键盘
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         // 手机窗口设置无标题
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        if (Build.VERSION.SDK_INT>=21){
+            View decorView = getWindow().getDecorView();
+            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+            decorView.setSystemUiVisibility(option);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
+//        ActionBar actionBar = getActionBar();
+//        actionBar.hide();
+        //禁止EditText自动弹出软键盘
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         setVolumeControlStream(AudioManager.STREAM_MUSIC);// 使得音量键控制媒体声音
         setLayout();
         // 注入控件

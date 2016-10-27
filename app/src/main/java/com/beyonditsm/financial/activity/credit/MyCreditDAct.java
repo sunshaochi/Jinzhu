@@ -9,7 +9,6 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
@@ -20,6 +19,7 @@ import com.beyonditsm.financial.activity.user.MyCreditAct;
 import com.beyonditsm.financial.entity.MyCreditBean;
 import com.beyonditsm.financial.fragment.MineFragment;
 import com.beyonditsm.financial.fragment.MyCreditDetailFragment;
+import com.beyonditsm.financial.fragment.MyCreditSpeedDetailFrag;
 import com.beyonditsm.financial.fragment.MyCreditStatusFragment;
 import com.beyonditsm.financial.fragment.ServiceMineFrg;
 import com.beyonditsm.financial.http.RequestManager;
@@ -54,6 +54,7 @@ public class MyCreditDAct extends BaseActivity {
     private int position;
 
     private final String[] mTitles = {"贷款状态", "贷款详情"};
+    private String type;
 
     @Override
     public void setLayout() {
@@ -70,6 +71,7 @@ public class MyCreditDAct extends BaseActivity {
         EventBus.getDefault().register(this);
         setLeftTv("返回");
         setTopTitle("贷款详情");
+        type = getIntent().getStringExtra("type");
         rowe = getIntent().getParcelableExtra(MyCreditAct.CREDIT);
         String orderId = SpUtils.getOrderId(MyApplication.getInstance());
         MyLogUtils.info("获取到已保存的orderID+" + orderId);
@@ -176,10 +178,16 @@ public class MyCreditDAct extends BaseActivity {
         bundle.putParcelable("rowe", rowe);
         MyCreditStatusFragment statusFragment = new MyCreditStatusFragment();
         MyCreditDetailFragment detailFragment = new MyCreditDetailFragment();
+        MyCreditSpeedDetailFrag myCreditSpeedDetailFrag = new MyCreditSpeedDetailFrag();
         statusFragment.setArguments(bundle);
         detailFragment.setArguments(bundle);
+        myCreditSpeedDetailFrag.setArguments(bundle);
         fragmentList.add(statusFragment);
-        fragmentList.add(detailFragment);
+        if ("comm".equals(type)) {
+            fragmentList.add(detailFragment);
+        }else if ("speed".equals(type)){
+            fragmentList.add(myCreditSpeedDetailFrag);
+        }
         myCreditViewpager.setAdapter(new MyAdapter(getSupportFragmentManager(), fragmentList));
         myCreditViewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

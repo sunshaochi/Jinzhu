@@ -5,11 +5,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:background="#f58b35"
+        android:orientation="vertical">
     <RelativeLayout
         android:id="@+id/rl_title_layout"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="#f58b35">
+        android:layout_marginTop="20dp"
+        android:layout_height="48dp">
 
         <LinearLayout
             android:id="@+id/ll_gps"
@@ -42,6 +47,7 @@
             android:textSize="20sp" />
     </RelativeLayout>
 
+    </LinearLayout>
     <!--<com.beyonditsm.financial.view.refreshlayout.BGARefreshLayout-->
         <!--android:id="@+id/rl_BGA"-->
         <!--android:layout_width="match_parent"-->

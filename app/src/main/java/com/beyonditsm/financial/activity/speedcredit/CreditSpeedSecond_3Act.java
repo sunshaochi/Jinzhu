@@ -2,7 +2,9 @@ package com.beyonditsm.financial.activity.speedcredit;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -16,6 +18,7 @@ import com.beyonditsm.financial.entity.UserOrderInfo3;
 import com.beyonditsm.financial.http.CommManager;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.CheckUtil;
+import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -109,8 +112,42 @@ public class CreditSpeedSecond_3Act extends BaseActivity {
         initText();
 
 
+        etSpeedRelativesName_1.addTextChangedListener(new TextWatch());
+        etSpeedRelativesName_2.addTextChangedListener(new TextWatch());
+        etSpeedColleagueName_1.addTextChangedListener(new TextWatch());
+        etSpeedEmergentName_1.addTextChangedListener(new TextWatch());
+
     }
 
+
+    private class  TextWatch implements TextWatcher {
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (!FinancialUtil.isInputChinese(etSpeedRelativesName_1.getText().toString())) {
+                etSpeedRelativesName_1.setError("真实姓名必须为中文！");
+            }
+            if (!FinancialUtil.isInputChinese(etSpeedRelativesName_2.getText().toString())) {
+                etSpeedRelativesName_2.setError("真实姓名必须为中文！");
+            }
+            if (!FinancialUtil.isInputChinese(etSpeedColleagueName_1.getText().toString())) {
+                etSpeedColleagueName_1.setError("真实姓名必须为中文！");
+            }
+            if (!FinancialUtil.isInputChinese(etSpeedEmergentName_1.getText().toString())) {
+                etSpeedEmergentName_1.setError("真实姓名必须为中文！");
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    }
     private MySelfSheetDialog initDialog() {
         MySelfSheetDialog dialog = new MySelfSheetDialog(CreditSpeedSecond_3Act.this).builder();
         for (int i = 0; i < relationList.size(); i++) {
@@ -153,9 +190,12 @@ public class CreditSpeedSecond_3Act extends BaseActivity {
                 String result = CheckUtil.CheckOutNull(llFatherLayout);
                 if (result!=null){
                     MyToastUtils.showShortDebugToast(CreditSpeedSecond_3Act.this,result);
-                }else {
-                    saveUserInfo3();
+                }  else {
+                    if (isChinese()) {
+                        saveUserInfo3();
+                    }
                 }
+
 
 
                 break;
@@ -220,5 +260,26 @@ public class CreditSpeedSecond_3Act extends BaseActivity {
 
             }
         });
+    }
+
+    private boolean isChinese(){
+        if (!FinancialUtil.isInputChinese(etSpeedRelativesName_1.getText().toString())) {
+            MyToastUtils.showShortToast(CreditSpeedSecond_3Act.this, "真实姓名必须为中文！");
+            return false;
+        }
+        if (!FinancialUtil.isInputChinese(etSpeedRelativesName_2.getText().toString())) {
+            MyToastUtils.showShortToast(CreditSpeedSecond_3Act.this, "真实姓名必须为中文！");
+            return false;
+        }
+        if (!FinancialUtil.isInputChinese(etSpeedColleagueName_1.getText().toString())) {
+            MyToastUtils.showShortToast(CreditSpeedSecond_3Act.this, "真实姓名必须为中文！");
+            return false;
+        }
+        if (!FinancialUtil.isInputChinese(etSpeedEmergentName_1.getText().toString())) {
+            MyToastUtils.showShortToast(CreditSpeedSecond_3Act.this, "真实姓名必须为中文！");
+            return false;
+        }
+
+        return true;
     }
 }

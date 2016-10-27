@@ -229,6 +229,7 @@
                         android:id="@+id/et_speedSalary"
                         android:layout_marginLeft="0dp"
                         android:hint="000000"
+                        android:inputType="numberDecimal"
                         style="@style/cre_et"
                         android:layout_width="wrap_content"/>
                     <TextView

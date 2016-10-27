@@ -17,7 +17,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,7 +71,7 @@ public class MainActivity extends BaseActivity {
     private TextView tvMine;
     private TextView title_chat;
     private TextView title_friend;
-    private RelativeLayout main_title;
+    private LinearLayout main_title;
 
     private FragmentManager manager;
     private Fragment myCreditFgt, creditFgt, friendFgt, mineFgt;//我的信用，贷款，朋友，我的
@@ -103,7 +103,7 @@ public class MainActivity extends BaseActivity {
         tvMine = (TextView) findViewById(R.id.tvMine);
         title_chat = (TextView) findViewById(R.id.title_chat);
         title_friend = (TextView) findViewById(R.id.title_friend);
-        main_title = (RelativeLayout) findViewById(R.id.main_title);
+        main_title = (LinearLayout) findViewById(R.id.main_title);
         ivRedPoint = (ImageView) findViewById(R.id.ivMs);
     }
 

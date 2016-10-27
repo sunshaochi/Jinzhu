@@ -59,6 +59,8 @@
                     android:tag="请输入直系亲属联系电话"
                     android:id="@+id/et_speedRelativesPhone_1"
                     style="@style/cre_et"
+                    android:inputType="number"
+                    android:maxLength="11"
                     android:hint="请输入手机号码"/>
             </RelativeLayout>
 
@@ -124,6 +126,8 @@
                     android:tag="请输入直系亲属2联系电话"
                     android:id="@+id/et_speedRelativesPhone_2"
                     style="@style/cre_et"
+                    android:inputType="number"
+                    android:maxLength="11"
                     android:hint="请输入手机号码"/>
             </RelativeLayout>
 
@@ -271,6 +275,8 @@
                     android:tag="请输入同事联系电话"
                     android:id="@+id/et_speedColleaguePhone_1"
                     style="@style/cre_et"
+                    android:inputType="number"
+                    android:maxLength="11"
                     android:hint="请输入手机号码"/>
             </RelativeLayout>
 
@@ -393,6 +399,8 @@
                     android:tag="请输入紧急联系人电话"
                     android:id="@+id/et_speedEmergentPhone_1"
                     style="@style/cre_et"
+                    android:inputType="number"
+                    android:maxLength="11"
                     android:hint="请输入手机号码"/>
             </RelativeLayout>
 

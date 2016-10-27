@@ -1,20 +1,18 @@
 package com.beyonditsm.financial.activity;
 
-import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.manager.ManagerMainAct;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.ParamsUtil;
-import com.beyonditsm.financial.util.PermissionsChecker;
 import com.beyonditsm.financial.util.SpUtils;
-import com.beyonditsm.financial.util.gps.GPSAddressUtils;
 import com.beyonditsm.financial.util.gps.LocationListener;
 
 import cn.jpush.android.api.JPushInterface;
@@ -41,6 +39,10 @@ public class SplashAct extends BaseActivity implements LocationListener{
 
     @Override
     public void init(Bundle savedInstanceState) {
+        //隐藏状态栏
+        View decorView = getWindow().getDecorView();
+        int option = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(option);
         MyApplication.screenWith = FinancialUtil.getScreenWidth(this);
         MyApplication.screenHeight = FinancialUtil.getScreenHeight(this);
 
