@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.beyonditsm.financial.activity.newscenter.NewsDetailActivity">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/rlTop"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/main_color">
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <RelativeLayout
+            android:id="@+id/rl_back"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:onClick="goback">
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="12dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/btn_back" />
+
+            <TextView
+                android:id="@+id/tvLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3dp"
+                android:layout_toRightOf="@id/ivBack"
+                android:textColor="#ffffff"
+                android:textSize="16sp"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_right"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:paddingRight="10dp"
+            >
+
+
+            <ImageView
+                android:layout_alignParentRight="true"
+                android:scaleType="fitCenter"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:src="@mipmap/icon_more"
+                />
+        </RelativeLayout>
+
+
+
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <WebView
+            android:id="@+id/webView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <LinearLayout
+            android:background="#e2d6d6d6"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="80dp">
+            <TextView
+                android:id="@+id/tv_lastTitle"
+                android:layout_weight="1"
+                android:textColor="@color/tv_black"
+                android:gravity="center_vertical"
+                android:textSize="14sp"
+                android:paddingLeft="14dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+            <TextView
+                android:id="@+id/tv_nextTitle"
+                android:layout_weight="1"
+                android:paddingLeft="14dp"
+                android:textColor="@color/tv_black"
+                android:gravity="center_vertical"
+                android:textSize="14sp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

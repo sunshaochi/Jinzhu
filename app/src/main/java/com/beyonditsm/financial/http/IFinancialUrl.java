@@ -19,17 +19,23 @@ public interface IFinancialUrl {
 ////        /*验收环境游戏地址*/
 //    String GAME_URL = "http://myjinzhu.com:5011/";
     /*正式地址*/
-    String BASE_URL = "http://option.myjinzhu.com";
+//    String BASE_URL = "http://option.myjinzhu.com";
     /*王建*/
-//    String BASE_URL = "http://139.196.227.53:8082";
+    String BASE_URL = "http://139.196.227.53:8080";
 
-//        /*正式游戏地址*/
+    //        /*正式游戏地址*/
     String GAME_URL = "http://m.farm.myjinzhu.com/";
 
 
-//    String BASE_URL = "http://test.myjinzhu.com:8082";
+//        String BASE_URL = "http://test.myjinzhu.com:8082";
     /*测试地址3*/
 //    String BASE_URL="http://test.myjinzhu.com:60";
+//    String BASE_URL = "http://172.16.6.116:8080";
+
+//    String BASE_URL="http://172.16.6.55:8080";
+    //帮助中心测试地址
+//    String BASE_URL="http://172.16.6.135:8080";
+
     //内网地址（测试钱包功能）
 //    String BASE_URL = "http://172.16.8.22:8082";
     /*测试游戏地址2*/
@@ -81,7 +87,7 @@ public interface IFinancialUrl {
     /*得到移动端的产品列表页面，所有查询参数的选项*/
     String FIND_PRODUCT_SORT_PARA = BASE_URL + API_VERSION + "/platform/unLogin/getProductQueryOptions.do";
     /*通过查询参数获取产品列表页面产品*/
-    String FIND_PRODCUT_BY_PARAM = BASE_URL + API_VERSION  + "/platform/unLogin/fingMobileProductPager.do";
+    String FIND_PRODCUT_BY_PARAM = BASE_URL + API_VERSION + "/platform/unLogin/fingMobileProductPager.do";
     /* 查询热门产品列表*/
     String FIND_HOT_PRODUCT_LIST = BASE_URL + API_VERSION + "/bankTerminal/unLogin/findHotProducRanklist.do";
     /* 查询订单历史处理流程*/
@@ -210,9 +216,9 @@ public interface IFinancialUrl {
     String SERVANT_COND_INFO = BASE_URL + API_VERSION + "/servant/login/getServantCondInfo.do";
     /*成为代言人*/
     String APPLY_TO_SERVANT = BASE_URL + API_VERSION + "/servant/login/applyToServant.do";
-//    /*代言人推荐信息获取*/
+    //    /*代言人推荐信息获取*/
     String SERVANT_RMD_INFO = BASE_URL + API_VERSION + "/servant/login/getServantSummary.do";
-//    /*代言人推荐信息获取*/
+    //    /*代言人推荐信息获取*/
 //    String SERVANT_GET_REWARD = BASE_URL + API_VERSION + "/servant/unlogin/getServantSummary.do";
     /*领取奖励*/
     String SERVANT_GET_REWARD = BASE_URL + API_VERSION + "/servant/login/pickUnhandledAward.do";
@@ -221,22 +227,29 @@ public interface IFinancialUrl {
     /*领取奖励（修改资料）*/
     String RECEIVE_REWARD = BASE_URL + API_VERSION + "/creditCard/login/modifyClient.do";
     /*查询角色信息*/
-    String ROLE_INTO = BASE_URL+API_VERSION+"/servant/login/getRoleInfo.do";
+    String ROLE_INTO = BASE_URL + API_VERSION + "/servant/login/getRoleInfo.do";
     /*Vip信息*/
-    String VIP_INFO = BASE_URL+API_VERSION+"/manager/unlogin/findVipInfo.do";
+    String VIP_INFO = BASE_URL + API_VERSION + "/manager/unLogin/findVipInfo.do";
     /*更新位置*/
-    String UPDATE_LOCATION = BASE_URL+API_VERSION +"/platform/login/updateLocation.do";
+    String UPDATE_LOCATION = BASE_URL + API_VERSION + "/platform/login/updateLocation.do";
     /*线下订单上传资料*/
-    String SAVE_OR_UPDATE_ORDER_IMAGE = BASE_URL+API_VERSION +"/platform/login/saveOrUpdateOrderImage.do";
+    String SAVE_OR_UPDATE_ORDER_IMAGE = BASE_URL + API_VERSION + "/platform/login/saveOrUpdateOrderImage.do";
     /*获得信用卡列表页面的信用卡数据*/
-    String GET_CREDIT_CARD_INFO = BASE_URL+API_VERSION + "/creditCard/unlogin/getCreditCards.do";
+    String GET_CREDIT_CARD_INFO = BASE_URL + API_VERSION + "/creditCard/unLogin/getCreditCards.do";
     /*在登录状态，点击申卡时,调用统计函数*/
-    String FIND_NEWS_MOBILE_INDEX = BASE_URL+API_VERSION + "/platform/information/findNewsMobileIndex.do";
+    String APPLY_CREDIT_CARD_CLICK = BASE_URL + API_VERSION + "/creditCard/login/applyCreditCardClick.do";
     /*查询移动/H5首页前5条端咨询信息 */
-    String FIND_NEWS_MOBILE_MORE = BASE_URL+API_VERSION + "/platform/information/findNewsMobileMore.do";
+    String FIND_NEWS_MOBILE_INDEX = BASE_URL + API_VERSION + "/platform/unLogin/findNewsMobileIndex.do";
     /* 查询移动/H5端更多咨询信息 */
-    /*在登录状态，点击申卡时,调用统计函数*/
-    String APPLY_CREDIT_CARD_CLICK = BASE_URL+API_VERSION + "/creditCard/login/applyCreditCardClick.do";
+    String FIND_NEWS_MOBILE_MORE = BASE_URL+API_VERSION + "/platform/unLogin/findNewsMobileMore.do";
     /*获取首页Banner*/
     String GET_BANNER = BASE_URL+API_VERSION+"/platform/unLogin/getPublishedMobileBanners.do";
+    /*根据ID进行文章翻页接口*/
+    String FIND_UP_AND_DOWN_ROW = BASE_URL + API_VERSION + "/platform/unLogin/findUpAndDownRow.do";
+    /*查询帮助主题*/
+    String FIND_HELP_ALLS =  BASE_URL+API_VERSION+"/platform/information/findAlls.do";
+    /*查询帮助文章（根据主题id（themeId）查询文章信息接口）*/
+    String FIND_HELP_DETAIL = BASE_URL +API_VERSION +"/platform/information/findActicleByThemeIdInter.do";
+
+
 }
