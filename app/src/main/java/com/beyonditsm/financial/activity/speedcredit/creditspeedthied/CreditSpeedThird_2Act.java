@@ -105,7 +105,7 @@ public class CreditSpeedThird_2Act extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.tvSure, R.id.rl_back_card, R.id.rl_top_card, R.id.rl_city, R.id.rl_address, R.id.tv_submit4})
+    @OnClick({R.id.tvSure, R.id.rl_back_card, R.id.rl_top_card, R.id.rl_city, R.id.rl_address, R.id.tv_submit4,R.id.tv_seek})
     public void todo(View v) {
         switch (v.getId()) {
             case R.id.tvSure:
@@ -171,6 +171,12 @@ public class CreditSpeedThird_2Act extends BaseActivity {
                     saveUserInfo4();
                 }
 
+                break;
+            case R.id.tv_seek:
+                Intent intent3 = new Intent(CreditSpeedThird_2Act.this,MainActivity.class);
+                intent3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent3.putExtra("position","1");
+                startActivity(intent3);
                 break;
             default:
                 break;
