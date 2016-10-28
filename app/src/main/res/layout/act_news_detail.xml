@@ -88,6 +88,8 @@
                 android:gravity="center_vertical"
                 android:textSize="14sp"
                 android:paddingLeft="14dp"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:layout_width="match_parent"
                 android:layout_height="1dp" />
             <TextView
@@ -97,6 +99,8 @@
                 android:textColor="@color/tv_black"
                 android:gravity="center_vertical"
                 android:textSize="14sp"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:layout_width="match_parent"
                 android:layout_height="1dp" />
         </LinearLayout>

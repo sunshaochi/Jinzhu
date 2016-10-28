@@ -101,7 +101,7 @@ public class NewsDetailActivity extends BaseActivity {
                 newsRelativeEntity = rd.getData();
                 tvLastTitle.setText("上一篇： " + newsRelativeEntity.getUpRow().getTitle());
                 tvNextTitle.setText("下一篇： " + newsRelativeEntity.getDownRow().getTitle());
-                NewsDetailActivity.super.setTopTitle(newsRelativeEntity.getCurRow().getTitle());
+//                NewsDetailActivity.super.setTopTitle(newsRelativeEntity.getCurRow().getTitle());
                 setWebView();
             }
 
