@@ -104,6 +104,11 @@ public class CreditSpeedSecond_3Act extends BaseActivity {
     private final int RL_SPEEDMARRIAGE2 = 2;
     private final int RL_SPEEDCOLLEAGUE = 3;
     private final int RL_SPEEDEMERGENT = 4;
+    private String marriage1Relation;
+    private String marriage2Relation;
+    private String colleagueRelation;
+    private String mergentRelation;
+
 
     @Override
     public void setLayout() {
@@ -162,7 +167,20 @@ public class CreditSpeedSecond_3Act extends BaseActivity {
             dialog.addSheetItem(relationList.get(i).getName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
                 @Override
                 public void onClick(int which) {
-                    MyLogUtils.info(which+"");
+                    switch (CURRENT_SELECT){
+                        case RL_SPEEDMARRIAGE1:
+                            marriage1Relation = relationList.get(which).getId()+"";
+                            break;
+                        case RL_SPEEDMARRIAGE2:
+                            marriage2Relation = relationList.get(which).getId()+"";
+                            break;
+                        case RL_SPEEDCOLLEAGUE:
+                            colleagueRelation = relationList.get(which).getId()+"";
+                            break;
+                        case RL_SPEEDEMERGENT:
+                            mergentRelation = relationList.get(which).getId()+"";
+                            break;
+                    }
                 }
             });
         }
@@ -208,15 +226,20 @@ public class CreditSpeedSecond_3Act extends BaseActivity {
 
                 break;
             case R.id.rl_speedMarriage1:
+                CURRENT_SELECT = RL_SPEEDMARRIAGE1;
                 initDialog().show(tvSpeedSelectRelationship_1);
+
                 break;
             case R.id.rl_speedMarriage2:
+                CURRENT_SELECT = RL_SPEEDMARRIAGE2;
                 initDialog().show(tvSpeedSelectRelationship_2);
                 break;
             case R.id.rl_speedColleague:
+                CURRENT_SELECT = RL_SPEEDCOLLEAGUE;
                 initDialog().show(tvColleagueSelectRelationship);
                 break;
             case R.id.rl_speedEmergent:
+                CURRENT_SELECT = RL_SPEEDEMERGENT;
                 initDialog().show(tvSpeedSelectEmergent_1);
 
                 break;
@@ -244,15 +267,16 @@ public class CreditSpeedSecond_3Act extends BaseActivity {
     }
 
     public void saveUserInfo3() {
+
         UserOrderInfo3 userOrderInfo3 = new UserOrderInfo3(orderId, etSpeedRelativesName_1.getText().toString() + "",
-                tvSpeedSelectRelationship_1.getText().toString() + "",
+                marriage1Relation + "",
                 etSpeedRelativesPhone_1.getText().toString() + "", etSpeedRelativesName_2.getText().toString() + "",
-                tvSpeedSelectRelationship_2.getText().toString() + "",
+                marriage2Relation + "",
                 etSpeedRelativesPhone_2.getText().toString() + "", etSpeedColleagueName_1.getText().toString() + "",
-                tvColleagueSelectRelationship.getText().toString() + "",
+                colleagueRelation + "",
                 etSpeedColleaguePhone_1.getText().toString() + "",
                 etSpeedEmergentName_1.getText().toString() + "",
-                tvSpeedSelectEmergent_1.getText().toString() + "",
+                mergentRelation + "",
                 etSpeedEmergentPhone_1.getText().toString() + ""
         );
         CommManager.getCommManager().saveUserOrderInfo3(userOrderInfo3, new RequestManager.CallBack() {
