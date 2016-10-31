@@ -269,18 +269,14 @@ public interface IFinancialUrl {
     /*区域接口*/
     String QUERY_ALL_AREA = BASE_URL + API_VERSION + "/platform/unlogin/queryAllArea.do";
     /*城市接口*/
-    String QUERY_ALL_CITY = BASE_URL +API_VERSION +"/platform/unlogin/queryAllCity.do";
+    String QUERY_ALL_CITY = BASE_URL + API_VERSION + "/platform/unlogin/queryAllCity.do";
     /*保存基本信息*/
-    String SAVE_ESSENTIAL_INFO = BASE_URL + API_VERSION +"/platform/login/saveUserOrderInfo1.do";
+    String SAVE_ESSENTIAL_INFO = BASE_URL + API_VERSION + "/platform/login/saveUserOrderInfo1.do";
     /*保存资质信息*/
-    String SAVE_QUALIFICATIONS_INFO = BASE_URL +API_VERSION +"/platform/login/saveUserOrderInfo2.do";
-    /*保存联系人信息*/
-    String SAVE_CONTACTS_INFO = BASE_URL +API_VERSION +"/platform/login/saveUserOrderInfo3.do";
-    /*上传资料信息（第四版块）*/
-    String SAVE_UPLOAD_INFO = BASE_URL +API_VERSION+"/platform/login/saveUserOrderInfo4.do";
+    String SAVE_QUALIFICATIONS_INFO = BASE_URL + API_VERSION + "/platform/login/saveUserOrderInfo2.do";
 
     /*提交极速贷接口*/
-    String SUBMIT_SPEED_CREDIT =BASE_URL + API_VERSION + "/platform/login/submitExtremeCreditOrder.do";
+    String SUBMIT_SPEED_CREDIT = BASE_URL + API_VERSION + "/platform/login/submitExtremeCreditOrder.do";
     /*上传急借通第四板块信息接口*/
     String SAVE_USER_ORDER_INFO4 = BASE_URL + API_VERSION + "/platform/login/saveUserOrderInfo4.do";
     /*通过城市查询门店*/
