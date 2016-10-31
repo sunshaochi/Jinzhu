@@ -21,13 +21,13 @@ public interface IFinancialUrl {
     /*正式地址*/
 //    String BASE_URL = "http://option.myjinzhu.com";
     /*王建*/
-//    String BASE_URL = "http://139.196.227.53:8082";
+    String BASE_URL = "http://139.196.227.38:8086";
 
 //        /*正式游戏地址*/
     String GAME_URL = "http://m.farm.myjinzhu.com/";
 
 
-    String BASE_URL = "http://test.myjinzhu.com:8086";
+//    String BASE_URL = "http://test.myjinzhu.com:8086";
     /*测试地址3*/
 //    String BASE_URL="http://test.myjinzhu.com:60";
     //内网地址（测试钱包功能）
