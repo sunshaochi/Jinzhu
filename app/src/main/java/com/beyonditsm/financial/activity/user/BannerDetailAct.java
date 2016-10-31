@@ -1,5 +1,6 @@
 package com.beyonditsm.financial.activity.user;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ public class BannerDetailAct extends BaseActivity {
         setContentView(R.layout.act_bannerdetail);
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     public void init(Bundle savedInstanceState) {
         String bannerName = getIntent().getStringExtra(HomeFragment.BANNER_NAME);
@@ -36,15 +38,16 @@ public class BannerDetailAct extends BaseActivity {
         //覆盖webview使用默认浏览器或第三方浏览器打开网页的行为，使网页用webview打开
 //        wvBannerDetail.loadUrl(Address);
         wvBannerDetail.loadUrl("http://172.16.6.182:9000/activity/policyLoan1014/1/1");
-        wvBannerDetail.getSettings().setJavaScriptEnabled(true);
-        wvBannerDetail.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
+//        wvBannerDetail.getSettings().setJavaScriptEnabled(true);
+//        wvBannerDetail.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
 
         WebSettings settings = wvBannerDetail.getSettings();
         settings.setUseWideViewPort(true);
-        settings.setLoadWithOverviewMode(true);
+        settings.setLoadWithOverviewMode(false);
         settings.setJavaScriptEnabled(true);
         settings.setSupportZoom(true);
         settings.setAllowFileAccess(true);
+        settings.setDefaultFontSize(12);
         //设置缓存模式
         settings.setCacheMode(WebSettings.LOAD_DEFAULT);
         // 开启 DOM storage API 功能
