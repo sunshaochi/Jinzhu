@@ -25,6 +25,7 @@ import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.RongCloudEvent;
 import com.beyonditsm.financial.activity.user.AddressBookAct;
+import com.beyonditsm.financial.activity.user.BannerDetailAct;
 import com.beyonditsm.financial.activity.user.GameActivity;
 import com.beyonditsm.financial.activity.user.LoginAct;
 import com.beyonditsm.financial.db.FriendDao;
@@ -154,6 +155,12 @@ public class MainActivity extends BaseActivity {
         assignViews();
 
 
+//        String position = getIntent().getStringExtra("position");
+//        if (!TextUtils.isEmpty(position)&&Integer.valueOf(position)==1){
+//            setTabSelection(Integer.valueOf(position));
+//            setCheckItem(Integer.valueOf(position));
+//        }
+
         if (TextUtils.isEmpty(SpUtils.getRoleName(MainActivity.this))) {
             ivRedPoint.setVisibility(View.GONE);
         } else {
@@ -178,6 +185,7 @@ public class MainActivity extends BaseActivity {
         }
         //检查版本更新
         gUtils.toVersion(MainActivity.this, FinancialUtil.getAppVer(MainActivity.this), 1);
+
 
     }
 
@@ -437,6 +445,11 @@ public class MainActivity extends BaseActivity {
         setCheckItem(0);
     }
 
+    public void onEvent(BannerDetailAct.CreditEvent event){
+        setAllTabNor();
+        setTabSelection(1);
+        setCheckItem(1);
+    }
     //    public void onEvent(BaseActivity.SwitchEvent event) {
 //        setAllTabNor();
 //        setTabSelection(3);

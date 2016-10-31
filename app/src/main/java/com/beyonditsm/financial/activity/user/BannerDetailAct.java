@@ -10,7 +10,9 @@ import android.webkit.WebViewClient;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.fragment.HomeFragment;
+import com.beyonditsm.financial.util.MyLogUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.tandong.sa.eventbus.EventBus;
 
 /**
  * Created by Administrator on 2016/9/20 0020.
@@ -30,20 +32,53 @@ public class BannerDetailAct extends BaseActivity {
         setTopTitle(bannerName);
         setLeftTv("返回");
         //如果访问的页面中有javascript，则webview必须设置支持javascript
-        wvBannerDetail.getSettings().setJavaScriptEnabled(true);
-        wvBannerDetail.getSettings().setAllowFileAccess(true);
-        wvBannerDetail.getSettings().setAppCacheEnabled(true);//开启Application caches
-        wvBannerDetail.getSettings().setDomStorageEnabled(true);
-        wvBannerDetail.getSettings().setDatabaseEnabled(true);
 
-        wvBannerDetail.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);//设置缓存模式
-        wvBannerDetail.loadUrl(Address);
         //覆盖webview使用默认浏览器或第三方浏览器打开网页的行为，使网页用webview打开
+        wvBannerDetail.loadUrl(Address);
+        wvBannerDetail.getSettings().setJavaScriptEnabled(true);
+        wvBannerDetail.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
+
+        WebSettings settings = wvBannerDetail.getSettings();
+        settings.setUseWideViewPort(true);
+        settings.setLoadWithOverviewMode(true);
+        settings.setJavaScriptEnabled(true);
+        settings.setSupportZoom(true);
+        settings.setAllowFileAccess(true);
+        //设置缓存模式
+        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        // 开启 DOM storage API 功能
+        settings.setDomStorageEnabled(true);
+        //开启 database storage API 功能
+        settings.setDatabaseEnabled(true);
+//        String cacheDirPath = getApplicationContext().getDir("gameCache", Context.MODE_PRIVATE).getPath();
+
+//        String cacheDirPath = getFilesDir().getAbsolutePath()+APP_CACAHE_DIRNAME;
+//        MyLogUtils.info("cacheDirPath+"+cacheDirPath);
+//        //设置数据库缓存路径
+//        settings.setDatabasePath(cacheDirPath);
+        //设置  Application Caches 缓存目录
+//        settings.setAppCachePath(cacheDirPath);
+        settings.setAllowFileAccess(true);
+        //开启 Application Caches 功能
+        settings.setAppCacheEnabled(true);
+
+
+
         wvBannerDetail.setWebViewClient(new WebViewClient(){
             //返回值是true的时候控制去webview打开，false时调用系统浏览器或第三方浏览器
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
+//
+                MyLogUtils.info(url);
+                if (url.endsWith("APPid=12345")){
+//                    Intent intent = new Intent(BannerDetailAct.this, MainActivity.class);
+//                    intent.putExtra("position","1");
+//                    startActivity(intent);
+                    EventBus.getDefault().post(new CreditEvent());
+                    BannerDetailAct.this.finish();
+                }else {
+                    view.loadUrl(url);
+                }
                 return true;
             }
         });
@@ -74,5 +109,8 @@ public class BannerDetailAct extends BaseActivity {
             wvBannerDetail.destroy();
         }
         super.onDestroy();
+    }
+    public class CreditEvent{
+
     }
 }
