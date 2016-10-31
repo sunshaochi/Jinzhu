@@ -163,6 +163,7 @@ public class NewsDetailActivity extends BaseActivity {
         settings.setLoadWithOverviewMode(true);
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
+        settings.setBlockNetworkImage(false);
 //        settings.setBuiltInZoomControls(true);
 //        settings.setSupportZoom(true);
         webView.removeJavascriptInterface("searchBoxJavaBredge_");
