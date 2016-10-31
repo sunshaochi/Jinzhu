@@ -27,11 +27,11 @@ public interface IFinancialUrl {
     //        /*正式游戏地址*/
     String GAME_URL = "http://m.farm.myjinzhu.com/";
 
-    //    String BASE_URL = "http://test.myjinzhu.com:8082";
+        String BASE_URL = "http://test.myjinzhu.com:8086";
     /*测试急借通接口*/
 //    String BASE_URL = "http://172.16.5.151:8080";
 
-    String BASE_URL = "http://139.196.227.38:8080";
+//    String BASE_URL = "http://139.196.227.38:8080";
 //    String BASE_URL = "http://172.16.5.151:8080";
 //    String BASE_URL = "http://139.196.227.38:8080";
     /*测试地址3*/
@@ -285,4 +285,10 @@ public interface IFinancialUrl {
     String RELATION = BASE_URL + API_VERSION + "/platform/unlogin/Relation.do";
     /*上传急借通第三板块信息接口*/
     String SAVE_USER_ORDER_INFO3 = BASE_URL + API_VERSION + "/platform/login/saveUserOrderInfo3.do";
+    /*个人信息查询省*/
+    String QUERY_PROVINCE = BASE_URL + API_VERSION +"/common/commonAPI/queryAllProvince.do";
+    /*个人信息查询市*/
+    String QUERY_CITY = BASE_URL + API_VERSION + "/common/commonAPI/queryAllCity.do";
+    /*个人信息查询区县*/
+    String QUERY_DISTRICT = BASE_URL + API_VERSION +"/common/commonAPI/queryAllArea.do";
 }

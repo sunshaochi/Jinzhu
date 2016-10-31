@@ -13,7 +13,6 @@ import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.entity.UserOrderInfo1;
 import com.beyonditsm.financial.entity.UserOrderInfo2;
 import com.beyonditsm.financial.entity.UserOrderInfo3;
-import com.beyonditsm.financial.entity.UserOrderInfoEntity;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.lidroid.xutils.http.client.multipart.content.FileBody;
@@ -817,5 +816,29 @@ public class CommManager extends RequestManager {
         params.put("payout",payout);
         doPost(IFinancialUrl.SAVE_QUALIFICATIONS_INFO,params,callBack);
 
+    }
+
+    /**
+     * 个人信息查询省
+     */
+    public void queryProvince(CallBack callBack){
+        Map<String, String> params = new HashMap<>();
+        doPost(IFinancialUrl.QUERY_PROVINCE,params,callBack);
+    }
+
+    /**
+     * 个人信息查询市
+     */
+    public void queryCity(String provinceCode,CallBack callBack){
+        Map<String, String> params = new HashMap<>();
+        doPost(IFinancialUrl.QUERY_CITY,params,callBack);
+    }
+
+    /**
+     * 个人信息查询区县
+     */
+    public void queryDistrict(String cityCode,CallBack callBack){
+        Map<String, String> params = new HashMap<>();
+        doPost(IFinancialUrl.QUERY_DISTRICT,params,callBack);
     }
 }

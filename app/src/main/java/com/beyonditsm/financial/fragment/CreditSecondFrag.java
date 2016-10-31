@@ -20,7 +20,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.credit.CreditDetailAct;
 import com.beyonditsm.financial.activity.credit.CreditStepAct;
@@ -41,7 +40,6 @@ import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.widget.DialogChooseAdress;
-import com.beyonditsm.financial.widget.DialogChooseProvince;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.eventbus.EventBus;
@@ -142,6 +140,7 @@ public class CreditSecondFrag extends BaseFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        queryProvince();
         addressUtil = new AddressUtil(mParentActivity);
         getDictionaryContent(0, "job_identity");//职业身份
         getDictionaryContent(1, "under_own_car");//名下车产
@@ -829,6 +828,20 @@ public class CreditSecondFrag extends BaseFragment {
             @Override
             public void run() {
                 criSv.fullScroll(ScrollView.FOCUS_DOWN);
+            }
+        });
+    }
+
+    private void queryProvince(){
+        RequestManager.getCommManager().queryProvince(new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
             }
         });
     }
