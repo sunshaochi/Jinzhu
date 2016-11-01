@@ -245,7 +245,7 @@ public interface IFinancialUrl {
     /*获取首页Banner*/
     String GET_BANNER = BASE_URL+API_VERSION+"/platform/unLogin/getPublishedMobileBanners.do";
     /*根据ID进行文章翻页接口*/
-    String FIND_UP_AND_DOWN_ROW = BASE_URL + API_VERSION + "/platform/unLogin/findUpAndDownRow.do";
+    String FIND_UP_AND_DOWN_ROW = BASE_URL + API_VERSION + "/platform/unLogin/findUpAndDownRowMobile.do";
     /*查询帮助主题*/
     String FIND_HELP_ALLS =  BASE_URL+API_VERSION+"/platform/information/findAlls.do";
     /*查询帮助文章（根据主题id（themeId）查询文章信息接口）*/
