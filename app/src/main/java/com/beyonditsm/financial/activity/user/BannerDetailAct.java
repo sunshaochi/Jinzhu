@@ -36,8 +36,8 @@ public class BannerDetailAct extends BaseActivity {
         //如果访问的页面中有javascript，则webview必须设置支持javascript
 
         //覆盖webview使用默认浏览器或第三方浏览器打开网页的行为，使网页用webview打开
-//        wvBannerDetail.loadUrl(Address);
-        wvBannerDetail.loadUrl("http://172.16.6.182:9000/activity/policyLoan1014/1/1");
+        wvBannerDetail.loadUrl(Address);
+//        wvBannerDetail.loadUrl("http://172.16.6.182:9000/activity/policyLoan1014/1/1");
 //        wvBannerDetail.getSettings().setJavaScriptEnabled(true);
 //        wvBannerDetail.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
 
