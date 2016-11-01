@@ -239,4 +239,6 @@ public interface IFinancialUrl {
     String APPLY_CREDIT_CARD_CLICK = BASE_URL+API_VERSION + "/creditCard/login/applyCreditCardClick.do";
     /*获取首页Banner*/
     String GET_BANNER = BASE_URL+API_VERSION+"/platform/unLogin/getPublishedMobileBanners.do";
+    /*热门城市接口获取*/
+    String GET_HOT_CITY = BASE_URL+API_VERSION+"/platform/unLogin/getAreaPanelData.do";
 }
