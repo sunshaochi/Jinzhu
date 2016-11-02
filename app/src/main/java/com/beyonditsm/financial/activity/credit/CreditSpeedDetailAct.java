@@ -104,6 +104,7 @@ public class CreditSpeedDetailAct extends BaseActivity {
     private ObjectAnimator obaOn2;
     private ObjectAnimator obaDown3;
     private ObjectAnimator obaOn3;
+    private String purposeId;
 
     public static final String CREDIT_TYPE = "credit_type";
     public static final String SPEED_CREDIT_ORDER_ID = "order_id";
@@ -429,7 +430,7 @@ public class CreditSpeedDetailAct extends BaseActivity {
                 if (isHaveData()) {
                     SubmitCreditSpeedEntity submitCreditSpeedEntity = new SubmitCreditSpeedEntity();
 
-                    submitCreditSpeedEntity.setPurpose(tvPurpose.getText().toString());
+                    submitCreditSpeedEntity.setPurpose(purposeId+"");
                     submitCreditSpeedEntity.setMaxRepaymentWeekly(etSpeedBearing.getText().toString());
                     submitCreditSpeedEntity.setTotalAmount(etSpeedAmount.getText().toString().trim());
                     submitCreditSpeedEntity.setTotalPeriods(tvSpeedWeek.getText().toString());
@@ -451,6 +452,7 @@ public class CreditSpeedDetailAct extends BaseActivity {
                             @Override
                             public void onClick(int which) {
                                 tvPurpose.setText(jobIdentitysList.get(which - 1).getName());
+                                purposeId = jobIdentitysList.get(which - 1).getId();
                             }
                         });
                     }

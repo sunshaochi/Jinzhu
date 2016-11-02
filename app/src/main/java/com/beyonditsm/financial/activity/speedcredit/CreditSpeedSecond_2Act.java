@@ -101,11 +101,13 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
     private final int RL_SPEEDSALARYTYPE = 1; //工资发放形式
     private final int RL_SPEEDWORKTYPE = 2; //工作性质
     private final int RL_SPEEDCOMPANYTYPE = 3; //单位性质
-    private final int RL_SPEEDEMERGENT = 4;
 
 
     private final static long WAITTIME = 2000;
     private long touchTime = 0;
+    private String companyType;
+    private String workType;
+    private  String salaryType;
 
     @Override
     public void onBackPressed() {
@@ -205,20 +207,23 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
                         for (int i = 0; i < adress.size(); i++) {
                             sb.append(adress.get(i));
                         }
-                        companyProvince = adress.get(0);
-                        companyCity = adress.get(1);
-                        companyArea = adress.get(2);
+//                        companyProvince = adress.get(0);
+//                        companyCity = adress.get(1);
+//                        companyArea = adress.get(2);
                         tvSpeedSelectCompanyAddress.setText(sb.toString());
                     }
                 });
                 break;
             case R.id.rl_speedSalaryType: //工资发放形式
+                CURRENT_SELECT = RL_SPEEDSALARYTYPE;
                 initRelationDialog(salaryPropertyList).show(tvSpeedSelectSalaryType);
                 break;
             case R.id.rl_speedWorkType: //工作性质
+                CURRENT_SELECT = RL_SPEEDWORKTYPE;
                 initRelationDialog(workPropertyList).show(tvSpeedSelectWorkType);
                 break;
             case R.id.rl_speedCompanyType: //单位性质
+                CURRENT_SELECT = RL_SPEEDCOMPANYTYPE;
                 initRelationDialog(unitPropertyList).show(tvSpeedSelectCompanyType);
                 break;
         }
@@ -359,18 +364,20 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
 
     @Override
     public void onProvinceSelected(JJTProvinceEntity jjtProvinceEntity) {
+        companyProvince = jjtProvinceEntity.getId();
         queryAllCity(jjtProvinceEntity.getId() + "");
 
     }
 
     @Override
     public void onCitySelected(JJTCityEntity jjtCityEntity) {
+        companyCity = jjtCityEntity.getCode();
         queryAllArea(jjtCityEntity.getId() + "");
     }
 
     @Override
     public void onCounySelected(JJTCounyEntity jjtCounyEntity) {
-
+        companyArea = jjtCounyEntity.getId();
     }
 
     private MySelfSheetDialog initRelationDialog(List<UnitPropertyEntity> list) {
@@ -379,7 +386,18 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
             dialog.addSheetItem(list.get(i).getName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
                 @Override
                 public void onClick(int which) {
-
+                    MyLogUtils.info("which"+which+"");
+                    switch (CURRENT_SELECT){
+                        case RL_SPEEDCOMPANYTYPE:
+                            companyType = unitPropertyList.get(which-1).getId()+"";
+                            break;
+                        case RL_SPEEDSALARYTYPE:
+                            salaryType = salaryPropertyList.get(which-1).getId()+"";
+                            break;
+                        case RL_SPEEDWORKTYPE:
+                            workType = workPropertyList.get(which-1).getId()+"";
+                            break;
+                    }
                 }
             });
         }
@@ -393,10 +411,10 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
         CommManager.getCommManager().saveQualificationsInfo(orderId, etSpeedCompanyName.getText().toString(), companyArea, companyCity, companyProvince, getEtSpeedCompanyAddressDetail.getText().toString(),
                 etSpeedCompanyPhoneArea.getText().toString() + "",
                 etSpeedCompanyPhone.getText().toString() + "",
-                tvSpeedSelectCompanyType.getText().toString() + "",
-                tvSpeedSelectWorkType.getText().toString() + "",
+                companyType + "",
+                workType+"",
                 etSpeedSalary.getText().toString() + "",
-                tvSpeedSalaryType.getText().toString() + "",
+                salaryType+ "",
                 new RequestManager.CallBack() {
                     @Override
                     public void onSucess(String result) throws JSONException {
