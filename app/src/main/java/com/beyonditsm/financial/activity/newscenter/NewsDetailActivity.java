@@ -101,6 +101,17 @@ public class NewsDetailActivity extends BaseActivity {
                 newsRelativeEntity = rd.getData();
                 tvLastTitle.setText("上一篇： " + newsRelativeEntity.getUpRow().getTitle());
                 tvNextTitle.setText("下一篇： " + newsRelativeEntity.getDownRow().getTitle());
+                if (newsRelativeEntity.getUpRow().getTitle().equals("没有了")){
+                    tvLastTitle.setTextColor(getResources().getColor(R.color.tv_black));
+                }else {
+                    tvLastTitle.setTextColor(getResources().getColor(R.color.credit_offline_divder_org));
+                }
+                if ( newsRelativeEntity.getDownRow().getTitle().equals("没有了")){
+                    tvNextTitle.setTextColor(getResources().getColor(R.color.tv_black));
+                }else {
+                    tvNextTitle.setTextColor(getResources().getColor(R.color.credit_offline_divder_org));
+                }
+
 //                NewsDetailActivity.super.setTopTitle(newsRelativeEntity.getCurRow().getTitle());
                 setWebView();
             }

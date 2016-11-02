@@ -57,7 +57,7 @@
             <ImageView
                 android:layout_alignParentRight="true"
                 android:scaleType="fitCenter"
-                android:layout_width="30dp"
+                android:layout_width="20dp"
                 android:layout_height="match_parent"
                 android:src="@mipmap/icon_more"
                 />
@@ -84,7 +84,7 @@
             <TextView
                 android:id="@+id/tv_lastTitle"
                 android:layout_weight="1"
-                android:textColor="@color/tv_black"
+                android:textColor="@color/credit_offline_divder_org"
                 android:gravity="center_vertical"
                 android:textSize="14sp"
                 android:paddingLeft="14dp"
@@ -96,7 +96,7 @@
                 android:id="@+id/tv_nextTitle"
                 android:layout_weight="1"
                 android:paddingLeft="14dp"
-                android:textColor="@color/tv_black"
+                android:textColor="@color/credit_offline_divder_org"
                 android:gravity="center_vertical"
                 android:textSize="14sp"
                 android:ellipsize="end"
