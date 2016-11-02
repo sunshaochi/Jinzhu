@@ -48,6 +48,7 @@ public class CreditSpeedUploadAct extends BaseActivity {
     TextView tvDes;
     @ViewInject(R.id.ivPhoto)
     ImageView ivPhoto;
+
     public static final int PHOTOZOOM = 0;
     public static final int PHOTOTAKE = 1;
     private String photoSavePath;
@@ -181,7 +182,7 @@ public class CreditSpeedUploadAct extends BaseActivity {
     }
 
 
-    @OnClick({R.id.ivPhoto})
+    @OnClick({R.id.ivPhoto,R.id.tvSave,R.id.tvBack})
     public void todo(View v) {
         switch (v.getId()) {
             case R.id.ivPhoto:
@@ -221,6 +222,8 @@ public class CreditSpeedUploadAct extends BaseActivity {
 
 
                 break;
+            case R.id.tvBack:finish();break;
+            case R.id.tvSave:finish();break;
         }
     }
 }

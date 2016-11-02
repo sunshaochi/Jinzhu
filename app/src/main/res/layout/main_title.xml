@@ -9,7 +9,8 @@
     <RelativeLayout
         android:id="@+id/rl_statusBar"
         android:layout_width="match_parent"
-        android:layout_height="20dp"/>
+        android:layout_height="20dp"
+        android:visibility="gone"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="48dp">

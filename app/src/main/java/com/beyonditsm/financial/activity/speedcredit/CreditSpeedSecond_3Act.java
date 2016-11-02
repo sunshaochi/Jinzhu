@@ -9,9 +9,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
+import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.speedcredit.creditspeedthied.CreditSpeedThird_2Act;
 import com.beyonditsm.financial.entity.RelationEntity;
 import com.beyonditsm.financial.entity.UserOrderInfo3;
@@ -109,6 +111,38 @@ public class CreditSpeedSecond_3Act extends BaseActivity {
     private String colleagueRelation;
     private String mergentRelation;
 
+    private final static long WAITTIME = 2000;
+    private long touchTime = 0;
+
+    @Override
+    public void goback(View view) {
+//        super.goback(view);
+        long currentTime = System.currentTimeMillis();
+        if ((currentTime - touchTime) >= WAITTIME) {
+            Toast.makeText(this, "再按一次取消贷款申请", Toast.LENGTH_SHORT).show();
+            touchTime = currentTime;
+        } else {
+
+            Intent intent = new Intent(CreditSpeedSecond_3Act.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        long currentTime = System.currentTimeMillis();
+        if ((currentTime - touchTime) >= WAITTIME) {
+            Toast.makeText(this, "再按一次取消贷款申请", Toast.LENGTH_SHORT).show();
+            touchTime = currentTime;
+        } else {
+
+            Intent intent = new Intent(CreditSpeedSecond_3Act.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
+    }
 
     @Override
     public void setLayout() {

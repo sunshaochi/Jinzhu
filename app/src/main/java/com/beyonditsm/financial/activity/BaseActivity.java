@@ -32,14 +32,14 @@ public abstract class BaseActivity extends SmartFragmentActivity {
         // 手机窗口设置无标题
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        if (Build.VERSION.SDK_INT>=21){
-//            rlStatusBar.setVisibility(View.VISIBLE);
-            View decorView = getWindow().getDecorView();
-            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-            decorView.setSystemUiVisibility(option);
-//            getWindow().setStatusBarColor(Color.TRANSPARENT);
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
+//        if (Build.VERSION.SDK_INT>=21){
+////            rlStatusBar.setVisibility(View.VISIBLE);
+//            View decorView = getWindow().getDecorView();
+//            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+//            decorView.setSystemUiVisibility(option);
+////            getWindow().setStatusBarColor(Color.TRANSPARENT);
+//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//        }
 //        ActionBar actionBar = getActionBar();
 //        actionBar.hide();
         //禁止EditText自动弹出软键盘
