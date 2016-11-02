@@ -173,7 +173,6 @@
                     android:text="单位名称:"/>
 
                 <EditText
-                    android:tag="请输入单位名称"
                     android:id="@+id/et_speedRelativesWork_1"
                     style="@style/cre_et" />
             </RelativeLayout>
@@ -194,7 +193,6 @@
                     android:layout_centerVertical="true" />
 
                 <TextView
-                    android:tag="请选择单位地址"
                     android:id="@+id/tv_speedSelectRelativeWoH_1"
                     style="@style/tv_select_style"
                     android:drawableRight="@mipmap/button_select"
@@ -206,7 +204,6 @@
 
             <!--家庭/单位详细地址-->
             <EditText
-                android:tag="请输入单位详细地址"
                 android:id="@+id/et_speedRelativesWoHDetail_1"
                 style="@style/speed_credit_second_detail_address"
                 android:visibility="gone"/>
@@ -295,7 +292,6 @@
                     android:text="单位名称:"/>
 
                 <EditText
-                    android:tag="请输入单位名称"
                     android:id="@+id/et_speedColleagueWork_1"
                     style="@style/cre_et"
                     android:hint="请输入单位名称"/>
@@ -317,7 +313,6 @@
                     android:layout_centerVertical="true" />
 
                 <TextView
-                    android:tag="请选择单位地址"
                     android:id="@+id/tv_speedSelectColleagueWoH_1"
                     style="@style/tv_select_style"
                     android:drawableRight="@mipmap/button_select"
@@ -329,7 +324,6 @@
 
             <!--家庭/单位详细地址-->
             <EditText
-                android:tag="请输入单位详细地址"
                 android:id="@+id/et_speedColleagueWoHDetail_1"
                 style="@style/speed_credit_second_detail_address"
                 android:visibility="gone"/>

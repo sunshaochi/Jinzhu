@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.beyonditsm.financial.ConstantValue;
 import com.beyonditsm.financial.MyApplication;
@@ -67,6 +68,23 @@ public class CreditSpeedFirstAct extends BaseActivity {
     private Timer timer;
     private CreditSpeedFirstAct.MyTimerTask myTask;
     private MyReciver myReciver;
+
+    private final static long WAITTIME = 2000;
+    private long touchTime = 0;
+
+    @Override
+    public void onBackPressed() {
+        long currentTime = System.currentTimeMillis();
+        if ((currentTime - touchTime) >= WAITTIME) {
+            Toast.makeText(this, "再按一次取消贷款申请", Toast.LENGTH_SHORT).show();
+            touchTime = currentTime;
+        } else {
+
+            Intent intent = new Intent(CreditSpeedFirstAct.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
+    }
 
     private void assignViews() {
         crePhone = (ClearEditText) findViewById(R.id.cre_phone);

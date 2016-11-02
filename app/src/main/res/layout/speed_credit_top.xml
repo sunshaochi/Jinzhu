@@ -198,6 +198,7 @@
                 android:cursorVisible="false"
                 android:gravity="center"
                 android:maxLength="3"
+                android:text="111"
                 android:textColor="#ff6633"
                 android:textSize="14sp" />
         </RelativeLayout>

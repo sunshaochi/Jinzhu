@@ -11,9 +11,11 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
+import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.credit.CreditSpeedDetailAct;
 import com.beyonditsm.financial.entity.CreditSpeedEntity;
 import com.beyonditsm.financial.entity.JJTCityEntity;
@@ -126,9 +128,41 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
 
     public static final String ORDER_ID ="order_id";
 
+    private final static long WAITTIME = 2000;
+    private long touchTime = 0;
+
+    @Override
+    public void onBackPressed() {
+        long currentTime = System.currentTimeMillis();
+        if ((currentTime - touchTime) >= WAITTIME) {
+            Toast.makeText(this, "再按一次取消贷款申请", Toast.LENGTH_SHORT).show();
+            touchTime = currentTime;
+        } else {
+
+            Intent intent = new Intent(CreditSpeedSecond_1Act.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
+    }
+
     @Override
     public void setLayout() {
         setContentView(R.layout.act_creditspeedsecond_1);
+    }
+
+    @Override
+    public void goback(View view) {
+//        super.goback(view);
+        long currentTime = System.currentTimeMillis();
+        if ((currentTime - touchTime) >= WAITTIME) {
+            Toast.makeText(this, "再按一次取消贷款申请", Toast.LENGTH_SHORT).show();
+            touchTime = currentTime;
+        } else {
+
+            Intent intent = new Intent(CreditSpeedSecond_1Act.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
     }
 
     @Override

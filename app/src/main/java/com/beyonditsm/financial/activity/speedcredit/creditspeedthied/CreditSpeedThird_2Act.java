@@ -7,11 +7,13 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.credit.CreditUploadAct;
+import com.beyonditsm.financial.activity.speedcredit.CreditSpeedSecond_1Act;
 import com.beyonditsm.financial.entity.UserOrderInfoEntity;
 import com.beyonditsm.financial.entity.VendorEntity;
 import com.beyonditsm.financial.http.CommManager;
@@ -67,6 +69,39 @@ public class CreditSpeedThird_2Act extends BaseActivity {
     private List<VendorEntity> vendorList;
     private VendorEntity curVendero;
     private String orderId;
+
+    private final static long WAITTIME = 2000;
+    private long touchTime = 0;
+
+    @Override
+    public void onBackPressed() {
+        long currentTime = System.currentTimeMillis();
+        if ((currentTime - touchTime) >= WAITTIME) {
+            Toast.makeText(this, "再按一次取消贷款申请", Toast.LENGTH_SHORT).show();
+            touchTime = currentTime;
+        } else {
+
+            Intent intent = new Intent(CreditSpeedThird_2Act.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void goback(View view) {
+//        super.goback(view);
+        long currentTime = System.currentTimeMillis();
+        if ((currentTime - touchTime) >= WAITTIME) {
+            Toast.makeText(this, "再按一次取消贷款申请", Toast.LENGTH_SHORT).show();
+            touchTime = currentTime;
+        } else {
+
+            Intent intent = new Intent(CreditSpeedThird_2Act.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
+    }
+
 
     @Override
     public void setLayout() {

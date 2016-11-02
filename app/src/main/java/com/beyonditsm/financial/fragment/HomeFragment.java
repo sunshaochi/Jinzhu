@@ -184,9 +184,9 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
 
         //头部布局的初始化时透明
 //        rlTitleLayout.setBackgroundColor(Color.argb(0,0xf5,0x8b,0x35));
-        if (Build.VERSION.SDK_INT>=21){
-            rlStatusBar.setVisibility(View.VISIBLE);
-        }
+//        if (Build.VERSION.SDK_INT>=21){
+//            rlStatusBar.setVisibility(View.VISIBLE);
+//        }
         String roleName = SpUtils.getRoleName(context);
         MyLogUtils.info("ROLENAME=" + roleName);
         svHome.smoothScrollTo(0,0);
