@@ -43,7 +43,6 @@ import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
-import com.beyonditsm.financial.widget.DialogChooseAdress;
 import com.beyonditsm.financial.widget.jijietong.DialogJJTAddress;
 import com.beyonditsm.financial.widget.jijietong.JJTInterface;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -123,18 +122,6 @@ public class CreditSecondFrag extends BaseFragment {
     private DialogJJTAddress dialogJJTAddress;
     private List<JJTCityEntity> cityList;
     private List<JJTCounyEntity> counyList;
-    private String nativePlaceProvince;
-    private String nativePlaceCity;
-    private String nativePlaceDistrict;
-    private String nativePlaceAddrProvince;
-    private String nativePlaceAddrCity;
-    private String nativePlaceAddrDistrict;
-    private String nativePlaceProvinceCode;
-    private String nativePlaceCityCode;
-    private String nativePlaceCounyCode;
-    private String nativePlaceAddrProvinceCode;
-    private String nativePlaceAddrCityCode;
-    private String nativePlaceAddrCounyCode;
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -162,7 +149,7 @@ public class CreditSecondFrag extends BaseFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        queryProvince();
+
         addressUtil = new AddressUtil(mParentActivity);
         getDictionaryContent(0, "job_identity");//职业身份
         getDictionaryContent(1, "under_own_car");//名下车产
@@ -250,20 +237,28 @@ public class CreditSecondFrag extends BaseFragment {
                 upData();
                 break;
             case R.id.rlPosition://常住地
-                DialogChooseAdress dialogChooseAdress = new DialogChooseAdress(mParentActivity).builder();
-                dialogChooseAdress.show();
-                dialogChooseAdress.setOnSheetItemClickListener(new DialogChooseAdress.SexClickListener() {
+//                DialogChooseAdress dialogChooseAdress = new DialogChooseAdress(mParentActivity).builder();
+//                dialogChooseAdress.show();
+//                dialogChooseAdress.setOnSheetItemClickListener(new DialogChooseAdress.SexClickListener() {
+//                    @Override
+//                    public void getAdress(List<String> adress) {
+//
+//                    }
+//                });
+                dialogJJTAddress.show();
+                dialogJJTAddress.setOnSheetItemClickListener(new DialogJJTAddress.SexClickListener() {
                     @Override
                     public void getAdress(List<String> adress) {
-                        String proCode = addressUtil.getProCode(adress.get(0));
-                        String cityCode = addressUtil.getCityCode(proCode, adress.get(1));
-                        String districtCode = addressUtil.getCountryCode(cityCode, adress.get(2));
-                        user.setProvince(proCode);
+                        String defaultProvince = adress.get(0);
+                        String provinceCode = queryProvinceCodeByName(defaultProvince);
+                        String defaultCity = adress.get(1);
+                        String cityCode = queryCityCodeByName(defaultCity);
+                        String defaultArea = adress.get(2);
+                        String districtCode = queryAreaCodeByName(defaultArea);
+                        user.setProvince(provinceCode);
                         user.setCity(cityCode);
                         user.setDistrict(districtCode);
-                        position.setText(addressUtil.getProName(user.getProvince())
-                                + addressUtil.getCityName(user.getProvince(), user.getCity())
-                                + addressUtil.getCountryName(user.getCity(), user.getDistrict()));
+                        position.setText(defaultProvince + defaultCity + defaultArea);
                     }
                 });
                 break;
@@ -280,30 +275,19 @@ public class CreditSecondFrag extends BaseFragment {
                 dialogJJTAddress.setOnSheetItemClickListener(new DialogJJTAddress.SexClickListener() {
                     @Override
                     public void getAdress(List<String> adress) {
-                        nativePlaceProvince = adress.get(0);
-                        nativePlaceCity = adress.get(1);
-                        nativePlaceDistrict = adress.get(2);
+                        String nativePlaceProvince = adress.get(0);
+                        String nativePlaceProvinceCode = queryProvinceCodeByName(nativePlaceProvince);
+                        String nativePlaceCity = adress.get(1);
+                        String nativePlaceCityCode = queryCityCodeByName(nativePlaceCity);
+                        String nativePlaceDistrict = adress.get(2);
+                        String nativePlaceCounyCode = queryAreaCodeByName(nativePlaceDistrict);
+                        user.setNativePlaceProvince(nativePlaceProvinceCode);
+                        user.setNativePlaceCity(nativePlaceCityCode);
+                        user.setNativePlaceDistrict(nativePlaceCounyCode);
                         tvJiguan.setText(nativePlaceProvince + nativePlaceCity + nativePlaceDistrict);
                     }
                 });
-                dialogJJTAddress.getJJTPicker().setOnSrollListener(new JJTInterface() {
-                    @Override
-                    public void onProvinceSelected(JJTProvinceEntity jjtProvinceEntity) {
-                        nativePlaceProvinceCode = jjtProvinceEntity.getCode();
-                        queryCity(jjtProvinceEntity.getCode());
-                    }
 
-                    @Override
-                    public void onCitySelected(JJTCityEntity jjtCityEntity) {
-                        nativePlaceCityCode = jjtCityEntity.getCode();
-                        queryDistrict(jjtCityEntity.getCode());
-                    }
-
-                    @Override
-                    public void onCounySelected(JJTCounyEntity jjtCounyEntity) {
-                        nativePlaceCounyCode = jjtCounyEntity.getCode();
-                    }
-                });
                 break;
             case R.id.rlAddress://户籍地址
 //                DialogChooseAdress dialogChooseAdress1 = new DialogChooseAdress(mParentActivity).builder();
@@ -321,28 +305,16 @@ public class CreditSecondFrag extends BaseFragment {
                 dialogJJTAddress.setOnSheetItemClickListener(new DialogJJTAddress.SexClickListener() {
                     @Override
                     public void getAdress(List<String> adress) {
-                        nativePlaceAddrProvince = adress.get(0);
-                        nativePlaceAddrCity = adress.get(1);
-                        nativePlaceAddrDistrict = adress.get(2);
+                        String nativePlaceAddrProvince = adress.get(0);
+                        String nativePlaceAddrProvinceCode = queryProvinceCodeByName(nativePlaceAddrProvince);
+                        String nativePlaceAddrCity = adress.get(1);
+                        String nativePlaceAddrCityCode = queryCityCodeByName(nativePlaceAddrCity);
+                        String nativePlaceAddrDistrict = adress.get(2);
+                        String nativePlaceAddrCounyCode = queryAreaCodeByName(nativePlaceAddrDistrict);
+                        user.setNativePlaceAddrProvince(nativePlaceAddrProvinceCode);
+                        user.setNativePlaceAddrCity(nativePlaceAddrCityCode);
+                        user.setNativePlaceAddrDistrict(nativePlaceAddrCounyCode);
                         tvAddress.setText(nativePlaceAddrProvince + nativePlaceAddrCity + nativePlaceAddrDistrict);
-                    }
-                });
-                dialogJJTAddress.getJJTPicker().setOnSrollListener(new JJTInterface() {
-                    @Override
-                    public void onProvinceSelected(JJTProvinceEntity jjtProvinceEntity) {
-                        nativePlaceAddrProvinceCode = jjtProvinceEntity.getCode();
-                        queryCity(jjtProvinceEntity.getCode());
-                    }
-
-                    @Override
-                    public void onCitySelected(JJTCityEntity jjtCityEntity) {
-                        nativePlaceAddrCityCode = jjtCityEntity.getCode();
-                        queryDistrict(jjtCityEntity.getCode());
-                    }
-
-                    @Override
-                    public void onCounySelected(JJTCounyEntity jjtCounyEntity) {
-                        nativePlaceAddrCounyCode = jjtCounyEntity.getCode();
                     }
                 });
                 break;
@@ -594,10 +566,8 @@ public class CreditSecondFrag extends BaseFragment {
                         }
                     }
 
-                    if (!TextUtils.isEmpty(user.getProvince()) && !TextUtils.isEmpty(user.getCity()) && !TextUtils.isEmpty(user.getDistrict())) {
-                        position.setText(addressUtil.getProName(user.getProvince())
-                                + addressUtil.getCityName(user.getProvince(), user.getCity())
-                                + addressUtil.getCountryName(user.getCity(), user.getDistrict()));//常住地
+                    if (!TextUtils.isEmpty(user.getDefaultAddrApp())) {
+                        position.setText(user.getDefaultAddrApp());//常住地
                     }
 
                     if (!TextUtils.isEmpty(user.getDetailAddr())) {
@@ -606,7 +576,7 @@ public class CreditSecondFrag extends BaseFragment {
 
                     if (TextUtils.isEmpty(user.getNativePlaceApp())) {
                         tvJiguan.setText(user.getNativePlace());//籍贯
-                    }else{
+                    } else {
                         tvJiguan.setText(user.getNativePlaceApp());//籍贯
                     }
 //                    if (TextUtils.isEmpty(user.getNativePlaceProvince())&&TextUtils.isEmpty(user.getNativePlaceCity())&&TextUtils.isEmpty(user.getNativePlaceDistrict())){
@@ -617,7 +587,7 @@ public class CreditSecondFrag extends BaseFragment {
 
                     if (TextUtils.isEmpty(user.getNativePlaceAddrApp())) {
                         tvAddress.setText(user.getNativePlaceAddr());//户籍地址
-                    }else{
+                    } else {
                         tvAddress.setText(user.getNativePlaceAddrApp());//户籍地址
                     }
 
@@ -661,6 +631,8 @@ public class CreditSecondFrag extends BaseFragment {
                         tvXy.setText(user.getTowYearCredName());
                     }
                 }
+
+                queryProvince();
             }
 
             @Override
@@ -679,15 +651,10 @@ public class CreditSecondFrag extends BaseFragment {
             user.setIdentCard(IdCard.getText().toString());
             user.setDetailAddr(address.getText().toString());
             user.setNativePlace(tvJiguan.getText().toString());
-//            if (TextUtils.isEmpty(tvJiguan.getText().toString())) {
-                user.setNativePlaceProvince(nativePlaceProvinceCode);
-                user.setNativePlaceCity(nativePlaceCityCode);
-                user.setNativePlaceDistrict(nativePlaceCounyCode);
-//            }
+
             user.setNativePlaceAddr(tvAddress.getText().toString());
-            user.setNativePlaceAddrProvince(nativePlaceAddrProvinceCode);
-            user.setNativePlaceAddrCity(nativePlaceAddrCityCode);
-            user.setNativePlaceAddrDistrict(nativePlaceAddrCounyCode);
+
+
             user.setUserAge(Integer.parseInt(age.getText().toString()));
             if (carSelect) {
                 user.setHaveCar(carList.get(carPos).getId());//车产
@@ -936,7 +903,7 @@ public class CreditSecondFrag extends BaseFragment {
         });
     }
 
-    private void queryProvince(){
+    private void queryProvince() {
         RequestManager.getCommManager().queryProvince(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
@@ -946,12 +913,27 @@ public class CreditSecondFrag extends BaseFragment {
                 provinceList = gson.fromJson(data.toString(), new TypeToken<List<JJTProvinceEntity>>() {
                 }.getType());
                 ParamsUtil.getInstance().setProvinceEntityList(provinceList);
-                if (provinceList!=null&&provinceList.size()>0){
+                if (provinceList != null && provinceList.size() > 0) {
                     dialogJJTAddress = new DialogJJTAddress(getActivity(), provinceList).builder();
+                    dialogJJTAddress.getJJTPicker().setOnSrollListener(new JJTInterface() {
+                        @Override
+                        public void onProvinceSelected(JJTProvinceEntity jjtProvinceEntity) {
+                            queryCity(jjtProvinceEntity.getCode());
+                        }
 
+                        @Override
+                        public void onCitySelected(JJTCityEntity jjtCityEntity) {
+                            queryDistrict(jjtCityEntity.getCode());
+                        }
+
+                        @Override
+                        public void onCounySelected(JJTCounyEntity jjtCounyEntity) {
+                        }
+                    });
                     queryCity(provinceList.get(0).getCode());
                 }
-
+//                if ()
+//                queryProvinceCodeByName()
             }
 
             @Override
@@ -961,7 +943,7 @@ public class CreditSecondFrag extends BaseFragment {
         });
     }
 
-    private void queryCity(String provinceCode){
+    private void queryCity(String provinceCode) {
         RequestManager.getCommManager().queryCity(provinceCode, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
@@ -972,7 +954,7 @@ public class CreditSecondFrag extends BaseFragment {
                 }.getType());
                 ParamsUtil.getInstance().setCityEntityList(cityList);
                 dialogJJTAddress.getJJTPicker().setCityList();
-                if (cityList!=null&&cityList.size()>0){
+                if (cityList != null && cityList.size() > 0) {
                     queryDistrict(cityList.get(0).getCode());
                 }
             }
@@ -983,16 +965,19 @@ public class CreditSecondFrag extends BaseFragment {
             }
         });
     }
-    private void queryDistrict(String cityCode){
+
+    private void queryDistrict(String cityCode) {
         RequestManager.getCommManager().queryDistrict(cityCode, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray data = jsonObject.getJSONArray("data");
                 Gson gson = new Gson();
-                counyList = gson.fromJson(data.toString(),new TypeToken<List<JJTCounyEntity>>(){}.getType());
+                counyList = gson.fromJson(data.toString(), new TypeToken<List<JJTCounyEntity>>() {
+                }.getType());
                 ParamsUtil.getInstance().setCounyEntityList(counyList);
                 dialogJJTAddress.getJJTPicker().setCouny();
+
             }
 
             @Override
@@ -1002,4 +987,33 @@ public class CreditSecondFrag extends BaseFragment {
         });
     }
 
+    public String queryProvinceCodeByName(String name) {
+        for (int i = 0; i < provinceList.size(); i++) {
+            JJTProvinceEntity jjtProvinceEntity = provinceList.get(i);
+            if (jjtProvinceEntity.getName().equals(name)) {
+                return jjtProvinceEntity.getCode();
+            }
+        }
+        return "";
+    }
+
+    public String queryCityCodeByName(String name) {
+        for (int i = 0; i < cityList.size(); i++) {
+            JJTCityEntity jjtProvinceEntity = cityList.get(i);
+            if (jjtProvinceEntity.getName().equals(name)) {
+                return jjtProvinceEntity.getCode();
+            }
+        }
+        return "";
+    }
+
+    public String queryAreaCodeByName(String name) {
+        for (int i = 0; i < counyList.size(); i++) {
+            JJTCounyEntity jjtProvinceEntity = counyList.get(i);
+            if (jjtProvinceEntity.getName().equals(name)) {
+                return jjtProvinceEntity.getCode();
+            }
+        }
+        return "";
+    }
 }
