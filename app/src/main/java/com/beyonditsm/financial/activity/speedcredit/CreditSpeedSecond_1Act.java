@@ -125,6 +125,7 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
     private List<JJTCounyEntity> counyEntityList;
     private DialogJJTAddress dialogChooseAdress1;
     private List<String> uuntanal;
+    private UserOrderInfo1 userOrderInfo1 ;
 
     public static final String ORDER_ID ="order_id";
 
@@ -171,6 +172,7 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
         setLeftTv("返回");
         orderId = getIntent().getStringExtra(CreditSpeedDetailAct.SPEED_CREDIT_ORDER_ID);
         propetyTypesList = (List<CreditSpeedEntity.PropertyTypesBean>) getIntent().getSerializableExtra(SpeedCreditFrag.PROPERTY_TYPES);
+        userOrderInfo1 = new UserOrderInfo1();
         initText();
         queryAllProvince();
         getMarriage();
@@ -240,7 +242,6 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
         switch (view.getId()){
             case R.id.tv_speed_toTwo:
                 if (isHaveData()) {
-                    UserOrderInfo1 userOrderInfo1 = new UserOrderInfo1();
                     if (!TextUtils.isEmpty(orderId)) {
                         userOrderInfo1.setOrderId(orderId);
                     }
@@ -248,8 +249,8 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
                     userOrderInfo1.setContactNum(etSpeedPhone.getText().toString().trim());
                     userOrderInfo1.setIdcardno(etSpeedIdCard.getText().toString().trim());
                     userOrderInfo1.setName(etSpeedName.getText().toString().trim());
-                    userOrderInfo1.setMarriagests(tvSpeedSelectMarriage.getText().toString().trim());
-                    userOrderInfo1.setQualitications(tvSpeedSelectEdu.getText().toString().trim());
+//                    userOrderInfo1.setMarriagests(tvSpeedSelectMarriage.getText().toString().trim());
+//                    userOrderInfo1.setQualitications(tvSpeedSelectEdu.getText().toString().trim());
                     if (!TextUtils.isEmpty(permanentP)) {
                         userOrderInfo1.setDomicileProvince(permanentP);
                     }
@@ -270,7 +271,7 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
                         userOrderInfo1.setPermanentArea(residentA);
                     }
                     userOrderInfo1.setPermanentDetail(etSpeedResidentDetail.getText().toString().trim());
-                    userOrderInfo1.setResSts(tvSpeedSelectLivingConditions.getText().toString().trim());
+//                    userOrderInfo1.setResSts(tvSpeedSelectLivingConditions.getText().toString().trim());
                     saveEsseatialInfo(userOrderInfo1);
 
                 }
@@ -284,6 +285,7 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
                             @Override
                             public void onClick(int which) {
                                 tvSpeedSelectLivingConditions.setText(propetyTypesList.get(which - 1).getName());
+                                userOrderInfo1.setResSts(propetyTypesList.get(which - 1).getId()+"");
                             }
                         });
                     }
@@ -299,6 +301,7 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
                             @Override
                             public void onClick(int which) {
                                 tvSpeedSelectMarriage.setText(marriageList.get(which - 1).getName());
+                                userOrderInfo1.setMarriagests(marriageList.get(which - 1).getId()+"");
                             }
                         });
                     }
@@ -314,6 +317,7 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
                             @Override
                             public void onClick(int which) {
                                 tvSpeedSelectEdu.setText(eduList.get(which - 1).getName());
+                                userOrderInfo1.setQualitications(eduList.get(which - 1).getId()+"");
                             }
                         });
                     }

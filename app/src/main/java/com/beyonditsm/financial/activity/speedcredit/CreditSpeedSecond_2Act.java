@@ -97,6 +97,13 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
     private String companyProvince;
     private String orderId;
 
+    private int CURRENT_SELECT;
+    private final int RL_SPEEDSALARYTYPE = 1; //工资发放形式
+    private final int RL_SPEEDWORKTYPE = 2; //工作性质
+    private final int RL_SPEEDCOMPANYTYPE = 3; //单位性质
+    private final int RL_SPEEDEMERGENT = 4;
+
+
     private final static long WAITTIME = 2000;
     private long touchTime = 0;
 
@@ -187,7 +194,7 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
 //                intent.putxtra("item",2);
 //                getActivity().sendBroadcast(intent);
                 break;
-            case R.id.rl_speedCompanyAddress:
+            case R.id.rl_speedCompanyAddress: //单位地址
                 MyLogUtils.info("TAG:" + tvSpeedSelectCompanyAddress.getTag() + "");
                 dialogChooseAdress1.show();
                 dialogChooseAdress1.setOnSheetItemClickListener(new DialogJJTAddress.SexClickListener() {
@@ -205,13 +212,13 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
                     }
                 });
                 break;
-            case R.id.rl_speedSalaryType:
+            case R.id.rl_speedSalaryType: //工资发放形式
                 initRelationDialog(salaryPropertyList).show(tvSpeedSelectSalaryType);
                 break;
-            case R.id.rl_speedWorkType:
+            case R.id.rl_speedWorkType: //工作性质
                 initRelationDialog(workPropertyList).show(tvSpeedSelectWorkType);
                 break;
-            case R.id.rl_speedCompanyType:
+            case R.id.rl_speedCompanyType: //单位性质
                 initRelationDialog(unitPropertyList).show(tvSpeedSelectCompanyType);
                 break;
         }
