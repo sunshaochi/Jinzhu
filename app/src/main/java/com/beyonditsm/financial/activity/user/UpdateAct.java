@@ -120,13 +120,13 @@ public class UpdateAct extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        if (null!=savedInstanceState){
-            userInfo = savedInstanceState.getParcelable("UserEntity");
-        }
-    }
+//    @Override
+//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+//        super.onRestoreInstanceState(savedInstanceState);
+//        if (null!=savedInstanceState){
+//            userInfo = savedInstanceState.getParcelable("UserEntity");
+//        }
+//    }
 
     @Override
     public void setLayout() {
@@ -141,13 +141,13 @@ public class UpdateAct extends BaseActivity {
         //强制关闭键盘
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         addressUtil = new AddressUtil(this);
-        userInfo = getIntent().getParcelableExtra(MineFragment.USER_KEY);
-        //把用户信息放进去
-        if (userInfo != null)
-            setUserMes(userInfo);
-        else
+//        userInfo = getIntent().getParcelableExtra(MineFragment.USER_KEY);
+//        //把用户信息放进去
+//        if (userInfo != null) {
+//            setUserMes(userInfo);
+//        } else{
             getUserInfo();
-
+//        }
         //注册EventBus
         EventBus.getDefault().register(this);
         cbSelectSex.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -361,10 +361,8 @@ public class UpdateAct extends BaseActivity {
             ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + userInfo.getHeadIcon(), civHead, options);
             if (userInfo.getUserSex() != null) {
                 if (userInfo.getUserSex() == 0) {
-//                    tvSex.setText("女");
                     cbSelectSex.setChecked(true);
                 } else {
-//                    tvSex.setText("男");
                     cbSelectSex.setChecked(false);
                 }
             }
