@@ -1,6 +1,7 @@
 package com.beyonditsm.financial.widget.jijietong;
 
 import com.beyonditsm.financial.entity.JJTCityEntity;
+import com.beyonditsm.financial.entity.JJTCounyEntity;
 import com.beyonditsm.financial.entity.JJTProvinceEntity;
 
 /**
@@ -10,4 +11,5 @@ import com.beyonditsm.financial.entity.JJTProvinceEntity;
 public interface JJTInterface {
     void onProvinceSelected(JJTProvinceEntity jjtProvinceEntity);
     void onCitySelected(JJTCityEntity jjtCityEntity);
+    void onCounySelected(JJTCounyEntity jjtCounyEntity);
 }

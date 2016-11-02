@@ -326,6 +326,11 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
         queryAllArea(jjtCityEntity.getId() + "");
     }
 
+    @Override
+    public void onCounySelected(JJTCounyEntity jjtCounyEntity) {
+
+    }
+
     private MySelfSheetDialog initRelationDialog(List<UnitPropertyEntity> list) {
         MySelfSheetDialog dialog = new MySelfSheetDialog(CreditSpeedSecond_2Act.this).builder();
         for (int i = 0; i < list.size(); i++) {

@@ -12,11 +12,9 @@ import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.entity.JJTCityEntity;
 import com.beyonditsm.financial.entity.JJTCounyEntity;
 import com.beyonditsm.financial.entity.JJTProvinceEntity;
-import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.widget.city.CitycodeUtil;
 import com.beyonditsm.financial.widget.city.Cityinfo;
-import com.beyonditsm.financial.widget.city.FileUtil;
 import com.beyonditsm.financial.widget.city.ScrollerNumberPicker;
 import com.tandong.sa.json.JsonArray;
 import com.tandong.sa.json.JsonElement;
@@ -260,6 +258,7 @@ public class JJTPicker extends LinearLayout {
 
                 if (text.equals("") || text == null)
                     return;
+                jjtInterface.onCounySelected(counyEntityList.get(id));
                 if (tempCounyIndex != id) {
                     String selectDay = provincePicker.getSelectedText();
                     if (selectDay == null || selectDay.equals(""))

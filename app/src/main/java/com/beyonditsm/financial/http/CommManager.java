@@ -831,6 +831,7 @@ public class CommManager extends RequestManager {
      */
     public void queryCity(String provinceCode,CallBack callBack){
         Map<String, String> params = new HashMap<>();
+        params.put("code",provinceCode);
         doPost(IFinancialUrl.QUERY_CITY,params,callBack);
     }
 
@@ -839,6 +840,7 @@ public class CommManager extends RequestManager {
      */
     public void queryDistrict(String cityCode,CallBack callBack){
         Map<String, String> params = new HashMap<>();
+        params.put("cityCode",cityCode);
         doPost(IFinancialUrl.QUERY_DISTRICT,params,callBack);
     }
 }

@@ -48,6 +48,7 @@ public class SpeedCreditFrag extends BaseFragment {
     public static final String CREDIT_SPEED = "credit_speed";
     public static final String JOB_IDENTITYS = "job_identitys";
     public static final String PROPERTY_TYPES = "property_types";
+    public static final String PAY_TYPE = "pay_type";
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -127,6 +128,7 @@ public class SpeedCreditFrag extends BaseFragment {
 //                List<CreditSpeedEntity.PropertyTypesBean> propertyTypesList = ;
                 intent.putExtra(JOB_IDENTITYS,(Serializable)creditSpeedEntity.getJobIdentitys());
                 intent.putExtra(PROPERTY_TYPES,(Serializable) creditSpeedEntity.getPropertyTypes());
+                intent.putExtra(PAY_TYPE,(Serializable) creditSpeedEntity.getPayTypess());
                 intent.putExtra(CREDIT_SPEED, creditSpeedEntity);
                 getActivity().startActivity(intent);
             }

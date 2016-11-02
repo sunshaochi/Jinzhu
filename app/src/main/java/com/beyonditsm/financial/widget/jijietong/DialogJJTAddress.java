@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.entity.JJTProvinceEntity;
-import com.beyonditsm.financial.widget.city.CityPicker;
 
 import java.util.List;
 

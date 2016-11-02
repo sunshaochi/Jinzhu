@@ -15,10 +15,20 @@ public class JJTCounyEntity {
      */
 
     private String name;
-    private long id;
+    private String id;
     private int category;
     private long parentId;
     private Object desc;
+    /**
+     * code : 110101
+     * abbr : null
+     * cityCode : 110100
+     */
+
+    private String code;
+    private Object abbr;
+    private String cityCode;
+
 
     public String getName() {
         return name;
@@ -28,11 +38,11 @@ public class JJTCounyEntity {
         this.name = name;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -58,5 +68,29 @@ public class JJTCounyEntity {
 
     public void setDesc(Object desc) {
         this.desc = desc;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Object getAbbr() {
+        return abbr;
+    }
+
+    public void setAbbr(Object abbr) {
+        this.abbr = abbr;
+    }
+
+    public String getCityCode() {
+        return cityCode;
+    }
+
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode;
     }
 }

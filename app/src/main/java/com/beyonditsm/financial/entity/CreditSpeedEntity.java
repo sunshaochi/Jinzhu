@@ -13,7 +13,7 @@ import java.util.List;
  * Created by Administrator on 2016/10/17 0017.
  */
 
-public class CreditSpeedEntity  implements Parcelable{
+public class CreditSpeedEntity implements Parcelable{
 
     /**
      * timeMaxVal : 0
@@ -99,6 +99,12 @@ public class CreditSpeedEntity  implements Parcelable{
      */
 
     private List<JobIdentitysBean> jobIdentitys;
+    /**
+     * name : 等本等息
+     * id : 900091202
+     */
+
+    private List<PayTypessBean> payTypess;
 
 
     protected CreditSpeedEntity(Parcel in) {
@@ -116,12 +122,14 @@ public class CreditSpeedEntity  implements Parcelable{
         loanPeriod = in.readString();
         costDescribe = in.readString();
         repaymentPeriod = in.readString();
-        applyCondition  = in.readString();
+        applyCondition = in.readString();
         applyMaterial = in.readString();
         detailDescribe = in.readString();
         payType = in.readString();
-        mortgageType = in.readString();
         productId = in.readString();
+        mortgageType = in.readString();
+        jobIdentity = in.readString();
+        propertyType = in.readString();
     }
 
     public static final Creator<CreditSpeedEntity> CREATOR = new Creator<CreditSpeedEntity>() {
@@ -240,34 +248,6 @@ public class CreditSpeedEntity  implements Parcelable{
         this.costDescribe = costDescribe;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(timeMaxVal);
-        parcel.writeString(maxRate);
-        parcel.writeString(imageLogoPath);
-        parcel.writeString(productName);
-        parcel.writeString(timeMinVal);
-        parcel.writeString(maxVal);
-        parcel.writeString(minVal);
-        parcel.writeString(productChara);
-        parcel.writeString(minRate);
-        parcel.writeString(id);
-        parcel.writeString(productNo);
-        parcel.writeString(loanPeriod);
-        parcel.writeString(costDescribe);
-        parcel.writeString(repaymentPeriod);
-        parcel.writeString(applyCondition);
-        parcel.writeString(applyMaterial);
-        parcel.writeString(detailDescribe);
-        parcel.writeString(payType);
-        parcel.writeString(mortgageType);
-        parcel.writeString(productId);
-    }
 
     public String getRepaymentPeriod() {
         return repaymentPeriod;
@@ -365,6 +345,45 @@ public class CreditSpeedEntity  implements Parcelable{
         this.jobIdentitys = jobIdentitys;
     }
 
+    public List<PayTypessBean> getPayTypess() {
+        return payTypess;
+    }
+
+    public void setPayTypess(List<PayTypessBean> payTypess) {
+        this.payTypess = payTypess;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(timeMaxVal);
+        parcel.writeString(maxRate);
+        parcel.writeString(imageLogoPath);
+        parcel.writeString(productName);
+        parcel.writeString(timeMinVal);
+        parcel.writeString(maxVal);
+        parcel.writeString(minVal);
+        parcel.writeString(productChara);
+        parcel.writeString(minRate);
+        parcel.writeString(id);
+        parcel.writeString(productNo);
+        parcel.writeString(loanPeriod);
+        parcel.writeString(costDescribe);
+        parcel.writeString(repaymentPeriod);
+        parcel.writeString(applyCondition);
+        parcel.writeString(applyMaterial);
+        parcel.writeString(detailDescribe);
+        parcel.writeString(payType);
+        parcel.writeString(productId);
+        parcel.writeString(mortgageType);
+        parcel.writeString(jobIdentity);
+        parcel.writeString(propertyType);
+    }
+
 
     public static class LoanTimesBean {
         @SerializedName("15")
@@ -421,6 +440,27 @@ public class CreditSpeedEntity  implements Parcelable{
     }
 
     public static class JobIdentitysBean implements Serializable{
+        private String name;
+        private String id;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+    }
+
+    public static class PayTypessBean implements Serializable{
         private String name;
         private String id;
 

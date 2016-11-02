@@ -15,10 +15,18 @@ public class JJTProvinceEntity {
      */
 
     private String name;
-    private long id;
+    private String id;
     private int category;
     private Object parentId;
     private Object desc;
+    /**
+     * code : 110000
+     * abbr : 北京
+     */
+
+    private String code;
+    private String abbr;
+
 
     public String getName() {
         return name;
@@ -28,11 +36,11 @@ public class JJTProvinceEntity {
         this.name = name;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -59,4 +67,21 @@ public class JJTProvinceEntity {
     public void setDesc(Object desc) {
         this.desc = desc;
     }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getAbbr() {
+        return abbr;
+    }
+
+    public void setAbbr(String abbr) {
+        this.abbr = abbr;
+    }
+
 }

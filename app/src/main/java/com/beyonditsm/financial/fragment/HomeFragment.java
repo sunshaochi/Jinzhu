@@ -2,40 +2,32 @@ package com.beyonditsm.financial.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
-import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.ConstantValue;
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
-import com.beyonditsm.financial.activity.GuideActivity;
 import com.beyonditsm.financial.activity.MainActivity;
-import com.beyonditsm.financial.activity.credit.CreditGuideAct;
 import com.beyonditsm.financial.activity.speedcredit.CreditSpeedSecond_2Act;
-import com.beyonditsm.financial.activity.speedcredit.CreditSpeedSecond_3Act;
-import com.beyonditsm.financial.activity.speedcredit.creditspeedthied.CreditSpeedThird_2Act;
 import com.beyonditsm.financial.activity.user.BannerDetailAct;
-import com.beyonditsm.financial.activity.user.creditcard.CreditCardAct;
 import com.beyonditsm.financial.activity.user.GameActivity;
 import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
 import com.beyonditsm.financial.activity.user.LoginAct;
 import com.beyonditsm.financial.activity.user.MyRecommAct;
+import com.beyonditsm.financial.activity.user.creditcard.CreditCardAct;
 import com.beyonditsm.financial.adapter.HomeCreditAdapter;
 import com.beyonditsm.financial.entity.BannerEntity;
 import com.beyonditsm.financial.entity.HomeHotProductEntity;
@@ -43,7 +35,6 @@ import com.beyonditsm.financial.entity.HotProduct;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserLoginEntity;
 import com.beyonditsm.financial.http.RequestManager;
-import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
@@ -59,12 +50,8 @@ import com.beyonditsm.financial.view.banner.ConvenientBanner;
 import com.beyonditsm.financial.view.banner.HolderView;
 import com.beyonditsm.financial.view.banner.OnItemClickListener;
 import com.beyonditsm.financial.view.banner.Transformer;
-import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
-import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
 import com.beyonditsm.financial.view.refreshlayout.BGAMeiTuanRefreshViewHolder;
-import com.beyonditsm.financial.view.refreshlayout.BGAMoocStyleRefreshViewHolder;
 import com.beyonditsm.financial.view.refreshlayout.BGARefreshLayout;
-import com.beyonditsm.financial.view.refreshlayout.BGARefreshViewHolder;
 import com.beyonditsm.financial.widget.GPSAlertDialog;
 import com.beyonditsm.financial.widget.gpscity.DialogChooseCity;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -72,14 +59,12 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.eventbus.EventBus;
 import com.tandong.sa.json.Gson;
 import com.tandong.sa.json.reflect.TypeToken;
-import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -111,6 +96,8 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
     private LinearLayout llHeader;
     @ViewInject(R.id.rl_title_layout)
     private RelativeLayout rlTitleLayout;
+    @ViewInject(R.id.rl_statusBar)
+    private RelativeLayout rlStatusBar;
     private int currentPage = 1;
     private HomeCreditAdapter adapter;
     private List<HomeHotProductEntity> hotList;
@@ -197,6 +184,9 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
 
         //头部布局的初始化时透明
 //        rlTitleLayout.setBackgroundColor(Color.argb(0,0xf5,0x8b,0x35));
+        if (Build.VERSION.SDK_INT>=21){
+            rlStatusBar.setVisibility(View.VISIBLE);
+        }
         String roleName = SpUtils.getRoleName(context);
         MyLogUtils.info("ROLENAME=" + roleName);
         svHome.smoothScrollTo(0,0);
@@ -304,7 +294,7 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
                 }
                 break;
             case R.id.ivSuspen://浮窗
-                intent = new Intent(getContext(), CreditSpeedSecond_3Act.class);
+                intent = new Intent(getContext(), CreditSpeedSecond_2Act.class);
                 startActivity(intent);
                 break;
             case R.id.ll_creditCard://信用卡

@@ -126,6 +126,8 @@ public class CreditSpeedDetailAct extends BaseActivity {
     private String creditMonth;
     private ArrayList<CreditSpeedEntity.PropertyTypesBean> propertyTypeList;
     private ArrayList<CreditSpeedEntity.JobIdentitysBean> jobIdentitysList;
+    private ArrayList<CreditSpeedEntity.PayTypessBean> payTypessList;
+    private String payType;
     //    private List<String> jobIdentitysList = new ArrayList<>();
 //    private List<String> propertyTypeList;
 
@@ -141,6 +143,7 @@ public class CreditSpeedDetailAct extends BaseActivity {
 //        jobIdentitysList = (List<String>) getIntent().getSerializableExtra(SpeedCreditFrag.JOB_IDENTITYS);
         propertyTypeList = (ArrayList<CreditSpeedEntity.PropertyTypesBean>) getIntent().getSerializableExtra(SpeedCreditFrag.PROPERTY_TYPES);
         jobIdentitysList = (ArrayList<CreditSpeedEntity.JobIdentitysBean>) getIntent().getSerializableExtra(SpeedCreditFrag.JOB_IDENTITYS);
+        payTypessList = (ArrayList<CreditSpeedEntity.PayTypessBean>) getIntent().getSerializableExtra(SpeedCreditFrag.PAY_TYPE);
         creditSpeedEntity = getIntent().getParcelableExtra(SpeedCreditFrag.CREDIT_SPEED);
         if (creditSpeedEntity != null) {
             setTopTitle(creditSpeedEntity.getProductName());
@@ -148,8 +151,12 @@ public class CreditSpeedDetailAct extends BaseActivity {
                 etSpeedAmount.setText(creditSpeedEntity.getMinVal());
             }
 
-            if (!TextUtils.isEmpty(creditSpeedEntity.getRepaymentPeriod())) {
-                String timeMinValue = creditSpeedEntity.getRepaymentPeriod().substring(0, 2);
+            if (!TextUtils.isEmpty(creditSpeedEntity.getMortgageType())) {
+                String[] split = creditSpeedEntity.getMortgageType().split(",");
+//                String timeMinValue = creditSpeedEntity.getRepaymentPeriod().substring(0, 2);
+                String minTime = split[0];
+//                String timeMinValue = minTime.split("周");
+                String timeMinValue = minTime.substring(0, minTime.length()-1);
                 minWeek = Integer.valueOf(timeMinValue);
                 tvSpeedWeek.setText(timeMinValue);
             }
@@ -165,9 +172,18 @@ public class CreditSpeedDetailAct extends BaseActivity {
             tvScope.setText("额度范围：" + df.format(minVal / 10000) + "-" + df.format(maxVal / 10000) + "万");
             tvProName.setText(creditSpeedEntity.getProductName());
 
-            tvLim.setText("期限范围：" + creditSpeedEntity.getRepaymentPeriod());
-            if (!TextUtils.isEmpty(creditSpeedEntity.getPayType())) {
-                tvPayType.setText("还款方式：" + creditSpeedEntity.getPayType());
+            if (!TextUtils.isEmpty(creditSpeedEntity.getRepaymentPeriod())) {
+                tvLim.setText("期限范围：" + creditSpeedEntity.getRepaymentPeriod());
+            }
+//            List<CreditSpeedEntity.PayTypessBean> payTypessList = creditSpeedEntity.getPayTypess();
+//            for (int i= 0;i<payTypessList.size();i++){
+//                payType = payTypessList.get(i).getName();
+//            }
+            if (payTypessList!=null&&payTypessList.size()>0) {
+                String payType = payTypessList.get(0).getName();
+                if (!TextUtils.isEmpty(payType)) {
+                    tvPayType.setText("还款方式：" + payType);
+                }
             }
             if (!TextUtils.isEmpty(creditSpeedEntity.getLoanPeriod())) {
                 tvLoan.setText(creditSpeedEntity.getLoanPeriod() + "个工作日");
@@ -310,7 +326,7 @@ public class CreditSpeedDetailAct extends BaseActivity {
 //            }
 //
 //        } else {
-        double v = curVal * Integer.valueOf(creditMonth) * 7 * 0.3 / 100;
+        double v = curVal * Integer.valueOf(creditMonth) * 7 * Double.valueOf(creditSpeedEntity.getMinRate()) / 100;
         tvTotal.setText(String.valueOf(v));
 
 //        }
@@ -418,7 +434,7 @@ public class CreditSpeedDetailAct extends BaseActivity {
                     submitCreditSpeedEntity.setTotalAmount(etSpeedAmount.getText().toString().trim());
                     submitCreditSpeedEntity.setTotalPeriods(tvSpeedWeek.getText().toString());
                     submitCreditSpeedEntity.setTotalLoanInterest(tvTotal.getText().toString());
-                    submitCreditSpeedEntity.setRealMonthlyRate(tvRate.getText().toString());
+                    submitCreditSpeedEntity.setRealMonthlyRate(creditSpeedEntity.getMinRate());
                     submitOreder(creditSpeedEntity.getProductId(),submitCreditSpeedEntity);
                 }
 

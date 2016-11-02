@@ -1,6 +1,5 @@
 package com.beyonditsm.financial.activity;
 
-import android.graphics.Color;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,17 +24,21 @@ import cn.jpush.android.api.JPushInterface;
 public abstract class BaseActivity extends SmartFragmentActivity {
 
     private RelativeLayout rl_right;
+//    private RelativeLayout rlStatusBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // 手机窗口设置无标题
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         if (Build.VERSION.SDK_INT>=21){
+//            rlStatusBar.setVisibility(View.VISIBLE);
             View decorView = getWindow().getDecorView();
             int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
             decorView.setSystemUiVisibility(option);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
+//            getWindow().setStatusBarColor(Color.TRANSPARENT);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
 //        ActionBar actionBar = getActionBar();
 //        actionBar.hide();

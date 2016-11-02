@@ -587,4 +587,9 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
     public void onCitySelected(JJTCityEntity jjtCityEntity) {
         queryAllArea(jjtCityEntity.getId()+"");
     }
+
+    @Override
+    public void onCounySelected(JJTCounyEntity jjtCounyEntity) {
+
+    }
 }

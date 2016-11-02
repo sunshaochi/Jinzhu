@@ -27,5 +27,4 @@
                 android:layout_height="match_parent" />
         </FrameLayout>
     </com.beyonditsm.financial.view.slidebottompanel.SlideBottomPanel>
-
 </LinearLayout>

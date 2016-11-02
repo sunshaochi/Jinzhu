@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +47,7 @@ import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
 import com.lidroid.xutils.util.LogUtils;
+import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.eventbus.EventBus;
 
@@ -73,6 +76,8 @@ public class MainActivity extends BaseActivity {
     private TextView title_friend;
     private LinearLayout main_title;
 
+    @ViewInject(R.id.rl_statusBar)
+    private RelativeLayout rlStatusBar;
     private FragmentManager manager;
     private Fragment myCreditFgt, creditFgt, friendFgt, mineFgt;//我的信用，贷款，朋友，我的
     private ConversationListFragment listFragment;
@@ -142,6 +147,9 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void init(Bundle savedInstanceState) {
+        if (Build.VERSION.SDK_INT>=21){
+            rlStatusBar.setVisibility(View.VISIBLE);
+        }
         manager = getSupportFragmentManager();
         activityInstance=this;
         ParamsUtil.getInstance().setMainAct(this);
