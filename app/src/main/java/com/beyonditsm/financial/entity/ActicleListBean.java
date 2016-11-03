@@ -10,7 +10,8 @@ import android.os.Parcelable;
 public class ActicleListBean implements Parcelable {
     private long createTime;
     private String articleId;
-    private int remark;
+    private String url;
+//    private int remark;
     private int sort;
     private String title;
     private String type;
@@ -32,13 +33,21 @@ public class ActicleListBean implements Parcelable {
         this.articleId = articleId;
     }
 
-    public int getRemark() {
-        return remark;
+    public String getUrl() {
+        return url;
     }
 
-    public void setRemark(int remark) {
-        this.remark = remark;
+    public void setUrl(String url) {
+        this.url = url;
     }
+
+    //    public int getRemark() {
+//        return remark;
+//    }
+//
+//    public void setRemark(int remark) {
+//        this.remark = remark;
+//    }
 
     public int getSort() {
         return sort;
@@ -75,7 +84,8 @@ public class ActicleListBean implements Parcelable {
     protected ActicleListBean(Parcel in) {
         createTime = in.readLong();
         articleId = in.readString();
-        remark = in.readInt();
+        url = in.readString();
+//        remark = in.readInt();
         sort = in.readInt();
         title = in.readString();
         type = in.readString();
@@ -103,7 +113,8 @@ public class ActicleListBean implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeLong(createTime);
         parcel.writeString(articleId);
-        parcel.writeInt(remark);
+        parcel.writeString(url);
+//        parcel.writeInt(remark);
         parcel.writeInt(sort);
         parcel.writeString(title);
         parcel.writeString(type);

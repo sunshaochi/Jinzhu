@@ -1,6 +1,7 @@
 package com.beyonditsm.financial.activity.helpcenter;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -47,10 +48,10 @@ public class HelpCenterDetailAct extends BaseActivity {
             }
         });
 
-//        if ("".equals(content) || null == content) {
-////            wvHelpCenterDetail.loadUrl(hotNewsEntity.getUrlPath());
-//        } else {
+        if (!TextUtils.isEmpty(acticleListBean.getUrl())) {
+            wvHelpCenterDetail.loadUrl(acticleListBean.getUrl());
+        } else {
             wvHelpCenterDetail.loadData(acticleListBean.getContent(), "text/html; charset=UTF-8", null);//这种写法可以正确解码
-//        }
+        }
     }
 }
