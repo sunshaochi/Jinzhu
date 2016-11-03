@@ -70,7 +70,7 @@
         <View
             android:layout_marginTop="18.5dp"
             android:layout_marginBottom="18.5dp"
-            style="@style/vertical_light_thin_divider" />
+            style="@style/vertical_dark_thin_divider" />
 
         <LinearLayout style="@style/speed_credit_linearlayout">
 
@@ -85,7 +85,7 @@
         <View
             android:layout_marginTop="18.5dp"
             android:layout_marginBottom="18.5dp"
-            style="@style/vertical_light_thin_divider" />
+            style="@style/vertical_dark_thin_divider" />
 
         <LinearLayout style="@style/speed_credit_linearlayout">
 
@@ -101,7 +101,7 @@
         <View
             android:layout_marginTop="18.5dp"
             android:layout_marginBottom="18.5dp"
-            style="@style/vertical_light_thin_divider" />
+            style="@style/vertical_dark_thin_divider" />
 
         <LinearLayout style="@style/speed_credit_linearlayout">
 
