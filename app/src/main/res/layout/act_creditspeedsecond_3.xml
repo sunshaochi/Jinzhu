@@ -346,7 +346,6 @@
                     android:text="姓名:" />
 
                 <EditText
-                    android:tag="请输入紧急联系人姓名"
                     android:id="@+id/et_speedEmergentName_1"
                     style="@style/cre_et"
                     android:hint="请输入姓名"/>
@@ -368,7 +367,6 @@
                     android:id="@+id/rl_speedSelectEmergent_1"
                     style="@style/speed_credit_second_select_relative">
                     <TextView
-                        android:tag="请选择直系亲属关系"
                         android:id="@+id/tv_speedSelectEmergent_1"
                         style="@style/speed_credit_second_select_text"
                         />
@@ -390,7 +388,6 @@
                     android:text="联系电话:"/>
 
                 <EditText
-                    android:tag="请输入紧急联系人电话"
                     android:id="@+id/et_speedEmergentPhone_1"
                     style="@style/cre_et"
                     android:inputType="number"
