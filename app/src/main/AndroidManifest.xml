@@ -406,6 +406,17 @@
         <activity
             android:name=".activity.vip.SelectPayWayAct"
             android:screenOrientation="portrait" />
+
+        <!--帮助中心第一级页面-->
+        <activity
+            android:name=".activity.helpcenter.HelpCenterActivity"
+            android:screenOrientation="portrait" />
+        <!--帮助中心第二级页面-->
+        <activity android:name=".activity.helpcenter.HelpCenterSecondAct"
+            android:screenOrientation="portrait"/>
+        <!--帮助中心详情页面-->
+        <activity android:name=".activity.helpcenter.HelpCenterDetailAct"
+            android:screenOrientation="portrait"/>
         <!-- 扫描二维码结果展示界面 -->
 
 
@@ -618,7 +629,10 @@
             android:process=":mini"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Start" />
-        <activity android:name=".activity.CityChooseActivity"></activity>
+        <activity android:name=".activity.CityChooseActivity" />
+
+        <activity android:name=".activity.newscenter.NewsCenterActivity" />
+        <activity android:name=".activity.newscenter.NewsDetailActivity" />
     </application>
 
 </manifest>

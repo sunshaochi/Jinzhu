@@ -8,11 +8,7 @@ import com.beyonditsm.financial.entity.MyRecommeEntity;
 import com.beyonditsm.financial.entity.TaskEntity;
 import com.beyonditsm.financial.util.SpUtils;
 
-import org.apache.http.NameValuePair;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -186,6 +182,7 @@ public class UserManager extends RequestManager {
         params.put("orderId", orderId);
         doPost(IFinancialUrl.CANCEL_ORDER, params, callBack);
     }
+
 }
 
 

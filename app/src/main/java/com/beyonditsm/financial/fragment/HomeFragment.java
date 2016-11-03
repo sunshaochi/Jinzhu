@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.ConstantValue;
@@ -22,6 +24,9 @@ import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.credit.CreditGuideAct;
 import com.beyonditsm.financial.activity.user.BannerDetailAct;
+import com.beyonditsm.financial.activity.newscenter.NewsCenterActivity;
+import com.beyonditsm.financial.activity.newscenter.NewsDetailActivity;
+import com.beyonditsm.financial.activity.user.creditcard.CreditCardAct;
 import com.beyonditsm.financial.activity.user.GameActivity;
 import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
 import com.beyonditsm.financial.activity.user.LoginAct;
@@ -29,16 +34,21 @@ import com.beyonditsm.financial.activity.user.MyRecommAct;
 import com.beyonditsm.financial.activity.user.creditcard.CreditCardAct;
 import com.beyonditsm.financial.adapter.HomeCreditAdapter;
 import com.beyonditsm.financial.entity.BannerEntity;
+import com.beyonditsm.financial.adapter.HotNewsAdapter;
 import com.beyonditsm.financial.entity.HomeHotProductEntity;
+import com.beyonditsm.financial.entity.HotNewsEntity;
 import com.beyonditsm.financial.entity.HotProduct;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserLoginEntity;
+import com.beyonditsm.financial.http.CommManager;
+import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
+import com.beyonditsm.financial.util.Uitls;
 import com.beyonditsm.financial.util.gps.GPSAddressUtils;
 import com.beyonditsm.financial.util.gps.LocationListener;
 import com.beyonditsm.financial.view.ListViewForScrollView;
@@ -58,6 +68,8 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.eventbus.EventBus;
 import com.tandong.sa.json.Gson;
 import com.tandong.sa.json.reflect.TypeToken;
+import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
+import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -77,7 +89,7 @@ import java.util.List;
 /**
  * Created by liwk on 2015/12/8
  */
-public class HomeFragment extends BaseFragment implements LocationListener,BGARefreshLayout.BGARefreshLayoutDelegate {
+public class HomeFragment extends BaseFragment implements LocationListener, BGARefreshLayout.BGARefreshLayoutDelegate {
     @ViewInject(R.id.plv_hotCredit)
     private ListViewForScrollView plvHotCredit;
     @ViewInject(R.id.loadingView)
@@ -89,22 +101,34 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
     private ConvenientBanner cbHomeBanner;
     @ViewInject(R.id.sv_home)
     private MyScrollView svHome;
-//    @ViewInject(R.id.rl_BGA)
+    //    @ViewInject(R.id.rl_BGA)
 //    private BGARefreshLayout mRefreshLayout;
     @ViewInject(R.id.ll_header)
     private LinearLayout llHeader;
     @ViewInject(R.id.rl_title_layout)
     private RelativeLayout rlTitleLayout;
+    @ViewInject(R.id.tv_checkMore)
+    private TextView tvCheckMore;
+    @ViewInject(R.id.lv_newsCenter)
+    private ListView lvNewsCenter;
+    @ViewInject(R.id.iv_firstNews)
+    private ImageView ivFirstNews;
+    @ViewInject(R.id.iv_secNews)
+    private ImageView ivSecNews;
+    private HotNewsEntity firstNews;
+    private HotNewsEntity secNews;
     private int currentPage = 1;
     private HomeCreditAdapter adapter;
     private List<HomeHotProductEntity> hotList;
     private UserLoginEntity ule;
+    private boolean productLoaded = false;
+    private boolean newsLoaded = false;
     private Activity mParentActivity;
     public static final String BANNER_NAME = "banner_name";
     public static final String HREF_ADDR = "href_addr";
 
     private List<String> networkImages = new ArrayList<>();
-//    private String[] images = {"http://img2.imgtn.bdimg.com/it/u=3093785514,1341050958&fm=21&gp=0.jpg",
+    //    private String[] images = {"http://img2.imgtn.bdimg.com/it/u=3093785514,1341050958&fm=21&gp=0.jpg",
 //            "http://img2.3lian.com/2014/f2/37/d/40.jpg",
 //            "http://d.3987.com/sqmy_131219/001.jpg",
 //            "http://img2.3lian.com/2014/f2/37/d/39.jpg",
@@ -113,6 +137,15 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
 //            "http://f.hiphotos.baidu.com/image/pic/item/09fa513d269759ee50f1971ab6fb43166c22dfba.jpg"
 //    };
     private List<BannerEntity> bannerList;
+    private List<HotNewsEntity> hotNewsList;
+    private HotNewsAdapter hotNewsAdapter;
+    private DisplayImageOptions options = new DisplayImageOptions.Builder()
+            .showStubImage(R.mipmap.pro_default) // 设置图片下载期间显示的图片
+            .showImageForEmptyUri(R.mipmap.pro_default) // 设置图片Uri为空或是错误的时候显示的图片
+            .showImageOnFail(R.mipmap.pro_default) // 设置图片加载或解码过程中发生错误显示的图片
+            .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
+            .cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
+            .build(); // 创建配置过得DisplayImageOption对象
 
 
     @SuppressLint("InflateParams")
@@ -164,8 +197,8 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (!hidden){
-            svHome.smoothScrollTo(0,0);
+        if (!hidden) {
+            svHome.smoothScrollTo(0, 0);
         }
     }
 
@@ -173,7 +206,7 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
     @Override
     public void onResume() {
         super.onResume();
-        svHome.smoothScrollTo(0,0);
+        svHome.smoothScrollTo(0, 0);
     }
 
     @Override
@@ -183,7 +216,7 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
 //        rlTitleLayout.setBackgroundColor(Color.argb(0,0xf5,0x8b,0x35));
         String roleName = SpUtils.getRoleName(context);
         MyLogUtils.info("ROLENAME=" + roleName);
-        svHome.smoothScrollTo(0,0);
+        svHome.smoothScrollTo(0, 0);
         plvHotCredit.setDivider(null);
         plvHotCredit.setVerticalScrollBarEnabled(false);
         plvHotCredit.setSelector(new ColorDrawable(Color.TRANSPARENT));
@@ -193,6 +226,7 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
 //        plvHotCredit.setHasMoreData(true);
 //        plvHotCredit.getRefreshableView().setDivider(null);
 //        plvHotCredit.getRefreshableView().setVerticalScrollBarEnabled(false);
+        plvHotCredit.setVerticalScrollBarEnabled(false);
 //        plvHotCredit.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
 //        plvHotCredit.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
 //        plvHotCredit.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
@@ -212,9 +246,11 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
 
         getHotProductList(currentPage);
         getBanner();
+        getNewsIndex();
         loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
             @Override
             public void OnRetry() {
+                getNewsIndex();
                 getHotProductList(currentPage);
             }
         });
@@ -222,7 +258,6 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
 
 //        initRefreshLayout(convenientBanner);
     }
-
 
 
     @Override
@@ -255,7 +290,7 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
         });
     }
 
-    @OnClick({R.id.ll_credit, R.id.ll_tillage, R.id.ll_work, R.id.ivSuspen, R.id.ll_creditCard, R.id.ll_gps})
+    @OnClick({R.id.ll_credit, R.id.ll_tillage, R.id.ll_work, R.id.ivSuspen, R.id.ll_creditCard, R.id.ll_gps, R.id.tv_checkMore, R.id.iv_firstNews, R.id.iv_secNews})
     public void toClick(View v) {
         Intent intent;
         switch (v.getId()) {
@@ -293,14 +328,18 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
                 break;
             case R.id.ll_creditCard://信用卡
 //                MyToastUtils.showShortToast(getContext(), "敬请期待");
-                if(TextUtils.isEmpty(SpUtils.getRoleName(context).toString())){
-                    MyToastUtils.showShortToast(getContext(),"请先登录金蛛账号");
-                    Intent goLog = new Intent(context,LoginAct.class);
+                if (TextUtils.isEmpty(SpUtils.getRoleName(context).toString())) {
+                    MyToastUtils.showShortToast(getContext(), "请先登录金蛛账号");
+                    Intent goLog = new Intent(context, LoginAct.class);
                     context.startActivity(goLog);
-                }else{
+                } else {
                     intent = new Intent(mParentActivity, CreditCardAct.class);
                     startActivity(intent);
                 }
+                break;
+            case R.id.tv_checkMore://咨询中心查看更多
+                intent = new Intent(mParentActivity, NewsCenterActivity.class);
+                startActivity(intent);
                 break;
             case R.id.ll_gps://GPS
                 DialogChooseCity dialogChooseAdress1 = new DialogChooseCity(context).builder();
@@ -323,7 +362,7 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
                                     if (adress.get(1).length() > 4) {
                                         tvCity.setText(adress.get(1).substring(0, 4) + "...");
                                     } else {
-                                        tvCity.setText(adress.get(1 ));
+                                        tvCity.setText(adress.get(1));
                                     }
                                     SpUtils.setCity(MyApplication.getInstance().getApplicationContext(), adress.get(1));
                                     currentPage = 1;
@@ -334,6 +373,16 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
                         }
                     }
                 });
+                break;
+            case R.id.iv_firstNews:
+                Intent intent2 = new Intent(mParentActivity, NewsDetailActivity.class);
+                intent2.putExtra("hotnews", firstNews);
+                startActivity(intent2);
+                break;
+            case R.id.iv_secNews:
+                Intent intent3 = new Intent(mParentActivity, NewsDetailActivity.class);
+                intent3.putExtra("hotnews", secNews);
+                startActivity(intent3);
                 break;
         }
     }
@@ -364,6 +413,7 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
 
     /**
      * 获取热门产品列表
+     *
      * @param Page
      */
     private void getHotProductList(final int Page) {
@@ -374,6 +424,10 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
             @Override
             public void onSucess(String result) throws JSONException {
                 loadingView.loadComplete();
+                productLoaded = true;
+                if (newsLoaded) {
+                    loadingView.loadComplete();
+                }
 //                plvHotCredit.onPullUpRefreshComplete();
 //                plvHotCredit.onPullDownRefreshComplete();
 
@@ -403,9 +457,11 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
                     if (null != getContext()) {
                         adapter = new HomeCreditAdapter(getContext(), datas);
                         plvHotCredit.setAdapter(adapter);
+                        Uitls.setListViewHeightBasedOnChildren(plvHotCredit);
                     }
                 } else {
                     adapter.setDatas(datas);
+                    Uitls.setListViewHeightBasedOnChildren(plvHotCredit);
                 }
             }
 
@@ -413,6 +469,7 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
             public void onError(int status, String msg) {
 //                plvHotCredit.onPullUpRefreshComplete();
 //                plvHotCredit.onPullDownRefreshComplete();
+                productLoaded = false;
                 loadingView.loadError();
             }
         });
@@ -483,10 +540,11 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
                     tvCity.setText(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()));
 
                 }
-            }else{
+            } else {
                 tvCity.setText(ParamsUtil.getInstance().getChangedCity());
                 SpUtils.setCity(MyApplication.getInstance().getApplicationContext(), ParamsUtil.getInstance().getChangedCity());
             }
+
         } else {
             tvCity.setText("——");
             GPSAlertDialog gpsAlertDialog = new GPSAlertDialog(context);
@@ -514,6 +572,7 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
             }
         });
     }
+
     private void initRefreshLayout(ConvenientBanner convenientBanner) {
         // 为BGARefreshLayout设置代理
 //        mRefreshLayout.setDelegate(this);
@@ -545,6 +604,75 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
 
     }
 
+    public void getNewsIndex() {
+        CommManager.getCommManager().findNewsMobileIndex(new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                newsLoaded = true;
+                if (productLoaded) {
+                    loadingView.loadComplete();
+                }
+                JSONObject object = new JSONObject(result);
+                JSONArray data = object.getJSONArray("data");
+                Gson gson = new Gson();
+
+                hotNewsList = gson.fromJson(data.toString(), new TypeToken<List<HotNewsEntity>>() {
+                }.getType());
+
+                if (hotNewsList == null || hotNewsList.size() == 0) {
+//                    adapter.setDatas(datas ,isLast(cardList));
+//                    adapter.setOnCreditCardListner(CreditCardAct.this);
+//                    adapter.notifyDataSetChanged();
+                    loadingView.noContent();
+                    return;
+                }
+                for (int i = 0; i < hotNewsList.size(); i++) {
+                    MyLogUtils.info("Weights:" + hotNewsList.get(i).getWeights() + "");
+                    if (hotNewsList.get(i).getWeights() == 6) {
+                        MyLogUtils.info("BASE_IMAGE_URL:" + hotNewsList.get(i).getPictrue() + "");
+                        ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + hotNewsList.get(i).getPictrue(), ivFirstNews, options);
+                        firstNews = hotNewsList.get(i);
+                        hotNewsList.remove(i);
+                        i--;
+                    } else if (hotNewsList.get(i).getWeights() == 7) {
+                        MyLogUtils.info("BASE_IMAGE_URL:" + hotNewsList.get(i).getPictrue() + "");
+                        ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + hotNewsList.get(i).getPictrue(), ivSecNews, options);
+                        secNews = hotNewsList.get(i);
+                        hotNewsList.remove(i);
+                    }
+                }
+                if (hotNewsAdapter == null) {
+                    hotNewsAdapter = new HotNewsAdapter(mParentActivity, hotNewsList);
+                    lvNewsCenter.setAdapter(hotNewsAdapter);
+                    Uitls.setListViewHeightBasedOnChildren(lvNewsCenter);
+//                    hotNewsAdapter.setOnCreditCardListner(mParentActivity);
+
+                } else {
+                    hotNewsAdapter.setDatas(hotNewsList);
+//                    hotNewsAdapter.setOnCreditCardListner(mParentActivity);
+                    hotNewsAdapter.notifyDataSetChanged();
+                    Uitls.setListViewHeightBasedOnChildren(lvNewsCenter);
+                }
+
+                lvNewsCenter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(mParentActivity, NewsDetailActivity.class);
+                        intent.putExtra("hotnews", hotNewsList.get(position));
+                        startActivity(intent);
+                    }
+                });
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+                newsLoaded = false;
+                loadingView.loadError();
+            }
+        });
+    }
+
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -562,7 +690,7 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
             }
         }, networkImages);
         convenientBanner.setPageTransformer(new Transformer(Transformer.TransformerType.DEFAULT));
-        convenientBanner.setPageIndicator(new int[]{R.mipmap.ic_page_indicator,R.mipmap.ic_page_indicator_focused});
+        convenientBanner.setPageIndicator(new int[]{R.mipmap.ic_page_indicator, R.mipmap.ic_page_indicator_focused});
         convenientBanner.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -570,8 +698,8 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
                 String bannerName = bannerList.get(position).getBannerName();
                 String hrefAddr = bannerList.get(position).getHrefAddr();
                 Intent intent = new Intent(mParentActivity, BannerDetailAct.class);
-                intent.putExtra(BANNER_NAME,bannerName);
-                intent.putExtra(HREF_ADDR,hrefAddr);
+                intent.putExtra(BANNER_NAME, bannerName);
+                intent.putExtra(HREF_ADDR, hrefAddr);
                 startActivity(intent);
             }
         });
@@ -595,7 +723,7 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
 //        });
     }
 
-    private void getBanner(){
+    private void getBanner() {
         RequestManager.getCommManager().getBanner(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
@@ -604,7 +732,7 @@ public class HomeFragment extends BaseFragment implements LocationListener,BGARe
                 Gson gson = new Gson();
                 bannerList = gson.fromJson(data.toString(), new TypeToken<List<BannerEntity>>() {
                 }.getType());
-                for (int i = 0; i< bannerList.size(); i++){
+                for (int i = 0; i < bannerList.size(); i++) {
                     BannerEntity bannerEntity = bannerList.get(i);
 //                    String bannerName = bannerEntity.getBannerName();
                     String imgSrc = bannerEntity.getImgSrc();
