@@ -584,7 +584,6 @@ public class UpdateAct extends BaseActivity {
                         public void onProvinceSelected(JJTProvinceEntity jjtProvinceEntity) {
                             queryCity(jjtProvinceEntity.getCode());
                         }
-
                         @Override
                         public void onCitySelected(JJTCityEntity jjtCityEntity) {
                             queryDistrict(jjtCityEntity.getCode());
