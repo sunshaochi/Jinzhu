@@ -16,320 +16,329 @@
             android:src="@mipmap/progress_02" />
     </RelativeLayout>
 
-    <ScrollView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none">
-        <LinearLayout
-            style="@style/speed_credit_linearlayout_in_scrollview">
-            <TextView
-                android:id="@+id/tv_speed_top_1"
-                style="@style/speed_credit_second_top_text"/>
-
-            <!--姓名-->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
-
+        android:layout_height="match_parent">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+            <LinearLayout
+                style="@style/speed_credit_linearlayout_in_scrollview">
                 <TextView
-                    android:id="@+id/tv_speedName"
-                    style="@style/tv_primary_style"
-                    android:layout_centerVertical="true" />
+                    android:id="@+id/tv_speed_top_1"
+                    style="@style/speed_credit_second_top_text"/>
 
-                <EditText
-                    android:id="@+id/et_speedName"
-                    style="@style/cre_et"
-                    android:hint="请输入姓名"/>
-            </RelativeLayout>
-
-            <View style="@style/view_line"></View>
-            <!--身份证-->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/tv_speedIdCard"
-                    style="@style/tv_primary_style"
-                    android:layout_centerVertical="true" />
-
-                <EditText
-                    android:id="@+id/et_speedIdCard"
-                    style="@style/cre_et"
-                    android:maxLength="18"
-                    android:hint="请输入身份证号码"/>
-            </RelativeLayout>
-
-            <View style="@style/view_line"></View>
-            <!--电话号码-->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/tv_speedPhone"
-                    style="@style/tv_primary_style"
-                    android:layout_centerVertical="true" />
-
-                <EditText
-                    android:id="@+id/et_speedPhone"
-                    style="@style/cre_et"
-                    android:inputType="number"
-                    android:hint="请输入手机号码"
-                    android:maxLength="11" />
-            </RelativeLayout>
-
-            <View style="@style/view_line"></View>
-            <!--婚姻状况-->
-            <RelativeLayout
-                android:id="@+id/rl_speedMarriage"
-                android:layout_width="match_parent"
-                android:layout_height="40dp">
-
-                <TextView
-                    android:id="@+id/tv_speedMarriage"
-                    style="@style/tv_primary_style"
-                    android:layout_centerVertical="true" />
-
+                <!--姓名-->
                 <RelativeLayout
-                    android:id="@+id/rl_speedSelectMarriage"
-                    style="@style/speed_credit_second_select_relative">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp">
+
                     <TextView
-                        android:id="@+id/tv_speedSelectMarriage"
-                        style="@style/speed_credit_second_select_text"
-                        />
-                    <ImageView
-                        style="@style/speed_credit_sencond_select_imageview"/>
+                        android:id="@+id/tv_speedName"
+                        style="@style/tv_primary_style"
+                        android:layout_centerVertical="true" />
+
+                    <EditText
+                        android:id="@+id/et_speedName"
+                        style="@style/cre_et"
+                        android:hint="请输入姓名"/>
                 </RelativeLayout>
-            </RelativeLayout>
 
-            <View style="@style/view_line"></View>
-            <!--子女数目-->
-            <RelativeLayout
-                android:id="@+id/rl_speedChildrenNum"
-                android:layout_width="match_parent"
-                android:layout_height="40dp">
-
-                <TextView
-                    android:id="@+id/tv_speedChildrenNum"
-                    style="@style/tv_primary_style"
-                    android:layout_centerVertical="true" />
-
+                <View style="@style/view_line"></View>
+                <!--身份证-->
                 <RelativeLayout
-                    android:id="@+id/rl_speedSelectChildrenNum"
-                    style="@style/speed_credit_second_select_relative">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
                     <TextView
-                        android:id="@+id/tv_speedSelectChildrenNum"
-                        style="@style/speed_credit_second_select_text"
-                        />
-                    <ImageView
-                        style="@style/speed_credit_sencond_select_imageview"/>
+                        android:id="@+id/tv_speedIdCard"
+                        style="@style/tv_primary_style"
+                        android:layout_centerVertical="true" />
+
+                    <EditText
+                        android:id="@+id/et_speedIdCard"
+                        style="@style/cre_et"
+                        android:maxLength="18"
+                        android:hint="请输入身份证号码"/>
                 </RelativeLayout>
-            </RelativeLayout>
-            <View style="@style/view_line"></View>
-            <!--学历-->
-            <RelativeLayout
-                android:id="@+id/rl_speedEducation"
-                android:layout_width="match_parent"
-                android:layout_height="40dp">
 
-                <TextView
-                    android:id="@+id/tv_speedEducation"
-                    style="@style/tv_primary_style"
-                    android:layout_centerVertical="true" />
-
+                <View style="@style/view_line"></View>
+                <!--电话号码-->
                 <RelativeLayout
-                    android:id="@+id/rl_speedSelectEdu"
-                    style="@style/speed_credit_second_select_relative">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
                     <TextView
-                        android:id="@+id/tv_speedSelectEdu"
-                        style="@style/speed_credit_second_select_text"
-                        />
-                    <ImageView
-                        style="@style/speed_credit_sencond_select_imageview"/>
+                        android:id="@+id/tv_speedPhone"
+                        style="@style/tv_primary_style"
+                        android:layout_centerVertical="true" />
+
+                    <EditText
+                        android:id="@+id/et_speedPhone"
+                        style="@style/cre_et"
+                        android:inputType="number"
+                        android:hint="请输入手机号码"
+                        android:maxLength="11" />
                 </RelativeLayout>
-            </RelativeLayout>
 
-            <View style="@style/view_line"></View>
-            <!--户籍地址-->
-            <RelativeLayout
-                android:id="@+id/rl_speedPermanent"
-                android:layout_width="match_parent"
-                android:layout_height="40dp">
-
-                <TextView
-                    android:id="@+id/tv_speedPermanent"
-                    style="@style/tv_primary_style"
-                    android:layout_centerVertical="true" />
-
+                <View style="@style/view_line"></View>
+                <!--婚姻状况-->
                 <RelativeLayout
-                    android:id="@+id/rl_speedSelectPermanent"
-                    style="@style/speed_credit_second_select_relative">
+                    android:id="@+id/rl_speedMarriage"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
                     <TextView
-                        android:id="@+id/tv_speedSelectPermanent"
-                        style="@style/speed_credit_second_select_text"
-                        android:hint="请选择城市"
-                        />
-                    <ImageView
-                        style="@style/speed_credit_sencond_select_imageview"/>
+                        android:id="@+id/tv_speedMarriage"
+                        style="@style/tv_primary_style"
+                        android:layout_centerVertical="true" />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_speedSelectMarriage"
+                        style="@style/speed_credit_second_select_relative">
+                        <TextView
+                            android:id="@+id/tv_speedSelectMarriage"
+                            style="@style/speed_credit_second_select_text"
+                            />
+                        <ImageView
+                            style="@style/speed_credit_sencond_select_imageview"/>
+                    </RelativeLayout>
                 </RelativeLayout>
-            </RelativeLayout>
 
-            <View style="@style/view_line"></View>
-
-            <!--户籍地址详细地址-->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/tv_speedPermanentDetail"
-                    style="@style/tv_primary_style"
-                    android:layout_centerVertical="true" />
-
-                <EditText
-                    android:id="@+id/et_speedPermanentDetail"
-                    android:hint="请输入详细户籍地址"
-                    style="@style/cre_et"/>
-            </RelativeLayout>
-
-
-            <View style="@style/view_line"></View>
-            <!--常住地-->
-            <RelativeLayout
-                android:id="@+id/rl_speedResident"
-                android:layout_width="match_parent"
-                android:layout_height="40dp">
-
-                <TextView
-                    android:id="@+id/tv_speedResident"
-                    style="@style/tv_primary_style"
-                    android:layout_centerVertical="true" />
-
+                <View style="@style/view_line"></View>
+                <!--子女数目-->
                 <RelativeLayout
-                    android:id="@+id/rl_speedSelectResident"
-                    style="@style/speed_credit_second_select_relative">
+                    android:id="@+id/rl_speedChildrenNum"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
                     <TextView
-                        android:id="@+id/tv_speedSelectResident"
-                        style="@style/speed_credit_second_select_text"
-                        android:hint="请选择城市"
-                        />
-                    <ImageView
-                        style="@style/speed_credit_sencond_select_imageview"/>
+                        android:id="@+id/tv_speedChildrenNum"
+                        style="@style/tv_primary_style"
+                        android:layout_centerVertical="true" />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_speedSelectChildrenNum"
+                        style="@style/speed_credit_second_select_relative">
+                        <TextView
+                            android:id="@+id/tv_speedSelectChildrenNum"
+                            style="@style/speed_credit_second_select_text"
+                            />
+                        <ImageView
+                            style="@style/speed_credit_sencond_select_imageview"/>
+                    </RelativeLayout>
                 </RelativeLayout>
-            </RelativeLayout>
-
-            <View style="@style/view_line"></View>
-            <!--常住地详细地址-->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/tv_speedResidentDetail"
-                    style="@style/tv_primary_style"
-                    android:layout_centerVertical="true" />
-
-                <EditText
-                    android:id="@+id/et_speedResidentDetail"
-                    android:hint="请输入详细常住地址"
-                    style="@style/cre_et"/>
-            </RelativeLayout>
-
-            <View style="@style/view_line"></View>
-            <!--居住状况-->
-            <RelativeLayout
-                android:id="@+id/rl_speedLivingConditions"
-                android:layout_width="match_parent"
-                android:layout_height="40dp">
-
-                <TextView
-                    android:id="@+id/tv_speedLivingConditions"
-                    style="@style/tv_primary_style"
-                    android:layout_centerVertical="true" />
-
+                <View style="@style/view_line"></View>
+                <!--学历-->
                 <RelativeLayout
-                    android:id="@+id/rl_speedSelectLiving"
-                   style="@style/speed_credit_second_select_relative">
+                    android:id="@+id/rl_speedEducation"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
                     <TextView
-                        android:id="@+id/tv_speedSelectLivingConditions"
-                        style="@style/speed_credit_second_select_text"
-                        />
-                    <ImageView
-                        style="@style/speed_credit_sencond_select_imageview"/>
+                        android:id="@+id/tv_speedEducation"
+                        style="@style/tv_primary_style"
+                        android:layout_centerVertical="true" />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_speedSelectEdu"
+                        style="@style/speed_credit_second_select_relative">
+                        <TextView
+                            android:id="@+id/tv_speedSelectEdu"
+                            style="@style/speed_credit_second_select_text"
+                            />
+                        <ImageView
+                            style="@style/speed_credit_sencond_select_imageview"/>
+                    </RelativeLayout>
                 </RelativeLayout>
-            </RelativeLayout>
 
-            <View style="@style/view_line"></View>
-            <!--开户银行-->
-            <RelativeLayout
-                android:id="@+id/rl_speedBank"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:visibility="gone">
+                <View style="@style/view_line"></View>
+                <!--户籍地址-->
+                <RelativeLayout
+                    android:id="@+id/rl_speedPermanent"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:id="@+id/tv_speedPermanent"
+                        style="@style/tv_primary_style"
+                        android:layout_centerVertical="true" />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_speedSelectPermanent"
+                        style="@style/speed_credit_second_select_relative">
+                        <TextView
+                            android:id="@+id/tv_speedSelectPermanent"
+                            style="@style/speed_credit_second_select_text"
+                            android:hint="请选择城市"
+                            />
+                        <ImageView
+                            style="@style/speed_credit_sencond_select_imageview"/>
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <View style="@style/view_line"></View>
+
+                <!--户籍地址详细地址-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_speedPermanentDetail"
+                        style="@style/tv_primary_style"
+                        android:layout_centerVertical="true" />
+
+                    <EditText
+                        android:id="@+id/et_speedPermanentDetail"
+                        android:hint="请输入详细户籍地址"
+                        style="@style/cre_et"/>
+                </RelativeLayout>
+
+
+                <View style="@style/view_line"></View>
+                <!--常住地-->
+                <RelativeLayout
+                    android:id="@+id/rl_speedResident"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:id="@+id/tv_speedResident"
+                        style="@style/tv_primary_style"
+                        android:layout_centerVertical="true" />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_speedSelectResident"
+                        style="@style/speed_credit_second_select_relative">
+                        <TextView
+                            android:id="@+id/tv_speedSelectResident"
+                            style="@style/speed_credit_second_select_text"
+                            android:hint="请选择城市"
+                            />
+                        <ImageView
+                            style="@style/speed_credit_sencond_select_imageview"/>
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <View style="@style/view_line"></View>
+                <!--常住地详细地址-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_speedResidentDetail"
+                        style="@style/tv_primary_style"
+                        android:layout_centerVertical="true" />
+
+                    <EditText
+                        android:id="@+id/et_speedResidentDetail"
+                        android:hint="请输入详细常住地址"
+                        style="@style/cre_et"/>
+                </RelativeLayout>
+
+                <View style="@style/view_line"></View>
+                <!--居住状况-->
+                <RelativeLayout
+                    android:id="@+id/rl_speedLivingConditions"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:id="@+id/tv_speedLivingConditions"
+                        style="@style/tv_primary_style"
+                        android:layout_centerVertical="true" />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_speedSelectLiving"
+                        style="@style/speed_credit_second_select_relative">
+                        <TextView
+                            android:id="@+id/tv_speedSelectLivingConditions"
+                            style="@style/speed_credit_second_select_text"
+                            />
+                        <ImageView
+                            style="@style/speed_credit_sencond_select_imageview"/>
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <View style="@style/view_line"></View>
+                <!--开户银行-->
+                <RelativeLayout
+                    android:id="@+id/rl_speedBank"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tv_speedBank"
+                        style="@style/tv_primary_style"
+                        android:layout_centerVertical="true" />
+
+                    <TextView
+                        android:id="@+id/tv_speedSelectBank"
+                        style="@style/tv_select_style"
+                        android:drawableRight="@mipmap/button_select"
+                        android:textColor="#f63" />
+                </RelativeLayout>
+
+                <View style="@style/view_line"
+                    android:visibility="gone"></View>
+                <!--银行卡号-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tv_speedBankCard"
+                        style="@style/tv_primary_style"
+                        android:layout_centerVertical="true" />
+
+                    <EditText
+                        android:id="@+id/et_speedBankCard"
+                        style="@style/cre_et"
+                        android:inputType="number"/>
+                </RelativeLayout>
+
+                <View style="@style/view_line"
+                    android:visibility="gone"></View>
+                <!--银行预留手机号-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tv_speedBankPhone"
+                        style="@style/tv_primary_style"
+                        android:layout_centerVertical="true" />
+
+                    <EditText
+                        android:id="@+id/et_speedBankPhone"
+                        style="@style/cre_et"
+                        android:inputType="number"
+                        android:maxLength="11" />
+                </RelativeLayout>
+
+                <View style="@style/view_line"
+                    android:visibility="gone"></View>
 
                 <TextView
-                    android:id="@+id/tv_speedBank"
-                    style="@style/tv_primary_style"
-                    android:layout_centerVertical="true" />
-
+                    android:id="@+id/tv_speed_toTwo"
+                    style="@style/speed_credit_next_btn"
+                    android:text="下一步" />
                 <TextView
-                    android:id="@+id/tv_speedSelectBank"
-                    style="@style/tv_select_style"
-                    android:drawableRight="@mipmap/button_select"
-                    android:textColor="#f63" />
-            </RelativeLayout>
+                    android:text="1/3"
+                    style="@style/speed_credit_second_bottom_text"/>
+            </LinearLayout>
+        </ScrollView>
 
-            <View style="@style/view_line"
-                android:visibility="gone"></View>
-            <!--银行卡号-->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
+        <com.beyonditsm.financial.view.LoadingView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
 
-                <TextView
-                    android:id="@+id/tv_speedBankCard"
-                    style="@style/tv_primary_style"
-                    android:layout_centerVertical="true" />
-
-                <EditText
-                    android:id="@+id/et_speedBankCard"
-                    style="@style/cre_et"
-                    android:inputType="number"/>
-            </RelativeLayout>
-
-            <View style="@style/view_line"
-                android:visibility="gone"></View>
-            <!--银行预留手机号-->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/tv_speedBankPhone"
-                    style="@style/tv_primary_style"
-                    android:layout_centerVertical="true" />
-
-                <EditText
-                    android:id="@+id/et_speedBankPhone"
-                    style="@style/cre_et"
-                    android:inputType="number"
-                    android:maxLength="11" />
-            </RelativeLayout>
-
-            <View style="@style/view_line"
-                android:visibility="gone"></View>
-
-            <TextView
-                android:id="@+id/tv_speed_toTwo"
-                style="@style/speed_credit_next_btn"
-                android:text="下一步" />
-            <TextView
-                android:text="1/3"
-                style="@style/speed_credit_second_bottom_text"/>
-        </LinearLayout>
-    </ScrollView>
 </LinearLayout>

@@ -65,7 +65,7 @@ public class SpeedCreditFrag extends BaseFragment {
         lvSpeedCredit.getRefreshableView().setVerticalScrollBarEnabled(false);
         lvSpeedCredit.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
         lvSpeedCredit.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
-        lvSpeedCredit.getRefreshableView().setDivider(null);
+        lvSpeedCredit.getRefreshableView().setDivider(getResources().getDrawable(R.drawable.divider_grey));
         lvSpeedCredit.getRefreshableView().setDividerHeight(20);
         getCreditSpeed(currentP);
     }
