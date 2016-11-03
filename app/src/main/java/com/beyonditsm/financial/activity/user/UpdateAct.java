@@ -631,9 +631,16 @@ public class UpdateAct extends BaseActivity {
                     cityList.add(jjtCityEntity);
                     ParamsUtil.getInstance().setCityEntityList(cityList);
                     dialogJJTAddress.getJJTPicker().setCityList();
-                    if (cityList != null && cityList.size() > 0) {
-                        queryDistrict(cityList.get(0).getCode());
-                    }
+
+                    counyList = new ArrayList<JJTCounyEntity>();
+                    JJTCounyEntity jjtCounyEntity = new JJTCounyEntity();
+                    jjtCounyEntity.setName("");
+                    jjtCounyEntity.setId("");
+                    counyList.add(jjtCounyEntity);
+                    ParamsUtil.getInstance().setCounyEntityList(counyList);
+                    dialogJJTAddress.getJJTPicker().setCouny();
+
+
                 }
 
 
