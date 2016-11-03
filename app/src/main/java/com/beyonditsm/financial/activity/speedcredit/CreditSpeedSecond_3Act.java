@@ -203,16 +203,16 @@ public class CreditSpeedSecond_3Act extends BaseActivity {
                 public void onClick(int which) {
                     switch (CURRENT_SELECT){
                         case RL_SPEEDMARRIAGE1:
-                            marriage1Relation = relationList.get(which).getId()+"";
+                            marriage1Relation = relationList.get(which-1).getId()+"";
                             break;
                         case RL_SPEEDMARRIAGE2:
-                            marriage2Relation = relationList.get(which).getId()+"";
+                            marriage2Relation = relationList.get(which-1).getId()+"";
                             break;
                         case RL_SPEEDCOLLEAGUE:
-                            colleagueRelation = relationList.get(which).getId()+"";
+                            colleagueRelation = relationList.get(which-1).getId()+"";
                             break;
                         case RL_SPEEDEMERGENT:
-                            mergentRelation = relationList.get(which).getId()+"";
+                            mergentRelation = relationList.get(which-1).getId()+"";
                             break;
                     }
                 }

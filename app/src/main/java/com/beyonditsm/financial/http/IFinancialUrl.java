@@ -36,6 +36,7 @@ public interface IFinancialUrl {
     //产品优化接口测试
 //    String BASE_URL = "http://172.16.6.77:8080";
 //    String BASE_URL = "http://139.196.227.38:8080";
+//    String BASE_URL = "http://139.196.227.38:8080";
     /*测试地址3*/
 //    String BASE_URL="http://test.myjinzhu.com:60";
     //内网地址（测试钱包功能）

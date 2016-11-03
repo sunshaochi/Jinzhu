@@ -54,6 +54,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -261,12 +262,22 @@ public class UpdateAct extends BaseActivity {
                         defaultProvince = adress.get(0);
                         String provinceCode = queryProvinceCodeByName(defaultProvince);
                         defaultCity = adress.get(1);
-                        String cityCode = queryCityCodeByName(defaultCity);
+                        if (!TextUtils.isEmpty(defaultCity)){
+                            String cityCode = queryCityCodeByName(defaultCity);
+                            userInfo.setCity(cityCode);
+                        }else {
+                            userInfo.setCity("");
+                        }
                         defaultArea = adress.get(2);
-                        String districtCode = queryAreaCodeByName(defaultArea);
+
+                        if (!TextUtils.isEmpty(defaultArea)){
+                            String districtCode = queryAreaCodeByName(defaultArea);
+                            userInfo.setDistrict(districtCode);
+                        }
+
                         userInfo.setProvince(provinceCode);
-                        userInfo.setCity(cityCode);
-                        userInfo.setDistrict(districtCode);
+
+
                         updateData(userInfo, 3);
                     }
                 });
@@ -601,15 +612,32 @@ public class UpdateAct extends BaseActivity {
             @Override
             public void onSucess(String result) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result);
-                JSONArray data = jsonObject.getJSONArray("data");
-                Gson gson = new Gson();
-                cityList = gson.fromJson(data.toString(), new TypeToken<List<JJTCityEntity>>() {
-                }.getType());
-                ParamsUtil.getInstance().setCityEntityList(cityList);
-                dialogJJTAddress.getJJTPicker().setCityList();
-                if (cityList != null && cityList.size() > 0) {
-                    queryDistrict(cityList.get(0).getCode());
+                if (jsonObject.get("data") instanceof JSONArray){
+                    JSONArray data = jsonObject.getJSONArray("data");
+                    Gson gson = new Gson();
+                    cityList = gson.fromJson(data.toString(), new TypeToken<List<JJTCityEntity>>() {
+                    }.getType());
+
+                    ParamsUtil.getInstance().setCityEntityList(cityList);
+                    dialogJJTAddress.getJJTPicker().setCityList();
+                    if (cityList != null && cityList.size() > 0) {
+                        queryDistrict(cityList.get(0).getCode());
+                    }
+                }else {
+                    cityList = new ArrayList<JJTCityEntity>();
+                    JJTCityEntity jjtCityEntity = new JJTCityEntity();
+                    jjtCityEntity.setName("");
+                    jjtCityEntity.setId("");
+                    jjtCityEntity.setCode("");
+                    cityList.add(jjtCityEntity);
+                    ParamsUtil.getInstance().setCityEntityList(cityList);
+                    dialogJJTAddress.getJJTPicker().setCityList();
+                    if (cityList != null && cityList.size() > 0) {
+                        queryDistrict(cityList.get(0).getCode());
+                    }
                 }
+
+
             }
 
             @Override
@@ -624,12 +652,23 @@ public class UpdateAct extends BaseActivity {
             @Override
             public void onSucess(String result) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result);
-                JSONArray data = jsonObject.getJSONArray("data");
-                Gson gson = new Gson();
-                counyList = gson.fromJson(data.toString(), new TypeToken<List<JJTCounyEntity>>() {
-                }.getType());
-                ParamsUtil.getInstance().setCounyEntityList(counyList);
-                dialogJJTAddress.getJJTPicker().setCouny();
+                if (jsonObject.get("data") instanceof JSONArray){
+                    JSONArray data = jsonObject.getJSONArray("data");
+                    Gson gson = new Gson();
+                    counyList = gson.fromJson(data.toString(), new TypeToken<List<JJTCounyEntity>>() {
+                    }.getType());
+                    ParamsUtil.getInstance().setCounyEntityList(counyList);
+                    dialogJJTAddress.getJJTPicker().setCouny();
+                }else {
+                    counyList = new ArrayList<JJTCounyEntity>();
+                    JJTCounyEntity jjtCityEntity = new JJTCounyEntity();
+                    jjtCityEntity.setName("");
+                    jjtCityEntity.setId("");
+                    counyList.add(jjtCityEntity);
+                    ParamsUtil.getInstance().setCounyEntityList(counyList);
+                    dialogJJTAddress.getJJTPicker().setCouny();
+                }
+
 
             }
 
