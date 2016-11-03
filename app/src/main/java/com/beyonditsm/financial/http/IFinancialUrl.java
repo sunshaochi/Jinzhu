@@ -27,14 +27,14 @@ public interface IFinancialUrl {
     //        /*正式游戏地址*/
     String GAME_URL = "http://m.farm.myjinzhu.com/";
 
-//        String BASE_URL = "http://test.myjinzhu.com:8086";
+        String BASE_URL = "http://test.myjinzhu.com:8086";
     /*测试急借通接口*/
 //    String BASE_URL = "http://172.16.5.151:8080";
 
 //    String BASE_URL = "http://139.196.227.38:8080";
 //    String BASE_URL = "http://172.16.5.151:8080";
     //产品优化接口测试
-    String BASE_URL = "http://172.16.6.77:8080";
+//    String BASE_URL = "http://172.16.6.77:8080";
 //    String BASE_URL = "http://139.196.227.38:8080";
     /*测试地址3*/
 //    String BASE_URL="http://test.myjinzhu.com:60";

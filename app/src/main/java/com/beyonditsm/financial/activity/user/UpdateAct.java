@@ -418,7 +418,7 @@ public class UpdateAct extends BaseActivity {
 
                         break;
                     case 2://更新户籍地址
-                        tvHouseHold.setText(nativePlaceAddrProvince + nativePlaceAddrCity + nativePlaceAddrCity);
+                        tvHouseHold.setText(nativePlaceAddrProvince + nativePlaceAddrCity + nativePlaceAddrDistrict);
                         break;
                     case 3://常住地
                         tvLocal.setText(defaultProvince + defaultCity + defaultArea);
