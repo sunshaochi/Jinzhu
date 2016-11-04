@@ -68,6 +68,7 @@ import io.rong.imlib.model.UserInfo;
  */
 @SuppressWarnings("deprecation")
 public class MyCreditDetailFragment extends BaseFragment {
+
     java.text.DecimalFormat df = new java.text.DecimalFormat("#0.0");//保留小数
     java.text.DecimalFormat df2 = new java.text.DecimalFormat("#0.00");//保留小数
 

@@ -22,6 +22,7 @@ import com.beyonditsm.financial.fragment.MyCreditDetailFragment;
 import com.beyonditsm.financial.fragment.MyCreditSpeedDetailFrag;
 import com.beyonditsm.financial.fragment.MyCreditStatusFragment;
 import com.beyonditsm.financial.fragment.ServiceMineFrg;
+import com.beyonditsm.financial.fragment.SpeedCreditDetailFragment;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
@@ -174,10 +175,17 @@ public class MyCreditDAct extends BaseActivity {
     @SuppressWarnings("deprecation")
     private void initViewpager() {
         ArrayList<Fragment> fragmentList = new ArrayList<>();
+
         Bundle bundle = new Bundle();
         bundle.putParcelable("rowe", rowe);
+        Fragment detailFragment;
+        if (rowe.getOrderType().equals("4")){
+            detailFragment = new SpeedCreditDetailFragment();
+        }else {
+            detailFragment = new MyCreditDetailFragment();
+
+        }
         MyCreditStatusFragment statusFragment = new MyCreditStatusFragment();
-        MyCreditDetailFragment detailFragment = new MyCreditDetailFragment();
         MyCreditSpeedDetailFrag myCreditSpeedDetailFrag = new MyCreditSpeedDetailFrag();
         statusFragment.setArguments(bundle);
         detailFragment.setArguments(bundle);

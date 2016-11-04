@@ -843,4 +843,15 @@ public class CommManager extends RequestManager {
         params.put("cityCode",cityCode);
         doPost(IFinancialUrl.QUERY_DISTRICT,params,callBack);
     }
+
+    /**
+     * 极速贷贷款详情接口
+     * @param orderId 订单Id
+     * @param callBack 回调
+     */
+    public void shortLoanOrderDetail(String orderId,CallBack callBack){
+        Map<String,String> params = new HashMap<>();
+        params.put("orderId",orderId);
+        doPost(IFinancialUrl.SHORT_LOAN_ORDER_DETAIL,params,callBack);
+    }
 }

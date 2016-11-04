@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.MainActivity;
+import com.beyonditsm.financial.activity.speedcredit.listener.DialogListener;
 import com.beyonditsm.financial.entity.JJTCityEntity;
 import com.beyonditsm.financial.entity.JJTCounyEntity;
 import com.beyonditsm.financial.entity.JJTProvinceEntity;
@@ -23,6 +24,7 @@ import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
+import com.beyonditsm.financial.widget.DialogCloseBtn;
 import com.beyonditsm.financial.widget.jijietong.DialogJJTAddress;
 import com.beyonditsm.financial.widget.jijietong.JJTInterface;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -111,33 +113,29 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
 
     @Override
     public void onBackPressed() {
-        long currentTime = System.currentTimeMillis();
-        if ((currentTime - touchTime) >= WAITTIME) {
-            Toast.makeText(this, "再按一次取消贷款申请", Toast.LENGTH_SHORT).show();
-            touchTime = currentTime;
-        } else {
-
-            Intent intent = new Intent(CreditSpeedSecond_2Act.this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-        }
+        new DialogCloseBtn(CreditSpeedSecond_2Act.this).builder().setCreditOfflineDialogListener(new DialogListener() {
+            @Override
+            public void onYes() {
+                Intent intent = new Intent(CreditSpeedSecond_2Act.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        }).show();
     }
+
 
     @Override
     public void goback(View view) {
 //        super.goback(view);
-        long currentTime = System.currentTimeMillis();
-        if ((currentTime - touchTime) >= WAITTIME) {
-            Toast.makeText(this, "再按一次取消贷款申请", Toast.LENGTH_SHORT).show();
-            touchTime = currentTime;
-        } else {
-
-            Intent intent = new Intent(CreditSpeedSecond_2Act.this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-        }
+        new DialogCloseBtn(CreditSpeedSecond_2Act.this).builder().setCreditOfflineDialogListener(new DialogListener() {
+            @Override
+            public void onYes() {
+                Intent intent = new Intent(CreditSpeedSecond_2Act.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        }).show();
     }
-
 
     @Override
     public void setLayout() {

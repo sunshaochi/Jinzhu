@@ -17,6 +17,7 @@ import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.credit.CreditSpeedDetailAct;
+import com.beyonditsm.financial.activity.speedcredit.listener.DialogListener;
 import com.beyonditsm.financial.entity.CreditSpeedEntity;
 import com.beyonditsm.financial.entity.JJTCityEntity;
 import com.beyonditsm.financial.entity.JJTCounyEntity;
@@ -31,7 +32,9 @@ import com.beyonditsm.financial.util.IdcardUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.view.CoustomDialog;
+import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
+import com.beyonditsm.financial.widget.DialogCloseBtn;
 import com.beyonditsm.financial.widget.jijietong.DialogJJTAddress;
 import com.beyonditsm.financial.widget.jijietong.JJTInterface;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -107,6 +110,8 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
     private TextView tvSpeedSelectResident;
     @ViewInject(R.id.tv_speed_toTwo)
     private TextView tvSpeedToTwo;
+    @ViewInject(R.id.loadView)
+    private LoadingView loadingView;
     private String orderId;
     private List<CreditSpeedEntity.PropertyTypesBean> propetyTypesList;
 
@@ -134,16 +139,14 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
 
     @Override
     public void onBackPressed() {
-        long currentTime = System.currentTimeMillis();
-        if ((currentTime - touchTime) >= WAITTIME) {
-            Toast.makeText(this, "再按一次取消贷款申请", Toast.LENGTH_SHORT).show();
-            touchTime = currentTime;
-        } else {
-
-            Intent intent = new Intent(CreditSpeedSecond_1Act.this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-        }
+            new DialogCloseBtn(CreditSpeedSecond_1Act.this).builder().setCreditOfflineDialogListener(new DialogListener() {
+                @Override
+                public void onYes() {
+                    Intent intent = new Intent(CreditSpeedSecond_1Act.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+            }).show();
     }
 
     @Override
@@ -154,16 +157,14 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
     @Override
     public void goback(View view) {
 //        super.goback(view);
-        long currentTime = System.currentTimeMillis();
-        if ((currentTime - touchTime) >= WAITTIME) {
-            Toast.makeText(this, "再按一次取消贷款申请", Toast.LENGTH_SHORT).show();
-            touchTime = currentTime;
-        } else {
-
-            Intent intent = new Intent(CreditSpeedSecond_1Act.this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-        }
+        new DialogCloseBtn(CreditSpeedSecond_1Act.this).builder().setCreditOfflineDialogListener(new DialogListener() {
+            @Override
+            public void onYes() {
+                Intent intent = new Intent(CreditSpeedSecond_1Act.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        }).show();
     }
 
     @Override
@@ -174,6 +175,12 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
         propetyTypesList = (List<CreditSpeedEntity.PropertyTypesBean>) getIntent().getSerializableExtra(SpeedCreditFrag.PROPERTY_TYPES);
         userOrderInfo1 = new UserOrderInfo1();
         initText();
+        loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
+            @Override
+            public void OnRetry() {
+                queryAllProvince();
+            }
+        });
         queryAllProvince();
         getMarriage();
         getEdu();
@@ -542,6 +549,7 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
         CommManager.getCommManager().queryAllProvince(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
+                loadingView.loadComplete();
                 JSONObject jsonObject = new JSONObject(result);
                 JSONObject data = jsonObject.getJSONObject("data");
                 JSONArray res = data.getJSONArray("result");
@@ -561,7 +569,7 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
 
             @Override
             public void onError(int status, String msg) {
-
+                loadingView.loadError();
             }
         });
     }

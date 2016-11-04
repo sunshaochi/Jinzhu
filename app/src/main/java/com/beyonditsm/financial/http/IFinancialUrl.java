@@ -16,13 +16,13 @@ public interface IFinancialUrl {
 //    String BASE_URL = "http://172.16.6.153:8080";
 //    String BASE_URL = "http://172.16.6.228:8080";
     /*验收环境地址*/
-//    String BASE_URL = "http://test.myjinzhu.com:8080";
+//    String BASE_URL = "http://test.myjinzhu.com:8086";
 ////        /*验收环境游戏地址*/
 //    String GAME_URL = "http://myjinzhu.com:5011/";
     /*正式地址*/
 //    String BASE_URL = "http://option.myjinzhu.com";
     /*王建*/
-//    String BASE_URL = "http://172.16.6.121:8080";
+//    String BASE_URL = "http://139.196.227.38:8080";
 
     //        /*正式游戏地址*/
     String GAME_URL = "http://m.farm.myjinzhu.com/";
@@ -31,10 +31,10 @@ public interface IFinancialUrl {
     /*测试急借通接口*/
 //    String BASE_URL = "http://172.16.5.151:8080";
 
-    String BASE_URL = "http://139.196.227.38:8080";
+//    String BASE_URL = "http://139.196.227.38:8080";
 //    String BASE_URL = "http://172.16.5.151:8080";
     //产品优化接口测试
-//    String BASE_URL = "http://172.16.6.77:8080";
+    String BASE_URL = "http://172.16.7.196:8080";
 //    String BASE_URL = "http://139.196.227.38:8080";
 //    String BASE_URL = "http://139.196.227.38:8080";
     /*测试地址3*/
@@ -289,9 +289,11 @@ public interface IFinancialUrl {
     /*上传急借通第三板块信息接口*/
     String SAVE_USER_ORDER_INFO3 = BASE_URL + API_VERSION + "/platform/login/saveUserOrderInfo3.do";
     /*个人信息查询省*/
-    String QUERY_PROVINCE = BASE_URL + API_VERSION +"/common/commonAPI/queryAllProvince.do";
+    String QUERY_PROVINCE = BASE_URL + API_VERSION + "/common/commonAPI/queryAllProvince.do";
     /*个人信息查询市*/
     String QUERY_CITY = BASE_URL + API_VERSION + "/common/commonAPI/queryAllCity.do";
     /*个人信息查询区县*/
-    String QUERY_DISTRICT = BASE_URL + API_VERSION +"/common/commonAPI/queryAllArea.do";
+    String QUERY_DISTRICT = BASE_URL + API_VERSION + "/common/commonAPI/queryAllArea.do";
+    /*极速贷贷款详情接口*/
+    String SHORT_LOAN_ORDER_DETAIL = BASE_URL + API_VERSION + "/platform/login/ShortLoanOrderDetail.do";
 }
