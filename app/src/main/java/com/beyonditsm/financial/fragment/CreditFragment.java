@@ -33,7 +33,7 @@ public class CreditFragment extends BaseFragment {
     @ViewInject(R.id.rl_back)
     private RelativeLayout rl_back;
 
-    private final String[] mTitles = {"惠心贷", "极速贷"};
+    private final String[] mTitles = {"大额贷", "极速贷"};
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -46,12 +46,6 @@ public class CreditFragment extends BaseFragment {
         if (!hidden){
             creditViewpager.setCurrentItem(0);
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        creditViewpager.setCurrentItem(0);
     }
 
     @Override
