@@ -525,7 +525,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:hint">请选择</item>
-        <item name="android:textColor">#f63</item>
+        <item name="android:textColor">#333</item>
         <item name="android:textSize">14sp</item>
     </style>
 

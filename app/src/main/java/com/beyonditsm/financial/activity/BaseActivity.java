@@ -107,7 +107,7 @@ public abstract class BaseActivity extends SmartFragmentActivity {
      */
     public void setLeftTv(String tv) {
         TextView tvLeft = (TextView) findViewById(R.id.tvLeft);
-        tvLeft.setVisibility(View.VISIBLE);
+        tvLeft.setVisibility(View.GONE);
         tvLeft.setText(tv);
     }
 
