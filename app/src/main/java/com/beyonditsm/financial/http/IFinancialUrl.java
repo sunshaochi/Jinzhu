@@ -1,5 +1,7 @@
 package com.beyonditsm.financial.http;
 
+import io.rong.imkit.common.RongConst;
+
 /**
  * Url
  * <p>
@@ -254,6 +256,8 @@ public interface IFinancialUrl {
     String FIND_HELP_ALLS =  BASE_URL+API_VERSION+"/platform/information/findAlls.do";
     /*查询帮助文章（根据主题id（themeId）查询文章信息接口）*/
     String FIND_HELP_DETAIL = BASE_URL +API_VERSION +"/platform/information/findActicleByThemeIdInter.do";
-
-
+    /*获取图形验证码*/
+    String IMAGE_CAPTCHA = BASE_URL + API_VERSION +"/captcha/imageCaptcha.do";
+    /*验证图形验证码*/
+    String SMS_CAPTCHA_FOGET_PASSWORD = BASE_URL +API_VERSION + "/manager/unLogin/smsCaptchaFogetPassword.do";
 }
