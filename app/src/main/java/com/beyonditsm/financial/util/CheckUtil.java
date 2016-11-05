@@ -45,4 +45,34 @@ public class CheckUtil {
         return null;
     }
 
+
+    public static String CheckOutNullString(ViewGroup viewGroup){
+
+        for (int i =0;i<viewGroup.getChildCount();i++){
+            if (viewGroup.getChildAt(i)!=null && viewGroup.getChildAt(i) instanceof ViewGroup){
+                   CheckOutNullString((ViewGroup) viewGroup.getChildAt(i));
+            }else {
+                View view = viewGroup.getChildAt(i);
+                if (view instanceof TextView){
+//                    if (view instanceof EditText){
+////                        EditText editText = (EditText)view;
+////                        if (TextUtils.isEmpty(editText.getText()) && editText.getTag() != null && !(editText.getTag()+"").equals("")){
+////                            MyLogUtils.info(editText.getTag()+"");
+////                            return editText.getTag()+"";
+////                        }
+//                    }else {
+                        TextView textView = (TextView) view;
+                        if ((textView.getText()+"").equals("null")){
+                            textView.setText("未填写");
+                        }
+//                    }
+
+                }
+
+            }
+        }
+        return null;
+    }
+
+
 }

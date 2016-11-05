@@ -132,44 +132,48 @@ public class MyCreditDAct extends BaseActivity {
             if ("CANCEL_REQUET".equals(rowe.getOrderSts())) {
                 setRightVG(false);
             } else if ("WAIT_BACKGROUND_APPROVAL".equals(rowe.getOrderSts()) || "CREDIT_MANAGER_GRAB".equals(rowe.getOrderSts())) {
-                setRightBtn("取消订单", new View.OnClickListener() {
+                setCancel();
+            }
+        }
+    }
+
+    public void setCancel() {
+        setRightBtn("取消订单", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyAlertDialog dialog = new MyAlertDialog(MyCreditDAct.this);
+                dialog.builder().setTitle("提示").setMsg("确认取消订单？").setPositiveButton("确定", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MyAlertDialog dialog = new MyAlertDialog(MyCreditDAct.this);
-                        dialog.builder().setTitle("提示").setMsg("确认取消订单？").setPositiveButton("确定", new View.OnClickListener() {
+                        RequestManager.getUserManager().cancelOrder(rowe.getId(), new RequestManager.CallBack() {
                             @Override
-                            public void onClick(View v) {
-                                RequestManager.getUserManager().cancelOrder(rowe.getId(), new RequestManager.CallBack() {
-                                    @Override
-                                    public void onSucess(String result) throws JSONException {
+                            public void onSucess(String result) throws JSONException {
 
-                                        JSONObject object = new JSONObject(result);
-                                        int status = object.getInt("status");
-                                        String message = object.getString("message");
-                                        if (status == 200) {
-                                            MyToastUtils.showShortToast(MyCreditDAct.this, message);
-                                            Intent intent = new Intent(MyCreditAct.CREDIT_RECEIVER);
-                                            intent.putExtra("position", position);
-                                            sendBroadcast(intent);
+                                JSONObject object = new JSONObject(result);
+                                int status = object.getInt("status");
+                                String message = object.getString("message");
+                                if (status == 200) {
+                                    MyToastUtils.showShortToast(MyCreditDAct.this, message);
+                                    Intent intent = new Intent(MyCreditAct.CREDIT_RECEIVER);
+                                    intent.putExtra("position", position);
+                                    sendBroadcast(intent);
 //                                            SpUtils.clearOrderId(MyApplication.getInstance());
 //                                            sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
 //                                            sendBroadcast(new Intent(MineFragment.HIDE_POINT));
-                                            finish();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onError(int status, String msg) {
-                                        MyToastUtils.showShortToast(MyCreditDAct.this, msg);
-                                    }
-                                });
+                                    finish();
+                                }
                             }
-                        }).setNegativeButton("取消", null).show();
 
+                            @Override
+                            public void onError(int status, String msg) {
+                                MyToastUtils.showShortToast(MyCreditDAct.this, msg);
+                            }
+                        });
                     }
-                });
+                }).setNegativeButton("取消", null).show();
+
             }
-        }
+        });
     }
 
     @SuppressWarnings("deprecation")
@@ -179,23 +183,23 @@ public class MyCreditDAct extends BaseActivity {
         Bundle bundle = new Bundle();
         bundle.putParcelable("rowe", rowe);
         Fragment detailFragment;
-        if (rowe.getOrderType().equals("4")){
+        if (rowe.getOrderType().equals("4")) {
             detailFragment = new SpeedCreditDetailFragment();
-        }else {
+        } else {
             detailFragment = new MyCreditDetailFragment();
+            MyCreditStatusFragment statusFragment = new MyCreditStatusFragment();
+            statusFragment.setArguments(bundle);
+            fragmentList.add(statusFragment);
+        }
 
-        }
-        MyCreditStatusFragment statusFragment = new MyCreditStatusFragment();
-        MyCreditSpeedDetailFrag myCreditSpeedDetailFrag = new MyCreditSpeedDetailFrag();
-        statusFragment.setArguments(bundle);
         detailFragment.setArguments(bundle);
-        myCreditSpeedDetailFrag.setArguments(bundle);
-        fragmentList.add(statusFragment);
-        if ("comm".equals(type)) {
+        detailFragment.setArguments(bundle);
+
+//        if ("comm".equals(type)) {
+//            fragmentList.add(detailFragment);
+//        } else if ("speed".equals(type)) {
             fragmentList.add(detailFragment);
-        }else if ("speed".equals(type)){
-            fragmentList.add(myCreditSpeedDetailFrag);
-        }
+//        }
         myCreditViewpager.setAdapter(new MyAdapter(getSupportFragmentManager(), fragmentList));
         myCreditViewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

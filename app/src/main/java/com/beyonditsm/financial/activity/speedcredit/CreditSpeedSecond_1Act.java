@@ -112,6 +112,13 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
     private TextView tvSpeedToTwo;
     @ViewInject(R.id.loadView)
     private LoadingView loadingView;
+    private String productId;
+    private String purpose;
+    private String maxRepaymentWeekly;
+    private String totalAmount;
+    private String totalPeriods;
+    private String totalLoanInterest;
+    private String realMonthlyRate;
     private String orderId;
     private List<CreditSpeedEntity.PropertyTypesBean> propetyTypesList;
 
@@ -171,7 +178,14 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
     public void init(Bundle savedInstanceState) {
         setTopTitle("快速判断资质");
         setLeftTv("返回");
-        orderId = getIntent().getStringExtra(CreditSpeedDetailAct.SPEED_CREDIT_ORDER_ID);
+        productId = getIntent().getStringExtra(CreditSpeedDetailAct.SPEED_CREDIT_PRODUCT_ID);
+        purpose = getIntent().getStringExtra(CreditSpeedDetailAct.PURPOSE);
+        maxRepaymentWeekly = getIntent().getStringExtra(CreditSpeedDetailAct.MAXREPAYMENTWEEKLY);
+        totalAmount = getIntent().getStringExtra(CreditSpeedDetailAct.TOTALAMOUNT);
+        totalPeriods = getIntent().getStringExtra(CreditSpeedDetailAct.TOTALPERIODS);
+        totalLoanInterest = getIntent().getStringExtra(CreditSpeedDetailAct.TOTALLOANINTEREST);
+        realMonthlyRate = getIntent().getStringExtra(CreditSpeedDetailAct.REALMONTHLYRATE);
+
         propetyTypesList = (List<CreditSpeedEntity.PropertyTypesBean>) getIntent().getSerializableExtra(SpeedCreditFrag.PROPERTY_TYPES);
         userOrderInfo1 = new UserOrderInfo1();
         initText();
@@ -249,9 +263,15 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
         switch (view.getId()){
             case R.id.tv_speed_toTwo:
                 if (isHaveData()) {
-                    if (!TextUtils.isEmpty(orderId)) {
-                        userOrderInfo1.setOrderId(orderId);
+                    if (!TextUtils.isEmpty(productId)) {
+                        userOrderInfo1.setProductId(productId);
                     }
+                    userOrderInfo1.setPurpose(purpose);
+                    userOrderInfo1.setMaxRepaymentWeekly(maxRepaymentWeekly);
+                    userOrderInfo1.setTotalAmount(totalAmount);
+                    userOrderInfo1.setTotalPeriods(totalPeriods);
+                    userOrderInfo1.setTotalLoanInterest(totalLoanInterest);
+                    userOrderInfo1.setRealMonthlyRate(realMonthlyRate);
                     userOrderInfo1.setChildNum(tvSpeedSelectChildrenNum.getText().toString().trim());
                     userOrderInfo1.setContactNum(etSpeedPhone.getText().toString().trim());
                     userOrderInfo1.setIdcardno(etSpeedIdCard.getText().toString().trim());
@@ -435,22 +455,22 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
             public void onSucess(String result) throws JSONException {
 
                 JSONObject jsonObject = new JSONObject(result);
-                if (jsonObject.get("data") instanceof JSONArray){
-                    JSONArray data = jsonObject.getJSONArray("data");
-                    Gson gson = new Gson();
-                    uuntanal = gson.fromJson(data.toString(), new TypeToken<List<String>>() {
-                    }.getType());
-                    CoustomDialog coustomDialog = new CoustomDialog(CreditSpeedSecond_1Act.this, uuntanal);
-                    coustomDialog.builder();
-                    coustomDialog.setCanceledOnTouchOutside(false);
-                    coustomDialog.show();
-                    tvSpeedToTwo.setClickable(false);
-                    tvSpeedToTwo.setBackground(getResources().getDrawable(R.drawable.button_grey));
-                }else{
+//                if (jsonObject.get("data") instanceof JSONArray){
+//                    JSONArray data = jsonObject.getJSONArray("data");
+//                    Gson gson = new Gson();
+//                    uuntanal = gson.fromJson(data.toString(), new TypeToken<List<String>>() {
+//                    }.getType());
+//                    CoustomDialog coustomDialog = new CoustomDialog(CreditSpeedSecond_1Act.this, uuntanal);
+//                    coustomDialog.builder();
+//                    coustomDialog.setCanceledOnTouchOutside(false);
+//                    coustomDialog.show();
+//                    tvSpeedToTwo.setClickable(false);
+//                    tvSpeedToTwo.setBackground(getResources().getDrawable(R.drawable.button_grey));
+//                }else{
                     Intent intent = new Intent(CreditSpeedSecond_1Act.this, CreditSpeedSecond_2Act.class);
-                    intent.putExtra(ORDER_ID,userOrderInfo1.getOrderId());
+                    intent.putExtra(ORDER_ID,jsonObject.getString("data")+"");
                     startActivity(intent);
-                }
+//                }
 
             }
 

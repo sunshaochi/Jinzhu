@@ -29,12 +29,12 @@ public interface IFinancialUrl {
 
 //        String BASE_URL = "http://test.myjinzhu.com:8086";
     /*测试急借通接口*/
-//    String BASE_URL = "http://172.16.5.151:8080";
+//    String BASE_URL = "http://172.16.5.32:8080";
 
-//    String BASE_URL = "http://139.196.227.38:8080";
+    String BASE_URL = "http://139.196.227.38:8080";
 //    String BASE_URL = "http://172.16.5.151:8080";
     //产品优化接口测试
-    String BASE_URL = "http://172.16.7.196:8080";
+//    String BASE_URL = "http://139.196.227.38:8080";
 //    String BASE_URL = "http://139.196.227.38:8080";
 //    String BASE_URL = "http://139.196.227.38:8080";
     /*测试地址3*/

@@ -107,7 +107,14 @@ public class CreditSpeedDetailAct extends BaseActivity {
     private String purposeId;
 
     public static final String CREDIT_TYPE = "credit_type";
-    public static final String SPEED_CREDIT_ORDER_ID = "order_id";
+    public static final String PURPOSE = "purpose";
+    public static final String MAXREPAYMENTWEEKLY = "maxRepaymentWeekly";
+    public static final String TOTALAMOUNT = "totalAmount";
+    public static final String TOTALPERIODS = "totalPeriods";
+    public static final String TOTALLOANINTEREST = "totalLoanInterest";
+    public static final String REALMONTHLYRATE = "realMonthlyRate";
+    public static final String SPEED_CREDIT_PRODUCT_ID = "product_id";
+
     private List<LoadUseEntity> loadUseEntityList;
 
     java.text.DecimalFormat df = new java.text.DecimalFormat("#0.0");//保留小数
@@ -427,16 +434,40 @@ public class CreditSpeedDetailAct extends BaseActivity {
 ////                bundle.putParcelable(PRODUCTINFO, productInfo);
 //                bundle.putString(CREDIT_TYPE,"speed");
 //                gotoActivity(CreditStepAct.class, false, bundle);
-                if (isHaveData()) {
-                    SubmitCreditSpeedEntity submitCreditSpeedEntity = new SubmitCreditSpeedEntity();
 
-                    submitCreditSpeedEntity.setPurpose(purposeId+"");
-                    submitCreditSpeedEntity.setMaxRepaymentWeekly(etSpeedBearing.getText().toString());
-                    submitCreditSpeedEntity.setTotalAmount(etSpeedAmount.getText().toString().trim());
-                    submitCreditSpeedEntity.setTotalPeriods(tvSpeedWeek.getText().toString());
-                    submitCreditSpeedEntity.setTotalLoanInterest(tvTotal.getText().toString());
-                    submitCreditSpeedEntity.setRealMonthlyRate(creditSpeedEntity.getMinRate());
-                    submitOreder(creditSpeedEntity.getProductId(),submitCreditSpeedEntity);
+
+                if (isHaveData()) {
+
+                    if (TextUtils.isEmpty(SpUtils.getRoleName(CreditSpeedDetailAct.this))) {
+                        gotoActivity(CreditSpeedFirstAct.class, false);
+                    } else {
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString(SPEED_CREDIT_PRODUCT_ID,creditSpeedEntity.getProductId());
+                        bundle.putString(PURPOSE,purposeId+"");
+                        bundle.putString(MAXREPAYMENTWEEKLY,etSpeedBearing.getText().toString()+"");
+                        bundle.putString(TOTALAMOUNT,etSpeedAmount.getText().toString().trim()+"");
+                        bundle.putString(TOTALPERIODS,tvSpeedWeek.getText().toString()+"");
+                        bundle.putString(TOTALLOANINTEREST,tvTotal.getText().toString()+"");
+                        bundle.putString(REALMONTHLYRATE,creditSpeedEntity.getMinRate()+"");
+                        bundle.putSerializable(SpeedCreditFrag.PROPERTY_TYPES,(Serializable) propertyTypeList);
+
+
+                        gotoActivity(CreditSpeedSecond_1Act.class, false,bundle);
+                    }
+
+
+
+
+//                    SubmitCreditSpeedEntity submitCreditSpeedEntity = new SubmitCreditSpeedEntity();
+//
+//                    submitCreditSpeedEntity.setPurpose(purposeId+"");
+//                    submitCreditSpeedEntity.setMaxRepaymentWeekly(etSpeedBearing.getText().toString());
+//                    submitCreditSpeedEntity.setTotalAmount(etSpeedAmount.getText().toString().trim());
+//                    submitCreditSpeedEntity.setTotalPeriods(tvSpeedWeek.getText().toString());
+//                    submitCreditSpeedEntity.setTotalLoanInterest(tvTotal.getText().toString());
+//                    submitCreditSpeedEntity.setRealMonthlyRate(creditSpeedEntity.getMinRate());
+//                    submitOreder(creditSpeedEntity.getProductId(),submitCreditSpeedEntity);
                 }
 
 
@@ -530,27 +561,26 @@ public class CreditSpeedDetailAct extends BaseActivity {
         return true;
     }
 
-    private void submitOreder(String productId,SubmitCreditSpeedEntity submitEntity) {
-        RequestManager.getCommManager().submitSpeedOrder(productId,submitEntity, new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
-                JSONObject jsonObject = new JSONObject(result);
-                String orderId = jsonObject.getString("data");
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(SpeedCreditFrag.PROPERTY_TYPES,(Serializable) propertyTypeList);
-                bundle.putString(SPEED_CREDIT_ORDER_ID,orderId);
-                if (TextUtils.isEmpty(SpUtils.getRoleName(CreditSpeedDetailAct.this))) {
-                    gotoActivity(CreditSpeedFirstAct.class, false);
-                } else {
-                    gotoActivity(CreditSpeedSecond_1Act.class, false,bundle);
-                }
-
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-                MyToastUtils.showShortToast(CreditSpeedDetailAct.this,msg);
-            }
-        });
-    }
+//    private void submitOreder(String productId,SubmitCreditSpeedEntity submitEntity) {
+//        RequestManager.getCommManager().submitSpeedOrder(productId,submitEntity, new RequestManager.CallBack() {
+//            @Override
+//            public void onSucess(String result) throws JSONException {
+//                JSONObject jsonObject = new JSONObject(result);
+//                String orderId = jsonObject.getString("data");
+//                Bundle bundle = new Bundle();
+//                bundle.putString(SPEED_CREDIT_ORDER_ID,orderId);
+//                if (TextUtils.isEmpty(SpUtils.getRoleName(CreditSpeedDetailAct.this))) {
+//                    gotoActivity(CreditSpeedFirstAct.class, false);
+//                } else {
+//                    gotoActivity(CreditSpeedSecond_1Act.class, false,bundle);
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onError(int status, String msg) {
+//                MyToastUtils.showShortToast(CreditSpeedDetailAct.this,msg);
+//            }
+//        });
+//    }
 }

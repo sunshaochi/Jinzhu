@@ -342,12 +342,13 @@
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
+                                    android:visibility="gone"
                                     android:orientation="horizontal">
 
                                     <TextView
                                         android:id="@+id/nicksex"
                                         style="@style/tv_second_style"
-                                        android:text="性别：" />
+                                        android:text="身份证号：" />
 
                                     <TextView
                                         android:id="@+id/tvSex"

@@ -9,7 +9,13 @@ import android.os.Parcelable;
  */
 
 public class UserOrderInfo1 implements Parcelable{
-    private String orderId;//订单id
+    private String productId;//产品Id
+    private String purpose;//借款用途
+    private String maxRepaymentWeekly;//最大承受还款额度
+    private String totalAmount;//贷款金额
+    private String totalPeriods;//还款期限
+    private String totalLoanInterest;//利息
+    private String realMonthlyRate;//综合费率
     private String name;// 用户姓名
     private String contactNum;//联系电话
     private String idcardno;//身份证号
@@ -30,7 +36,13 @@ public class UserOrderInfo1 implements Parcelable{
     }
 
     protected UserOrderInfo1(Parcel in) {
-        orderId = in.readString();
+        productId = in.readString();
+        purpose = in.readString();
+        maxRepaymentWeekly = in.readString();
+        totalAmount = in.readString();
+        totalPeriods = in.readString();
+        totalLoanInterest = in.readString();
+        realMonthlyRate = in.readString();
         name = in.readString();
         contactNum = in.readString();
         idcardno = in.readString();
@@ -60,12 +72,61 @@ public class UserOrderInfo1 implements Parcelable{
         }
     };
 
-    public String getOrderId() {
-        return orderId;
+
+    public String getProductId() {
+        return productId;
     }
 
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    public String getPurpose() {
+        return purpose;
+    }
+
+    public void setPurpose(String purpose) {
+        this.purpose = purpose;
+    }
+
+    public String getMaxRepaymentWeekly() {
+        return maxRepaymentWeekly;
+    }
+
+    public void setMaxRepaymentWeekly(String maxRepaymentWeekly) {
+        this.maxRepaymentWeekly = maxRepaymentWeekly;
+    }
+
+    public String getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(String totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public String getTotalPeriods() {
+        return totalPeriods;
+    }
+
+    public void setTotalPeriods(String totalPeriods) {
+        this.totalPeriods = totalPeriods;
+    }
+
+    public String getTotalLoanInterest() {
+        return totalLoanInterest;
+    }
+
+    public void setTotalLoanInterest(String totalLoanInterest) {
+        this.totalLoanInterest = totalLoanInterest;
+    }
+
+    public String getRealMonthlyRate() {
+        return realMonthlyRate;
+    }
+
+    public void setRealMonthlyRate(String realMonthlyRate) {
+        this.realMonthlyRate = realMonthlyRate;
     }
 
     public String getName() {
@@ -195,7 +256,13 @@ public class UserOrderInfo1 implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(orderId);
+        parcel.writeString(productId);
+        parcel.writeString(purpose);
+        parcel.writeString(maxRepaymentWeekly);
+        parcel.writeString(totalAmount);
+        parcel.writeString(totalPeriods);
+        parcel.writeString(totalLoanInterest);
+        parcel.writeString(realMonthlyRate);
         parcel.writeString(name);
         parcel.writeString(contactNum);
         parcel.writeString(idcardno);

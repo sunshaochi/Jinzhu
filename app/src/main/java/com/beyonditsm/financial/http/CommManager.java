@@ -761,7 +761,13 @@ public class CommManager extends RequestManager {
 
     public void saveEssentialInfo(UserOrderInfo1 userInfo1,CallBack callBack){
         Map<String, String> params = new HashMap<>();
-        params.put("orderId",userInfo1.getOrderId()+"");
+        params.put("productId",userInfo1.getProductId()+"");
+        params.put("purpose",userInfo1.getPurpose()+"");
+        params.put("maxRepaymentWeekly",userInfo1.getMaxRepaymentWeekly()+"");
+        params.put("totalAmount",userInfo1.getTotalAmount()+"");
+        params.put("totalPeriods",userInfo1.getTotalPeriods()+"");
+        params.put("totalLoanInterest",userInfo1.getTotalLoanInterest()+"");
+        params.put("realMonthlyRate",userInfo1.getRealMonthlyRate()+"");
         params.put("name",userInfo1.getName()+"");
         params.put("contactNum",userInfo1.getContactNum()+"");
         params.put("idcardno",userInfo1.getIdcardno()+"");
@@ -777,11 +783,7 @@ public class CommManager extends RequestManager {
         params.put("permanentProvince",userInfo1.getPermanentProvince()+"");
         params.put("permanentDetail",userInfo1.getPermanentDetail()+"");
         params.put("resSts",userInfo1.getResSts()+"");
-        MyLogUtils.info("订单id："+userInfo1.getOrderId()+",姓名："+userInfo1.getName()+",身份证号："+userInfo1.getIdcardno()
-                +",联系电话:"+userInfo1.getContactNum()+"，子女数目："+userInfo1.getChildNum()+",学历："+userInfo1.getQualitications()
-        +",户籍地省："+userInfo1.getDomicileProvince()+"户籍地市："+userInfo1.getDomicileCity()+",户籍地区："+userInfo1.getDomicileArea()+
-        ",户籍地详细地址："+userInfo1.getDomicileDetail()+",常住地省："+userInfo1.getPermanentProvince()+",常住地市："+userInfo1.getPermanentCity()
-        +",常住地区："+userInfo1.getPermanentArea()+"，常住地详细地址："+userInfo1.getPermanentDetail()+",居住状况："+userInfo1.getResSts());
+
         doPost(IFinancialUrl.SAVE_ESSENTIAL_INFO,params,callBack);
     }
 
