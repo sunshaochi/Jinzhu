@@ -94,8 +94,8 @@ public class SpeedCreditDetailFragment extends BaseFragment {
     private TextView tvTotal;
     private TextView tvLimit;
     private TextView tvTime;
-    private TextView tvYueG;
-    private TextView tvHf;
+    private TextView tvYueG;//总利息
+    private TextView tvHf; //还款方式
     private TextView tvT;
     private TextView tvFTime;
     private TextView tvRate;
@@ -136,7 +136,7 @@ public class SpeedCreditDetailFragment extends BaseFragment {
     @ViewInject(R.id.tv_sb)
     private TextView tv_sb;//单位地址
     @ViewInject(R.id.tv_company_property)
-    private TextView tv_company_property;//单位地址
+    private TextView tv_company_property;//单位性质
     @ViewInject(R.id.gjj_data)
     private TextView gjj_data;//是否有本地公积金
     @ViewInject(R.id.house_data)
@@ -212,6 +212,8 @@ public class SpeedCreditDetailFragment extends BaseFragment {
     private ImageView icardBack;
     @ViewInject(R.id.rlUpCredit)
     private RelativeLayout rlUpCredit;
+    @ViewInject(R.id.tv_work_property)
+    private TextView tvWorkProperty;
     private MyCreditBean.RowsEntity rowe;
 
 
@@ -403,12 +405,12 @@ public class SpeedCreditDetailFragment extends BaseFragment {
                         break;
                     case "2":
                         Intent intent4 = new Intent(getContext(), CreditSpeedSecond_3Act.class);
-                        intent4.putExtra("order_id", rowe.getId());
+                        intent4.putExtra("orderId", rowe.getId());
                         getActivity().startActivity(intent4);
                         break;
                     case "3":
                         Intent intent5 = new Intent(getContext(), CreditSpeedThird_2Act.class);
-                        intent5.putExtra("order_id", rowe.getId());
+                        intent5.putExtra("orderId", rowe.getId());
                         getActivity().startActivity(intent5);
                         break;
 
@@ -451,6 +453,17 @@ public class SpeedCreditDetailFragment extends BaseFragment {
                 Gson gson = new Gson();
                 JSONObject jsonObject = new JSONObject(result);
                 JSONObject data = jsonObject.getJSONObject("data");
+                if (data.getJSONArray("payType") != null){
+                    StringBuilder sb = new StringBuilder();
+                    JSONArray payJSON = data.getJSONArray("payType");
+                    for(int i =0;i<payJSON.length();i++){
+                        JSONObject jsonObject1 = payJSON.getJSONObject(i);
+                        sb.append(jsonObject1.getString("name"));
+                        sb.append(" ,");
+                    }
+                    tvHf.setText("还款方式：" + sb.toString().substring(0,sb.length()-1));
+                }
+
                 info = gson.fromJson(data.toString(), SpeedOrderInfo.class);
                 if (info != null) {
 //                    data = info.getData();
@@ -472,7 +485,7 @@ public class SpeedCreditDetailFragment extends BaseFragment {
                             act.setCancel();
                         }
 
-                        if (TextUtils.isEmpty(info.getStepCode() + "") || (info.getStepCode()+"").equals("null")) {
+                        if (TextUtils.isEmpty(info.getStepCode() + "") || (info.getStepCode()+"").equals("null") || (info.getStepCode()+"").equals("4")) {
                             rlUpCredit.setVisibility(View.GONE);
                         } else {
                             rlUpCredit.setVisibility(View.VISIBLE);
@@ -494,12 +507,14 @@ public class SpeedCreditDetailFragment extends BaseFragment {
                             tvTime.setText(info.getTotalPeriods() + "");
                         }
                         if (!TextUtils.isEmpty(String.valueOf(info.getTotalLoanInterest()))) {
-                            tvYueG.setText(info.getTotalLoanInterest() + "");
+                            tvYueG.setText(info.getTotalLoanInterest() + " 元");
                         }
-                        if (!TextUtils.isEmpty(info.getPayType())) {
-                            tvHf.setText("还款方式：" + info.getPayType());
-                        }
+
 //                        tvT.setText("¥" + info.getTotalAmount());
+
+                        if (!TextUtils.isEmpty(info.getWorkProp())) {
+                            tvWorkProperty.setText(info.getWorkProp());
+                        }
 
 //                        Double totalMPay = Arith.sub(info.getPeriodsAmount() * info.getTotalPeriods(), info.getTotalAmount());
 //                        tvT.setText(df2.format(totalMPay));
@@ -508,7 +523,7 @@ public class SpeedCreditDetailFragment extends BaseFragment {
                         }
                         if (!TextUtils.isEmpty(info.getRealMonthlyRate() + "")) {
 //                            if (Double.valueOf(info.getMonthlyRateMin()) - Double.valueOf(info.getMonthlyRateMax()) == 0) {
-                            tvT.setText("综合费率:" + info.getRealMonthlyRate() + "%");
+                            tvT.setText(info.getRealMonthlyRate() + "%");
 //                            }
 //                            } else {
 //                                tvRate.setText("综合费率：" + info.getRealMonthlyRate() + "%" + "~" + info.getMonthlyRateMax() + "%");
@@ -546,14 +561,14 @@ public class SpeedCreditDetailFragment extends BaseFragment {
 
 
                         if (!TextUtils.isEmpty(info.getPermanentadds())) {
-                            alwaysaddress.setText(addressUtil.getProName(info.getPermanentadds()));
+                            alwaysaddress.setText(info.getPermanentadds());
                         }
                         if (!TextUtils.isEmpty(info.getResSts())) {
                             address.setText(info.getResSts());
                         }
 
                         if (!TextUtils.isEmpty(info.getDomicileAdds())) {
-                            tv_jgl.setText(info.getDomicileAdds());
+                            user_data.setText(info.getDomicileAdds());
                         }
 
 //                        if (!TextUtils.isEmpty(info.getNativePlaceAddr())) {
@@ -569,8 +584,8 @@ public class SpeedCreditDetailFragment extends BaseFragment {
                         if (!TextUtils.isEmpty(info.getCompanyAdds() + "")) {
                             tv_sb.setText(info.getCompanyAdds() + "");
                         }
-                        if (!TextUtils.isEmpty(info.getCompanyNatureId() + "")) {
-                            tv_company_property.setText(info.getCompanyNatureId() + "");
+                        if (!TextUtils.isEmpty(info.getCompanyNature() + "")) {
+                            tv_company_property.setText(info.getCompanyNature() + "");
                         }
 
                         if (!TextUtils.isEmpty(info.getSalary() + "")) {
@@ -581,8 +596,8 @@ public class SpeedCreditDetailFragment extends BaseFragment {
                             tvFamily1Name.setText(info.getRelatives1Name() + "");
                         }
 
-                        if (!TextUtils.isEmpty(info.getRelatives1RsId() + "")) {
-                            tvFamily1Relation.setText(info.getRelatives1RsId() + "");
+                        if (!TextUtils.isEmpty(info.getRelatives1Rs() + "")) {
+                            tvFamily1Relation.setText(info.getRelatives1Rs() + "");
                         }
 
                         if (!TextUtils.isEmpty(info.getRelatives1Mobile() + "")) {
@@ -594,8 +609,8 @@ public class SpeedCreditDetailFragment extends BaseFragment {
                             tvFamily2Name.setText(info.getRelatives2Name() + "");
                         }
 
-                        if (!TextUtils.isEmpty(info.getRelatives2RsId() + "")) {
-                            tvFamily2Relation.setText(info.getRelatives2RsId() + "");
+                        if (!TextUtils.isEmpty(info.getRelatives2Rs() + "")) {
+                            tvFamily2Relation.setText(info.getRelatives2Rs() + "");
                         }
 
                         if (!TextUtils.isEmpty(info.getRelatives2Mobile() + "")) {
@@ -607,8 +622,8 @@ public class SpeedCreditDetailFragment extends BaseFragment {
                             tvColleagueName.setText(info.getColleagueNAME() + "");
                         }
 
-                        if (!TextUtils.isEmpty(info.getColleagueRsId() + "")) {
-                            tvColleagueRelation.setText(info.getColleagueRsId() + "");
+                        if (!TextUtils.isEmpty(info.getColleagueRs() + "")) {
+                            tvColleagueRelation.setText(info.getColleagueRs() + "");
                         }
 
                         if (!TextUtils.isEmpty(info.getColleagueMobile() + "")) {
@@ -619,8 +634,8 @@ public class SpeedCreditDetailFragment extends BaseFragment {
                             tvEcName.setText(info.getEcName() + "");
                         }
 
-                        if (!TextUtils.isEmpty(info.getEsRsId() + "")) {
-                            tvEcRelation.setText(info.getEsRsId() + "");
+                        if (!TextUtils.isEmpty(info.getEsRs() + "")) {
+                            tvEcRelation.setText(info.getEsRs() + "");
                         }
 
                         if (!TextUtils.isEmpty(info.getEcMobile() + "")) {

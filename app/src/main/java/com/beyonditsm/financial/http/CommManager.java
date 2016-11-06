@@ -856,4 +856,16 @@ public class CommManager extends RequestManager {
         params.put("orderId",orderId);
         doPost(IFinancialUrl.SHORT_LOAN_ORDER_DETAIL,params,callBack);
     }
+
+    /**
+     * 极速贷推送第三方接口
+     * @param orderId 订单Id
+     * @param callBack 回调
+     */
+    public void applyShortLoanOrder(String orderId,CallBack callBack){
+        Map<String,String> params = new HashMap<>();
+        params.put("orderId",orderId);
+        doPost(IFinancialUrl.APPLY_SHORT_LOAN_ORDER,params,callBack);
+    }
+
 }

@@ -328,6 +328,14 @@ public class JJTPicker extends LinearLayout {
         return province_city_couny;
     }
 
+    public List<Integer> getListAddressId() {
+        List<Integer> province_city_couny = new ArrayList<Integer>();
+        province_city_couny.add(provincePicker.getSelectedId());
+        province_city_couny.add(cityPicker.getSelectedId());
+        province_city_couny.add(counyPicker.getSelectedId());
+        return province_city_couny;
+    }
+
     public interface OnSelectingListener {
 
         public void selected(boolean selected);

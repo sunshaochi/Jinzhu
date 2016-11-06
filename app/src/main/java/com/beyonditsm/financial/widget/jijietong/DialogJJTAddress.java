@@ -57,7 +57,7 @@ public class DialogJJTAddress {
 			
 			@Override
 			public void onClick(View v) {
-				listener.getAdress(jjtPicker.getListAddress());
+				listener.getAdress(jjtPicker.getListAddress(),jjtPicker.getListAddressId());
 				dialog.dismiss();
 			}
 		});
@@ -98,7 +98,7 @@ public class DialogJJTAddress {
 	}
 
 	public interface SexClickListener {
-		void getAdress(List<String> adress);
+		void getAdress(List<String> adress,List<Integer> id);
 	}
 
 	public void setOnSheetItemClickListener(SexClickListener listener){

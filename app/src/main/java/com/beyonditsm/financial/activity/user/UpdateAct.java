@@ -258,7 +258,7 @@ public class UpdateAct extends BaseActivity {
                 dialogJJTAddress.show();
                 dialogJJTAddress.setOnSheetItemClickListener(new DialogJJTAddress.SexClickListener() {
                     @Override
-                    public void getAdress(List<String> adress) {
+                    public void getAdress(List<String> adress,List<Integer> id) {
                         defaultProvince = adress.get(0);
                         String provinceCode = queryProvinceCodeByName(defaultProvince);
                         defaultCity = adress.get(1);
@@ -295,7 +295,7 @@ public class UpdateAct extends BaseActivity {
                 dialogJJTAddress.show();
                 dialogJJTAddress.setOnSheetItemClickListener(new DialogJJTAddress.SexClickListener() {
                     @Override
-                    public void getAdress(List<String> adress) {
+                    public void getAdress(List<String> adress,List<Integer> id) {
                         nativePlaceProvince = adress.get(0);
                         String nativePlaceProvinceCode = queryProvinceCodeByName(nativePlaceProvince);
                         nativePlaceCity = adress.get(1);
@@ -322,7 +322,7 @@ public class UpdateAct extends BaseActivity {
                 dialogJJTAddress.show();
                 dialogJJTAddress.setOnSheetItemClickListener(new DialogJJTAddress.SexClickListener() {
                     @Override
-                    public void getAdress(List<String> adress) {
+                    public void getAdress(List<String> adress,List<Integer> id) {
                         nativePlaceAddrProvince = adress.get(0);
                         String nativePlaceAddrProvinceCode = queryProvinceCodeByName(nativePlaceAddrProvince);
                         nativePlaceAddrCity = adress.get(1);

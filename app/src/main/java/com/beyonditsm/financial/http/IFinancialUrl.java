@@ -296,4 +296,6 @@ public interface IFinancialUrl {
     String QUERY_DISTRICT = BASE_URL + API_VERSION + "/common/commonAPI/queryAllArea.do";
     /*极速贷贷款详情接口*/
     String SHORT_LOAN_ORDER_DETAIL = BASE_URL + API_VERSION + "/platform/login/ShortLoanOrderDetail.do";
+    /*急速贷推送第三方接口*/
+    String APPLY_SHORT_LOAN_ORDER = BASE_URL +API_VERSION + "/platform/login/applyShortLoanOrder.do";
 }

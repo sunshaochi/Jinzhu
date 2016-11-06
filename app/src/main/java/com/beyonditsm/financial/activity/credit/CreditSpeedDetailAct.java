@@ -438,6 +438,7 @@ public class CreditSpeedDetailAct extends BaseActivity {
 
                 if (isHaveData()) {
 
+
                     if (TextUtils.isEmpty(SpUtils.getRoleName(CreditSpeedDetailAct.this))) {
                         gotoActivity(CreditSpeedFirstAct.class, false);
                     } else {

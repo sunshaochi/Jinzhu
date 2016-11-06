@@ -199,15 +199,15 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
                 dialogChooseAdress1.show();
                 dialogChooseAdress1.setOnSheetItemClickListener(new DialogJJTAddress.SexClickListener() {
                     @Override
-                    public void getAdress(final List<String> adress) {
+                    public void getAdress(final List<String> adress,List<Integer> id) {
 //                        MyLogUtils.info("选择的地址:" + adress.get(1));
                         StringBuilder sb = new StringBuilder();
                         for (int i = 0; i < adress.size(); i++) {
                             sb.append(adress.get(i));
                         }
-//                        companyProvince = adress.get(0);
-//                        companyCity = adress.get(1);
-//                        companyArea = adress.get(2);
+                        companyProvince = provinceList.get(id.get(0)).getId();
+                        companyCity = cityEntityList.get(id.get(0)).getId();
+                        companyArea = counyEntityList.get(id.get(0)).getId();
                         tvSpeedSelectCompanyAddress.setText(sb.toString());
                     }
                 });

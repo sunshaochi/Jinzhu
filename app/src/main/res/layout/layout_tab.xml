@@ -5,20 +5,32 @@
     android:layout_height="match_parent"
     android:clipChildren="false"
     android:clipToPadding="false">
-
-    <TextView
-        android:id="@+id/tv_tab_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="2dp"
         android:gravity="center"
-        android:singleLine="true" />
+        >
+        <TextView
+            android:id="@+id/tv_tab_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:singleLine="true" />
+    </LinearLayout>
 
+
+    <View
+        android:layout_width="0.5dp"
+        android:background="#e2e2e2"
+        android:layout_height="match_parent" />
     <com.beyonditsm.financial.view.tablayout.MsgView
         android:id="@+id/rtv_msg_tip"
         android:layout_width="10dp"
         android:layout_height="10dp"
         android:gravity="center"
+
         android:textColor="#ffffff"
         android:textSize="11.5sp"
         mv:mv_backgroundColor="#FD481F"

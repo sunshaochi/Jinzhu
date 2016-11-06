@@ -68,6 +68,12 @@ public class SpeedOrderInfo {
      * loanPeriod : 3
      * domicileAreaId : 城关区
      */
+    private String relatives2Rs;
+    private String relatives1Rs;
+    private String colleagueRs;
+    private String esRs;
+    private String workProp;
+    private String companyNature;
     private String totalLoanInterest;
     private Object workPropId;
     private String repaymentPeriod;
@@ -80,7 +86,7 @@ public class SpeedOrderInfo {
     private String productName;
     private String qualifications;
     private double maxVal;
-    private String payType;
+//    private String payType;
     private double minVal;
     private String orderSts;
     private Object companyPhone;
@@ -125,11 +131,59 @@ public class SpeedOrderInfo {
     private String marragestsId;
     private Object companyAreaId;
     private Object colleagueMobile;
-    private String payTypeId;
+//    private String payTypeId;
     private Object idCardBack;
     private int loanPeriod;
     private String domicileAreaId;
 
+
+    public String getRelatives2Rs() {
+        return relatives2Rs;
+    }
+
+    public void setRelatives2Rs(String relatives2Rs) {
+        this.relatives2Rs = relatives2Rs;
+    }
+
+    public String getRelatives1Rs() {
+        return relatives1Rs;
+    }
+
+    public void setRelatives1Rs(String relatives1Rs) {
+        this.relatives1Rs = relatives1Rs;
+    }
+
+    public String getColleagueRs() {
+        return colleagueRs;
+    }
+
+    public void setColleagueRs(String colleagueRs) {
+        this.colleagueRs = colleagueRs;
+    }
+
+    public String getEsRs() {
+        return esRs;
+    }
+
+    public void setEsRs(String esRs) {
+        this.esRs = esRs;
+    }
+
+    public String getWorkProp() {
+        return workProp;
+    }
+
+    public void setWorkProp(String workProp) {
+        this.workProp = workProp;
+    }
+
+    public String getCompanyNature() {
+        return companyNature;
+    }
+
+    public void setCompanyNature(String companyNature) {
+        this.companyNature = companyNature;
+    }
 
     public String getTotalLoanInterest() {
         return totalLoanInterest;
@@ -227,13 +281,13 @@ public class SpeedOrderInfo {
         this.maxVal = maxVal;
     }
 
-    public String getPayType() {
-        return payType;
-    }
-
-    public void setPayType(String payType) {
-        this.payType = payType;
-    }
+//    public String getPayType() {
+//        return payType;
+//    }
+//
+//    public void setPayType(String payType) {
+//        this.payType = payType;
+//    }
 
     public double getMinVal() {
         return minVal;
@@ -587,13 +641,13 @@ public class SpeedOrderInfo {
         this.colleagueMobile = colleagueMobile;
     }
 
-    public String getPayTypeId() {
-        return payTypeId;
-    }
-
-    public void setPayTypeId(String payTypeId) {
-        this.payTypeId = payTypeId;
-    }
+//    public String getPayTypeId() {
+//        return payTypeId;
+//    }
+//
+//    public void setPayTypeId(String payTypeId) {
+//        this.payTypeId = payTypeId;
+//    }
 
     public Object getIdCardBack() {
         return idCardBack;

@@ -248,7 +248,7 @@ public class CreditSecondFrag extends BaseFragment {
                 dialogJJTAddress.show();
                 dialogJJTAddress.setOnSheetItemClickListener(new DialogJJTAddress.SexClickListener() {
                     @Override
-                    public void getAdress(List<String> adress) {
+                    public void getAdress(List<String> adress,List<Integer> id) {
                         String defaultProvince = adress.get(0);
                         String provinceCode = queryProvinceCodeByName(defaultProvince);
                         String defaultCity = adress.get(1);
@@ -274,7 +274,7 @@ public class CreditSecondFrag extends BaseFragment {
                 dialogJJTAddress.show();
                 dialogJJTAddress.setOnSheetItemClickListener(new DialogJJTAddress.SexClickListener() {
                     @Override
-                    public void getAdress(List<String> adress) {
+                    public void getAdress(List<String> adress,List<Integer> id) {
                         String nativePlaceProvince = adress.get(0);
                         String nativePlaceProvinceCode = queryProvinceCodeByName(nativePlaceProvince);
                         String nativePlaceCity = adress.get(1);
@@ -304,7 +304,7 @@ public class CreditSecondFrag extends BaseFragment {
                 dialogJJTAddress.show();
                 dialogJJTAddress.setOnSheetItemClickListener(new DialogJJTAddress.SexClickListener() {
                     @Override
-                    public void getAdress(List<String> adress) {
+                    public void getAdress(List<String> adress,List<Integer> id) {
                         String nativePlaceAddrProvince = adress.get(0);
                         String nativePlaceAddrProvinceCode = queryProvinceCodeByName(nativePlaceAddrProvince);
                         String nativePlaceAddrCity = adress.get(1);

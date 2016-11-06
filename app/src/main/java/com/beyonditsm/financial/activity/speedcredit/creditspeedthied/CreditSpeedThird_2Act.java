@@ -17,6 +17,7 @@ import com.beyonditsm.financial.activity.speedcredit.CreditSpeedSecond_1Act;
 import com.beyonditsm.financial.activity.speedcredit.listener.DialogListener;
 import com.beyonditsm.financial.entity.UserOrderInfoEntity;
 import com.beyonditsm.financial.entity.VendorEntity;
+import com.beyonditsm.financial.fragment.HomeFragment;
 import com.beyonditsm.financial.http.CommManager;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.CheckUtil;
@@ -27,6 +28,7 @@ import com.beyonditsm.financial.widget.DialogSingalPicker;
 import com.beyonditsm.financial.widget.gpscity.DialogChooseCity;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.tandong.sa.eventbus.EventBus;
 import com.tandong.sa.json.Gson;
 import com.tandong.sa.json.reflect.TypeToken;
 
@@ -209,6 +211,7 @@ public class CreditSpeedThird_2Act extends BaseActivity {
             case R.id.tv_seek:
                 Intent intent3 = new Intent(CreditSpeedThird_2Act.this,MainActivity.class);
                 intent3.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                EventBus.getDefault().post(new ToSwitchEvent());
                 intent3.putExtra("position","1");
                 startActivity(intent3);
                 break;
@@ -216,13 +219,30 @@ public class CreditSpeedThird_2Act extends BaseActivity {
                 break;
         }
     }
+    public class ToSwitchEvent {
 
+    }
     private void saveUserInfo4() {
 
         CommManager.getCommManager().saveUserOrderInfo4(orderId, frontCardUrl, backCardUrl, tvCity.getText().toString(), curVendero.getId() + "", curVendero.getAddr() + "", new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
+                applyShortLoanOrder();
                 llSuccess.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
+            }
+        });
+    }
+
+    private void applyShortLoanOrder() {
+        CommManager.getCommManager().applyShortLoanOrder(orderId, new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                String a  = result;
             }
 
             @Override

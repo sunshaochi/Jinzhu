@@ -357,13 +357,13 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
                 dialogChooseAdress1.show();
                 dialogChooseAdress1.setOnSheetItemClickListener(new DialogJJTAddress.SexClickListener() {
                     @Override
-                    public void getAdress(final List<String> adress) {
-//                        MyLogUtils.info("选择的地址:" + adress.get(1));
+                    public void getAdress(final List<String> adress,final List<Integer> id) {
+//                        MyLogUtils.info("选择的地址:" + adresTOTALPETOTALPERIODS/RIODSs.get(1));
 
-                        permanentP = adress.get(0);
-                        permanentC = adress.get(1);
-                       permanentA =  adress.get(2);
-                        tvSpeedSelectPermanent.setText(permanentP + permanentC + permanentA);
+                        permanentP = provinceList.get(id.get(0)).getId();
+                        permanentC = cityEntityList.get(id.get(1)).getId();
+                        permanentA = counyEntityList.get(id.get(2)).getId();
+                        tvSpeedSelectPermanent.setText(adress.get(0) + adress.get(1) + adress.get(2));
 //                        for (int i=0;i<adress.size();i++){
 //                            MyLogUtils.info("address"+adress.get(i));
 //                        }
@@ -376,12 +376,12 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
                 dialogChooseAdress1.show();
                 dialogChooseAdress1.setOnSheetItemClickListener(new DialogJJTAddress.SexClickListener() {
                     @Override
-                    public void getAdress(final List<String> adress) {
+                    public void getAdress(final List<String> adress,final List<Integer> id) {
 
-                        residentP = adress.get(0);
-                        residentC = adress.get(1);
-                        residentA = adress.get(2);
-                        tvSpeedSelectResident.setText(residentP + residentC + residentA);
+                        residentP = provinceList.get(id.get(0)).getId();
+                        residentC = cityEntityList.get(id.get(1)).getId();
+                        residentA = counyEntityList.get(id.get(2)).getId();
+                        tvSpeedSelectResident.setText(adress.get(0) + adress.get(1) + adress.get(2));
                     }
                 });
                 break;
@@ -455,22 +455,22 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
             public void onSucess(String result) throws JSONException {
 
                 JSONObject jsonObject = new JSONObject(result);
-//                if (jsonObject.get("data") instanceof JSONArray){
-//                    JSONArray data = jsonObject.getJSONArray("data");
-//                    Gson gson = new Gson();
-//                    uuntanal = gson.fromJson(data.toString(), new TypeToken<List<String>>() {
-//                    }.getType());
-//                    CoustomDialog coustomDialog = new CoustomDialog(CreditSpeedSecond_1Act.this, uuntanal);
-//                    coustomDialog.builder();
-//                    coustomDialog.setCanceledOnTouchOutside(false);
-//                    coustomDialog.show();
-//                    tvSpeedToTwo.setClickable(false);
-//                    tvSpeedToTwo.setBackground(getResources().getDrawable(R.drawable.button_grey));
-//                }else{
+                if (jsonObject.get("data") instanceof JSONArray){
+                    JSONArray data = jsonObject.getJSONArray("data");
+                    Gson gson = new Gson();
+                    uuntanal = gson.fromJson(data.toString(), new TypeToken<List<String>>() {
+                    }.getType());
+                    CoustomDialog coustomDialog = new CoustomDialog(CreditSpeedSecond_1Act.this, uuntanal);
+                    coustomDialog.builder();
+                    coustomDialog.setCanceledOnTouchOutside(false);
+                    coustomDialog.show();
+                    tvSpeedToTwo.setClickable(false);
+                    tvSpeedToTwo.setBackground(getResources().getDrawable(R.drawable.button_grey));
+                }else{
                     Intent intent = new Intent(CreditSpeedSecond_1Act.this, CreditSpeedSecond_2Act.class);
                     intent.putExtra(ORDER_ID,jsonObject.getString("data")+"");
                     startActivity(intent);
-//                }
+                }
 
             }
 

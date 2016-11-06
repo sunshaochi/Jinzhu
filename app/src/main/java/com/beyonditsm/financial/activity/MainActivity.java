@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.RongCloudEvent;
+import com.beyonditsm.financial.activity.speedcredit.creditspeedthied.CreditSpeedThird_2Act;
 import com.beyonditsm.financial.activity.user.AddressBookAct;
 import com.beyonditsm.financial.activity.user.GameActivity;
 import com.beyonditsm.financial.activity.user.LoginAct;
@@ -448,6 +449,12 @@ public class MainActivity extends BaseActivity {
         setAllTabNor();
         setTabSelection(0);
         setCheckItem(0);
+    }
+
+    public void onEvent(CreditSpeedThird_2Act.ToSwitchEvent event) {
+        setAllTabNor();
+        setTabSelection(1);
+        setCheckItem(1);
     }
 
     //    public void onEvent(BaseActivity.SwitchEvent event) {
