@@ -158,7 +158,6 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:visibility="gone"
             android:id="@+id/rl_speedBearing"
             android:layout_width="0dp"
             android:layout_height="30dp"
@@ -198,7 +197,6 @@
                 android:background="@null"
                 android:cursorVisible="false"
                 android:gravity="center"
-                android:text="111"
                 android:maxLength="3"
                 android:textColor="#ff6633"
                 android:textSize="14sp" />

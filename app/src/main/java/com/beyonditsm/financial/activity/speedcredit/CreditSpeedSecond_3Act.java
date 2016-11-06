@@ -101,6 +101,12 @@ public class CreditSpeedSecond_3Act extends BaseActivity {
     private EditText etSpeedEmergentPhone_1; //紧急联系人电话1
     @ViewInject(R.id.ll_fatherLayout)
     private LinearLayout llFatherLayout;
+    @ViewInject(R.id.tv_speedEmergentName_1)
+    private TextView tv_speedEmergentName_1;
+    @ViewInject(R.id.tv_speedEmergentPhone_1)
+    private TextView tv_speedEmergentPhone_1;
+    @ViewInject(R.id.tv_speedEmergent_1)
+    private TextView tv_speedEmergent_1;
     private List<RelationEntity> relationList;
     private String orderId;
     private int CURRENT_SELECT;
@@ -239,6 +245,10 @@ public class CreditSpeedSecond_3Act extends BaseActivity {
         String speedPermanentDetail = "详细地址<font color='#FF0000'>*</font>:";
         etSpeedRelativeWoHDetail.setHint(Html.fromHtml(speedPermanentDetail));
         etSpeedColleagueWoHDetail.setHint(Html.fromHtml(speedPermanentDetail));
+
+        tv_speedEmergentName_1.setText(Html.fromHtml(speedName));
+        tv_speedEmergentPhone_1.setText(Html.fromHtml(speedPhone));
+        tv_speedEmergent_1.setText(Html.fromHtml(relationship));
     }
 
     @OnClick({R.id.tv_speed_toEnd, R.id.rl_speedMarriage1, R.id.rl_speedMarriage2, R.id.rl_speedColleague, R.id.rl_speedEmergent})

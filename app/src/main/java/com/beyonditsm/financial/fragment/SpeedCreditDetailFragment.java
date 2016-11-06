@@ -485,7 +485,7 @@ public class SpeedCreditDetailFragment extends BaseFragment {
                             act.setCancel();
                         }
 
-                        if (TextUtils.isEmpty(info.getStepCode() + "") || (info.getStepCode()+"").equals("null") || (info.getStepCode()+"").equals("4")) {
+                        if (TextUtils.isEmpty(info.getStepCode() + "") || (info.getStepCode()+"").equals("null") || (info.getStepCode()+"").equals("4") || (info.getOrderSts() + "").equals("审批不通过")) {
                             rlUpCredit.setVisibility(View.GONE);
                         } else {
                             rlUpCredit.setVisibility(View.VISIBLE);

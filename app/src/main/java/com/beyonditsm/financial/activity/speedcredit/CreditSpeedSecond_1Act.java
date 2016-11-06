@@ -569,7 +569,7 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
         CommManager.getCommManager().queryAllProvince(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-                loadingView.loadComplete();
+
                 JSONObject jsonObject = new JSONObject(result);
                 JSONObject data = jsonObject.getJSONObject("data");
                 JSONArray res = data.getJSONArray("result");
@@ -583,7 +583,7 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
                     dialogChooseAdress1.getJJTPicker().setOnSrollListener(CreditSpeedSecond_1Act.this);
                     queryAllCity(provinceList.get(0).getId() + "");
                 }
-
+                loadingView.loadComplete();
             }
 
 
