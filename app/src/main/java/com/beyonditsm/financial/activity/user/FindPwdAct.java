@@ -10,14 +10,17 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.AppManager;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
+import com.beyonditsm.financial.http.CommManager;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.widget.ClearEditText;
+import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
 import org.json.JSONException;
@@ -38,6 +41,8 @@ public class FindPwdAct extends BaseActivity {
     private MyTimerTask myTask;
 //    private String phoneNumber;
 
+    @ViewInject(R.id.iv_sms_pic)
+    ImageView ivSmsPic;
 
     public static final String PHONENUM = "phone";
     public static final String CAPTCHA = "captcha";
@@ -54,6 +59,8 @@ public class FindPwdAct extends BaseActivity {
         setTopTitle("找回密码");
         setLeftTv("返回");
         setView();
+        getSMSPic();
+
         findetphone.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -97,6 +104,10 @@ public class FindPwdAct extends BaseActivity {
         });
     }
 
+    private void getSMSPic() {
+//        CommManager.getCommManager().get
+    }
+
     private void setView() {
         gettv = (TextView) findViewById(R.id.gettv);
         findetphone = (ClearEditText) findViewById(R.id.findetphone);
@@ -107,6 +118,8 @@ public class FindPwdAct extends BaseActivity {
     public void toClick(View v) {
         switch (v.getId()) {
             //获取验证码
+
+
             case R.id.gettv:
                 if (isPhoneNum()){
                         RequestManager.getCommManager().findpwbyCode(name, new RequestManager.CallBack() {

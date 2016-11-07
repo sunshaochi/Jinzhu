@@ -1,0 +1,10 @@
+diff a/IMKit/build.gradle b/IMKit/build.gradle	(rejected hunks)
+@@ -2,7 +2,7 @@
+ 
+ android {
+     compileSdkVersion 23
+-    buildToolsVersion "23.0.3"
++    buildToolsVersion '25'
+     defaultConfig {
+         minSdkVersion 14
+         targetSdkVersion 22
