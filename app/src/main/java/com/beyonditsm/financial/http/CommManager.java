@@ -601,11 +601,32 @@ public class CommManager extends RequestManager {
         doPost(IFinancialUrl.FIND_HELP_ALLS, params, callBack);
     }
 
+    /**
+     * 获取帮助中心详情
+     * @param id
+     * @param callBack
+     */
     public void findHelpDetail(String id,CallBack callBack){
         Map<String, String> params = new HashMap<>();
         params.put("themeId",id);
         doPost(IFinancialUrl.FIND_HELP_DETAIL, params, callBack);
     }
 
+    /**
+     * 获取图形验证码
+     * @param callBack
+     */
+    public void imageCaptcha(CallBack callBack){
+        Map<String, String> params = new HashMap<>();
+        doGet(IFinancialUrl.IMAGE_CAPTCHA,  callBack);
+    }
+
+    public void SMSCaptchaFogetPassword(String imageCaptcha ,String ignoreExistence,String phoneNumber,CallBack callBack){
+        Map<String, String> params = new HashMap<>();
+        params.put("imageCaptcha",imageCaptcha);
+        params.put("ignoreExistence",ignoreExistence);
+        params.put("phoneNumber",phoneNumber);
+        doPost(IFinancialUrl.SMS_CAPTCHA_FOGET_PASSWORD, params, callBack);
+    }
 
 }

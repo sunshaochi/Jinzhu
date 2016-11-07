@@ -9,19 +9,27 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.AppManager;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.http.CommManager;
+import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.Code;
+import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.view.ValidateImageView;
 import com.beyonditsm.financial.widget.ClearEditText;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
+import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
 import org.json.JSONException;
 
@@ -42,11 +50,23 @@ public class FindPwdAct extends BaseActivity {
 //    private String phoneNumber;
 
     @ViewInject(R.id.iv_sms_pic)
-    ImageView ivSmsPic;
-
+    LinearLayout llSmsPic;
+    @ViewInject(R.id.sms_code)
+    EditText SMSCode;
     public static final String PHONENUM = "phone";
     public static final String CAPTCHA = "captcha";
     private String name;
+    private ValidateImageView view = null;
+    String[] responseArray = null;
+
+    private DisplayImageOptions options = new DisplayImageOptions.Builder()
+            .showStubImage(R.mipmap.pro_default) // 设置图片下载期间显示的图片
+            .showImageForEmptyUri(R.mipmap.pro_default) // 设置图片Uri为空或是错误的时候显示的图片
+            .showImageOnFail(R.mipmap.pro_default) // 设置图片加载或解码过程中发生错误显示的图片
+            .cacheInMemory(false) // 设置下载的图片是否缓存在内存中
+            .cacheOnDisk(false) // 设置下载的图片是否缓存在SD卡中
+            .build(); // 创建配置过得DisplayImageOption对象
+
 
     @Override
     public void setLayout() {
@@ -104,9 +124,71 @@ public class FindPwdAct extends BaseActivity {
         });
     }
 
-    private void getSMSPic() {
-//        CommManager.getCommManager().get
+    private void SMSCaptchaFogetPassword(String phoneNumber, String code) {
+        CommManager.getCommManager().SMSCaptchaFogetPassword(code, "false", phoneNumber, new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                Intent intent = new Intent(FindPwdAct.this, UpdatePwdAct.class);
+                intent.putExtra(PHONENUM, name);
+//                intent.putExtra(CAPTCHA, authcode);
+                startActivity(intent);
+
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
+            }
+        });
     }
+
+    //为数组赋值1~9的随机数
+    private String[] getRandomInteger() {
+        String[] reuestArray = new String[4];
+        for (int i = 0; i < 4; i++) {
+            reuestArray[i] = String.valueOf((int) (Math.random() * 9 + 1));
+        }
+        return reuestArray;
+    }
+
+    //获取返回的数组
+    private String getResponseStr(String[] response) {
+        StringBuffer stringBuffer = new StringBuffer();
+        for (String str : response) {
+            stringBuffer.append(str);
+        }
+        return stringBuffer.toString();
+    }
+
+    private void getSMSPic() {
+//
+        view = new ValidateImageView(this);
+        view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        llSmsPic.addView(view);
+        responseArray = view.getValidataAndSetImage(getRandomInteger());
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                responseArray = view.getValidataAndSetImage(getRandomInteger());
+            }
+        });
+
+//        CommManager.getCommManager().imageCaptcha(new RequestManager.CallBack() {
+//            @Override
+//            public void onSucess(String result) throws JSONException {
+//
+//            }
+//
+//            @Override
+//            public void onError(int status, String msg) {
+//
+//            }
+//        });
+
+//        ivSmsPic.setImageBitmap(Code.getInstance().createBitmap());
+    }
+//        ivSmsPic.setImageResource(R.mipmap.pro_default);
+//        ImageLoader.getInstance().displayImage(IFinancialUrl.IMAGE_CAPTCHA,ivSmsPic,options);    }
 
     private void setView() {
         gettv = (TextView) findViewById(R.id.gettv);
@@ -114,30 +196,32 @@ public class FindPwdAct extends BaseActivity {
         findetpwd = (EditText) findViewById(R.id.findetpwd);
     }
 
-    @OnClick({R.id.gettv, R.id.nexttv})
+    @OnClick({R.id.gettv, R.id.nexttv, R.id.iv_sms_pic})
     public void toClick(View v) {
         switch (v.getId()) {
             //获取验证码
-
+//            case R.id.iv_sms_pic:
+//                getSMSPic();
+//                break;
 
             case R.id.gettv:
-                if (isPhoneNum()){
-                        RequestManager.getCommManager().findpwbyCode(name, new RequestManager.CallBack() {
-                            @Override
-                            public void onSucess(String result) throws JSONException {
-                                i = 60;
-                                gettv.setEnabled(false);
-                                timer = new Timer();
-                                myTask = new MyTimerTask();
-                                timer.schedule(myTask, 0, 1000);
+                if (isPhoneNum()) {
+                    RequestManager.getCommManager().findpwbyCode(name, new RequestManager.CallBack() {
+                        @Override
+                        public void onSucess(String result) throws JSONException {
+                            i = 60;
+                            gettv.setEnabled(false);
+                            timer = new Timer();
+                            myTask = new MyTimerTask();
+                            timer.schedule(myTask, 0, 1000);
 
-                            }
+                        }
 
-                            @Override
-                            public void onError(int status, String msg) {
-                                MyToastUtils.showShortToast(getApplicationContext(), msg);
-                            }
-                        });
+                        @Override
+                        public void onError(int status, String msg) {
+                            MyToastUtils.showShortToast(getApplicationContext(), msg);
+                        }
+                    });
 
                 }
 
@@ -162,10 +246,19 @@ public class FindPwdAct extends BaseActivity {
                     return;
                 }
 
-                Intent intent = new Intent(this, UpdatePwdAct.class);
-                intent.putExtra(PHONENUM, name);
-                intent.putExtra(CAPTCHA, authcode);
-                startActivity(intent);
+                MyLogUtils.info(SMSCode.getText().toString() + "sss" + getResponseStr(responseArray));
+
+                if ((SMSCode.getText().toString() + "").trim().toLowerCase().equals(getResponseStr(responseArray).toLowerCase().trim())) {
+                    Intent intent = new Intent(FindPwdAct.this, UpdatePwdAct.class);
+                    intent.putExtra(PHONENUM, name);
+                    intent.putExtra(CAPTCHA, authcode);
+                    startActivity(intent);
+
+                } else {
+                    MyToastUtils.showShortToast(getApplicationContext(), "图形校验码错误");
+                }
+
+//                SMSCaptchaFogetPassword(name,SMSCode.getText().toString()+"");
 
 
                 break;

@@ -24,7 +24,7 @@ public interface IFinancialUrl {
 //    String BASE_URL = "http://option.myjinzhu.com";
     /*王建*/
 //    String BASE_URL = "http://139.196.227.38:8086";
-    String BASE_URL = "http://139.196.227.53:8080";
+//    String BASE_URL = "http://139.196.227.53:8080";
 
     //        /*正式游戏地址*/
     String GAME_URL = "http://m.farm.myjinzhu.com/";
@@ -38,7 +38,7 @@ public interface IFinancialUrl {
 
 //    String BASE_URL="http://172.16.6.55:8080";
     //帮助中心测试地址
-//    String BASE_URL="http://172.16.6.135:8080";
+    String BASE_URL="http://172.16.6.182:8100";
 
     //内网地址（测试钱包功能）
 //    String BASE_URL = "http://172.16.8.22:8082";
