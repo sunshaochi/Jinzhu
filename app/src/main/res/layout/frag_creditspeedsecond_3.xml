@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+        <LinearLayout
+            style="@style/speed_credit_linearlayout_in_scrollview">
+            <TextView
+                style="@style/speed_credit_second_top_text"
+                android:text="直系亲属"/>
+            <!--姓名-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/tv_speedRelativesName_1"
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true" />
+
+                <EditText
+                    android:id="@+id/et_speedRelativesName_1"
+                    style="@style/cre_et" />
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <!--联系电话-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+                <TextView
+                    android:id="@+id/tv_speedRelativesPhone_1"
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true" />
+
+                <EditText
+                    android:id="@+id/et_speedRelativesPhone_1"
+                    style="@style/cre_et" />
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <!--关系-->
+            <RelativeLayout
+                android:id="@+id/rl_speedMarriage"
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+                <TextView
+                    android:id="@+id/tv_speedRelationship_1"
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true" />
+
+                <TextView
+                    android:id="@+id/tv_speedSelectRelationship_1"
+                    style="@style/tv_select_style"
+                    android:drawableRight="@mipmap/button_select"
+                    android:textColor="#f63" />
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+            <!--单位名称-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_speedRelativesWork_1"
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true"
+                    android:text="单位名称:"/>
+
+                <EditText
+                    android:id="@+id/et_speedRelativesWork_1"
+                    style="@style/cre_et" />
+            </RelativeLayout>
+
+            <View style="@style/view_line"
+                android:visibility="gone"></View>
+
+            <!--家庭/单位地址-->
+            <RelativeLayout
+                android:id="@+id/rl_speedRelativesWoH_1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_speedRelativesWoH_1"
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true" />
+
+                <TextView
+                    android:id="@+id/tv_speedSelectRelativeWoH_1"
+                    style="@style/tv_select_style"
+                    android:drawableRight="@mipmap/button_select"
+                    android:textColor="#f63" />
+            </RelativeLayout>
+
+            <View style="@style/view_line"
+                android:visibility="gone"></View>
+
+            <!--家庭/单位详细地址-->
+            <EditText
+                android:id="@+id/et_speedRelativesWoHDetail_1"
+                style="@style/speed_credit_second_detail_address"
+                android:visibility="gone"/>
+            <View style="@style/view_line"></View>
+
+            <TextView
+                style="@style/speed_credit_second_top_text"
+                android:text="同事"/>
+
+
+            <!--姓名-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/tv_speedColleagueName_1"
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true" />
+
+                <EditText
+                    android:id="@+id/et_speedColleagueName_1"
+                    style="@style/cre_et" />
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <!--联系电话-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+                <TextView
+                    android:id="@+id/tv_speedColleaguePhone_1"
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true" />
+
+                <EditText
+                    android:id="@+id/et_speedColleaguePhone_1"
+                    style="@style/cre_et" />
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <!--单位名称-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_speedColleagueWork_1"
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true"
+                    android:text="单位名称:"/>
+
+                <EditText
+                    android:id="@+id/et_speedColleagueWork_1"
+                    style="@style/cre_et" />
+            </RelativeLayout>
+
+            <View style="@style/view_line"
+                android:visibility="gone"></View>
+
+            <!--家庭/单位地址-->
+            <RelativeLayout
+                android:id="@+id/rl_speedColleagueWoH_1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_speedColleagueWoH_1"
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true" />
+
+                <TextView
+                    android:id="@+id/tv_speedSelectColleagueWoH_1"
+                    style="@style/tv_select_style"
+                    android:drawableRight="@mipmap/button_select"
+                    android:textColor="#f63" />
+            </RelativeLayout>
+
+            <View style="@style/view_line"
+                android:visibility="gone"></View>
+
+            <!--家庭/单位详细地址-->
+            <EditText
+                android:id="@+id/et_speedColleagueWoHDetail_1"
+                style="@style/speed_credit_second_detail_address"
+                android:visibility="gone"/>
+            <View style="@style/view_line"></View>
+
+
+            <TextView
+                style="@style/speed_credit_second_top_text"
+                android:text="紧急联系人"/>
+            <!--姓名-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/tv_speedEmergentName_1"
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true"
+                    android:text="姓        名:"/>
+
+                <EditText
+                    android:tag="请输入紧急联系人姓名"
+                    android:id="@+id/et_speedEmergentName_1"
+                    style="@style/cre_et" />
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <!--联系电话-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+                <TextView
+                    android:id="@+id/tv_speedEmergentPhone_1"
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true"
+                    android:text="联系电话:"/>
+
+                <EditText
+                    android:tag="请输入紧急联系人联系电话"
+                    android:id="@+id/et_speedEmergentPhone_1"
+                    style="@style/cre_et" />
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+
+            <!--关系-->
+            <RelativeLayout
+                android:id="@+id/rl_speedEmergent"
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
+
+                <TextView
+                    android:id="@+id/tv_speedEmergent_1"
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true"
+                    android:text="关        系:"/>
+
+                <TextView
+                    android:tag="请选择紧急联系人关系"
+                    android:id="@+id/tv_speedSelectEmergent_1"
+                    style="@style/tv_select_style"
+                    android:drawableRight="@mipmap/button_select"
+                    android:textColor="#f63" />
+            </RelativeLayout>
+
+            <View style="@style/view_line"></View>
+            <!--单位名称-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_speedEmergentWork_1"
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true"
+                    android:text="单位名称:"/>
+
+                <EditText
+                    android:id="@+id/et_speedEmergentWork_1"
+                    style="@style/cre_et" />
+            </RelativeLayout>
+
+            <View style="@style/view_line"
+                android:visibility="gone"></View>
+
+            <!--家庭/单位地址-->
+            <RelativeLayout
+                android:id="@+id/rl_speedEmergentWoH_1"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_speedEmergentWoH_1"
+                    style="@style/tv_primary_style"
+                    android:layout_centerVertical="true"
+                    android:text="家庭/单位地址:"/>
+
+                <TextView
+                    android:id="@+id/tv_speedSelectEmergentWoH_1"
+                    style="@style/tv_select_style"
+                    android:drawableRight="@mipmap/button_select"
+                    android:textColor="#f63" />
+            </RelativeLayout>
+
+            <View style="@style/view_line"
+                android:visibility="gone"></View>
+
+            <!--家庭/单位详细地址-->
+            <EditText
+                android:id="@+id/et_speedEmergentWoHDetail_1"
+                style="@style/speed_credit_second_detail_address"
+                android:hint="详细地址"
+                android:visibility="gone"/>
+            <View style="@style/view_line"
+                android:visibility="gone"></View>
+
+            <TextView
+                android:id="@+id/tv_speed_toEnd"
+                style="@style/speed_credit_next_btn"
+                android:text="下一步" />
+            <TextView
+                android:text="3/3"
+                style="@style/speed_credit_second_bottom_text"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

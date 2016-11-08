@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/title_act_layout"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/bg_color">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/progress_01" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/tv_primary_style"
+                android:layout_centerVertical="true"
+                android:text="手机号" />
+
+            <com.beyonditsm.financial.widget.ClearEditText
+                android:id="@+id/cre_phone"
+                style="@style/cre_et"
+                android:hint="@string/phone_name"
+                android:inputType="phone"
+                android:maxLength="11" />
+
+        </RelativeLayout>
+
+        <View style="@style/view_line"/>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/tv_primary_style"
+                android:layout_centerVertical="true"
+                android:text="验证码" />
+
+            <com.beyonditsm.financial.widget.ClearEditText
+                android:id="@+id/cre_yzm"
+                style="@style/cre_et"
+                android:hint="@string/code"
+                android:inputType="number"
+                android:maxLength="6" />
+
+            <TextView
+                android:id="@+id/cre_btn_yzm"
+                style="@style/send_code_style"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true" />
+        </RelativeLayout>
+
+        <View style="@style/view_line"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/tv_primary_style"
+                android:layout_centerVertical="true"
+                android:text="邀请码" />
+
+            <com.beyonditsm.financial.widget.ClearEditText
+                android:id="@+id/cre_yqm"
+                style="@style/cre_et"
+                android:hint="@string/invite_code"
+                android:maxLength="20" />
+
+        </RelativeLayout>
+
+        <View style="@style/view_line"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/cre_tk"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:button="@drawable/checkbox"
+                android:checked="true"
+                android:gravity="center_vertical"
+                android:paddingStart="8dp"
+                android:text="同意"
+                android:textColor="#333333"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/intro"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:textColor="#333333"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/first_btn_next"
+            style="@style/zc_btn"
+            android:text="@string/next" />
+
+        <TextView
+            android:id="@+id/cre_tv_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="25dp"
+            android:layout_marginTop="20dp"
+            android:drawablePadding="5dp"
+            android:drawableRight="@mipmap/arrow_inner"
+            android:text="已有账号，先登录"
+            android:textColor="#fead00"
+            android:textSize="14sp" />
+    </LinearLayout>
+</LinearLayout>

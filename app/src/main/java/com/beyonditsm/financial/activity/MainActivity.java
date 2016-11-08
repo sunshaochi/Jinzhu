@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,6 +18,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +26,7 @@ import android.widget.Toast;
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.RongCloudEvent;
+import com.beyonditsm.financial.activity.speedcredit.creditspeedthied.CreditSpeedThird_2Act;
 import com.beyonditsm.financial.activity.user.AddressBookAct;
 import com.beyonditsm.financial.activity.user.BannerDetailAct;
 import com.beyonditsm.financial.activity.user.GameActivity;
@@ -46,6 +49,7 @@ import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
 import com.lidroid.xutils.util.LogUtils;
+import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.eventbus.EventBus;
 
@@ -72,8 +76,10 @@ public class MainActivity extends BaseActivity {
     private TextView tvMine;
     private TextView title_chat;
     private TextView title_friend;
-    private RelativeLayout main_title;
+    private LinearLayout main_title;
 
+//    @ViewInject(R.id.rl_statusBar)
+//    private RelativeLayout rlStatusBar;
     private FragmentManager manager;
     private Fragment myCreditFgt, creditFgt, friendFgt, mineFgt;//我的信用，贷款，朋友，我的
     private ConversationListFragment listFragment;
@@ -104,7 +110,7 @@ public class MainActivity extends BaseActivity {
         tvMine = (TextView) findViewById(R.id.tvMine);
         title_chat = (TextView) findViewById(R.id.title_chat);
         title_friend = (TextView) findViewById(R.id.title_friend);
-        main_title = (RelativeLayout) findViewById(R.id.main_title);
+        main_title = (LinearLayout) findViewById(R.id.main_title);
         ivRedPoint = (ImageView) findViewById(R.id.ivMs);
     }
 
@@ -143,6 +149,9 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void init(Bundle savedInstanceState) {
+//        if (Build.VERSION.SDK_INT>=21){
+//            rlStatusBar.setVisibility(View.VISIBLE);
+//        }
         manager = getSupportFragmentManager();
         activityInstance=this;
         ParamsUtil.getInstance().setMainAct(this);
@@ -160,6 +169,12 @@ public class MainActivity extends BaseActivity {
 //            setTabSelection(Integer.valueOf(position));
 //            setCheckItem(Integer.valueOf(position));
 //        }
+
+        String position = getIntent().getStringExtra("position");
+        if (!TextUtils.isEmpty(position)&&Integer.valueOf(position)==1){
+            setTabSelection(Integer.valueOf(position));
+            setCheckItem(Integer.valueOf(position));
+        }
 
         if (TextUtils.isEmpty(SpUtils.getRoleName(MainActivity.this))) {
             ivRedPoint.setVisibility(View.GONE);
@@ -446,6 +461,10 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onEvent(BannerDetailAct.CreditEvent event){
+
+    }
+
+    public void onEvent(CreditSpeedThird_2Act.ToSwitchEvent event) {
         setAllTabNor();
         setTabSelection(1);
         setCheckItem(1);

@@ -16,7 +16,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.MyLogUtils;
-import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -34,6 +33,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -247,9 +247,19 @@ public class RequestManager {
         }) {
             @Override
             protected Map<String, String> getParams() {
-                return params;
+                return checkParams(params);
             }
 
+            private Map<String,String> checkParams(Map<String,String> map){
+                Iterator<Map.Entry<String, String>> it = map.entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry<String, String> pairs = (Map.Entry<String, String>)it.next();
+                    if(pairs.getValue()==null){
+                        map.put(pairs.getKey(), "");
+                    }
+                }
+                return map;
+            }
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> localHashMap = new HashMap<>();

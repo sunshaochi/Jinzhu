@@ -19,6 +19,9 @@ import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.db.FriendDao;
 import com.beyonditsm.financial.entity.FriendBean;
+import com.beyonditsm.financial.entity.JJTCityEntity;
+import com.beyonditsm.financial.entity.JJTCounyEntity;
+import com.beyonditsm.financial.entity.JJTProvinceEntity;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.entity.UserEvent;
@@ -30,19 +33,28 @@ import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyBitmapUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.view.crop.square.CameraUtils;
 import com.beyonditsm.financial.view.crop.square.Crop;
-import com.beyonditsm.financial.widget.DialogChooseAdress;
 import com.beyonditsm.financial.widget.ScaleAllImageView;
+import com.beyonditsm.financial.widget.jijietong.DialogJJTAddress;
+import com.beyonditsm.financial.widget.jijietong.JJTInterface;
 import com.lidroid.xutils.http.client.multipart.content.FileBody;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.eventbus.EventBus;
+import com.tandong.sa.json.Gson;
+import com.tandong.sa.json.reflect.TypeToken;
 import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
 import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -87,6 +99,19 @@ public class UpdateAct extends BaseActivity {
     private TextView tvLocal;
 
     private AddressUtil addressUtil;
+    private List<JJTProvinceEntity> provinceList;
+    private DialogJJTAddress dialogJJTAddress;
+    private List<JJTCityEntity> cityList;
+    private List<JJTCounyEntity> counyList;
+    private String defaultProvince;
+    private String defaultCity;
+    private String defaultArea;
+    private String nativePlaceProvince;
+    private String nativePlaceCity;
+    private String nativePlaceDistrict;
+    private String nativePlaceAddrProvince;
+    private String nativePlaceAddrCity;
+    private String nativePlaceAddrDistrict;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -96,13 +121,13 @@ public class UpdateAct extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        if (null!=savedInstanceState){
-            userInfo = savedInstanceState.getParcelable("UserEntity");
-        }
-    }
+//    @Override
+//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+//        super.onRestoreInstanceState(savedInstanceState);
+//        if (null!=savedInstanceState){
+//            userInfo = savedInstanceState.getParcelable("UserEntity");
+//        }
+//    }
 
     @Override
     public void setLayout() {
@@ -113,16 +138,17 @@ public class UpdateAct extends BaseActivity {
     public void init(Bundle savedInstanceState) {
         setTopTitle("我的资料");
         setLeftTv("返回");
+        queryProvince();
         //强制关闭键盘
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         addressUtil = new AddressUtil(this);
-        userInfo = getIntent().getParcelableExtra(MineFragment.USER_KEY);
-        //把用户信息放进去
-        if (userInfo != null)
-            setUserMes(userInfo);
-        else
+//        userInfo = getIntent().getParcelableExtra(MineFragment.USER_KEY);
+//        //把用户信息放进去
+//        if (userInfo != null) {
+//            setUserMes(userInfo);
+//        } else{
             getUserInfo();
-
+//        }
         //注册EventBus
         EventBus.getDefault().register(this);
         cbSelectSex.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -215,39 +241,97 @@ public class UpdateAct extends BaseActivity {
                 startActivity(intent);
                 break;
             case R.id.rlLocal://常住地
-                DialogChooseAdress dialogChooseAdress = new DialogChooseAdress(this).builder();
-                dialogChooseAdress.show();
-                dialogChooseAdress.setOnSheetItemClickListener(new DialogChooseAdress.SexClickListener() {
+//                DialogChooseAdress dialogChooseAdress = new DialogChooseAdress(this).builder();
+//                dialogChooseAdress.show();
+//                dialogChooseAdress.setOnSheetItemClickListener(new DialogChooseAdress.SexClickListener() {
+//                    @Override
+//                    public void getAdress(List<String> adress) {
+//                        String proCode = addressUtil.getProCode(adress.get(0));
+//                        String cityCode = addressUtil.getCityCode(proCode, adress.get(1));
+//                        String districtCode = addressUtil.getCountryCode(cityCode, adress.get(2));
+//                        userInfo.setProvince(proCode);
+//                        userInfo.setCity(cityCode);
+//                        userInfo.setDistrict(districtCode);
+//                        updateData(userInfo, 3);
+//                    }
+//                });
+                dialogJJTAddress.show();
+                dialogJJTAddress.setOnSheetItemClickListener(new DialogJJTAddress.SexClickListener() {
                     @Override
-                    public void getAdress(List<String> adress) {
-                        String proCode = addressUtil.getProCode(adress.get(0));
-                        String cityCode = addressUtil.getCityCode(proCode, adress.get(1));
-                        String districtCode = addressUtil.getCountryCode(cityCode, adress.get(2));
-                        userInfo.setProvince(proCode);
-                        userInfo.setCity(cityCode);
-                        userInfo.setDistrict(districtCode);
+                    public void getAdress(List<String> adress,List<Integer> id) {
+                        defaultProvince = adress.get(0);
+                        String provinceCode = queryProvinceCodeByName(defaultProvince);
+                        defaultCity = adress.get(1);
+                        if (!TextUtils.isEmpty(defaultCity)){
+                            String cityCode = queryCityCodeByName(defaultCity);
+                            userInfo.setCity(cityCode);
+                        }else {
+                            userInfo.setCity("");
+                        }
+                        defaultArea = adress.get(2);
+
+                        if (!TextUtils.isEmpty(defaultArea)){
+                            String districtCode = queryAreaCodeByName(defaultArea);
+                            userInfo.setDistrict(districtCode);
+                        }
+
+                        userInfo.setProvince(provinceCode);
+
+
                         updateData(userInfo, 3);
                     }
                 });
                 break;
             case R.id.rlNative://籍贯
-                DialogChooseAdress dialogChooseProvince = new DialogChooseAdress(this).builder();
-                dialogChooseProvince.show();
-                dialogChooseProvince.setOnSheetItemClickListener(new DialogChooseAdress.SexClickListener() {
+//                DialogChooseAdress dialogChooseProvince = new DialogChooseAdress(this).builder();
+//                dialogChooseProvince.show();
+//                dialogChooseProvince.setOnSheetItemClickListener(new DialogChooseAdress.SexClickListener() {
+//                    @Override
+//                    public void getAdress(List<String> adress) {
+//                        userInfo.setNativePlace(adress.get(0)+adress.get(1)+adress.get(2));
+//                        updateData(userInfo, 4);
+//                    }
+//                });
+                dialogJJTAddress.show();
+                dialogJJTAddress.setOnSheetItemClickListener(new DialogJJTAddress.SexClickListener() {
                     @Override
-                    public void getAdress(List<String> adress) {
-                        userInfo.setNativePlace(adress.get(0)+adress.get(1)+adress.get(2));
+                    public void getAdress(List<String> adress,List<Integer> id) {
+                        nativePlaceProvince = adress.get(0);
+                        String nativePlaceProvinceCode = queryProvinceCodeByName(nativePlaceProvince);
+                        nativePlaceCity = adress.get(1);
+                        String nativePlaceCityCode = queryCityCodeByName(nativePlaceCity);
+                        nativePlaceDistrict = adress.get(2);
+                        String nativePlaceCounyCode = queryAreaCodeByName(nativePlaceDistrict);
+                        userInfo.setNativePlaceProvince(nativePlaceProvinceCode);
+                        userInfo.setNativePlaceCity(nativePlaceCityCode);
+                        userInfo.setNativePlaceDistrict(nativePlaceCounyCode);
                         updateData(userInfo, 4);
                     }
                 });
                 break;
             case R.id.rlHouseHold://户籍地址
-                DialogChooseAdress dialogChooseAdress1 = new DialogChooseAdress(this).builder();
-                dialogChooseAdress1.show();
-                dialogChooseAdress1.setOnSheetItemClickListener(new DialogChooseAdress.SexClickListener() {
+//                DialogChooseAdress dialogChooseAdress1 = new DialogChooseAdress(this).builder();
+//                dialogChooseAdress1.show();
+//                dialogChooseAdress1.setOnSheetItemClickListener(new DialogChooseAdress.SexClickListener() {
+//                    @Override
+//                    public void getAdress(List<String> adress) {
+//                        userInfo.setNativePlaceAddr(adress.get(0) + adress.get(1) + adress.get(2));
+//                        updateData(userInfo, 2);
+//                    }
+//                });
+                dialogJJTAddress.show();
+                dialogJJTAddress.setOnSheetItemClickListener(new DialogJJTAddress.SexClickListener() {
                     @Override
-                    public void getAdress(List<String> adress) {
-                        userInfo.setNativePlaceAddr(adress.get(0) + adress.get(1) + adress.get(2));
+                    public void getAdress(List<String> adress,List<Integer> id) {
+                        nativePlaceAddrProvince = adress.get(0);
+                        String nativePlaceAddrProvinceCode = queryProvinceCodeByName(nativePlaceAddrProvince);
+                        nativePlaceAddrCity = adress.get(1);
+                        String nativePlaceAddrCityCode = queryCityCodeByName(nativePlaceAddrCity);
+                        nativePlaceAddrDistrict = adress.get(2);
+                        String nativePlaceAddrCounyCode = queryAreaCodeByName(nativePlaceAddrDistrict);
+                        userInfo.setNativePlaceAddrProvince(nativePlaceAddrProvinceCode);
+                        userInfo.setNativePlaceAddrCity(nativePlaceAddrCityCode);
+                        userInfo.setNativePlaceAddrDistrict(nativePlaceAddrCounyCode);
                         updateData(userInfo, 2);
                     }
                 });
@@ -288,10 +372,8 @@ public class UpdateAct extends BaseActivity {
             ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + userInfo.getHeadIcon(), civHead, options);
             if (userInfo.getUserSex() != null) {
                 if (userInfo.getUserSex() == 0) {
-//                    tvSex.setText("女");
                     cbSelectSex.setChecked(true);
                 } else {
-//                    tvSex.setText("男");
                     cbSelectSex.setChecked(false);
                 }
             }
@@ -312,16 +394,14 @@ public class UpdateAct extends BaseActivity {
                     tvMarry.setText("已婚");
                 }
             }
-            if (!TextUtils.isEmpty(userInfo.getNativePlace())) {//籍贯地址
-                tvnative.setText(userInfo.getNativePlace());
+            if (!TextUtils.isEmpty(userInfo.getNativePlaceApp())) {//籍贯地址
+                tvnative.setText(userInfo.getNativePlaceApp());
             }
-            if (!TextUtils.isEmpty(userInfo.getNativePlaceAddr())) {
-                tvHouseHold.setText(userInfo.getNativePlaceAddr());
+            if (!TextUtils.isEmpty(userInfo.getNativePlaceAddrApp())) {//户籍地址
+                tvHouseHold.setText(userInfo.getNativePlaceAddrApp());
             }
-            if (!TextUtils.isEmpty(userInfo.getProvince()) && !TextUtils.isEmpty(userInfo.getCity()) && !TextUtils.isEmpty(userInfo.getDistrict())) {
-                tvLocal.setText(addressUtil.getProName(userInfo.getProvince())
-                        + addressUtil.getCityName(userInfo.getProvince(), userInfo.getCity())
-                        + addressUtil.getCountryName(userInfo.getCity(), userInfo.getDistrict()));
+            if (!TextUtils.isEmpty(userInfo.getDefaultAddrApp())) {//常住地
+                tvLocal.setText(userInfo.getDefaultAddrApp());
             }
 
         }
@@ -349,15 +429,13 @@ public class UpdateAct extends BaseActivity {
 
                         break;
                     case 2://更新户籍地址
-                        tvHouseHold.setText(ue.getNativePlaceAddr());
+                        tvHouseHold.setText(nativePlaceAddrProvince + nativePlaceAddrCity + nativePlaceAddrDistrict);
                         break;
                     case 3://常住地
-                        tvLocal.setText(addressUtil.getProName(ue.getProvince())
-                                + addressUtil.getCityName(ue.getProvince(), ue.getCity())
-                                + addressUtil.getCountryName(ue.getCity(), ue.getDistrict()));
+                        tvLocal.setText(defaultProvince + defaultCity + defaultArea);
                         break;
                     case 4://籍贯
-                        tvnative.setText(ue.getNativePlace());
+                        tvnative.setText(nativePlaceProvince + nativePlaceCity + nativePlaceDistrict);
                         break;
                     case 5://性别
                         if (ue.getUserSex() == 1) {
@@ -487,6 +565,154 @@ public class UpdateAct extends BaseActivity {
                 MyLogUtils.info(msg);
             }
         });
+    }
+
+    private void queryProvince() {
+        RequestManager.getCommManager().queryProvince(new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                JSONObject jsonObject = new JSONObject(result);
+                JSONArray data = jsonObject.getJSONArray("data");
+                Gson gson = new Gson();
+                provinceList = gson.fromJson(data.toString(), new TypeToken<List<JJTProvinceEntity>>() {
+                }.getType());
+                ParamsUtil.getInstance().setProvinceEntityList(provinceList);
+                if (provinceList != null && provinceList.size() > 0) {
+                    dialogJJTAddress = new DialogJJTAddress(UpdateAct.this, provinceList).builder();
+                    dialogJJTAddress.getJJTPicker().setOnSrollListener(new JJTInterface() {
+                        @Override
+                        public void onProvinceSelected(JJTProvinceEntity jjtProvinceEntity) {
+                            queryCity(jjtProvinceEntity.getCode());
+                        }
+                        @Override
+                        public void onCitySelected(JJTCityEntity jjtCityEntity) {
+                            queryDistrict(jjtCityEntity.getCode());
+                        }
+
+                        @Override
+                        public void onCounySelected(JJTCounyEntity jjtCounyEntity) {
+                        }
+                    });
+                    queryCity(provinceList.get(0).getCode());
+                }
+//                if ()
+//                queryProvinceCodeByName()
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
+            }
+        });
+    }
+
+    private void queryCity(String provinceCode) {
+        RequestManager.getCommManager().queryCity(provinceCode, new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                JSONObject jsonObject = new JSONObject(result);
+                if (jsonObject.get("data") instanceof JSONArray){
+                    JSONArray data = jsonObject.getJSONArray("data");
+                    Gson gson = new Gson();
+                    cityList = gson.fromJson(data.toString(), new TypeToken<List<JJTCityEntity>>() {
+                    }.getType());
+
+                    ParamsUtil.getInstance().setCityEntityList(cityList);
+                    dialogJJTAddress.getJJTPicker().setCityList();
+                    if (cityList != null && cityList.size() > 0) {
+                        queryDistrict(cityList.get(0).getCode());
+                    }
+                }else {
+                    cityList = new ArrayList<JJTCityEntity>();
+                    JJTCityEntity jjtCityEntity = new JJTCityEntity();
+                    jjtCityEntity.setName("");
+                    jjtCityEntity.setId("");
+                    jjtCityEntity.setCode("");
+                    cityList.add(jjtCityEntity);
+                    ParamsUtil.getInstance().setCityEntityList(cityList);
+                    dialogJJTAddress.getJJTPicker().setCityList();
+
+                    counyList = new ArrayList<JJTCounyEntity>();
+                    JJTCounyEntity jjtCounyEntity = new JJTCounyEntity();
+                    jjtCounyEntity.setName("");
+                    jjtCounyEntity.setId("");
+                    counyList.add(jjtCounyEntity);
+                    ParamsUtil.getInstance().setCounyEntityList(counyList);
+                    dialogJJTAddress.getJJTPicker().setCouny();
+
+
+                }
+
+
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
+            }
+        });
+    }
+
+    private void queryDistrict(String cityCode) {
+        RequestManager.getCommManager().queryDistrict(cityCode, new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                JSONObject jsonObject = new JSONObject(result);
+                if (jsonObject.get("data") instanceof JSONArray){
+                    JSONArray data = jsonObject.getJSONArray("data");
+                    Gson gson = new Gson();
+                    counyList = gson.fromJson(data.toString(), new TypeToken<List<JJTCounyEntity>>() {
+                    }.getType());
+                    ParamsUtil.getInstance().setCounyEntityList(counyList);
+                    dialogJJTAddress.getJJTPicker().setCouny();
+                }else {
+                    counyList = new ArrayList<JJTCounyEntity>();
+                    JJTCounyEntity jjtCityEntity = new JJTCounyEntity();
+                    jjtCityEntity.setName("");
+                    jjtCityEntity.setId("");
+                    counyList.add(jjtCityEntity);
+                    ParamsUtil.getInstance().setCounyEntityList(counyList);
+                    dialogJJTAddress.getJJTPicker().setCouny();
+                }
+
+
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
+            }
+        });
+    }
+
+    public String queryProvinceCodeByName(String name) {
+        for (int i = 0; i < provinceList.size(); i++) {
+            JJTProvinceEntity jjtProvinceEntity = provinceList.get(i);
+            if (jjtProvinceEntity.getName().equals(name)) {
+                return jjtProvinceEntity.getCode();
+            }
+        }
+        return "";
+    }
+
+    public String queryCityCodeByName(String name) {
+        for (int i = 0; i < cityList.size(); i++) {
+            JJTCityEntity jjtProvinceEntity = cityList.get(i);
+            if (jjtProvinceEntity.getName().equals(name)) {
+                return jjtProvinceEntity.getCode();
+            }
+        }
+        return "";
+    }
+
+    public String queryAreaCodeByName(String name) {
+        for (int i = 0; i < counyList.size(); i++) {
+            JJTCounyEntity jjtProvinceEntity = counyList.get(i);
+            if (jjtProvinceEntity.getName().equals(name)) {
+                return jjtProvinceEntity.getCode();
+            }
+        }
+        return "";
     }
 
 }

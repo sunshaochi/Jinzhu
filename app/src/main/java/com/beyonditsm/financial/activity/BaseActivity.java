@@ -9,9 +9,7 @@ import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
-import com.beyonditsm.financial.util.FinancialUtil;
 import com.lidroid.xutils.ViewUtils;
 import com.tandong.sa.activity.SmartFragmentActivity;
 import com.umeng.analytics.MobclickAgent;
@@ -25,14 +23,26 @@ import cn.jpush.android.api.JPushInterface;
 public abstract class BaseActivity extends SmartFragmentActivity {
 
     private RelativeLayout rl_right;
+//    private RelativeLayout rlStatusBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //禁止EditText自动弹出软键盘
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         // 手机窗口设置无标题
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+//        if (Build.VERSION.SDK_INT>=21){
+////            rlStatusBar.setVisibility(View.VISIBLE);
+//            View decorView = getWindow().getDecorView();
+//            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+//            decorView.setSystemUiVisibility(option);
+////            getWindow().setStatusBarColor(Color.TRANSPARENT);
+//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//        }
+//        ActionBar actionBar = getActionBar();
+//        actionBar.hide();
+        //禁止EditText自动弹出软键盘
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         setVolumeControlStream(AudioManager.STREAM_MUSIC);// 使得音量键控制媒体声音
         setLayout();
         // 注入控件
@@ -97,7 +107,7 @@ public abstract class BaseActivity extends SmartFragmentActivity {
      */
     public void setLeftTv(String tv) {
         TextView tvLeft = (TextView) findViewById(R.id.tvLeft);
-        tvLeft.setVisibility(View.VISIBLE);
+        tvLeft.setVisibility(View.GONE);
         tvLeft.setText(tv);
     }
 

@@ -8,8 +8,12 @@ import com.beyonditsm.financial.entity.CreditOfflineUploadEntity;
 import com.beyonditsm.financial.entity.HotProduct;
 import com.beyonditsm.financial.entity.MyCreditEntity;
 import com.beyonditsm.financial.entity.OrderBean;
+import com.beyonditsm.financial.entity.SubmitCreditSpeedEntity;
 import com.beyonditsm.financial.entity.SumLoadEntity;
 import com.beyonditsm.financial.entity.UserEntity;
+import com.beyonditsm.financial.entity.UserOrderInfo1;
+import com.beyonditsm.financial.entity.UserOrderInfo2;
+import com.beyonditsm.financial.entity.UserOrderInfo3;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.SpUtils;
@@ -542,27 +546,12 @@ public class CommManager extends RequestManager {
      */
     public void getCreditCards(HotProduct hp, String area, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
-        params.put("area",area);
+        params.put("area", area);
         params.put("page", hp.getPage() + "");
         params.put("rows", hp.getRows() + "");
         doPost(IFinancialUrl.GET_CREDIT_CARD_INFO, params, callBack);
     }
-    /**
-     * 监听点击次数
-     */
-    public void applyCreditCardClick(String creditCardId,CallBack callBack)  {
-        Map<String, String> params = new HashMap<>();
-        params.put("creditCardId",creditCardId);
-        doPost(IFinancialUrl.APPLY_CREDIT_CARD_CLICK, params, callBack);
-    }
-    /**
-     * 获取首页banner
-     * @param callBack
-     */
-    public void getBanner(CallBack callBack){
-        Map<String, String> params = new HashMap<>();
-        doPost(IFinancialUrl.GET_BANNER,params,callBack);
-    }
+
     /**
      * 获取资讯中心初始数据
      */
@@ -621,12 +610,334 @@ public class CommManager extends RequestManager {
         doGet(IFinancialUrl.IMAGE_CAPTCHA,  callBack);
     }
 
-    public void SMSCaptchaFogetPassword(String imageCaptcha ,String ignoreExistence,String phoneNumber,CallBack callBack){
+    public void SMSCaptchaFogetPassword(String imageCaptcha ,String ignoreExistence,String phoneNumber,CallBack callBack) {
         Map<String, String> params = new HashMap<>();
-        params.put("imageCaptcha",imageCaptcha);
-        params.put("ignoreExistence",ignoreExistence);
-        params.put("phoneNumber",phoneNumber);
+        params.put("imageCaptcha", imageCaptcha);
+        params.put("ignoreExistence", ignoreExistence);
+        params.put("phoneNumber", phoneNumber);
         doPost(IFinancialUrl.SMS_CAPTCHA_FOGET_PASSWORD, params, callBack);
+    }
+    /**
+     * 获取信用卡数据
+     */
+    public void applyCreditCardClick(String creditCardId, CallBack callBack) {
+        Map<String, String> params = new HashMap<>();
+        params.put("creditCardId", creditCardId);
+        doPost(IFinancialUrl.APPLY_CREDIT_CARD_CLICK, params, callBack);
+    }
+
+    /**
+     * 获取首页banner
+     *
+     * @param callBack
+     */
+    public void getBanner(CallBack callBack) {
+        Map<String, String> params = new HashMap<>();
+        doPost(IFinancialUrl.GET_BANNER, params, callBack);
+    }
+
+    /**
+     * 获取急借通列表
+     *
+     * @param callBack
+     */
+    public void getCreditSpeed(CallBack callBack) {
+        Map<String, String> params = new HashMap<>();
+        doPost(IFinancialUrl.GET_CREDIT_SPEED, params, callBack);
+    }
+
+    /**
+     * 保存急借通第四版块信息接口（城市门店、身份证）
+     *
+     * @param callBack
+     */
+    public void saveUserOrderInfo4(String orderId,String idCardFront,String idCardBack,String storeCity,String storeId,String StoreAddress,CallBack callBack) {
+
+        Map<String, String> params = new HashMap<>();
+        params.put("orderId",orderId);
+        params.put("idcardFront",idCardFront);
+        params.put("idcardBack",idCardBack);
+        params.put("storeCity",storeCity);
+        params.put("storeId",storeId);
+        params.put("storeAddr",StoreAddress);
+//        JSONObject jsonObject =
+        doPost(IFinancialUrl.SAVE_USER_ORDER_INFO4, params, callBack);
+    }
+
+    /**
+     * 急借通通过城市名查询门店
+     *
+     * @param city
+     * @param callBack
+     */
+    public void queryVendorByCity(String city, CallBack callBack) {
+        Map<String, String> params = new HashMap<>();
+        params.put("city", city);
+        doPost(IFinancialUrl.QUERY_VENDOR_BY_CITY, params, callBack);
+    }
+
+    /**
+     * 获取亲属关系
+     *
+     * @param callBack
+     */
+    public void queryRelation(CallBack callBack) {
+        Map<String, String> params = new HashMap<>();
+        doPost(IFinancialUrl.RELATION, params, callBack);
+    }
+
+    /**
+     * 保存急借通第三板块信息
+     *
+     * @param entity3
+     * @param callBack
+     */
+    public void saveUserOrderInfo3(UserOrderInfo3 entity3, CallBack callBack) {
+        Map<String, String> params = new HashMap<>();
+        params.put("orderId",entity3.getOrderId());
+        params.put("relatives1Name",entity3.getRelatives1Name());
+        params.put("relatives1Rs",entity3.getRelatives1Rs());
+        params.put("relatives1ContactNum",entity3.getRelatives1ContactNum());
+        params.put("relatives2Name",entity3.getRelatives2Name());
+        params.put("relatives2Rs",entity3.getRelatives2Rs());
+        params.put("relatives2ContactNum", entity3.getRelatives2ContactNum());
+        params.put("colleagueName", entity3.getColleagueName());
+        params.put("colleagueRs", entity3.getColleagueRs());
+        params.put("colleagueContactNum", entity3.getColleagueContactNum());
+        params.put("ecName", entity3.getEcName());
+        params.put("ecRs", entity3.getEcRs());
+        params.put("ecContactNum", entity3.getEcContactNum());
+        doPost(IFinancialUrl.SAVE_USER_ORDER_INFO3, params, callBack);
+    }
+
+    /**
+     * 保存急借通第二板块信息
+     *
+     * @param
+     * @param callBack
+     */
+    public void saveUserOrderInfo2(UserOrderInfo2 entity2, CallBack callBack) {
+        Map<String, String> params = new HashMap<>();
+        params.put("entity2", GsonUtils.bean2Json(entity2));
+        doPost(IFinancialUrl.SAVE_USER_ORDER_INFO3, params, callBack);
+    }
+
+    /**
+     * 借款用途接口
+     *
+     * @param callBack
+     */
+    public void queryLoanUse(CallBack callBack) {
+        Map<String, String> params = new HashMap<>();
+        doPost(IFinancialUrl.QUERY_LOAN_USE, params, callBack);
+    }
+
+    /**
+     * 点击申贷接口（须传参数：借款用途:purpose;最大承受还款额度:maxRepaymentWeekly;贷款金额:
+     * totalAmount;还款期限: totalPeriods;利息:totalLoanInterest;综合费率:realMonthlyRate）
+     */
+
+    public void submitSpeedOrder(SubmitCreditSpeedEntity scse, CallBack callBack) {
+        Map<String, String> params = new HashMap<>();
+        params.put("purpose", scse.getPurpose());
+        params.put("maxRepaymentWeekly", scse.getMaxRepaymentWeekly());
+        params.put("totalAmount", scse.getTotalAmount());
+        params.put("totalPeriods", scse.getTotalPeriods());
+        params.put("totalLoanInterest", scse.getTotalLoanInterest());
+        params.put("realMonthlyRate", scse.getRealMonthlyRate());
+        doPost(IFinancialUrl.SUBMIT_SPEED_CREDIT, params, callBack);
+    }
+
+    /**
+     * 急借通单位性质接口
+     * @param callBack
+     */
+    public void queryUnitProperty(CallBack callBack) {
+        Map<String, String> params = new HashMap<>();
+        doPost(IFinancialUrl.QUERY_UNIT_PROPERTY, params, callBack);
+    }
+
+    /**
+     * 急借通工作性质接口
+     * @param callBack
+     */
+    public void queryWorkingProperty(CallBack callBack) {
+        Map<String, String> params = new HashMap<>();
+        doPost(IFinancialUrl.QUERY_WORK_PROPERTY, params, callBack);
+    }
+    /**
+     * 急借通工资发放接口
+     * @param callBack
+     */
+    public void querySalary(CallBack callBack){
+        Map<String, String> params = new HashMap<>();
+        doPost(IFinancialUrl.QUERY_SALARY, params, callBack);
+    }
+    /**
+     * 急借通省份查询接口
+     * @param callBack
+     */
+    public void queryAllProvince(CallBack callBack){
+        Map<String, String> params = new HashMap<>();
+        doPost(IFinancialUrl.QUERY_ALL_PROVINCE, params, callBack);
+    }
+    /**
+     * 急借通市查询接口
+     * @param callBack
+     */
+    public void queryAllCity(String parentId,CallBack callBack){
+        Map<String, String> params = new HashMap<>();
+        params.put("parentId",parentId+"");
+        doPost(IFinancialUrl.QUERY_ALL_CITY, params, callBack);
+    }
+    /**
+     * 急借通区查询接口
+     * @param callBack
+     */
+    public void queryAllArea(String parentId,CallBack callBack) {
+        Map<String, String> params = new HashMap<>();
+        params.put("parentId", parentId);
+        doPost(IFinancialUrl.QUERY_ALL_AREA, params, callBack);
+    }
+    public void submitSpeedOrder(String productId,SubmitCreditSpeedEntity scse, CallBack callBack){
+        Map<String, String> params = new HashMap<>();
+        params.put("productId",productId);
+        params.put("purpose",scse.getPurpose()+"");
+        params.put("maxRepaymentWeekly",scse.getMaxRepaymentWeekly()+"");
+        params.put("totalAmount",scse.getTotalAmount()+"");
+        params.put("totalPeriods",scse.getTotalPeriods()+"");
+        params.put("totalLoanInterest",scse.getTotalLoanInterest()+"");
+        params.put("realMonthlyRate",scse.getRealMonthlyRate()+"");
+        MyLogUtils.info("借款用途："+scse.getPurpose()+",最大承受还款额度："+scse.getMaxRepaymentWeekly()+",贷款金额："+scse.getTotalAmount()+",还款期限："+scse.getTotalPeriods()+",总利息："+scse.getTotalLoanInterest()+"，综合费率："+scse.getRealMonthlyRate());
+        doPost(IFinancialUrl.SUBMIT_SPEED_CREDIT,params,callBack);
+
+    }
+
+    /**
+     * 获取婚姻状况
+     * @param callBack
+     */
+    public void getMarrias(CallBack callBack){
+        Map<String, String> params = new HashMap<>();
+        doPost(IFinancialUrl.MARITALE,params,callBack);
+    }
+
+    /**
+     * 获取学历状况
+     * @param callBack
+     */
+    public void getEducation(CallBack callBack){
+        Map<String, String> params = new HashMap<>();
+        doPost(IFinancialUrl.EDUCATION,params,callBack);
+    }
+
+    public void saveEssentialInfo(UserOrderInfo1 userInfo1,CallBack callBack){
+        Map<String, String> params = new HashMap<>();
+        params.put("productId",userInfo1.getProductId()+"");
+        params.put("purpose",userInfo1.getPurpose()+"");
+        params.put("maxRepaymentWeekly",userInfo1.getMaxRepaymentWeekly()+"");
+        params.put("totalAmount",userInfo1.getTotalAmount()+"");
+        params.put("totalPeriods",userInfo1.getTotalPeriods()+"");
+        params.put("totalLoanInterest",userInfo1.getTotalLoanInterest()+"");
+        params.put("realMonthlyRate",userInfo1.getRealMonthlyRate()+"");
+        params.put("name",userInfo1.getName()+"");
+        params.put("contactNum",userInfo1.getContactNum()+"");
+        params.put("idcardno",userInfo1.getIdcardno()+"");
+        params.put("marriagests",userInfo1.getMarriagests()+"");
+        params.put("qualitications",userInfo1.getQualitications()+"");
+        params.put("childNum",userInfo1.getChildNum()+"");
+        params.put("domicileArea",userInfo1.getDomicileArea()+"");
+        params.put("domicileCity",userInfo1.getDomicileCity()+"");
+        params.put("domicileDetail",userInfo1.getDomicileDetail()+"");
+        params.put("domicileProvince",userInfo1.getDomicileProvince()+"");
+        params.put("permanentArea",userInfo1.getPermanentArea()+"");
+        params.put("permanentCity",userInfo1.getPermanentCity()+"");
+        params.put("permanentProvince",userInfo1.getPermanentProvince()+"");
+        params.put("permanentDetail",userInfo1.getPermanentDetail()+"");
+        params.put("resSts",userInfo1.getResSts()+"");
+
+        doPost(IFinancialUrl.SAVE_ESSENTIAL_INFO,params,callBack);
+    }
+
+    /**
+     * 急借通储存第二步信息接口
+     * @param callBack
+     */
+    public void saveQualificationsInfo(String orderId,
+                                       String CompanyName,
+                                       String CompanyArea,
+                                       String CompanyCity,
+                                       String CompanyProvince,
+                                       String CompanyDetail,
+                                       String areaCode,
+                                       String CompanyPhoneNum,
+                                       String companyNature,
+                                       String workingProp,
+                                       String salary,
+                                       String payout,CallBack callBack){
+        Map<String,String> params = new HashMap<>();
+        params.put("orderId",orderId);
+        params.put("CompanyName",CompanyName);
+        params.put("CompanyArea",CompanyArea);
+        params.put("CompanyCity",CompanyCity);
+        params.put("CompanyProvince",CompanyProvince);
+        params.put("CompanyDetail",CompanyDetail);
+        params.put("areaCode",areaCode);
+        params.put("CompanyPhoneNum",CompanyPhoneNum);
+        params.put("companyNature",companyNature);
+        params.put("workingProp",workingProp);
+        params.put("salary",salary);
+        params.put("payout",payout);
+        doPost(IFinancialUrl.SAVE_QUALIFICATIONS_INFO,params,callBack);
+
+    }
+
+    /**
+     * 个人信息查询省
+     */
+    public void queryProvince(CallBack callBack){
+        Map<String, String> params = new HashMap<>();
+        doPost(IFinancialUrl.QUERY_PROVINCE,params,callBack);
+    }
+
+    /**
+     * 个人信息查询市
+     */
+    public void queryCity(String provinceCode,CallBack callBack){
+        Map<String, String> params = new HashMap<>();
+        params.put("code",provinceCode);
+        doPost(IFinancialUrl.QUERY_CITY,params,callBack);
+    }
+
+    /**
+     * 个人信息查询区县
+     */
+    public void queryDistrict(String cityCode,CallBack callBack){
+        Map<String, String> params = new HashMap<>();
+        params.put("cityCode",cityCode);
+        doPost(IFinancialUrl.QUERY_DISTRICT,params,callBack);
+    }
+
+    /**
+     * 极速贷贷款详情接口
+     * @param orderId 订单Id
+     * @param callBack 回调
+     */
+    public void shortLoanOrderDetail(String orderId,CallBack callBack){
+        Map<String,String> params = new HashMap<>();
+        params.put("orderId",orderId);
+        doPost(IFinancialUrl.SHORT_LOAN_ORDER_DETAIL,params,callBack);
+    }
+
+    /**
+     * 极速贷推送第三方接口
+     * @param orderId 订单Id
+     * @param callBack 回调
+     */
+    public void applyShortLoanOrder(String orderId,CallBack callBack){
+        Map<String,String> params = new HashMap<>();
+        params.put("orderId",orderId);
+        doPost(IFinancialUrl.APPLY_SHORT_LOAN_ORDER,params,callBack);
     }
 
 }

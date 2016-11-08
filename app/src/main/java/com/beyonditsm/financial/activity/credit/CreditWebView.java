@@ -42,11 +42,9 @@ public class CreditWebView extends BaseActivity {
                 return true;
             }
         });
-        if ("guangda".equals(bankName)){
-            webView.loadUrl("https://xyk.cebbank.com/cebmms/apply/ps/apply-card-list.htm?pro_code=FHTG17000SJC01FZQH");
-        }else{
-            webView.loadUrl("https://ecentre.spdbccc.com.cn/creditcard/indexActivity.htm?data=P730548");
-        }
+
+            webView.loadUrl(bankName);
+
 
 //        webView.reload();
 

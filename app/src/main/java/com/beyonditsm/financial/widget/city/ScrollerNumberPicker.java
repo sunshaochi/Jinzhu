@@ -15,8 +15,11 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.beyonditsm.financial.R;
+import com.beyonditsm.financial.util.ParamsUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * 
@@ -224,6 +227,11 @@ public class ScrollerNumberPicker extends View {
 				break;
 			}
 		}
+	}
+
+	public void clearData(){
+		this.dataList.clear();
+		initData();
 	}
 
 	/**
@@ -463,6 +471,7 @@ public class ScrollerNumberPicker extends View {
 		initData();
 	}
 
+
 	/**
 	 * 获取返回项
 	 * 
@@ -483,10 +492,22 @@ public class ScrollerNumberPicker extends View {
 	 */
 	public String getSelectedText() {
 		for (ItemObject item : itemList) {
-			if (item.isSelected())
+			if (item.isSelected()){
 				return item.itemText;
+			}
+
 		}
 		return "";
+	}
+
+	public int getSelectedId() {
+		for (ItemObject item : itemList) {
+			if (item.isSelected()){
+				return item.id;
+			}
+
+		}
+		return 0;
 	}
 
 	/**
@@ -522,8 +543,11 @@ public class ScrollerNumberPicker extends View {
 	 * @param index
 	 */
 	public void setDefault(int index) {
-		float move = itemList.get(index).moveToSelected();
-		defaultMove((int) move);
+		if (itemList.size()>index){
+			float move = itemList.get(index).moveToSelected();
+			defaultMove((int) move);
+		}
+
 	}
 
 	/**

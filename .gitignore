@@ -9,3 +9,4 @@ gradlew
 .gradle/
 buildsrc/libs/dx.jar
 *.log
+IMKit

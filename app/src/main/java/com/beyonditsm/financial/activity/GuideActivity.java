@@ -36,6 +36,10 @@ public class GuideActivity extends BaseActivity {
 
     @Override
     public void init(Bundle savedInstanceState) {
+        //隐藏状态栏
+        View decorView = getWindow().getDecorView();
+        int option = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(option);
         GuidePagerAdapter adapter = new GuidePagerAdapter();
         pager.setAdapter(adapter);
 //        indicator.setViewPager(pager);

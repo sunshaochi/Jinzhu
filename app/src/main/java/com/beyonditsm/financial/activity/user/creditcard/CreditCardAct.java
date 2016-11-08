@@ -201,7 +201,11 @@ public class CreditCardAct extends BaseActivity implements CreditCardInterface {
 //                    loadingView.noContent();
 //                    return;
 //                }
+//<<<<<<< HEAD
+////                MyLogUtils.degug("cardListInfo: "+cardList+"");
+//=======
 //                MyLogUtils.degug("cardListInfo: "+cardList+"");
+//>>>>>>> jijietong
                 if (cardList == null || cardList.size() == 0) {
 //                    adapter.setDatas(datas ,isLast(cardList));
 //                    adapter.setOnCreditCardListner(CreditCardAct.this);

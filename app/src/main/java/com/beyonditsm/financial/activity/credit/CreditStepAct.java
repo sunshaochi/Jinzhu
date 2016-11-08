@@ -19,6 +19,7 @@ import com.beyonditsm.financial.fragment.CreditFirstFrag;
 import com.beyonditsm.financial.fragment.CreditOfflineFrag;
 import com.beyonditsm.financial.fragment.CreditSecondFrag;
 import com.beyonditsm.financial.fragment.CreditFourthFrag;
+import com.beyonditsm.financial.fragment.CreditSpeedSecondFrag;
 import com.beyonditsm.financial.fragment.CreditThirFrag;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.SpUtils;
@@ -48,6 +49,8 @@ public class CreditStepAct extends BaseActivity {
     public static final String TAG_TYPE = "tag_type";
 
     private static CreditStepAct activityInstance;
+    private CreditSpeedSecondFrag creditSpeedSecondFrag;
+    private String credit_type;
 
     @Override
     public void setLayout() {
@@ -62,12 +65,16 @@ public class CreditStepAct extends BaseActivity {
         // 1 线上  2线下
         String orderType = getIntent().getStringExtra("orderType");
         productInfo = getIntent().getParcelableExtra(HomeCreditDetailAct.PRODUCTINFO);
+        credit_type = getIntent().getStringExtra(CreditSpeedDetailAct.CREDIT_TYPE);
         EventBus.getDefault().register(this);
         fragmentManager = getSupportFragmentManager();
-        if (TextUtils.isEmpty(SpUtils.getRoleName(this)))
+        if (TextUtils.isEmpty(SpUtils.getRoleName(this))) {
             setTabSelection(0);
-        else
+        } else if (TextUtils.isEmpty(credit_type)){
             setTabSelection(1);
+        }else if (!TextUtils.isEmpty(credit_type)&&"speed".equals(credit_type)){
+            setTabSelection(5);
+        }
 
         if (getIntent().getIntExtra("credit_upload", 0) == 1) {
 //            MyLogUtils.error("orderType===="+orderType);
@@ -183,6 +190,17 @@ public class CreditStepAct extends BaseActivity {
                     fragmentTransaction.add(R.id.credit_fl, offlineFrag);
                 } else {
                     fragmentTransaction.show(offlineFrag);
+                }
+
+                break;
+            //极速贷
+            case 5:
+                setTopTitle("快速判断资质");
+                if (creditSpeedSecondFrag==null){
+                    creditSpeedSecondFrag = new CreditSpeedSecondFrag();
+                    fragmentTransaction.add(R.id.credit_fl,creditSpeedSecondFrag);
+                }else{
+                    fragmentTransaction.show(creditSpeedSecondFrag);
                 }
 
                 break;

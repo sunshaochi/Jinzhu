@@ -10,6 +10,7 @@ import io.rong.imkit.common.RongConst;
 public interface IFinancialUrl {
     /*吕建明*/
 //    String BASE_URL = "http://172.16.6.236:8080";
+//    String BASE_URL = "http://172.16.6.95:8080";
     /*吕东测试*/
 //    String BASE_URL = "http://172.16.5.59";
 //    String BASE_URL ="http://172.16.6.218";
@@ -17,28 +18,44 @@ public interface IFinancialUrl {
 //    String BASE_URL = "http://172.16.6.153:8080";
 //    String BASE_URL = "http://172.16.6.228:8080";
     /*验收环境地址*/
-//    String BASE_URL = "http://test.myjinzhu.com:8080";
+//    String BASE_URL = "http://test.myjinzhu.com:8086";
 ////        /*验收环境游戏地址*/
 //    String GAME_URL = "http://myjinzhu.com:5011/";
     /*正式地址*/
-//    String BASE_URL = "http://option.myjinzhu.com";
+    String BASE_URL = "http://option.myjinzhu.com";
     /*王建*/
+//<<<<<<< HEAD
 //    String BASE_URL = "http://139.196.227.38:8086";
 //    String BASE_URL = "http://139.196.227.53:8080";
+//=======
+//    String BASE_URL = "http://139.196.227.38:8080";
+//>>>>>>> jijietong
 
     //        /*正式游戏地址*/
     String GAME_URL = "http://m.farm.myjinzhu.com/";
 
+//        String BASE_URL = "http://test.myjinzhu.com:8086";
+    /*测试急借通接口*/
+//    String BASE_URL = "http://172.16.5.32:8080";
 
+//<<<<<<< HEAD
 //    String BASE_URL = "http://test.myjinzhu.com:8086";
 //        String BASE_URL = "http://test.myjinzhu.com:8082";
+//=======
+//    String BASE_URL = "http://139.196.227.38:8080";
+//    String BASE_URL = "http://172.16.5.151:8080";
+    //产品优化接口测试
+//    String BASE_URL = "http://139.196.227.38:8080";
+//    String BASE_URL = "http://139.196.227.38:8080";
+//    String BASE_URL = "http://139.196.227.38:8080";
+//>>>>>>> jijietong
     /*测试地址3*/
 //    String BASE_URL="http://test.myjinzhu.com:60";
 //    String BASE_URL = "http://172.16.6.116:8080";
 
 //    String BASE_URL="http://172.16.6.55:8080";
     //帮助中心测试地址
-    String BASE_URL="http://172.16.6.182:8100";
+//    String BASE_URL="http://172.16.6.182:8100";
 
     //内网地址（测试钱包功能）
 //    String BASE_URL = "http://172.16.8.22:8082";
@@ -233,21 +250,16 @@ public interface IFinancialUrl {
     /*查询角色信息*/
     String ROLE_INTO = BASE_URL + API_VERSION + "/servant/login/getRoleInfo.do";
     /*Vip信息*/
-    String VIP_INFO = BASE_URL + API_VERSION + "/manager/unLogin/findVipInfo.do";
+
+    String VIP_INFO = BASE_URL + API_VERSION + "/manager/unlogin/findVipInfo.do";
     /*更新位置*/
     String UPDATE_LOCATION = BASE_URL + API_VERSION + "/platform/login/updateLocation.do";
     /*线下订单上传资料*/
     String SAVE_OR_UPDATE_ORDER_IMAGE = BASE_URL + API_VERSION + "/platform/login/saveOrUpdateOrderImage.do";
-    /*获得信用卡列表页面的信用卡数据*/
-    String GET_CREDIT_CARD_INFO = BASE_URL + API_VERSION + "/creditCard/unLogin/getCreditCards.do";
-    /*在登录状态，点击申卡时,调用统计函数*/
-    String APPLY_CREDIT_CARD_CLICK = BASE_URL + API_VERSION + "/creditCard/login/applyCreditCardClick.do";
     /*查询移动/H5首页前5条端咨询信息 */
     String FIND_NEWS_MOBILE_INDEX = BASE_URL + API_VERSION + "/platform/unLogin/findNewsMobileIndex.do";
     /* 查询移动/H5端更多咨询信息 */
     String FIND_NEWS_MOBILE_MORE = BASE_URL+API_VERSION + "/platform/unLogin/findNewsMobileMore.do";
-    /*获取首页Banner*/
-    String GET_BANNER = BASE_URL+API_VERSION+"/platform/unLogin/getPublishedMobileBanners.do";
     /*热门城市接口获取*/
     String GET_HOT_CITY = BASE_URL+API_VERSION+"/platform/unLogin/getAreaPanelData.do";
     /*根据ID进行文章翻页接口*/
@@ -260,4 +272,65 @@ public interface IFinancialUrl {
     String IMAGE_CAPTCHA = BASE_URL + API_VERSION +"/captcha/imageCaptcha.do";
     /*验证图形验证码*/
     String SMS_CAPTCHA_FOGET_PASSWORD = BASE_URL +API_VERSION + "/manager/unLogin/smsCaptchaFogetPassword.do";
+
+    String GET_CREDIT_CARD_INFO = BASE_URL + API_VERSION + "/creditCard/unlogin/getCreditCards.do";
+    /*在登录状态，点击申卡时,调用统计函数*/
+    String APPLY_CREDIT_CARD_CLICK = BASE_URL + API_VERSION + "/creditCard/login/applyCreditCardClick.do";
+    /*获取首页Banner*/
+    String GET_BANNER = BASE_URL + API_VERSION + "/platform/unLogin/getPublishdMobileBanners.do";
+
+    /*急借通列表*/
+    String GET_CREDIT_SPEED = BASE_URL + API_VERSION + "/platform/unlogin/fingProductPager.do";
+
+    /*借款用途接口*/
+    String QUERY_LOAN_USE = BASE_URL + API_VERSION + "/platform/unlogin/queryLoanUse.do";
+    /*婚姻状况下拉接口*/
+    String MARITALE = BASE_URL + API_VERSION + "/platform/unlogin/Maritale.do";
+    /*学历状况下拉接口*/
+    String EDUCATION = BASE_URL + API_VERSION + "/platform/unlogin/Education.do";
+    /*居住状况下拉接口*/
+    String LIVE = BASE_URL + API_VERSION + "/platform/unlogin/Live.do";
+    /*单位性质*/
+    String QUERY_UNIT_PROPERTY = BASE_URL + API_VERSION + "/platform/unlogin/queryUnitProperty.do";
+    /*工作性质*/
+    String QUERY_WORK_PROPERTY = BASE_URL + API_VERSION + "/platform/unlogin/queryWorkingProperty.do";
+    /*月薪发放形式*/
+    String QUERY_SALARY = BASE_URL + API_VERSION + "/platform/unlogin/querySalary.do";
+    /*银行机构*/
+    String QUERY_SPEED_BANK = BASE_URL + API_VERSION + "/platform/unlogin/queryBank.do";
+    /*还款期限下拉*/
+    String LOAN_DEAD_LINE = BASE_URL + API_VERSION + "/platform/unlogin/LoanDeadLine.do";
+    /*紧急联系人*/
+    String CONTACT = BASE_URL + API_VERSION + "/platform/unlogin/Contact.do";
+    /*省份接口*/
+    String QUERY_ALL_PROVINCE = BASE_URL + API_VERSION + "/platform/unlogin/queryAllProvince.do";
+    /*区域接口*/
+    String QUERY_ALL_AREA = BASE_URL + API_VERSION + "/platform/unlogin/queryAllArea.do";
+    /*城市接口*/
+    String QUERY_ALL_CITY = BASE_URL + API_VERSION + "/platform/unlogin/queryAllCity.do";
+    /*保存基本信息*/
+    String SAVE_ESSENTIAL_INFO = BASE_URL + API_VERSION + "/platform/login/saveUserOrderInfo1.do";
+    /*保存资质信息*/
+    String SAVE_QUALIFICATIONS_INFO = BASE_URL + API_VERSION + "/platform/login/saveUserOrderInfo2.do";
+
+    /*提交极速贷接口*/
+    String SUBMIT_SPEED_CREDIT = BASE_URL + API_VERSION + "/platform/login/submitExtremeCreditOrder.do";
+    /*上传急借通第四板块信息接口*/
+    String SAVE_USER_ORDER_INFO4 = BASE_URL + API_VERSION + "/platform/login/saveUserOrderInfo4.do";
+    /*通过城市查询门店*/
+    String QUERY_VENDOR_BY_CITY = BASE_URL + API_VERSION + "/platform/unlogin/queryVendorByCity.do";
+    /*亲属关系接口*/
+    String RELATION = BASE_URL + API_VERSION + "/platform/unlogin/Relation.do";
+    /*上传急借通第三板块信息接口*/
+    String SAVE_USER_ORDER_INFO3 = BASE_URL + API_VERSION + "/platform/login/saveUserOrderInfo3.do";
+    /*个人信息查询省*/
+    String QUERY_PROVINCE = BASE_URL + API_VERSION + "/common/commonAPI/queryAllProvince.do";
+    /*个人信息查询市*/
+    String QUERY_CITY = BASE_URL + API_VERSION + "/common/commonAPI/queryAllCity.do";
+    /*个人信息查询区县*/
+    String QUERY_DISTRICT = BASE_URL + API_VERSION + "/common/commonAPI/queryAllArea.do";
+    /*极速贷贷款详情接口*/
+    String SHORT_LOAN_ORDER_DETAIL = BASE_URL + API_VERSION + "/platform/login/ShortLoanOrderDetail.do";
+    /*急速贷推送第三方接口*/
+    String APPLY_SHORT_LOAN_ORDER = BASE_URL +API_VERSION + "/platform/login/applyShortLoanOrder.do";
 }

@@ -47,6 +47,12 @@ public class UserEntity implements Parcelable {
     private String district;// 区县
     private Integer marrySts;//0未婚 1已婚
     private String nativePlace;//籍贯
+    private String nativePlaceProvince;//籍贯省
+    private String nativePlaceCity;//籍贯市
+    private String nativePlaceDistrict;//籍贯区县
+    private String nativePlaceAddrProvince;//户籍省
+    private String nativePlaceAddrCity;//户籍市
+    private String nativePlaceAddrDistrict;//户籍区县
     private String nativePlaceAddr;//户籍地址
     private String referralCode;//推荐码
 
@@ -84,6 +90,20 @@ public class UserEntity implements Parcelable {
     private String cashTicketAmount;//现金券数量
     private String unCashTicketAmount;//不可用现金券数量
     private String deductionTicketAmount;//抵扣券数量
+    /**
+     * isSuspension : null
+     * creditScoreCount : 0
+     * nativePlaceAddrApp :
+     * otherAccess : null
+     * defaultAddrApp : 安徽省合肥市瑶海区
+     * nativePlaceApp :
+     * userBehavior : null
+     */
+
+    private String nativePlaceAddrApp;//户籍地显示
+    private String defaultAddrApp;//常住地显示
+    private String nativePlaceApp;//籍贯显示
+
 
     public String getCashTicketAmount() {
         return cashTicketAmount;
@@ -533,6 +553,53 @@ public class UserEntity implements Parcelable {
         this.bankNameTitle = bankNameTitle;
     }
 
+    public String getNativePlaceProvince() {
+        return nativePlaceProvince;
+    }
+
+    public void setNativePlaceProvince(String nativePlaceProvince) {
+        this.nativePlaceProvince = nativePlaceProvince;
+    }
+
+    public String getNativePlaceCity() {
+        return nativePlaceCity;
+    }
+
+    public void setNativePlaceCity(String nativePlaceCity) {
+        this.nativePlaceCity = nativePlaceCity;
+    }
+
+    public String getNativePlaceDistrict() {
+        return nativePlaceDistrict;
+    }
+
+    public void setNativePlaceDistrict(String nativePlaceDistrict) {
+        this.nativePlaceDistrict = nativePlaceDistrict;
+    }
+
+    public String getNativePlaceAddrProvince() {
+        return nativePlaceAddrProvince;
+    }
+
+    public void setNativePlaceAddrProvince(String nativePlaceAddrProvince) {
+        this.nativePlaceAddrProvince = nativePlaceAddrProvince;
+    }
+
+    public String getNativePlaceAddrCity() {
+        return nativePlaceAddrCity;
+    }
+
+    public void setNativePlaceAddrCity(String nativePlaceAddrCity) {
+        this.nativePlaceAddrCity = nativePlaceAddrCity;
+    }
+
+    public String getNativePlaceAddrDistrict() {
+        return nativePlaceAddrDistrict;
+    }
+
+    public void setNativePlaceAddrDistrict(String nativePlaceAddrDistrict) {
+        this.nativePlaceAddrDistrict = nativePlaceAddrDistrict;
+    }
 
     @Override
     public int describeContents() {
@@ -670,4 +737,28 @@ public class UserEntity implements Parcelable {
             return new UserEntity[size];
         }
     };
+
+    public String getNativePlaceAddrApp() {
+        return nativePlaceAddrApp;
+    }
+
+    public void setNativePlaceAddrApp(String nativePlaceAddrApp) {
+        this.nativePlaceAddrApp = nativePlaceAddrApp;
+    }
+
+    public String getDefaultAddrApp() {
+        return defaultAddrApp;
+    }
+
+    public void setDefaultAddrApp(String defaultAddrApp) {
+        this.defaultAddrApp = defaultAddrApp;
+    }
+
+    public String getNativePlaceApp() {
+        return nativePlaceApp;
+    }
+
+    public void setNativePlaceApp(String nativePlaceApp) {
+        this.nativePlaceApp = nativePlaceApp;
+    }
 }

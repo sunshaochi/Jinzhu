@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Created by Administrator on 2015/12/18.
  */
-public class HomeHotProductEntity implements Parcelable{
+public class HomeHotProductEntity implements Parcelable {
 
 
     /**
@@ -35,7 +35,7 @@ public class HomeHotProductEntity implements Parcelable{
      * 2c908c7651474aa40151478b13820002 : 速度快
      */
 
-    private Map<String,String> productCharas ;
+    private Map<String, String> productCharas;
     /**
      * imageLogoPath : img/2646181724931072.png
      * compositiveRate : 80
@@ -120,6 +120,14 @@ public class HomeHotProductEntity implements Parcelable{
 
     public void setAndroidProductLogo(String androidProductLogo) {
         this.androidProductLogo = androidProductLogo;
+    }
+
+    public String getImageLogoPath() {
+        return androidProductLogo;
+    }
+
+    public void setImageLogoPath(String imageLogoPath) {
+        this.androidProductLogo = imageLogoPath;
     }
 
     public String getCompositiveRate() {

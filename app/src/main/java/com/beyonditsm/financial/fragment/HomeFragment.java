@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
@@ -27,6 +28,8 @@ import com.beyonditsm.financial.activity.user.BannerDetailAct;
 import com.beyonditsm.financial.activity.newscenter.NewsCenterActivity;
 import com.beyonditsm.financial.activity.newscenter.NewsDetailActivity;
 import com.beyonditsm.financial.activity.user.creditcard.CreditCardAct;
+import com.beyonditsm.financial.activity.speedcredit.CreditSpeedSecond_2Act;
+import com.beyonditsm.financial.activity.user.BannerDetailAct;
 import com.beyonditsm.financial.activity.user.GameActivity;
 import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
 import com.beyonditsm.financial.activity.user.LoginAct;
@@ -89,6 +92,7 @@ import java.util.List;
 /**
  * Created by liwk on 2015/12/8
  */
+
 public class HomeFragment extends BaseFragment implements LocationListener, BGARefreshLayout.BGARefreshLayoutDelegate {
     @ViewInject(R.id.plv_hotCredit)
     private ListViewForScrollView plvHotCredit;
@@ -102,6 +106,7 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
     @ViewInject(R.id.sv_home)
     private MyScrollView svHome;
     //    @ViewInject(R.id.rl_BGA)
+//    @ViewInject(R.id.rl_BGA)
 //    private BGARefreshLayout mRefreshLayout;
     @ViewInject(R.id.ll_header)
     private LinearLayout llHeader;
@@ -117,6 +122,8 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
     private ImageView ivSecNews;
     private HotNewsEntity firstNews;
     private HotNewsEntity secNews;
+//    @ViewInject(R.id.rl_statusBar)
+//    private RelativeLayout rlStatusBar;
     private int currentPage = 1;
     private HomeCreditAdapter adapter;
     private List<HomeHotProductEntity> hotList;
@@ -129,6 +136,7 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
 
     private List<String> networkImages = new ArrayList<>();
     //    private String[] images = {"http://img2.imgtn.bdimg.com/it/u=3093785514,1341050958&fm=21&gp=0.jpg",
+//    private String[] images = {"http://img2.imgtn.bdimg.com/it/u=3093785514,1341050958&fm=21&gp=0.jpg",
 //            "http://img2.3lian.com/2014/f2/37/d/40.jpg",
 //            "http://d.3987.com/sqmy_131219/001.jpg",
 //            "http://img2.3lian.com/2014/f2/37/d/39.jpg",
@@ -199,6 +207,9 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
         super.onHiddenChanged(hidden);
         if (!hidden) {
             svHome.smoothScrollTo(0, 0);
+            if (!hidden) {
+                svHome.smoothScrollTo(0, 0);
+            }
         }
     }
 
@@ -207,13 +218,20 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
     public void onResume() {
         super.onResume();
         svHome.smoothScrollTo(0, 0);
+        svHome.smoothScrollTo(0, 0);
     }
 
     @Override
     public void initData(Bundle savedInstanceState) {
 
         //头部布局的初始化时透明
-//        rlTitleLayout.setBackgroundColor(Color.argb(0,0xf5,0x8b,0x35));
+////        rlTitleLayout.setBackgroundColor(Color.argb(0,0xf5,0x8b,0x35));
+//        String roleName = SpUtils.getRoleName(context);
+//        MyLogUtils.info("ROLENAME=" + roleName);
+//        svHome.smoothScrollTo(0, 0);
+//        if (Build.VERSION.SDK_INT>=21){
+//            rlStatusBar.setVisibility(View.VISIBLE);
+//        }
         String roleName = SpUtils.getRoleName(context);
         MyLogUtils.info("ROLENAME=" + roleName);
         svHome.smoothScrollTo(0, 0);
@@ -226,7 +244,7 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
 //        plvHotCredit.setHasMoreData(true);
 //        plvHotCredit.getRefreshableView().setDivider(null);
 //        plvHotCredit.getRefreshableView().setVerticalScrollBarEnabled(false);
-        plvHotCredit.setVerticalScrollBarEnabled(false);
+//        plvHotCredit.setVerticalScrollBarEnabled(false);
 //        plvHotCredit.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
 //        plvHotCredit.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
 //        plvHotCredit.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
@@ -323,7 +341,7 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
                 }
                 break;
             case R.id.ivSuspen://浮窗
-                intent = new Intent(getContext(), CreditGuideAct.class);
+                intent = new Intent(getContext(), CreditSpeedSecond_2Act.class);
                 startActivity(intent);
                 break;
             case R.id.ll_creditCard://信用卡
@@ -413,6 +431,10 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
 
     /**
      * 获取热门产品列表
+     * <<<<<<< HEAD
+     * <p>
+     * =======
+     * >>>>>>> jijietong
      *
      * @param Page
      */
@@ -421,63 +443,70 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
         hp.setPage(Page);
         hp.setRows(30);
         RequestManager.getUserManager().findHotProductList(hp, new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
-                loadingView.loadComplete();
-                productLoaded = true;
-                if (newsLoaded) {
-                    loadingView.loadComplete();
-                }
+                    @Override
+                    public void onSucess(String result) throws JSONException {
+                        loadingView.loadComplete();
+                        productLoaded = true;
+                        if (newsLoaded) {
+                            loadingView.loadComplete();
+                        }
 //                plvHotCredit.onPullUpRefreshComplete();
 //                plvHotCredit.onPullDownRefreshComplete();
 
-                JSONObject object = new JSONObject(result);
-                JSONArray data = object.getJSONArray("data");
-                Gson gson = new Gson();
-                hotList = gson.fromJson(data.toString(), new TypeToken<List<HomeHotProductEntity>>() {
-                }.getType());
+                        JSONObject object = new JSONObject(result);
+                        JSONArray data = object.getJSONArray("data");
+                        Gson gson = new Gson();
+                        hotList = gson.fromJson(data.toString(), new TypeToken<List<HomeHotProductEntity>>() {
+                        }.getType());
 //                if (data == null) {
 //                    loadingView.noContent();
 //                    return;
 //                }
-                if (hotList == null || hotList.size() == 0) {
-                    if (Page == 1) {
-                        loadingView.noContent();
-                    }
+                        if (hotList == null || hotList.size() == 0) {
+                            if (Page == 1) {
+                                loadingView.noContent();
+                            }
 //                    else {
 ////                        plvHotCredit.setHasMoreData(false);
 //                    }
-                    return;
-                }
-                if (Page == 1) {
-                    datas.clear();
-                }
-                datas.addAll(hotList);
-                if (adapter == null) {
-                    if (null != getContext()) {
-                        adapter = new HomeCreditAdapter(getContext(), datas);
-                        plvHotCredit.setAdapter(adapter);
-                        Uitls.setListViewHeightBasedOnChildren(plvHotCredit);
+                            return;
+                        }
+                        if (Page == 1) {
+                            datas.clear();
+                        }
+                        datas.addAll(hotList);
+                        if (adapter == null) {
+                            if (null != getContext()) {
+                                adapter = new HomeCreditAdapter(getContext(), datas);
+                                plvHotCredit.setAdapter(adapter);
+                                Uitls.setListViewHeightBasedOnChildren(plvHotCredit);
+                            }
+                        } else {
+                            adapter.setDatas(datas);
+                            Uitls.setListViewHeightBasedOnChildren(plvHotCredit);
+                        }
                     }
-                } else {
-                    adapter.setDatas(datas);
-                    Uitls.setListViewHeightBasedOnChildren(plvHotCredit);
-                }
-            }
 
-            @Override
-            public void onError(int status, String msg) {
+                    //                } else {
+//                    adapter.setDatas(datas);
+//                }
+//
+                    @Override
+                    public void onError(int status, String msg) {
 //                plvHotCredit.onPullUpRefreshComplete();
 //                plvHotCredit.onPullDownRefreshComplete();
-                productLoaded = false;
-                loadingView.loadError();
-            }
-        });
+                        productLoaded = false;
+                        loadingView.loadError();
+                    }
+                }
+
+        );
     }
 
     /**
      * 获取用户的角色信息
      */
+
     private void getUserLoginInfo() {
 
         RequestManager.getUserManager().findUserLoginInfo(new RequestManager.CallBack() {
@@ -572,6 +601,7 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
             }
         });
     }
+
 
     private void initRefreshLayout(ConvenientBanner convenientBanner) {
         // 为BGARefreshLayout设置代理
@@ -700,6 +730,9 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
                 Intent intent = new Intent(mParentActivity, BannerDetailAct.class);
                 intent.putExtra(BANNER_NAME, bannerName);
                 intent.putExtra(HREF_ADDR, hrefAddr);
+                intent.putExtra(BANNER_NAME, bannerName);
+                intent.putExtra(HREF_ADDR, hrefAddr);
+
                 startActivity(intent);
             }
         });
@@ -722,6 +755,7 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
 //            }
 //        });
     }
+
 
     private void getBanner() {
         RequestManager.getCommManager().getBanner(new RequestManager.CallBack() {
@@ -747,5 +781,6 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
 
             }
         });
+
     }
 }
