@@ -65,6 +65,10 @@ public class CreditSpeedThird_2Act extends BaseActivity {
     LinearLayout llSuccess;
     @ViewInject(R.id.ll_fatherLayout)
     LinearLayout llFatherLayout;
+    @ViewInject(R.id.tv_msg)
+    TextView tvMsg;
+    @ViewInject(R.id.address_detail)
+    TextView addreddDetail;
     private ArrayList<String> vendorNameList;
     private String frontCardUrl;//身份证正面url
     private String backCardUrl;//身份证反面url
@@ -185,7 +189,14 @@ public class CreditSpeedThird_2Act extends BaseActivity {
                         @Override
                         public void getAdress(String adress, int position) {
                             curVendero = vendorList.get(position);
-                            tvAddress.setText(vendorList.get(position).getAddr() + "");
+                            if ((vendorList.get(position).getAddr()+"").equals("null") || TextUtils.isEmpty(vendorList.get(position).getAddr()+"")){
+                                tvAddress.setText(vendorList.get(position).getName() + "");
+                                addreddDetail.setText("暂无详细地址");
+                            }else {
+                                tvAddress.setText(vendorList.get(position).getName() + "");
+                                addreddDetail.setText(vendorList.get(position).getAddr() + "");
+                            }
+
 //                        getMOnthPay(creditMoney, productInfo.getMonthlyRathAvg(), creditMonth);
                         }
                     });
@@ -203,7 +214,7 @@ public class CreditSpeedThird_2Act extends BaseActivity {
                     MyToastUtils.showShortToast(CreditSpeedThird_2Act.this, "请上传身份证反面");
                 }else if (null!=CheckUtil.CheckOutNull(llFatherLayout)){
                     MyToastUtils.showShortToast(CreditSpeedThird_2Act.this, CheckUtil.CheckOutNull(llFatherLayout));
-                }else {
+                }else if (llNullShopTip.getVisibility() == View.GONE){
                     saveUserInfo4();
                 }
 
@@ -228,7 +239,8 @@ public class CreditSpeedThird_2Act extends BaseActivity {
             @Override
             public void onSucess(String result) throws JSONException {
                 applyShortLoanOrder();
-                llSuccess.setVisibility(View.VISIBLE);
+
+
             }
 
             @Override
@@ -242,7 +254,15 @@ public class CreditSpeedThird_2Act extends BaseActivity {
         CommManager.getCommManager().applyShortLoanOrder(orderId, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-                String a  = result;
+                JSONObject jsonObject  = new JSONObject(result);
+                JSONObject data = jsonObject.getJSONObject("data");
+                String msg = data.getString("msg");
+
+                if (!msg.equals("成功")){
+                    tvMsg.setText(msg);
+                }
+                llSuccess.setVisibility(View.VISIBLE);
+
             }
 
             @Override

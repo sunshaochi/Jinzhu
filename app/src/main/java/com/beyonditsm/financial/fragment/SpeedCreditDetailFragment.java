@@ -82,7 +82,7 @@ public class SpeedCreditDetailFragment extends BaseFragment {
 
     private DisplayImageOptions options = new DisplayImageOptions.Builder()
             .showStubImage(R.mipmap.pro_default) // 设置图片下载期间显示的图片
-            .showImageForEmptyUri(R.mipmap.pro_default) // 设置图片Uri为空或是错误的时候显示的图片
+            .showImageForEmptyUri(null) // 设置图片Uri为空或是错误的时候显示的图片
             .showImageOnFail(R.mipmap.pro_default) // 设置图片加载或解码过程中发生错误显示的图片
             .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
             .cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
@@ -126,6 +126,8 @@ public class SpeedCreditDetailFragment extends BaseFragment {
     @ViewInject(R.id.user_data)
     private TextView user_data;//户籍地址
 
+    @ViewInject(R.id.llsf)
+    private LinearLayout llsf;
 //    @ViewInject(R.id.)
 
     @ViewInject(R.id.tv_zy)
@@ -187,6 +189,8 @@ public class SpeedCreditDetailFragment extends BaseFragment {
     @ViewInject(R.id.tv_family2_phone)
     private TextView tvFamily2Phone; //直系亲属2电话
 
+    @ViewInject(R.id.llmdxx)
+    private LinearLayout llmdxx;
     @ViewInject(R.id.tv_colleagueName)
     private TextView tvColleagueName; //同事姓名
     @ViewInject(R.id.tv_colleagueRelation)
@@ -297,6 +301,9 @@ public class SpeedCreditDetailFragment extends BaseFragment {
         map.put(0, false);
         map.put(1, false);
         map.put(2, false);
+        map.put(3, false);
+        map.put(4, false);
+        map.put(5, false);
 
         llzl.setVisibility(View.GONE);
         llzz.setVisibility(View.GONE);
@@ -324,9 +331,50 @@ public class SpeedCreditDetailFragment extends BaseFragment {
         });
     }
 
-    @OnClick({R.id.rlzl, R.id.rlzz, R.id.rlts, R.id.bj, R.id.tvUpload, R.id.tvUpCredit})
+    @OnClick({R.id.rlzl, R.id.rlzz, R.id.rlts, R.id.bj, R.id.tvUpload, R.id.tvUpCredit,R.id.rlcl,R.id.rl_relativeInfo ,R.id.rlmdxx})
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.rlmdxx:
+                if (!map.get(5)) {
+//                    obaDownzl.start();
+                    llmdxx.setVisibility(View.VISIBLE);
+                    map.put(5, true);
+                    scrollDown();
+                } else {
+//                    obaOnzl.start();
+                    llmdxx.setVisibility(View.GONE);
+                    map.put(5, false);
+                }
+
+                break;
+            case R.id.rlcl:
+
+                if (!map.get(3)) {
+//                    obaDownzl.start();
+                    llsf.setVisibility(View.VISIBLE);
+                    map.put(3, true);
+                    scrollDown();
+                } else {
+//                    obaOnzl.start();
+                    llsf.setVisibility(View.GONE);
+                    map.put(3, false);
+                }
+
+
+                break;
+            case R.id.rl_relativeInfo:
+                if (!map.get(4)) {
+//                    obaDownzl.start();
+                    llRelativeInfo.setVisibility(View.VISIBLE);
+                    map.put(4, true);
+                    scrollDown();
+                } else {
+//                    obaOnzl.start();
+                    llRelativeInfo.setVisibility(View.GONE);
+                    map.put(4, false);
+                }
+
+                break;
             case R.id.rlzl://用户基本资料
 //                if (!map.get(0)) {
 //                    obaDown.start();

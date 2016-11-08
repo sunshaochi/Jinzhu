@@ -172,7 +172,7 @@
                         android:hint="请选择"
                         android:drawableRight="@mipmap/button_select"
                         android:gravity="right"
-                        android:textColor="#f63"
+                        android:textColor="@color/tv_primary_color"
                         android:textSize="14sp"
 
                         />
@@ -180,6 +180,14 @@
                 </LinearLayout>
 
                 <View style="@style/view_line" />
+
+                <TextView
+                    android:id="@+id/address_detail"
+                    android:textColor="#f63"
+                    android:textSize="14sp"
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp" />
 
                 <LinearLayout
                     android:id="@+id/ll_null_shop_tip"

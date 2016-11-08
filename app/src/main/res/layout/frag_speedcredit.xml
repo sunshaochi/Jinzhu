@@ -9,6 +9,7 @@
 
         <com.beyonditsm.financial.view.pullfreshview.LoadRefreshView
             android:id="@+id/lv_speedCredit"
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

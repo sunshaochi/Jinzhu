@@ -30,350 +30,243 @@
                     android:layout_marginTop="10dp"
                     android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#ffffff"
-                    android:orientation="vertical"
-                    android:padding="15dp">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:id="@+id/ivBank"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:src="@mipmap/pro_default" />
-
-
-                        <TextView
-                            android:id="@+id/tvStatus"
-                            android:layout_width="100dp"
-                            android:layout_height="30dp"
-                            android:layout_alignParentRight="true"
-                            android:background="@drawable/cre_btn_bg_ore"
-                            android:gravity="center"
-                            android:text=""
-                            android:textColor="#ffffff"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/tvName"
-                            style="@style/tv_primary_style"
-                            android:layout_marginLeft="10dp"
-                            android:layout_toLeftOf="@+id/tvStatus"
-                            android:layout_toRightOf="@id/ivBank" />
-                    </RelativeLayout>
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:orientation="horizontal">
+                        android:background="#ffffff"
+                        android:orientation="vertical"
+                        android:padding="15dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/ivBank"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:src="@mipmap/pro_default" />
+
+
+                            <TextView
+                                android:id="@+id/tvStatus"
+                                android:layout_width="100dp"
+                                android:layout_height="30dp"
+                                android:layout_alignParentRight="true"
+                                android:background="@drawable/cre_btn_bg_ore"
+                                android:gravity="center"
+                                android:text=""
+                                android:textColor="#ffffff"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/tvName"
+                                style="@style/tv_primary_style"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toLeftOf="@+id/tvStatus"
+                                android:layout_toRightOf="@id/ivBank" />
+                        </RelativeLayout>
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_marginTop="15dp"
                             android:orientation="horizontal">
 
-                            <TextView
-                                android:id="@+id/total"
-                                style="@style/tv_second_style"
-                                android:text="贷款金额：" />
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/total"
+                                    style="@style/tv_second_style"
+                                    android:text="贷款金额：" />
+
+                                <TextView
+                                    android:id="@+id/tvTotal"
+                                    style="@style/tv_red_style" />
+
+                                <TextView
+                                    style="@style/tv_second_style"
+                                    android:layout_marginLeft="3dp" />
+                            </LinearLayout>
 
                             <TextView
-                                android:id="@+id/tvTotal"
-                                style="@style/tv_red_style" />
-
-                            <TextView
+                                android:id="@+id/tvLimit"
                                 style="@style/tv_second_style"
-                                android:layout_marginLeft="3dp" />
+                                android:layout_width="0dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_weight="1"
+                                android:singleLine="true"
+                                android:text="额度范围：" />
+
                         </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/tvLimit"
-                            style="@style/tv_second_style"
-                            android:layout_width="0dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_weight="1"
-                            android:singleLine="true"
-                            android:text="额度范围：" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/time"
+                                    style="@style/tv_second_style"
+                                    android:text="贷款期限：" />
+
+                                <TextView
+                                    android:id="@+id/tvTime"
+                                    style="@style/tv_red_style" />
+
+                                <TextView
+                                    android:id="@+id/tvLim"
+                                    style="@style/tv_second_style"
+                                    android:layout_marginLeft="3dp"
+                                    android:text="个月" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/tvL"
+                                style="@style/tv_second_style"
+                                android:layout_width="0dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_weight="1"
+                                android:singleLine="true"
+                                android:text="期限范围：" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    style="@style/tv_second_style"
+                                    android:text="总利息：" />
+
+                                <TextView
+                                    android:id="@+id/tvYueG"
+                                    style="@style/tv_red_style" />
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/tvHf"
+                                style="@style/tv_second_style"
+                                android:layout_width="0dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_weight="1"
+                                android:singleLine="true"
+                                android:text="还款方式：" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    style="@style/tv_second_style"
+                                    android:text="综合费率：" />
+
+                                <TextView
+                                    android:id="@+id/tvT"
+                                    style="@style/tv_red_style" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    style="@style/tv_second_style"
+                                    android:text="放款时间：" />
+
+                                <TextView
+                                    android:id="@+id/tvFTime"
+                                    style="@style/tv_red_style" />
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/tvRate"
+                                style="@style/tv_second_style"
+                                android:layout_width="0dp"
+                                android:layout_marginTop="15dp"
+                                android:layout_weight="1"
+                                android:text="总利率：" />
+
+                            <TextView
+
+                                android:id="@+id/onpay"
+                                style="@style/tv_second_style"
+                                android:layout_width="0dp"
+                                android:layout_marginTop="15dp"
+                                android:layout_weight="1"
+                                android:text="一次性收费："
+                                android:visibility="gone" />
+                        </LinearLayout>
 
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/ll_credit_remark"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/time"
-                                style="@style/tv_second_style"
-                                android:text="贷款期限：" />
-
-                            <TextView
-                                android:id="@+id/tvTime"
-                                style="@style/tv_red_style" />
-
-                            <TextView
-                                android:id="@+id/tvLim"
-                                style="@style/tv_second_style"
-                                android:layout_marginLeft="3dp"
-                                android:text="个月" />
-                        </LinearLayout>
-
-                        <TextView
-                            android:id="@+id/tvL"
-                            style="@style/tv_second_style"
-                            android:layout_width="0dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_weight="1"
-                            android:singleLine="true"
-                            android:text="期限范围：" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                style="@style/tv_second_style"
-                                android:text="总利息：" />
-
-                            <TextView
-                                android:id="@+id/tvYueG"
-                                style="@style/tv_red_style" />
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:id="@+id/tvHf"
-                            style="@style/tv_second_style"
-                            android:layout_width="0dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_weight="1"
-                            android:singleLine="true"
-                            android:text="还款方式：" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                style="@style/tv_second_style"
-                                android:text="综合费率：" />
-
-                            <TextView
-                                android:id="@+id/tvT"
-                                style="@style/tv_red_style" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_weight="1"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                style="@style/tv_second_style"
-                                android:text="放款时间：" />
-
-                            <TextView
-                                android:id="@+id/tvFTime"
-                                style="@style/tv_red_style" />
-
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        android:padding="15dp"
                         android:visibility="gone">
 
-                        <TextView
-                            android:id="@+id/tvRate"
-                            style="@style/tv_second_style"
-                            android:layout_width="0dp"
-                            android:layout_marginTop="15dp"
-                            android:layout_weight="1"
-                            android:text="总利率：" />
-
-                        <TextView
-
-                            android:id="@+id/onpay"
-                            style="@style/tv_second_style"
-                            android:layout_width="0dp"
-                            android:layout_marginTop="15dp"
-                            android:layout_weight="1"
-                            android:text="一次性收费："
-                            android:visibility="gone" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/ll_credit_remark"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/white"
-                    android:orientation="vertical"
-                    android:padding="15dp"
-                    android:visibility="gone">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            style="@style/tv_second_style"
-                            android:text="您的授信额：" />
-
-                        <TextView
-                            android:id="@+id/tv_credit_amount"
-                            style="@style/tv_red_style" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            style="@style/tv_second_style"
-                            android:text="备注：" />
-
-                        <TextView
-                            android:id="@+id/tv_remarks"
-                            style="@style/tv_red_style" />
-                    </LinearLayout>
-                </LinearLayout>
-                <!--用户基本资料-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/white"
-                    android:orientation="vertical"
-                    android:padding="15dp">
-
-                    <RelativeLayout
-                        android:id="@+id/rlzl"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            style="@style/tv_primary_style"
-                            android:layout_centerVertical="true"
-                            android:text="用户基本资料" />
-
-                        <ImageView
-                            android:id="@+id/ivzl"
-                            android:layout_width="6dp"
-                            android:layout_height="5dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:background="@mipmap/arrow_down" />
-
-                    </RelativeLayout>
-
-                    <LinearLayout
-                        android:id="@+id/llzl"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:orientation="horizontal">
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    style="@style/tv_second_style"
-                                    android:text="真实姓名：" />
-
-                                <TextView
-                                    android:id="@+id/tv_tochat"
-                                    style="@style/tv_red_style"
-                                    android:drawablePadding="5dp" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:visibility="gone"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/nicksex"
-                                    style="@style/tv_second_style"
-                                    android:text="性别：" />
-
-                                <TextView
-                                    android:id="@+id/tvSex"
-                                    style="@style/tv_red_style" />
-                            </LinearLayout>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
                             android:orientation="horizontal">
 
                             <TextView
                                 style="@style/tv_second_style"
-                                android:text="身份证号：" />
+                                android:text="您的授信额：" />
 
                             <TextView
-                                android:id="@+id/IdCard"
+                                android:id="@+id/tv_credit_amount"
                                 style="@style/tv_red_style" />
                         </LinearLayout>
 
-
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -382,780 +275,884 @@
 
                             <TextView
                                 style="@style/tv_second_style"
-                                android:text="联系电话：" />
+                                android:text="备注：" />
 
                             <TextView
-                                android:id="@+id/tv_phone"
+                                android:id="@+id/tv_remarks"
                                 style="@style/tv_red_style" />
                         </LinearLayout>
-
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                style="@style/tv_second_style"
-                                android:text="学历：" />
-
-                            <TextView
-                                android:id="@+id/tv_collage"
-                                style="@style/tv_red_style" />
-                        </LinearLayout>
-
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:orientation="horizontal"
-                            android:visibility="visible">
-
-                            <TextView
-                                style="@style/tv_second_style"
-                                android:text="常住地：" />
-
-                            <TextView
-                                android:id="@+id/alwaysaddress"
-                                style="@style/tv_red_style"
-                                android:text="" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                style="@style/tv_second_style"
-                                android:text="居住状况：" />
-
-                            <TextView
-                                android:id="@+id/address"
-                                style="@style/tv_red_style"
-                                android:text="" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:orientation="horizontal">
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    style="@style/tv_second_style"
-                                    android:text="婚姻状况：" />
-
-                                <TextView
-                                    android:id="@+id/tv_wyl"
-                                    style="@style/tv_red_style"
-                                    android:text="" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:visibility="gone"
-                                android:orientation="horizontal">
-
-                                <TextView
-
-                                    style="@style/tv_second_style"
-                                    android:text="籍贯：" />
-
-                                <TextView
-                                    android:id="@+id/tv_jgl"
-                                    style="@style/tv_red_style"
-                                    android:text="" />
-                            </LinearLayout>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                style="@style/tv_second_style"
-                                android:layout_gravity="bottom"
-                                android:text="户籍地址：" />
-
-                            <TextView
-                                android:id="@+id/user_data"
-                                style="@style/tv_red_style"
-                                android:layout_gravity="bottom"
-                                android:text="" />
-
-                        </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
-
-
-                <!--用户资质-->
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/white"
-                    android:orientation="vertical"
-                    android:padding="15dp">
-
-                    <RelativeLayout
-                        android:id="@+id/rlzz"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            style="@style/tv_primary_style"
-                            android:layout_centerVertical="true"
-                            android:text="用户资质" />
-
-                        <ImageView
-                            android:id="@+id/ivzz"
-                            android:layout_width="6dp"
-                            android:layout_height="5dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:background="@mipmap/arrow_down" />
-
-                    </RelativeLayout>
-
-
+                    <!--用户基本资料-->
                     <LinearLayout
-                        android:id="@+id/llzz"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_marginTop="10dp"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        android:padding="15dp">
 
-                        <LinearLayout
+                        <RelativeLayout
+                            android:id="@+id/rlzl"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:orientation="horizontal">
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    style="@style/tv_second_style"
-                                    android:text="单位名称：" />
-
-                                <TextView
-                                    android:id="@+id/tv_zy"
-                                    style="@style/tv_red_style"
-                                    android:drawablePadding="5dp"
-                                    android:text="" />
-
-                            </LinearLayout>
-
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    style="@style/tv_second_style"
-                                    android:text="单位电话：" />
-
-                                <TextView
-                                    android:id="@+id/tv_companyPhone"
-                                    style="@style/tv_red_style"
-                                    android:drawablePadding="5dp"
-                                    android:text="" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:orientation="horizontal">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    style="@style/tv_second_style"
-                                    android:text="单位地址：" />
-
-                                <TextView
-                                    android:id="@+id/tv_sb"
-                                    style="@style/tv_red_style"
-                                    android:text="" />
-                            </LinearLayout>
-
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    style="@style/tv_second_style"
-                                    android:text="单位性质：" />
-
-                                <TextView
-                                    android:id="@+id/tv_company_property"
-                                    style="@style/tv_red_style"
-                                    android:text="" />
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:orientation="horizontal">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    style="@style/tv_second_style"
-                                    android:layout_gravity="bottom"
-                                    android:text="月基本薪水：" />
-
-                                <TextView
-                                    android:id="@+id/gjj_data"
-                                    style="@style/tv_red_style"
-                                    android:layout_gravity="bottom"
-                                    android:text="" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    style="@style/tv_second_style"
-                                    android:layout_gravity="bottom"
-                                    android:text="工作性质：" />
-
-                                <TextView
-                                    android:id="@+id/tv_work_property"
-                                    style="@style/tv_red_style"
-                                    android:layout_gravity="bottom"
-                                    android:text="" />
-                            </LinearLayout>
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:orientation="horizontal"
-                            android:visibility="gone">
+                            android:layout_height="wrap_content">
 
                             <TextView
-                                style="@style/tv_second_style"
-                                android:layout_gravity="bottom"
-                                android:text="名下房产类型：" />
+                                style="@style/tv_primary_style"
+                                android:layout_centerVertical="true"
+                                android:text="用户基本资料" />
 
-                            <TextView
-                                android:id="@+id/house_data"
-                                style="@style/tv_red_style"
-                                android:layout_gravity="bottom"
-                                android:text="" />
-                        </LinearLayout>
+                            <ImageView
+                                android:id="@+id/ivzl"
+                                android:layout_width="6dp"
+                                android:layout_height="5dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:background="@mipmap/arrow_down" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:orientation="horizontal"
-                            android:visibility="gone">
-
-                            <TextView
-                                style="@style/tv_second_style"
-                                android:layout_gravity="bottom"
-                                android:text="名下车产类型：" />
-
-                            <TextView
-                                android:id="@+id/car_data"
-                                style="@style/tv_red_style"
-                                android:layout_gravity="bottom"
-                                android:text="" />
-                        </LinearLayout>
+                        </RelativeLayout>
 
                         <LinearLayout
+                            android:id="@+id/llzl"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:orientation="horizontal"
-                            android:visibility="gone">
-
-                            <TextView
-                                style="@style/tv_second_style"
-                                android:layout_gravity="bottom"
-                                android:text="您的信用状况：" />
-
-                            <TextView
-                                android:id="@+id/xy_data"
-                                style="@style/tv_red_style"
-                                android:layout_gravity="bottom"
-                                android:text="" />
-                        </LinearLayout>
-                    </LinearLayout>
-                </LinearLayout>
-
-                <!--用户联系人信息-->
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/white"
-                    android:orientation="vertical"
-                    android:padding="15dp">
-
-                    <RelativeLayout
-                        android:id="@+id/rl_relativeInfo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            style="@style/tv_primary_style"
-                            android:layout_centerVertical="true"
-                            android:text="用户联系人信息" />
-
-                        <ImageView
-                            android:id="@+id/iv_relativeInfo"
-                            android:layout_width="6dp"
-                            android:layout_height="5dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:background="@mipmap/arrow_down" />
-
-                    </RelativeLayout>
-
-
-                    <LinearLayout
-                        android:id="@+id/ll_relativeInfo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="15dp"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
 
                             <LinearLayout
-                                android:layout_width="0dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
+                                android:layout_marginTop="15dp"
+                                android:orientation="horizontal">
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="直属亲戚"
-                                    android:textColor="@color/blue_color"
-                                    android:textSize="16sp" />
-                                <!--直属关系1姓名-->
                                 <LinearLayout
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="15dp"
+                                    android:layout_weight="1"
                                     android:orientation="horizontal">
 
                                     <TextView
                                         style="@style/tv_second_style"
-                                        android:text="姓名: " />
+                                        android:text="真实姓名：" />
 
                                     <TextView
-                                        android:id="@+id/tv_family1_name"
+                                        android:id="@+id/tv_tochat"
+                                        style="@style/tv_red_style"
+                                        android:drawablePadding="5dp" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal"
+                                    android:visibility="gone">
+
+                                    <TextView
+                                        android:id="@+id/nicksex"
+                                        style="@style/tv_second_style"
+                                        android:text="性别：" />
+
+                                    <TextView
+                                        android:id="@+id/tvSex"
+                                        style="@style/tv_red_style" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    style="@style/tv_second_style"
+                                    android:text="身份证号：" />
+
+                                <TextView
+                                    android:id="@+id/IdCard"
+                                    style="@style/tv_red_style" />
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    style="@style/tv_second_style"
+                                    android:text="联系电话：" />
+
+                                <TextView
+                                    android:id="@+id/tv_phone"
+                                    style="@style/tv_red_style" />
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    style="@style/tv_second_style"
+                                    android:text="学历：" />
+
+                                <TextView
+                                    android:id="@+id/tv_collage"
+                                    style="@style/tv_red_style" />
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:orientation="horizontal"
+                                android:visibility="visible">
+
+                                <TextView
+                                    style="@style/tv_second_style"
+                                    android:text="常住地：" />
+
+                                <TextView
+                                    android:id="@+id/alwaysaddress"
+                                    style="@style/tv_red_style"
+                                    android:text="" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    style="@style/tv_second_style"
+                                    android:text="居住状况：" />
+
+                                <TextView
+                                    android:id="@+id/address"
+                                    style="@style/tv_red_style"
+                                    android:text="" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        style="@style/tv_second_style"
+                                        android:text="婚姻状况：" />
+
+                                    <TextView
+                                        android:id="@+id/tv_wyl"
+                                        style="@style/tv_red_style"
+                                        android:text="" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal"
+                                    android:visibility="gone">
+
+                                    <TextView
+
+                                        style="@style/tv_second_style"
+                                        android:text="籍贯：" />
+
+                                    <TextView
+                                        android:id="@+id/tv_jgl"
+                                        style="@style/tv_red_style"
+                                        android:text="" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    style="@style/tv_second_style"
+                                    android:layout_gravity="bottom"
+                                    android:text="户籍地址：" />
+
+                                <TextView
+                                    android:id="@+id/user_data"
+                                    style="@style/tv_red_style"
+                                    android:layout_gravity="bottom"
+                                    android:text="" />
+
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                    <!--用户资质-->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        android:padding="15dp">
+
+                        <RelativeLayout
+                            android:id="@+id/rlzz"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                style="@style/tv_primary_style"
+                                android:layout_centerVertical="true"
+                                android:text="用户资质" />
+
+                            <ImageView
+                                android:id="@+id/ivzz"
+                                android:layout_width="6dp"
+                                android:layout_height="5dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:background="@mipmap/arrow_down" />
+
+                        </RelativeLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/llzz"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        style="@style/tv_second_style"
+                                        android:text="单位名称：" />
+
+                                    <TextView
+                                        android:id="@+id/tv_zy"
                                         style="@style/tv_red_style"
                                         android:drawablePadding="5dp"
                                         android:text="" />
+
                                 </LinearLayout>
-                                <!---->
+
+
                                 <LinearLayout
-                                    android:layout_width="match_parent"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="15dp"
+                                    android:layout_weight="1"
                                     android:orientation="horizontal">
 
                                     <TextView
                                         style="@style/tv_second_style"
-                                        android:text="关系: " />
+                                        android:text="单位电话：" />
 
                                     <TextView
-                                        android:id="@+id/tv_family1_relation"
+                                        android:id="@+id/tv_companyPhone"
                                         style="@style/tv_red_style"
+                                        android:drawablePadding="5dp"
                                         android:text="" />
-                                </LinearLayout>
-                                <!---->
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="15dp"
-                                    android:orientation="horizontal">
-
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="vertical">
-
-                                        <TextView
-                                            style="@style/tv_second_style"
-                                            android:layout_gravity="bottom"
-                                            android:text="联系电话: " />
-
-                                        <TextView
-                                            android:id="@+id/tv_family1_phone"
-                                            style="@style/tv_red_style"
-                                            android:layout_gravity="bottom"
-                                            android:text="" />
-                                    </LinearLayout>
 
                                 </LinearLayout>
-                                <!---->
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="20dp"
-                                    android:orientation="horizontal">
 
-                                    <TextView
-                                        style="@style/tv_second_style"
-                                        android:layout_gravity="bottom"
-                                        android:text="姓名: " />
-
-                                    <TextView
-                                        android:id="@+id/tv_family2_name"
-                                        style="@style/tv_red_style"
-                                        android:layout_gravity="bottom"
-                                        android:text="" />
-                                </LinearLayout>
-                                <!---->
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="15dp"
-                                    android:orientation="horizontal">
-
-                                    <TextView
-                                        style="@style/tv_second_style"
-                                        android:layout_gravity="bottom"
-                                        android:text="关系: " />
-
-                                    <TextView
-                                        android:id="@+id/tv_family2_relation"
-                                        style="@style/tv_red_style"
-                                        android:layout_gravity="bottom"
-                                        android:text="" />
-                                </LinearLayout>
-                                <!---->
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="15dp"
-                                    android:orientation="horizontal">
-
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="vertical">
-
-                                        <TextView
-                                            style="@style/tv_second_style"
-                                            android:layout_gravity="bottom"
-                                            android:text="联系电话: " />
-
-                                        <TextView
-                                            android:id="@+id/tv_family2_phone"
-                                            style="@style/tv_red_style"
-                                            android:layout_gravity="bottom"
-                                            android:text="" />
-                                    </LinearLayout>
-
-                                </LinearLayout>
-                                <!---->
-
-                                <!--竖布局结尾-->
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_width="0dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
+                                android:layout_marginTop="15dp"
+                                android:orientation="horizontal">
 
-                                <TextView
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="同事"
-                                    android:textColor="@color/blue_color"
-                                    android:textSize="16sp" />
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
 
-                                <!--同事-->
+                                    <TextView
+                                        style="@style/tv_second_style"
+                                        android:text="单位地址：" />
+
+                                    <TextView
+                                        android:id="@+id/tv_sb"
+                                        style="@style/tv_red_style"
+                                        android:text="" />
+                                </LinearLayout>
+
+
                                 <LinearLayout
-                                    android:layout_width="match_parent"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="15dp"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        style="@style/tv_second_style"
+                                        android:text="单位性质：" />
+
+                                    <TextView
+                                        android:id="@+id/tv_company_property"
+                                        style="@style/tv_red_style"
+                                        android:text="" />
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
                                     android:orientation="horizontal">
 
                                     <TextView
                                         style="@style/tv_second_style"
                                         android:layout_gravity="bottom"
-                                        android:text="姓名: " />
+                                        android:text="月基本薪水：" />
 
                                     <TextView
-                                        android:id="@+id/tv_colleagueName"
+                                        android:id="@+id/gjj_data"
                                         style="@style/tv_red_style"
                                         android:layout_gravity="bottom"
                                         android:text="" />
                                 </LinearLayout>
 
                                 <LinearLayout
-                                    android:layout_width="match_parent"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="15dp"
+                                    android:layout_weight="1"
                                     android:orientation="horizontal">
 
                                     <TextView
                                         style="@style/tv_second_style"
                                         android:layout_gravity="bottom"
-                                        android:text="关系: " />
+                                        android:text="工作性质：" />
 
                                     <TextView
-                                        android:id="@+id/tv_colleagueRelation"
+                                        android:id="@+id/tv_work_property"
                                         style="@style/tv_red_style"
                                         android:layout_gravity="bottom"
                                         android:text="" />
                                 </LinearLayout>
 
 
-                                <!---->
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="15dp"
-                                    android:orientation="horizontal">
+                            </LinearLayout>
 
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <TextView
+                                    style="@style/tv_second_style"
+                                    android:layout_gravity="bottom"
+                                    android:text="名下房产类型：" />
+
+                                <TextView
+                                    android:id="@+id/house_data"
+                                    style="@style/tv_red_style"
+                                    android:layout_gravity="bottom"
+                                    android:text="" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <TextView
+                                    style="@style/tv_second_style"
+                                    android:layout_gravity="bottom"
+                                    android:text="名下车产类型：" />
+
+                                <TextView
+                                    android:id="@+id/car_data"
+                                    style="@style/tv_red_style"
+                                    android:layout_gravity="bottom"
+                                    android:text="" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <TextView
+                                    style="@style/tv_second_style"
+                                    android:layout_gravity="bottom"
+                                    android:text="您的信用状况：" />
+
+                                <TextView
+                                    android:id="@+id/xy_data"
+                                    style="@style/tv_red_style"
+                                    android:layout_gravity="bottom"
+                                    android:text="" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!--用户联系人信息-->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        android:padding="15dp">
+
+                        <RelativeLayout
+                            android:id="@+id/rl_relativeInfo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                style="@style/tv_primary_style"
+                                android:layout_centerVertical="true"
+                                android:text="用户联系人信息" />
+
+                            <ImageView
+                                android:id="@+id/iv_relativeInfo"
+                                android:layout_width="6dp"
+                                android:layout_height="5dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:background="@mipmap/arrow_down" />
+
+                        </RelativeLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/ll_relativeInfo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="直属亲戚"
+                                        android:textColor="@color/blue_color"
+                                        android:textSize="16sp" />
+                                    <!--直属关系1姓名-->
                                     <LinearLayout
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:orientation="vertical">
+                                        android:layout_marginTop="15dp"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            style="@style/tv_second_style"
+                                            android:text="姓名: " />
+
+                                        <TextView
+                                            android:id="@+id/tv_family1_name"
+                                            style="@style/tv_red_style"
+                                            android:drawablePadding="5dp"
+                                            android:text="" />
+                                    </LinearLayout>
+                                    <!---->
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="15dp"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            style="@style/tv_second_style"
+                                            android:text="关系: " />
+
+                                        <TextView
+                                            android:id="@+id/tv_family1_relation"
+                                            style="@style/tv_red_style"
+                                            android:text="" />
+                                    </LinearLayout>
+                                    <!---->
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="15dp"
+                                        android:orientation="horizontal">
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="vertical">
+
+                                            <TextView
+                                                style="@style/tv_second_style"
+                                                android:layout_gravity="bottom"
+                                                android:text="联系电话: " />
+
+                                            <TextView
+                                                android:id="@+id/tv_family1_phone"
+                                                style="@style/tv_red_style"
+                                                android:layout_gravity="bottom"
+                                                android:text="" />
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+                                    <!---->
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="20dp"
+                                        android:orientation="horizontal">
 
                                         <TextView
                                             style="@style/tv_second_style"
                                             android:layout_gravity="bottom"
-                                            android:text="联系电话: " />
+                                            android:text="姓名: " />
 
                                         <TextView
-                                            android:id="@+id/tv_colleaguePhone"
+                                            android:id="@+id/tv_family2_name"
+                                            style="@style/tv_red_style"
+                                            android:layout_gravity="bottom"
+                                            android:text="" />
+                                    </LinearLayout>
+                                    <!---->
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="15dp"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            style="@style/tv_second_style"
+                                            android:layout_gravity="bottom"
+                                            android:text="关系: " />
+
+                                        <TextView
+                                            android:id="@+id/tv_family2_relation"
+                                            style="@style/tv_red_style"
+                                            android:layout_gravity="bottom"
+                                            android:text="" />
+                                    </LinearLayout>
+                                    <!---->
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="15dp"
+                                        android:orientation="horizontal">
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="vertical">
+
+                                            <TextView
+                                                style="@style/tv_second_style"
+                                                android:layout_gravity="bottom"
+                                                android:text="联系电话: " />
+
+                                            <TextView
+                                                android:id="@+id/tv_family2_phone"
+                                                style="@style/tv_red_style"
+                                                android:layout_gravity="bottom"
+                                                android:text="" />
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+                                    <!---->
+
+                                    <!--竖布局结尾-->
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="同事"
+                                        android:textColor="@color/blue_color"
+                                        android:textSize="16sp" />
+
+                                    <!--同事-->
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="15dp"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            style="@style/tv_second_style"
+                                            android:layout_gravity="bottom"
+                                            android:text="姓名: " />
+
+                                        <TextView
+                                            android:id="@+id/tv_colleagueName"
                                             style="@style/tv_red_style"
                                             android:layout_gravity="bottom"
                                             android:text="" />
                                     </LinearLayout>
 
-                                </LinearLayout>
-
-                                <!--紧急联系人-->
-
-                                <TextView
-                                    android:layout_marginTop="15dp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="紧急联系人"
-                                    android:textColor="@color/blue_color"
-                                    android:textSize="16sp" />
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="15dp"
-                                    android:orientation="horizontal">
-
-                                    <TextView
-                                        style="@style/tv_second_style"
-                                        android:layout_gravity="bottom"
-                                        android:text="姓名: " />
-
-                                    <TextView
-                                        android:id="@+id/tv_ecName"
-                                        style="@style/tv_red_style"
-                                        android:layout_gravity="bottom"
-                                        android:text="" />
-                                </LinearLayout>
-
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="15dp"
-                                    android:orientation="horizontal">
-
-                                    <TextView
-                                        style="@style/tv_second_style"
-                                        android:layout_gravity="bottom"
-                                        android:text="关系: " />
-
-                                    <TextView
-                                        android:id="@+id/tv_ecRelation"
-                                        style="@style/tv_red_style"
-                                        android:layout_gravity="bottom"
-                                        android:text="" />
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="15dp"
-                                    android:orientation="horizontal">
-
                                     <LinearLayout
-                                        android:layout_width="wrap_content"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:orientation="vertical">
+                                        android:layout_marginTop="15dp"
+                                        android:orientation="horizontal">
 
                                         <TextView
                                             style="@style/tv_second_style"
                                             android:layout_gravity="bottom"
-                                            android:text="联系电话: " />
+                                            android:text="关系: " />
 
                                         <TextView
-                                            android:id="@+id/tv_ecPhone"
+                                            android:id="@+id/tv_colleagueRelation"
                                             style="@style/tv_red_style"
                                             android:layout_gravity="bottom"
                                             android:text="" />
                                     </LinearLayout>
 
+
+                                    <!---->
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="15dp"
+                                        android:orientation="horizontal">
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="vertical">
+
+                                            <TextView
+                                                style="@style/tv_second_style"
+                                                android:layout_gravity="bottom"
+                                                android:text="联系电话: " />
+
+                                            <TextView
+                                                android:id="@+id/tv_colleaguePhone"
+                                                style="@style/tv_red_style"
+                                                android:layout_gravity="bottom"
+                                                android:text="" />
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                    <!--紧急联系人-->
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="15dp"
+                                        android:text="紧急联系人"
+                                        android:textColor="@color/blue_color"
+                                        android:textSize="16sp" />
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="15dp"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            style="@style/tv_second_style"
+                                            android:layout_gravity="bottom"
+                                            android:text="姓名: " />
+
+                                        <TextView
+                                            android:id="@+id/tv_ecName"
+                                            style="@style/tv_red_style"
+                                            android:layout_gravity="bottom"
+                                            android:text="" />
+                                    </LinearLayout>
+
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="15dp"
+                                        android:orientation="horizontal">
+
+                                        <TextView
+                                            style="@style/tv_second_style"
+                                            android:layout_gravity="bottom"
+                                            android:text="关系: " />
+
+                                        <TextView
+                                            android:id="@+id/tv_ecRelation"
+                                            style="@style/tv_red_style"
+                                            android:layout_gravity="bottom"
+                                            android:text="" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="15dp"
+                                        android:orientation="horizontal">
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="vertical">
+
+                                            <TextView
+                                                style="@style/tv_second_style"
+                                                android:layout_gravity="bottom"
+                                                android:text="联系电话: " />
+
+                                            <TextView
+                                                android:id="@+id/tv_ecPhone"
+                                                style="@style/tv_red_style"
+                                                android:layout_gravity="bottom"
+                                                android:text="" />
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                    <!--第二竖布局结尾-->
                                 </LinearLayout>
 
-                                <!--第二竖布局结尾-->
+
+                            </LinearLayout>
+                            <!---->
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                    <!--身份证-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        android:padding="15dp">
+
+                        <RelativeLayout
+                            android:id="@+id/rlcl"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                style="@style/tv_primary_style"
+                                android:layout_centerVertical="true"
+                                android:text="所需材料" />
+
+                            <ImageView
+                                android:id="@+id/ivcl"
+                                android:layout_width="6dp"
+                                android:layout_height="5dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:background="@mipmap/arrow_down" />
+
+                        </RelativeLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/llsf"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    style="@style/tv_second_style"
+                                    android:layout_weight="1"
+                                    android:text="申请人身份证正面：" />
+
+                                <TextView
+                                    style="@style/tv_second_style"
+                                    android:layout_weight="1"
+                                    android:text="申请人身份证反面：" />
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/front"
+                                    style="@style/tv_second_style"
+                                    android:layout_weight="1"
+                                    android:adjustViewBounds="true"
+                                    android:scaleType="fitXY" />
+
+                                <View
+                                    android:layout_width="15dp"
+                                    android:layout_height="match_parent" />
+
+                                <ImageView
+                                    android:id="@+id/back"
+                                    style="@style/tv_second_style"
+                                    android:layout_weight="1"
+                                    android:adjustViewBounds="true"
+                                    android:scaleType="fitXY" />
                             </LinearLayout>
 
 
                         </LinearLayout>
-                        <!---->
-
-
-                    </LinearLayout>
-                </LinearLayout>
-
-
-                <!--身份证-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/white"
-                    android:orientation="vertical"
-                    android:padding="15dp">
-
-                    <RelativeLayout
-                        android:id="@+id/rlcl"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            style="@style/tv_primary_style"
-                            android:layout_centerVertical="true"
-                            android:text="所需材料" />
-
-                        <ImageView
-                            android:id="@+id/ivcl"
-                            android:layout_width="6dp"
-                            android:layout_height="5dp"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:background="@mipmap/arrow_down" />
-
-                    </RelativeLayout>
-
-
-                    <LinearLayout
-                        android:id="@+id/llsf"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-
-                <TextView
-                    android:layout_weight="1"
-                    style="@style/tv_second_style"
-                    android:text="申请人身份证正面：" />
-
-                <TextView
-                    android:layout_weight="1"
-                    style="@style/tv_second_style"
-                    android:text="申请人身份证反面：" />
-            </LinearLayout>
-
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginTop="15dp"
-                            >
-
-                            <ImageView
-                                android:id="@+id/front"
-                                android:layout_weight="1"
-                                android:scaleType="fitXY"
-                                android:adjustViewBounds="true"
-                                style="@style/tv_second_style"
-                                 />
-
-                            <View
-                                android:layout_width="15dp"
-                                android:layout_height="match_parent" />
-                            <ImageView
-                                android:id="@+id/back"
-                                android:scaleType="fitXY"
-                                android:adjustViewBounds="true"
-                                android:layout_weight="1"
-                                style="@style/tv_second_style"
-                                 />
-                        </LinearLayout>
-
-
-                         </LinearLayout>
                     </LinearLayout>
 
 
@@ -1176,7 +1173,7 @@
                             <TextView
                                 style="@style/tv_primary_style"
                                 android:layout_centerVertical="true"
-                                android:text="所需材料" />
+                                android:text="门店信息" />
 
                             <ImageView
                                 android:id="@+id/ivmdxx"
@@ -1199,8 +1196,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                >
+                                android:orientation="horizontal">
 
                                 <TextView
                                     style="@style/tv_second_style"
@@ -1209,13 +1205,13 @@
                                 <TextView
                                     android:id="@+id/tv_md_city"
                                     style="@style/tv_second_style"
-                                    android:text="申请人身份证反面：" />
+                                     />
                             </LinearLayout>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                >
+                                android:orientation="horizontal">
 
                                 <TextView
                                     style="@style/tv_second_style"
@@ -1223,14 +1219,12 @@
 
                                 <TextView
                                     android:id="@+id/tv_md_address"
-                                    style="@style/tv_second_style"
-                                    />
+                                    style="@style/tv_second_style" />
                             </LinearLayout>
 
 
                         </LinearLayout>
                     </LinearLayout>
-
 
 
                     <!--贷款提速-->
@@ -1280,8 +1274,8 @@
                 android:id="@+id/rlUpload"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
-                android:visibility="gone"
-                android:background="#ffffff">
+                android:background="#ffffff"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tvUpload"
