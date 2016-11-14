@@ -297,6 +297,7 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
                     if (!TextUtils.isEmpty(residentA)) {
                         userOrderInfo1.setPermanentArea(residentA);
                     }
+
                     userOrderInfo1.setPermanentDetail(etSpeedResidentDetail.getText().toString().trim());
 //                    userOrderInfo1.setResSts(tvSpeedSelectLivingConditions.getText().toString().trim());
                     saveEsseatialInfo(userOrderInfo1);
@@ -513,6 +514,14 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
             etSpeedPhone.requestFocus();
            return false;
         }
+
+        if (etSpeedPhone.getText().toString().length() != 11) {
+            MyToastUtils.showShortToast(CreditSpeedSecond_1Act.this, "请输入正确手机位数");
+//            secondBtnNext.setClickable(true);
+            etSpeedPhone.requestFocus();
+            return false;
+        }
+
         if (TextUtils.isEmpty(tvSpeedSelectMarriage.getText().toString())){
             MyToastUtils.showShortToast(CreditSpeedSecond_1Act.this, "尚未选择婚姻状况");
 //            secondBtnNext.setClickable(true);

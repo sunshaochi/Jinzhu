@@ -528,14 +528,16 @@ public class SpeedCreditDetailFragment extends BaseFragment {
                         mdAddress.setText(info.getStoreAddr() + "");
                         STEP = info.getStepCode()+"";
 //
-                        if (STEP.equals("1") || STEP.equals("2") || STEP.equals("3")){
-                            MyCreditDAct act = (MyCreditDAct) getActivity();
-                            act.setCancel();
-                        }
 
-                        if (TextUtils.isEmpty(info.getStepCode() + "") || (info.getStepCode()+"").equals("null") || (info.getStepCode()+"").equals("4") || (info.getOrderSts() + "").equals("审批不通过")) {
+
+                        if (TextUtils.isEmpty(info.getStepCode() + "") || (info.getStepCode()+"").equals("null") || (info.getStepCode()+"").equals("4") || (info.getOrderSts() + "").equals("审批不通过")
+                                || (info.getOrderSts() + "").equals("已取消")) {
                             rlUpCredit.setVisibility(View.GONE);
                         } else {
+                            if (STEP.equals("1") || STEP.equals("2") || STEP.equals("3")){
+                                MyCreditDAct act = (MyCreditDAct) getActivity();
+                                act.setCancel();
+                            }
                             rlUpCredit.setVisibility(View.VISIBLE);
                         }
 

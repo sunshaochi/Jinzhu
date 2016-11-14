@@ -346,11 +346,6 @@
 
                     </RelativeLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:layout_marginLeft="45dp"
-                        android:background="@color/line_color"></View>
 
 
                     <RelativeLayout
@@ -435,13 +430,11 @@
                     </RelativeLayout>
 
                     <View
-                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="1px"
                         android:layout_marginLeft="45dp"
-                        android:background="@color/line_color" />
+                        android:background="@color/line_color"></View>
                     <RelativeLayout
-                        android:visibility="gone"
                         android:id="@+id/rlCustom"
                         style="@style/rl_mine_style">
 
@@ -471,7 +464,7 @@
                     <RelativeLayout
                         android:id="@+id/rlHelp"
                         style="@style/rl_mine_style"
-                        android:visibility="visible"
+                        android:visibility="gone"
 
                         >
 

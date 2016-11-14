@@ -175,6 +175,7 @@
 
 
                     <RelativeLayout
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="40dp">
 
@@ -198,40 +199,45 @@
                             android:textSize="14sp" />
                     </RelativeLayout>
 
+                    <!--热点资讯banner-->
+
                     <LinearLayout
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/white"
-                        android:orientation="horizontal"
-                        >
+                        android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_marginTop="10dp"
                             android:id="@+id/iv_firstNews"
                             android:layout_width="1dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="15dp"
+                            android:layout_marginTop="10dp"
                             android:layout_weight="1"
                             android:adjustViewBounds="true"
                             android:scaleType="fitXY" />
 
                         <View
-                            android:layout_marginTop="10dp"
                             android:layout_width="10dp"
-                            android:layout_height="match_parent" />
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp" />
 
                         <ImageView
-                            android:layout_marginTop="10dp"
                             android:id="@+id/iv_secNews"
                             android:layout_width="1dp"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="15dp"
+                            android:layout_marginTop="10dp"
                             android:layout_weight="1"
                             android:adjustViewBounds="true"
                             android:scaleType="fitXY" />
                     </LinearLayout>
 
+                    <!--热点咨询banner-->
+
                     <ListView
+                        android:visibility="gone"
                         android:id="@+id/lv_newsCenter"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

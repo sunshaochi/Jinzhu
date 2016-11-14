@@ -259,7 +259,8 @@ public class CreditSpeedSecond_3Act extends BaseActivity {
                 if (result!=null){
                     MyToastUtils.showShortDebugToast(CreditSpeedSecond_3Act.this,result);
                 }  else {
-                    if (isChinese()) {
+                    if (isChinese() && isPhoneNum()) {
+
                         saveUserInfo3();
                     }
                 }
@@ -286,6 +287,20 @@ public class CreditSpeedSecond_3Act extends BaseActivity {
 
                 break;
         }
+    }
+
+    private boolean isPhoneNum() {
+        if(etSpeedRelativesPhone_1.getText().toString().length() == 11 &&
+                etSpeedRelativesPhone_2.getText().toString().length() == 11 &&
+                etSpeedColleaguePhone_1.getText().toString().length() == 11 &&
+                etSpeedEmergentPhone_1.getText().toString().length() == 11){
+            return true;
+        }else {
+            MyToastUtils.showShortToast(CreditSpeedSecond_3Act.this,"请输入正确手机号");
+            return false;
+        }
+
+
     }
 
     /*获取亲属关系*/
