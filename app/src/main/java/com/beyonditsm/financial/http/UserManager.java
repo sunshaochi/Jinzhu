@@ -4,8 +4,6 @@ import android.text.TextUtils;
 
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.entity.HotProduct;
-import com.beyonditsm.financial.entity.MyRecommeEntity;
-import com.beyonditsm.financial.entity.TaskEntity;
 import com.beyonditsm.financial.util.SpUtils;
 
 import java.util.HashMap;
@@ -17,79 +15,6 @@ import java.util.Map;
  */
 public class UserManager extends RequestManager {
 
-    /**
-     * 查询用户的所有任务列表（未完成，审核中，已完成）
-     *
-     * @param callBack  回调
-     */
-    public void findAllTask(final CallBack callBack) {
-        doGet(IFinancialUrl.ALLTASK_URL, callBack);
-    }
-
-    /**
-     * 根据任务id查询已提交的任务详情
-     *
-     * @param taskEntity  任务实体类
-     * @param callBack  回调
-     */
-    public void findTaskDetail(TaskEntity taskEntity, CallBack callBack) {
-//        List<NameValuePair> queryParams = new ArrayList<NameValuePair>();
-//        queryParams.add(new BasicNameValuePair("taskId", taskEntity.getId()));
-        doGet(IFinancialUrl.FINISH_DO_URL + "?taskId=" + taskEntity.getId(), callBack);
-    }
-
-    /**
-     * 根据产品列表任务id查询已提交任务详情
-     *
-     * @param taskEntity 任务实体类
-     * @param callBack  回调
-     */
-    public void findProTaskDetail(TaskEntity taskEntity, CallBack callBack) {
-        doGet(IFinancialUrl.FINISH_DO_URL + "?taskId=" + taskEntity.getTaskId(), callBack);
-    }
-
-    /**
-     * 根据任务id查询任务策略
-     *
-     * @param taskEntity 任务实体类
-     * @param callBack  回调
-     */
-    public void findTaskStrategy(TaskEntity taskEntity, CallBack callBack) {
-        doGet(IFinancialUrl.TASK_STRATEGY + "?taskId=" + taskEntity.getId(), callBack);
-    }
-
-
-    public void findTaskBytaskIds(String taskId, CallBack callBack) {
-//        List<NameValuePair> queryParams=new ArrayList<>();
-//        queryParams.add(new BasicNameValuePair("taskManageIds",taskId));
-        doGet(IFinancialUrl.FINDTASK_BY_TASKID_URL + "?taskManageIds=" + taskId, callBack);
-    }
-
-    /**
-     * 做任务(提交任务相关信息)
-     *
-     * @param json 整个json
-     * @param callBack  回调
-     */
-    public void addTaskAnswer(String json, CallBack callBack) {
-        Map<String, String> params = new HashMap<>();
-        params.put("answerJsonStr", json);
-        doPost(IFinancialUrl.DOTASK, params, callBack);
-    }
-
-
-    /**
-     * 查找我推荐的好友列表
-     *
-     * @param fre 我的推荐实体类
-     * @param callBack  回调
-     */
-    public void findFriendList(MyRecommeEntity fre, final CallBack callBack) {
-        Map<String, String> params = new HashMap<>();
-        params.put("page", fre.getPage() + "");
-        params.put("rows", fre.getRows() + "");
-        doPost(IFinancialUrl.FIND_MY_FRIEND_LIST_URL, params, callBack);
-    }
 
     /**
      * 计算月供
@@ -124,17 +49,6 @@ public class UserManager extends RequestManager {
     }
 
 
-    /**
-     * 获取超过多少的用户
-     *
-     * @param creditScore 信用分
-     * @param callBack  回调
-     */
-    public void getScorePer(String creditScore, CallBack callBack) {
-        Map<String, String> params = new HashMap<>();
-        params.put("creditScore", creditScore);
-        doPost(IFinancialUrl.GET_SCORE_PER_URL, params, callBack);
-    }
 
     /**
      * 查看当前登陆人的信息

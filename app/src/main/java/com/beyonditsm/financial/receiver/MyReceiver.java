@@ -10,12 +10,9 @@ import android.util.Log;
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.MessageActivity;
-import com.beyonditsm.financial.activity.manager.ManagerMainAct;
-import com.beyonditsm.financial.activity.servicer.ServiceMainAct;
 import com.beyonditsm.financial.db.MessageDao;
 import com.beyonditsm.financial.entity.MessageBean;
 import com.beyonditsm.financial.fragment.MineFragment;
-import com.beyonditsm.financial.fragment.ServiceMineFrg;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
@@ -66,28 +63,19 @@ public class MyReceiver extends BroadcastReceiver {
                     MessageDao.saveMes(mb);
                     context.sendBroadcast(new Intent(MessageActivity.MESSAGE));
                     context.sendBroadcast(new Intent(MainActivity.DISPLAY_REDPOINT));
-                    context.sendBroadcast(new Intent(ServiceMainAct.DISPLAY));
                     JSONObject object = new JSONObject(jsonType);
                     String type = object.getString("type");
 
                     MyLogUtils.info("type="+type);
                     String roleName = SpUtils.getRoleName(context);
                     switch (type) {
-                        case "12": //升级代言人推送
-                            MyLogUtils.info("升级代言人推送");
-                            SpUtils.setIsUpgrade(context, "isUpgrade");
-                            context.sendBroadcast(new Intent(ServiceMineFrg.DISPLAY_WALLET_RED));
-                            break;
-                        case "5":
+
                         case "7": //贷款推送
                             MyLogUtils.info("贷款推送");
                             if (!TextUtils.isEmpty(roleName)) {
-                                if ("ROLE_COMMON_CLIENT".equals(roleName)) {
                                     context.sendBroadcast(new Intent(MineFragment.UPDATE_MESSAGE));
                                     context.sendBroadcast(new Intent(MineFragment.DISPLAY_POINT));
-                                } else {
-                                    context.sendBroadcast(new Intent(ServiceMineFrg.DISPLAY_CREIDT_RED));
-                                }
+
                             }
                             String orderId = object.getString("orderId");
                             MyLogUtils.info("orderId+" + orderId);
@@ -99,11 +87,9 @@ public class MyReceiver extends BroadcastReceiver {
                             MyLogUtils.info("领取奖励推送");
                             SpUtils.setReceiveReward(context, "isReceive");
                             if (!TextUtils.isEmpty(roleName)) {
-                                if ("ROLE_COMMON_CLIENT".equals(roleName)) {
+
                                     context.sendBroadcast(new Intent(MineFragment.WALLET_POINT));
-                                } else {
-                                    context.sendBroadcast(new Intent(ServiceMineFrg.DISPLAY_WALLET_RED));
-                                }
+
                             }
 
                             break;
@@ -131,11 +117,8 @@ public class MyReceiver extends BroadcastReceiver {
                     JSONObject obj = new JSONObject(jsonType);
                     String type = obj.optString("type");
                     Intent i;
-                    if ("1".equals(type)) {
-                        i = new Intent(context, ManagerMainAct.class);
-                    } else {
                         i = new Intent(context, MainActivity.class);
-                    }
+
 
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     context.startActivity(i);

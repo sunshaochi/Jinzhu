@@ -2,7 +2,6 @@ package com.beyonditsm.financial.view;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -11,9 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.beyonditsm.financial.ConstantValue;
 import com.beyonditsm.financial.R;
-import com.beyonditsm.financial.activity.manager.OrderDetailAct;
 import com.beyonditsm.financial.entity.GrabOrderBean;
 
 /**
@@ -49,15 +46,6 @@ public class MyDialog {
         cancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        check.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, OrderDetailAct.class);
-                intent.putExtra(ConstantValue.ORDER,data);
-                context.startActivity(intent);
                 dialog.dismiss();
             }
         });

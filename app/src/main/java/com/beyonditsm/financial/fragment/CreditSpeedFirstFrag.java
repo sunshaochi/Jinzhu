@@ -213,19 +213,6 @@ public class CreditSpeedFirstFrag extends BaseFragment {
                     e.printStackTrace();
                 }
 
-                if (!TextUtils.isEmpty(yqm)) {
-                    RequestManager.getCommManager().myReferralCode(yqm, new RequestManager.CallBack() {
-                        @Override
-                        public void onSucess(String result) throws JSONException {
-
-                        }
-
-                        @Override
-                        public void onError(int status, String msg) {
-
-                        }
-                    });
-                }
             }
 
             @Override

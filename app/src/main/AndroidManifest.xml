@@ -161,9 +161,6 @@
         <!-- 上传附件 -->
         <!-- 补充资料 -->
         <activity
-            android:name=".activity.user.CreditPointAct"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.user.TiJiaoFuJianAct"
             android:screenOrientation="portrait" />
 
@@ -173,26 +170,6 @@
             android:screenOrientation="portrait" />
 
         <!-- 代言人主act -->
-        <activity
-            android:name=".activity.servicer.ServiceMainAct"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.VIEW" /> -->
-
-
-            <!-- <category android:name="android.intent.category.DEFAULT" /> -->
-
-
-            <!-- <data -->
-            <!-- android:host="com.beyonditsm.financial" -->
-            <!-- android:pathPrefix="/conversationlist" -->
-            <!-- android:scheme="rong" /> -->
-            <!-- </intent-filter> -->
-
-        </activity>
         <!-- 提现记录 -->
         <!-- 代言人设置界面 -->
         <!-- 代言人修改密码界面 -->
@@ -200,63 +177,19 @@
             android:name=".activity.servicer.ChangePwdAct"
             android:screenOrientation="portrait" />
         <!-- 代言人我的资料界面 -->
-        <activity
-            android:name=".activity.servicer.ServiceDataAct"
-            android:screenOrientation="portrait" />
 
         <!-- 代言人修改资料条目界面 -->
-        <activity
-            android:name=".activity.servicer.ServiceEditAct"
-            android:screenOrientation="portrait" />
         <!-- 信贷经理主界面 -->
-        <activity
-            android:name=".activity.manager.ManagerMainAct"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.VIEW" /> -->
-
-
-            <!-- <category android:name="android.intent.category.DEFAULT" /> -->
-
-
-            <!-- <data -->
-            <!-- android:host="com.beyonditsm.financial" -->
-            <!-- android:pathPrefix="/conversationlist" -->
-            <!-- android:scheme="rong" /> -->
-            <!-- </intent-filter> -->
-
-        </activity>
         <!-- 信贷经理订单管理界面 -->
-        <activity
-            android:name=".activity.manager.OrderAct"
-            android:screenOrientation="portrait" />
         <!-- 信贷经理订单详情界面 -->
-        <activity
-            android:name=".activity.manager.DribblewareAct"
-            android:screenOrientation="portrait" />
         <!-- 信贷经理修改个人资料界面以及个人资料界面 -->
-        <activity
-            android:name=".activity.manager.ManagerUpdateAct"
-            android:screenOrientation="portrait" />
         <!-- 信贷经理编辑个人资料界面 -->
-        <activity
-            android:name=".activity.manager.ManagerEditAct"
-            android:screenOrientation="portrait" />
         <!-- 选择性别界面 -->
 
 
         <!-- 信用耕耘界面 -->
         <!-- 做上传照片的任务 -->
-        <activity
-            android:name=".activity.user.DoTaskPicture"
-            android:screenOrientation="portrait" />
         <!-- 做最近游玩地方的任务 -->
-        <activity
-            android:name=".activity.user.DoTaskPlaceAct"
-            android:screenOrientation="portrait" />
         <!-- 评估界面 -->
         <!-- 查看图片界面 -->
         <activity
@@ -268,41 +201,20 @@
             android:screenOrientation="portrait" />
         <!-- 删除照片 -->
         <!-- 信用耕耘 -->
-        <activity
-            android:name=".activity.user.HardCreditAct"
-            android:screenOrientation="portrait" />
         <!-- 初级任务 -->
         <!-- 任务详情 -->
-        <activity
-            android:name=".activity.user.TaskDetail"
-            android:screenOrientation="portrait" />
         <!-- 补充资料 -->
         <activity
             android:name=".activity.user.SuppleInfoAct"
             android:screenOrientation="portrait" />
         <!-- 基本任务 -->
-        <activity
-            android:name=".activity.user.BaseTaskAct"
-            android:screenOrientation="portrait" />
         <!-- 中级任务 -->
         <!-- 高级任务 -->
         <!-- 完成传照片任务 -->
-        <activity
-            android:name=".activity.user.FinishTaskPicture"
-            android:screenOrientation="portrait" />
         <!-- 完成填写游玩地方任务 -->
-        <activity
-            android:name=".activity.user.FinishTaskPlaceAct"
-            android:screenOrientation="portrait" />
         <!-- 完成补充资料任务 -->
         <!-- 完成选择教育程度任务 -->
         <!-- 游戏 -->
-        <activity
-            android:name=".activity.user.GameActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.user.TaskLevelAct"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.manager.GetPictureAct"
             android:screenOrientation="portrait" />
@@ -317,9 +229,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.photo.ImageBrowserActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.manager.OrderDetailAct"
             android:screenOrientation="portrait" />
         <!-- 消息中心 -->
         <activity

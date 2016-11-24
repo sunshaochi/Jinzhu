@@ -1,7 +1,5 @@
 package com.beyonditsm.financial.http;
 
-import io.rong.imkit.common.RongConst;
-
 /**
  * Url
  * <p>
@@ -75,8 +73,6 @@ public interface IFinancialUrl {
 
     /*登录*/
     String LOGIN_URL = BASE_URL + API_VERSION + "/manager/unLogin/login.do";
-    /*验证手机号是否可用*/
-    String ISVALIDATE_URL = BASE_URL + API_VERSION + "/manager/unLogin/validateUsername.do";
     /*注册*/
     String REGISTER_URL = BASE_URL + API_VERSION + "/manager/unLogin/register.do";
     /*退出*/
@@ -95,15 +91,7 @@ public interface IFinancialUrl {
     String FIND_PRODUCT_LIST_URL = BASE_URL + API_VERSION + "/platform/unLogin/productList.do";
     /*我的贷款*/
     String USERCREDIT_URL = BASE_URL + API_VERSION + "/platform/login/findOrderListByUserName.do";
-    /*做任务*/
-    String DOTASK = BASE_URL + API_VERSION + "/assignmentInterface/login/addTaskAnswer.do";
-    /*任务策略*/
-    String TASK_STRATEGY = BASE_URL + API_VERSION + "/assignmentInterface/login/findTaskStrategyByTaskId.do";
-    /*获取所有任务(包括已完成)*/
-    String ALLTASK_URL = BASE_URL + API_VERSION + "/assignmentInterface/login/getAllTaskMsg.do";
-    /* 查询已完成、审核中的任务提交的信息*/
-    String FINISH_DO_URL = BASE_URL + API_VERSION + "/assignmentInterface/login/findTaskValueByTaskId.do";
-    /*查询我推荐的好友列表*/
+   /*查询我推荐的好友列表*/
     String FIND_MY_FRIEND_LIST_URL = BASE_URL + API_VERSION + "/platform/login/findMyFriendListByParams.do";
     /*得到移动端的产品列表页面，所有查询参数的选项*/
     String FIND_PRODUCT_SORT_PARA = BASE_URL + API_VERSION + "/platform/unLogin/getProductQueryOptions.do";
@@ -116,28 +104,12 @@ public interface IFinancialUrl {
     /* 根据id查看产品详情 */
     String FIND_ORDER_DETAIL = BASE_URL + API_VERSION + "/bankTerminal/unLogin/findProductById.do";
 
-    /*根据任务id查询任务*/
-    String FINDTASK_BY_TASKID_URL = BASE_URL + API_VERSION + "/assignmentInterface/login/findTaskBytaskIds.do";
-    /*获取代言人详细*/
+  /*获取代言人详细*/
     String SERVANT_URL = BASE_URL + API_VERSION + "/servant/login/servantDetail.do";
     /*修改代言人资料*/
     String UPDATE_SERVANT_URL = BASE_URL + API_VERSION + "/servant/login/modifyServant.do";
 
-    /* 查看当前登陆的信贷经理详情*/
-    String CURR_CREDIT_MANGER_DETAIL = BASE_URL + API_VERSION + "/bankTerminal/login/currLoginCreditManagerDetail.do";
-    /* 修改信贷经理信息*/
-    String UPDATE_CREDIT_DATAS = BASE_URL + API_VERSION + "/bankTerminal/login/modifyCreditManager.do";
-    /*信贷经理抢单列表*/
-    String GRAB_ORDER_URL = BASE_URL + API_VERSION + "/platform/login/findOrderListOfCm.do";
-    /*信贷经理已抢到的订单列表*/
-    String CM_ORDER_URL = BASE_URL + API_VERSION + "/platform/login/findOrderListOfCmEd.do";
-    /*信贷经理已提交、补件中、已放款、未通过的订单列表*/
-    String CM_COMMIT_ORDER_URL = BASE_URL + API_VERSION + "/platform/login/findOrderListOfCmCommitted.do";
-    /*信贷经理要求客户补件*/
-    String BJ_ORDER_URL = BASE_URL + API_VERSION + "/platform/login/cmBackOrderToAddFile.do";
-    /*信贷经理提交已抢到的订单*/
-    String COMMIT_ORDER_URL = BASE_URL + API_VERSION + "/platform/login/cmPassOrder.do";
-    /*信贷经理根据id号查询订单详情*/
+    /*根据id号查询订单详情*/
     String ORDER_DETAIL_URL = BASE_URL + API_VERSION + "/platform/login/orderDetail.do";
     /*上传文件*/
     String UPLOAD_URL = BASE_URL + API_VERSION + "/common/commonAPI/login/upLoadFile.do";
@@ -145,32 +117,15 @@ public interface IFinancialUrl {
     /*上传小图片文件*/
     String UPLOAD_small_URL = BASE_URL + API_VERSION + "/common/commonAPI/login/upLoadSmallImage.do";
 
-    /*抢单接口*/
-    String ORDER_GRAB_URL = BASE_URL + API_VERSION + "/platform/login/cmChooseOrder.do";
     /*客户提交订单*/
     String SUBMITORDER_URL = BASE_URL + API_VERSION + "/platform/login/submitOrder.do";
     /*忘记密码*/
     String FOGET_PWD_URL = BASE_URL + API_VERSION + "/manager/unLogin/forgetPassword.do";
     /*发送验证码找回密码的验证码 */
     String FPRGET_PWD_SMSCAPTCHA = BASE_URL + API_VERSION + "/manager/unLogin/forgetPasswordSmsCaptcha.do";
-    /*是否提交过升级 */
-    String ISSUBMIT_UP_URL = BASE_URL + API_VERSION + "/platform/login/isSubmitedUpgrade.do";
-    /*是否允许升级 */
-    String ISALLOW_UPGRADE_URL = BASE_URL + API_VERSION + "/platform/login/isAllowUpgrade.do";
-    /*升级代言人*/
-    String APPLY_LVUP_SERVANT_URL = BASE_URL + API_VERSION + "/servant/login/applyLvUpToServant.do";
-    /*计算月供*/
+      /*计算月供*/
     String MONTH_PAY_URL = BASE_URL + API_VERSION + "/common/commonAPI/unLogin/calcMonthlyPayments.do";
-    /*通过推荐码 加好友*/
-    String MYREFERRALCODE_URL = BASE_URL + API_VERSION + "/rongCloudAPIcontroller/login/addFriendByMyReferralCode.do";
-    /*通过账号id获取好友列表*/
-    String FRIENDLIST_URL = BASE_URL + API_VERSION + "/rongCloudAPIcontroller/login/findFriendListById.do";
-    /*信贷经理抢单成功后加客户为好友*/
-    String ADDFRIENDABOUTORDER_URL = BASE_URL + API_VERSION + "/rongCloudAPIcontroller/login/addFriendAboutOrder.do";
-    /*获取信用分超过多少用户*/
-    String GET_SCORE_PER_URL = BASE_URL + API_VERSION + "/platform/login/findToGetCreditScorePer.do";
-    /*上传其他附件*/
-    String UPLOAD_OTHER_URL = BASE_URL + API_VERSION + "/common/commonAPI/login/uploadOtherAccessory.do";
+
     /*上传附件*/
     String SUBMIT_FUJIAN_URL = BASE_URL + API_VERSION + "/common/commonAPI/login/uploadOtherAccessory.do";
     /*获取附件图片*/
@@ -178,8 +133,6 @@ public interface IFinancialUrl {
 
     /*更改订单状态*/
     String UPDATE_ORDER = BASE_URL + API_VERSION + "/platform/login/customerOperationOrder.do";
-    /*添加好友*/
-    String ADD_FRIEND_URL = BASE_URL + API_VERSION + "/platform/login/findBookAddByPhone.do";
     /*移动端获取上次使用的地区*/
     String GET_MOBILE_LAST_REGION_URL = BASE_URL + API_VERSION + "/platform/unLogin/getMobileLastRegion.do";
     /*检查版本更新*/
@@ -233,10 +186,6 @@ public interface IFinancialUrl {
     String APPLAY_CREDIT_STATUS = BASE_URL + API_VERSION + "/platform/login/applyCreditStatus.do";
     /*跳过某个流程*/
     String SKIP_FLOW = BASE_URL + API_VERSION + "/platform/login/skipFlow.do";
-    /*代言人条件获取*/
-    String SERVANT_COND_INFO = BASE_URL + API_VERSION + "/servant/login/getServantCondInfo.do";
-    /*成为代言人*/
-    String APPLY_TO_SERVANT = BASE_URL + API_VERSION + "/servant/login/applyToServant.do";
     //    /*代言人推荐信息获取*/
     String SERVANT_RMD_INFO = BASE_URL + API_VERSION + "/servant/login/getServantSummary.do";
     //    /*代言人推荐信息获取*/
@@ -247,32 +196,11 @@ public interface IFinancialUrl {
     String MIN_EXCHANGE = BASE_URL + API_VERSION + "/wallet/login/ifGetMinExchange.do";
     /*领取奖励（修改资料）*/
     String RECEIVE_REWARD = BASE_URL + API_VERSION + "/creditCard/login/modifyClient.do";
-    /*查询角色信息*/
-    String ROLE_INTO = BASE_URL + API_VERSION + "/servant/login/getRoleInfo.do";
-    /*Vip信息*/
-
-    String VIP_INFO = BASE_URL + API_VERSION + "/manager/unlogin/findVipInfo.do";
     /*更新位置*/
     String UPDATE_LOCATION = BASE_URL + API_VERSION + "/platform/login/updateLocation.do";
     /*线下订单上传资料*/
     String SAVE_OR_UPDATE_ORDER_IMAGE = BASE_URL + API_VERSION + "/platform/login/saveOrUpdateOrderImage.do";
-    /*查询移动/H5首页前5条端咨询信息 */
-    String FIND_NEWS_MOBILE_INDEX = BASE_URL + API_VERSION + "/platform/unLogin/findNewsMobileIndex.do";
-    /* 查询移动/H5端更多咨询信息 */
-    String FIND_NEWS_MOBILE_MORE = BASE_URL+API_VERSION + "/platform/unLogin/findNewsMobileMore.do";
-    /*热门城市接口获取*/
-    String GET_HOT_CITY = BASE_URL+API_VERSION+"/platform/unLogin/getAreaPanelData.do";
-    /*根据ID进行文章翻页接口*/
-    String FIND_UP_AND_DOWN_ROW = BASE_URL + API_VERSION + "/platform/unLogin/findUpAndDownRowMobile.do";
-    /*查询帮助主题*/
-    String FIND_HELP_ALLS =  BASE_URL+API_VERSION+"/platform/information/findAlls.do";
-    /*查询帮助文章（根据主题id（themeId）查询文章信息接口）*/
-    String FIND_HELP_DETAIL = BASE_URL +API_VERSION +"/platform/information/findActicleByThemeIdInter.do";
-    /*获取图形验证码*/
-    String IMAGE_CAPTCHA = BASE_URL + API_VERSION +"/captcha/imageCaptcha.do";
-    /*验证图形验证码*/
-    String SMS_CAPTCHA_FOGET_PASSWORD = BASE_URL +API_VERSION + "/manager/unLogin/smsCaptchaFogetPassword.do";
-
+    /*获取信用卡信息*/
     String GET_CREDIT_CARD_INFO = BASE_URL + API_VERSION + "/creditCard/unlogin/getCreditCards.do";
     /*在登录状态，点击申卡时,调用统计函数*/
     String APPLY_CREDIT_CARD_CLICK = BASE_URL + API_VERSION + "/creditCard/login/applyCreditCardClick.do";
@@ -288,20 +216,12 @@ public interface IFinancialUrl {
     String MARITALE = BASE_URL + API_VERSION + "/platform/unlogin/Maritale.do";
     /*学历状况下拉接口*/
     String EDUCATION = BASE_URL + API_VERSION + "/platform/unlogin/Education.do";
-    /*居住状况下拉接口*/
-    String LIVE = BASE_URL + API_VERSION + "/platform/unlogin/Live.do";
     /*单位性质*/
     String QUERY_UNIT_PROPERTY = BASE_URL + API_VERSION + "/platform/unlogin/queryUnitProperty.do";
     /*工作性质*/
     String QUERY_WORK_PROPERTY = BASE_URL + API_VERSION + "/platform/unlogin/queryWorkingProperty.do";
     /*月薪发放形式*/
     String QUERY_SALARY = BASE_URL + API_VERSION + "/platform/unlogin/querySalary.do";
-    /*银行机构*/
-    String QUERY_SPEED_BANK = BASE_URL + API_VERSION + "/platform/unlogin/queryBank.do";
-    /*还款期限下拉*/
-    String LOAN_DEAD_LINE = BASE_URL + API_VERSION + "/platform/unlogin/LoanDeadLine.do";
-    /*紧急联系人*/
-    String CONTACT = BASE_URL + API_VERSION + "/platform/unlogin/Contact.do";
     /*省份接口*/
     String QUERY_ALL_PROVINCE = BASE_URL + API_VERSION + "/platform/unlogin/queryAllProvince.do";
     /*区域接口*/

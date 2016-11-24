@@ -21,7 +21,6 @@ import com.beyonditsm.financial.AppManager;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.credit.CreditStepAct;
-import com.beyonditsm.financial.activity.vip.VipAct;
 import com.beyonditsm.financial.entity.ProductInfo;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserLoginEntity;
@@ -29,7 +28,6 @@ import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
-import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.widget.DialogChooseMonth;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -449,16 +447,6 @@ public class HomeCreditDetailAct extends BaseActivity {
 
                 break;
 
-            case R.id.tvBuy://购买VIP
-                if (!TextUtils.isEmpty(SpUtils.getRoleName(getApplicationContext()))){
-                    intent = new Intent(HomeCreditDetailAct.this, VipAct.class);
-                    intent.putExtra("user", ule);
-                }else{
-                    intent = new Intent(HomeCreditDetailAct.this,LoginAct.class);
-                }
-
-                startActivity(intent);
-                break;
         }
     }
 

@@ -9,7 +9,6 @@ import android.view.View;
 
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
-import com.beyonditsm.financial.activity.manager.ManagerMainAct;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
@@ -80,20 +79,11 @@ public class SplashAct extends BaseActivity implements LocationListener{
             } else {
                 String roleName = SpUtils.getRoleName(getApplicationContext());
                 switch (roleName) {
-                    case "ROLE_CREDIT_MANAGER":
-                        sendBroadcast(new Intent(ManagerMainAct.UPDATATAB));
-                        gotoActivity(ManagerMainAct.class, true);
-                        int version = Integer.valueOf(android.os.Build.VERSION.SDK);
-                        if(version  >= 5) {
-                            overridePendingTransition(R.anim.fade, R.anim.hold);;  //此为自定义的动画效果，下面两个为系统的动画效果
-                            //overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
-                            //overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
-                        }
-                        break;
+
                     case "ROLE_COMMON_CLIENT":
                         sendBroadcast(new Intent(MainActivity.UPDATATAB));
                         gotoActivity(MainActivity.class, true);
-                        version = Integer.valueOf(android.os.Build.VERSION.SDK);
+                        int version = Integer.valueOf(android.os.Build.VERSION.SDK);
                         if(version  >= 5) {
                             overridePendingTransition(R.anim.fade, R.anim.hold);;  //此为自定义的动画效果，下面两个为系统的动画效果
                             //overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);

@@ -1,14 +1,11 @@
 package com.beyonditsm.financial.activity;
 
-import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,24 +16,19 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
-import com.beyonditsm.financial.RongCloudEvent;
 import com.beyonditsm.financial.activity.speedcredit.creditspeedthied.CreditSpeedThird_2Act;
-import com.beyonditsm.financial.activity.user.AddressBookAct;
 import com.beyonditsm.financial.activity.user.BannerDetailAct;
-import com.beyonditsm.financial.activity.user.GameActivity;
 import com.beyonditsm.financial.activity.user.LoginAct;
 import com.beyonditsm.financial.db.FriendDao;
 import com.beyonditsm.financial.entity.FriendBean;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.fragment.CreditFragment;
-import com.beyonditsm.financial.fragment.FriendFrg;
 import com.beyonditsm.financial.fragment.HomeFragment;
 import com.beyonditsm.financial.fragment.MineFragment;
 import com.beyonditsm.financial.http.IFinancialUrl;
@@ -45,11 +37,9 @@ import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GeneralUtils;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
-import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
 import com.lidroid.xutils.util.LogUtils;
-import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.eventbus.EventBus;
 
@@ -124,8 +114,6 @@ public class MainActivity extends BaseActivity {
             myCreditFgt = fragment;
         } else if (creditFgt == null && fragment instanceof CreditFragment) {
             creditFgt = fragment;
-        } else if (friendFgt == null && fragment instanceof FriendFrg) {
-            friendFgt = fragment;
         } else if (mineFgt == null && fragment instanceof MineFragment) {
             mineFgt = fragment;
         }
@@ -261,26 +249,7 @@ public class MainActivity extends BaseActivity {
                 break;
             //沟通
             case R.id.llChat:
-                if (TextUtils.isEmpty(SpUtils.getRoleName(MainActivity.this))) {
-                    gotoActivity(LoginAct.class, false);
-                } else {
-                    switch (title) {
-                        case 1:
-                            setAllTabNor();
-                            setTitleTabNor();
-                            setTabSelection(2);
-                            setTitleCheckItem(0);
-                            setCheckItem(2);
-                            break;
-                        case 2:
-                            setAllTabNor();
-                            setTitleTabNor();
-                            setTabSelection(4);
-                            setTitleCheckItem(1);
-                            setCheckItem(2);
-                            break;
-                    }
-                }
+
                 break;
             //我的
             case R.id.llMine:
@@ -292,36 +261,7 @@ public class MainActivity extends BaseActivity {
                     setCheckItem(3);
                 }
                 break;
-            //添加通讯录好友
-            case R.id.add_friend:
-//                if (Build.VERSION.SDK_INT >= 23) {
-//                    findContactsPermission();
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
-                    Intent intent = new Intent(MainActivity.this, AddressBookAct.class);
-                    startActivity(intent);
-                } else {
-                    MyToastUtils.showShortToast(getApplicationContext(), "请在设置中勾选应用的通讯录权限");
-                }
 
-                break;
-            //顶部沟通按钮
-            case R.id.title_chat:
-                title = 1;
-                setAllTabNor();
-                setTitleTabNor();
-                setTabSelection(2);
-                setTitleCheckItem(0);
-                setCheckItem(2);
-                break;
-            //顶部好友按钮
-            case R.id.title_friend:
-                title = 2;
-                setAllTabNor();
-                setTitleTabNor();
-                setTabSelection(4);
-                setTitleCheckItem(1);
-                setCheckItem(2);
-                break;
         }
     }
 
@@ -419,7 +359,6 @@ public class MainActivity extends BaseActivity {
             case 4:
                 main_title.setVisibility(View.VISIBLE);
                 if (friendFgt == null) {
-                    friendFgt = new FriendFrg();
                     transaction.add(R.id.main_frame, friendFgt, "common");
                 } else {
                     transaction.show(friendFgt);
@@ -581,21 +520,9 @@ public class MainActivity extends BaseActivity {
         public void onReceive(Context context, Intent intent) {
 
             setAllTabNor();
-            if (intent.getIntExtra(GameActivity.GAME_TYPE, 0) == 0) {
-                setTabSelection(0);
-                setCheckItem(0);
-                String token = SpUtils.getToken(MainActivity.this);
-                if (!TextUtils.isEmpty(token)) {
-                    if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
-                        RongCloudEvent.getInstance().getFriendList();
-                        RongIM.getInstance().setOnReceiveUnreadCountChangedListener
-                                (new MyReceiveUnreadCountChangedListener(), Conversation.ConversationType.PRIVATE);
-                    }
-                }
-            } else {
+
                 setTabSelection(1);
                 setCheckItem(1);
-            }
 
         }
     }

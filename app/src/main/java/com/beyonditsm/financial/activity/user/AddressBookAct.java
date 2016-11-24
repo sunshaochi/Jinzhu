@@ -10,32 +10,17 @@ import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
-import com.beyonditsm.financial.activity.MainActivity;
-import com.beyonditsm.financial.activity.manager.ManagerMainAct;
 import com.beyonditsm.financial.adapter.AddressBookAdapter;
-import com.beyonditsm.financial.db.FriendDao;
-import com.beyonditsm.financial.entity.FriendBean;
 import com.beyonditsm.financial.entity.PhoneInfo;
-import com.beyonditsm.financial.fragment.FriendFrg;
-import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.CharacterParserUtils;
 import com.beyonditsm.financial.util.GetPhoneNumberUtils;
-import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.PinyinComparator;
 import com.beyonditsm.financial.util.SideBarUtils;
-import com.beyonditsm.financial.util.SpUtils;
-import com.lidroid.xutils.util.LogUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
 
 /**
  * Created by gxy on 2015/11/24
@@ -86,7 +71,6 @@ public class AddressBookAct extends BaseActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String phone_num = list.get(position).getPhoneNumber();
-                addFriend(phone_num.replace("-", "").replace(" ", ""));
             }
         });
     }
@@ -117,56 +101,6 @@ public class AddressBookAct extends BaseActivity {
     }
 
 
-    private void addFriend(final String phone) {
-        RequestManager.getCommManager().addFriend(phone, new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
-                JSONObject jsonObject = new JSONObject(result);
-                JSONObject jsonData = jsonObject.optJSONObject("data");
-                String status = jsonData.optString("status");
-                if ("noRegister".equals(status)) {
-
-                    sendMess("邀请注册", phone);
-                } else if ("noFirend".equals(status)) {
-                    sendBroadcast(new Intent(FriendFrg.UPDATA));
-                    String roleName = SpUtils.getRoleName(getApplicationContext());
-                    switch (roleName) {
-                        case "ROLE_CREDIT_MANAGER":
-                            sendBroadcast(new Intent(ManagerMainAct.UPDATATAB));
-                            break;
-                        case "ROLE_COMMON_CLIENT":
-                            sendBroadcast(new Intent(MainActivity.UPDATATAB));
-                            break;
-                        default:
-                            sendBroadcast(new Intent(MainActivity.UPDATATAB));
-//                        sendBroadcast(new Intent(ServiceMainAct.UPDATATAB));
-                            break;
-                    }
-                    MyToastUtils.showShortToast(getApplicationContext(), jsonData.optString("message"));
-                } else  {
-                    JSONObject data = jsonData.getJSONObject("data");
-                    String rcNickname = data.optString("rcNickname");
-                    String rcHeadPic = data.optString("rcHeadPic");
-                    String id = data.optString("id");
-                    LogUtils.i(id+rcHeadPic+rcNickname);
-                    if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
-                        RongIM.getInstance().startPrivateChat(AddressBookAct.this, id, rcNickname);
-                    }
-                    FriendBean friendBean = new FriendBean();
-                    friendBean.setUserId(id);
-                    friendBean.setUserName(rcNickname);
-                    friendBean.setUserHead(rcHeadPic);
-                    FriendDao.saveMes(friendBean);
-                }
-
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-
-            }
-        });
-    }
 
     private void sendMess(String message, String number) {
         Uri smsToUri = Uri.parse("smsto:" + number);

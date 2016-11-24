@@ -118,8 +118,6 @@ public class MyCreditAct extends BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
-                Intent intent = new Intent(GameActivity.RELOAD);
-                sendBroadcast(intent);
             }
         });
 

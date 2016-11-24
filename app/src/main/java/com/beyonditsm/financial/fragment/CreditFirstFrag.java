@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.ConstantValue;
@@ -213,19 +212,7 @@ public class CreditFirstFrag extends BaseFragment {
                     e.printStackTrace();
                 }
 
-                if (!TextUtils.isEmpty(yqm)) {
-                    RequestManager.getCommManager().myReferralCode(yqm, new RequestManager.CallBack() {
-                        @Override
-                        public void onSucess(String result) throws JSONException {
 
-                        }
-
-                        @Override
-                        public void onError(int status, String msg) {
-
-                        }
-                    });
-                }
             }
 
             @Override

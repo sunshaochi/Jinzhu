@@ -4,23 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
-import android.text.TextUtils;
 import android.view.View;
 
 import com.beyonditsm.financial.activity.PhotoActivity;
 import com.beyonditsm.financial.db.FriendDao;
 import com.beyonditsm.financial.entity.FriendBean;
 import com.beyonditsm.financial.entity.FriendEntity;
-import com.beyonditsm.financial.http.IFinancialUrl;
-import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.widget.MyProvider;
 import com.tandong.sa.json.Gson;
-import com.tandong.sa.json.reflect.TypeToken;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +23,6 @@ import io.rong.imkit.model.UIConversation;
 import io.rong.imkit.widget.provider.CameraInputProvider;
 import io.rong.imkit.widget.provider.ImageInputProvider;
 import io.rong.imkit.widget.provider.InputProvider;
-import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
@@ -103,9 +94,7 @@ public final class RongCloudEvent implements RongIM.UserInfoProvider, RongIM.Con
      */
     private void initDefaultListener() {
         String token = SpUtils.getToken(mContext);
-        if (!TextUtils.isEmpty(token)) {
-            getFriendList();
-        }
+
         RongIM.setUserInfoProvider(this, true);//设置用户信息提供者。
         RongIM.setConversationBehaviorListener(this);//设置会话界面操作的监听器。
         RongIM.setConversationListBehaviorListener(this);
@@ -114,44 +103,7 @@ public final class RongCloudEvent implements RongIM.UserInfoProvider, RongIM.Con
         RongIM.getInstance().setMessageAttachedUserInfo(true);
     }
 
-    public void getFriendList() {
-        //获取好友列表
-        RequestManager.getCommManager().getFriendList(new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
 
-                JSONObject obj = new JSONObject(result);
-                JSONArray array = obj.getJSONArray("data");
-//                friends = gson.fromJson(array.toString(), new TypeToken<List<UserEntity>>() {
-//                }.getType());
-                friends = gson.fromJson(array.toString(), new TypeToken<List<FriendEntity>>() {
-                }.getType());
-                if (friends != null && friends.size() > 0) {
-                    for (int i = 0; i < friends.size(); i++) {
-                        FriendBean friendBean = new FriendBean();
-                        friendBean.setUserId(friends.get(i).getAccountId());
-                        friendBean.setUserHead(IFinancialUrl.BASE_IMAGE_URL + friends.get(i).getRcHendPic());
-                        if (TextUtils.isEmpty(friends.get(i).getManaName()))
-                            friendBean.setUserName(friends.get(i).getTel());
-                        else
-                            friendBean.setUserName(friends.get(i).getManaName());
-
-//                        friendBean.setUserHead(IFinancialUrl.BASE_IMAGE_URL + friends.get(i).getHeadIcon());
-//                        if (TextUtils.isEmpty(friends.get(i).getUserName()))
-//                            friendBean.setUserName(friends.get(i).getMobile());
-//                        else
-//                            friendBean.setUserName(friends.get(i).getUserName());
-                        FriendDao.saveMes(friendBean);
-                    }
-                }
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-
-            }
-        });
-    }
     /**
      * 连接成功注册。
      * <p>

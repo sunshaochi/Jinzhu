@@ -8,28 +8,21 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcelable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.credit.CreditStepAct;
 import com.beyonditsm.financial.activity.credit.MyCreditDAct;
-import com.beyonditsm.financial.activity.credit.SubFlowAct;
 import com.beyonditsm.financial.activity.speedcredit.CreditSpeedSecond_2Act;
 import com.beyonditsm.financial.activity.speedcredit.CreditSpeedSecond_3Act;
 import com.beyonditsm.financial.activity.speedcredit.creditspeedthied.CreditSpeedThird_2Act;
-import com.beyonditsm.financial.activity.user.FinishTaskPicture;
-import com.beyonditsm.financial.activity.user.FinishTaskPlaceAct;
-import com.beyonditsm.financial.activity.user.TaskLevelAct;
 import com.beyonditsm.financial.activity.user.TiJiaoFuJianAct;
 import com.beyonditsm.financial.adapter.PrimaryTaskAdapter;
 import com.beyonditsm.financial.db.FriendDao;
@@ -42,9 +35,7 @@ import com.beyonditsm.financial.http.CommManager;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.AddressUtil;
-import com.beyonditsm.financial.util.Arith;
 import com.beyonditsm.financial.util.CheckUtil;
-import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.widget.FinalLoadDialog;
@@ -53,7 +44,6 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.animation.ObjectAnimator;
 import com.tandong.sa.json.Gson;
-import com.tandong.sa.json.reflect.TypeToken;
 import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
 import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
@@ -61,7 +51,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -312,24 +301,9 @@ public class SpeedCreditDetailFragment extends BaseFragment {
 
     @Override
     public void setListener() {
-        mlv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                if (taskEntityList.get(position).getTaskStatus() != -1) {
-                    if ((taskEntityList.get(position).getTaskStatus() == 0) || (taskEntityList.get(position).getTaskStatus() == 1)) {
-                        findTaskDetail(taskEntityList.get(position), position);
 
-                    }
-                }
-            }
-        });
-        loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
-            @Override
-            public void OnRetry() {
-                ShortLoanOrderDetail(rowe.getId());
-            }
-        });
     }
+
 
     @OnClick({R.id.rlzl, R.id.rlzz, R.id.rlts, R.id.bj, R.id.tvUpload, R.id.tvUpCredit,R.id.rlcl,R.id.rl_relativeInfo ,R.id.rlmdxx})
     public void onClick(View v) {
@@ -818,38 +792,7 @@ public class SpeedCreditDetailFragment extends BaseFragment {
     private List<TaskEntity> taskEntityList, finishList;//任务列表
     private PrimaryTaskAdapter adapter;
 
-    /**
-     * 根据任务id查询任务列表内容
-     *
-     * @param taskId 任务id
-     */
-    private void findTaskBytaskIds(String taskId) {
-        RequestManager.getUserManager().findTaskBytaskIds(taskId, new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
-                JSONObject jsonObject = new JSONObject(result);
-                JSONArray dataArr = jsonObject.getJSONArray("data");
-                Gson gson = new Gson();
-                taskEntityList = gson.fromJson(dataArr.toString(), new TypeToken<List<TaskEntity>>() {
-                }.getType());
 
-                if (taskEntityList.size() != 0 && adapter == null) {
-                    adapter = new PrimaryTaskAdapter(taskEntityList, context);
-                    mlv.setAdapter(adapter);
-                } else {
-                    if (taskEntityList.size() != 0) {
-                        adapter.notifyChange(taskEntityList);
-                    }
-                }
-                //    Toast.makeText(getContext(),result,Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-                Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     @OnClick({R.id.start_msg})
     public void todo(View v) {
@@ -878,51 +821,7 @@ public class SpeedCreditDetailFragment extends BaseFragment {
         }
     }
 
-    /**
-     * 跳转到对应的已做过任务的activity
-     *
-     * @param list     任务列表
-     * @param position 点击的位置
-     */
-    private void selectToFinishAct(List<TaskEntity> list, int position) {
-        Intent intent;
-        intent = new Intent();
-        intent.putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) list);
-        intent.putExtra("position", position);
-        if (list.get(0).getValueType() == 0) {
-            intent.setClass(getContext(), FinishTaskPlaceAct.class);
-        } else if (list.get(0).getValueType() == 1) {
-            intent.setClass(getContext(), FinishTaskPicture.class);
-        }
-        startActivity(intent);
-    }
 
-    /**
-     * 根据任务查询任务详情（审核中，已完成）
-     *
-     * @param taskEntity 任务实体类
-     */
-    private void findTaskDetail(TaskEntity taskEntity, final int position) {
-        dialog.show();
-        RequestManager.getUserManager().findProTaskDetail(taskEntity, new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
-                dialog.cancel();
-                JSONObject jsonObject = new JSONObject(result);
-                JSONArray dataArr = jsonObject.getJSONArray("data");
-                Gson gson = new Gson();
-                finishList = gson.fromJson(dataArr.toString(), new TypeToken<List<TaskEntity>>() {
-                }.getType());
-                selectToFinishAct(finishList, position);
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-                dialog.cancel();
-                MyToastUtils.showShortToast(getActivity(), msg);
-            }
-        });
-    }
 
     @Override
     public void onStart() {
@@ -934,7 +833,6 @@ public class SpeedCreditDetailFragment extends BaseFragment {
             order_receiver = new SpeedCreditDetailFragment.OrderBroadCastReceiver();
         }
         getActivity().registerReceiver(order_receiver, new IntentFilter(UPDATE_ORDER));
-        getActivity().registerReceiver(receiver, new IntentFilter(TaskLevelAct.UPDATE_LIST));
     }
 
     @Override
@@ -953,7 +851,6 @@ public class SpeedCreditDetailFragment extends BaseFragment {
     public class MyBroadCastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            findTaskBytaskIds(data.getTaskManageId());
         }
     }
 }

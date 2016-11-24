@@ -1,12 +1,10 @@
 package com.beyonditsm.financial.widget;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 
 import com.beyonditsm.financial.R;
-import com.beyonditsm.financial.activity.user.HardCreditAct;
 
 import io.rong.imkit.RongContext;
 import io.rong.imkit.widget.provider.InputProvider;
@@ -37,10 +35,6 @@ public class MyProvider extends InputProvider.ExtendProvider {
 
     @Override
     public void onPluginClick(View view) {
-        Intent intent = new Intent(context, HardCreditAct.class);
-        intent.putExtra("flag",10);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
 //        startActivityForResult(intent, MYRESULT);
     }
 

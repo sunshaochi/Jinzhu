@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
@@ -15,36 +14,26 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.ConstantValue;
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.MainActivity;
-import com.beyonditsm.financial.activity.credit.CreditGuideAct;
-import com.beyonditsm.financial.activity.user.BannerDetailAct;
-import com.beyonditsm.financial.activity.newscenter.NewsCenterActivity;
-import com.beyonditsm.financial.activity.newscenter.NewsDetailActivity;
-import com.beyonditsm.financial.activity.user.creditcard.CreditCardAct;
 import com.beyonditsm.financial.activity.speedcredit.CreditSpeedSecond_2Act;
 import com.beyonditsm.financial.activity.user.BannerDetailAct;
-import com.beyonditsm.financial.activity.user.GameActivity;
 import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
 import com.beyonditsm.financial.activity.user.LoginAct;
 import com.beyonditsm.financial.activity.user.MyRecommAct;
 import com.beyonditsm.financial.activity.user.creditcard.CreditCardAct;
 import com.beyonditsm.financial.adapter.HomeCreditAdapter;
-import com.beyonditsm.financial.entity.BannerEntity;
 import com.beyonditsm.financial.adapter.HotNewsAdapter;
+import com.beyonditsm.financial.entity.BannerEntity;
 import com.beyonditsm.financial.entity.HomeHotProductEntity;
 import com.beyonditsm.financial.entity.HotNewsEntity;
 import com.beyonditsm.financial.entity.HotProduct;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserLoginEntity;
-import com.beyonditsm.financial.http.CommManager;
-import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
@@ -72,7 +61,6 @@ import com.tandong.sa.eventbus.EventBus;
 import com.tandong.sa.json.Gson;
 import com.tandong.sa.json.reflect.TypeToken;
 import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
-import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -112,16 +100,6 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
     private LinearLayout llHeader;
     @ViewInject(R.id.rl_title_layout)
     private RelativeLayout rlTitleLayout;
-    @ViewInject(R.id.tv_checkMore)
-    private TextView tvCheckMore;
-    @ViewInject(R.id.lv_newsCenter)
-    private ListView lvNewsCenter;
-    @ViewInject(R.id.iv_firstNews)
-    private ImageView ivFirstNews;
-    @ViewInject(R.id.iv_secNews)
-    private ImageView ivSecNews;
-    private HotNewsEntity firstNews;
-    private HotNewsEntity secNews;
 //    @ViewInject(R.id.rl_statusBar)
 //    private RelativeLayout rlStatusBar;
     private int currentPage = 1;
@@ -264,11 +242,10 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
 
         getHotProductList(currentPage);
         getBanner();
-        getNewsIndex();
         loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
             @Override
             public void OnRetry() {
-                getNewsIndex();
+
                 getHotProductList(currentPage);
             }
         });
@@ -308,22 +285,14 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
         });
     }
 
-    @OnClick({R.id.ll_credit, R.id.ll_tillage, R.id.ll_work, R.id.ivSuspen, R.id.ll_creditCard, R.id.ll_gps, R.id.tv_checkMore, R.id.iv_firstNews, R.id.iv_secNews})
+    @OnClick({R.id.ll_credit, R.id.ll_tillage, R.id.ll_work, R.id.ivSuspen, R.id.ll_creditCard, R.id.ll_gps})
     public void toClick(View v) {
         Intent intent;
         switch (v.getId()) {
             case R.id.ll_credit://我要贷款
                 EventBus.getDefault().post(new ToSwitchEvent());
                 break;
-            case R.id.ll_tillage://信用耕耘
-                if (TextUtils.isEmpty(SpUtils.getRoleName(context) + "")) {
-                    Intent goLog = new Intent(context, LoginAct.class);
-                    context.startActivity(goLog);
-                } else {
-                    intent = new Intent(mParentActivity, GameActivity.class);
-                    startActivity(intent);
-                }
-                break;
+
             case R.id.ll_work://打工挣钱
                 if (!"".equals(SpUtils.getRoleName(context))) {
 //                    intent = new Intent(mParentActivity, NewWorkAct.class);//跳转打工挣钱页面
@@ -355,10 +324,7 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
                     startActivity(intent);
                 }
                 break;
-            case R.id.tv_checkMore://咨询中心查看更多
-                intent = new Intent(mParentActivity, NewsCenterActivity.class);
-                startActivity(intent);
-                break;
+
             case R.id.ll_gps://GPS
                 DialogChooseCity dialogChooseAdress1 = new DialogChooseCity(context).builder();
                 dialogChooseAdress1.show();
@@ -392,16 +358,7 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
                     }
                 });
                 break;
-            case R.id.iv_firstNews:
-                Intent intent2 = new Intent(mParentActivity, NewsDetailActivity.class);
-                intent2.putExtra("hotnews", firstNews);
-                startActivity(intent2);
-                break;
-            case R.id.iv_secNews:
-                Intent intent3 = new Intent(mParentActivity, NewsDetailActivity.class);
-                intent3.putExtra("hotnews", secNews);
-                startActivity(intent3);
-                break;
+
         }
     }
 
@@ -634,73 +591,7 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
 
     }
 
-    public void getNewsIndex() {
-        CommManager.getCommManager().findNewsMobileIndex(new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
-                newsLoaded = true;
-                if (productLoaded) {
-                    loadingView.loadComplete();
-                }
-                JSONObject object = new JSONObject(result);
-                JSONArray data = object.getJSONArray("data");
-                Gson gson = new Gson();
 
-                hotNewsList = gson.fromJson(data.toString(), new TypeToken<List<HotNewsEntity>>() {
-                }.getType());
-
-                if (hotNewsList == null || hotNewsList.size() == 0) {
-//                    adapter.setDatas(datas ,isLast(cardList));
-//                    adapter.setOnCreditCardListner(CreditCardAct.this);
-//                    adapter.notifyDataSetChanged();
-                    loadingView.noContent();
-                    return;
-                }
-                for (int i = 0; i < hotNewsList.size(); i++) {
-                    MyLogUtils.info("Weights:" + hotNewsList.get(i).getWeights() + "");
-                    if (hotNewsList.get(i).getWeights() == 6) {
-                        MyLogUtils.info("BASE_IMAGE_URL:" + hotNewsList.get(i).getPictrue() + "");
-                        ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + hotNewsList.get(i).getPictrue(), ivFirstNews, options);
-                        firstNews = hotNewsList.get(i);
-                        hotNewsList.remove(i);
-                        i--;
-                    } else if (hotNewsList.get(i).getWeights() == 7) {
-                        MyLogUtils.info("BASE_IMAGE_URL:" + hotNewsList.get(i).getPictrue() + "");
-                        ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + hotNewsList.get(i).getPictrue(), ivSecNews, options);
-                        secNews = hotNewsList.get(i);
-                        hotNewsList.remove(i);
-                    }
-                }
-                if (hotNewsAdapter == null) {
-                    hotNewsAdapter = new HotNewsAdapter(mParentActivity, hotNewsList);
-                    lvNewsCenter.setAdapter(hotNewsAdapter);
-                    Uitls.setListViewHeightBasedOnChildren(lvNewsCenter);
-//                    hotNewsAdapter.setOnCreditCardListner(mParentActivity);
-
-                } else {
-                    hotNewsAdapter.setDatas(hotNewsList);
-//                    hotNewsAdapter.setOnCreditCardListner(mParentActivity);
-                    hotNewsAdapter.notifyDataSetChanged();
-                    Uitls.setListViewHeightBasedOnChildren(lvNewsCenter);
-                }
-
-                lvNewsCenter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent intent = new Intent(mParentActivity, NewsDetailActivity.class);
-                        intent.putExtra("hotnews", hotNewsList.get(position));
-                        startActivity(intent);
-                    }
-                });
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-                newsLoaded = false;
-                loadingView.loadError();
-            }
-        });
-    }
 
 
     @Override

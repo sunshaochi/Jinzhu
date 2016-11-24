@@ -11,17 +11,13 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.AppManager;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
-import com.beyonditsm.financial.http.CommManager;
-import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
-import com.beyonditsm.financial.util.Code;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.view.ValidateImageView;
@@ -29,7 +25,6 @@ import com.beyonditsm.financial.widget.ClearEditText;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
-import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
 import org.json.JSONException;
 
@@ -124,23 +119,6 @@ public class FindPwdAct extends BaseActivity {
         });
     }
 
-    private void SMSCaptchaFogetPassword(String phoneNumber, String code) {
-        CommManager.getCommManager().SMSCaptchaFogetPassword(code, "false", phoneNumber, new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
-                Intent intent = new Intent(FindPwdAct.this, UpdatePwdAct.class);
-                intent.putExtra(PHONENUM, name);
-//                intent.putExtra(CAPTCHA, authcode);
-                startActivity(intent);
-
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-
-            }
-        });
-    }
 
     //为数组赋值1~9的随机数
     private String[] getRandomInteger() {

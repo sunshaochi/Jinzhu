@@ -699,17 +699,11 @@ public class CreditSecondFrag extends BaseFragment {
                 @Override
                 public void onSucess(String result) throws JSONException {
                     String roleName = SpUtils.getRoleName(context);
-                    if (roleName.equals("ROLE_COMMON_CLIENT")) {
                         Intent intent = new Intent(MineFragment.UPDATE_USER);
                         intent.putExtra(MineFragment.USER_KEY, user);
                         mParentActivity.sendBroadcast(intent);
                         mParentActivity.sendBroadcast(new Intent(MineFragment.UPDATE_SCORE));
-                    } else {
-                        Intent intent = new Intent(ServiceMineFrg.UPDATE_SERVANT);
-                        intent.putExtra(ServiceMineFrg.SERVANT_INFO, user);
-                        mParentActivity.sendBroadcast(intent);
-                        mParentActivity.sendBroadcast(new Intent(ServiceMineFrg.UPDATE_SCORE));
-                    }
+
 
                     toSubmitOrder();
                 }

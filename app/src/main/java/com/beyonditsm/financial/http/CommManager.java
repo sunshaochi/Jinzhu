@@ -8,11 +8,9 @@ import com.beyonditsm.financial.entity.CreditOfflineUploadEntity;
 import com.beyonditsm.financial.entity.HotProduct;
 import com.beyonditsm.financial.entity.MyCreditEntity;
 import com.beyonditsm.financial.entity.OrderBean;
-import com.beyonditsm.financial.entity.SubmitCreditSpeedEntity;
 import com.beyonditsm.financial.entity.SumLoadEntity;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.entity.UserOrderInfo1;
-import com.beyonditsm.financial.entity.UserOrderInfo2;
 import com.beyonditsm.financial.entity.UserOrderInfo3;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
@@ -252,39 +250,8 @@ public class CommManager extends RequestManager {
         doPost(IFinancialUrl.ORDER_DETAIL_URL, params, callBack);
     }
 
-    /**
-     * 通过推荐码加好友
-     *
-     * @param myReferralCode 推荐码
-     * @param callBack       回调
-     */
-    public void myReferralCode(String myReferralCode, final CallBack callBack) {
-        Map<String, String> params = new HashMap<>();
-        params.put("myReferralCode", myReferralCode);
-        doPost(IFinancialUrl.MYREFERRALCODE_URL, params, callBack);
-    }
 
-    /**
-     * 通过账户id获取好友列表
-     *
-     * @param callBack 回调
-     */
-    public void getFriendList(final CallBack callBack) {
-        Map<String, String> params = new HashMap<>();
-        doPost(IFinancialUrl.FRIENDLIST_URL, params, callBack);
-    }
 
-    /**
-     * 信贷经理抢单成功后 添加订单里的客户为好友
-     *
-     * @param clientId 订单里面的客户id
-     * @param callBack 回调
-     */
-    public void addFriendAboutOrder(String clientId, final CallBack callBack) {
-        Map<String, String> params = new HashMap<>();
-        params.put("clientId", clientId);
-        doPost(IFinancialUrl.ADDFRIENDABOUTORDER_URL, params, callBack);
-    }
 
     /**
      * 提交附件
@@ -297,17 +264,7 @@ public class CommManager extends RequestManager {
         submitFujian(IFinancialUrl.SUBMIT_FUJIAN_URL, orderNo, isSupplementFile, fileMaps, callBack);
     }
 
-    /**
-     * 添加好友
-     *
-     * @param phone    好友手机号
-     * @param callBack 回调
-     */
-    public void addFriend(String phone, CallBack callBack) {
-        Map<String, String> params = new HashMap<>();
-        params.put("phone", phone);
-        doPost(IFinancialUrl.ADD_FRIEND_URL, params, callBack);
-    }
+
 
     /**
      * 检查版本更新
@@ -408,13 +365,7 @@ public class CommManager extends RequestManager {
         doPost(IFinancialUrl.FIND_EXTRA_FlOW_URL, params, callBack);
     }
 
-    /**
-     * 移动端获取上次使用的地区
-     */
-    public void getLastRegion(CallBack callBack) {
-        Map<String, String> params = new HashMap<>();
-        doPost(IFinancialUrl.GET_MOBILE_LAST_REGION_URL, params, callBack);
-    }
+
 
     /**
      * 订单状态
@@ -498,14 +449,6 @@ public class CommManager extends RequestManager {
         doPost(IFinancialUrl.RECEIVE_REWARD, params, callBack);
     }
 
-    /*获取vip信息*/
-    public void findVipInfo(String username, CallBack callBack) {
-        Map<String, String> params = new HashMap<>();
-        params.put("userName", username);
-        MyLogUtils.info("用户名是否为空：" + username);
-        doPost(IFinancialUrl.VIP_INFO, params, callBack);
-    }
-
     public void updateLocation(String area, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
         params.put("area", area);
@@ -552,71 +495,8 @@ public class CommManager extends RequestManager {
         doPost(IFinancialUrl.GET_CREDIT_CARD_INFO, params, callBack);
     }
 
-    /**
-     * 获取资讯中心初始数据
-     */
-    public void findNewsMobileIndex(CallBack callBack)  {
-        Map<String, String> params = new HashMap<>();
-        doPost(IFinancialUrl.FIND_NEWS_MOBILE_INDEX, params, callBack);
-    }
 
 
-    /**
-     * 获取资讯中心更多数据
-     */
-    public void findNewsMobileMore(String page,String rows,CallBack callBack)  {
-        Map<String, String> params = new HashMap<>();
-        params.put("page",page);
-        params.put("rows",rows);
-        doPost(IFinancialUrl.FIND_NEWS_MOBILE_MORE, params, callBack);
-    }
-
-    /**
-     * 资讯详情根据当前文章ID查询前后文章信息实现翻页
-     * @param curId 当前文章ID
-     * @param callBack 回调
-     */
-    public void findUpAndDownRow(String curId,CallBack callBack){
-        Map<String,String> params = new HashMap<>();
-        params.put("curId",curId);
-        doPost(IFinancialUrl.FIND_UP_AND_DOWN_ROW,params,callBack);
-    }
-
-     /** 获取帮助中心
-     * @param callBack 回调
-     */
-    public void findHelpAlls(CallBack callBack){
-        Map<String, String> params = new HashMap<>();
-        doPost(IFinancialUrl.FIND_HELP_ALLS, params, callBack);
-    }
-
-    /**
-     * 获取帮助中心详情
-     * @param id
-     * @param callBack
-     */
-    public void findHelpDetail(String id,CallBack callBack){
-        Map<String, String> params = new HashMap<>();
-        params.put("themeId",id);
-        doPost(IFinancialUrl.FIND_HELP_DETAIL, params, callBack);
-    }
-
-    /**
-     * 获取图形验证码
-     * @param callBack
-     */
-    public void imageCaptcha(CallBack callBack){
-        Map<String, String> params = new HashMap<>();
-        doGet(IFinancialUrl.IMAGE_CAPTCHA,  callBack);
-    }
-
-    public void SMSCaptchaFogetPassword(String imageCaptcha ,String ignoreExistence,String phoneNumber,CallBack callBack) {
-        Map<String, String> params = new HashMap<>();
-        params.put("imageCaptcha", imageCaptcha);
-        params.put("ignoreExistence", ignoreExistence);
-        params.put("phoneNumber", phoneNumber);
-        doPost(IFinancialUrl.SMS_CAPTCHA_FOGET_PASSWORD, params, callBack);
-    }
     /**
      * 获取信用卡数据
      */
@@ -710,43 +590,8 @@ public class CommManager extends RequestManager {
         doPost(IFinancialUrl.SAVE_USER_ORDER_INFO3, params, callBack);
     }
 
-    /**
-     * 保存急借通第二板块信息
-     *
-     * @param
-     * @param callBack
-     */
-    public void saveUserOrderInfo2(UserOrderInfo2 entity2, CallBack callBack) {
-        Map<String, String> params = new HashMap<>();
-        params.put("entity2", GsonUtils.bean2Json(entity2));
-        doPost(IFinancialUrl.SAVE_USER_ORDER_INFO3, params, callBack);
-    }
 
-    /**
-     * 借款用途接口
-     *
-     * @param callBack
-     */
-    public void queryLoanUse(CallBack callBack) {
-        Map<String, String> params = new HashMap<>();
-        doPost(IFinancialUrl.QUERY_LOAN_USE, params, callBack);
-    }
 
-    /**
-     * 点击申贷接口（须传参数：借款用途:purpose;最大承受还款额度:maxRepaymentWeekly;贷款金额:
-     * totalAmount;还款期限: totalPeriods;利息:totalLoanInterest;综合费率:realMonthlyRate）
-     */
-
-    public void submitSpeedOrder(SubmitCreditSpeedEntity scse, CallBack callBack) {
-        Map<String, String> params = new HashMap<>();
-        params.put("purpose", scse.getPurpose());
-        params.put("maxRepaymentWeekly", scse.getMaxRepaymentWeekly());
-        params.put("totalAmount", scse.getTotalAmount());
-        params.put("totalPeriods", scse.getTotalPeriods());
-        params.put("totalLoanInterest", scse.getTotalLoanInterest());
-        params.put("realMonthlyRate", scse.getRealMonthlyRate());
-        doPost(IFinancialUrl.SUBMIT_SPEED_CREDIT, params, callBack);
-    }
 
     /**
      * 急借通单位性质接口
@@ -799,19 +644,7 @@ public class CommManager extends RequestManager {
         params.put("parentId", parentId);
         doPost(IFinancialUrl.QUERY_ALL_AREA, params, callBack);
     }
-    public void submitSpeedOrder(String productId,SubmitCreditSpeedEntity scse, CallBack callBack){
-        Map<String, String> params = new HashMap<>();
-        params.put("productId",productId);
-        params.put("purpose",scse.getPurpose()+"");
-        params.put("maxRepaymentWeekly",scse.getMaxRepaymentWeekly()+"");
-        params.put("totalAmount",scse.getTotalAmount()+"");
-        params.put("totalPeriods",scse.getTotalPeriods()+"");
-        params.put("totalLoanInterest",scse.getTotalLoanInterest()+"");
-        params.put("realMonthlyRate",scse.getRealMonthlyRate()+"");
-        MyLogUtils.info("借款用途："+scse.getPurpose()+",最大承受还款额度："+scse.getMaxRepaymentWeekly()+",贷款金额："+scse.getTotalAmount()+",还款期限："+scse.getTotalPeriods()+",总利息："+scse.getTotalLoanInterest()+"，综合费率："+scse.getRealMonthlyRate());
-        doPost(IFinancialUrl.SUBMIT_SPEED_CREDIT,params,callBack);
 
-    }
 
     /**
      * 获取婚姻状况

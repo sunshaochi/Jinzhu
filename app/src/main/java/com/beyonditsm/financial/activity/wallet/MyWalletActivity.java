@@ -15,12 +15,10 @@ import android.widget.TextView;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.MainActivity;
-import com.beyonditsm.financial.activity.servicer.ServiceMainAct;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.entity.UserLoginEntity;
 import com.beyonditsm.financial.fragment.MineFragment;
-import com.beyonditsm.financial.fragment.ServiceMineFrg;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.GsonUtils;
@@ -212,8 +210,6 @@ public class MyWalletActivity extends BaseActivity {
 //        SpUtils.clearIsUpgrade(getApplicationContext());
         SpUtils.clearReceiveReward(getApplicationContext());
         ivPaymentsRedPoint.setVisibility(View.GONE);
-        sendBroadcast(new Intent(ServiceMineFrg.HIDE_RED_POINT));
-        sendBroadcast(new Intent(ServiceMainAct.HIDE));
         sendBroadcast(new Intent(MineFragment.HIDE_WALLET_POINT));
         sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
     }

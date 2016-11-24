@@ -19,7 +19,6 @@ import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.credit.CreditStepAct;
-import com.beyonditsm.financial.activity.manager.ManagerMainAct;
 import com.beyonditsm.financial.activity.speedcredit.CreditSpeedFirstAct;
 import com.beyonditsm.financial.activity.speedcredit.CreditSpeedSecond_1Act;
 import com.beyonditsm.financial.entity.UserEntity;
@@ -290,10 +289,7 @@ public class LoginAct extends BaseActivity{
                                 }
                             });
                                 connect(SpUtils.getToken(getApplicationContext()));
-                            if ("ROLE_CREDIT_MANAGER".equals(SpUtils.getRoleName(getApplicationContext()))) {
-                                sendBroadcast(new Intent(ManagerMainAct.UPDATATAB));
-                                gotoActivity(ManagerMainAct.class, true);
-                            } else if (SpUtils.getRoleName(getApplicationContext()).equals("ROLE_COMMON_CLIENT")) {
+                             if (SpUtils.getRoleName(getApplicationContext()).equals("ROLE_COMMON_CLIENT")) {
                                 sendBroadcast(new Intent(MainActivity.UPDATATAB));
                                 sendBroadcast(new Intent(MineFragment.UPDATE_USER));
                                 if(null != ParamsUtil.getInstance().getServiceMainAct()){

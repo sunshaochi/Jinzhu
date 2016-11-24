@@ -20,15 +20,11 @@ import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.MessageActivity;
-import com.beyonditsm.financial.activity.helpcenter.HelpCenterActivity;
-import com.beyonditsm.financial.activity.user.CreditPointAct;
-import com.beyonditsm.financial.activity.user.HardCreditAct;
 import com.beyonditsm.financial.activity.user.LoginAct;
 import com.beyonditsm.financial.activity.user.MyCreditAct;
 import com.beyonditsm.financial.activity.user.MyRecommAct;
 import com.beyonditsm.financial.activity.user.SettingAct;
 import com.beyonditsm.financial.activity.user.UpdateAct;
-import com.beyonditsm.financial.activity.vip.VipAct;
 import com.beyonditsm.financial.activity.wallet.MyWalletActivity;
 import com.beyonditsm.financial.db.FriendDao;
 import com.beyonditsm.financial.db.MessageDao;
@@ -73,13 +69,7 @@ public class MineFragment extends BaseFragment {
     @ViewInject(R.id.civHead)
     private ScaleAllImageView civHead;
     //    private String targetId;
-    @ViewInject(R.id.tv_score)
-    private TextView tv_score;
-    @ViewInject(R.id.tvGrade)
-    private TextView tvGrade;
 
-    @ViewInject(R.id.tvCredit)
-    private TextView tvCredit;//信用分
     @ViewInject(R.id.tvExit)
     private TextView tvExit;//退出
 
@@ -223,24 +213,7 @@ public class MineFragment extends BaseFragment {
                 }
                 startActivity(intent);
                 break;
-            //我的信用分
-            case R.id.rlMyCode:
-                intent = new Intent(getActivity(), CreditPointAct.class);
-                if (TextUtils.isEmpty(user.getCreditScore()))
-                    intent.putExtra(CreditPointAct.CREDIT, 0);
-                else
-                    intent.putExtra(CreditPointAct.CREDIT, Integer.valueOf(user.getCreditScore()));
-                if (TextUtils.isEmpty(grade))
-                    intent.putExtra(CreditPointAct.GRADE, "0");
-                else
-                    intent.putExtra(CreditPointAct.GRADE, grade);
-                getActivity().startActivity(intent);
-                break;
-            //我的信售额
-            case R.id.rlLines:
-                intent = new Intent(getActivity(), HardCreditAct.class);
-                getActivity().startActivity(intent);
-                break;
+
             //我的贷款
             case R.id.rlMyCredit:
                 intent = new Intent(getActivity(), MyCreditAct.class);
@@ -322,11 +295,6 @@ public class MineFragment extends BaseFragment {
                 getActivity().startActivity(msgintent);
                 break;
 
-            case R.id.rlVip://金蛛VIP
-                intent = new Intent(getActivity(), VipAct.class);
-                intent.putExtra("user", ule);
-                getActivity().startActivity(intent);
-                break;
             case R.id.rlCustom: //在线客服
 
                 CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
@@ -350,11 +318,7 @@ public class MineFragment extends BaseFragment {
                  */
                 RongIM.getInstance().startCustomerServiceChat(getActivity(), "KEFU147280950773537", "在线客服",csInfo);
                 break;
-            //帮助中心
-            case R.id.rlHelp:
-                intent = new Intent(getActivity(), HelpCenterActivity.class);
-                getActivity().startActivity(intent);
-                break;
+
         }
     }
 
@@ -376,16 +340,9 @@ public class MineFragment extends BaseFragment {
                     if (!TextUtils.isEmpty(user.getAccountName())) {
                         tvName.setText(user.getAccountName());
                     }
-                    tv_score.setText(user.getCreditScore());
 //                    tvGrade.setText(user.getCreditGrade());
-                    if (!TextUtils.isEmpty(user.getCreditScore())) {
-                        tvCredit.setText(user.getCreditScore());
-                    }
-                    if (TextUtils.isEmpty(user.getCreditScore())) {
-                        getScorePer("0");
-                    } else {
-                        getScorePer(user.getCreditScore());
-                    }
+
+
                     ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon(), civHead, options);
                     if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
                         if (!TextUtils.isEmpty(user.getAccountId())) {
@@ -412,28 +369,7 @@ public class MineFragment extends BaseFragment {
         });
     }
 
-    /**
-     * 获取信用分超过多少的用户
-     *
-     * @param score 信用分
-     */
-    private void getScorePer(String score) {
-        RequestManager.getUserManager().getScorePer(score, new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
-                JSONObject object = new JSONObject(result);
-                grade = object.optString("data");
-                double dGrade = Double.valueOf(grade);
-                tvGrade.setText((int) dGrade + "%");
 
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-
-            }
-        });
-    }
 
 
     @Override

@@ -2,7 +2,6 @@ package com.beyonditsm.financial.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,18 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
-import com.beyonditsm.financial.activity.manager.ManagerMainAct;
 import com.beyonditsm.financial.entity.GrabOrderBean;
-import com.beyonditsm.financial.fragment.FriendFrg;
-import com.beyonditsm.financial.fragment.ManagerOrderFragment;
 import com.beyonditsm.financial.http.IFinancialUrl;
-import com.beyonditsm.financial.http.RequestManager;
-import com.beyonditsm.financial.util.MyToastUtils;
-import com.beyonditsm.financial.view.MyDialog;
 import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
 import com.tandong.sa.zUImageLoader.core.ImageLoader;
-
-import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,45 +118,12 @@ public class GrabOrderAdp extends BaseAdapter {
             @Override
             public void onClick(View view) {
 //                int position = (int) view.getTag();
-                GrabOrder(datas.get(i), i);
+
             }
         });
     }
 
-    /**
-     * 抢单
-     */
-    private void GrabOrder(final GrabOrderBean.RowsEntity data, final int i) {
-        RequestManager.getMangManger().GrabOrder(data.getId(), new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
-                MyDialog dialog = new MyDialog(context, data).builder();
-                dialog.show();
-                datas.remove(i);
-                notifyDataSetChanged();
-                Intent intent = new Intent(ManagerOrderFragment.UPDATA);
-                intent.putExtra("orderSts", "");
-                context.sendBroadcast(intent);
-                RequestManager.getCommManager().addFriendAboutOrder(data.getClientId(), new RequestManager.CallBack() {
-                    @Override
-                    public void onSucess(String result) throws JSONException {
-                        context.sendBroadcast(new Intent(FriendFrg.UPDATA));
-                        context.sendBroadcast(new Intent(ManagerMainAct.UPDATATAB));
-                    }
 
-                    @Override
-                    public void onError(int status, String msg) {
-
-                    }
-                });
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-                MyToastUtils.showShortToast(context, msg);
-            }
-        });
-    }
 
     public class ViewHolder {
         public final ImageView ivPic;//显示图片
