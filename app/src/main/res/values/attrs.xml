@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--自定义CommonView-->
+
+    <declare-styleable name="CommonView">
+        <attr name="desTextColor" format="color" />
+        <attr name="categoryImage" format="reference" />
+        <attr name="desText" format="string" />
+
+        <attr name="isShowCategoryImage" format="boolean" />
+        <attr name="statusImage" format="reference" />
+        <attr name="statusImage_width" format="dimension" />
+        <attr name="statusImage_height" format="dimension" />
+        <attr name="desTextSize" format="dimension" />
+
+        <attr name="isShowTextNotes" format="boolean" />
+        <attr name="notesText" format="string" />
+        <attr name="notesTextColor" format="color" />
+        <attr name="notesTextSize" format="dimension" />
+
+    </declare-styleable>
+
     <!-- 圆形imageview -->
     <declare-styleable name="CircleImageView">
         <attr name="border_width" format="dimension" />

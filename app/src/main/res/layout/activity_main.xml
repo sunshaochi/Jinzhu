@@ -76,7 +76,7 @@
                 <TextView
                     android:id="@+id/tvMes"
                     style="@style/main_btm_tv"
-                    android:text="沟通" />
+                    android:text="推荐" />
             </LinearLayout>
 
 

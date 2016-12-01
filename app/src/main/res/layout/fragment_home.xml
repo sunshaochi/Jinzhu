@@ -91,7 +91,7 @@
                             style="@style/home_text_style"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="我要贷款" />
+                            android:text="大额贷" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -107,7 +107,7 @@
                             style="@style/home_text_style"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="信用耕耘" />
+                            android:text="极速贷" />
                     </LinearLayout>
 
                     <LinearLayout

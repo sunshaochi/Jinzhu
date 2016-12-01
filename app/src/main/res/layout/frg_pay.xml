@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<com.beyonditsm.financial.view.pullfreshview.PullToRefreshListView
+    android:background="@color/white"
+    android:id="@+id/plv_jl"
+    android:divider="@color/bg_color"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"></com.beyonditsm.financial.view.pullfreshview.PullToRefreshListView>
+    <com.beyonditsm.financial.view.LoadingView
+        android:id="@+id/loadView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></com.beyonditsm.financial.view.LoadingView>
+
+</RelativeLayout>

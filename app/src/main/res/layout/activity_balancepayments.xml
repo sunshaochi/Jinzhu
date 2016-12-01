@@ -18,6 +18,7 @@
         tl:tl_textUnselectColor="@color/tv_primary_color"
         tl:tl_tab_space_equal="true"
         tl:tl_indicator_color="@color/main_color"
+        tl:tl_indicator_width="65dp"
         tl:tl_indicator_height="2dp"/>
     <View
         android:layout_width="match_parent"

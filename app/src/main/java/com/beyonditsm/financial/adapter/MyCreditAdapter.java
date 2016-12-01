@@ -59,71 +59,78 @@ public  class MyCreditAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = View.inflate(context, R.layout.lv_mycredit_item, null);
-            holder.tvProductName = (TextView) convertView.findViewById(R.id.tv_productName);
-            holder.tvTotalAmount = (TextView) convertView.findViewById(R.id.tv_totalAmount);
-            holder.tvPeriodsAmount = (TextView) convertView.findViewById(R.id.tv_periodsAmount);
-            holder.tvName = (TextView) convertView.findViewById(R.id.tv_name);
-            holder.ivRedPoint = (ImageView) convertView.findViewById(R.id.ivMs);
-            holder.rlCreditList = (RelativeLayout) convertView.findViewById(R.id.rl_creditList);
-            holder.tvProductName.setSelected(true);
+//            holder.tvProductName = (TextView) convertView.findViewById(R.id.tv_productName);
+//            holder.tvTotalAmount = (TextView) convertView.findViewById(R.id.tv_totalAmount);
+//            holder.tvPeriodsAmount = (TextView) convertView.findViewById(R.id.tv_periodsAmount);
+//            holder.tvName = (TextView) convertView.findViewById(R.id.tv_name);
+//            holder.ivRedPoint = (ImageView) convertView.findViewById(R.id.ivMs);
+//            holder.rlCreditList = (RelativeLayout) convertView.findViewById(R.id.rl_creditList);
+//            holder.tvProductName.setSelected(true);
+            holder.tv_bianhao= (TextView) convertView.findViewById(R.id.tv_bianhao);
+            holder.tv_zhuangtai= (TextView) convertView.findViewById(R.id.tv_zhuangtai);
+            holder.tv_dkname= (TextView) convertView.findViewById(R.id.tv_dkname);
+            holder.tv_dkje= (TextView) convertView.findViewById(R.id.tv_dkje);
+            holder.tv_dksj= (TextView) convertView.findViewById(R.id.tv_dksj);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        if (!TextUtils.isEmpty(orderId)) {
-            if (list.get(position).getId().equals(orderId)) {
-                holder.ivRedPoint.setVisibility(View.VISIBLE);
-            }
-        }else{
-            holder.ivRedPoint.setVisibility(View.GONE);
-        }
-        holder.tvProductName.setText(list.get(position).getProductName());
-        holder.tvTotalAmount.setText(df.format(Double.valueOf(list.get(position).getTotalAmount()) / 10000) + "万");
-        holder.tvPeriodsAmount.setText(df.format(Double.valueOf(list.get(position).getPeriodsAmount()) / 10000) + "万");
-        String status = list.get(position).getOrderSts();
-        if ("ORGANIZATION_APPROVAL".equals(status)) {
-            holder.tvName.setText("机构审批中");
-            holder.tvName.setTextColor(Color.parseColor("#ff6633"));
-
-        } else if ("CREDIT_MANAGER_GRAB".equals(status)) {
-            holder.tvName.setText("待抢单");
-            holder.tvName.setTextColor(Color.parseColor("#ff6633"));
-        }else if ("CREDIT_MANAGER_APPROVAL".equals(status)){
-            holder.tvName.setText("已抢单");
-            holder.tvName.setTextColor(Color.parseColor("#ff6633"));
-        }else if ("PASS".equals(status)) {
-            holder.tvName.setText("审批通过");
-            holder.tvName.setTextColor(Color.parseColor("#1fd45f"));
-
-        } else if ("WAIT_BACKGROUND_APPROVAL".equals(status)) {
-            holder.tvName.setText("待审批");
-            holder.tvName.setTextColor(Color.parseColor("#ff6633"));
-
-        } else if ("SUPPLEMENT_DATA".equals(status)) {
-            holder.tvName.setText("补件中");
-            holder.tvName.setTextColor(Color.parseColor("#ff6633"));
-
-        } else if ("NO_PASS".equals(status)) {
-            holder.tvName.setText("审批不通过");
-            holder.tvName.setTextColor(Color.parseColor("#ff0000"));
-        } else if ("CANCEL_REQUET".equals(status)) {
-            holder.tvName.setText("已取消");
-            holder.tvName.setTextColor(Color.parseColor("#ff8383"));
-        } else if ("DRAFT".equals(status)) {
-            holder.tvName.setText("资料待上传");
-            holder.tvName.setTextColor(Color.parseColor("#ff6633"));
-        }else if ("REJECT".equals(status)){
-            holder.tvName.setText("驳回");
-            holder.tvName.setTextColor(Color.parseColor("#ff0000"));
-        }
+//        if (!TextUtils.isEmpty(orderId)) {
+//            if (list.get(position).getId().equals(orderId)) {
+//                holder.ivRedPoint.setVisibility(View.VISIBLE);
+//            }
+//        }else{
+//            holder.ivRedPoint.setVisibility(View.GONE);
+//        }
+//        holder.tvProductName.setText(list.get(position).getProductName());
+//        holder.tvTotalAmount.setText(df.format(Double.valueOf(list.get(position).getTotalAmount()) / 10000) + "万");
+//        holder.tvPeriodsAmount.setText(df.format(Double.valueOf(list.get(position).getPeriodsAmount()) / 10000) + "万");
+//        String status = list.get(position).getOrderSts();
+//        if ("ORGANIZATION_APPROVAL".equals(status)) {
+//            holder.tvName.setText("机构审批中");
+//            holder.tvName.setTextColor(Color.parseColor("#ff6633"));
+//
+//        } else if ("CREDIT_MANAGER_GRAB".equals(status)) {
+//            holder.tvName.setText("待抢单");
+//            holder.tvName.setTextColor(Color.parseColor("#ff6633"));
+//        }else if ("CREDIT_MANAGER_APPROVAL".equals(status)){
+//            holder.tvName.setText("已抢单");
+//            holder.tvName.setTextColor(Color.parseColor("#ff6633"));
+//        }else if ("PASS".equals(status)) {
+//            holder.tvName.setText("审批通过");
+//            holder.tvName.setTextColor(Color.parseColor("#1fd45f"));
+//
+//        } else if ("WAIT_BACKGROUND_APPROVAL".equals(status)) {
+//            holder.tvName.setText("待审批");
+//            holder.tvName.setTextColor(Color.parseColor("#ff6633"));
+//
+//        } else if ("SUPPLEMENT_DATA".equals(status)) {
+//            holder.tvName.setText("补件中");
+//            holder.tvName.setTextColor(Color.parseColor("#ff6633"));
+//
+//        } else if ("NO_PASS".equals(status)) {
+//            holder.tvName.setText("审批不通过");
+//            holder.tvName.setTextColor(Color.parseColor("#ff0000"));
+//        } else if ("CANCEL_REQUET".equals(status)) {
+//            holder.tvName.setText("已取消");
+//            holder.tvName.setTextColor(Color.parseColor("#ff8383"));
+//        } else if ("DRAFT".equals(status)) {
+//            holder.tvName.setText("资料待上传");
+//            holder.tvName.setTextColor(Color.parseColor("#ff6633"));
+//        }else if ("REJECT".equals(status)){
+//            holder.tvName.setText("驳回");
+//            holder.tvName.setTextColor(Color.parseColor("#ff0000"));
+//        }
 
         return convertView;
     }
 
     class ViewHolder {
-        TextView tvProductName, tvTotalAmount, tvPeriodsAmount, tvName;
-        ImageView ivRedPoint;//推送红点
-        RelativeLayout rlCreditList;
+//        TextView tvProductName, tvTotalAmount, tvPeriodsAmount, tvName;
+//        ImageView ivRedPoint;//推送红点
+//        RelativeLayout rlCreditList;
+        TextView tv_bianhao,tv_zhuangtai,tv_dkname,tv_dkje,tv_dksj;//贷款编号，状态，金额，时间
+        ImageView iv_iv_tubiao;//贷款图标
     }
 
 }

@@ -20,16 +20,15 @@
             <RelativeLayout
                 android:id="@+id/rlServiceData"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_marginTop="10dp"
+                android:layout_height="100dp"
                 android:background="@drawable/item_back"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
-                <com.beyonditsm.financial.widget.ScaleAllImageView
+                <com.beyonditsm.financial.view.CircleImageView
                     android:id="@+id/civHead"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_centerVertical="true"
                     android:src="@mipmap/ava_default" />
 
@@ -41,27 +40,37 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:paddingBottom="2dp"
+                        android:paddingTop="2dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:background="@drawable/dyr_bg"
+                        android:text="代言人"
                         android:id="@+id/tvName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
-                        android:textColor="#333333"
-                        android:textSize="15sp" />
+                        android:textColor="#53C84F"
+                        android:textSize="12sp" />
 
                     <TextView
+                        android:layout_marginTop="5dp"
+                        android:text="13917702726"
                         android:id="@+id/tvPhone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
-                        android:layout_marginTop="10dp"
                         android:textColor="#333333"
-                        android:textSize="15sp" />
+                        android:textSize="16sp" />
                 </LinearLayout>
 
 
             </RelativeLayout>
 
             <LinearLayout
+                android:paddingBottom="15dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -184,7 +193,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/item_back"
                 android:orientation="vertical">
 
@@ -202,6 +211,11 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:orientation="horizontal">
+                        <ImageView
+                            android:layout_gravity="center_vertical"
+                            android:src="@mipmap/iconszmx"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
 
                         <TextView
                             style="@style/tv_second_style"
@@ -209,11 +223,6 @@
                             android:layout_marginLeft="5dp"
                             android:text="收支明细" />
 
-                        <ImageView
-                            android:id="@+id/ivPaymentsRed"
-                            style="@style/red_oval_style"
-                            android:layout_marginLeft="5dp"
-                            android:visibility="gone" />
                     </LinearLayout>
 
 
@@ -230,6 +239,7 @@
                     android:background="@color/line_color" />
 
                 <RelativeLayout
+                    android:visibility="gone"
                     android:id="@+id/rlMyOrder"
                     style="@style/rl_mine_style">
 
@@ -254,17 +264,25 @@
                 <RelativeLayout
                     android:id="@+id/rlBindBankCard"
                     style="@style/rl_mine_style">
+                    <ImageView
+                        android:id="@+id/iv_imageview"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/iconqb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
 
                     <TextView
+                        android:layout_toRightOf="@id/iv_imageview"
                         style="@style/tv_second_style"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
                         android:text="绑定银行卡" />
 
                     <ImageView
-                        android:id="@+id/ivBindBankCard"
                         style="@style/arrow_right_style"
                         android:layout_alignParentRight="true" />
+
+
 
                 </RelativeLayout>
             </LinearLayout>
@@ -283,6 +301,7 @@
         </LinearLayout>
 
         <com.beyonditsm.financial.view.LoadingView
+            android:visibility="gone"
             android:id="@+id/loadingView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"></com.beyonditsm.financial.view.LoadingView>

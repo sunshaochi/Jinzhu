@@ -31,6 +31,7 @@ import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.fragment.CreditFragment;
 import com.beyonditsm.financial.fragment.HomeFragment;
 import com.beyonditsm.financial.fragment.MineFragment;
+import com.beyonditsm.financial.fragment.RecomFragment;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
@@ -71,7 +72,7 @@ public class MainActivity extends BaseActivity {
 //    @ViewInject(R.id.rl_statusBar)
 //    private RelativeLayout rlStatusBar;
     private FragmentManager manager;
-    private Fragment myCreditFgt, creditFgt, friendFgt, mineFgt;//我的信用，贷款，朋友，我的
+    private Fragment myCreditFgt, creditFgt, friendFgt, mineFgt,recomfgt;//我的信用，贷款，朋友，我的,推荐
     private ConversationListFragment listFragment;
     /**
      * 按两次退出键时间小于2秒退出
@@ -116,6 +117,8 @@ public class MainActivity extends BaseActivity {
             creditFgt = fragment;
         } else if (mineFgt == null && fragment instanceof MineFragment) {
             mineFgt = fragment;
+        }else if(recomfgt==null&&fragment instanceof RecomFragment){
+            recomfgt=fragment;
         }
     }
 
@@ -249,7 +252,9 @@ public class MainActivity extends BaseActivity {
                 break;
             //沟通
             case R.id.llChat:
-
+                setAllTabNor();
+                setTabSelection(2);
+                setCheckItem(2);
                 break;
             //我的
             case R.id.llMine:
@@ -329,25 +334,31 @@ public class MainActivity extends BaseActivity {
                     transaction.show(creditFgt);
                 }
                 break;
-            case 2:
-                main_title.setVisibility(View.VISIBLE);
+            case 2://推荐
+                main_title.setVisibility(View.GONE);
 //                if (listFragment == null) {
-                listFragment = ConversationListFragment.getInstance();
-                Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon()
-                        .appendPath("conversationlist")
-                        .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话是否聚合显示
-                        .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "true")//群组
-                        .appendQueryParameter(Conversation.ConversationType.DISCUSSION.getName(), "false")//讨论组
-                        .appendQueryParameter(Conversation.ConversationType.PUBLIC_SERVICE.getName(), "false")//公共服务号
-                        .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "false")//系统
-                        .build();
-                listFragment.setUri(uri);
-                transaction.add(R.id.main_frame, listFragment);
-//                } else {
-//                    transaction.show(chatFrg);
-//                }
+//                listFragment = ConversationListFragment.getInstance();
+//                Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon()
+//                        .appendPath("conversationlist")
+//                        .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话是否聚合显示
+//                        .appendQueryParameter(Conversation.ConversationType.GROUP.getName(), "true")//群组
+//                        .appendQueryParameter(Conversation.ConversationType.DISCUSSION.getName(), "false")//讨论组
+//                        .appendQueryParameter(Conversation.ConversationType.PUBLIC_SERVICE.getName(), "false")//公共服务号
+//                        .appendQueryParameter(Conversation.ConversationType.SYSTEM.getName(), "false")//系统
+//                        .build();
+//                listFragment.setUri(uri);
+//                transaction.add(R.id.main_frame, listFragment);
+////                } else {
+////                    transaction.show(chatFrg);
+////                }
+                if(recomfgt==null){
+                    recomfgt=new RecomFragment();
+                    transaction.add(R.id.main_frame, recomfgt);
+                }else {
+                    transaction.show(recomfgt);
+                }
                 break;
-            case 3:
+            case 3://我的
                 main_title.setVisibility(View.GONE);
                 if (mineFgt == null) {
                     mineFgt = new MineFragment();
@@ -384,6 +395,9 @@ public class MainActivity extends BaseActivity {
         }
         if (friendFgt != null) {
             transaction.hide(friendFgt);
+        }
+        if(recomfgt !=null){
+            transaction.hide(recomfgt);
         }
     }
 

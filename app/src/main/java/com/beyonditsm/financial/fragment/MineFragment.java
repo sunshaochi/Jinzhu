@@ -37,6 +37,7 @@ import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.SpUtils;
+import com.beyonditsm.financial.view.CircleImageView;
 import com.beyonditsm.financial.view.MinePageLoadingView;
 import com.beyonditsm.financial.widget.MyAlertDialog;
 import com.beyonditsm.financial.widget.ScaleAllImageView;
@@ -67,7 +68,7 @@ public class MineFragment extends BaseFragment {
     @ViewInject(R.id.tvName)
     private TextView tvName;
     @ViewInject(R.id.civHead)
-    private ScaleAllImageView civHead;
+    private CircleImageView civHead;
     //    private String targetId;
 
     @ViewInject(R.id.tvExit)

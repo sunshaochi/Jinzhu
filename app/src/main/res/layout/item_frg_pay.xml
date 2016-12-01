@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:paddingLeft="15dp"
+    android:background="@color/white"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_txbh"
+            android:layout_centerVertical="true"
+            android:text="提现编号:"
+            style="@style/tv_third_style"/>
+        <TextView
+            android:textColor="@color/tv_second_color"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/tv_txbh"
+            android:layout_centerVertical="true"
+            android:text="3423455234235234234235234"
+            style="@style/tv_third_style"/>
+        <TextView
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="10dp"
+           android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="待面签"
+            style="@style/tv_third_style"/>
+
+    </RelativeLayout>
+   <View
+       style="@style/view_line"></View>
+
+    <RelativeLayout
+       android:paddingTop="15dp"
+        android:paddingBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginRight="10dp"
+                android:text="提现金额:"
+                style="@style/tv_third_style"/>
+            <TextView
+                android:textColor="#FF6600"
+                android:text="4000"
+                style="@style/tv_third_style"/>
+            <TextView
+                android:text="元"
+                style="@style/tv_third_style"
+                android:layout_width="wrap_content" />
+
+        </LinearLayout>
+        <TextView
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:id="@+id/tv_sj"
+            android:layout_centerVertical="true"
+            android:text="提现时间：2016-8-9:"
+            style="@style/tv_third_style"/>
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -24,6 +24,7 @@ import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
+import com.beyonditsm.financial.view.CircleImageView;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.widget.ScaleAllImageView;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -40,7 +41,7 @@ import org.json.JSONObject;
 @SuppressLint("SetTextI18n")
 public class MyWalletActivity extends BaseActivity {
     @ViewInject(R.id.civHead)
-    private ScaleAllImageView civHead;//头像
+    private CircleImageView civHead;//头像
     @ViewInject(R.id.tvName)
     private TextView tvName;//用户身份（代言人）
     @ViewInject(R.id.tvPhone)
@@ -53,8 +54,8 @@ public class MyWalletActivity extends BaseActivity {
     private TextView tvDikouMoney;//抵扣金额
     @ViewInject(R.id.loadingView)
     private LoadingView loadingView;
-    @ViewInject(R.id.ivPaymentsRed)
-    private ImageView ivPaymentsRedPoint;//收支明细推送红点
+//    @ViewInject(R.id.ivPaymentsRed)
+//    private ImageView ivPaymentsRedPoint;//收支明细推送红点
 
 
     @SuppressWarnings("deprecation")
@@ -87,15 +88,15 @@ public class MyWalletActivity extends BaseActivity {
         user = getIntent().getParcelableExtra("userInfo");
         String isUpgrade = SpUtils.getIsUpgrade(getApplicationContext());
         if (!TextUtils.isEmpty(isUpgrade) && "isUpgrade".equals(isUpgrade)) {
-            ivPaymentsRedPoint.setVisibility(View.VISIBLE);
+//            ivPaymentsRedPoint.setVisibility(View.VISIBLE);
         } else {
-            ivPaymentsRedPoint.setVisibility(View.GONE);
+//            ivPaymentsRedPoint.setVisibility(View.GONE);
         }
         String receiveReward = SpUtils.getReceiveReward(getApplicationContext());
         if (!TextUtils.isEmpty(receiveReward)&&"isReceive".equals(receiveReward)){
-            ivPaymentsRedPoint.setVisibility(View.VISIBLE);
+//            ivPaymentsRedPoint.setVisibility(View.VISIBLE);
         }else{
-            ivPaymentsRedPoint.setVisibility(View.GONE);
+//            ivPaymentsRedPoint.setVisibility(View.GONE);
         }
         if (ule == null) {
             getUserLoginInfo();
@@ -171,7 +172,6 @@ public class MyWalletActivity extends BaseActivity {
         switch (v.getId()) {
             //收支明细
             case R.id.rlMyPayments:
-
                 hideRedPoint();
                 intent = new Intent(MyWalletActivity.this, BalancePaymentsAct.class);
                 startActivity(intent);
@@ -209,7 +209,7 @@ public class MyWalletActivity extends BaseActivity {
 //        sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
 //        SpUtils.clearIsUpgrade(getApplicationContext());
         SpUtils.clearReceiveReward(getApplicationContext());
-        ivPaymentsRedPoint.setVisibility(View.GONE);
+//        ivPaymentsRedPoint.setVisibility(View.GONE);
         sendBroadcast(new Intent(MineFragment.HIDE_WALLET_POINT));
         sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
     }
@@ -354,7 +354,7 @@ public class MyWalletActivity extends BaseActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            ivPaymentsRedPoint.setVisibility(View.VISIBLE);
+//            ivPaymentsRedPoint.setVisibility(View.VISIBLE);
         }
     }
 
@@ -363,7 +363,7 @@ public class MyWalletActivity extends BaseActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            ivPaymentsRedPoint.setVisibility(View.GONE);
+//            ivPaymentsRedPoint.setVisibility(View.GONE);
         }
     }
 }

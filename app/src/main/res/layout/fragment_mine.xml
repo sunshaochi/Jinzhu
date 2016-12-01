@@ -25,16 +25,16 @@
                 <RelativeLayout
                     android:id="@+id/rlMyData"
                     android:layout_width="match_parent"
-                    android:layout_height="70dp"
+                    android:layout_height="100dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/item_back"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp">
 
-                    <com.beyonditsm.financial.widget.ScaleAllImageView
+                    <com.beyonditsm.financial.view.CircleImageView
                         android:id="@+id/civHead"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="63dp"
+                        android:layout_height="63dp"
                         android:layout_centerVertical="true"
                         android:src="@mipmap/ava_default" />
 
@@ -153,12 +153,6 @@
 
                     </RelativeLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1px"
-                        android:layout_marginLeft="45dp"
-                        android:background="@color/line_color"></View>
-
                     <RelativeLayout
                         android:id="@+id/rlMyCredit"
                         style="@style/rl_mine_style">
@@ -198,7 +192,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
-                        android:layout_marginLeft="45dp"
+                        android:layout_marginLeft="15dp"
                         android:background="@color/line_color"></View>
 
                     <RelativeLayout
@@ -222,7 +216,6 @@
                             android:layout_alignParentRight="true" />
 
                     </RelativeLayout>
-
 
 
                     <RelativeLayout
@@ -258,7 +251,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
-                        android:layout_marginLeft="45dp"
+                        android:layout_marginLeft="15dp"
                         android:background="@color/line_color" />
 
                     <RelativeLayout
@@ -271,7 +264,7 @@
                         <ImageView
                             android:id="@+id/ivMyWallet"
                             style="@style/iv_mine"
-                            android:src="@mipmap/ico_money" />
+                            android:src="@mipmap/iconqb" />
 
                         <!--<TextView-->
                         <!--style="@style/tv_second_style"-->
@@ -309,23 +302,45 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1px"
-                        android:layout_marginLeft="45dp"
+                        android:layout_marginLeft="15dp"
                         android:background="@color/line_color"></View>
                     <RelativeLayout
-                        android:id="@+id/rlCustom"
-                        style="@style/rl_mine_style">
+                        android:id="@+id/rlhp"
+                        style="@style/rl_mine_style"
+                        android:visibility="visible"
+
+                        >
 
                         <ImageView
-                            android:id="@+id/ivCustom"
+                            android:id="@+id/ivhp"
                             style="@style/iv_mine"
-                            android:src="@mipmap/icon_custom" />
+                            android:src="@mipmap/ico_money" />
 
-                        <TextView
-                            style="@style/tv_second_style"
+                        <!--<TextView-->
+                        <!--style="@style/tv_second_style"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:layout_marginLeft="5dp"-->
+                        <!--android:layout_toRightOf="@id/ivMyWallet"-->
+                        <!--android:text="我的钱包" />-->
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="5dp"
-                            android:layout_toRightOf="@id/ivCustom"
-                            android:text="在线客服" />
+                            android:layout_toRightOf="@id/ivhp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/tv_second_style"
+                                android:layout_centerVertical="true"
+                                android:text="帮助中心" />
+
+                            <ImageView
+                                style="@style/red_oval_style"
+                                android:layout_marginLeft="5dp"
+                                android:visibility="gone" />
+                        </LinearLayout>
 
                         <ImageView
                             style="@style/arrow_right_style"
@@ -406,6 +421,31 @@
                         style="@style/arrow_right_style"
                         android:layout_alignParentRight="true" />
                 </RelativeLayout>
+                <View
+                    android:layout_marginLeft="15dp"
+                   style="@style/view_line"></View>
+
+                <RelativeLayout
+                android:id="@+id/rlCustom"
+                style="@style/rl_mine_style">
+
+                <ImageView
+                android:id="@+id/ivCustom"
+                style="@style/iv_mine"
+                android:src="@mipmap/icon_custom" />
+
+                <TextView
+                style="@style/tv_second_style"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/ivCustom"
+                android:text="在线客服" />
+
+                <ImageView
+                style="@style/arrow_right_style"
+                android:layout_alignParentRight="true" />
+
+                </RelativeLayout>
 
 
                 <TextView
@@ -417,8 +457,7 @@
                     android:gravity="center"
                     android:text="退出登录"
                     android:textColor="#333333"
-                    android:textSize="16sp"
-                    android:visibility="gone" />
+                    android:textSize="16sp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -427,6 +466,7 @@
         </ScrollView>
 
         <com.beyonditsm.financial.view.MinePageLoadingView
+            android:visibility="gone"
             android:id="@+id/mplv_mine"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

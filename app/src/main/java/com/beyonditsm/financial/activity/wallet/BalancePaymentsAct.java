@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.fragment.CouponsFragment;
+import com.beyonditsm.financial.fragment.PayFrag;
 import com.beyonditsm.financial.fragment.RebateFragment;
 import com.beyonditsm.financial.view.tablayout.SlidingTabLayout;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -26,7 +27,7 @@ public class BalancePaymentsAct extends BaseActivity{
     @ViewInject(R.id.tl_creditDetail)
     private SlidingTabLayout tlCreditDetail;
 
-    private String[] mTitles  = {"现金券","抵扣券"};
+    private String[] mTitles  = {"现金券","抵扣券","提现记录"};
     @Override
     public void setLayout() {
         setContentView(R.layout.activity_balancepayments);
@@ -45,10 +46,12 @@ public class BalancePaymentsAct extends BaseActivity{
 //        bundle.putParcelable("rowe", rowe);
         CouponsFragment couponsFragment = new CouponsFragment();
         RebateFragment rebateFragment =new RebateFragment();
+        PayFrag payFrag=new PayFrag();
 //        couponsFragment.setArguments(bundle);
 //        rebateFragment.setArguments(bundle);
         fragmentList.add(couponsFragment);
         fragmentList.add(rebateFragment);
+        fragmentList.add(payFrag);
         myCreditViewpager.setAdapter(new MyAdapter(getSupportFragmentManager(), fragmentList));
         myCreditViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
