@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
-import com.beyonditsm.financial.entity.ProductInfo;
+import com.beyonditsm.financial.entity.ProductBean;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
 import com.tandong.sa.zUImageLoader.core.ImageLoader;
@@ -24,7 +24,7 @@ import java.util.List;
 public class CreditAdapter extends BaseAdapter {
     private Context context;
 
-    private List<ProductInfo> list;
+    private List<ProductBean> list;
 
     java.text.DecimalFormat df = new java.text.DecimalFormat("#0.00");//保留小数
     private DisplayImageOptions options = new DisplayImageOptions.Builder()
@@ -36,13 +36,13 @@ public class CreditAdapter extends BaseAdapter {
             .build(); // 创建配置过得DisplayImageOption对象
 
 
-    public CreditAdapter(Context contex, List<ProductInfo> list) {
+    public CreditAdapter(Context contex, List<ProductBean> list) {
         this.context = contex;
         this.list=list;
     }
-    public void notifyChange(List<ProductInfo> list){
+    public void notifyChange(List<ProductBean> list){
         this.list=list;
-        notifyDataSetChanged();;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -70,28 +70,28 @@ public class CreditAdapter extends BaseAdapter {
         } else {
             viewHolder =(ViewHolder)convertView.getTag();
         }
-        ProductInfo productEntity = list.get(position);
-        ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + productEntity.getImageLogoPath(), viewHolder.ivBanl, options);
+        ProductBean productEntity = list.get(position);
+        ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + productEntity.getProductLogo(), viewHolder.ivBanl, options);
         if (!TextUtils.isEmpty(productEntity.getProductName())) {
             viewHolder.tvBank.setText(productEntity.getProductName());
         }
-        if (!TextUtils.isEmpty(productEntity.getLoanPeriod())) {
-            viewHolder.tvTime.setText("放款周期:" + productEntity.getLoanPeriod() + "个工作日");
+        if (!TextUtils.isEmpty(productEntity.getPreLoanPeriod())) {
+            viewHolder.tvTime.setText("放款周期:" + productEntity.getPreLoanPeriod() + "个工作日");
         }
-        if (!TextUtils.isEmpty(productEntity.getMonthlyRathMax())||!TextUtils.isEmpty(productEntity.getMonthlyRathMin())) {
-            if (Double.valueOf(productEntity.getMonthlyRathMin()) - Double.valueOf(productEntity.getMonthlyRathMax()) == 0) {
-                viewHolder.tvRate.setText("月利率:" + productEntity.getMonthlyRathMin() + "%");
+        if (!TextUtils.isEmpty(productEntity.getMaxLoanRate())||!TextUtils.isEmpty(productEntity.getMinLoanRate())) {
+            if (Double.valueOf(productEntity.getMinLoanRate()) - Double.valueOf(productEntity.getMaxLoanRate()) == 0) {
+                viewHolder.tvRate.setText("月利率:" + productEntity.getMinLoanRate() + "%");
             } else {
-                viewHolder.tvRate.setText("月利率:" + productEntity.getMonthlyRathMin() + "%~" + productEntity.getMonthlyRathMax() + "%");
+                viewHolder.tvRate.setText("月利率:" + productEntity.getMinLoanRate() + "%~" + productEntity.getMaxLoanRate() + "%");
             }
         }
 
-        if (!TextUtils.isEmpty(productEntity.get_totalRath())) {
-            viewHolder.tvTotal.setText( df.format(Double.valueOf(productEntity.get_totalRath())));
-        }
-        if (!TextUtils.isEmpty(productEntity.get_monthlyPayment())) {
-            viewHolder.tvReim.setText(df.format(Double.valueOf(productEntity.get_monthlyPayment())) );
-        }
+//        if (!TextUtils.isEmpty(productEntity.get_totalRath())) {
+//            viewHolder.tvTotal.setText( df.format(Double.valueOf(productEntity.get_totalRath())));
+//        }
+//        if (!TextUtils.isEmpty(productEntity.get_monthlyPayment())) {
+//            viewHolder.tvReim.setText(df.format(Double.valueOf(productEntity.get_monthlyPayment())) );
+//        }
         if (!TextUtils.isEmpty(productEntity.getDisposableRateMax())||!TextUtils.isEmpty(productEntity.getDisposableRateMin())) {
             if(TextUtils.isEmpty(productEntity.getDisposableRateMin())){
                 productEntity.setDisposableRateMin("0.0");

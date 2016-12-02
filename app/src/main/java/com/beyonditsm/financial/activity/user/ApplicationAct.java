@@ -27,7 +27,7 @@ import com.beyonditsm.financial.activity.credit.CreditGuideAct;
 import com.beyonditsm.financial.adapter.CreditAdapter;
 import com.beyonditsm.financial.adapter.ProductSortAdapter;
 import com.beyonditsm.financial.entity.FindProductListEntity;
-import com.beyonditsm.financial.entity.ProductInfo;
+import com.beyonditsm.financial.entity.ProductBean;
 import com.beyonditsm.financial.entity.ProductResult;
 import com.beyonditsm.financial.entity.ProductSortEntity;
 import com.beyonditsm.financial.entity.ResultData;
@@ -244,7 +244,7 @@ public class ApplicationAct extends BaseActivity {
             }
         });
     }
-    private List<ProductInfo> datas = new ArrayList<>();
+    private List<ProductBean> datas = new ArrayList<>();
 
     private void getCredit(String userName, final String area, final String orgType, String productOrder, String moneyScope, String loanTerm, final int currentPage, int rows) {
 
@@ -258,7 +258,7 @@ public class ApplicationAct extends BaseActivity {
                 plv.onPullUpRefreshComplete();
                 ResultData<ProductResult> rd = (ResultData<ProductResult>) GsonUtils.json(result, ProductResult.class);
                 ProductResult pr = rd.getData();
-                List<ProductInfo> list = pr.getRows();
+                List<ProductBean> list = pr.getRows();
 
                 if (list == null || list.size() == 0) {
                     if (currentPage == 1) {

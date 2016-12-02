@@ -11,10 +11,8 @@ import java.util.List;
  */
 public class ProductResult implements Parcelable {
 
-
-
-    private int total;
-    private List<ProductInfo> rows;
+    public ProductResult() {
+    }
 
     public int getTotal() {
         return total;
@@ -24,13 +22,34 @@ public class ProductResult implements Parcelable {
         this.total = total;
     }
 
-    public List<ProductInfo> getRows() {
+    public List<ProductBean> getRows() {
         return rows;
     }
 
-    public void setRows(List<ProductInfo> rows) {
+    public void setRows(List<ProductBean> rows) {
         this.rows = rows;
     }
+
+    private int total;
+    private List<ProductBean> rows;
+
+
+    protected ProductResult(Parcel in) {
+        total = in.readInt();
+        rows = in.createTypedArrayList(ProductBean.CREATOR);
+    }
+
+    public static final Creator<ProductResult> CREATOR = new Creator<ProductResult>() {
+        @Override
+        public ProductResult createFromParcel(Parcel in) {
+            return new ProductResult(in);
+        }
+
+        @Override
+        public ProductResult[] newArray(int size) {
+            return new ProductResult[size];
+        }
+    };
 
     @Override
     public int describeContents() {
@@ -39,25 +58,7 @@ public class ProductResult implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.total);
+        dest.writeInt(total);
         dest.writeTypedList(rows);
     }
-
-    public ProductResult() {
-    }
-
-    protected ProductResult(Parcel in) {
-        this.total = in.readInt();
-        this.rows = in.createTypedArrayList(ProductInfo.CREATOR);
-    }
-
-    public static final Parcelable.Creator<ProductResult> CREATOR = new Parcelable.Creator<ProductResult>() {
-        public ProductResult createFromParcel(Parcel source) {
-            return new ProductResult(source);
-        }
-
-        public ProductResult[] newArray(int size) {
-            return new ProductResult[size];
-        }
-    };
 }
