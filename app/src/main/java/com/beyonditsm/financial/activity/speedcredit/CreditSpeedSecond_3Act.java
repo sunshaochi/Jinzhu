@@ -202,21 +202,21 @@ public class CreditSpeedSecond_3Act extends BaseActivity {
     private MySelfSheetDialog initDialog() {
         MySelfSheetDialog dialog = new MySelfSheetDialog(CreditSpeedSecond_3Act.this).builder();
         for (int i = 0; i < relationList.size(); i++) {
-            dialog.addSheetItem(relationList.get(i).getName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
+            dialog.addSheetItem(relationList.get(i).getOptionName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
                 @Override
                 public void onClick(int which) {
                     switch (CURRENT_SELECT){
                         case RL_SPEEDMARRIAGE1:
-                            marriage1Relation = relationList.get(which-1).getId()+"";
+                            marriage1Relation = relationList.get(which-1).getDictSubId()+"";
                             break;
                         case RL_SPEEDMARRIAGE2:
-                            marriage2Relation = relationList.get(which-1).getId()+"";
+                            marriage2Relation = relationList.get(which-1).getDictSubId()+"";
                             break;
                         case RL_SPEEDCOLLEAGUE:
-                            colleagueRelation = relationList.get(which-1).getId()+"";
+                            colleagueRelation = relationList.get(which-1).getDictSubId()+"";
                             break;
                         case RL_SPEEDEMERGENT:
-                            mergentRelation = relationList.get(which-1).getId()+"";
+                            mergentRelation = relationList.get(which-1).getDictSubId()+"";
                             break;
                     }
                 }

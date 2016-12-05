@@ -126,10 +126,10 @@ public class SpeedCreditFrag extends BaseFragment {
                 CreditSpeedEntity creditSpeedEntity = creditSpeedList.get(position);
 //                List<String> jobIdentitysList = jobIdentitys.get(position);
 //                List<CreditSpeedEntity.PropertyTypesBean> propertyTypesList = ;
-                intent.putExtra(JOB_IDENTITYS,(Serializable)creditSpeedEntity.getJobIdentitys());
-                intent.putExtra(PROPERTY_TYPES,(Serializable) creditSpeedEntity.getPropertyTypes());
-                intent.putExtra(PAY_TYPE,(Serializable) creditSpeedEntity.getPayTypess());
-                intent.putExtra(CREDIT_SPEED, creditSpeedEntity);
+                intent.putExtra(JOB_IDENTITYS,(Serializable)creditSpeedEntity.getDebtTypemap());//借款用途
+                intent.putExtra(PROPERTY_TYPES,(Serializable) creditSpeedEntity.getResideStatusmap());//居住状况
+                intent.putExtra(PAY_TYPE,(Serializable) creditSpeedEntity.getPaytypemap());//还款方式
+                intent.putExtra(CREDIT_SPEED, creditSpeedEntity);//急速贷个体
                 getActivity().startActivity(intent);
             }
         });

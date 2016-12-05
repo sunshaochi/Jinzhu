@@ -178,15 +178,15 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
     public void init(Bundle savedInstanceState) {
         setTopTitle("快速判断资质");
         setLeftTv("返回");
-        productId = getIntent().getStringExtra(CreditSpeedDetailAct.SPEED_CREDIT_PRODUCT_ID);
-        purpose = getIntent().getStringExtra(CreditSpeedDetailAct.PURPOSE);
-        maxRepaymentWeekly = getIntent().getStringExtra(CreditSpeedDetailAct.MAXREPAYMENTWEEKLY);
-        totalAmount = getIntent().getStringExtra(CreditSpeedDetailAct.TOTALAMOUNT);
-        totalPeriods = getIntent().getStringExtra(CreditSpeedDetailAct.TOTALPERIODS);
-        totalLoanInterest = getIntent().getStringExtra(CreditSpeedDetailAct.TOTALLOANINTEREST);
-        realMonthlyRate = getIntent().getStringExtra(CreditSpeedDetailAct.REALMONTHLYRATE);
+        productId = getIntent().getStringExtra(CreditSpeedDetailAct.SPEED_CREDIT_PRODUCT_ID);//产品id
+        purpose = getIntent().getStringExtra(CreditSpeedDetailAct.PURPOSE);//用途
+        maxRepaymentWeekly = getIntent().getStringExtra(CreditSpeedDetailAct.MAXREPAYMENTWEEKLY);//最多可承受还款
+        totalAmount = getIntent().getStringExtra(CreditSpeedDetailAct.TOTALAMOUNT);//输入的金额
+        totalPeriods = getIntent().getStringExtra(CreditSpeedDetailAct.TOTALPERIODS);//输入期限
+        totalLoanInterest = getIntent().getStringExtra(CreditSpeedDetailAct.TOTALLOANINTEREST);//总利息
+        realMonthlyRate = getIntent().getStringExtra(CreditSpeedDetailAct.REALMONTHLYRATE);//最小利率
 
-        propetyTypesList = (List<CreditSpeedEntity.PropertyTypesBean>) getIntent().getSerializableExtra(SpeedCreditFrag.PROPERTY_TYPES);
+        propetyTypesList = (List<CreditSpeedEntity.PropertyTypesBean>) getIntent().getSerializableExtra(SpeedCreditFrag.PROPERTY_TYPES);//居住状况
         userOrderInfo1 = new UserOrderInfo1();
         initText();
         loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
@@ -195,9 +195,9 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
                 queryAllProvince();
             }
         });
-        queryAllProvince();
-        getMarriage();
-        getEdu();
+        queryAllProvince();//获取省份
+        getMarriage();//获取婚姻
+        getEdu();//获取学历
         childNumList = new ArrayList<>();
         for (int i = 0;i<9;i++){
             childNumList.add(String.valueOf(i));
@@ -264,41 +264,41 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
             case R.id.tv_speed_toTwo:
                 if (isHaveData()) {
                     if (!TextUtils.isEmpty(productId)) {
-                        userOrderInfo1.setProductId(productId);
+                        userOrderInfo1.setProductId(productId);//产品id
                     }
-                    userOrderInfo1.setPurpose(purpose);
-                    userOrderInfo1.setMaxRepaymentWeekly(maxRepaymentWeekly);
-                    userOrderInfo1.setTotalAmount(totalAmount);
-                    userOrderInfo1.setTotalPeriods(totalPeriods);
-                    userOrderInfo1.setTotalLoanInterest(totalLoanInterest);
-                    userOrderInfo1.setRealMonthlyRate(realMonthlyRate);
-                    userOrderInfo1.setChildNum(tvSpeedSelectChildrenNum.getText().toString().trim());
-                    userOrderInfo1.setContactNum(etSpeedPhone.getText().toString().trim());
-                    userOrderInfo1.setIdcardno(etSpeedIdCard.getText().toString().trim());
-                    userOrderInfo1.setName(etSpeedName.getText().toString().trim());
-//                    userOrderInfo1.setMarriagests(tvSpeedSelectMarriage.getText().toString().trim());
-//                    userOrderInfo1.setQualitications(tvSpeedSelectEdu.getText().toString().trim());
+                    userOrderInfo1.setPurpose(purpose);//借款用途
+                    userOrderInfo1.setMaxRepaymentWeekly(maxRepaymentWeekly);//最大承受还款额度
+                    userOrderInfo1.setApplyAmount(totalAmount);//贷款金额
+                    userOrderInfo1.setApplyPeriods(totalPeriods);//还款期限
+                    userOrderInfo1.setPeriodsAmount(totalLoanInterest);//利息
+                    userOrderInfo1.setMonthlyRate(realMonthlyRate);//综合费率(最小的利率)
+                    userOrderInfo1.setChildrenCount(tvSpeedSelectChildrenNum.getText().toString().trim());//子女数
+                    userOrderInfo1.setMobilePhone(etSpeedPhone.getText().toString().trim());//电话号码、、
+                    userOrderInfo1.setIdNo(etSpeedIdCard.getText().toString().trim());//身份证号码。。
+                    userOrderInfo1.setName(etSpeedName.getText().toString().trim());//姓名
+//                    userOrderInfo1.setMarryStatus(tvSpeedSelectMarriage.getText().toString().trim());//婚姻状况。。。
+//                    userOrderInfo1.setQualitications(tvSpeedSelectEdu.getText().toString().trim());//学历状况
                     if (!TextUtils.isEmpty(permanentP)) {
-                        userOrderInfo1.setDomicileProvince(permanentP);
+                        userOrderInfo1.setDomicileProvince(permanentP);//户籍省份
                     }
-                    if (!TextUtils.isEmpty(permanentC)) {
+                    if (!TextUtils.isEmpty(permanentC)) {//户籍地市
                         userOrderInfo1.setDomicileCity(permanentC);
                     }
                     if (!TextUtils.isEmpty(permanentA)) {
-                        userOrderInfo1.setDomicileArea(permanentA);
+                        userOrderInfo1.setDomicileRegion(permanentA);//户籍地区
                     }
-                    userOrderInfo1.setDomicileDetail(etSpeedPermanentDetail.getText().toString().trim());
+                    userOrderInfo1.setDomicileAddress(etSpeedPermanentDetail.getText().toString().trim());
                     if (!TextUtils.isEmpty(residentP)) {
-                        userOrderInfo1.setPermanentProvince(residentP);
+                        userOrderInfo1.setCurrentProvince(residentP);//常驻省份
                     }
                     if (!TextUtils.isEmpty(residentC)) {
-                        userOrderInfo1.setPermanentCity(residentC);
+                        userOrderInfo1.setCurrentCity(residentC);//常驻城市
                     }
                     if (!TextUtils.isEmpty(residentA)) {
-                        userOrderInfo1.setPermanentArea(residentA);
+                        userOrderInfo1.setCurrentRegion(residentA);//常驻地区
                     }
 
-                    userOrderInfo1.setPermanentDetail(etSpeedResidentDetail.getText().toString().trim());
+                    userOrderInfo1.setDomicileAddress(etSpeedResidentDetail.getText().toString().trim());//常驻地详情
 //                    userOrderInfo1.setResSts(tvSpeedSelectLivingConditions.getText().toString().trim());
                     saveEsseatialInfo(userOrderInfo1);
 
@@ -313,7 +313,7 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
                             @Override
                             public void onClick(int which) {
                                 tvSpeedSelectLivingConditions.setText(propetyTypesList.get(which - 1).getName());
-                                userOrderInfo1.setResSts(propetyTypesList.get(which - 1).getId()+"");
+                                userOrderInfo1.setResideStatus(propetyTypesList.get(which - 1).getId()+"");
                             }
                         });
                     }
@@ -325,11 +325,11 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
                 MySelfSheetDialog mySelfSheetDialogm = new MySelfSheetDialog(CreditSpeedSecond_1Act.this).builder();
                 if (marriageList.size() != 0) {
                     for (int i = 0; i < marriageList.size(); i++) {
-                        mySelfSheetDialogm.addSheetItem(marriageList.get(i).getName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
+                        mySelfSheetDialogm.addSheetItem(marriageList.get(i).getOptionName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
-                                tvSpeedSelectMarriage.setText(marriageList.get(which - 1).getName());
-                                userOrderInfo1.setMarriagests(marriageList.get(which - 1).getId()+"");
+                                tvSpeedSelectMarriage.setText(marriageList.get(which - 1).getOptionName());
+                                userOrderInfo1.setMarryStatus(marriageList.get(which - 1).getDictSubId()+"");
                             }
                         });
                     }
@@ -341,11 +341,11 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
                 MySelfSheetDialog mySelfSheetDialoge = new MySelfSheetDialog(CreditSpeedSecond_1Act.this).builder();
                 if (eduList.size() != 0) {
                     for (int i = 0; i < eduList.size(); i++) {
-                        mySelfSheetDialoge.addSheetItem(eduList.get(i).getName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
+                        mySelfSheetDialoge.addSheetItem(eduList.get(i).getOptionName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
-                                tvSpeedSelectEdu.setText(eduList.get(which - 1).getName());
-                                userOrderInfo1.setQualitications(eduList.get(which - 1).getId()+"");
+                                tvSpeedSelectEdu.setText(eduList.get(which - 1).getOptionName());
+                                userOrderInfo1.setQualitications(eduList.get(which - 1).getDictSubId()+"");
                             }
                         });
                     }

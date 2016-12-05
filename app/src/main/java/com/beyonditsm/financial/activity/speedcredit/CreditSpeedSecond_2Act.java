@@ -16,6 +16,7 @@ import com.beyonditsm.financial.activity.speedcredit.listener.DialogListener;
 import com.beyonditsm.financial.entity.JJTCityEntity;
 import com.beyonditsm.financial.entity.JJTCounyEntity;
 import com.beyonditsm.financial.entity.JJTProvinceEntity;
+import com.beyonditsm.financial.entity.RelationEntity;
 import com.beyonditsm.financial.entity.UnitPropertyEntity;
 import com.beyonditsm.financial.http.CommManager;
 import com.beyonditsm.financial.http.RequestManager;
@@ -91,9 +92,9 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
     private List<JJTCityEntity> cityEntityList;
     private List<JJTCounyEntity> counyEntityList;
     private DialogJJTAddress dialogChooseAdress1;
-    private List<UnitPropertyEntity> unitPropertyList;
-    private List<UnitPropertyEntity> workPropertyList;
-    private List<UnitPropertyEntity> salaryPropertyList;
+    private List<RelationEntity> unitPropertyList;//单位性质
+    private List<RelationEntity> workPropertyList;//工作性质
+    private List<RelationEntity> salaryPropertyList;//工资发放形式
     private String companyArea;
     private String companyCity;
     private String companyProvince;
@@ -147,10 +148,10 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
         setTopTitle("快速判断资质");
         setLeftTv("返回");
         orderId = getIntent().getStringExtra(CreditSpeedSecond_1Act.ORDER_ID);
-        queryUnitProperty();
-        queryWorkingProperty();
-        querySalary();
-        queryAllProvince();
+        queryUnitProperty();//获取单位性质
+        queryWorkingProperty();//获取工作性质
+        querySalary();//获取月薪发放形式
+        queryAllProvince();//获取省
         initText();
     }
 
@@ -378,22 +379,22 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
         companyArea = jjtCounyEntity.getId();
     }
 
-    private MySelfSheetDialog initRelationDialog(List<UnitPropertyEntity> list) {
+    private MySelfSheetDialog initRelationDialog(List<RelationEntity> list) {
         MySelfSheetDialog dialog = new MySelfSheetDialog(CreditSpeedSecond_2Act.this).builder();
         for (int i = 0; i < list.size(); i++) {
-            dialog.addSheetItem(list.get(i).getName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
+            dialog.addSheetItem(list.get(i).getOptionName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
                 @Override
                 public void onClick(int which) {
                     MyLogUtils.info("which"+which+"");
                     switch (CURRENT_SELECT){
                         case RL_SPEEDCOMPANYTYPE:
-                            companyType = unitPropertyList.get(which-1).getId()+"";
+                            companyType = unitPropertyList.get(which-1).getDictSubId()+"";
                             break;
                         case RL_SPEEDSALARYTYPE:
-                            salaryType = salaryPropertyList.get(which-1).getId()+"";
+                            salaryType = salaryPropertyList.get(which-1).getDictSubId()+"";
                             break;
                         case RL_SPEEDWORKTYPE:
-                            workType = workPropertyList.get(which-1).getId()+"";
+                            workType = workPropertyList.get(which-1).getDictSubId()+"";
                             break;
                     }
                 }
@@ -406,7 +407,7 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
     public void saveQualificationsInfo() {
 
 
-        CommManager.getCommManager().saveQualificationsInfo(orderId, etSpeedCompanyName.getText().toString(), companyArea, companyCity, companyProvince, getEtSpeedCompanyAddressDetail.getText().toString(),
+        CommManager.getCommManager().saveQualificationsInfo(orderId, etSpeedCompanyName.getText().toString(),companyProvince,companyCity,companyArea,getEtSpeedCompanyAddressDetail.getText().toString(),
                 etSpeedCompanyPhoneArea.getText().toString() + "",
                 etSpeedCompanyPhone.getText().toString() + "",
                 companyType + "",

@@ -1,5 +1,9 @@
 package com.beyonditsm.financial.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
+import com.beyonditsm.financial.view.pullfreshview.ILoadingLayout;
 import com.beyonditsm.financial.view.tablayout.SlidingTabLayout;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
@@ -115,5 +120,30 @@ public class CreditFragment extends BaseFragment {
             Fragment fragment = fragmentList.get(position);
             fm.beginTransaction().hide(fragment).commit();
         }
+    }
+
+    //接收从首页急速贷发过来的广播
+
+    public final static String CHANGE="homefragment_jis";//点击急速贷选中viewpage
+
+    private BroadcastReceiver mbroad=new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            creditViewpager.setCurrentItem(1);
+        }
+    };
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        IntentFilter intentFilter=new IntentFilter();
+        intentFilter.addAction(CHANGE);
+        getActivity().registerReceiver(mbroad,intentFilter);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(mbroad);
     }
 }

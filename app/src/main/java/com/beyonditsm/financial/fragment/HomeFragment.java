@@ -292,6 +292,10 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
             case R.id.ll_credit://我要贷款
                 EventBus.getDefault().post(new ToSwitchEvent());
                 break;
+            case R.id.ll_tillage://急速贷
+                EventBus.getDefault().post(new ToSwitchEvent());
+                getActivity().sendBroadcast(new Intent(CreditFragment.CHANGE));
+                break;
 
             case R.id.ll_work://打工挣钱
                 if (!"".equals(SpUtils.getRoleName(context))) {

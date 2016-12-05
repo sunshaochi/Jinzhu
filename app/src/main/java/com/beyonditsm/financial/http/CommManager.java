@@ -577,16 +577,16 @@ public class CommManager extends RequestManager {
         params.put("orderId",entity3.getOrderId());
         params.put("relatives1Name",entity3.getRelatives1Name());
         params.put("relatives1Rs",entity3.getRelatives1Rs());
-        params.put("relatives1ContactNum",entity3.getRelatives1ContactNum());
+        params.put("relatives1MobilePhone",entity3.getRelatives1MobilePhone());
         params.put("relatives2Name",entity3.getRelatives2Name());
         params.put("relatives2Rs",entity3.getRelatives2Rs());
-        params.put("relatives2ContactNum", entity3.getRelatives2ContactNum());
+        params.put("relatives2MobilePhone ", entity3.getRelatives2MobilePhone());
         params.put("colleagueName", entity3.getColleagueName());
         params.put("colleagueRs", entity3.getColleagueRs());
-        params.put("colleagueContactNum", entity3.getColleagueContactNum());
+        params.put("colleagueMobilePhone ", entity3.getColleagueMobilePhone());
         params.put("ecName", entity3.getEcName());
         params.put("ecRs", entity3.getEcRs());
-        params.put("ecContactNum", entity3.getEcContactNum());
+        params.put("ecMobilePhone ", entity3.getEcMobilePhone());
         doPost(IFinancialUrl.SAVE_USER_ORDER_INFO3, params, callBack);
     }
 
@@ -669,25 +669,26 @@ public class CommManager extends RequestManager {
         params.put("productId",userInfo1.getProductId()+"");
         params.put("purpose",userInfo1.getPurpose()+"");
         params.put("maxRepaymentWeekly",userInfo1.getMaxRepaymentWeekly()+"");
-        params.put("totalAmount",userInfo1.getTotalAmount()+"");
-        params.put("totalPeriods",userInfo1.getTotalPeriods()+"");
-        params.put("totalLoanInterest",userInfo1.getTotalLoanInterest()+"");
-        params.put("realMonthlyRate",userInfo1.getRealMonthlyRate()+"");
+        params.put("applyAmount",userInfo1.getApplyAmount()+"");
+        params.put("applyPeriods",userInfo1.getApplyPeriods()+"");
+        params.put("periodsAmount",userInfo1.getPeriodsAmount()+"");
+        params.put("monthlyRate",userInfo1.getMonthlyRate()+"");
         params.put("name",userInfo1.getName()+"");
-        params.put("contactNum",userInfo1.getContactNum()+"");
-        params.put("idcardno",userInfo1.getIdcardno()+"");
-        params.put("marriagests",userInfo1.getMarriagests()+"");
+        params.put("mobilePhone",userInfo1.getMobilePhone()+"");
+        params.put("idNo",userInfo1.getIdNo()+"");
+        params.put("marryStatus",userInfo1.getMarryStatus()+"");
         params.put("qualitications",userInfo1.getQualitications()+"");
-        params.put("childNum",userInfo1.getChildNum()+"");
-        params.put("domicileArea",userInfo1.getDomicileArea()+"");
-        params.put("domicileCity",userInfo1.getDomicileCity()+"");
-        params.put("domicileDetail",userInfo1.getDomicileDetail()+"");
+        params.put("childrenCount",userInfo1.getChildrenCount()+"");
+        params.put("currentProvince",userInfo1.getCurrentProvince()+"");
+        params.put("currentCity",userInfo1.getCurrentCity()+"");
+        params.put("currentRegion",userInfo1.getCurrentRegion()+"");
+        params.put("currentAddress",userInfo1.getCurrentAddress()+"");
         params.put("domicileProvince",userInfo1.getDomicileProvince()+"");
-        params.put("permanentArea",userInfo1.getPermanentArea()+"");
-        params.put("permanentCity",userInfo1.getPermanentCity()+"");
-        params.put("permanentProvince",userInfo1.getPermanentProvince()+"");
-        params.put("permanentDetail",userInfo1.getPermanentDetail()+"");
-        params.put("resSts",userInfo1.getResSts()+"");
+        params.put("domicileProvince",userInfo1.getDomicileProvince()+"");
+        params.put("domicileCity",userInfo1.getDomicileCity()+"");
+        params.put("domicileRegion",userInfo1.getDomicileRegion()+"");
+        params.put("domicileAddress",userInfo1.getDomicileAddress()+"");
+        params.put("resideStatus",userInfo1.getResideStatus()+"");
 
         doPost(IFinancialUrl.SAVE_ESSENTIAL_INFO,params,callBack);
     }
@@ -696,29 +697,30 @@ public class CommManager extends RequestManager {
      * 急借通储存第二步信息接口
      * @param callBack
      */
-    public void saveQualificationsInfo(String orderId,
-                                       String CompanyName,
-                                       String CompanyArea,
-                                       String CompanyCity,
-                                       String CompanyProvince,
-                                       String CompanyDetail,
-                                       String areaCode,
-                                       String CompanyPhoneNum,
-                                       String companyNature,
-                                       String workingProp,
-                                       String salary,
-                                       String payout,CallBack callBack){
+    public void saveQualificationsInfo(String orderId,//订单id
+                                       String companyName,//公司名称
+                                       String companyProvince,//公司所在省份
+                                       String companyCity,//公司所在城市
+                                       String companyRegion,//公司所在地区
+                                       String companyAddress,//公司详细地址
+                                       String regionCode,//电话区号
+                                       String companyTelPhone,//电话号码
+                                       String companyNature,//单位性质
+                                       String workingNature,//工作性质
+                                       String salary,//月薪
+                                       String payout,//发放形式
+                                       CallBack callBack){
         Map<String,String> params = new HashMap<>();
         params.put("orderId",orderId);
-        params.put("CompanyName",CompanyName);
-        params.put("CompanyArea",CompanyArea);
-        params.put("CompanyCity",CompanyCity);
-        params.put("CompanyProvince",CompanyProvince);
-        params.put("CompanyDetail",CompanyDetail);
-        params.put("areaCode",areaCode);
-        params.put("CompanyPhoneNum",CompanyPhoneNum);
+        params.put("companyName",companyName);
+        params.put("companyProvince",companyProvince);
+        params.put("companyCity",companyCity);
+        params.put("companyRegion",companyRegion);
+        params.put("companyAddress",companyAddress);
+        params.put("regionCode",regionCode);
+        params.put("companyTelPhone",companyTelPhone);
         params.put("companyNature",companyNature);
-        params.put("workingProp",workingProp);
+        params.put("workingNature",workingNature);
         params.put("salary",salary);
         params.put("payout",payout);
         doPost(IFinancialUrl.SAVE_QUALIFICATIONS_INFO,params,callBack);
