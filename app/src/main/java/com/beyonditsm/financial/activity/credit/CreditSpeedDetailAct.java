@@ -175,54 +175,7 @@ public class CreditSpeedDetailAct extends BaseActivity {
                 minWeek = Integer.valueOf(timeMinValue);
                 tvSpeedWeek.setText(timeMinValue);
             }
-//            if(!TextUtils.isEmpty(creditSpeedEntity.getLoanPeriodType())){//贷款类型
-//                String type=creditSpeedEntity.getLoanPeriodType();
-//                switch (type){
-//                    case "1"://年产品
-//                        tvspeedMonth.setText("年");//期限单位
-//                        if(creditSpeedEntity.getLoanRateType().equals("1")){//月利率
-//                            double v = Double.valueOf(etSpeedAmount.getText().toString().trim()) * (Integer.valueOf(tvSpeedWeek.getText().toString()) * 12) *0.03;
-//                            tvTotal.setText(String.valueOf(v));//总利息
-//                        }else if(creditSpeedEntity.getLoanRateType().equals("2")){//日利率
-//                            double v = Double.valueOf(etSpeedAmount.getText().toString().trim()) * (Integer.valueOf(tvSpeedWeek.getText().toString()) * 365) * 0.003;
-//                            tvTotal.setText(String.valueOf(v));//总利息
-//                        }
-//
-//                        if (!TextUtils.isEmpty(creditSpeedEntity.getMinLoanPeriod())&&!TextUtils.isEmpty(creditSpeedEntity.getMaxLoanPeriod())) {
-//                            tvLim.setText("期限范围：" + creditSpeedEntity.getMinLoanPeriod()+"-"+creditSpeedEntity.getMaxLoanPeriod()+"年");
-//                        }
-//                        break;
-//                    case "2"://月产品
-//                        tvspeedMonth.setText("月");
-//                        if(creditSpeedEntity.getLoanRateType().equals("1")){//月利率
-//                            double v = Double.valueOf(etSpeedAmount.getText().toString().trim()) * (Integer.valueOf(tvSpeedWeek.getText().toString()) * 1) *0.03;
-//                            tvTotal.setText(String.valueOf(v));//总利息
-//                        }else if(creditSpeedEntity.getLoanRateType().equals("2")){//日利率
-//                            double v = Double.valueOf(etSpeedAmount.getText().toString().trim()) * (Integer.valueOf(tvSpeedWeek.getText().toString()) * 30) * 0.003;
-//                            tvTotal.setText(String.valueOf(v));//总利息
-//                        }
-//                        if (!TextUtils.isEmpty(creditSpeedEntity.getMinLoanPeriod())&&!TextUtils.isEmpty(creditSpeedEntity.getMaxLoanPeriod())) {
-//                            tvLim.setText("期限范围：" + creditSpeedEntity.getMinLoanPeriod()+"-"+creditSpeedEntity.getMaxLoanPeriod()+"月");
-//                        }
-//                        break;
-//                    case "3"://周产品
-//                        tvspeedMonth.setText("周");
-//                        double v2 = Double.valueOf(etSpeedAmount.getText().toString().trim()) * (Integer.valueOf(tvSpeedWeek.getText().toString()) * 7) * 0.003;
-//                        tvTotal.setText(String.valueOf(v2));//总利息
-//                        if (!TextUtils.isEmpty(creditSpeedEntity.getMinLoanPeriod())&&!TextUtils.isEmpty(creditSpeedEntity.getMaxLoanPeriod())) {
-//                            tvLim.setText("期限范围：" + creditSpeedEntity.getMinLoanPeriod()+"-"+creditSpeedEntity.getMaxLoanPeriod()+"周");
-//                        }
-//                        break;
-//                    case "4"://日产品
-//                        tvspeedMonth.setText("日");
-//                        double v3 = Double.valueOf(etSpeedAmount.getText().toString().trim()) * (Integer.valueOf(tvSpeedWeek.getText().toString()) * 1) * 0.003;
-//                        tvTotal.setText(String.valueOf(v3));//总费率
-//                        if (!TextUtils.isEmpty(creditSpeedEntity.getMinLoanPeriod())&&!TextUtils.isEmpty(creditSpeedEntity.getMaxLoanPeriod())) {
-//                            tvLim.setText("期限范围：" + creditSpeedEntity.getMinLoanPeriod()+"-"+creditSpeedEntity.getMaxLoanPeriod()+"日");
-//                        }
-//                        break;
-//                }
-//            }
+
             getTotlerate();//获取总利息
 
 //            double v = Double.valueOf(etSpeedAmount.getText().toString().trim()) * (Integer.valueOf(tvSpeedWeek.getText().toString()) * 7) * 0.003;
@@ -384,7 +337,7 @@ public class CreditSpeedDetailAct extends BaseActivity {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            etSpeedAmount.setCursorVisible(true);
+            etSpeedAmount.setCursorVisible(true);//获取光标
             if (s.toString().contains(".")) {
                 if (s.length() - 1 - s.toString().indexOf(".") > 2) {
                     s = s.toString().subSequence(0,

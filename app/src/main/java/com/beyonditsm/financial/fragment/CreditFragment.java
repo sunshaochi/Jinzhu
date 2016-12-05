@@ -125,25 +125,34 @@ public class CreditFragment extends BaseFragment {
     //接收从首页急速贷发过来的广播
 
     public final static String CHANGE="homefragment_jis";//点击急速贷选中viewpage
-
-    private BroadcastReceiver mbroad=new BroadcastReceiver() {
+    private MyBrodecast brodecast;
+    private class MyBrodecast extends BroadcastReceiver{
         @Override
         public void onReceive(Context context, Intent intent) {
             creditViewpager.setCurrentItem(1);
         }
-    };
+    }
+
+//    private BroadcastReceiver mbroad=new BroadcastReceiver() {
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            creditViewpager.setCurrentItem(1);
+//        }
+//    };
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        IntentFilter intentFilter=new IntentFilter();
-        intentFilter.addAction(CHANGE);
-        getActivity().registerReceiver(mbroad,intentFilter);
+        if(brodecast==null){
+            brodecast=new MyBrodecast();
+        }
+        getActivity().registerReceiver(brodecast,new IntentFilter(CHANGE));
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        getActivity().unregisterReceiver(mbroad);
+        if(brodecast!=null){
+        getActivity().unregisterReceiver(brodecast);}
     }
 }

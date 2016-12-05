@@ -489,7 +489,7 @@ public class SpeedCreditDetailFragment extends BaseFragment {
                 info = gson.fromJson(data.toString(), SpeedOrderInfo.class);
                 if (info != null) {
 //                    data = info.getData();
-                    if (data != null) {
+//                    if (data != null) {
                         creditName = info.getProductName();
 //                        accountId = info.getCreditAccountId();
                         if (!TextUtils.isEmpty(accountId))
@@ -739,7 +739,7 @@ public class SpeedCreditDetailFragment extends BaseFragment {
 //                        }
                         CheckUtil.CheckOutNullString(llCreditDetail);
 
-                    }
+//                    }
                 }
             }
 

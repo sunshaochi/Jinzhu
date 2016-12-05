@@ -135,7 +135,15 @@ public class SpeedOrderInfo {
     private Object idCardBack;
     private int loanPeriod;
     private String domicileAreaId;
+    private String companyPhoneNum;//公司电话
 
+    public String getCompanyPhoneNum() {
+        return companyPhoneNum;
+    }
+
+    public void setCompanyPhoneNum(String companyPhoneNum) {
+        this.companyPhoneNum = companyPhoneNum;
+    }
 
     public String getRelatives2Rs() {
         return relatives2Rs;

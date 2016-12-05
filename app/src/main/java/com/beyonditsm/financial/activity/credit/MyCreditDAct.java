@@ -52,7 +52,7 @@ public class MyCreditDAct extends BaseActivity {
     private int position;
 
     private final String[] mTitles = {"贷款状态", "贷款详情"};
-    private String type;
+//    private String type;
 
     @Override
     public void setLayout() {
@@ -69,7 +69,7 @@ public class MyCreditDAct extends BaseActivity {
         EventBus.getDefault().register(this);
         setLeftTv("返回");
         setTopTitle("贷款详情");
-        type = getIntent().getStringExtra("type");
+//        type = getIntent().getStringExtra("type");
         rowe = getIntent().getParcelableExtra(MyCreditAct.CREDIT);
         String orderId = SpUtils.getOrderId(MyApplication.getInstance());
         MyLogUtils.info("获取到已保存的orderID+" + orderId);
@@ -180,11 +180,11 @@ public class MyCreditDAct extends BaseActivity {
         Bundle bundle = new Bundle();
         bundle.putParcelable("rowe", rowe);
         Fragment detailFragment;
-        if (rowe.getOrderType().equals("4")) {
+        if (rowe.getOrderType().equals("4")) {//急借通
             detailFragment = new SpeedCreditDetailFragment();
         } else {
-            detailFragment = new MyCreditDetailFragment();
-            MyCreditStatusFragment statusFragment = new MyCreditStatusFragment();
+            detailFragment = new MyCreditDetailFragment();//贷款详情
+            MyCreditStatusFragment statusFragment = new MyCreditStatusFragment();//贷款状态
             statusFragment.setArguments(bundle);
             fragmentList.add(statusFragment);
         }

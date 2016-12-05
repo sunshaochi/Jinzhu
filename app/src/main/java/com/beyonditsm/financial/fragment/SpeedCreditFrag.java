@@ -67,7 +67,7 @@ public class SpeedCreditFrag extends BaseFragment {
         lvSpeedCredit.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
         lvSpeedCredit.getRefreshableView().setDivider(getResources().getDrawable(R.drawable.divider_grey));
         lvSpeedCredit.getRefreshableView().setDividerHeight(20);
-        getCreditSpeed(currentP);
+        getCreditSpeed(currentP);//获取急速贷产品
     }
 
     private void getCreditSpeed(final int page) {

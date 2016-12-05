@@ -98,13 +98,13 @@ public class MyCreditAct extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MyCreditAct.this, MyCreditDAct.class);
                 MyCreditBean.RowsEntity credit = datas.get(position);
-                if (position==0){
-                    intent.putExtra("type","comm");
-                }else if (position==1){
-                    intent.putExtra("type","speed");
-                }
+//                if (position==0){
+//                    intent.putExtra("type","comm");
+//                }else if (position==1){
+//                    intent.putExtra("type","speed");
+//                }
                 intent.putExtra(CREDIT, credit);
-                intent.putExtra("position", position);
+//                intent.putExtra("position", position);
                 startActivity(intent);
             }
         });
