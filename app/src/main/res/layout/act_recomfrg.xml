@@ -25,6 +25,7 @@
                 android:orientation="vertical">
 
                 <RelativeLayout
+                    android:id="@+id/rl_money"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
@@ -39,24 +40,26 @@
                         android:textColor="#666666"
                         android:textSize="13sp" />
                     <TextView
-                        android:layout_toLeftOf="@+id/et_money"
+                        android:id="@+id/tv_money"
+                        android:layout_marginRight="25dp"
+                        android:layout_alignParentRight="true"
                         android:gravity="center"
                         android:textColor="#FF6600"
                         android:textSize="17sp"
-                        android:text="￥"
+                        android:text="￥1000"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" />
 
-                    <EditText
-                        android:layout_marginRight="15dp"
-                        android:id="@+id/et_money"
-                        android:minWidth="50dp"
-                        android:textColor="#FF6600"
-                        android:layout_alignParentRight="true"
-                        android:text="344444"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:background="@color/white" />
+                    <!--<EditText-->
+                        <!--android:layout_marginRight="15dp"-->
+                        <!--android:id="@+id/et_money"-->
+                        <!--android:minWidth="50dp"-->
+                        <!--android:textColor="#FF6600"-->
+                        <!--android:layout_alignParentRight="true"-->
+                        <!--android:text="344444"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:background="@color/white" />-->
                 </RelativeLayout>
 
                 <View
@@ -70,6 +73,7 @@
                     android:orientation="horizontal">
 
                     <com.beyonditsm.financial.view.CommonView
+                        android:id="@+id/com_qixian"
                         android:layout_width="match_parent"
                         android:layout_height="43dp"
                         app:desText="贷款期限"
@@ -102,6 +106,7 @@
                 android:orientation="vertical">
 
                 <com.beyonditsm.financial.view.CommonView
+                    android:id="@+id/com_dq"
                     android:layout_width="match_parent"
                     android:layout_height="43dp"
                     app:desText="地区"
@@ -113,6 +118,7 @@
                     android:layout_marginLeft="15dp"></View>
 
                 <com.beyonditsm.financial.view.CommonView
+                    android:id="@+id/com_xl"
                     android:layout_width="match_parent"
                     android:layout_height="43dp"
                     app:desText="学历"
@@ -124,6 +130,7 @@
                     android:layout_marginLeft="15dp"></View>
 
                 <com.beyonditsm.financial.view.CommonView
+                    android:id="@+id/com_hj"
                     android:layout_width="match_parent"
                     android:layout_height="43dp"
                     app:desText="户籍"
@@ -141,6 +148,7 @@
                     android:layout_marginLeft="15dp"></View>
 
                 <com.beyonditsm.financial.view.CommonView
+                    android:id="@+id/com_xyjl"
                     android:layout_width="match_parent"
                     android:layout_height="43dp"
                     app:desText="信用记录"
@@ -154,6 +162,7 @@
                     android:layout_marginLeft="15dp"></View>
 
                 <com.beyonditsm.financial.view.CommonView
+                    android:id="@+id/com_zw"
                     android:layout_width="match_parent"
                     android:layout_height="43dp"
                     app:desText="职位"
@@ -163,6 +172,7 @@
                     style="@style/view_line"
                     android:layout_marginLeft="15dp"></View>
                 <RelativeLayout
+                    android:id="@+id/rl_nj"
                     android:layout_width="match_parent"
                     android:layout_height="43dp">
                     <TextView
@@ -170,24 +180,36 @@
                         android:textSize="13sp"
                         android:layout_marginLeft="15dp"
                         android:gravity="center"
-                        android:text="请输入年级"
+                        android:text="请输入年纪"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" />
-                    <EditText
-                        android:textSize="13sp"
-                        android:background="@color/white"
-                        android:layout_marginRight="15dp"
-                        android:textColorHint="#999999"
-                        android:hint="例如：33岁"
+                    <TextView
+                        android:id="@+id/tv_nj"
+                        android:layout_marginRight="25dp"
                         android:layout_alignParentRight="true"
+                        android:gravity="center"
+                        android:textColor="#999999"
+                        android:textSize="17sp"
+                        android:text="￥1000"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" />
+
+                    <!--<EditText-->
+                        <!--android:textSize="13sp"-->
+                        <!--android:background="@color/white"-->
+                        <!--android:layout_marginRight="15dp"-->
+                        <!--android:textColorHint="#999999"-->
+                        <!--android:hint="例如：33岁"-->
+                        <!--android:layout_alignParentRight="true"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="match_parent" />-->
 
                 </RelativeLayout>
                 <View
                     style="@style/view_line"
                     android:layout_marginLeft="15dp"></View>
                 <RelativeLayout
+                    android:id="@+id/rl_gzsc"
                     android:layout_width="match_parent"
                     android:layout_height="43dp">
                     <TextView
@@ -198,13 +220,23 @@
                         android:text="工作/执照注册时长"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" />
-                    <EditText
-                        android:background="@color/white"
-                        android:textSize="13sp"
-                        android:layout_marginRight="15dp"
-                        android:textColorHint="#999999"
-                        android:hint="例如：3月"
+                    <!--<EditText-->
+                        <!--android:background="@color/white"-->
+                        <!--android:textSize="13sp"-->
+                        <!--android:layout_marginRight="15dp"-->
+                        <!--android:textColorHint="#999999"-->
+                        <!--android:hint="例如：3月"-->
+                        <!--android:layout_alignParentRight="true"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="match_parent" />-->
+                    <TextView
+                        android:id="@+id/tv_gzsc"
+                        android:layout_marginRight="25dp"
                         android:layout_alignParentRight="true"
+                        android:gravity="center"
+                        android:textColor="#999999"
+                        android:textSize="17sp"
+                        android:text="￥1000"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" />
 
@@ -232,6 +264,7 @@
                 android:orientation="vertical">
 
                 <com.beyonditsm.financial.view.CommonView
+                    android:id="@+id/com_cc"
                     android:layout_width="match_parent"
                     android:layout_height="43dp"
                     app:desText="车产"
@@ -243,9 +276,10 @@
                     android:layout_marginLeft="15dp"></View>
 
                 <com.beyonditsm.financial.view.CommonView
+                    android:id="@+id/com_fc"
                     android:layout_width="match_parent"
                     android:layout_height="43dp"
-                    app:desText="学历"
+                    app:desText="房产"
                     app:isShowCategoryImage="false"
                     app:notesText="请选择"></com.beyonditsm.financial.view.CommonView>
 
@@ -256,6 +290,7 @@
                 <View style="@style/view_line"></View>
 
                 <com.beyonditsm.financial.view.CommonView
+                    android:id="@+id/com_dfgo"
                     android:layout_width="match_parent"
                     android:layout_height="43dp"
                     app:desText="代发工资金额"
@@ -267,6 +302,7 @@
                     android:layout_marginLeft="15dp"></View>
 
                 <com.beyonditsm.financial.view.CommonView
+                    android:id="@+id/com_bd"
                     android:layout_width="match_parent"
                     android:layout_height="43dp"
                     app:desText="保单"
@@ -278,6 +314,7 @@
                     android:layout_marginLeft="15dp"></View>
 
                 <com.beyonditsm.financial.view.CommonView
+                    android:id="@+id/com_qtzc"
                     android:layout_width="match_parent"
                     android:layout_height="43dp"
                     app:desText="其他资产"
@@ -287,6 +324,7 @@
                     style="@style/view_line"
                     android:layout_marginLeft="15dp"></View>
                 <RelativeLayout
+                    android:id="@+id/rl_gjjsc"
                     android:layout_width="match_parent"
                     android:layout_height="43dp">
                     <TextView
@@ -297,16 +335,25 @@
                         android:text="公积金/社保时长"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" />
-                    <EditText
-                        android:textSize="13sp"
-                        android:background="@color/white"
-                        android:layout_marginRight="15dp"
-                        android:textColorHint="#999999"
-                        android:hint="例如：24月"
+                    <!--<EditText-->
+                        <!--android:textSize="13sp"-->
+                        <!--android:background="@color/white"-->
+                        <!--android:layout_marginRight="15dp"-->
+                        <!--android:textColorHint="#999999"-->
+                        <!--android:hint="例如：24月"-->
+                        <!--android:layout_alignParentRight="true"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="match_parent" />-->
+                    <TextView
+                        android:id="@+id/tv_gjjsc"
+                        android:layout_marginRight="25dp"
                         android:layout_alignParentRight="true"
+                        android:gravity="center"
+                        android:textColor="#999999"
+                        android:textSize="17sp"
+                        android:text="￥1000"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" />
-
                 </RelativeLayout>
 
 
