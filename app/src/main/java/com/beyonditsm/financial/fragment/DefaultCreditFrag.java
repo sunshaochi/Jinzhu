@@ -47,6 +47,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 大额贷
  * Created by Administrator on 2016/9/26 0026.
  */
 
@@ -112,14 +113,14 @@ public class DefaultCreditFrag extends BaseFragment {
     }
 
     @Override
-    public void onHiddenChanged(boolean hidden) {
+    public void onHiddenChanged(boolean hidden) {//重新切换frg后原来数据不变
         super.onHiddenChanged(hidden);
         if (!hidden) {
             initTit();
             getCredit(ParamsUtil.getInstance().getUle().getUsername(), SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
             String city = SpUtils.getCity(MyApplication.getInstance().getApplicationContext());
             if (TextUtils.isEmpty(city)) {
-                getSortParam(ParamsUtil.getInstance().getChangedCity());
+                getSortParam(ParamsUtil.getInstance().getChangedCity());//通过城市获取筛选条件
             } else {
                 getSortParam(city);
                 initTit();
@@ -301,10 +302,10 @@ public class DefaultCreditFrag extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), HomeCreditDetailAct.class);
-                intent.putExtra(HomeCreditDetailAct.PRODUCTINFO, datas.get(position).getProductId());
-                intent.putExtra(HomeCreditDetailAct.CREDIT_AMOUNT, ConstantValue.CREDIT_MONEY + "");
-                intent.putExtra(HomeCreditDetailAct.CREDIT_TIME, ConstantValue.CREDIT_MONTH + "");
-                intent.putExtra(HomeCreditDetailAct.CREDIT_NAME, datas.get(position).getProductName());
+                intent.putExtra(HomeCreditDetailAct.PRODUCTINFO, datas.get(position).getProductId());//传递id
+                intent.putExtra(HomeCreditDetailAct.CREDIT_AMOUNT, ConstantValue.CREDIT_MONEY + "");//传递金额
+                intent.putExtra(HomeCreditDetailAct.CREDIT_TIME, ConstantValue.CREDIT_MONTH + "");//传递时间
+                intent.putExtra(HomeCreditDetailAct.CREDIT_NAME, datas.get(position).getProductName());//传递姓名
                 getActivity().startActivity(intent);
             }
         });
@@ -373,7 +374,7 @@ public class DefaultCreditFrag extends BaseFragment {
 
 
     private List<ProductBean> datas = new ArrayList<>();
-
+    //获取产品列表
     private void getCredit(String userName, final String area, final String orgType, String productOrder, String moneyScope, String loanTerm, final int currentPage, int rows) {
 
         RequestManager.getMangManger().findProductByParam(userName, area, orgType, productOrder, moneyScope, loanTerm, currentPage, rows, new RequestManager.CallBack() {

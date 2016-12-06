@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
+import com.beyonditsm.financial.entity.ProductBean;
 import com.beyonditsm.financial.entity.ProductInfo;
 import com.beyonditsm.financial.entity.UpLoadEntity;
 import com.beyonditsm.financial.fragment.CreditFirstFrag;
@@ -28,7 +29,7 @@ import com.tandong.sa.eventbus.EventBus;
 import java.util.List;
 
 /**
- * 贷款流程主act
+ * 贷款流程主act（第一步，二步，三步，四步。）
  * Created by Yang on 2015/11/12 0012
  */
 public class CreditStepAct extends BaseActivity {
@@ -45,7 +46,7 @@ public class CreditStepAct extends BaseActivity {
 
     private FragmentManager fragmentManager;
 
-    private ProductInfo productInfo;
+    private ProductBean productInfo;
     public static final String TAG_TYPE = "tag_type";
 
     private static CreditStepAct activityInstance;
@@ -64,14 +65,14 @@ public class CreditStepAct extends BaseActivity {
         orderId = getIntent().getStringExtra("orderId");
         // 1 线上  2线下
         String orderType = getIntent().getStringExtra("orderType");
-        productInfo = getIntent().getParcelableExtra(HomeCreditDetailAct.PRODUCTINFO);
-        credit_type = getIntent().getStringExtra(CreditSpeedDetailAct.CREDIT_TYPE);
+        productInfo = getIntent().getParcelableExtra(HomeCreditDetailAct.PRODUCTINFO);//普通产品从贷款详情带过来
+        credit_type = getIntent().getStringExtra(CreditSpeedDetailAct.CREDIT_TYPE);//急速度产品
         EventBus.getDefault().register(this);
         fragmentManager = getSupportFragmentManager();
         if (TextUtils.isEmpty(SpUtils.getRoleName(this))) {
-            setTabSelection(0);
+            setTabSelection(0);//未登陆
         } else if (TextUtils.isEmpty(credit_type)){
-            setTabSelection(1);
+            setTabSelection(1);//快速判断资质普通产品过来走的这步
         }else if (!TextUtils.isEmpty(credit_type)&&"speed".equals(credit_type)){
             setTabSelection(5);
         }
@@ -143,8 +144,8 @@ public class CreditStepAct extends BaseActivity {
                 if (secondFrag == null) {
                     secondFrag = new CreditSecondFrag();
                     Bundle bundle = new Bundle();
-                    bundle.putParcelable(CreditDetailAct.PRODUCTINFO, productInfo);
-                    secondFrag.setArguments(bundle);
+                    bundle.putParcelable(HomeCreditDetailAct.PRODUCTINFO, productInfo);
+                    secondFrag.setArguments(bundle);//把产品info传过去
                     fragmentTransaction.add(R.id.credit_fl, secondFrag);
                 } else {
                     fragmentTransaction.show(secondFrag);

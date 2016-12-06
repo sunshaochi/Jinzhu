@@ -132,7 +132,7 @@ public class CreditUploadAct extends BaseActivity {
             file.mkdirs();
 
         photoSavePath = Environment.getExternalStorageDirectory() + "/upload/cache/";
-        findFlowDetail(orderId, flowId);
+        findFlowDetail(orderId, flowId);//获取要上传的照片类型
 
         loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
             @Override
@@ -145,10 +145,10 @@ public class CreditUploadAct extends BaseActivity {
     @OnClick({R.id.tvBack, R.id.tvSave, R.id.tvSkip})
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tvBack:
+            case R.id.tvBack://返回
                 finish();
                 break;
-            case R.id.tvSave:
+            case R.id.tvSave://保存
                 if (resultData == null || resultData.size() == 0) {
                     MyToastUtils.showShortToast(getApplicationContext(), "您没有做任何操作");
                     return;
@@ -195,14 +195,14 @@ public class CreditUploadAct extends BaseActivity {
                 JSONObject data = jsonObject.getJSONObject("data");
                 upLoadData = GsonUtils.json2Bean(data.toString(), UpLoadEntity.class);
                 if (!TextUtils.isEmpty(upLoadData.getDisplayName()))
-                    tvDes.setText(upLoadData.getDisplayName());
+                    tvDes.setText(upLoadData.getDisplayName());//例如上传个人及配偶身份证照
                 if (!TextUtils.isEmpty(upLoadData.getDescription())) {
                     tvRemarks.setVisibility(View.VISIBLE);
-                    tvRemarks.setText(upLoadData.getDescription());
+                    tvRemarks.setText(upLoadData.getDescription());//例如身份证正面照
                 }
                 creDatas = upLoadData.getItems();
 
-                imageMap = getImageMap(creDatas);
+                imageMap = getImageMap(creDatas);//拿到所有图片
                 myAdapter = new MyAdapter(creDatas);
                 lvUpLoad.setAdapter(myAdapter);
             }
@@ -277,7 +277,7 @@ public class CreditUploadAct extends BaseActivity {
                     break;
             }
             path = Environment.getExternalStorageDirectory() + "/upload/cache/credit_upload" + time + ".png";
-            uploadFile(path);
+            uploadFile(path);//上传图片
             super.onActivityResult(requestCode, resultCode, data);
         } catch (NullPointerException e) {
             e.printStackTrace();
@@ -438,7 +438,7 @@ public class CreditUploadAct extends BaseActivity {
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-            if (!TextUtils.isEmpty(list.get(position).getUploadDisplayName()))
+            if (!TextUtils.isEmpty(list.get(position).getUploadDisplayName()))//例如上传环境
                 holder.tvImgDes.setText(list.get(position).getUploadDisplayName());
             holder.lvUpLoad.setAdapter(new ImageAdapter(list.get(position).getImage(), list.get(position).getUploadItemId(), list.get(position).getLimit()));
             return convertView;

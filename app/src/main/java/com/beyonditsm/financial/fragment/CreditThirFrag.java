@@ -107,8 +107,8 @@ public class CreditThirFrag extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(mParentActivity, CreditUploadAct.class);
                 intent.putExtra("orderId", orderId);
-                intent.putExtra("flowId", datas.get(position).getFlowId());
-                intent.putExtra("status", datas.get(position).getStatus());
+                intent.putExtra("flowId", datas.get(position).getFlowId());//流程id
+                intent.putExtra("status", datas.get(position).getStatus());//流程状态
                 mParentActivity.startActivity(intent);
             }
         });
@@ -397,7 +397,7 @@ public class CreditThirFrag extends BaseFragment {
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-            holder.tvContent.setText(list.get(position).getDisplayName());
+            holder.tvContent.setText(list.get(position).getFlowDisplayNam());//流程展示名
             if ("0".equals(list.get(position).getIsComplete())) {
 //                holder.ivUpload.setImageResource(R.mipmap.cm_btn_more_nor);
                 holder.tvIsLoad.setText("未上传");
@@ -406,22 +406,23 @@ public class CreditThirFrag extends BaseFragment {
 //                holder.ivUpload.setImageResource(R.mipmap.load_sucess);
 //                holder.tvState.setVisibility(View.VISIBLE);
                 holder.tvIsLoad.setText("已上传");
+                holder.tvState.setVisibility(View.VISIBLE);
                 holder.tvIsLoad.setBackgroundResource(R.drawable.btn_bg_green);
 
             }
-            if ("DRAFT".equals(orderStatus)) {
-                holder.tvState.setVisibility(View.GONE);
-            } else if ("WAIT_BACKGROUND_APPROVAL".equals(orderStatus) ||//待审批
-                    "CANCEL_REQUET".equals(orderStatus) ||//取消订单
-                    "NO_PASS".equals(orderStatus) ||//审批不通过
-                    "REJECT".equals(orderStatus) ||//驳回
-                    "PASS".equals(orderStatus) ||//通过
-                    "SUPPLEMENT_DATA".equals(orderStatus) ||//补件中
-                    "ORGANIZATION_APPROVAL".equals(orderStatus) ||//机构审批中
-                    "CREDIT_MANAGER_GRAB".equals(orderStatus) ||//待抢单
-                    "CREDIT_MANAGER_APPROVAL".equals(orderStatus)) {//已抢单
-                holder.tvState.setVisibility(View.VISIBLE);
-            }
+//            if ("DRAFT".equals(orderStatus)) {
+//                holder.tvState.setVisibility(View.GONE);
+//            } else if ("WAIT_BACKGROUND_APPROVAL".equals(orderStatus) ||//待审批
+//                    "CANCEL_REQUET".equals(orderStatus) ||//取消订单
+//                    "NO_PASS".equals(orderStatus) ||//审批不通过
+//                    "REJECT".equals(orderStatus) ||//驳回
+//                    "PASS".equals(orderStatus) ||//通过
+//                    "SUPPLEMENT_DATA".equals(orderStatus) ||//补件中
+//                    "ORGANIZATION_APPROVAL".equals(orderStatus) ||//机构审批中
+//                    "CREDIT_MANAGER_GRAB".equals(orderStatus) ||//待抢单
+//                    "CREDIT_MANAGER_APPROVAL".equals(orderStatus)) {//已抢单
+//                holder.tvState.setVisibility(View.VISIBLE);
+//            }
 //            else if () {
 //                holder.tvState.setVisibility(View.VISIBLE);
 //            }
@@ -447,7 +448,7 @@ public class CreditThirFrag extends BaseFragment {
 
         public class ViewHolder {
             public final View root;
-            public final TextView tvContent;
+            public final TextView tvContent;//流程展示名如上传身份证照
             public final TextView tvIsLoad;
             public final TextView tvState;
 

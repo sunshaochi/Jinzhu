@@ -8,6 +8,7 @@ import com.beyonditsm.financial.entity.CreditOfflineUploadEntity;
 import com.beyonditsm.financial.entity.HotProduct;
 import com.beyonditsm.financial.entity.MyCreditEntity;
 import com.beyonditsm.financial.entity.OrderBean;
+import com.beyonditsm.financial.entity.Orederinfo;
 import com.beyonditsm.financial.entity.SumLoadEntity;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.entity.UserOrderInfo1;
@@ -16,6 +17,7 @@ import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.lidroid.xutils.http.client.multipart.content.FileBody;
+import com.tandong.sa.json.Gson;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -188,16 +190,16 @@ public class CommManager extends RequestManager {
     /**
      * 提交订单
      *
-     * @param orderBean 订单实体类
+     * @param orederinfo 订单实体类
      * @param callBack  回调
      */
-    public void submitOrder(OrderBean orderBean, final CallBack callBack) {
+    public void submitOrder(Orederinfo orederinfo, final CallBack callBack) {
+       Gson gson=new Gson();
         Map<String, String> params = new HashMap<>();
-//        params.put("orderNo", orderBean.getOrderNo());
-        params.put("productId", orderBean.getProductId());
-        params.put("totalAmount", orderBean.getTotalAmount());
-        params.put("totalPeriods", orderBean.getTotalPeriods());
-        params.put("periodsAmount", orderBean.getPeriodsAmount());
+//       params.put("orderNo", orderBean.getOrderNo());
+        params.put("productInfo",gson.toJson(orederinfo.getProductInfo()));
+        params.put("orderInfo", gson.toJson(orederinfo.getOrderInfo()));
+        params.put("customerInfo", gson.toJson(orederinfo.getCustomerInfo()));
         doPost(IFinancialUrl.SUBMITORDER_URL, params, callBack);
     }
 

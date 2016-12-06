@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 贷款
+ * 贷款(大额贷，和急速贷)
  * Created by wangbin on 15/11/11
  */
 public class CreditFragment extends BaseFragment {

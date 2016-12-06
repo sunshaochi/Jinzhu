@@ -11,9 +11,9 @@ import java.util.List;
 public class CreditUplEntity implements Parcelable {
 
     private List<CreditImageBean> image;
-    private String uploadDisplayName;
-    private String uploadItemId;
-    private Integer limit;
+    private String uploadDisplayName;//例如上传企业经营场所内部环境照
+    private String uploadItemId;//"93289293weioo0349ew9ud0s904ji"
+    private Integer limit;//4  照片数量限制
 
     public List<CreditImageBean> getImage() {
         return image;

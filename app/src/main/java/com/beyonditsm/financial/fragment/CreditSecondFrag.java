@@ -21,15 +21,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.beyonditsm.financial.R;
-import com.beyonditsm.financial.activity.credit.CreditDetailAct;
 import com.beyonditsm.financial.activity.credit.CreditStepAct;
 import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
 import com.beyonditsm.financial.entity.DictionaryType;
 import com.beyonditsm.financial.entity.JJTCityEntity;
 import com.beyonditsm.financial.entity.JJTCounyEntity;
 import com.beyonditsm.financial.entity.JJTProvinceEntity;
-import com.beyonditsm.financial.entity.OrderBean;
-import com.beyonditsm.financial.entity.ProductInfo;
+import com.beyonditsm.financial.entity.Orederinfo;
+import com.beyonditsm.financial.entity.ProductBean;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.http.RequestManager;
@@ -99,7 +98,7 @@ public class CreditSecondFrag extends BaseFragment {
 
     private List<DictionaryType> carList, jobList, hourseList, creditList;//车产，职业，房产，信用
     private int jobPos, carPos, hoursePos, creditPos;
-    private ProductInfo productInfo;//产品信息
+    private ProductBean productInfo;//产品信息
     private boolean jobSelect = false;
     private boolean carSelect = false;
     private boolean hourseSelect = false;
@@ -131,14 +130,14 @@ public class CreditSecondFrag extends BaseFragment {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(Bundle outState) {//保存当前状态
         super.onSaveInstanceState(outState);
         outState.putParcelable(USER_KEY, user);
         outState.putParcelable(PRODUCT_KEY, productInfo);
     }
 
     @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {//赋值当前状态
         super.onViewStateRestored(savedInstanceState);
         if (null != savedInstanceState) {
             user = savedInstanceState.getParcelable(USER_KEY);
@@ -151,7 +150,7 @@ public class CreditSecondFrag extends BaseFragment {
     public void initData(Bundle savedInstanceState) {
 
         addressUtil = new AddressUtil(mParentActivity);
-        getDictionaryContent(0, "job_identity");//职业身份
+        getDictionaryContent(0, "job_identity");//职业身份获取身份列表供选择
         getDictionaryContent(1, "under_own_car");//名下车产
         getDictionaryContent(2, "under_own_hour");//名下房产
         getDictionaryContent(3, "two_year_credit");//信用状况
@@ -159,8 +158,8 @@ public class CreditSecondFrag extends BaseFragment {
 
         map.put(1, false);
         map.put(2, false);
-        productInfo = getArguments().getParcelable(CreditDetailAct.PRODUCTINFO);
-        getData();
+        productInfo = getArguments().getParcelable(HomeCreditDetailAct.PRODUCTINFO);//取到传递过来的产品
+        getData();//获取个人资料并给界面赋值
         loadView.setOnRetryListener(new LoadingView.OnRetryListener() {
             @Override
             public void OnRetry() {
@@ -473,7 +472,7 @@ public class CreditSecondFrag extends BaseFragment {
             mParentActivity = CreditStepAct.getInstance();
         }
     }
-
+    //职业身份弹出框
     private void getDictionaryContent(final int pos, String key) {
 
         RequestManager.getCommManager().getDicMap(key, new RequestManager.CallBack() {
@@ -485,7 +484,7 @@ public class CreditSecondFrag extends BaseFragment {
                 switch (pos) {
                     case 0:
                         jobList = gson.fromJson(dataArr.toString(), new TypeToken<List<DictionaryType>>() {
-                        }.getType());
+                        }.getType());//职业身份
                         break;
                     case 1:
                         carList = gson.fromJson(dataArr.toString(), new TypeToken<List<DictionaryType>>() {
@@ -632,7 +631,7 @@ public class CreditSecondFrag extends BaseFragment {
                     }
                 }
 
-                queryProvince();
+                queryProvince();//获取省份
             }
 
             @Override
@@ -705,7 +704,7 @@ public class CreditSecondFrag extends BaseFragment {
                         mParentActivity.sendBroadcast(new Intent(MineFragment.UPDATE_SCORE));
 
 
-                    toSubmitOrder();
+                    toSubmitOrder();//立即申请提交订单
                 }
 
                 @Override
@@ -816,22 +815,43 @@ public class CreditSecondFrag extends BaseFragment {
     }
 
     private int i = 5;
-    private String reOrderId;
+    private String reOrderId;//快速申贷返回来的订单id传给第三不
 
     /**
      * 提交订单
      */
     private void toSubmitOrder() {
-        OrderBean orderBean = new OrderBean();
-        orderBean.setProductId(productInfo.getProductId());
+//        OrderBean orderBean = new OrderBean();
+        Orederinfo orederinfo=new Orederinfo();
+        orederinfo.productInfo.setProductId(productInfo.getProductId());
+//        orderBean.setProductId(productInfo.getProductId());
         if (null == HomeCreditDetailAct.creditMoney) {
             MyToastUtils.showShortToast(mParentActivity, "网络不给力，请返回重新提交");
             secondBtnNext.setClickable(true);
         } else {
-            orderBean.setTotalAmount(Double.parseDouble(HomeCreditDetailAct.creditMoney) * 10000 + "");//总金额
-            orderBean.setTotalPeriods(HomeCreditDetailAct.creditMonth);//总期数
-            orderBean.setPeriodsAmount(HomeCreditDetailAct.monthlyPayments);//单期还款金额
-            RequestManager.getCommManager().submitOrder(orderBean, new RequestManager.CallBack() {
+            orederinfo.orderInfo.setApplyAmount((Double.parseDouble(HomeCreditDetailAct.creditMoney) * 10000 + ""));//设置金额
+            orederinfo.orderInfo.setApplyPeriods(HomeCreditDetailAct.creditMonth);//总期数
+//            orderBean.setPeriodsAmount(HomeCreditDetailAct.monthlyPayments);//单期还款金额
+            orederinfo.customerInfo.setCusName(user.getUserName());//姓名
+            orederinfo.customerInfo.setSex(user.getUserSex());//性别
+            orederinfo.customerInfo.setIdNo(user.getIdentCard());//身份证
+            orederinfo.customerInfo.setCurrentProvince(user.getProvince());//省
+            orederinfo.customerInfo.setCurrentCity(user.getCity());//市
+            orederinfo.customerInfo.setCurrentRegion(user.getDistrict());//区
+            orederinfo.customerInfo.setIsMarried(user.getMarrySts());//婚姻状态
+            orederinfo.customerInfo.setNativePlace(user.getNativePlace());//籍贯
+            orederinfo.customerInfo.setDomicileAddr(user.getNativePlaceAddr());//户籍地
+            orederinfo.customerInfo.setPhoneNum(user.getMobile());//手机号
+            orederinfo.customerInfo.setCareerName(user.getHavaJobName());//职业身份
+            orederinfo.customerInfo.setCompany(user.getCompanyName());//公司名称
+            orederinfo.customerInfo.setCareerTitle(user.getBusiness());//职务
+            orederinfo.customerInfo.setAge(user.getUserAge());//年纪
+            orederinfo.customerInfo.setHasHouseFunding(user.getProFund());//是否有公积金
+            orederinfo.customerInfo.setHasSocialInsurance(user.getSecailSecurity());//是否有社保
+            orederinfo.customerInfo.setHaveOwnCar(user.getHaveCar());//名下车产类型
+            orederinfo.customerInfo.setHaveOwnHouse(user.getHaveHours());//房产类型
+            orederinfo.customerInfo.setCreditState(user.getTowYearCred());//信用状况
+            RequestManager.getCommManager().submitOrder(orederinfo, new RequestManager.CallBack() {
                 @Override
                 public void onSucess(String result) {
                     secondBtnNext.setClickable(true);
@@ -912,19 +932,19 @@ public class CreditSecondFrag extends BaseFragment {
                     dialogJJTAddress.getJJTPicker().setOnSrollListener(new JJTInterface() {
                         @Override
                         public void onProvinceSelected(JJTProvinceEntity jjtProvinceEntity) {
-                            queryCity(jjtProvinceEntity.getCode());
+                            queryCity(jjtProvinceEntity.getCode());//获取城市
                         }
 
                         @Override
                         public void onCitySelected(JJTCityEntity jjtCityEntity) {
-                            queryDistrict(jjtCityEntity.getCode());
+                            queryDistrict(jjtCityEntity.getCode());//获取地区
                         }
 
                         @Override
                         public void onCounySelected(JJTCounyEntity jjtCounyEntity) {
                         }
                     });
-                    queryCity(provinceList.get(0).getCode());
+                    queryCity(provinceList.get(0).getCode());//通过省份id查询城市
                 }
 //                if ()
 //                queryProvinceCodeByName()
@@ -949,7 +969,7 @@ public class CreditSecondFrag extends BaseFragment {
                 ParamsUtil.getInstance().setCityEntityList(cityList);
                 dialogJJTAddress.getJJTPicker().setCityList();
                 if (cityList != null && cityList.size() > 0) {
-                    queryDistrict(cityList.get(0).getCode());
+                    queryDistrict(cityList.get(0).getCode());//查询地区
                 }
             }
 
@@ -959,7 +979,7 @@ public class CreditSecondFrag extends BaseFragment {
             }
         });
     }
-
+//查询地区
     private void queryDistrict(String cityCode) {
         RequestManager.getCommManager().queryDistrict(cityCode, new RequestManager.CallBack() {
             @Override
