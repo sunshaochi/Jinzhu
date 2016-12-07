@@ -67,11 +67,17 @@ public class UserManager extends RequestManager {
         doPost(IFinancialUrl.FIND_ORDER_DEAL_HISTORY, params, callBack);
     }
 
-    public void findOrderDetailById(String productId, CallBack callBack) {
-        Map<String, String> params = new HashMap<>();
-        params.put("productId", productId);
-        doPost(IFinancialUrl.FIND_ORDER_DETAIL, params, callBack);
-    }
+//    public void findOrderDetailById(String productId, CallBack callBack) {
+//        Map<String, String> params = new HashMap<>();
+//        params.put("productId", productId);
+//        doPost(IFinancialUrl.FIND_ORDER_DETAIL, params, callBack);
+//    }
+    //通过产品id获取产品详情
+   public void findOrderDetailById(String productId, CallBack callBack) {
+//    Map<String, String> params = new HashMap<>();
+//    params.put("productId", productId);
+    doGet(IFinancialUrl.FIND_ORDER_DETAIL+"?productId="+productId, callBack);
+  }
 
     /**
      * 更改订单状态

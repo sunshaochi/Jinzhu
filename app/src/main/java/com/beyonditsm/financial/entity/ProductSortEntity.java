@@ -94,6 +94,108 @@ public class ProductSortEntity implements Parcelable {
     public static class OrgTypeBean {
         private String orgId;
         private String orgName;
+//
+//        "dictSubId": "8aae98285215d02c01521b35c92003b1",
+//                "dictCode": "productJop",
+//                "optionName": "受薪人士",
+//                "optionValue": "1",
+//                "sort": 1,
+//                "isDisabled": 1,
+//                "createUser": null,
+//                "createTime": null,
+//                "updateUser": null,
+//                "updateTime": null
+
+        private String dictSubId;
+        private String dictCode;
+        private String optionName;
+        private String optionValue;
+        private int sort;
+        private int isDisabled;
+        private String createUser;
+        private String createTime;
+        private String updateUser;
+        private String updateTime;
+
+        public String getDictSubId() {
+            return dictSubId;
+        }
+
+        public void setDictSubId(String dictSubId) {
+            this.dictSubId = dictSubId;
+        }
+
+        public String getDictCode() {
+            return dictCode;
+        }
+
+        public void setDictCode(String dictCode) {
+            this.dictCode = dictCode;
+        }
+
+        public String getOptionName() {
+            return optionName;
+        }
+
+        public void setOptionName(String optionName) {
+            this.optionName = optionName;
+        }
+
+        public String getOptionValue() {
+            return optionValue;
+        }
+
+        public void setOptionValue(String optionValue) {
+            this.optionValue = optionValue;
+        }
+
+        public int getSort() {
+            return sort;
+        }
+
+        public void setSort(int sort) {
+            this.sort = sort;
+        }
+
+        public int getIsDisabled() {
+            return isDisabled;
+        }
+
+        public void setIsDisabled(int isDisabled) {
+            this.isDisabled = isDisabled;
+        }
+
+        public String getCreateUser() {
+            return createUser;
+        }
+
+        public void setCreateUser(String createUser) {
+            this.createUser = createUser;
+        }
+
+        public String getCreateTime() {
+            return createTime;
+        }
+
+        public void setCreateTime(String createTime) {
+            this.createTime = createTime;
+        }
+
+        public String getUpdateUser() {
+            return updateUser;
+        }
+
+        public void setUpdateUser(String updateUser) {
+            this.updateUser = updateUser;
+        }
+
+        public String getUpdateTime() {
+            return updateTime;
+        }
+
+        public void setUpdateTime(String updateTime) {
+            this.updateTime = updateTime;
+        }
 
         public String getOrgId() {
             return orgId;
@@ -116,6 +218,97 @@ public class ProductSortEntity implements Parcelable {
         private String termVal;
         private String termKey;
 
+        private String dictSubId;
+        private String dictCode;
+        private String optionName;
+        private String optionValue;
+        private int sort;
+        private int isDisabled;
+        private String createUser;
+        private String createTime;
+        private String updateUser;
+        private String updateTime;
+
+        public String getDictSubId() {
+            return dictSubId;
+        }
+
+        public void setDictSubId(String dictSubId) {
+            this.dictSubId = dictSubId;
+        }
+
+        public String getDictCode() {
+            return dictCode;
+        }
+
+        public void setDictCode(String dictCode) {
+            this.dictCode = dictCode;
+        }
+
+        public String getOptionName() {
+            return optionName;
+        }
+
+        public void setOptionName(String optionName) {
+            this.optionName = optionName;
+        }
+
+        public String getOptionValue() {
+            return optionValue;
+        }
+
+        public void setOptionValue(String optionValue) {
+            this.optionValue = optionValue;
+        }
+
+        public int getSort() {
+            return sort;
+        }
+
+        public void setSort(int sort) {
+            this.sort = sort;
+        }
+
+        public int getIsDisabled() {
+            return isDisabled;
+        }
+
+        public void setIsDisabled(int isDisabled) {
+            this.isDisabled = isDisabled;
+        }
+
+        public String getCreateUser() {
+            return createUser;
+        }
+
+        public void setCreateUser(String createUser) {
+            this.createUser = createUser;
+        }
+
+        public String getCreateTime() {
+            return createTime;
+        }
+
+        public void setCreateTime(String createTime) {
+            this.createTime = createTime;
+        }
+
+        public String getUpdateUser() {
+            return updateUser;
+        }
+
+        public void setUpdateUser(String updateUser) {
+            this.updateUser = updateUser;
+        }
+
+        public String getUpdateTime() {
+            return updateTime;
+        }
+
+        public void setUpdateTime(String updateTime) {
+            this.updateTime = updateTime;
+        }
+
         public String getTermVal() {
             return termVal;
         }
@@ -137,6 +330,97 @@ public class ProductSortEntity implements Parcelable {
         private String moneyVal;
         private String moneyKey;
 
+        private String dictSubId;
+        private String dictCode;
+        private String optionName;
+        private String optionValue;
+        private int sort;
+        private int isDisabled;
+        private String createUser;
+        private String createTime;
+        private String updateUser;
+        private String updateTime;
+
+        public String getDictSubId() {
+            return dictSubId;
+        }
+
+        public void setDictSubId(String dictSubId) {
+            this.dictSubId = dictSubId;
+        }
+
+        public String getDictCode() {
+            return dictCode;
+        }
+
+        public void setDictCode(String dictCode) {
+            this.dictCode = dictCode;
+        }
+
+        public String getOptionName() {
+            return optionName;
+        }
+
+        public void setOptionName(String optionName) {
+            this.optionName = optionName;
+        }
+
+        public String getOptionValue() {
+            return optionValue;
+        }
+
+        public void setOptionValue(String optionValue) {
+            this.optionValue = optionValue;
+        }
+
+        public int getSort() {
+            return sort;
+        }
+
+        public void setSort(int sort) {
+            this.sort = sort;
+        }
+
+        public int getIsDisabled() {
+            return isDisabled;
+        }
+
+        public void setIsDisabled(int isDisabled) {
+            this.isDisabled = isDisabled;
+        }
+
+        public String getCreateUser() {
+            return createUser;
+        }
+
+        public void setCreateUser(String createUser) {
+            this.createUser = createUser;
+        }
+
+        public String getCreateTime() {
+            return createTime;
+        }
+
+        public void setCreateTime(String createTime) {
+            this.createTime = createTime;
+        }
+
+        public String getUpdateUser() {
+            return updateUser;
+        }
+
+        public void setUpdateUser(String updateUser) {
+            this.updateUser = updateUser;
+        }
+
+        public String getUpdateTime() {
+            return updateTime;
+        }
+
+        public void setUpdateTime(String updateTime) {
+            this.updateTime = updateTime;
+        }
+
         public String getMoneyVal() {
             return moneyVal;
         }
@@ -157,6 +441,97 @@ public class ProductSortEntity implements Parcelable {
     public static class ProductOrderBean {
         private String orderKey;
         private String orderVal;
+
+        private String dictSubId;
+        private String dictCode;
+        private String optionName;
+        private String optionValue;
+        private int sort;
+        private int isDisabled;
+        private String createUser;
+        private String createTime;
+        private String updateUser;
+        private String updateTime;
+
+        public String getDictSubId() {
+            return dictSubId;
+        }
+
+        public void setDictSubId(String dictSubId) {
+            this.dictSubId = dictSubId;
+        }
+
+        public String getDictCode() {
+            return dictCode;
+        }
+
+        public void setDictCode(String dictCode) {
+            this.dictCode = dictCode;
+        }
+
+        public String getOptionName() {
+            return optionName;
+        }
+
+        public void setOptionName(String optionName) {
+            this.optionName = optionName;
+        }
+
+        public String getOptionValue() {
+            return optionValue;
+        }
+
+        public void setOptionValue(String optionValue) {
+            this.optionValue = optionValue;
+        }
+
+        public int getSort() {
+            return sort;
+        }
+
+        public void setSort(int sort) {
+            this.sort = sort;
+        }
+
+        public int getIsDisabled() {
+            return isDisabled;
+        }
+
+        public void setIsDisabled(int isDisabled) {
+            this.isDisabled = isDisabled;
+        }
+
+        public String getCreateUser() {
+            return createUser;
+        }
+
+        public void setCreateUser(String createUser) {
+            this.createUser = createUser;
+        }
+
+        public String getCreateTime() {
+            return createTime;
+        }
+
+        public void setCreateTime(String createTime) {
+            this.createTime = createTime;
+        }
+
+        public String getUpdateUser() {
+            return updateUser;
+        }
+
+        public void setUpdateUser(String updateUser) {
+            this.updateUser = updateUser;
+        }
+
+        public String getUpdateTime() {
+            return updateTime;
+        }
+
+        public void setUpdateTime(String updateTime) {
+            this.updateTime = updateTime;
+        }
 
         public String getOrderKey() {
             return orderKey;

@@ -207,7 +207,7 @@ public class ApplicationAct extends BaseActivity {
 //    }
 
     private void getSortParam(String cityName) {
-        RequestManager.getCommManager().findSortParam(cityName, new RequestManager.CallBack() {
+        RequestManager.getCommManager().findSortParam( new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
 

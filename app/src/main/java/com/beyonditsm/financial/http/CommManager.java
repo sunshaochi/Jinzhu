@@ -88,10 +88,13 @@ public class CommManager extends RequestManager {
     /**
      * 获取产品列表的筛选参数
      */
-    public void findSortParam(String cityName, final CallBack callBack) {
-        List<NameValuePair> params = new ArrayList<>();
-        params.add(new BasicNameValuePair("cityName", cityName));
-        doPost(IFinancialUrl.FIND_PRODUCT_SORT_PARA, params, callBack);
+//    public void findSortParam(String cityName, final CallBack callBack) {
+//        List<NameValuePair> params = new ArrayList<>();
+//        params.add(new BasicNameValuePair("cityName", cityName));
+//        doPost(IFinancialUrl.FIND_PRODUCT_SORT_PARA, params, callBack);
+//    }
+    public void findSortParam( final CallBack callBack) {
+        doGet(IFinancialUrl.FIND_PRODUCT_SORT_PARA, callBack);
     }
 
     /**

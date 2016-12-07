@@ -55,7 +55,7 @@ public class OrgTypeAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.param.setText(orgTypeInfos.get(position).getOrgName());
+        holder.param.setText(orgTypeInfos.get(position).getOptionName());
         return convertView;
     }
 

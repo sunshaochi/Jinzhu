@@ -66,6 +66,7 @@ public class RecomFragment extends BaseFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         tv_title.setText("为我推荐");
+
     }
 
     @OnClick({R.id.rl_money,R.id.com_qixian,R.id.com_dq,R.id.com_xl,R.id.com_hj,R.id.com_xyjl,R.id.com_zw,R.id.rl_nj,R.id.rl_gzsc,R.id.com_cc,R.id.com_dfgo,R.id.com_bd,R.id.com_qtzc,R.id.rl_gjjsc})

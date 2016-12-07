@@ -557,7 +557,7 @@ public class HomeCreditDetailAct extends BaseActivity {
                     Double minMont = Double.valueOf(productEntity.getMinLoanPeriod());//最小期限
                     Double maxMont = Double.valueOf(productEntity.getMaxLoanPeriod());//最大期限
 
-                    if (TextUtils.isEmpty(creditMonth) && TextUtils.isEmpty(creditMoney)) {
+                    if (TextUtils.isEmpty(creditMonth) && TextUtils.isEmpty(creditMoney)) {//点击item传递过来的
                         creditMoney = df.format(minMone / 10000) + "";
                         creditMonth = productEntity.getMinLoanPeriod();
                         tvM.setText(creditMonth);

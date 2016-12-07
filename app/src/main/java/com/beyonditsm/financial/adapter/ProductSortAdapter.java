@@ -73,16 +73,16 @@ public class ProductSortAdapter extends BaseAdapter {
         }
         switch (type) {
             case BANK:
-                holder.param.setText(((ProductSortEntity.OrgTypeBean) list.get(position)).getOrgName());
+                holder.param.setText(((ProductSortEntity.OrgTypeBean) list.get(position)).getOptionName());
                 break;
             case MONEY:
-                holder.param.setText(((ProductSortEntity.MoneyScopeBean) list.get(position)).getMoneyVal());
+                holder.param.setText(((ProductSortEntity.MoneyScopeBean) list.get(position)).getOptionName());
                 break;
             case SORT:
-                holder.param.setText(((ProductSortEntity.ProductOrderBean) list.get(position)).getOrderVal());
+                holder.param.setText(((ProductSortEntity.ProductOrderBean) list.get(position)).getOptionName());
                 break;
             case TIME:
-                holder.param.setText(((ProductSortEntity.LoanTermBean) list.get(position)).getTermVal());
+                holder.param.setText(((ProductSortEntity.LoanTermBean) list.get(position)).getOptionName());
                 break;
         }
         return convertView;

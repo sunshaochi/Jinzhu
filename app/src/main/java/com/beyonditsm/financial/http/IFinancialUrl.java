@@ -11,7 +11,7 @@ public interface IFinancialUrl {
 //    String BASE_URL = "http://172.16.6.95:8080";
     /*吕东测试*/
 //    String BASE_URL = "http://172.16.5.59";
-//    String BASE_URL ="http://172.16.6.218";
+    String BASE_URL ="http://172.16.6.218:8084";
     /*袁峰测试*/
 //    String BASE_URL = "http://172.16.6.153:8080";
 //    String BASE_URL = "http://172.16.6.228:8080";
@@ -20,7 +20,7 @@ public interface IFinancialUrl {
 ////        /*验收环境游戏地址*/
 //    String GAME_URL = "http://myjinzhu.com:5011/";
     /*正式地址*/
-    String BASE_URL = "http://option.myjinzhu.com";
+//    String BASE_URL = "http://option.myjinzhu.com";
     /*王建*/
 //<<<<<<< HEAD
 //    String BASE_URL = "http://139.196.227.38:8086";
@@ -63,6 +63,8 @@ public interface IFinancialUrl {
 //    String BASE_URL = "http://172.16.5.250:8080";
 //    String BASE_URL="http://172.16.6.216";
 //    String BASE_URL = "http://172.16.6.227:8080";
+
+
     /**
      * @MARKEY_CODE 渠道号设置，默认渠道设置为空字符串
      */
@@ -93,16 +95,23 @@ public interface IFinancialUrl {
     String USERCREDIT_URL = BASE_URL + API_VERSION + "/platform/login/findOrderListByUserName.do";
    /*查询我推荐的好友列表*/
     String FIND_MY_FRIEND_LIST_URL = BASE_URL + API_VERSION + "/platform/login/findMyFriendListByParams.do";
+
+
+
     /*得到移动端的产品列表页面，所有查询参数的选项*/
-    String FIND_PRODUCT_SORT_PARA = BASE_URL + API_VERSION + "/platform/unLogin/getProductQueryOptions.do";
+    String FIND_PRODUCT_SORT_PARA = BASE_URL + "/productApi" + "/unLogin/getProductQueryOptions";
     /*通过查询参数获取产品列表页面产品*/
-    String FIND_PRODCUT_BY_PARAM = BASE_URL + API_VERSION + "/platform/unLogin/fingMobileProductPager.do";
+    String FIND_PRODCUT_BY_PARAM = BASE_URL +"/productApi" + "/unLogin/getProductsFromOffline";
+
+
+
+
     /* 查询热门产品列表*/
     String FIND_HOT_PRODUCT_LIST = BASE_URL + API_VERSION + "/bankTerminal/unLogin/findHotProducRanklist.do";
     /* 查询订单历史处理流程*/
     String FIND_ORDER_DEAL_HISTORY = BASE_URL + API_VERSION + "/platform/login/findOrderDealHistory.do";
     /* 根据id查看产品详情 */
-    String FIND_ORDER_DETAIL = BASE_URL + API_VERSION + "/bankTerminal/unLogin/findProductById.do";
+    String FIND_ORDER_DETAIL = BASE_URL + "/productApi" + "/unLogin/getProductDetail";
 
   /*获取代言人详细*/
     String SERVANT_URL = BASE_URL + API_VERSION + "/servant/login/servantDetail.do";

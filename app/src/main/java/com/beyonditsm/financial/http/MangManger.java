@@ -14,12 +14,12 @@ public class MangManger extends RequestManager {
     /**
      * 通过产品表相关参数查询产品信息
      *
-     * @param fpe  查询产品列表实体类
+     * @param
      * @param callBack  回调
      */
-    public void findProductList(FindProductListEntity fpe,String creditMoney,String creditTime ,CallBack callBack) {
+    public void findProductList(String cityId,String creditMoney,String creditTime ,String orgTypeKey,String productOrder,String orderByOfType,int page,int rows,CallBack callBack) {
 
-        doGet(IFinancialUrl.FIND_PRODUCT_LIST_URL + "?creditMoney=" + creditMoney + "&creditTime=" + creditTime + "&orderByOfType=" + "" + "&page=" + fpe.getPage() + "&rows=" + fpe.getRows(), callBack);
+        doGet(IFinancialUrl.FIND_PRODCUT_BY_PARAM  + "?cityId=" + cityId + "&creditMoney=" + creditMoney + "&creditTime=" + creditTime + "&orgTypeKey=" + orgTypeKey + "&productOrder=" + productOrder+"&orderByOfType="+orderByOfType+"&page="+page+"&rows="+rows, callBack);
     }
     /**
      * 通过产品表筛选参数查询产品信息
