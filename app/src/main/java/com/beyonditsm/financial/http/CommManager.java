@@ -7,7 +7,6 @@ import com.beyonditsm.financial.entity.ChangePwdEntity;
 import com.beyonditsm.financial.entity.CreditOfflineUploadEntity;
 import com.beyonditsm.financial.entity.HotProduct;
 import com.beyonditsm.financial.entity.MyCreditEntity;
-import com.beyonditsm.financial.entity.OrderBean;
 import com.beyonditsm.financial.entity.Orederinfo;
 import com.beyonditsm.financial.entity.SumLoadEntity;
 import com.beyonditsm.financial.entity.UserEntity;
@@ -518,7 +517,7 @@ public class CommManager extends RequestManager {
      */
     public void getBanner(CallBack callBack) {
         Map<String, String> params = new HashMap<>();
-        doPost(IFinancialUrl.GET_BANNER, params, callBack);
+        doGet(IFinancialUrl.GET_BANNER,  callBack);
     }
 
     /**
