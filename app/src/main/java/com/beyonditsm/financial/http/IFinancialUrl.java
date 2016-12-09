@@ -8,10 +8,10 @@ package com.beyonditsm.financial.http;
 public interface IFinancialUrl {
     /*吕建明*/
 //    String BASE_URL = "http://172.16.6.236:8080";
-//    String BASE_URL = "http://172.16.6.95:8080";
+    String BASE_URL = "http://172.16.6.95:8083";
     /*吕东测试*/
 //    String BASE_URL = "http://172.16.5.59";
-    String BASE_URL ="http://172.16.6.218:8084";
+//    String BASE_URL ="http://172.16.6.218:8082";
     /*袁峰测试*/
 //    String BASE_URL = "http://172.16.6.153:8080";
 //    String BASE_URL = "http://172.16.6.228:8080";
@@ -103,6 +103,11 @@ public interface IFinancialUrl {
     /*通过查询参数获取产品列表页面产品*/
     String FIND_PRODCUT_BY_PARAM = BASE_URL +"/productApi" + "/unLogin/getProductsFromOffline";
 
+    /*獲取推薦产品*/
+    String RECOMMENDPRODUCTS = BASE_URL + "/unLogin/getRecommendProducts";
+
+    /*根据code值获取字典列表*/
+    String FINDALLDICTMAP_URL = BASE_URL  + "/unLogin/getAllByDictCode";
 
 
 
@@ -253,11 +258,11 @@ public interface IFinancialUrl {
     /*上传急借通第三板块信息接口*/
     String SAVE_USER_ORDER_INFO3 = BASE_URL + API_VERSION + "/platform/login/saveUserOrderInfo3.do";
     /*个人信息查询省*/
-    String QUERY_PROVINCE = BASE_URL + API_VERSION + "/common/commonAPI/queryAllProvince.do";
+    String QUERY_PROVINCE = BASE_URL + "/productApi" + "/unLogin/getPrivinces";
     /*个人信息查询市*/
-    String QUERY_CITY = BASE_URL + API_VERSION + "/common/commonAPI/queryAllCity.do";
+    String QUERY_CITY = BASE_URL + "/productApi"+ "/unLogin/getCitys";
     /*个人信息查询区县*/
-    String QUERY_DISTRICT = BASE_URL + API_VERSION + "/common/commonAPI/queryAllArea.do";
+    String QUERY_DISTRICT = BASE_URL + "/productApi" + "/unLogin/getRegions";
     /*极速贷贷款详情接口*/
     String SHORT_LOAN_ORDER_DETAIL = BASE_URL + API_VERSION + "/platform/login/ShortLoanOrderDetail.do";
     /*急速贷推送第三方接口*/

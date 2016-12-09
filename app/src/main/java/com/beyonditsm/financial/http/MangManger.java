@@ -21,6 +21,31 @@ public class MangManger extends RequestManager {
 
         doGet(IFinancialUrl.FIND_PRODCUT_BY_PARAM  + "?cityId=" + cityId + "&creditMoney=" + creditMoney + "&creditTime=" + creditTime + "&orgTypeKey=" + orgTypeKey + "&productOrder=" + productOrder+"&orderByOfType="+orderByOfType+"&page="+page+"&rows="+rows, callBack);
     }
+
+    /**
+     * 获取推荐产品
+     *
+     * @param
+     * @param callBack  回调
+     */
+    public void findTjProductList(String cityId,String creditMoney,String creditTime,String eduLevel,String domicile ,String creditStatusKey,String jobIdentityKey,String age,String licenseTimeLength,String carStatusKey,String propertyTypeKey,String salary,String guaranteeSlip,String otherAssets,String fundTimeLength,int page,int rows,CallBack callBack) {
+
+        doGet(IFinancialUrl.RECOMMENDPRODUCTS  + "?cityId=" + cityId + "&creditMoney="+creditMoney+"&creditTime="+creditTime+"&eduLevel=" + eduLevel + "&domicile=" + domicile + "&creditStatusKey=" + creditStatusKey + "&jobIdentityKey=" + jobIdentityKey+"&age="+age+"&licenseTimeLength="+licenseTimeLength+"&carStatusKey="+carStatusKey+"&propertyTypeKey"+propertyTypeKey+"&salary="+salary+"&guaranteeSlip="+guaranteeSlip+"&otherAssets="+otherAssets+"&fundTimeLength="+fundTimeLength+"&page="+page+"&rows="+rows, callBack);
+    }
+
+
+    /**
+     * 推荐第一步词典（单个)
+     *
+     * @param
+     * @param callBack  回调
+     */
+    public void findTjselet(String dictCode,CallBack callBack) {
+
+        todoGet(IFinancialUrl.FINDALLDICTMAP_URL  + "?dictCode=" + dictCode, callBack);
+    }
+
+
     /**
      * 通过产品表筛选参数查询产品信息
      */

@@ -12,7 +12,98 @@ public class JJTProvinceEntity {
      * category : 11
      * parentId : null
      * desc : null
+     *
+     * (新的返回)
+     * {"code":"341700",
+     * "pinyin":null,
+     * "regionId":null,
+     * "parentCode":"340000",
+     * "createTime":null,
+     * "name":"池州市",
+     * "updateUser":null
+     * ,"createUser":null,
+     * "updateTime":null,"
+     * sort":null,
+     * "isDisabled":1}
+     *
+     *
+     *
+     *
      */
+
+    private String pinyin;
+    private String regionId;
+    private String parentCode;
+    private String createTime;
+    private String updateUser;
+    private String updateTime;
+    private String sort;
+    private int isDisabled;
+
+
+    public String getPinyin() {
+        return pinyin;
+    }
+
+    public void setPinyin(String pinyin) {
+        this.pinyin = pinyin;
+    }
+
+    public String getRegionId() {
+        return regionId;
+    }
+
+    public void setRegionId(String regionId) {
+        this.regionId = regionId;
+    }
+
+    public String getParentCode() {
+        return parentCode;
+    }
+
+    public void setParentCode(String parentCode) {
+        this.parentCode = parentCode;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getUpdateUser() {
+        return updateUser;
+    }
+
+    public void setUpdateUser(String updateUser) {
+        this.updateUser = updateUser;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getSort() {
+        return sort;
+    }
+
+    public void setSort(String sort) {
+        this.sort = sort;
+    }
+
+    public int getIsDisabled() {
+        return isDisabled;
+    }
+
+    public void setIsDisabled(int isDisabled) {
+        this.isDisabled = isDisabled;
+    }
 
     private String name;
     private String id;

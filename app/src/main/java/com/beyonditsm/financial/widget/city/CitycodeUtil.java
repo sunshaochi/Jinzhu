@@ -1,10 +1,11 @@
 package com.beyonditsm.financial.widget.city;
 
 import android.content.Context;
+import android.text.TextUtils;
+
 
 import com.beyonditsm.financial.entity.JJTCityEntity;
 import com.beyonditsm.financial.entity.JJTCounyEntity;
-import com.beyonditsm.financial.util.MyLogUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -114,8 +115,13 @@ public class CitycodeUtil {
         }
 
         for (int i = 0; i < list.size(); i++) {
+            if (TextUtils.isEmpty(list.get(i).getId())){
+                city_list_code.add(list.get(i).getCode() + "");
+            }else {
+                city_list_code.add(list.get(i).getId() + "");
+            }
             city_list.add(list.get(i).getName());
-            city_list_code.add(list.get(i).getId() + "");
+
         }
 
 
@@ -134,8 +140,13 @@ public class CitycodeUtil {
         }
 
         for (int i = 0; i < list.size(); i++) {
+            if (TextUtils.isEmpty(list.get(i).getId())){
+                city_list_code.add(list.get(i).getCode() + "");
+            }else {
+                city_list_code.add(list.get(i).getId() + "");
+            }
             city_list.add(list.get(i).getName());
-            city_list_code.add(list.get(i).getId() + "");
+
         }
 
         return city_list;

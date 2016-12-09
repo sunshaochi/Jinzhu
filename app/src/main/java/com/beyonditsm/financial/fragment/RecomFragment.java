@@ -1,137 +1,169 @@
 package com.beyonditsm.financial.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
+import com.beyonditsm.financial.adapter.CreditAdapter;
+import com.beyonditsm.financial.entity.ProductBean;
+import com.beyonditsm.financial.entity.ProductResult;
+import com.beyonditsm.financial.entity.ResultData;
+import com.beyonditsm.financial.http.IFinancialUrl;
+import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.GsonUtils;
+import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.CommonView;
 import com.beyonditsm.financial.widget.DialogChooseMonth;
+import com.beyonditsm.financial.widget.jijietong.DialogJJTAddress;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.tandong.sa.eventbus.EventBus;
+import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
+import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
-/**沟通fragment
+import org.json.JSONException;
+
+import java.util.List;
+
+/**推荐fragment
  * Created by bitch-1 on 2016/11/28.
  */
 
 public class RecomFragment extends BaseFragment {
     @ViewInject(R.id.tv_title)
     private TextView tv_title;
-    @ViewInject(R.id.rl_money)
-    private RelativeLayout rl_money;//金额
-    @ViewInject(R.id.tv_money)
-    private TextView tv_money;//金额
-    @ViewInject(R.id.com_qixian)
-    private CommonView com_qixian;//期限
-    @ViewInject(R.id.com_dq)
-    private CommonView com_dq;//地区
-    @ViewInject(R.id.com_xl)
-    private CommonView com_xl;//学历
-    @ViewInject(R.id.com_hj)
-    private CommonView com_hj;//户籍
-    @ViewInject(R.id.com_xyjl)
-    private CommonView com_xyjl;//信用记录
-    @ViewInject(R.id.com_zw)
-    private CommonView com_zw;//职务
-    @ViewInject(R.id.rl_nj)
-    private RelativeLayout rl_nj;//年纪
-    @ViewInject(R.id.tv_nj)
-    private TextView tv_nj;//年纪
-    @ViewInject(R.id.rl_gzsc)
-    private RelativeLayout rl_gzsc;//工作时长
-    @ViewInject(R.id.tv_gzsc)
-    private TextView tv_gzsc;//工作时长
-    @ViewInject(R.id.com_cc)
-    private CommonView com_cc;//车场
-    @ViewInject(R.id.com_fc)
-    private CommonView com_fc;//房产
-    @ViewInject(R.id.com_dfgo)
-    private CommonView com_dfgo;//代发工资
-    @ViewInject(R.id.com_bd)
-    private String com_bd;//保单
-    @ViewInject(R.id.com_qtzc)
-    private String com_qtzc;//其他资产
-    @ViewInject(R.id.rl_gjjsc)
-    private RelativeLayout rl_gjjsc;//公积金时长
-    @ViewInject(R.id.tv_gjjsc)
-    private TextView tv_gjjsc;//公积金时长
+    @ViewInject(R.id.rl_back)
+    private RelativeLayout rl_back;
+
+    private TjfirstFragment tjfirstfrg;//推荐第一步fragment
+    private TjlistFragment tjlistFragment;//推荐第二不list
+
+    private FragmentManager fragmentManager;
+    private myBroadcastReceiver receiver;
 
     @Override
     public View initView(LayoutInflater inflater) {
-        return inflater.inflate(R.layout.act_recomfrg,null);
+        return inflater.inflate(R.layout.act_recomfrg, null);
     }
 
     @Override
     public void initData(Bundle savedInstanceState) {
         tv_title.setText("为我推荐");
+        rl_back.setVisibility(View.GONE);
+        fragmentManager =getActivity().getSupportFragmentManager();
+//        EventBus.getDefault().register(getActivity());
+        setTabSelection(0);
+
 
     }
-
-    @OnClick({R.id.rl_money,R.id.com_qixian,R.id.com_dq,R.id.com_xl,R.id.com_hj,R.id.com_xyjl,R.id.com_zw,R.id.rl_nj,R.id.rl_gzsc,R.id.com_cc,R.id.com_dfgo,R.id.com_bd,R.id.com_qtzc,R.id.rl_gjjsc})
-    public void toClick(View view){
-        switch (view.getId()){
-            case R.id.rl_money://金额
-
-
+    //选择不同的fra显示
+    private void setTabSelection(int i) {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();//拿到对象
+        hideFragments(fragmentTransaction);//隐藏所有对象
+        switch (i){
+            case 0:
+                if(tjfirstfrg==null){
+                    tjfirstfrg=new TjfirstFragment();
+                    fragmentTransaction.add(R.id.fl_main,tjfirstfrg);
+                }else {
+                    fragmentTransaction.show(tjfirstfrg);
+                }
                 break;
-            case R.id.com_qixian://期限
-
-//                DialogChooseMonth dialogChooseMonth=new DialogChooseMonth(getActivity(),tList)
-
-
-                break;
-            case R.id.com_dq://地区
-
-
-                break;
-            case R.id.com_xl://学历
-
-
-                break;
-            case R.id.com_hj://户籍
-
-
-                break;
-            case R.id.com_xyjl://性用记录
-
-
-                break;
-            case R.id.com_zw://职务
-
-
-                break;
-            case R.id.rl_nj://年纪
-
-
-                break;
-            case R.id.rl_gzsc://工作时长
-
-
-                break;
-            case R.id.com_cc://车产
-
-
-                break;
-            case R.id.com_dfgo://代发工资
-
-
-                break;
-            case R.id.com_bd://保单
-
-
-                break;
-            case R.id.com_qtzc://其他资产
-
-                break;
-            case R.id.rl_gjjsc://公积金时长
-
+            case 1:
+                if(tjlistFragment==null){
+                    tjlistFragment=new TjlistFragment();
+                    fragmentTransaction.add(R.id.fl_main,tjlistFragment);
+                }else {
+                    fragmentTransaction.show(tjlistFragment);
+                }
                 break;
         }
+
+        fragmentTransaction.commit();
+
     }
+    //隐藏所有对象
+    private void hideFragments(FragmentTransaction fragmentTransaction) {
+        if(tjfirstfrg!=null){
+            fragmentTransaction.hide(tjfirstfrg);
+        }
+        if(tjlistFragment!=null){
+            fragmentTransaction.hide(tjlistFragment);
+        }
+
+    }
+
+
     @Override
     public void setListener() {
 
     }
+
+    public static final String CHANGE ="tjfirstfrgment";
+
+    public class myBroadcastReceiver extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            setTabSelection(1);
+        }
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if(receiver==null){
+            receiver=new myBroadcastReceiver();
+        }
+        getActivity().registerReceiver(receiver,new IntentFilter(CHANGE));
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(receiver!=null){
+            getActivity().unregisterReceiver(receiver);
+        }
+    }
+
+    //    //从推荐第一步传递post的参数
+//    public static class FirstEvent {
+//
+//    }
+//    //重写event方法处理
+//    public void onEvent(){
+//        setTabSelection(1);//显示推荐第二部frament
+//    }
+//
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        if(!EventBus.getDefault().isRegistered(this)){//加上判断
+//            EventBus.getDefault().register(this);
+//        }
+//    }
+//
+//    @Override
+//    public void onDestroy() {
+//        if (EventBus.getDefault().isRegistered(this))//加上判断
+//            EventBus.getDefault().unregister(this);
+//        super.onDestroy();
+//    }
 }

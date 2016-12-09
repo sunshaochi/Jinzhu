@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+    android:id="@+id/scview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="10dp">
+
+    <LinearLayout
+    android:id="@+id/ll_dk"
+    android:layout_width="match_parent"
+    android:layout_height="86dp"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+    android:id="@+id/rl_money"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:orientation="horizontal"
+    android:paddingLeft="15dp">
+
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:text="贷款金额"
+    android:textColor="#666666"
+    android:textSize="13sp" />
+    <TextView
+    android:id="@+id/tv_money"
+    android:layout_marginRight="25dp"
+    android:layout_alignParentRight="true"
+    android:gravity="center"
+    android:textColor="#FF6600"
+    android:textSize="17sp"
+    android:text="1000"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent" />
+
+    </RelativeLayout>
+
+    <View
+    style="@style/view_line"
+    android:layout_marginLeft="15dp"></View>
+
+    <RelativeLayout
+    android:id="@+id/rl_qixian"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:orientation="horizontal"
+    android:paddingLeft="15dp">
+
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:text="贷款金额"
+    android:textColor="#666666"
+    android:textSize="13sp" />
+    <TextView
+    android:drawablePadding="5dp"
+    android:drawableRight="@mipmap/ico_arrow_no"
+    android:id="@+id/tv_qixian"
+    android:layout_marginRight="12dp"
+    android:layout_alignParentRight="true"
+    android:gravity="center"
+    android:textColor="#FF6600"
+    android:textSize="17sp"
+    android:text="2个月"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent" />
+    </RelativeLayout>
+
+    </LinearLayout>
+
+    <TextView
+    android:id="@+id/tv_jb"
+    android:layout_width="match_parent"
+    android:layout_height="43dp"
+    android:layout_below="@+id/ll_dk"
+    android:layout_marginLeft="15dp"
+    android:layout_marginTop="10dp"
+    android:gravity="center_vertical"
+    android:text="基本资料"
+    android:textSize="12sp" />
+
+    <LinearLayout
+    android:id="@+id/ll_jb"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/tv_jb"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+    style="@style/com_view"
+    android:id="@+id/rl_diqu">
+
+    <TextView
+    style="@style/com_textbt"
+    android:text="地区"
+    />
+    <TextView
+    android:drawablePadding="5dp"
+    android:drawableRight="@mipmap/ico_arrow_no"
+    style="@style/com_textnots"
+    android:id="@+id/tv_diqu"
+    android:text="湖北省武汉市" />
+    </RelativeLayout>
+
+    <View
+    style="@style/view_line"
+    android:layout_marginLeft="15dp"></View>
+
+    <RelativeLayout
+    style="@style/com_view"
+    android:id="@+id/rl_xueli">
+
+    <TextView
+    style="@style/com_textbt"
+    android:text="学历"
+    />
+    <TextView
+    android:drawablePadding="5dp"
+    android:drawableRight="@mipmap/ico_arrow_no"
+    style="@style/com_textnots"
+    android:id="@+id/tv_xueli"
+    android:text="本科" />
+
+    </RelativeLayout>
+
+    <View
+    style="@style/view_line"
+    android:layout_marginLeft="15dp"></View>
+
+    <RelativeLayout
+    style="@style/com_view"
+    android:id="@+id/rl_huji">
+
+    <TextView
+    style="@style/com_textbt"
+    android:text="户籍"
+    />
+    <TextView
+    android:drawablePadding="5dp"
+    android:drawableRight="@mipmap/ico_arrow_no"
+    style="@style/com_textnots"
+    android:id="@+id/tv_huji"
+    android:text="湖北省武汉市" />
+
+    </RelativeLayout>
+
+    <View
+    style="@style/view_line"
+    android:layout_marginLeft="15dp"></View>
+
+    <RelativeLayout
+    style="@style/com_view"
+    android:id="@+id/rl_xyjl">
+
+    <TextView
+    style="@style/com_textbt"
+    android:text="信用记录"
+    />
+    <TextView
+    android:drawablePadding="5dp"
+    android:drawableRight="@mipmap/ico_arrow_no"
+    style="@style/com_textnots"
+    android:id="@+id/tv_xyjl"
+    android:text="良好" />
+
+    </RelativeLayout>
+
+    <View
+    style="@style/view_line"
+    android:layout_marginLeft="15dp"></View>
+
+    <RelativeLayout
+    style="@style/com_view"
+    android:id="@+id/rl_zhiwei">
+
+    <TextView
+    style="@style/com_textbt"
+    android:text="职位"
+    />
+    <TextView
+    android:drawablePadding="5dp"
+    android:drawableRight="@mipmap/ico_arrow_no"
+    style="@style/com_textnots"
+    android:id="@+id/tv_zhiwei"
+    android:text="受薪人员" />
+    </RelativeLayout>
+    <View
+    style="@style/view_line"
+    android:layout_marginLeft="15dp"></View>
+    <RelativeLayout
+    style="@style/com_view"
+    android:id="@+id/rl_nianji">
+
+    <TextView
+    style="@style/com_textbt"
+    android:text="请输入年纪"
+    />
+
+    <TextView
+    android:textSize="17sp"
+    style="@style/com_textnots"
+    android:id="@+id/tv_nianji"
+    android:text="20"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentEnd="true"
+    android:layout_marginRight="25dp"
+    android:layout_marginEnd="23dp" />
+
+
+    </RelativeLayout>
+    <View
+    style="@style/view_line"
+    android:layout_marginLeft="15dp"></View>
+    <RelativeLayout
+    style="@style/com_view"
+    android:id="@+id/rl_zhucesc">
+
+    <TextView
+    style="@style/com_textbt"
+    android:text="工作/执照注册时长"
+    />
+    <TextView
+    android:layout_marginRight="25dp"
+    android:textSize="17sp"
+    style="@style/com_textnots"
+    android:id="@+id/tv_zhucesc"
+    android:text="3个月" />
+
+
+    </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <TextView
+    android:id="@+id/tv_zz"
+    android:layout_width="match_parent"
+    android:layout_height="43dp"
+    android:layout_below="@+id/ll_jb"
+    android:layout_marginLeft="15dp"
+    android:layout_marginTop="10dp"
+    android:gravity="center_vertical"
+    android:text="资质信息" />
+
+    <LinearLayout
+    android:id="@+id/ll_zz"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/tv_zz"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+    style="@style/com_view"
+    android:id="@+id/rl_cc">
+
+    <TextView
+    style="@style/com_textbt"
+    android:text="车产"
+    />
+    <TextView
+    android:drawablePadding="5dp"
+    android:drawableRight="@mipmap/ico_arrow_no"
+    style="@style/com_textnots"
+    android:id="@+id/tv_cc"
+    android:text="1" />
+
+    </RelativeLayout>
+
+    <View
+    style="@style/view_line"
+    android:layout_marginLeft="15dp"></View>
+
+    <RelativeLayout
+    style="@style/com_view"
+    android:id="@+id/rl_fc">
+
+    <TextView
+    style="@style/com_textbt"
+    android:text="房产"
+    />
+    <TextView
+    android:drawablePadding="5dp"
+    android:drawableRight="@mipmap/ico_arrow_no"
+    style="@style/com_textnots"
+    android:id="@+id/tv_fc"
+    android:text="1" />
+    </RelativeLayout>
+
+    <View
+    style="@style/view_line"
+    android:layout_marginLeft="15dp"></View>
+
+    <View style="@style/view_line"></View>
+
+    <RelativeLayout
+    style="@style/com_view"
+    android:id="@+id/rl_dfgzje">
+
+    <TextView
+    style="@style/com_textbt"
+    android:text="代发工资金额"
+    />
+    <TextView
+    android:drawablePadding="5dp"
+    android:drawableRight="@mipmap/ico_arrow_no"
+    style="@style/com_textnots"
+    android:id="@+id/tv_dfgzje"
+    android:text="1000" />
+    </RelativeLayout>
+
+    <View
+    style="@style/view_line"
+    android:layout_marginLeft="15dp"></View>
+
+    <RelativeLayout
+    style="@style/com_view"
+    android:id="@+id/rl_bd"
+    android:layout_width="wrap_content">
+
+    <TextView
+    style="@style/com_textbt"
+    android:text="保单"
+    />
+
+    <TextView
+    android:drawablePadding="5dp"
+    android:drawableRight="@mipmap/ico_arrow_no"
+    style="@style/com_textnots"
+    android:id="@+id/tv_bd"
+    android:text="1"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
+    <View
+    style="@style/view_line"
+    android:layout_marginLeft="15dp"></View>
+
+    <RelativeLayout
+    style="@style/com_view"
+    android:id="@+id/rl_qtzc">
+
+    <TextView
+    style="@style/com_textbt"
+    android:text="其他资产"
+    />
+    <TextView
+    android:drawablePadding="5dp"
+    android:drawableRight="@mipmap/ico_arrow_no"
+    style="@style/com_textnots"
+    android:id="@+id/tv_qtzc"
+    android:text="1" />
+
+    </RelativeLayout>
+    <View
+    style="@style/view_line"
+    android:layout_marginLeft="15dp"></View>
+    <RelativeLayout
+    style="@style/com_view"
+    android:id="@+id/rl_sbsc">
+
+    <TextView
+    style="@style/com_textbt"
+    android:text="公积金/社保时长"
+    />
+    <TextView
+    android:textSize="17sp"
+    android:layout_marginRight="25dp"
+    style="@style/com_textnots"
+    android:id="@+id/tv_cbsc"
+    android:text="5个月" />
+
+    </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:layout_below="@id/ll_zz"
+    android:layout_marginTop="20dp"
+    android:background="@color/white">
+
+    <TextView
+    android:id="@+id/tv_tujian"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:layout_centerInParent="true"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:background="@drawable/cre_btn_bg_orange"
+    android:gravity="center"
+    android:text="保存资料，并推荐贷款产品"
+    android:textColor="@color/white"
+    android:textSize="15sp" />
+
+    </RelativeLayout>
+
+    </RelativeLayout>
+    </ScrollView>
+
+</LinearLayout>

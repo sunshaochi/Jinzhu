@@ -15,11 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.beyonditsm.financial.R;
-import com.beyonditsm.financial.util.ParamsUtil;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * 

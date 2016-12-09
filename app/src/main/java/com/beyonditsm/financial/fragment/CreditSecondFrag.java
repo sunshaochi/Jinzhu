@@ -472,6 +472,7 @@ public class CreditSecondFrag extends BaseFragment {
             mParentActivity = CreditStepAct.getInstance();
         }
     }
+
     //职业身份弹出框
     private void getDictionaryContent(final int pos, String key) {
 

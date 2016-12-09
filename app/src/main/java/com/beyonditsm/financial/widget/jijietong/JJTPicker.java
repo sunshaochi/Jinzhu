@@ -98,7 +98,7 @@ public class JJTPicker extends LinearLayout {
             JJTProvinceEntity jjtProvinceEntity = provinceEntityList.get(i);
             Cityinfo cityinfo = new Cityinfo();
             cityinfo.setCity_name(jjtProvinceEntity.getName() + "");
-            cityinfo.setId(jjtProvinceEntity.getId() + "");
+            cityinfo.setId(jjtProvinceEntity.getCode() + "");
             province_list.add(cityinfo);
         }
 

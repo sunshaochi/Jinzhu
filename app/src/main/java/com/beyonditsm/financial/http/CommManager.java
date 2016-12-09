@@ -739,6 +739,15 @@ public class CommManager extends RequestManager {
         Map<String, String> params = new HashMap<>();
         doPost(IFinancialUrl.QUERY_PROVINCE,params,callBack);
     }
+    /**
+     * 查詢省份
+     */
+    public void getProvince(CallBack callBack){
+//        Map<String, String> params = new HashMap<>();
+        doGet(IFinancialUrl.QUERY_PROVINCE,callBack);
+    }
+
+
 
     /**
      * 个人信息查询市
@@ -748,6 +757,12 @@ public class CommManager extends RequestManager {
         params.put("code",provinceCode);
         doPost(IFinancialUrl.QUERY_CITY,params,callBack);
     }
+    /**
+     * 查询市
+     */
+    public void getCity(String provinceCode,CallBack callBack){
+        doGet(IFinancialUrl.QUERY_CITY+"?provinceCode="+provinceCode,callBack);
+    }
 
     /**
      * 个人信息查询区县
@@ -756,6 +771,13 @@ public class CommManager extends RequestManager {
         Map<String, String> params = new HashMap<>();
         params.put("cityCode",cityCode);
         doPost(IFinancialUrl.QUERY_DISTRICT,params,callBack);
+    }
+
+    /**
+     * 个人信息查询区县
+     */
+    public void getDistrict(String cityCode,CallBack callBack){
+        doGet(IFinancialUrl.QUERY_DISTRICT+"?cityCode="+cityCode,callBack);
     }
 
     /**
