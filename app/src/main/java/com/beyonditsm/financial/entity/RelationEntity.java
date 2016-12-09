@@ -1,10 +1,13 @@
 package com.beyonditsm.financial.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /** 月薪发放形式，工作性质，单位性质，亲属关系，学历状况，婚姻状况
  * Created by xuleyuan on 2016/10/18.
  */
 
-public class RelationEntity {
+public class RelationEntity implements Parcelable {
 //    {"dictSubId":"1111222",
 //            "dictCode":"education",
 //            "optionName":"研究生",
@@ -30,6 +33,34 @@ public class RelationEntity {
 
     private String updateTime;
     private String dictSubId;
+
+    protected RelationEntity(Parcel in) {
+        dictCode = in.readString();
+        optionName = in.readString();
+        optionValue = in.readString();
+        sort = in.readString();
+        isDisabled = in.readString();
+        createUser = in.readString();
+        createTime = in.readString();
+        updateUser = in.readString();
+        updateTime = in.readString();
+        dictSubId = in.readString();
+        name = in.readString();
+        type = in.readString();
+        id = in.readString();
+    }
+
+    public static final Creator<RelationEntity> CREATOR = new Creator<RelationEntity>() {
+        @Override
+        public RelationEntity createFromParcel(Parcel in) {
+            return new RelationEntity(in);
+        }
+
+        @Override
+        public RelationEntity[] newArray(int size) {
+            return new RelationEntity[size];
+        }
+    };
 
     public String getDictCode() {
         return dictCode;
@@ -145,5 +176,27 @@ public class RelationEntity {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(dictCode);
+        dest.writeString(optionName);
+        dest.writeString(optionValue);
+        dest.writeString(sort);
+        dest.writeString(isDisabled);
+        dest.writeString(createUser);
+        dest.writeString(createTime);
+        dest.writeString(updateUser);
+        dest.writeString(updateTime);
+        dest.writeString(dictSubId);
+        dest.writeString(name);
+        dest.writeString(type);
+        dest.writeString(id);
     }
 }

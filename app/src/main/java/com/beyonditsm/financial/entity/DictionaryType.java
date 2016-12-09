@@ -16,6 +16,8 @@ public class DictionaryType implements Parcelable{
      * "isValid":1
      */
 
+
+
     private String id;
     private String code;
     private String name;

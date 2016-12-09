@@ -29,6 +29,7 @@ import com.beyonditsm.financial.entity.JJTCounyEntity;
 import com.beyonditsm.financial.entity.JJTProvinceEntity;
 import com.beyonditsm.financial.entity.Orederinfo;
 import com.beyonditsm.financial.entity.ProductBean;
+import com.beyonditsm.financial.entity.RelationEntity;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.http.RequestManager;
@@ -96,7 +97,7 @@ public class CreditSecondFrag extends BaseFragment {
     private LinearLayout zz_ll;//资质扩展区域
 
 
-    private List<DictionaryType> carList, jobList, hourseList, creditList;//车产，职业，房产，信用
+    private List<RelationEntity> carList, jobList, hourseList, creditList;//车产，职业，房产，信用
     private int jobPos, carPos, hoursePos, creditPos;
     private ProductBean productInfo;//产品信息
     private boolean jobSelect = false;
@@ -148,18 +149,16 @@ public class CreditSecondFrag extends BaseFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-
+        getData();//获取个人资料并给界面赋值
         addressUtil = new AddressUtil(mParentActivity);
-        getDictionaryContent(0, "job_identity");//职业身份获取身份列表供选择
-        getDictionaryContent(1, "under_own_car");//名下车产
-        getDictionaryContent(2, "under_own_hour");//名下房产
-        getDictionaryContent(3, "two_year_credit");//信用状况
-
-
+        getDictionaryContent(0, "jobType");//职业身份获取身份列表供选择
+        getDictionaryContent(1, "cardProperty");//名下车产
+        getDictionaryContent(2, "houseProperty");//名下房产
+        getDictionaryContent(3, " creidtType");//信用状况
         map.put(1, false);
         map.put(2, false);
         productInfo = getArguments().getParcelable(HomeCreditDetailAct.PRODUCTINFO);//取到传递过来的产品
-        getData();//获取个人资料并给界面赋值
+
         loadView.setOnRetryListener(new LoadingView.OnRetryListener() {
             @Override
             public void OnRetry() {
@@ -249,7 +248,7 @@ public class CreditSecondFrag extends BaseFragment {
                     @Override
                     public void getAdress(List<String> adress,List<Integer> id) {
                         String defaultProvince = adress.get(0);
-                        String provinceCode = queryProvinceCodeByName(defaultProvince);
+                        String provinceCode = queryProvinceCodeByName(defaultProvince);//通过名字查询id
                         String defaultCity = adress.get(1);
                         String cityCode = queryCityCodeByName(defaultCity);
                         String defaultArea = adress.get(2);
@@ -388,11 +387,11 @@ public class CreditSecondFrag extends BaseFragment {
                 dialog = new MySelfSheetDialog(mParentActivity).builder();
                 if (jobList.size() != 0) {
                     for (int i = 0; i < jobList.size(); i++) {
-                        dialog.addSheetItem(jobList.get(i).getName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
+                        dialog.addSheetItem(jobList.get(i).getOptionName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
                                 jobSelect = true;
-                                tvWork.setText(jobList.get(which - 1).getName());
+                                tvWork.setText(jobList.get(which - 1).getOptionName());
                                 jobPos = which - 1;
                             }
                         });
@@ -406,11 +405,11 @@ public class CreditSecondFrag extends BaseFragment {
                 dialog = new MySelfSheetDialog(mParentActivity).builder();
                 if (hourseList.size() != 0) {
                     for (int i = 0; i < hourseList.size(); i++) {
-                        dialog.addSheetItem(hourseList.get(i).getName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
+                        dialog.addSheetItem(hourseList.get(i).getOptionName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
                                 hourseSelect = true;
-                                tvHome.setText(hourseList.get(which - 1).getName());
+                                tvHome.setText(hourseList.get(which - 1).getOptionName());
                                 hoursePos = which - 1;
                             }
                         });
@@ -424,11 +423,11 @@ public class CreditSecondFrag extends BaseFragment {
 
                 if (carList.size() != 0) {
                     for (int i = 0; i < carList.size(); i++) {
-                        dialog.addSheetItem(carList.get(i).getName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
+                        dialog.addSheetItem(carList.get(i).getOptionName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
                                 carSelect = true;
-                                tvCar.setText(carList.get(which - 1).getName());
+                                tvCar.setText(carList.get(which - 1).getOptionName());
                                 carPos = which - 1;
                             }
                         });
@@ -441,11 +440,11 @@ public class CreditSecondFrag extends BaseFragment {
                 dialog = new MySelfSheetDialog(mParentActivity).builder();
                 if (creditList.size() != 0) {
                     for (int i = 0; i < creditList.size(); i++) {
-                        dialog.addSheetItem(creditList.get(i).getName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
+                        dialog.addSheetItem(creditList.get(i).getOptionName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
                                 creditSelect = true;
-                                tvXy.setText(creditList.get(which - 1).getName());
+                                tvXy.setText(creditList.get(which - 1).getOptionName());
                                 creditPos = which - 1;
                             }
                         });
@@ -472,30 +471,31 @@ public class CreditSecondFrag extends BaseFragment {
             mParentActivity = CreditStepAct.getInstance();
         }
     }
+
     //职业身份弹出框
     private void getDictionaryContent(final int pos, String key) {
 
-        RequestManager.getCommManager().getDicMap(key, new RequestManager.CallBack() {
+        RequestManager.getCommManager().findDicMap(key, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-                JSONObject jsonObject = new JSONObject(result);
-                JSONArray dataArr = jsonObject.getJSONArray("data");
+//                JSONObject jsonObject = new JSONObject(result);
+//                JSONArray dataArr = jsonObject.getJSONArray("data");
                 Gson gson = new Gson();
                 switch (pos) {
                     case 0:
-                        jobList = gson.fromJson(dataArr.toString(), new TypeToken<List<DictionaryType>>() {
+                        jobList = gson.fromJson(result.toString(), new TypeToken<List<RelationEntity>>() {
                         }.getType());//职业身份
                         break;
                     case 1:
-                        carList = gson.fromJson(dataArr.toString(), new TypeToken<List<DictionaryType>>() {
+                        carList = gson.fromJson(result.toString(), new TypeToken<List<RelationEntity>>() {
                         }.getType());
                         break;
                     case 2:
-                        hourseList = gson.fromJson(dataArr.toString(), new TypeToken<List<DictionaryType>>() {
+                        hourseList = gson.fromJson(result.toString(), new TypeToken<List<RelationEntity>>() {
                         }.getType());
                         break;
                     case 3:
-                        creditList = gson.fromJson(dataArr.toString(), new TypeToken<List<DictionaryType>>() {
+                        creditList = gson.fromJson(result.toString(), new TypeToken<List<RelationEntity>>() {
                         }.getType());
                         break;
                 }
@@ -860,7 +860,7 @@ public class CreditSecondFrag extends BaseFragment {
 
                     try {
                         JSONObject jsonObject = new JSONObject(result);
-                        reOrderId = jsonObject.getString("data");
+                        reOrderId = jsonObject.getString("data");//获取订单id
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -916,9 +916,9 @@ public class CreditSecondFrag extends BaseFragment {
             }
         });
     }
-
+    //获得省
     private void queryProvince() {
-        RequestManager.getCommManager().queryProvince(new RequestManager.CallBack() {
+        RequestManager.getCommManager().getProvince(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result);
@@ -958,7 +958,7 @@ public class CreditSecondFrag extends BaseFragment {
     }
 
     private void queryCity(String provinceCode) {
-        RequestManager.getCommManager().queryCity(provinceCode, new RequestManager.CallBack() {
+        RequestManager.getCommManager().getCity(provinceCode, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result);
@@ -981,7 +981,7 @@ public class CreditSecondFrag extends BaseFragment {
     }
 //查询地区
     private void queryDistrict(String cityCode) {
-        RequestManager.getCommManager().queryDistrict(cityCode, new RequestManager.CallBack() {
+        RequestManager.getCommManager().getDistrict(cityCode, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result);

@@ -99,8 +99,21 @@ public class RequestManager {
      * @param url      请求地址
      * @param callback 回调
      */
-    public void doGet(String url, final CallBack callback) {
-        MyLogUtils.info("地址:" + url);
+    public void doGet(String url ,final CallBack callback) {
+//        Map<String,String>params
+//        MyLogUtils.info("地址:" + url);
+//        url = url + "?";
+//        Iterator<String> iter = params.keySet().iterator();
+//        String key;
+//        while (iter.hasNext()) {
+//
+//            key = iter.next();
+//
+//            url = url + key + "=" +params.get(key)+ "&";
+//
+//        }
+//        url = url.substring(0,url.length()-1);
+
         StringRequest request = new StringRequest(url,
                 new Response.Listener<String>() {
                     @Override
@@ -157,6 +170,30 @@ public class RequestManager {
         MyApplication.getInstance().addToRequestQueue(request);
         MyApplication.getInstance().getRequestQueue().start();
 
+    }
+
+ //get請求（直接返回結果的，沒有statu）
+    public void todoGet(String url ,final CallBack callback) {
+       StringRequest request=new StringRequest(url, new Response.Listener<String>() {
+           @Override
+           public void onResponse(String s) {
+               try {
+                   callback.onSucess(s);
+               } catch (JSONException e) {
+                   e.printStackTrace();
+               }
+           }
+       },new Response.ErrorListener(){
+           @Override
+           public void onErrorResponse(VolleyError volleyError) {
+               callback.onError(no_net, "亲，网络不给力");
+           }
+       });
+
+        // 设定超时时间
+        request.setRetryPolicy(new DefaultRetryPolicy(5000, 1, 1.0f));
+        MyApplication.getInstance().addToRequestQueue(request);
+        MyApplication.getInstance().getRequestQueue().start();
     }
 
 //    public  void doGet(String url, List<NameValuePair> queryParams, final CallBack callback){

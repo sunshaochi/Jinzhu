@@ -307,6 +307,14 @@ public class CommManager extends RequestManager {
         doPost(IFinancialUrl.DIC_MAP_URL, params, callBack);
     }
 
+//个人信息字典（查询车产，职业身份，房产，信用状况）
+    public void findDicMap(String dictCod, CallBack callBack) {
+        todoGet(IFinancialUrl.FINDALLBYDICTCOD+"?dictCod="+dictCod, callBack);
+    }
+
+
+
+
 
     /**
      * 获取上传资料列表
@@ -738,6 +746,15 @@ public class CommManager extends RequestManager {
         Map<String, String> params = new HashMap<>();
         doPost(IFinancialUrl.QUERY_PROVINCE,params,callBack);
     }
+    /**
+     * 查詢省份（普通产品，推荐产品都用到）
+     */
+    public void getProvince(CallBack callBack){
+//        Map<String, String> params = new HashMap<>();
+        doGet(IFinancialUrl.QUERY_PROVINCE,callBack);
+    }
+
+
 
     /**
      * 个人信息查询市
@@ -747,6 +764,12 @@ public class CommManager extends RequestManager {
         params.put("code",provinceCode);
         doPost(IFinancialUrl.QUERY_CITY,params,callBack);
     }
+    /**
+     * 查询市
+     */
+    public void getCity(String provinceCode,CallBack callBack){
+        doGet(IFinancialUrl.QUERY_CITY+"?provinceCode="+provinceCode,callBack);
+    }
 
     /**
      * 个人信息查询区县
@@ -755,6 +778,13 @@ public class CommManager extends RequestManager {
         Map<String, String> params = new HashMap<>();
         params.put("cityCode",cityCode);
         doPost(IFinancialUrl.QUERY_DISTRICT,params,callBack);
+    }
+
+    /**
+     * 个人信息查询区县
+     */
+    public void getDistrict(String cityCode,CallBack callBack){
+        doGet(IFinancialUrl.QUERY_DISTRICT+"?cityCode="+cityCode,callBack);
     }
 
     /**
