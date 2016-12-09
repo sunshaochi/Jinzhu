@@ -308,6 +308,14 @@ public class CommManager extends RequestManager {
         doPost(IFinancialUrl.DIC_MAP_URL, params, callBack);
     }
 
+//个人信息字典（查询车产，职业身份，房产，信用状况）
+    public void findDicMap(String dictCod, CallBack callBack) {
+        todoGet(IFinancialUrl.FINDALLBYDICTCOD+"?dictCod="+dictCod, callBack);
+    }
+
+
+
+
 
     /**
      * 获取上传资料列表
@@ -740,7 +748,7 @@ public class CommManager extends RequestManager {
         doPost(IFinancialUrl.QUERY_PROVINCE,params,callBack);
     }
     /**
-     * 查詢省份
+     * 查詢省份（普通产品，推荐产品都用到）
      */
     public void getProvince(CallBack callBack){
 //        Map<String, String> params = new HashMap<>();
