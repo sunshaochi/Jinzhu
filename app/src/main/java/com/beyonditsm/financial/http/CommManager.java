@@ -320,10 +320,12 @@ public class CommManager extends RequestManager {
      * 获取上传资料列表
      *
      * @param orderId 订单id
+     * flowType 1-必填流程，2-增信流程
      */
     public void getUpLoadList(String orderId, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
         params.put("orderId", orderId);
+        params.put("flowType", "1");
         doPost(IFinancialUrl.UPLOAD_LIST_URL, params, callBack);
     }
 
