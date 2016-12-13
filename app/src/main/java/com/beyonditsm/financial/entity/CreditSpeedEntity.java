@@ -7,7 +7,9 @@ import com.tandong.sa.json.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 急借通entity
@@ -15,8 +17,8 @@ import java.util.List;
  */
 
 public class CreditSpeedEntity implements Parcelable{
-    private List<PropertyTypesBean> resideStatusmap;//居住状况字段信息
-    private List<String>repaymentTerm;//还款期限下拉选项
+    private List<ResideStatusmapBean> resideStatusmap;//居住状况字段信息
+    private Map<String,String> repaymentTerm;//还款期限下拉选项
     private String productId;//产品ID
     private String loanPeriodType;//贷款期限类型
     private String imageLogoPath;//产品图片
@@ -38,8 +40,37 @@ public class CreditSpeedEntity implements Parcelable{
     private String loanPeriod;//放款周期
     private String costDescribe;//产品要求
 
-    //以上是获取急速贷的bean 下面是原来已有的没重名的
 
+    private String propertyTypes;//（因为返回来的带斜杠的没用只是用实体来取）
+    private String payType;
+    private String jobIdentitys;
+
+
+    public String getPropertyTypes() {
+        return propertyTypes;
+    }
+
+    public void setPropertyTypes(String propertyTypes) {
+        this.propertyTypes = propertyTypes;
+    }
+
+    public String getPayType() {
+        return payType;
+    }
+
+    public void setPayType(String payType) {
+        this.payType = payType;
+    }
+
+    public String getJobIdentitys() {
+        return jobIdentitys;
+    }
+
+    public void setJobIdentitys(String jobIdentitys) {
+        this.jobIdentitys = jobIdentitys;
+    }
+
+    //以上是获取急速贷的bean 下面是原来已有的没重名的
     private String timeMinVal;//最小期限
     private String timeMaxVal;//最大期限
     private String id;
@@ -51,11 +82,11 @@ public class CreditSpeedEntity implements Parcelable{
 
 
 
-    public List<String> getRepaymentTerm() {
+    public Map<String,String> getRepaymentTerm() {
         return repaymentTerm;
     }
 
-    public void setRepaymentTerm(List<String> repaymentTerm) {
+    public void setRepaymentTerm(Map<String,String> repaymentTerm) {
         this.repaymentTerm = repaymentTerm;
     }
 
@@ -271,7 +302,7 @@ public class CreditSpeedEntity implements Parcelable{
     }
 
     //居住状况
-    public static class PropertyTypesBean implements  Serializable{
+    public static class ResideStatusmapBean implements  Serializable{
         private String name;
         private String id;
 
@@ -338,11 +369,11 @@ public class CreditSpeedEntity implements Parcelable{
     public CreditSpeedEntity() {
     }
 
-    public List<PropertyTypesBean> getResideStatusmap() {
+    public List<ResideStatusmapBean> getResideStatusmap() {
         return resideStatusmap;
     }
 
-    public void setResideStatusmap(List<PropertyTypesBean> resideStatusmap) {
+    public void setResideStatusmap(List<ResideStatusmapBean> resideStatusmap) {
         this.resideStatusmap = resideStatusmap;
     }
 
@@ -370,7 +401,11 @@ public class CreditSpeedEntity implements Parcelable{
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeList(this.resideStatusmap);
-        dest.writeStringList(this.repaymentTerm);
+        dest.writeInt(this.repaymentTerm.size());
+        for (Map.Entry<String, String> entry : this.repaymentTerm.entrySet()) {
+            dest.writeString(entry.getKey());
+            dest.writeString(entry.getValue());
+        }
         dest.writeString(this.productId);
         dest.writeString(this.loanPeriodType);
         dest.writeString(this.imageLogoPath);
@@ -391,6 +426,9 @@ public class CreditSpeedEntity implements Parcelable{
         dest.writeString(this.maxLoanPeriod);
         dest.writeString(this.loanPeriod);
         dest.writeString(this.costDescribe);
+        dest.writeString(this.propertyTypes);
+        dest.writeString(this.payType);
+        dest.writeString(this.jobIdentitys);
         dest.writeString(this.timeMinVal);
         dest.writeString(this.timeMaxVal);
         dest.writeString(this.id);
@@ -402,9 +440,15 @@ public class CreditSpeedEntity implements Parcelable{
     }
 
     protected CreditSpeedEntity(Parcel in) {
-        this.resideStatusmap = new ArrayList<PropertyTypesBean>();
-        in.readList(this.resideStatusmap, PropertyTypesBean.class.getClassLoader());
-        this.repaymentTerm = in.createStringArrayList();
+        this.resideStatusmap = new ArrayList<ResideStatusmapBean>();
+        in.readList(this.resideStatusmap, ResideStatusmapBean.class.getClassLoader());
+        int repaymentTermSize = in.readInt();
+        this.repaymentTerm = new HashMap<String, String>(repaymentTermSize);
+        for (int i = 0; i < repaymentTermSize; i++) {
+            String key = in.readString();
+            String value = in.readString();
+            this.repaymentTerm.put(key, value);
+        }
         this.productId = in.readString();
         this.loanPeriodType = in.readString();
         this.imageLogoPath = in.readString();
@@ -427,6 +471,9 @@ public class CreditSpeedEntity implements Parcelable{
         this.maxLoanPeriod = in.readString();
         this.loanPeriod = in.readString();
         this.costDescribe = in.readString();
+        this.propertyTypes = in.readString();
+        this.payType = in.readString();
+        this.jobIdentitys = in.readString();
         this.timeMinVal = in.readString();
         this.timeMaxVal = in.readString();
         this.id = in.readString();

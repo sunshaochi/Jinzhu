@@ -187,8 +187,8 @@ public class HttpManager {
 	 * @param params 集合
 	 * @param fileMaps 图片
 	 */
-	public String upLoadFile(String uri, Map<String, String> params,
-			Map<String, FileBody> fileMaps) {
+	public String upLoadFile(RequestManager.CallBack callBack,String uri, Map<String, String> params,
+							 Map<String, FileBody> fileMaps) {
 		post = new HttpPost(uri);
 
 		post.setHeaders(headers);
@@ -215,9 +215,11 @@ public class HttpManager {
 			} else {
 				MyLogUtils.error("访问失败--状态码："
 						+ response.getStatusLine().getStatusCode());
+				callBack.onError(response.getStatusLine().getStatusCode(),"访问失败");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			callBack.onError(500,"访问异常");
 			MyLogUtils.error("访问异常：" + e.getMessage());
 		}
 		return null;

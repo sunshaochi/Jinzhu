@@ -117,17 +117,13 @@ public class TjfirstFragment extends BaseFragment {
         provinceList=new ArrayList<>();
         cityList=new ArrayList<>();
         counyList=new ArrayList<>();
-        getDictCode(0, "qualifications");//学历
-        getDictCode(1, "productJop");//职业身份
-        getDictCode(2, "productCreditStatus");//信用状况
-        getDictCode(3, "salary");//代发工资金额
-        getDictCode(4, "booleanType");//是否保单
-        getDictCode(5, "loanTerm");//贷款期限
-//        getDictCode(6, "loanAmountRange");//金额范围
-        getDictCode(7, "cardProperty");//车产
-        getDictCode(8, "houseProperty");//房产
-        getPorvice();//获得省
 
+        getDictCode(5, "loanTerm");//贷款期限
+        getPorvice();//获得省地区户籍也可以用这个
+        getDictCode(0, "qualifications");//学历
+        getDictCode(2, "productCreditStatus");//信用状况
+        getDictCode(1, "productJop");//职业身份
+        getDictCode(3, "salary");//代发工资金额
 
 
     }
@@ -243,22 +239,13 @@ public class TjfirstFragment extends BaseFragment {
                         salarylist = gson.fromJson(result.toString(), new TypeToken<List<RelationEntity>>() {
                         }.getType());
                         break;
-                    case 4://是否保单
-                        booleantypelis = gson.fromJson(result.toString(), new TypeToken<List<RelationEntity>>() {
-                        }.getType());
-                        break;
+//
                     case 5://贷款期限
                         loanlist = gson.fromJson(result.toString(), new TypeToken<List<RelationEntity>>() {
                         }.getType());
                         break;
-                    case 7://车产
-                        cardlist = gson.fromJson(result.toString(), new TypeToken<List<RelationEntity>>() {
-                        }.getType());
-                        break;
-                    case 8://房产
-                        houselist = gson.fromJson(result.toString(), new TypeToken<List<RelationEntity>>() {
-                        }.getType());
-                        break;
+//
+//
                 }
 
             }
@@ -291,7 +278,8 @@ public class TjfirstFragment extends BaseFragment {
                         dialog.addSheetItem(loanlist.get(i).getOptionName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
-                                tv_qixian.setText(loanlist.get(which - 1).getName());
+                                tv_qixian.setText(loanlist.get(which - 1).getOptionName());
+                                tujianBean.setCreditTime(loanlist.get(which - 1).getOptionValue());
                             }
                         });
                     }
@@ -308,11 +296,11 @@ public class TjfirstFragment extends BaseFragment {
                     @Override
                     public void getAdress(List<String> adress,List<Integer> id) {
                         String defaultProvince = adress.get(0);
-                        String provinceCode = queryProvinceCodeByName(defaultProvince);
+//                        String provinceCode = queryProvinceCodeByName(defaultProvince);
                         String defaultCity = adress.get(1);
-                        String cityCode = queryCityCodeByName(defaultCity);
+//                        String cityCode = queryCityCodeByName(defaultCity);
                         String defaultArea = adress.get(2);
-                        String districtCode = queryAreaCodeByName(defaultArea);
+//                        String districtCode = queryAreaCodeByName(defaultArea);
                         tv_diqu.setText(defaultProvince + defaultCity + defaultArea);
                     }
                 });
@@ -326,6 +314,7 @@ public class TjfirstFragment extends BaseFragment {
                             @Override
                             public void onClick(int which) {
                                 tv_xueli.setText(xuelilist.get(which - 1).getOptionName());
+                                tujianBean.setEduLevel(xuelilist.get(which - 1).getOptionValue());
                             }
                         });
                     }
@@ -339,11 +328,11 @@ public class TjfirstFragment extends BaseFragment {
                     @Override
                     public void getAdress(List<String> adress,List<Integer> id) {
                         String defaultProvince = adress.get(0);
-                        String provinceCode = queryProvinceCodeByName(defaultProvince);
+//                        String provinceCode = queryProvinceCodeByName(defaultProvince);
                         String defaultCity = adress.get(1);
-                        String cityCode = queryCityCodeByName(defaultCity);
+//                        String cityCode = queryCityCodeByName(defaultCity);
                         String defaultArea = adress.get(2);
-                        String districtCode = queryAreaCodeByName(defaultArea);
+//                        String districtCode = queryAreaCodeByName(defaultArea);
                         tv_huji.setText(defaultProvince + defaultCity + defaultArea);
                     }
                 });
@@ -357,6 +346,7 @@ public class TjfirstFragment extends BaseFragment {
                             @Override
                             public void onClick(int which) {
                                 tv_xyjl.setText(creditlist.get(which - 1).getOptionName());
+                                tujianBean.setCreditStatusKey(creditlist.get(which - 1).getOptionName());
                             }
                         });
                     }
@@ -373,6 +363,7 @@ public class TjfirstFragment extends BaseFragment {
                             @Override
                             public void onClick(int which) {
                                 tv_zhiwei.setText(joplist.get(which - 1).getOptionName());
+                                tujianBean.setJobIdentityKey(joplist.get(which - 1).getOptionName());
                             }
                         });
                     }
@@ -436,6 +427,7 @@ public class TjfirstFragment extends BaseFragment {
                             @Override
                             public void onClick(int which) {
                                 tv_dfgzje.setText(salarylist.get(which - 1).getOptionName());
+                                tujianBean.setSalary(salarylist.get(which - 1).getOptionValue());
                             }
                         });
                     }
@@ -482,22 +474,13 @@ public class TjfirstFragment extends BaseFragment {
                 break;
             case R.id.tv_tujian://推荐
                 if (isNext()) {
-                    tujianBean.setCreditMoney(money);
-                    tujianBean.setCreditTime(time);
-                    tujianBean.setEduLevel(xueli);
-                    tujianBean.setDomicile(huji);
-                    tujianBean.setCreditStatusKey(xyjl);
-                    tujianBean.setJobIdentityKey(zhiwu);
-                    tujianBean.setAge(nianji);
-                    tujianBean.setLicenseTimeLength(gzsc);
-                    tujianBean.setCarStatusKey(cc);
-                    tujianBean.setPropertyTypeKey(fc);
-                    tujianBean.setSalary(dfgz);
-                    tujianBean.setGuaranteeSlip(bd);
-                    tujianBean.setOtherAssets(qtzc);
-                    tujianBean.setFundTimeLength(sbcs);
-//                   EventBus.getDefault().post(new RecomFragment.FirstEvent());
-                    Bundle bundle=new Bundle();
+//                    tujianBean.setCreditMoney(money);//金额
+//                    tujianBean.setDomicile(huji);//户籍
+//                    tujianBean.setAge(nianji);//年纪
+//                    tujianBean.setLicenseTimeLength(gzsc);//工作时长
+//                    tujianBean.setFundTimeLength(sbcs);//社保时长
+////                   EventBus.getDefault().post(new RecomFragment.FirstEvent());
+//                    Bundle bundle=new Bundle();
                     getActivity().sendBroadcast(new Intent(RecomFragment.CHANGE));
                 }
 
@@ -521,100 +504,155 @@ public class TjfirstFragment extends BaseFragment {
         bd = tv_bd.getText().toString();
         qtzc = tv_qtzc.getText().toString();
         sbcs = tv_cbsc.getText().toString();
-        if (TextUtils.isEmpty(tv_money.getText())) {
-            MyToastUtils.showShortToast(getActivity(), "贷款金额不能为空");
-            return false;
+        if(TextUtils.isEmpty(time)){
+            tujianBean.setCreditTime("");
         }
-        if (TextUtils.isEmpty(tv_qixian.getText())) {
-            MyToastUtils.showShortToast(getActivity(), "期限不能为空");
-            return false;
+        if(TextUtils.isEmpty(money)){
+            tujianBean.setCreditMoney("");
+        }else {
+            tujianBean.setCreditMoney(money);
         }
-        if (TextUtils.isEmpty(tv_diqu.getText())) {
-            MyToastUtils.showShortToast(getActivity(), "地区不能为空");
-            return false;
+        if(TextUtils.isEmpty(xueli)){
+            tujianBean.setEduLevel("");
         }
-        if (TextUtils.isEmpty(tv_xueli.getText())) {
-            MyToastUtils.showShortToast(getActivity(), "学历不能为空");
-            return false;
+        if(TextUtils.isEmpty(huji)){
+            tujianBean.setDomicile("");
+        }else {
+            tujianBean.setDomicile(huji);
         }
-        if (TextUtils.isEmpty(tv_huji.getText())) {
-            MyToastUtils.showShortToast(getActivity(), "户籍不能为空");
-            return false;
+        if(TextUtils.isEmpty(xyjl)){
+            tujianBean.setCreditStatusKey("");
         }
-        if (TextUtils.isEmpty(tv_xyjl.getText())) {
-            MyToastUtils.showShortToast(getActivity(), "信用记录不能为空");
-            return false;
+        if(TextUtils.isEmpty(nianji)){
+            tujianBean.setAge("");
+        }else {
+            tujianBean.setAge(nianji);
         }
-        if (TextUtils.isEmpty(tv_zhiwei.getText())) {
-            MyToastUtils.showShortToast(getActivity(), "职务不能为空");
-            return false;
+        if(TextUtils.isEmpty(zhiwu)){
+            tujianBean.setJobIdentityKey("");
         }
-        if (TextUtils.isEmpty(tv_nianji.getText())) {
-            MyToastUtils.showShortToast(getActivity(), "年纪不能为空");
-            return false;
+        if(TextUtils.isEmpty(gzsc)){
+            tujianBean.setLicenseTimeLength("");
+        }else {
+            tujianBean.setLicenseTimeLength(gzsc);
         }
-        if (TextUtils.isEmpty(tv_zhucesc.getText())) {
-            MyToastUtils.showShortToast(getActivity(), "注册时长不能为空");
-            return false;
+        if(TextUtils.isEmpty(cc)){
+            tujianBean.setCarStatusKey("");
+        }
+        if(TextUtils.isEmpty(fc)){
+            tujianBean.setPropertyTypeKey("");
+        }
+        if(TextUtils.isEmpty(dfgz)){
+            tujianBean.setSalary("");
+        }
+        if(TextUtils.isEmpty(bd)){
+            tujianBean.setGuaranteeSlip("");
+        }
+        if(TextUtils.isEmpty(qtzc)){
+            tujianBean.setOtherAssets("");
+        }
+        if(TextUtils.isEmpty(sbcs)){
+            tujianBean.setFundTimeLength("");
+        }else {
+            tujianBean.setFundTimeLength(sbcs);
         }
 
-        if (TextUtils.isEmpty(tv_cc.getText())) {
-            MyToastUtils.showShortToast(getActivity(), "车产不能为空");
-            return false;
-        }
-        if (TextUtils.isEmpty(tv_fc.getText())) {
-            MyToastUtils.showShortToast(getActivity(), "房产不能为空");
-            return false;
-        }
-        if (TextUtils.isEmpty(tv_dfgzje.getText())) {
-            MyToastUtils.showShortToast(getActivity(), "代发工资不能为空");
-            return false;
-        }
-        if (TextUtils.isEmpty(tv_bd.getText())) {
-            MyToastUtils.showShortToast(getActivity(), "保单不能为空");
-            return false;
-        }
-        if (TextUtils.isEmpty(tv_qtzc.getText())) {
-            MyToastUtils.showShortToast(getActivity(), "其他资产");
-            return false;
-        }
-        if (TextUtils.isEmpty(tv_cbsc.getText())) {
-            MyToastUtils.showShortToast(getActivity(), "攻击经社保时长不能为空");
-            return false;
-        }
+
+
+//        if (TextUtils.isEmpty(tv_money.getText())) {
+//            MyToastUtils.showShortToast(getActivity(), "贷款金额不能为空");
+//            return false;
+//        }
+//        if (TextUtils.isEmpty(tv_qixian.getText())) {
+//            MyToastUtils.showShortToast(getActivity(), "期限不能为空");
+//            return false;
+//        }
+//        if (TextUtils.isEmpty(tv_diqu.getText())) {
+//            MyToastUtils.showShortToast(getActivity(), "地区不能为空");
+//            return false;
+//        }
+//        if (TextUtils.isEmpty(tv_xueli.getText())) {
+//            MyToastUtils.showShortToast(getActivity(), "学历不能为空");
+//            return false;
+//        }
+//        if (TextUtils.isEmpty(tv_huji.getText())) {
+//            MyToastUtils.showShortToast(getActivity(), "户籍不能为空");
+//            return false;
+//        }
+//        if (TextUtils.isEmpty(tv_xyjl.getText())) {
+//            MyToastUtils.showShortToast(getActivity(), "信用记录不能为空");
+//            return false;
+//        }
+//        if (TextUtils.isEmpty(tv_zhiwei.getText())) {
+//            MyToastUtils.showShortToast(getActivity(), "职务不能为空");
+//            return false;
+//        }
+//        if (TextUtils.isEmpty(tv_nianji.getText())) {
+//            MyToastUtils.showShortToast(getActivity(), "年纪不能为空");
+//            return false;
+//        }
+//        if (TextUtils.isEmpty(tv_zhucesc.getText())) {
+//            MyToastUtils.showShortToast(getActivity(), "注册时长不能为空");
+//            return false;
+//        }
+//
+//        if (TextUtils.isEmpty(tv_cc.getText())) {
+//            MyToastUtils.showShortToast(getActivity(), "车产不能为空");
+//            return false;
+//        }
+//        if (TextUtils.isEmpty(tv_fc.getText())) {
+//            MyToastUtils.showShortToast(getActivity(), "房产不能为空");
+//            return false;
+//        }
+//        if (TextUtils.isEmpty(tv_dfgzje.getText())) {
+//            MyToastUtils.showShortToast(getActivity(), "代发工资不能为空");
+//            return false;
+//        }
+//        if (TextUtils.isEmpty(tv_bd.getText())) {
+//            MyToastUtils.showShortToast(getActivity(), "保单不能为空");
+//            return false;
+//        }
+//        if (TextUtils.isEmpty(tv_qtzc.getText())) {
+//            MyToastUtils.showShortToast(getActivity(), "其他资产");
+//            return false;
+//        }
+//        if (TextUtils.isEmpty(tv_cbsc.getText())) {
+//            MyToastUtils.showShortToast(getActivity(), "攻击经社保时长不能为空");
+//            return false;
+//        }
 
 
         return true;
     }
-    public String queryProvinceCodeByName(String name) {
-        for (int i = 0; i < provinceList.size(); i++) {
-            JJTProvinceEntity jjtProvinceEntity = provinceList.get(i);
-            if (jjtProvinceEntity.getName().equals(name)) {
-                return jjtProvinceEntity.getCode();
-            }
-        }
-        return "";
-    }
-
-    public String queryCityCodeByName(String name) {
-        for (int i = 0; i < cityList.size(); i++) {
-            JJTCityEntity jjtProvinceEntity = cityList.get(i);
-            if (jjtProvinceEntity.getName().equals(name)) {
-                return jjtProvinceEntity.getCode();
-            }
-        }
-        return "";
-    }
-
-    public String queryAreaCodeByName(String name) {
-        for (int i = 0; i < counyList.size(); i++) {
-            JJTCounyEntity jjtProvinceEntity = counyList.get(i);
-            if (jjtProvinceEntity.getName().equals(name)) {
-                return jjtProvinceEntity.getCode();
-            }
-        }
-        return "";
-    }
+//    public String queryProvinceCodeByName(String name) {
+//        for (int i = 0; i < provinceList.size(); i++) {
+//            JJTProvinceEntity jjtProvinceEntity = provinceList.get(i);
+//            if (jjtProvinceEntity.getName().equals(name)) {
+//                return jjtProvinceEntity.getCode();
+//            }
+//        }
+//        return "";
+//    }
+//
+//    public String queryCityCodeByName(String name) {
+//        for (int i = 0; i < cityList.size(); i++) {
+//            JJTCityEntity jjtProvinceEntity = cityList.get(i);
+//            if (jjtProvinceEntity.getName().equals(name)) {
+//                return jjtProvinceEntity.getCode();
+//            }
+//        }
+//        return "";
+//    }
+//
+//    public String queryAreaCodeByName(String name) {
+//        for (int i = 0; i < counyList.size(); i++) {
+//            JJTCounyEntity jjtProvinceEntity = counyList.get(i);
+//            if (jjtProvinceEntity.getName().equals(name)) {
+//                return jjtProvinceEntity.getCode();
+//            }
+//        }
+//        return "";
+//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

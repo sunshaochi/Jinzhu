@@ -28,6 +28,7 @@ import com.lidroid.xutils.http.client.multipart.content.FileBody;
 import org.apache.http.NameValuePair;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -257,6 +258,7 @@ public class RequestManager {
      */
     public void doPost(final String url, final Map<String, String> params, final CallBack callback) {
         MyLogUtils.info("地址:" + url);
+        MyLogUtils.info("params"+params);
         StringRequest request = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -483,6 +485,7 @@ public class RequestManager {
      */
     public void loadImage(final String url, final Map<String, FileBody> fileMaps, final CallBack callBack) {
         MyLogUtils.info("地址:" + url);
+        MyLogUtils.info("fileMaps"+fileMaps);
         final HttpManager manager = new HttpManager();
         final Map<String, String> par = new HashMap<>();
         par.put("type", "img");
@@ -490,7 +493,7 @@ public class RequestManager {
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... params) {
-                return manager.upLoadFile(url, par, fileMaps);
+                return manager.upLoadFile(callBack,url, par, fileMaps);
             }
 
             @Override
@@ -503,13 +506,14 @@ public class RequestManager {
                 MyLogUtils.info("上传图片：" + result);
                 if (!TextUtils.isEmpty(result)) {
                     try {
-                        JSONObject obj = new JSONObject(result);
-                        int status = obj.getInt("status");
-                        if (status == 200) {
-                            callBack.onSucess(obj.getString("data"));
-                        } else {
-                            callBack.onError(obj.getInt("status"), obj.getString("message"));
-                        }
+//                        JSONObject obj = new JSONObject(result);
+//                        int status = obj.getInt("status");
+//                        if (status == 200) {
+                        JSONArray jsonArray = new JSONArray(result);
+                        callBack.onSucess(jsonArray.getString(0));
+//                        } else {
+//                            callBack.onError(obj.getInt("status"), obj.getString("message"));
+//                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

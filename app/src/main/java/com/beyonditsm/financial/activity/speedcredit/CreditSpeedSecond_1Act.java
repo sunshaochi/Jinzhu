@@ -23,11 +23,14 @@ import com.beyonditsm.financial.entity.JJTCityEntity;
 import com.beyonditsm.financial.entity.JJTCounyEntity;
 import com.beyonditsm.financial.entity.JJTProvinceEntity;
 import com.beyonditsm.financial.entity.RelationEntity;
+import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserOrderInfo1;
+import com.beyonditsm.financial.entity.ZidianBean;
 import com.beyonditsm.financial.fragment.SpeedCreditFrag;
 import com.beyonditsm.financial.http.CommManager;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
+import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.IdcardUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
@@ -120,10 +123,21 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
     private String totalLoanInterest;
     private String realMonthlyRate;
     private String orderId;
-    private List<CreditSpeedEntity.PropertyTypesBean> propetyTypesList;
+    private List<CreditSpeedEntity.ResideStatusmapBean> propetyTypesList;
 
-    private List<RelationEntity> marriageList;
+    private List<RelationEntity> marriageList;//婚姻状态
     private List<RelationEntity> eduList;
+    private List<RelationEntity> workList;//工作性质
+    private List<RelationEntity> UnitList;//单位性质
+    private List<RelationEntity> liveTypeList;//居住状况
+    private List<RelationEntity> relationList;//亲属关系
+    private List<RelationEntity> SalaryList;//月薪
+
+
+
+
+
+
     private List<String> childNumList;
     private String permanentP;
     private String permanentC;
@@ -186,7 +200,7 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
         totalLoanInterest = getIntent().getStringExtra(CreditSpeedDetailAct.TOTALLOANINTEREST);//总利息
         realMonthlyRate = getIntent().getStringExtra(CreditSpeedDetailAct.REALMONTHLYRATE);//最小利率
 
-        propetyTypesList = (List<CreditSpeedEntity.PropertyTypesBean>) getIntent().getSerializableExtra(SpeedCreditFrag.PROPERTY_TYPES);//居住状况
+        propetyTypesList = (List<CreditSpeedEntity.ResideStatusmapBean>) getIntent().getSerializableExtra(SpeedCreditFrag.PROPERTY_TYPES);//居住状况
         userOrderInfo1 = new UserOrderInfo1();
         initText();
         loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
@@ -196,8 +210,8 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
             }
         });
         queryAllProvince();//获取省份
-        getMarriage();//获取婚姻
-        getEdu();//获取学历
+//        getMarriage();//获取婚姻
+        getEdu();//获取急速贷所有字典
         childNumList = new ArrayList<>();
         for (int i = 0;i<9;i++){
             childNumList.add(String.valueOf(i));
@@ -329,7 +343,7 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
                             @Override
                             public void onClick(int which) {
                                 tvSpeedSelectMarriage.setText(marriageList.get(which - 1).getOptionName());
-                                userOrderInfo1.setMarryStatus(marriageList.get(which - 1).getDictSubId()+"");
+                                userOrderInfo1.setMarryStatus(marriageList.get(which - 1).getOptionValue()+"");
                             }
                         });
                     }
@@ -345,7 +359,7 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
                             @Override
                             public void onClick(int which) {
                                 tvSpeedSelectEdu.setText(eduList.get(which - 1).getOptionName());
-                                userOrderInfo1.setQualitications(eduList.get(which - 1).getDictSubId()+"");
+                                userOrderInfo1.setQualitications(eduList.get(which - 1).getOptionValue()+"");
                             }
                         });
                     }
@@ -404,26 +418,26 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
         }
     }
 
-    /**
-     * 获取婚姻状况
-     */
-    private void getMarriage(){
-        RequestManager.getCommManager().getMarrias(new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
-                JSONObject jsonObject = new JSONObject(result);
-                JSONArray data = jsonObject.getJSONArray("data");
-                Gson gson = new Gson();
-                marriageList = gson.fromJson(data.toString(), new TypeToken<List<RelationEntity>>() {
-                }.getType());
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-
-            }
-        });
-    }
+//    /**
+//     * 获取婚姻状况
+//     */
+//    private void getMarriage(){
+//        RequestManager.getCommManager().getMarrias(new RequestManager.CallBack() {
+//            @Override
+//            public void onSucess(String result) throws JSONException {
+//                JSONObject jsonObject = new JSONObject(result);
+//                JSONArray data = jsonObject.getJSONArray("data");
+//                Gson gson = new Gson();
+//                marriageList = gson.fromJson(data.toString(), new TypeToken<List<RelationEntity>>() {
+//                }.getType());
+//            }
+//
+//            @Override
+//            public void onError(int status, String msg) {
+//
+//            }
+//        });
+//    }
 
     /**
      * 获取学历
@@ -432,11 +446,18 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
         RequestManager.getCommManager().getEducation(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-                JSONObject jsonObject = new JSONObject(result);
-                JSONArray data = jsonObject.getJSONArray("data");
-                Gson gson = new Gson();
-                eduList = gson.fromJson(data.toString(), new TypeToken<List<RelationEntity>>() {
-                }.getType());
+//                JSONObject jsonObject = new JSONObject(result);
+//                JSONArray data = jsonObject.getJSONArray("data");
+//                JSONArray salary=data.getJSONArray(0);
+//                JSONArray salary=data.getJSONArray(0);
+//                Gson gson = new Gson();
+//                eduList = gson.fromJson(data.toString(), new TypeToken<List<RelationEntity>>() {
+//                }.getType());
+                ResultData<ZidianBean> rd= ( ResultData<ZidianBean>)GsonUtils.json(result,ZidianBean.class);
+                ZidianBean zidianBean=rd.getData();
+                eduList=zidianBean.getEducation();//学历
+                marriageList=zidianBean.getMaritalStatus();
+
             }
 
             @Override

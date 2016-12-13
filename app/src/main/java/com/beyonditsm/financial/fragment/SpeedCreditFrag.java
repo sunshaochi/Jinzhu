@@ -23,7 +23,9 @@ import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -124,8 +126,6 @@ public class SpeedCreditFrag extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), CreditSpeedDetailAct.class);
                 CreditSpeedEntity creditSpeedEntity = creditSpeedList.get(position);
-//                List<String> jobIdentitysList = jobIdentitys.get(position);
-//                List<CreditSpeedEntity.PropertyTypesBean> propertyTypesList = ;
                 intent.putExtra(JOB_IDENTITYS,(Serializable)creditSpeedEntity.getDebtTypemap());//借款用途
                 intent.putExtra(PROPERTY_TYPES,(Serializable) creditSpeedEntity.getResideStatusmap());//居住状况
                 intent.putExtra(PAY_TYPE,(Serializable) creditSpeedEntity.getPaytypemap());//还款方式

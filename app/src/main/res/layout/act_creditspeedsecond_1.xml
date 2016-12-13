@@ -337,6 +337,7 @@
         </ScrollView>
 
         <com.beyonditsm.financial.view.LoadingView
+            android:visibility="gone"
             android:id="@+id/loadView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

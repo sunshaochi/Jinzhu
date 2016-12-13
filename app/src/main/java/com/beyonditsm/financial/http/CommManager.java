@@ -21,6 +21,7 @@ import com.tandong.sa.json.Gson;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -593,13 +594,13 @@ public class CommManager extends RequestManager {
         params.put("relatives1MobilePhone",entity3.getRelatives1MobilePhone());
         params.put("relatives2Name",entity3.getRelatives2Name());
         params.put("relatives2Rs",entity3.getRelatives2Rs());
-        params.put("relatives2MobilePhone ", entity3.getRelatives2MobilePhone());
+        params.put("relatives2MobilePhone", entity3.getRelatives2MobilePhone());
         params.put("colleagueName", entity3.getColleagueName());
         params.put("colleagueRs", entity3.getColleagueRs());
-        params.put("colleagueMobilePhone ", entity3.getColleagueMobilePhone());
+        params.put("colleagueMobilePhone", entity3.getColleagueMobilePhone());
         params.put("ecName", entity3.getEcName());
         params.put("ecRs", entity3.getEcRs());
-        params.put("ecMobilePhone ", entity3.getEcMobilePhone());
+        params.put("ecMobilePhone", entity3.getEcMobilePhone());
         doPost(IFinancialUrl.SAVE_USER_ORDER_INFO3, params, callBack);
     }
 
@@ -636,26 +637,29 @@ public class CommManager extends RequestManager {
      * @param callBack
      */
     public void queryAllProvince(CallBack callBack){
-        Map<String, String> params = new HashMap<>();
-        doPost(IFinancialUrl.QUERY_ALL_PROVINCE, params, callBack);
+//        Map<String, String> params = new HashMap<>();
+//        doPost(IFinancialUrl.QUERY_ALL_PROVINCE, params, callBack);
+        doGet(IFinancialUrl.QUERY_ALL_PROVINCE,callBack);
     }
     /**
      * 急借通市查询接口
      * @param callBack
      */
     public void queryAllCity(String parentId,CallBack callBack){
-        Map<String, String> params = new HashMap<>();
-        params.put("parentId",parentId+"");
-        doPost(IFinancialUrl.QUERY_ALL_CITY, params, callBack);
+//        Map<String, String> params = new HashMap<>();
+//        params.put("parentId",parentId+"");
+//        doPost(IFinancialUrl.QUERY_ALL_CITY, params, callBack);
+        doGet(IFinancialUrl.QUERY_ALL_CITY+"?parentId="+parentId,callBack);
     }
     /**
      * 急借通区查询接口
      * @param callBack
      */
     public void queryAllArea(String parentId,CallBack callBack) {
-        Map<String, String> params = new HashMap<>();
-        params.put("parentId", parentId);
-        doPost(IFinancialUrl.QUERY_ALL_AREA, params, callBack);
+//        Map<String, String> params = new HashMap<>();
+//        params.put("parentId", parentId);
+//        doPost(IFinancialUrl.QUERY_ALL_AREA, params, callBack);
+        doGet(IFinancialUrl.QUERY_ALL_AREA+"?parentId="+parentId,callBack);
     }
 
 
@@ -674,6 +678,16 @@ public class CommManager extends RequestManager {
      */
     public void getEducation(CallBack callBack){
         Map<String, String> params = new HashMap<>();
+        List<String> list = new ArrayList<>();
+        list.add("Salary");
+        list.add("Working_property");
+        list.add("Unit_property");
+        list.add("liveType");
+        list.add("relation");
+        list.add("education");
+        list.add("maritalStatus");
+        String jsonArray = GsonUtils.bean2Json(list);
+        params.put("jsonArrayKey",jsonArray);
         doPost(IFinancialUrl.EDUCATION,params,callBack);
     }
 

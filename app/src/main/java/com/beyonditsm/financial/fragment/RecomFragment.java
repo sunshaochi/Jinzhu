@@ -48,10 +48,9 @@ import java.util.List;
  */
 
 public class RecomFragment extends BaseFragment {
-    @ViewInject(R.id.tv_title)
-    private TextView tv_title;
-    @ViewInject(R.id.rl_back)
-    private RelativeLayout rl_back;
+
+    @ViewInject(R.id.frem_back)
+    private RelativeLayout frem_back;
 
     private TjfirstFragment tjfirstfrg;//推荐第一步fragment
     private TjlistFragment tjlistFragment;//推荐第二不list
@@ -66,8 +65,6 @@ public class RecomFragment extends BaseFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        tv_title.setText("为我推荐");
-        rl_back.setVisibility(View.GONE);
         fragmentManager =getActivity().getSupportFragmentManager();
 //        EventBus.getDefault().register(getActivity());
         setTabSelection(0);
@@ -80,6 +77,7 @@ public class RecomFragment extends BaseFragment {
         hideFragments(fragmentTransaction);//隐藏所有对象
         switch (i){
             case 0:
+                frem_back.setVisibility(View.GONE);
                 if(tjfirstfrg==null){
                     tjfirstfrg=new TjfirstFragment();
                     fragmentTransaction.add(R.id.fl_main,tjfirstfrg);
@@ -88,6 +86,13 @@ public class RecomFragment extends BaseFragment {
                 }
                 break;
             case 1:
+                frem_back.setVisibility(View.VISIBLE);
+                frem_back.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        setTabSelection(0);
+                    }
+                });
                 if(tjlistFragment==null){
                     tjlistFragment=new TjlistFragment();
                     fragmentTransaction.add(R.id.fl_main,tjlistFragment);
