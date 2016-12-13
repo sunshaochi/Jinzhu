@@ -56,7 +56,7 @@ public class CommManager extends RequestManager {
      */
     public void toRegister(UserEntity ue, String phoneNumber, String captcha, CallBack callBack) {
         List<NameValuePair> queryParams = new ArrayList<>();
-        queryParams.add(new BasicNameValuePair("phoneNumber", phoneNumber));
+        queryParams.add(new BasicNameValuePair("mobilePhone", phoneNumber));
         queryParams.add(new BasicNameValuePair("username", ue.getUsername()));
         queryParams.add(new BasicNameValuePair("captcha", captcha));
         if (!TextUtils.isEmpty(ue.getReferralCode())) {
@@ -73,6 +73,37 @@ public class CommManager extends RequestManager {
     }
 
     /**
+     * 注册
+     *
+     * @param ue       用户entity
+     * @param callBack 回调
+     */
+    public void toRegister2(UserEntity ue, String phoneNumber, String captcha, CallBack callBack) {
+        List<NameValuePair> queryParams = new ArrayList<>();
+        queryParams.add(new BasicNameValuePair("mobilePhone", phoneNumber));
+        queryParams.add(new BasicNameValuePair("userStatus", "users"));
+//        queryParams.add(new BasicNameValuePair("password", captcha));
+
+//        queryParams.add(new BasicNameValuePair("username", ue.getUsername()));
+        queryParams.add(new BasicNameValuePair("captcha", captcha));
+//        queryParams.add(new BasicNameValuePair("noValidateSms", captcha));
+        queryParams.add(new BasicNameValuePair("signFrom", IFinancialUrl.MARKET_CODE));
+        queryParams.add(new BasicNameValuePair("referCode", ue.getReferralCode()));
+
+//        if (!TextUtils.isEmpty(ue.getReferralCode())) {
+//            queryParams.add(new BasicNameValuePair("referralCode", ue.getReferralCode()));
+//
+//        }
+//        if (!TextUtils.isEmpty(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()))){
+//            queryParams.add(new BasicNameValuePair("registerArea", SpUtils.getCity(MyApplication.getInstance().getApplicationContext())));
+//        }else {
+//            queryParams.add(new BasicNameValuePair("registerArea", "全国"));
+//        }
+
+        doGet(IFinancialUrl.REGISTER_URL2+"?mobilePhone="+phoneNumber+"&userStatus=users"+"&captcha="+captcha+"&signFrom="+IFinancialUrl.MARKET_CODE+"&referCode="+ue.getReferralCode(), callBack);
+    }
+
+    /**
      * 获取验证码
      *
      * @param phoneNumber 手机号
@@ -81,7 +112,7 @@ public class CommManager extends RequestManager {
     public void getCode(String phoneNumber, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
         params.put("phoneNumber", phoneNumber);
-        doPost(IFinancialUrl.GET_CODE, params, callBack);
+        doGet(IFinancialUrl.GET_CODE2+"?phoneNumber="+phoneNumber, callBack);
     }
 
     /**

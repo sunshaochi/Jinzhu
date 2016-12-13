@@ -8,7 +8,7 @@ package com.beyonditsm.financial.http;
 public interface IFinancialUrl {
     /*吕建明*/
 //    String BASE_URL = "http://172.16.6.236:8080";
-    String BASE_URL = "http://172.16.6.95:8083";
+//    String BASE_URL = "http://172.16.6.95:8083";
     /*吕东测试*/
 //    String BASE_URL = "http://172.16.5.59";
 //    String BASE_URL ="http://172.16.6.218:8082";
@@ -62,8 +62,7 @@ public interface IFinancialUrl {
     //调试地址
 //    String BASE_URL = "http://172.16.5.250:8080";
 //    String BASE_URL="http://172.16.6.216";
-//    String BASE_URL = "http://172.16.6.227:8080";
-
+    String BASE_URL = "http://172.16.6.228:8080";
 
     /**
      * @MARKEY_CODE 渠道号设置，默认渠道设置为空字符串
@@ -80,7 +79,7 @@ public interface IFinancialUrl {
     /*退出*/
     String LOGINOUT_URL = BASE_URL + API_VERSION + "/manager/unLogin/logout.do";
     /*发送验证码*/
-    String GET_CODE = BASE_URL + API_VERSION + "/manager/unLogin/registerSmsCaptcha.do";
+//    String GET_CODE = BASE_URL + API_VERSION + "/manager/unLogin/registerSmsCaptcha.do";
     /*查找用户个人信息*/
     String USERINFO_URL = BASE_URL + API_VERSION + "/platform/login/findUserSelfInfo.do";
     /* 获得当前登陆人的信息*/
@@ -166,27 +165,27 @@ public interface IFinancialUrl {
 
 
     /*设置资金密码*/
-    String SET_PWD_URL = BASE_URL + API_VERSION + "/wallet/login/setFundPassword.do";
+//    String SET_PWD_URL = BASE_URL + API_VERSION + "/wallet/login/setFundPassword.do";
     /*现金券收支明细*/
-    String CASH_HISTORY = BASE_URL + API_VERSION + "/wallet/login/cashTHistory.do";
+//    String CASH_HISTORY = BASE_URL + API_VERSION + "/wallet/login/cashTHistory.do";
     /*抵扣券收支明细*/
-    String DEDUCTION_HISTORY = BASE_URL + API_VERSION + "/wallet/login/deductionTHistory.do";
+//    String DEDUCTION_HISTORY = BASE_URL + API_VERSION + "/wallet/login/deductionTHistory.do";
     /*订单明细*/
     String ORDER_LIST = BASE_URL + API_VERSION + "/wallet/login/tOrderList.do";
 
     /*用户的订单编号集合*/
-    String ORDER_NO_LIST = BASE_URL + API_VERSION + "/platform/login/findOrderNoListByUserName.do";
+//    String ORDER_NO_LIST = BASE_URL + API_VERSION + "/platform/login/findOrderNoListByUserName.do";
     /*总利息、可抵扣利息*/
     String LIXI = BASE_URL + API_VERSION + "/platform/login/findInterestByOrderNo.do";
 
     /*获取用户绑定的银行卡*/
-    String QUERY_BANK_CARD = BASE_URL + API_VERSION + "/wallet/login/queryBankCard.do";
+//    String QUERY_BANK_CARD = BASE_URL + API_VERSION + "/wallet/login/queryBankCard.do";
     /*获取支持的银行列表*/
-    String QUERY_BANK = BASE_URL + API_VERSION + "/wallet/login/queryBanK.do";
+//    String QUERY_BANK = BASE_URL + API_VERSION + "/wallet/login/queryBanK.do";
     /*添加银行卡*/
-    String ADD_BANK_CARD = BASE_URL + API_VERSION + "/wallet/login/addBankCard.do";
+//    String ADD_BANK_CARD = BASE_URL + API_VERSION + "/wallet/login/addBankCard.do";
     /*修改银行卡状态*/
-    String MODIFY_BANK_CARD_STATUS = BASE_URL + API_VERSION + "/wallet/login/modifyBankCard.do";
+//    String MODIFY_BANK_CARD_STATUS = BASE_URL + API_VERSION + "/wallet/login/modifyBankCard.do";
     /*线下订单资料列表*/
     String CREDIT_OFFLINE_LIST_URL = BASE_URL + API_VERSION + "/platform/login/getOfflineOrderDetail.do";
     /*上传资料列表*/
@@ -270,4 +269,31 @@ public interface IFinancialUrl {
     String SHORT_LOAN_ORDER_DETAIL = BASE_URL + API_VERSION + "/platform/login/ShortLoanOrderDetail.do";
     /*急速贷推送第三方接口*/
     String APPLY_SHORT_LOAN_ORDER = BASE_URL +API_VERSION + "/platform/login/applyShortLoanOrder.do";
+
+    //获取提现记录
+    String TIXIAN_HISTORY=BASE_URL+"/easyplay/welfare/selectERsForReception";
+    //获取可用券总额
+    String WALLET_DISPONIBLES_URL=BASE_URL+"/easyplay/welfare/selectCouponSummaryByUid";
+    //获取现金券列表
+    String CASH_HISTORY2=BASE_URL+"/easyplay/welfare/selectCRForReception";
+    //获取贷款产品
+    String GET_CREDIT_PRODUCT=BASE_URL+"/easyplay/welfare/selOrderNoListByUid";
+    //确认订单
+    String QUEREN_ORDER_URL=BASE_URL+"/easyplay/welfare/insertEnchashment";
+
+    /*获取用户绑定的银行卡*/
+    String QUERY_BANK_CARD2 = BASE_URL + "/easyplay/bankcard/queryBankCard";
+    /*获取支持的银行列表*/
+    String QUERY_BANK2 = BASE_URL + "/easyplay/bankcard/queryBank.do";
+    /*设置资金密码*/
+    String SET_PWD_URL2 = BASE_URL  + "/wallet/login/setFundPassword.do";
+    /*添加银行卡*/
+    String ADD_BANK_CARD2 = BASE_URL  + "/wallet/login/addBankCard.do";
+
+    /*注册*/
+    String REGISTER_URL2 = BASE_URL + "/customer/unLogin/registerCustomer";
+    /*发送验证码不需要图片验证*/
+    String GET_CODE2= BASE_URL + "/customer/unLogin/sendCaptcha";
+    /*修改银行卡状态*/
+    String MODIFY_BANK_CARD_STATUS = BASE_URL  + "/easyplay/bankcard/modifyBankCard";
 }

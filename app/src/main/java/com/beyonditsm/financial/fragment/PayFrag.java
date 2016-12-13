@@ -9,13 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.entity.TiXianBean;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
+import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshListView;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -42,7 +42,10 @@ public class PayFrag extends BaseFragment {
 
     private PayAdapter adapter;
     private  List<TiXianBean> list;
-
+    private List<TiXianBean> datas=new ArrayList<>();
+    private int page=1;
+    private int rows=10;
+    private String userId;
     @Override
     public View initView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.frg_pay, null);
@@ -58,8 +61,7 @@ public class PayFrag extends BaseFragment {
         plv_jl.getRefreshableView().setVerticalScrollBarEnabled(false);
         plv_jl.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
         plv_jl.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
-
-        loadingView.loadComplete();
+        getTiXianHistory(userId,page,rows);
 
     }
 
@@ -100,23 +102,36 @@ public class PayFrag extends BaseFragment {
             } else {
                 viewHolder=new ViewHolder();
                 convertView = View.inflate(context, R.layout.item_frg_pay, null);
-                viewHolder.iv_statu= (ImageView) convertView.findViewById(R.id.iv_statu);
+                viewHolder.iv_statu= (TextView) convertView.findViewById(R.id.iv_statu);
                 viewHolder.tv_sj= (TextView) convertView.findViewById(R.id.tv_sj);
                 viewHolder.tv_bh= (TextView) convertView.findViewById(R.id.tv_tx);
                 viewHolder.tv_je= (TextView) convertView.findViewById(R.id.tv_je);
                 convertView.setTag(viewHolder);
             }
             if (!TextUtils.isEmpty(txList.get(position).getCreateTime())){
-                viewHolder.tv_sj.setText(txList.get(position).getAmount());
+                viewHolder.tv_sj.setText(FinancialUtil.timeToDate(Long.parseLong(txList.get(position).getCreateTime())));
             }
             if (!TextUtils.isEmpty(txList.get(position).getAmount())){
-                viewHolder.tv_je.setText(txList.get(position).getAmount());
+                viewHolder.tv_je.setText(txList.get(position).getAmount()+"元");
             }
             if (!TextUtils.isEmpty(txList.get(position).getEnchashmentOrderNo())){
                 viewHolder.tv_bh.setText(txList.get(position).getEnchashmentOrderNo());
             }
 //            提现状态判定
-//            if (!TextUtils.isEmpty(txList.get(position).get))
+            if (TextUtils.equals(txList.get(position).getStatus(),1+"")){
+                viewHolder.iv_statu.setText("审批中");
+                viewHolder.iv_statu.setTextColor(Color.parseColor("#F4B11B"));
+            }else if (TextUtils.equals(txList.get(position).getStatus(),2+"")){
+                viewHolder.iv_statu.setText("已通过");
+                viewHolder.iv_statu.setTextColor(Color.parseColor("#53C84F"));
+
+            }else if (TextUtils.equals(txList.get(position).getStatus(),3+"")){
+                viewHolder.iv_statu.setText("已驳回");
+                viewHolder.iv_statu.setTextColor(Color.parseColor("#FF6600"));
+            }else if (TextUtils.equals(txList.get(position).getStatus(),4+"")){
+                viewHolder.iv_statu.setText("已完成");
+                viewHolder.iv_statu.setTextColor(Color.parseColor("#53C84F"));
+            }
             return convertView;
         }
 
@@ -127,27 +142,48 @@ public class PayFrag extends BaseFragment {
 
         class ViewHolder {
             TextView tv_bh;
-            ImageView iv_statu;
+            TextView iv_statu;
             TextView tv_sj;
             TextView tv_je;
         }
     }
-        private void getTiXianHistory(String uid,int page,int rows){
+
+    /**
+     * 提现记录
+     * @param uid
+     * @param page
+     * @param rows
+     */
+        private void getTiXianHistory(String uid, final int page, int rows){
             list=new ArrayList<>();
             RequestManager.getWalletManager().gettixianHistory(uid, page, rows, new RequestManager.CallBack() {
                 @Override
                 public void onSucess(String result) throws JSONException {
+                    plv_jl.onPullUpRefreshComplete();
+                    plv_jl.onPullDownRefreshComplete();
+                    loadingView.loadComplete();
                     JSONObject jsonObject = new JSONObject(result);
                     JSONArray data = jsonObject.getJSONArray("data");
                     Gson gson = new Gson();
                     list = gson.fromJson(data.toString(), new TypeToken<List<TiXianBean>>() {
                     }.getType());
-                    if (list!=null&&list.size()>0){
+                    if (list.size()==0){
+                        if (page==1){
+                            loadingView.noContent();
+                        }else {
+                            plv_jl.setHasMoreData(false);
+                        }
+                    }
+                    if (page==1){
+                        datas.clear();
+                    }
+                    datas.addAll(list);
+                    if (datas!=null&&datas.size()>0){
                         if (adapter==null){
-                            adapter = new PayAdapter(getActivity(),list);
+                            adapter = new PayAdapter(getActivity(),datas);
                             plv_jl.getRefreshableView().setAdapter(adapter);
                         }else {
-                            adapter.update(list);
+                            adapter.update(datas);
                         }
 
                     }
@@ -155,7 +191,10 @@ public class PayFrag extends BaseFragment {
 
                 @Override
                 public void onError(int status, String msg) {
-
+                    plv_jl.onPullUpRefreshComplete();
+                    plv_jl.onPullDownRefreshComplete();
+                    loadingView.loadError();
+                    MyToastUtils.showLongToast(getActivity(),msg);
                 }
             });
         }

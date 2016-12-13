@@ -15,12 +15,11 @@ import android.widget.Toast;
 import com.beyonditsm.financial.AppManager;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
-import com.beyonditsm.financial.entity.OrderBean;
-import com.beyonditsm.financial.entity.QueryBankCardEntity;
+import com.beyonditsm.financial.entity.BindCardBean;
+import com.beyonditsm.financial.entity.QueRenOrderBean;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
-import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.widget.DialogChooseProvince;
@@ -64,12 +63,12 @@ public class CashExchange extends BaseActivity {
     @ViewInject(R.id.tv_minPayment)
     private TextView tvMinPayment;//最小兑换金额
 
-    private OrderBean orderBean;//订单实体
+    private QueRenOrderBean orderBean;//订单实体
     private UserEntity user;//用户实体
 
     private double MIN_MARK = 0.0;
     private double MAX_MARK = 0.0;
-    private List<QueryBankCardEntity> bindList;
+    private List<BindCardBean> bindList;
     private int minPayment;
 
     @Override
@@ -227,22 +226,23 @@ public class CashExchange extends BaseActivity {
                 if (isValidate()) {
                     setOrderBean();
                     if (!TextUtils.isEmpty(zjPassword.getText().toString().trim())) {
-                        RequestManager.getWalletManager().submitCashTOrder(orderBean, zjPassword.getText().toString(), new RequestManager.CallBack() {
+                        orderBean.setFundPassword(zjPassword.getText().toString().trim());
+                        RequestManager.getWalletManager().comitOrder(orderBean, new RequestManager.CallBack() {
                             @Override
                             public void onSucess(String result) throws JSONException {
                                 Intent intent = new Intent(CashExchange.this, OrderCommitSusAct.class);
                                 startActivity(intent);
-                                MyLogUtils.degug(orderBean.getUserName() + ">" + orderBean.getBankName() + ">" + orderBean.getBankCardNo()
-                                        + ">" + orderBean.getCashOutAmount() + ">" + zjPassword.getText().toString() + ">" + orderBean.getDepositBank());
+//                                MyLogUtils.degug(orderBean.getUserName() + ">" + orderBean.getBankName() + ">" + orderBean.getBankCardNo()
+//                                        + ">" + orderBean.getCashOutAmount() + ">" + zjPassword.getText().toString() + ">" + orderBean.getDepositBank());
 
                             }
 
                             @Override
                             public void onError(int status, String msg) {
-                                Toast.makeText(CashExchange.this, msg, Toast.LENGTH_SHORT).show();
-                                MyLogUtils.degug(msg);
-                                MyLogUtils.degug(orderBean.getUserName() + ">" + orderBean.getBankName() + ">" + orderBean.getBankCardNo()
-                                        + ">" + orderBean.getCashOutAmount() + ">" + zjPassword.getText().toString() + ">" + orderBean.getDepositBank());
+//                                Toast.makeText(CashExchange.this, msg, Toast.LENGTH_SHORT).show();
+//                                MyLogUtils.degug(msg);
+//                                MyLogUtils.degug(orderBean.getUserName() + ">" + orderBean.getBankName() + ">" + orderBean.getBankCardNo()
+//                                        + ">" + orderBean.getCashOutAmount() + ">" + zjPassword.getText().toString() + ">" + orderBean.getDepositBank());
                             }
                         });
                     } else {
@@ -270,23 +270,24 @@ public class CashExchange extends BaseActivity {
     }
 
     private void setOrderBean() {
-        orderBean = new OrderBean();
+        orderBean = new QueRenOrderBean();
 
         if (!TextUtils.isEmpty(name.getText().toString())) {
-            orderBean.setUserName(name.getText().toString());
+            orderBean.setName(name.getText().toString());
         }
         if (!TextUtils.isEmpty(bankName.getText().toString())) {
             orderBean.setBankName(bankName.getText().toString());
         }
         if (!TextUtils.isEmpty(bankCount.getText().toString())) {
-            orderBean.setBankCardNo(bankCount.getText().toString());
+            orderBean.setBankCard(bankCount.getText().toString());
         }
         if (!TextUtils.isEmpty(depositBank.getText().toString())) {
-            orderBean.setDepositBank(depositBank.getText().toString());
+            orderBean.setBankBranchName(depositBank.getText().toString());
         }
         if (!TextUtils.isEmpty(tvgetxianjin.getText().toString())) {
-            orderBean.setCashOutAmount(Double.parseDouble(tvgetxianjin.getText().toString()));
+            orderBean.setAmount(tvgetxianjin.getText().toString());
         }
+        orderBean.setType(1+"");
     }
 
     private boolean isValidate() {
@@ -340,12 +341,12 @@ public class CashExchange extends BaseActivity {
                 JSONObject object = new JSONObject(result);
                 JSONArray data = object.getJSONArray("data");
                 Gson gson = new Gson();
-                bindList = gson.fromJson(data.toString(), new TypeToken<List<QueryBankCardEntity>>() {
+                bindList = gson.fromJson(data.toString(), new TypeToken<List<BindCardBean>>() {
                 }.getType());
 
                 if (bindList != null) {
                     for (int i = 0; i < bindList.size(); i++) {
-                        int status = bindList.get(i).getStatus();
+                        int status = Integer.parseInt(bindList.get(i).getStatus());
                         if (status == 2) {
                             if (!TextUtils.isEmpty(bindList.get(i).getBankName())) {
                                 bankName.setText(bindList.get(i).getBankName());

@@ -21,14 +21,13 @@
             android:layout_centerVertical="true"
             android:text="3423455234235234234235234"
             style="@style/tv_third_style"/>
-        <ImageView
+        <TextView
             android:id="@+id/iv_statu"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@mipmap/yijshenhe2x"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"/>
 

@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
-import com.beyonditsm.financial.entity.BalanceEntity;
+import com.beyonditsm.financial.entity.BalanceMxEntity;
 import com.beyonditsm.financial.util.FinancialUtil;
 
 import java.text.DecimalFormat;
@@ -20,15 +20,15 @@ import java.util.List;
  * Created by Administrator on 2016/1/14
  */
 public class RebateAdapter extends BaseAdapter {
-    private List<BalanceEntity.RowsEntity> list;
+    private List<BalanceMxEntity> list;
     private final LayoutInflater inflater;
 
-    public RebateAdapter(Context context, List<BalanceEntity.RowsEntity> list) {
+    public RebateAdapter(Context context, List<BalanceMxEntity> list) {
         this.list = list;
         inflater = LayoutInflater.from(context);
     }
 
-    public void setDatas(List<BalanceEntity.RowsEntity> list) {
+    public void setDatas(List<BalanceMxEntity> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -63,17 +63,17 @@ public class RebateAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        BalanceEntity.RowsEntity rowsEntity = list.get(position);
-        holder.name.setText(rowsEntity.getBusinessSubject());
-        holder.time.setText(FinancialUtil.timeToDate(rowsEntity.getCreateTime()));
-        holder.balance.setText("余额：" + rowsEntity.getRemainingSum().intValue());
+//        BalanceEntity.RowsEntity rowsEntity = list.get(position);
+        holder.name.setText(list.get(position).getRemark());
+        holder.time.setText(FinancialUtil.timeToDate(Long.parseLong(list.get(position).getCreateTime())));
+        holder.balance.setText("余额：" + list.get(position).getBalance());
         DecimalFormat df = new DecimalFormat("##.00");
         try {
-            if (Double.valueOf(rowsEntity.getDeductionAmount()) > 0) {
+            if (Double.valueOf(list.get(position).getAmount()) > 0) {
 //            holder.pay.setText("+"+rowsEntity.getDeductionAmount());
-                holder.pay.setText("+" + df.format(df.parse(rowsEntity.getDeductionAmount())));
+                holder.pay.setText("+" + df.format(df.parse(list.get(position).getAmount())));
             } else {
-                holder.pay.setText(df.format(df.parse(rowsEntity.getDeductionAmount())));
+                holder.pay.setText(df.format(df.parse(list.get(position).getAmount())));
             }
         } catch (ParseException e) {
             e.printStackTrace();

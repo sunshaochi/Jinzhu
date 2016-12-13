@@ -110,7 +110,18 @@ public class FinancialUtil {
         return format.format(new Date(time));
 
     }
+    /**
+     * 时间戳转化成时间
+     *
+     * @param time
+     * @return
+     */
+    @SuppressLint("SimpleDateFormat")
+    public static String timeToDate2(long time) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        return format.format(new Date(time));
 
+    }
     /**
      * 获得手机唯一IMEI
      */

@@ -173,7 +173,7 @@ public class RegisterAct extends BaseActivity {
     }
 
     private void toRegister(final UserEntity ue, String phoneNumber, String captcha) {
-        RequestManager.getCommManager().toRegister(ue, phoneNumber, captcha, new RequestManager.CallBack() {
+        RequestManager.getCommManager().toRegister2(ue, phoneNumber, captcha, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
                 try {
