@@ -7,7 +7,6 @@ import com.beyonditsm.financial.entity.ChangePwdEntity;
 import com.beyonditsm.financial.entity.CreditOfflineUploadEntity;
 import com.beyonditsm.financial.entity.HotProduct;
 import com.beyonditsm.financial.entity.MyCreditEntity;
-import com.beyonditsm.financial.entity.OrderBean;
 import com.beyonditsm.financial.entity.Orederinfo;
 import com.beyonditsm.financial.entity.SumLoadEntity;
 import com.beyonditsm.financial.entity.UserEntity;
@@ -322,10 +321,12 @@ public class CommManager extends RequestManager {
      * 获取上传资料列表
      *
      * @param orderId 订单id
+     * flowType 1-必填流程，2-增信流程
      */
     public void getUpLoadList(String orderId, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
         params.put("orderId", orderId);
+        params.put("flowType", "1");
         doPost(IFinancialUrl.UPLOAD_LIST_URL, params, callBack);
     }
 
@@ -371,11 +372,13 @@ public class CommManager extends RequestManager {
      * 查看是否需要增信资料
      *
      * @param orderId  订单id
+     * flowId 1-查询普通申贷流程  2-查询增信流程
      * @param callBack 回调
      */
     public void findOrderFlow(String orderId, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
         params.put("orderId", orderId);
+        params.put("flowId", "2");
         doPost(IFinancialUrl.FIND_EXTRA_FlOW_URL, params, callBack);
     }
 
@@ -527,7 +530,7 @@ public class CommManager extends RequestManager {
      */
     public void getBanner(CallBack callBack) {
         Map<String, String> params = new HashMap<>();
-        doPost(IFinancialUrl.GET_BANNER, params, callBack);
+        doGet(IFinancialUrl.GET_BANNER,  callBack);
     }
 
     /**

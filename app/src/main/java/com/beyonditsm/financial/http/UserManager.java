@@ -3,7 +3,6 @@ package com.beyonditsm.financial.http;
 import android.text.TextUtils;
 
 import com.beyonditsm.financial.MyApplication;
-import com.beyonditsm.financial.entity.HotProduct;
 import com.beyonditsm.financial.util.SpUtils;
 
 import java.util.HashMap;
@@ -19,7 +18,7 @@ public class UserManager extends RequestManager {
     /**
      * 计算月供
      *
-     * @param callBack  回调
+     * @param callBack 回调
      */
     public void getMonthPay(String repaymentMoney, String rate, String month, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
@@ -32,28 +31,31 @@ public class UserManager extends RequestManager {
     /**
      * 查询热门产品列表
      *
-     * @param hp 热门产品entity
-     * @param callBack  回调
+     * @param page       热门产品entity
+     * @param callBack 回调
      */
-    public void findHotProductList(HotProduct hp, CallBack callBack) {
-        Map<String, String> params = new HashMap<>();
-        params.put("page", hp.getPage() + "");
-        params.put("rows", hp.getRows() + "");
-        if (!TextUtils.isEmpty(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()))){
-            params.put("cityName", SpUtils.getCity(MyApplication.getInstance().getApplicationContext()));
-        }else {
-            params.put("cityName", "全国");
+    public void findHotProductList(String page, String rows, CallBack callBack) {
+
+        String cityName;
+//        Map<String, String> params = new HashMap<>();
+//        params.put("page", hp.getPage() + "");
+//        params.put("rows", hp.getRows() + "");
+        if (!TextUtils.isEmpty(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()))) {
+           cityName = SpUtils.getCity(MyApplication.getInstance().getApplicationContext());
+//            params.put("cityName", SpUtils.getCity(MyApplication.getInstance().getApplicationContext()));
+        } else {
+//            params.put("cityName", "全国");
+        cityName="全国";
         }
 
-        doPost(IFinancialUrl.FIND_HOT_PRODUCT_LIST, params, callBack);
+        doGet(IFinancialUrl.FIND_HOT_PRODUCT_LIST + "?cityName="+cityName+"&page="+page+"&rows="+rows, callBack);
     }
-
 
 
     /**
      * 查看当前登陆人的信息
      *
-     * @param callBack  回调
+     * @param callBack 回调
      */
     public void findUserLoginInfo(CallBack callBack) {
         Map<String, String> params = new HashMap<String, String>();
@@ -67,23 +69,23 @@ public class UserManager extends RequestManager {
         doPost(IFinancialUrl.FIND_ORDER_DEAL_HISTORY, params, callBack);
     }
 
-//    public void findOrderDetailById(String productId, CallBack callBack) {
+    //    public void findOrderDetailById(String productId, CallBack callBack) {
 //        Map<String, String> params = new HashMap<>();
 //        params.put("productId", productId);
 //        doPost(IFinancialUrl.FIND_ORDER_DETAIL, params, callBack);
 //    }
     //通过产品id获取产品详情
-   public void findOrderDetailById(String productId, CallBack callBack) {
+    public void findOrderDetailById(String productId, CallBack callBack) {
 //    Map<String, String> params = new HashMap<>();
 //    params.put("productId", productId);
-    doGet(IFinancialUrl.FIND_ORDER_DETAIL+"?productId="+productId, callBack);
-  }
+        doGet(IFinancialUrl.FIND_ORDER_DETAIL + "?productId=" + productId, callBack);
+    }
 
     /**
      * 更改订单状态
      *
-     * @param orderId 订单id
-     * @param callBack  回调
+     * @param orderId  订单id
+     * @param callBack 回调
      */
     public void updateOrder(String orderId, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
@@ -94,8 +96,8 @@ public class UserManager extends RequestManager {
     /**
      * 取消订单
      *
-     * @param orderId 订单id
-     * @param callBack  回调
+     * @param orderId  订单id
+     * @param callBack 回调
      */
     public void cancelOrder(String orderId, CallBack callBack) {
         Map<String, String> params = new HashMap<>();

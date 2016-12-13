@@ -31,9 +31,9 @@ import com.beyonditsm.financial.adapter.HotNewsAdapter;
 import com.beyonditsm.financial.entity.BannerEntity;
 import com.beyonditsm.financial.entity.HomeHotProductEntity;
 import com.beyonditsm.financial.entity.HotNewsEntity;
-import com.beyonditsm.financial.entity.HotProduct;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserLoginEntity;
+import com.beyonditsm.financial.entity.WalletQuanBean;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
@@ -111,7 +111,6 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
     private Activity mParentActivity;
     public static final String BANNER_NAME = "banner_name";
     public static final String HREF_ADDR = "href_addr";
-
     private List<String> networkImages = new ArrayList<>();
     //    private String[] images = {"http://img2.imgtn.bdimg.com/it/u=3093785514,1341050958&fm=21&gp=0.jpg",
 //    private String[] images = {"http://img2.imgtn.bdimg.com/it/u=3093785514,1341050958&fm=21&gp=0.jpg",
@@ -400,10 +399,10 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
      * @param Page
      */
     private void getHotProductList(final int Page) {
-        HotProduct hp = new HotProduct();
-        hp.setPage(Page);
-        hp.setRows(30);
-        RequestManager.getUserManager().findHotProductList(hp, new RequestManager.CallBack() {
+//        HotProduct hp = new HotProduct();
+//        hp.setPage(Page);
+//        hp.setRows(30);
+        RequestManager.getUserManager().findHotProductList(Page+"",30+"",new RequestManager.CallBack() {
                     @Override
                     public void onSucess(String result) throws JSONException {
                         loadingView.loadComplete();
@@ -678,4 +677,5 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
         });
 
     }
+
 }

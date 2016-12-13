@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
@@ -18,6 +17,7 @@ import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.entity.UserLoginEntity;
+import com.beyonditsm.financial.entity.WalletQuanBean;
 import com.beyonditsm.financial.fragment.MineFragment;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
@@ -26,14 +26,19 @@ import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.CircleImageView;
 import com.beyonditsm.financial.view.LoadingView;
-import com.beyonditsm.financial.widget.ScaleAllImageView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.tandong.sa.json.Gson;
+import com.tandong.sa.json.reflect.TypeToken;
 import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
 import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by wangbin on 16/1/14
@@ -54,6 +59,10 @@ public class MyWalletActivity extends BaseActivity {
     private TextView tvDikouMoney;//抵扣金额
     @ViewInject(R.id.loadingView)
     private LoadingView loadingView;
+    @ViewInject(R.id.tv_xj)
+    private TextView tv_xj;
+    @ViewInject(R.id.dikou)
+    private TextView tv_dikou;
 //    @ViewInject(R.id.ivPaymentsRed)
 //    private ImageView ivPaymentsRedPoint;//收支明细推送红点
 
@@ -71,6 +80,7 @@ public class MyWalletActivity extends BaseActivity {
     private UserEntity user;//用户信息
     private PaymentsRedDisReceiver paymentsRedDisReceiver;
     private PaymentsRedHideReceiver paymentsRedHideReceiver;
+    private List<WalletQuanBean> walletList=new ArrayList<>();
 
     @Override
     public void setLayout() {
@@ -126,6 +136,7 @@ public class MyWalletActivity extends BaseActivity {
                 findServantInfo();
             }
         });
+        getWalletQuan("15216187360");
     }
 
     private void setUserLogin() {
@@ -365,5 +376,48 @@ public class MyWalletActivity extends BaseActivity {
         public void onReceive(Context context, Intent intent) {
 //            ivPaymentsRedPoint.setVisibility(View.GONE);
         }
+    }
+
+    /**
+     * 获取抵用卷
+     * @param uid
+     */
+    private void getWalletQuan(String uid){
+        RequestManager.getWalletManager().getWalletQuan(uid, new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                JSONObject jsonObject = new JSONObject(result);
+                JSONArray data = jsonObject.getJSONArray("data");
+                Gson gson = new Gson();
+                walletList = gson.fromJson(data.toString(), new TypeToken<List<WalletQuanBean>>() {
+                }.getType());
+                if (walletList!=null&&walletList.size()>0){
+                   for (int i=0;i<walletList.size();i++){
+                       WalletQuanBean walletQuanBean = walletList.get(i);
+                       if (TextUtils.equals(walletQuanBean.getType(),1+"")){
+                           if (!TextUtils.isEmpty(walletQuanBean.getBalance())){
+                               tv_xj.setText(walletQuanBean.getBalance());
+                           }else {
+                               tv_xj.setText(0+"");
+                           }
+                       }else if (TextUtils.equals(walletQuanBean.getType(),2+"")){
+                           if (!TextUtils.isEmpty(walletQuanBean.getBalance())){
+                               tv_dikou.setText(walletQuanBean.getBalance());
+                           }else {
+                               tv_dikou.setText(0+"");
+                           }
+                       }
+                   }
+                }else {
+                    tv_xj.setText(0+"");
+                    tv_dikou.setText(0+"");
+                }
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
+            }
+        });
     }
 }

@@ -152,4 +152,28 @@ public class WalletManager extends RequestManager{
         List<NameValuePair> queryParams= new ArrayList<>();
         doPost(IFinancialUrl.QUERY_BANK,queryParams,callBack);
     }
+
+    /***
+     * 获取可用券总额
+     * @param userId
+     */
+    public  void getWalletQuan(String userId ,CallBack callBack){
+        doGet(IFinancialUrl.WALLET_DISPONIBLES_URL+"?uid="+userId,callBack);
+    }
+
+    /**
+     * 获取提现记录
+     * @param userId
+     * @param page
+     * @param rows
+     * @param callBack
+     */
+    public void gettixianHistory(String userId,int page,int rows,CallBack callBack){
+        Map<String,String> params= new HashMap<>();
+        params.put("uid",userId);
+        params.put("page",page+"");
+        params.put("rows",rows+"");
+        doPost(IFinancialUrl.TIXIAN_HISTORY,params,callBack);
+    }
+
 }
