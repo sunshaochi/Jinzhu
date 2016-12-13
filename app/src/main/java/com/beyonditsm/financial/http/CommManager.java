@@ -371,11 +371,13 @@ public class CommManager extends RequestManager {
      * 查看是否需要增信资料
      *
      * @param orderId  订单id
+     * flowId 1-查询普通申贷流程  2-查询增信流程
      * @param callBack 回调
      */
     public void findOrderFlow(String orderId, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
         params.put("orderId", orderId);
+        params.put("flowId", "2");
         doPost(IFinancialUrl.FIND_EXTRA_FlOW_URL, params, callBack);
     }
 
