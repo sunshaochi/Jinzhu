@@ -200,7 +200,7 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
         totalLoanInterest = getIntent().getStringExtra(CreditSpeedDetailAct.TOTALLOANINTEREST);//总利息
         realMonthlyRate = getIntent().getStringExtra(CreditSpeedDetailAct.REALMONTHLYRATE);//最小利率
 
-        propetyTypesList = (List<CreditSpeedEntity.ResideStatusmapBean>) getIntent().getSerializableExtra(SpeedCreditFrag.PROPERTY_TYPES);//居住状况
+        propetyTypesList = (List<CreditSpeedEntity.ResideStatusmapBean>) getIntent().getSerializableExtra("propertyTypeList");//居住状况
         userOrderInfo1 = new UserOrderInfo1();
         initText();
         loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {

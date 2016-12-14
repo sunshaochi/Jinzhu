@@ -201,7 +201,6 @@ public class CreditDetailAct extends BaseActivity {
         assignViews();
         initAnim();
         productInfo = getIntent().getParcelableExtra(PRODUCTINFO);
-
         creditMoney = getIntent().getStringExtra(CREDIT_AMOUNT);
         creditMonth = getIntent().getStringExtra(CREDIT_TIME);
         Double minMone = Double.valueOf(productInfo.getMinVal());

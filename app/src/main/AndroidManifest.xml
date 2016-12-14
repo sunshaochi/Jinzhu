@@ -152,6 +152,9 @@
         <activity
             android:name=".activity.credit.MyCreditDAct"
             android:screenOrientation="portrait" />
+        <!--推荐第一步上面输入框-->
+        <activity android:name=".activity.user.EditorAct"
+            android:screenOrientation="portrait"></activity>
         <!-- 我的推荐 -->
         <activity
             android:name=".activity.user.MyRecommAct"

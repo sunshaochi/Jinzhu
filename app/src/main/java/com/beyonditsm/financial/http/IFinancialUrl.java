@@ -9,10 +9,10 @@ public interface IFinancialUrl {
     /*吕建明*/
 //    String BASE_URL = "http://172.16.6.236:8080";
 //    String BASE_URL = "http://172.16.6.95:8083";
-    String BASE_URL = "http://172.16.5.32:8083";
+//    String BASE_URL = "http://172.16.5.32:8083";
     /*吕东测试*/
 //    String BASE_URL = "http://172.16.5.59";
-//    String BASE_URL ="http://172.16.6.218:8082";
+    String BASE_URL ="http://172.16.6.218:8082";
     /*袁峰测试*/
 //    String BASE_URL = "http://172.16.6.153:8080";
 //    String BASE_URL = "http://172.16.6.228:8080";
@@ -101,9 +101,9 @@ public interface IFinancialUrl {
 
 
     /*得到移动端的产品列表页面，所有查询参数的选项*/
-    String FIND_PRODUCT_SORT_PARA = BASE_URL + "/productApi" + "/unLogin/getProductQueryOptions";
+    String FIND_PRODUCT_SORT_PARA = BASE_URL + "/unLogin/getProductQueryOptions";
     /*通过查询参数获取产品列表页面产品*/
-    String FIND_PRODCUT_BY_PARAM = BASE_URL +"/productApi" + "/unLogin/getProductsFromOffline";
+    String FIND_PRODCUT_BY_PARAM = BASE_URL +"/unLogin/getProductsFromOffline";
 
     /*獲取推薦产品*/
     String RECOMMENDPRODUCTS = BASE_URL +"/productApi" + "/unLogin/getRecommendProducts";
@@ -118,7 +118,7 @@ public interface IFinancialUrl {
     /* 查询订单历史处理流程*/
     String FIND_ORDER_DEAL_HISTORY = BASE_URL + API_VERSION + "/platform/login/findOrderDealHistory.do";
     /* 根据id查看产品详情 */
-    String FIND_ORDER_DETAIL = BASE_URL + "/productApi" + "/unLogin/getProductDetail";
+    String FIND_ORDER_DETAIL = BASE_URL +  "/unLogin/getProductDetail";
 
   /*获取代言人详细*/
     String SERVANT_URL = BASE_URL + API_VERSION + "/servant/login/servantDetail.do";
