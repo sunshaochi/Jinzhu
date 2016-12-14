@@ -109,7 +109,7 @@ public class SpeedCreditAdapter extends BaseAdapter {
                     if (Double.valueOf(minloanperiod) - Double.valueOf(maxloanperiod) == 0) {
                         holder.tvTime.setText(minloanperiod+"年");
                     } else {
-                        holder.tvRate.setText( minloanperiod + "-" + maxloanperiod+"年");
+                        holder.tvTime.setText( minloanperiod + "-" + maxloanperiod+"年");
                     }
                 }
 
@@ -119,7 +119,7 @@ public class SpeedCreditAdapter extends BaseAdapter {
                     if (Double.valueOf(minloanperiod) - Double.valueOf(maxloanperiod) == 0) {
                         holder.tvTime.setText(minloanperiod+"月");
                     } else {
-                        holder.tvRate.setText( minloanperiod + "-" + maxloanperiod+"月");
+                        holder.tvTime.setText( minloanperiod + "-" + maxloanperiod+"月");
                     }
                 }
             }
@@ -128,7 +128,7 @@ public class SpeedCreditAdapter extends BaseAdapter {
                     if (Double.valueOf(minloanperiod) - Double.valueOf(maxloanperiod) == 0) {
                         holder.tvTime.setText(minloanperiod+"周");
                     } else {
-                        holder.tvRate.setText( minloanperiod + "-" + maxloanperiod+"周");
+                        holder.tvTime.setText( minloanperiod + "-" + maxloanperiod+"周");
                     }
                 }
             }
@@ -137,7 +137,7 @@ public class SpeedCreditAdapter extends BaseAdapter {
                     if (Double.valueOf(minloanperiod) - Double.valueOf(maxloanperiod) == 0) {
                         holder.tvTime.setText(minloanperiod+"日");
                     } else {
-                        holder.tvRate.setText( minloanperiod + "-" + maxloanperiod+"日");
+                        holder.tvTime.setText( minloanperiod + "-" + maxloanperiod+"日");
                     }
                 }
             }
@@ -146,7 +146,7 @@ public class SpeedCreditAdapter extends BaseAdapter {
                     if (Double.valueOf(minloanperiod) - Double.valueOf(maxloanperiod) == 0) {
                         holder.tvTime.setText(minloanperiod+"期数");
                     } else {
-                        holder.tvRate.setText( minloanperiod + "-" + maxloanperiod+"期数");
+                        holder.tvTime.setText( minloanperiod + "-" + maxloanperiod+"期数");
                     }
                 }
             }
