@@ -212,7 +212,7 @@ public class CommManager extends RequestManager {
      * @param callBack  回调
      */
     public void submitOrder(Orederinfo orederinfo, final CallBack callBack) {
-       Gson gson=new Gson();
+        Gson gson=new Gson();
         Map<String, String> params = new HashMap<>();
 //       params.put("orderNo", orderBean.getOrderNo());
         params.put("productInfo",gson.toJson(orederinfo.getProductInfo()));
@@ -557,6 +557,18 @@ public class CommManager extends RequestManager {
         Map<String, String> params = new HashMap<>();
         doPost(IFinancialUrl.GET_CREDIT_SPEED, params, callBack);
     }
+
+    /**
+     * 获取急借通详情
+     *
+     * @param callBack
+     */
+    public void getProductDetail(String productId,CallBack callBack) {
+//        Map<String, String> params = new HashMap<>();
+//        params.put("productId",productId);
+        doGet(IFinancialUrl.GETSHORTLOANPRODUCTDETAIL+"?productId="+productId, callBack);
+    }
+
 
     /**
      * 保存急借通第四版块信息接口（城市门店、身份证）

@@ -20,16 +20,23 @@ import com.beyonditsm.financial.activity.speedcredit.CreditSpeedFirstAct;
 import com.beyonditsm.financial.activity.speedcredit.CreditSpeedSecond_1Act;
 import com.beyonditsm.financial.entity.CreditSpeedEntity;
 import com.beyonditsm.financial.entity.LoadUseEntity;
+import com.beyonditsm.financial.entity.ResultData;
+import com.beyonditsm.financial.entity.SpeedCreditEntity;
 import com.beyonditsm.financial.entity.SubmitCreditSpeedEntity;
 import com.beyonditsm.financial.fragment.SpeedCreditFrag;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.GeneralUtils;
+import com.beyonditsm.financial.util.GsonUtils;
+import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.widget.DialogChooseMonth;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.tandong.sa.json.Gson;
+import com.tandong.sa.json.reflect.TypeToken;
 import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
 import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
@@ -111,6 +118,7 @@ public class CreditSpeedDetailAct extends BaseActivity {
     private String purposeId;
     private String minrata;//最低利率
     private Map<String,String>maplist=new HashMap<String, String>();
+    private String productId;
 
     public static final String CREDIT_TYPE = "credit_type";
     public static final String PURPOSE = "purpose";
@@ -153,13 +161,38 @@ public class CreditSpeedDetailAct extends BaseActivity {
 
     @Override
     public void init(Bundle savedInstanceState) {
-        propertyTypeList = (ArrayList<CreditSpeedEntity.ResideStatusmapBean>) getIntent().getSerializableExtra(SpeedCreditFrag.PROPERTY_TYPES);//居住状况
-        jobIdentitysList = (ArrayList<CreditSpeedEntity.debtTypemapBean>) getIntent().getSerializableExtra(SpeedCreditFrag.JOB_IDENTITYS);//借款用途
-        payTypessList = (ArrayList<CreditSpeedEntity.PayTypessBean>) getIntent().getSerializableExtra(SpeedCreditFrag.PAY_TYPE);//还款方式
-        creditSpeedEntity = getIntent().getParcelableExtra(SpeedCreditFrag.CREDIT_SPEED);//实体
+//        propertyTypeList = (ArrayList<CreditSpeedEntity.ResideStatusmapBean>) getIntent().getSerializableExtra(SpeedCreditFrag.PROPERTY_TYPES);//居住状况
+//        jobIdentitysList = (ArrayList<CreditSpeedEntity.debtTypemapBean>) getIntent().getSerializableExtra(SpeedCreditFrag.JOB_IDENTITYS);//借款用途
+//        payTypessList = (ArrayList<CreditSpeedEntity.PayTypessBean>) getIntent().getSerializableExtra(SpeedCreditFrag.PAY_TYPE);//还款方式
+//        creditSpeedEntity = getIntent().getParcelableExtra(SpeedCreditFrag.CREDIT_SPEED);//实体
+        productId=getIntent().getExtras().getString("productId");
+        getinfo(productId);
+    }
 
+    private void setinfo() {
         if (creditSpeedEntity != null) {
             setTopTitle(creditSpeedEntity.getProductName());
+            if (!TextUtils.isEmpty(creditSpeedEntity.getRepaymentTerm().toString())) {//期限下拉选项
+                maplist = creditSpeedEntity.getRepaymentTerm();
+                for (String key : maplist.keySet()) {
+
+                    mList.add(maplist.get(key));//期限下拉选项
+                }
+
+            }
+            if(creditSpeedEntity.getDebtTypemap()!=null&&creditSpeedEntity.getDebtTypemap().size()>0){//借款用途
+                jobIdentitysList= (ArrayList<CreditSpeedEntity.debtTypemapBean>) creditSpeedEntity.getDebtTypemap();
+            }
+
+            if(creditSpeedEntity.getResideStatusmap()!=null&&creditSpeedEntity.getResideStatusmap().size()>0){//居住状态
+                propertyTypeList= (ArrayList<CreditSpeedEntity.ResideStatusmapBean>) creditSpeedEntity.getResideStatusmap();
+            }
+
+            if(creditSpeedEntity.getPaytypemap()!=null&&creditSpeedEntity.getPaytypemap().size()>0){//还款方式
+                payTypessList= (ArrayList<CreditSpeedEntity.PayTypessBean>) creditSpeedEntity.getPaytypemap();
+            }
+
+
             if (!TextUtils.isEmpty(creditSpeedEntity.getMinVal())) {//最小额度
                 etSpeedAmount.setText(creditSpeedEntity.getMinVal());//金额
             }
@@ -240,14 +273,7 @@ public class CreditSpeedDetailAct extends BaseActivity {
                     tvDetail.setText(creditSpeedEntity.getDetailDescribe());//详细说明
                 }
 
-                if (!TextUtils.isEmpty(creditSpeedEntity.getRepaymentTerm().toString())) {//期限下拉选项
-                    maplist = creditSpeedEntity.getRepaymentTerm();
-                    for (String key : maplist.keySet()) {
 
-                        mList.add(maplist.get(key));//期限下拉选项
-                    }
-
-                }
 
             }
             initAnim();
@@ -261,6 +287,27 @@ public class CreditSpeedDetailAct extends BaseActivity {
             etSpeedAmount.addTextChangedListener(textWatcher);
         }
     }
+
+    /**通过id获取详情
+     * @param productid
+     */
+    private void getinfo(String productid) {
+        RequestManager.getCommManager().getProductDetail(productid, new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                ResultData<CreditSpeedEntity> rd= (ResultData<CreditSpeedEntity>) GsonUtils.json(result,CreditSpeedEntity.class);
+                creditSpeedEntity=rd.getData();
+                MyLogUtils.info("hahahahah"+creditSpeedEntity);
+                setinfo();
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
+            }
+        });
+    }
+
     //获取总利息
     private void getTotlerate() {
         if(creditSpeedEntity.getLoanRateType().equals("1")){//月息

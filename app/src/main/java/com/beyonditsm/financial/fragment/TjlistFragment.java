@@ -12,6 +12,7 @@ import android.widget.ListView;
 import com.beyonditsm.financial.ConstantValue;
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
+import com.beyonditsm.financial.activity.credit.CreditSpeedDetailAct;
 import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
 import com.beyonditsm.financial.adapter.CreditAdapter;
 import com.beyonditsm.financial.entity.ProductBean;
@@ -81,11 +82,17 @@ public class TjlistFragment extends BaseFragment {
         plv.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), HomeCreditDetailAct.class);
-                intent.putExtra(HomeCreditDetailAct.PRODUCTINFO, datas.get(position).getProductId());//传递id
-                intent.putExtra(HomeCreditDetailAct.CREDIT_AMOUNT, ConstantValue.CREDIT_MONEY + "");//传递金额
-                intent.putExtra(HomeCreditDetailAct.CREDIT_TIME, ConstantValue.CREDIT_MONTH + "");//传递时间
-                intent.putExtra(HomeCreditDetailAct.CREDIT_NAME, datas.get(position).getProductName());//传递姓名
+                Intent intent = new Intent();
+                if(datas.get(position).getProductType().equals("1")){//极速贷
+                    intent.putExtra("productId",datas.get(position).getProductId());
+                    intent.setClass(getActivity(),CreditSpeedDetailAct.class);
+                }else if(datas.get(position).getProductType().equals("0")){//大额贷
+                    intent.setClass(getActivity(),HomeCreditDetailAct.class);
+                    intent.putExtra(HomeCreditDetailAct.PRODUCTINFO, datas.get(position).getProductId());//传递id
+                    intent.putExtra(HomeCreditDetailAct.CREDIT_AMOUNT, ConstantValue.CREDIT_MONEY + "");//传递金额
+                    intent.putExtra(HomeCreditDetailAct.CREDIT_TIME, ConstantValue.CREDIT_MONTH + "");//传递时间
+                    intent.putExtra(HomeCreditDetailAct.CREDIT_NAME, datas.get(position).getProductName());//传递姓名
+                }
                 getActivity().startActivity(intent);
             }
         });

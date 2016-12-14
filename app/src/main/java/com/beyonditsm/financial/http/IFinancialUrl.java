@@ -13,6 +13,7 @@ public interface IFinancialUrl {
     /*吕东测试*/
 //    String BASE_URL = "http://172.16.5.59";
 //    String BASE_URL ="http://172.16.6.218:8082";
+//    String BASE_URL ="http://172.16.7.196:8083";
     /*袁峰测试*/
 //    String BASE_URL = "http://172.16.6.153:8080";
 //    String BASE_URL = "http://172.16.6.228:8080";
@@ -64,6 +65,8 @@ public interface IFinancialUrl {
 //    String BASE_URL = "http://172.16.5.250:8080";
 //    String BASE_URL="http://172.16.6.216";
     String BASE_URL = "http://172.16.6.228:8080";
+//    String BASE_URL = "http://172.16.6.228:8080";
+
     /**
      * @MARKEY_CODE 渠道号设置，默认渠道设置为空字符串
      */
@@ -224,6 +227,9 @@ public interface IFinancialUrl {
 
     /*急借通列表*/
     String GET_CREDIT_SPEED = BASE_URL + "/unlogin/findProductPager.do";
+
+    /*急借通列表*/
+    String GETSHORTLOANPRODUCTDETAIL = BASE_URL + "/unLogin/getShortLoanProductDetail";
 
     /*借款用途接口*/
     String QUERY_LOAN_USE = BASE_URL + API_VERSION + "/platform/unlogin/queryLoanUse.do";

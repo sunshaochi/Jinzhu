@@ -126,10 +126,10 @@ public class SpeedCreditFrag extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), CreditSpeedDetailAct.class);
                 CreditSpeedEntity creditSpeedEntity = creditSpeedList.get(position);
-                intent.putExtra(JOB_IDENTITYS,(Serializable)creditSpeedEntity.getDebtTypemap());//借款用途
-                intent.putExtra(PROPERTY_TYPES,(Serializable) creditSpeedEntity.getResideStatusmap());//居住状况
-                intent.putExtra(PAY_TYPE,(Serializable) creditSpeedEntity.getPaytypemap());//还款方式
-                intent.putExtra(CREDIT_SPEED, creditSpeedEntity);//急速贷个体
+//                intent.putExtra(JOB_IDENTITYS,(Serializable)creditSpeedEntity.getDebtTypemap());//借款用途
+//                intent.putExtra(PROPERTY_TYPES,(Serializable) creditSpeedEntity.getResideStatusmap());//居住状况
+//                intent.putExtra(PAY_TYPE,(Serializable) creditSpeedEntity.getPaytypemap());//还款方式
+                intent.putExtra("productId", creditSpeedEntity.getProductId());//急速贷个体
                 getActivity().startActivity(intent);
             }
         });

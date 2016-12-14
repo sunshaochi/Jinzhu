@@ -207,9 +207,10 @@ public class HomeCreditDetailAct extends BaseActivity {
     public void init(Bundle savedInstanceState) {
         //强制关闭键盘
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        assignViews();
-        initAnim();
-        getUserLoginInfo();
+        assignViews();//初识化控件
+        initAnim();//初识化动画
+        getUserLoginInfo();//获取用户角色
+
         String creditName = getIntent().getStringExtra(CREDIT_NAME);//产品名字
         setTopTitle(creditName);
         if (!TextUtils.isEmpty(creditName)&&creditName.length() > 14) {
