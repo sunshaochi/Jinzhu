@@ -75,7 +75,7 @@ public interface IFinancialUrl {
     /*登录*/
     String LOGIN_URL = BASE_URL + API_VERSION + "/manager/unLogin/login.do";
     /*注册*/
-    String REGISTER_URL = BASE_URL + API_VERSION + "/manager/unLogin/register.do";
+//    String REGISTER_URL = BASE_URL + API_VERSION + "/manager/unLogin/register.do";
     /*退出*/
     String LOGINOUT_URL = BASE_URL + API_VERSION + "/manager/unLogin/logout.do";
     /*发送验证码*/
@@ -123,7 +123,7 @@ public interface IFinancialUrl {
     String UPDATE_SERVANT_URL = BASE_URL + API_VERSION + "/servant/login/modifyServant.do";
 
     /*根据id号查询订单详情*/
-    String ORDER_DETAIL_URL = BASE_URL + API_VERSION + "/platform/login/orderDetail.do";
+//    String ORDER_DETAIL_URL = BASE_URL + API_VERSION + "/platform/login/orderDetail.do";
     /*上传文件*/
     String UPLOAD_URL = BASE_URL + API_VERSION + "/common/commonAPI/login/upLoadFile.do";
 
@@ -296,4 +296,7 @@ public interface IFinancialUrl {
     String GET_CODE2= BASE_URL + "/customer/unLogin/sendCaptcha";
     /*修改银行卡状态*/
     String MODIFY_BANK_CARD_STATUS = BASE_URL  + "/easyplay/bankcard/modifyBankCard";
+
+    /*根据id号查询订单详情*/
+    String ORDER_DETAIL_URL = BASE_URL + "/ShortLoanOrderDetail.do";
 }

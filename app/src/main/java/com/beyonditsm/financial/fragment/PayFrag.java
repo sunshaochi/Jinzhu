@@ -120,17 +120,17 @@ public class PayFrag extends BaseFragment {
 //            提现状态判定
             if (TextUtils.equals(txList.get(position).getStatus(),1+"")){
                 viewHolder.iv_statu.setText("审批中");
-                viewHolder.iv_statu.setTextColor(Color.parseColor("#F4B11B"));
+                viewHolder.iv_statu.setTextColor(Color.parseColor("#f4b529"));
             }else if (TextUtils.equals(txList.get(position).getStatus(),2+"")){
                 viewHolder.iv_statu.setText("已通过");
-                viewHolder.iv_statu.setTextColor(Color.parseColor("#53C84F"));
+                viewHolder.iv_statu.setTextColor(Color.parseColor("#5ccb5a"));
 
             }else if (TextUtils.equals(txList.get(position).getStatus(),3+"")){
                 viewHolder.iv_statu.setText("已驳回");
-                viewHolder.iv_statu.setTextColor(Color.parseColor("#FF6600"));
+                viewHolder.iv_statu.setTextColor(Color.parseColor("#cfcfcf"));
             }else if (TextUtils.equals(txList.get(position).getStatus(),4+"")){
                 viewHolder.iv_statu.setText("已完成");
-                viewHolder.iv_statu.setTextColor(Color.parseColor("#53C84F"));
+                viewHolder.iv_statu.setTextColor(Color.parseColor("#5ccb5a"));
             }
             return convertView;
         }

@@ -194,6 +194,8 @@ public class OrderDetailInfo implements Parcelable {
         private String creditAmount;//授信额
         private String evaluateLevel;//信贷经理评价等级
 
+
+
         public String getCreditAmount() {
             return creditAmount;
         }

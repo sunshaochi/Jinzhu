@@ -69,7 +69,7 @@ public class CommManager extends RequestManager {
             queryParams.add(new BasicNameValuePair("registerArea", "全国"));
         }
 
-        doPost(IFinancialUrl.REGISTER_URL, queryParams, callBack);
+        doPost(IFinancialUrl.REGISTER_URL2, queryParams, callBack);
     }
 
     /**
@@ -100,7 +100,7 @@ public class CommManager extends RequestManager {
 //            queryParams.add(new BasicNameValuePair("registerArea", "全国"));
 //        }
 
-        doGet(IFinancialUrl.REGISTER_URL2+"?mobilePhone="+phoneNumber+"&userStatus=users"+"&captcha="+captcha+"&signFrom="+IFinancialUrl.MARKET_CODE+"&referCode="+ue.getReferralCode(), callBack);
+        doPost(IFinancialUrl.REGISTER_URL2,queryParams, callBack);
     }
 
     /**
