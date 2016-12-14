@@ -24,6 +24,7 @@ import com.beyonditsm.financial.util.IdcardUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
+import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.widget.DialogChooseAdress;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -327,7 +328,7 @@ public class ReceiveRewardAct extends BaseActivity {
         });
     }
     private void getUserInfo(){
-        RequestManager.getCommManager().findUserInfo(new RequestManager.CallBack() {
+        RequestManager.getCommManager().findUserInfo( SpUtils.getPhonenumber(getApplicationContext()),new RequestManager.CallBack() {
             @SuppressLint("SetTextI18n")
             @SuppressWarnings("unchecked")
             @Override

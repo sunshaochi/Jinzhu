@@ -10,6 +10,21 @@ import android.os.Parcelable;
 public class ChangePwdEntity implements Parcelable{
     private String password;
     private String newPassword;
+    private String userName;
+
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public static Creator<ChangePwdEntity> getCREATOR() {
+        return CREATOR;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -25,6 +40,10 @@ public class ChangePwdEntity implements Parcelable{
     public void setNewPassword(String newPassword) {
         this.newPassword = newPassword;
     }
+
+    public ChangePwdEntity() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -34,21 +53,22 @@ public class ChangePwdEntity implements Parcelable{
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.password);
         dest.writeString(this.newPassword);
-    }
-
-    public ChangePwdEntity() {
+        dest.writeString(this.userName);
     }
 
     protected ChangePwdEntity(Parcel in) {
         this.password = in.readString();
         this.newPassword = in.readString();
+        this.userName = in.readString();
     }
 
     public static final Creator<ChangePwdEntity> CREATOR = new Creator<ChangePwdEntity>() {
+        @Override
         public ChangePwdEntity createFromParcel(Parcel source) {
             return new ChangePwdEntity(source);
         }
 
+        @Override
         public ChangePwdEntity[] newArray(int size) {
             return new ChangePwdEntity[size];
         }

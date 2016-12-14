@@ -215,9 +215,8 @@ public class LoginAct extends BaseActivity{
         RequestManager.getCommManager().toLogin(ue, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
-
+                    SpUtils.setPhonenumber(getApplicationContext(),ue.getUsername());
                 try {
-
                     updateLocation(ParamsUtil.getInstance().getChangedCity());
                     ParamsUtil.getInstance().setReLogin(true);
                     TestinAgent.setUserInfo(ue.getUserName()+"");

@@ -6,10 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,7 +14,6 @@ import android.widget.Toast;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.wallet.MyWalletActivity;
-import com.beyonditsm.financial.entity.MyRecomBean;
 import com.beyonditsm.financial.entity.MyRecommeEntity;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserEntity;
@@ -28,8 +24,7 @@ import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
-import com.beyonditsm.financial.view.pullfreshview.PullToRefreshListView;
-import com.lidroid.xutils.util.LogUtils;
+import com.beyonditsm.financial.util.SpUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -51,8 +46,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -501,7 +494,7 @@ public class MyRecommAct extends BaseActivity {
      */
     private void getUserInfo() {
 
-        RequestManager.getCommManager().findUserInfo(new RequestManager.CallBack() {
+        RequestManager.getCommManager().findUserInfo(SpUtils.getPhonenumber(getApplicationContext()),new RequestManager.CallBack() {
             @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) {

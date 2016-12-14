@@ -40,7 +40,6 @@ import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.CircleImageView;
 import com.beyonditsm.financial.view.MinePageLoadingView;
 import com.beyonditsm.financial.widget.MyAlertDialog;
-import com.beyonditsm.financial.widget.ScaleAllImageView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.eventbus.EventBus;
@@ -331,7 +330,7 @@ public class MineFragment extends BaseFragment {
      */
     private void getUserInfo() {
 
-        RequestManager.getCommManager().findUserInfo(new RequestManager.CallBack() {
+        RequestManager.getCommManager().findUserInfo( SpUtils.getPhonenumber(getContext()),new RequestManager.CallBack() {
             @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) {

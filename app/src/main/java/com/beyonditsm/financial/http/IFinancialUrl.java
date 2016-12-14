@@ -64,18 +64,17 @@ public interface IFinancialUrl {
 //    String BASE_URL = "http://172.16.5.250:8080";
 //    String BASE_URL="http://172.16.6.216";
     String BASE_URL = "http://172.16.6.228:8080";
-
     /**
      * @MARKEY_CODE 渠道号设置，默认渠道设置为空字符串
      */
     String MARKET_CODE = "qudao4";
-//    String API_VERSION = "/easyplay";
-      String API_VERSION = "/file";
+    //    String API_VERSION = "/easyplay";
+    String API_VERSION = "/file";
 
     String BASE_IMAGE_URL = BASE_URL + API_VERSION + "/";
 
     /*登录*/
-    String LOGIN_URL = BASE_URL + API_VERSION + "/manager/unLogin/login.do";
+//    String LOGIN_URL = BASE_URL + API_VERSION + "/manager/unLogin/login.do";
     /*注册*/
 //    String REGISTER_URL = BASE_URL + API_VERSION + "/manager/unLogin/register.do";
     /*退出*/
@@ -83,33 +82,31 @@ public interface IFinancialUrl {
     /*发送验证码*/
 //    String GET_CODE = BASE_URL + API_VERSION + "/manager/unLogin/registerSmsCaptcha.do";
     /*查找用户个人信息*/
-    String USERINFO_URL = BASE_URL + API_VERSION + "/platform/login/findUserSelfInfo.do";
+//    String USERINFO_URL = BASE_URL + API_VERSION + "/platform/login/findUserSelfInfo.do";
     /* 获得当前登陆人的信息*/
     String USER_LOGIN_URL = BASE_URL + API_VERSION + "/manager/login/findUserInfo.do";
     /*修改用户信息*/
     String UPDATE_USER_URL = BASE_URL + API_VERSION + "/platform/login/modifyCustomerInfoByEntity.do";
-    /*修改密码*/
-    String UPDATE_PWD_URL = BASE_URL + API_VERSION + "/manager/login/modifyUserPassword.do";
+//    /*修改密码*/
+//    String UPDATE_PWD_URL = BASE_URL + API_VERSION + "/manager/login/modifyUserPassword.do";
     /*通过产品表相关参数查询产品信息*/
     String FIND_PRODUCT_LIST_URL = BASE_URL + API_VERSION + "/platform/unLogin/productList.do";
     /*我的贷款*/
     String USERCREDIT_URL = BASE_URL + API_VERSION + "/platform/login/findOrderListByUserName.do";
-   /*查询我推荐的好友列表*/
+    /*查询我推荐的好友列表*/
     String FIND_MY_FRIEND_LIST_URL = BASE_URL + API_VERSION + "/platform/login/findMyFriendListByParams.do";
-
 
 
     /*得到移动端的产品列表页面，所有查询参数的选项*/
     String FIND_PRODUCT_SORT_PARA = BASE_URL + "/unLogin/getProductQueryOptions";
     /*通过查询参数获取产品列表页面产品*/
-    String FIND_PRODCUT_BY_PARAM = BASE_URL +"/unLogin/getProductsFromOffline";
+    String FIND_PRODCUT_BY_PARAM = BASE_URL + "/unLogin/getProductsFromOffline";
 
     /*獲取推薦产品*/
-    String RECOMMENDPRODUCTS = BASE_URL +"/productApi" + "/unLogin/getRecommendProducts";
+    String RECOMMENDPRODUCTS = BASE_URL + "/productApi" + "/unLogin/getRecommendProducts";
 
     /*根据code值获取字典列表*/
-    String FINDALLDICTMAP_URL = BASE_URL  + "/unLogin/getAllByDictCode";
-
+    String FINDALLDICTMAP_URL = BASE_URL + "/unLogin/getAllByDictCode";
 
 
     /* 查询热门产品列表*/
@@ -117,9 +114,9 @@ public interface IFinancialUrl {
     /* 查询订单历史处理流程*/
     String FIND_ORDER_DEAL_HISTORY = BASE_URL + API_VERSION + "/platform/login/findOrderDealHistory.do";
     /* 根据id查看产品详情 */
-    String FIND_ORDER_DETAIL = BASE_URL +  "/unLogin/getProductDetail";
+    String FIND_ORDER_DETAIL = BASE_URL + "/unLogin/getProductDetail";
 
-  /*获取代言人详细*/
+    /*获取代言人详细*/
     String SERVANT_URL = BASE_URL + API_VERSION + "/servant/login/servantDetail.do";
     /*修改代言人资料*/
     String UPDATE_SERVANT_URL = BASE_URL + API_VERSION + "/servant/login/modifyServant.do";
@@ -137,8 +134,8 @@ public interface IFinancialUrl {
     /*忘记密码*/
     String FOGET_PWD_URL = BASE_URL + API_VERSION + "/manager/unLogin/forgetPassword.do";
     /*发送验证码找回密码的验证码 */
-    String FPRGET_PWD_SMSCAPTCHA = BASE_URL + API_VERSION + "/manager/unLogin/forgetPasswordSmsCaptcha.do";
-      /*计算月供*/
+//    String FPRGET_PWD_SMSCAPTCHA = BASE_URL + API_VERSION + "/manager/unLogin/forgetPasswordSmsCaptcha.do";
+    /*计算月供*/
     String MONTH_PAY_URL = BASE_URL + API_VERSION + "/common/commonAPI/unLogin/calcMonthlyPayments.do";
 
     /*上传附件*/
@@ -153,11 +150,11 @@ public interface IFinancialUrl {
     /*检查版本更新*/
     String VERSION_URL = BASE_URL + API_VERSION + "/platform/unLogin/checkUpdrage.do";
     /*取消订单*/
-    String CANCEL_ORDER = BASE_URL + API_VERSION + "/platform/login/modifyToCancelOrderById.do";
+//    String CANCEL_ORDER = BASE_URL + API_VERSION + "/platform/login/modifyToCancelOrderById.do";
     /*根据key查找各种特点*/
     String DIC_MAP_URL = BASE_URL + API_VERSION + "/manager/unLogin/findDictMap.do";
     /*个人信息字典*/
-    String FINDALLBYDICTCOD = BASE_URL +"/productApi" + "/manager/unLogin/findDictMap.do";
+    String FINDALLBYDICTCOD = BASE_URL + "/productApi" + "/manager/unLogin/findDictMap.do";
 
 
     /*抵扣券兑现提交订单*/
@@ -205,7 +202,7 @@ public interface IFinancialUrl {
     /*跳过某个流程*/
     String SKIP_FLOW = BASE_URL + API_VERSION + "/platform/login/skipFlow.do";
     //    /*代言人推荐信息获取*/
-    String SERVANT_RMD_INFO = BASE_URL + API_VERSION + "/servant/login/getServantSummary.do";
+//    String SERVANT_RMD_INFO = BASE_URL + API_VERSION + "easyplay/servant/login/getServantSummary.do";
     //    /*代言人推荐信息获取*/
 //    String SERVANT_GET_REWARD = BASE_URL + API_VERSION + "/servant/unlogin/getServantSummary.do";
     /*领取奖励*/
@@ -243,11 +240,11 @@ public interface IFinancialUrl {
     /*极速贷省份接口*/
     String QUERY_ALL_PROVINCE = BASE_URL + "/unlogin/queryAllProvince.do";
     /*极速贷款区域接口*/
-    String QUERY_ALL_AREA = BASE_URL +  "/unlogin/queryAllArea.do";
+    String QUERY_ALL_AREA = BASE_URL + "/unlogin/queryAllArea.do";
     /*极速贷款城市接口*/
     String QUERY_ALL_CITY = BASE_URL + "/unlogin/queryAllCity.do";
     /*保存基本信息*/
-    String SAVE_ESSENTIAL_INFO = BASE_URL +  "/saveUserOrderInfo1.do";
+    String SAVE_ESSENTIAL_INFO = BASE_URL + "/saveUserOrderInfo1.do";
     /*极速度贷保存资质信息*/
     String SAVE_QUALIFICATIONS_INFO = BASE_URL + "/saveUserOrderInfo2.do";
 
@@ -256,51 +253,65 @@ public interface IFinancialUrl {
     /*上传急借通第四板块信息接口*/
     String SAVE_USER_ORDER_INFO4 = BASE_URL + "/saveUserOrderInfo4.do";
     /*通过城市查询门店*/
-    String QUERY_VENDOR_BY_CITY = BASE_URL +"/unlogin/queryVendorByCity.do";
+    String QUERY_VENDOR_BY_CITY = BASE_URL + "/unlogin/queryVendorByCity.do";
     /*亲属关系接口*/
     String RELATION = BASE_URL + API_VERSION + "/platform/unlogin/Relation.do";
     /*上传急借通第三板块信息接口*/
-    String SAVE_USER_ORDER_INFO3 = BASE_URL +  "/saveUserOrderInfo3.do";
+    String SAVE_USER_ORDER_INFO3 = BASE_URL + "/saveUserOrderInfo3.do";
     /*个人信息查询省*/
-    String QUERY_PROVINCE = BASE_URL +  "/unLogin/getPrivinces";
+    String QUERY_PROVINCE = BASE_URL + "/unLogin/getPrivinces";
     /*个人信息查询市*/
-    String QUERY_CITY = BASE_URL +  "/unLogin/getCitys";
+    String QUERY_CITY = BASE_URL + "/unLogin/getCitys";
     /*个人信息查询区县*/
-    String QUERY_DISTRICT = BASE_URL  + "/unLogin/getRegions";
+    String QUERY_DISTRICT = BASE_URL + "/unLogin/getRegions";
     /*极速贷贷款详情接口*/
     String SHORT_LOAN_ORDER_DETAIL = BASE_URL + API_VERSION + "/platform/login/ShortLoanOrderDetail.do";
     /*急速贷推送第三方接口*/
 //    String APPLY_SHORT_LOAN_ORDER = BASE_URL +API_VERSION + "/platform/login/applyShortLoanOrder.do";
 
     //获取提现记录
-    String TIXIAN_HISTORY=BASE_URL+"/easyplay/welfare/selectERsForReception";
+    String TIXIAN_HISTORY = BASE_URL + "/easyplay/welfare/selectERsForReception";
     //获取可用券总额
-    String WALLET_DISPONIBLES_URL=BASE_URL+"/easyplay/welfare/selectCouponSummaryByUid";
+    String WALLET_DISPONIBLES_URL = BASE_URL + "/easyplay/welfare/selectCouponSummaryByUid";
     //获取现金券列表
-    String CASH_HISTORY2=BASE_URL+"/easyplay/welfare/selectCRForReception";
+    String CASH_HISTORY2 = BASE_URL + "/easyplay/welfare/selectCRForReception";
     //获取贷款产品
-    String GET_CREDIT_PRODUCT=BASE_URL+"/easyplay/welfare/selOrderNoListByUid";
+    String GET_CREDIT_PRODUCT = BASE_URL + "/easyplay/welfare/selOrderNoListByUid";
     //确认订单
-    String QUEREN_ORDER_URL=BASE_URL+"/easyplay/welfare/insertEnchashment";
+    String QUEREN_ORDER_URL = BASE_URL + "/easyplay/welfare/insertEnchashment";
 
     /*获取用户绑定的银行卡*/
     String QUERY_BANK_CARD2 = BASE_URL + "/easyplay/bankcard/queryBankCard";
     /*获取支持的银行列表*/
     String QUERY_BANK2 = BASE_URL + "/easyplay/bankcard/queryBank.do";
     /*设置资金密码*/
-    String SET_PWD_URL2 = BASE_URL  + "/wallet/login/setFundPassword.do";
+    String SET_PWD_URL2 = BASE_URL + "/wallet/login/setFundPassword.do";
     /*添加银行卡*/
-    String ADD_BANK_CARD2 = BASE_URL  + "/wallet/login/addBankCard.do";
+    String ADD_BANK_CARD2 = BASE_URL + "/wallet/login/addBankCard.do";
 
     /*注册*/
     String REGISTER_URL2 = BASE_URL + "/customer/unLogin/registerCustomer";
     /*发送验证码不需要图片验证*/
-    String GET_CODE2= BASE_URL + "/customer/unLogin/sendCaptcha";
+    String GET_CODE2 = BASE_URL + "/customer/unLogin/sendCaptcha";
     /*修改银行卡状态*/
-    String MODIFY_BANK_CARD_STATUS = BASE_URL  + "/easyplay/bankcard/modifyBankCard";
+    String MODIFY_BANK_CARD_STATUS = BASE_URL + "/easyplay/bankcard/modifyBankCard";
 
     /*根据id号查询订单详情*/
     String ORDER_DETAIL_URL = BASE_URL + "/ShortLoanOrderDetail.do";
-        /*急速贷推送第三方接口*/
-    String APPLY_SHORT_LOAN_ORDER = BASE_URL  + "/applyShortLoanOrder.do";
+    /*急速贷推送第三方接口*/
+    String APPLY_SHORT_LOAN_ORDER = BASE_URL + "/applyShortLoanOrder.do";
+
+    /*登录*/
+    String LOGIN_URL = BASE_URL + "/userlogin/unLogin/login";
+    /*取消订单*/
+    String CANCEL_ORDER = BASE_URL  + "/order/updateOrderStatus";
+    //    /*代言人推荐信息获取*/
+    String SERVANT_RMD_INFO = BASE_URL+ "easyplay/servant/login/getServantSummary.do";
+    /*查找用户个人信息*/
+    String USERINFO_URL = BASE_URL  + "/customer/getAccountInfo";
+    /*修改密码*/
+    String UPDATE_PWD_URL = BASE_URL + "/customer/unLogin/modifyUserPassword";
+    /*发送验证码找回密码的验证码 */
+    String FPRGET_PWD_SMSCAPTCHA = BASE_URL + "/customer/unLogin/forgetPassword";
+
 }

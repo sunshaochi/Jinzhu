@@ -31,7 +31,7 @@ public class SpUtils {
     private static final String ISRECEIVE = "is_receive";
     private static final String GETPERMISSION = "get_permission";
     private static final String CITY = "user_city"; //定位城市
-
+    private static  final String PHONENUMBER="phoneNum";
     public SpUtils() {
 
     }
@@ -70,6 +70,9 @@ public class SpUtils {
         return context.getSharedPreferences(ROLE_NAME, Context.MODE_PRIVATE);
     }
 
+    public static SharedPreferences getPhoneNumSp(Context context){
+        return context.getSharedPreferences(PHONENUMBER,Context.MODE_PRIVATE);
+    }
     /**
      * 定位的城市名称
      * @param context
@@ -81,6 +84,18 @@ public class SpUtils {
 
     public static String getCity(Context context) {
         return getCitySp(context).getString(CITY, "");
+    }
+
+    /**
+     * 获取手机号码
+     * @param context
+     * @param phone
+     */
+    public static void setPhonenumber(Context context,String phone){
+        getPhoneNumSp(context).edit().putString(PHONENUMBER,phone).commit();
+    }
+    public static String getPhonenumber(Context context){
+        return getPhoneNumSp(context).getString(PHONENUMBER,"");
     }
     /**
      * 是否第一次进入app
