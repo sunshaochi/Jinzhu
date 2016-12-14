@@ -41,7 +41,7 @@
     android:gravity="center"
     android:textColor="#FF6600"
     android:textSize="17sp"
-    android:text="1000"
+    android:text=""
     android:layout_width="wrap_content"
     android:layout_height="match_parent" />
 
@@ -63,7 +63,7 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:gravity="center_vertical"
-    android:text="贷款金额"
+    android:text="贷款期限"
     android:textColor="#666666"
     android:textSize="13sp" />
     <TextView
@@ -75,7 +75,7 @@
     android:gravity="center"
     android:textColor="#FF6600"
     android:textSize="17sp"
-    android:text="2个月"
+    android:text=""
     android:layout_width="wrap_content"
     android:layout_height="match_parent" />
     </RelativeLayout>
@@ -114,7 +114,7 @@
     android:drawableRight="@mipmap/ico_arrow_no"
     style="@style/com_textnots"
     android:id="@+id/tv_diqu"
-    android:text="湖北省武汉市" />
+    android:text="" />
     </RelativeLayout>
 
     <View
@@ -134,7 +134,7 @@
     android:drawableRight="@mipmap/ico_arrow_no"
     style="@style/com_textnots"
     android:id="@+id/tv_xueli"
-    android:text="本科" />
+    android:text="" />
 
     </RelativeLayout>
 
@@ -155,7 +155,7 @@
     android:drawableRight="@mipmap/ico_arrow_no"
     style="@style/com_textnots"
     android:id="@+id/tv_huji"
-    android:text="湖北省武汉市" />
+    android:text="" />
 
     </RelativeLayout>
 
@@ -176,7 +176,7 @@
     android:drawableRight="@mipmap/ico_arrow_no"
     style="@style/com_textnots"
     android:id="@+id/tv_xyjl"
-    android:text="良好" />
+    android:text="" />
 
     </RelativeLayout>
 
@@ -197,7 +197,7 @@
     android:drawableRight="@mipmap/ico_arrow_no"
     style="@style/com_textnots"
     android:id="@+id/tv_zhiwei"
-    android:text="受薪人员" />
+    android:text="" />
     </RelativeLayout>
     <View
     style="@style/view_line"
@@ -215,7 +215,7 @@
     android:textSize="17sp"
     style="@style/com_textnots"
     android:id="@+id/tv_nianji"
-    android:text="20"
+    android:text=""
     android:layout_alignParentTop="true"
     android:layout_alignParentRight="true"
     android:layout_alignParentEnd="true"
@@ -240,7 +240,7 @@
     android:textSize="17sp"
     style="@style/com_textnots"
     android:id="@+id/tv_zhucesc"
-    android:text="3个月" />
+    android:text="" />
 
 
     </RelativeLayout>
@@ -279,7 +279,7 @@
     android:drawableRight="@mipmap/ico_arrow_no"
     style="@style/com_textnots"
     android:id="@+id/tv_cc"
-    android:text="1" />
+    android:text="" />
 
     </RelativeLayout>
 
@@ -300,7 +300,7 @@
     android:drawableRight="@mipmap/ico_arrow_no"
     style="@style/com_textnots"
     android:id="@+id/tv_fc"
-    android:text="1" />
+    android:text="" />
     </RelativeLayout>
 
     <View
@@ -322,7 +322,7 @@
     android:drawableRight="@mipmap/ico_arrow_no"
     style="@style/com_textnots"
     android:id="@+id/tv_dfgzje"
-    android:text="1000" />
+    android:text="" />
     </RelativeLayout>
 
     <View
@@ -344,7 +344,7 @@
     android:drawableRight="@mipmap/ico_arrow_no"
     style="@style/com_textnots"
     android:id="@+id/tv_bd"
-    android:text="1"
+    android:text=""
     android:layout_alignParentTop="true"
     android:layout_alignParentRight="true"
     android:layout_alignParentEnd="true" />
@@ -368,7 +368,7 @@
     android:drawableRight="@mipmap/ico_arrow_no"
     style="@style/com_textnots"
     android:id="@+id/tv_qtzc"
-    android:text="1" />
+    android:text="" />
 
     </RelativeLayout>
     <View
@@ -387,7 +387,7 @@
     android:layout_marginRight="25dp"
     style="@style/com_textnots"
     android:id="@+id/tv_cbsc"
-    android:text="5个月" />
+    android:text="" />
 
     </RelativeLayout>
 

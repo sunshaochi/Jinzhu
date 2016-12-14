@@ -28,9 +28,9 @@ public class MangManger extends RequestManager {
      * @param
      * @param callBack  回调
      */
-    public void findTjProductList(String cityId,String creditMoney,String creditTime,String eduLevel,String domicile ,String creditStatusKey,String jobIdentityKey,String age,String licenseTimeLength,String carStatusKey,String propertyTypeKey,String salary,String guaranteeSlip,String otherAssets,String fundTimeLength,int page,int rows,CallBack callBack) {
+    public void findTjProductList(String cityId,String creditMoney,String creditTime,String eduLevel,String domicile ,String creditStatusKey,String jobIdentityKey,String age,String licenseTimeLength,String carStatusKey,String propertyTypeKey,String salary,String guaranteeSlip,String otherAssets,String fundTimeLength,String propertyName,int page,int rows,CallBack callBack) {
 
-        doGet(IFinancialUrl.RECOMMENDPRODUCTS  + "?cityId=" + cityId + "&creditMoney="+creditMoney+"&creditTime="+creditTime+"&eduLevel=" + eduLevel + "&domicile=" + domicile + "&creditStatusKey=" + creditStatusKey + "&jobIdentityKey=" + jobIdentityKey+"&age="+age+"&licenseTimeLength="+licenseTimeLength+"&carStatusKey="+carStatusKey+"&propertyTypeKey"+propertyTypeKey+"&salary="+salary+"&guaranteeSlip="+guaranteeSlip+"&otherAssets="+otherAssets+"&fundTimeLength="+fundTimeLength+"&page="+page+"&rows="+rows, callBack);
+        doGet(IFinancialUrl.RECOMMENDPRODUCTS  + "?cityId=" + cityId + "&creditMoney="+creditMoney+"&creditTime="+creditTime+"&eduLevel=" + eduLevel + "&domicile=" + domicile + "&creditStatusKey=" + creditStatusKey + "&jobIdentityKey=" + jobIdentityKey+"&age="+age+"&licenseTimeLength="+licenseTimeLength+"&carStatusKey="+carStatusKey+"&propertyTypeKey="+propertyTypeKey+"&salary="+salary+"&guaranteeSlip="+guaranteeSlip+"&otherAssets="+otherAssets+"&fundTimeLength="+fundTimeLength+"&propertyName="+propertyName+"&page="+page+"&rows="+rows, callBack);
     }
 
 

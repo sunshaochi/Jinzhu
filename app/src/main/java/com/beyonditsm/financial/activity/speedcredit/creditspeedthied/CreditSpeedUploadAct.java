@@ -73,7 +73,8 @@ public class CreditSpeedUploadAct extends BaseActivity {
         Intent intent = getIntent();
         dialog = new FinalLoadDialog(this);
         dialog.setTitle("努力上传中");
-        dialog.setCancelable(false);
+        dialog.setCancelable(false);//后退不取消
+        dialog.setCanceledOnTouchOutside(true);
         File file = new File(Environment.getExternalStorageDirectory(), "upload/cache");
 
         if (!file.exists())

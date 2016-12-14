@@ -397,7 +397,7 @@ public class CreditThirFrag extends BaseFragment {
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-            holder.tvContent.setText(list.get(position).getFlowDisplayNam());//流程展示名
+            holder.tvContent.setText(list.get(position).getDisplayName());//流程展示名
             if ("0".equals(list.get(position).getIsComplete())) {
 //                holder.ivUpload.setImageResource(R.mipmap.cm_btn_more_nor);
                 holder.tvIsLoad.setText("未上传");

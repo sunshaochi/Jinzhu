@@ -17,11 +17,14 @@ import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.speedcredit.creditspeedthied.CreditSpeedThird_2Act;
 import com.beyonditsm.financial.activity.speedcredit.listener.DialogListener;
 import com.beyonditsm.financial.entity.RelationEntity;
+import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserOrderInfo3;
+import com.beyonditsm.financial.entity.ZidianBean;
 import com.beyonditsm.financial.http.CommManager;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.CheckUtil;
 import com.beyonditsm.financial.util.FinancialUtil;
+import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
@@ -158,8 +161,8 @@ public class CreditSpeedSecond_3Act extends BaseActivity {
         setTopTitle("快速判断资质");
         setLeftTv("返回");
         Intent intent = getIntent();
-        orderId = intent.getStringExtra("orderId");
-        queryRelation();
+        orderId = intent.getStringExtra("orderId");//订单id
+        queryRelation();//查询亲属关系
         initText();
 
 
@@ -207,16 +210,16 @@ public class CreditSpeedSecond_3Act extends BaseActivity {
                 public void onClick(int which) {
                     switch (CURRENT_SELECT){
                         case RL_SPEEDMARRIAGE1:
-                            marriage1Relation = relationList.get(which-1).getDictSubId()+"";
+                            marriage1Relation = relationList.get(which-1).getOptionValue()+"";
                             break;
                         case RL_SPEEDMARRIAGE2:
-                            marriage2Relation = relationList.get(which-1).getDictSubId()+"";
+                            marriage2Relation = relationList.get(which-1).getOptionValue()+"";
                             break;
                         case RL_SPEEDCOLLEAGUE:
-                            colleagueRelation = relationList.get(which-1).getDictSubId()+"";
+                            colleagueRelation = relationList.get(which-1).getOptionValue()+"";
                             break;
                         case RL_SPEEDEMERGENT:
-                            mergentRelation = relationList.get(which-1).getDictSubId()+"";
+                            mergentRelation = relationList.get(which-1).getOptionValue()+"";
                             break;
                     }
                 }
@@ -305,14 +308,36 @@ public class CreditSpeedSecond_3Act extends BaseActivity {
 
     /*获取亲属关系*/
     public void queryRelation() {
-        CommManager.getCommManager().queryRelation(new RequestManager.CallBack() {
+//        CommManager.getCommManager().queryRelation(new RequestManager.CallBack() {
+//            @Override
+//            public void onSucess(String result) throws JSONException {
+//                JSONObject jsonObject = new JSONObject(result);
+//                JSONArray data = jsonObject.getJSONArray("data");
+//                Gson gson = new Gson();
+//                relationList = gson.fromJson(data.toString(), new TypeToken<List<RelationEntity>>() {
+//                }.getType());
+//                initDialog();
+//            }
+//
+//            @Override
+//            public void onError(int status, String msg) {
+//
+//            }
+//        });
+        RequestManager.getCommManager().getEducation(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-                JSONObject jsonObject = new JSONObject(result);
-                JSONArray data = jsonObject.getJSONArray("data");
-                Gson gson = new Gson();
-                relationList = gson.fromJson(data.toString(), new TypeToken<List<RelationEntity>>() {
-                }.getType());
+//                JSONObject jsonObject = new JSONObject(result);
+//                JSONArray data = jsonObject.getJSONArray("data");
+//                JSONArray salary=data.getJSONArray(0);
+//                JSONArray salary=data.getJSONArray(0);
+//                Gson gson = new Gson();
+//                eduList = gson.fromJson(data.toString(), new TypeToken<List<RelationEntity>>() {
+//                }.getType());
+                ResultData<ZidianBean> rd= ( ResultData<ZidianBean>) GsonUtils.json(result,ZidianBean.class);
+                ZidianBean zidianBean=rd.getData();
+
+                 relationList=zidianBean.getRelation();//亲属关系
                 initDialog();
             }
 

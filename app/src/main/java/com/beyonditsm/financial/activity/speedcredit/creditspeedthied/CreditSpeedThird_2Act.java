@@ -117,11 +117,12 @@ public class CreditSpeedThird_2Act extends BaseActivity {
     public void init(Bundle savedInstanceState) {
         Intent intent = getIntent();
         orderId = intent.getStringExtra("orderId");
-        getAddress();  //获取门店信息
+        getAddress();  //获取门店信息（省，市）
         refreshUploadState();
     }
 
     private void getAddress() {
+
 
     }
 

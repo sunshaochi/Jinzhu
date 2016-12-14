@@ -27,7 +27,16 @@ public class ProductBean implements Parcelable{
     private  String productLogo;//贷款log
     private String disposableRateMin;//一次性费率最小
     private String disposableRateMax;//一次性费率最大值
+    private String productType;//( 0代表大额带1代表急借通)
 
+
+    public String getProductType() {
+        return productType;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
+    }
 
     public ProductBean() {
     }
@@ -210,6 +219,7 @@ public class ProductBean implements Parcelable{
         dest.writeString(this.productLogo);
         dest.writeString(this.disposableRateMin);
         dest.writeString(this.disposableRateMax);
+        dest.writeString(this.productType);
     }
 
     protected ProductBean(Parcel in) {
@@ -232,6 +242,7 @@ public class ProductBean implements Parcelable{
         this.productLogo = in.readString();
         this.disposableRateMin = in.readString();
         this.disposableRateMax = in.readString();
+        this.productType = in.readString();
     }
 
     public static final Creator<ProductBean> CREATOR = new Creator<ProductBean>() {

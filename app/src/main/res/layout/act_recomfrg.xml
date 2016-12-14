@@ -5,41 +5,30 @@
     android:layout_height="match_parent"
     android:background="@color/bg_color"
     android:orientation="vertical">
+    <RelativeLayout
+        android:background="@color/main_color"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+        <RelativeLayout
+            android:id="@+id/frem_back"
+            android:layout_width="100dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/btn_back" />
+        </RelativeLayout>
+        <TextView
+            android:text="为我推荐"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </RelativeLayout>
 
-    <include layout="@layout/title_act_layout"></include>
-    <!--还没有提交时候布局-->
-
-    <!--&lt;!&ndash;返回时候布局&ndash;&gt;-->
-    <!--<LinearLayout-->
-        <!--android:orientation="vertical"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
-        <!--<include layout="@layout/search_tit" />-->
-
-        <!--<View style="@style/view_line" />-->
-
-        <!--<com.beyonditsm.financial.view.slidebottompanel.SlideBottomPanel-->
-            <!--android:id="@+id/sbp"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--app:sbp_background_layout="@layout/background_layout"-->
-            <!--app:sbp_panel_height="200dp"-->
-            <!--app:sbp_title_height_no_display="0dp">-->
-
-            <!--<FrameLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:background="#ffffff"-->
-                <!--android:orientation="vertical">-->
-
-                <!--<ListView-->
-                    <!--android:id="@+id/lv_credit_sort"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent" />-->
-            <!--</FrameLayout>-->
-        <!--</com.beyonditsm.financial.view.slidebottompanel.SlideBottomPanel>-->
-
-    <!--</LinearLayout>-->
     <FrameLayout
         android:id="@+id/fl_main"
         android:layout_width="match_parent"
