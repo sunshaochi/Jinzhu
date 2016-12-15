@@ -482,7 +482,7 @@ public class CreditSecondFrag extends BaseFragment {
         RequestManager.getCommManager().findDicMap(key, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-                loadView.loadComplete();
+
                 JSONObject jsonObject = new JSONObject(result);
                 JSONObject data = jsonObject.getJSONObject("data");
                 Gson gson = new Gson();
@@ -1000,6 +1000,7 @@ public class CreditSecondFrag extends BaseFragment {
         RequestManager.getCommManager().getDistrict(cityCode, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
+                loadView.loadComplete();
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray data = jsonObject.getJSONArray("data");
                 Gson gson = new Gson();
