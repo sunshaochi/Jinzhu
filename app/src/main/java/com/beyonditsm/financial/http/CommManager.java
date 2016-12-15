@@ -339,8 +339,8 @@ public class CommManager extends RequestManager {
     }
 
 //个人信息字典（查询车产，职业身份，房产，信用状况）
-    public void findDicMap(String dictCod, CallBack callBack) {
-        todoGet(IFinancialUrl.FINDALLBYDICTCOD+"?dictCod="+dictCod, callBack);
+    public void findDicMap(String dictCode, CallBack callBack) {
+        todoGet(IFinancialUrl.FINDALLBYDICTCOD+"?dictCode="+dictCode, callBack);
     }
 
 

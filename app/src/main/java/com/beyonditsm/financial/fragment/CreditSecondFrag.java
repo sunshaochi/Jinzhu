@@ -149,12 +149,12 @@ public class CreditSecondFrag extends BaseFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        getData();//获取个人资料并给界面赋值
+//        getData();//获取个人资料并给界面赋值
         addressUtil = new AddressUtil(mParentActivity);
         getDictionaryContent(0, "jobType");//职业身份获取身份列表供选择
         getDictionaryContent(1, "cardProperty");//名下车产
         getDictionaryContent(2, "houseProperty");//名下房产
-        getDictionaryContent(3, " creidtType");//信用状况
+        getDictionaryContent(3, "creidtType");//信用状况
         map.put(1, false);
         map.put(2, false);
         productInfo = getArguments().getParcelable(HomeCreditDetailAct.PRODUCTINFO);//取到传递过来的产品
@@ -232,7 +232,8 @@ public class CreditSecondFrag extends BaseFragment {
                 break;
             case R.id.second_btn_next://下一步
                 secondBtnNext.setClickable(false);
-                upData();
+//                upData();
+                toSubmitOrder();
                 break;
             case R.id.rlPosition://常住地
 //                DialogChooseAdress dialogChooseAdress = new DialogChooseAdress(mParentActivity).builder();
@@ -480,6 +481,7 @@ public class CreditSecondFrag extends BaseFragment {
             public void onSucess(String result) throws JSONException {
 //                JSONObject jsonObject = new JSONObject(result);
 //                JSONArray dataArr = jsonObject.getJSONArray("data");
+                loadView.loadComplete();
                 Gson gson = new Gson();
                 switch (pos) {
                     case 0:
@@ -822,35 +824,58 @@ public class CreditSecondFrag extends BaseFragment {
      */
     private void toSubmitOrder() {
 //        OrderBean orderBean = new OrderBean();
-        Orederinfo orederinfo=new Orederinfo();
+        Orederinfo orederinfo = new Orederinfo();
         orederinfo.productInfo.setProductId(productInfo.getProductId());
 //        orderBean.setProductId(productInfo.getProductId());
         if (null == HomeCreditDetailAct.creditMoney) {
             MyToastUtils.showShortToast(mParentActivity, "网络不给力，请返回重新提交");
             secondBtnNext.setClickable(true);
         } else {
+//            orederinfo.orderInfo.setApplyAmount((Double.parseDouble(HomeCreditDetailAct.creditMoney) * 10000 + ""));//设置金额
+//            orederinfo.orderInfo.setApplyPeriods(HomeCreditDetailAct.creditMonth);//总期数
+////            orderBean.setPeriodsAmount(HomeCreditDetailAct.monthlyPayments);//单期还款金额
+//            orederinfo.customerInfo.setCusName(user.getUserName());//姓名
+//            orederinfo.customerInfo.setSex(user.getUserSex());//性别
+//            orederinfo.customerInfo.setIdNo(user.getIdentCard());//身份证
+//            orederinfo.customerInfo.setCurrentProvince(user.getProvince());//省
+//            orederinfo.customerInfo.setCurrentCity(user.getCity());//市
+//            orederinfo.customerInfo.setCurrentRegion(user.getDistrict());//区
+//            orederinfo.customerInfo.setIsMarried(user.getMarrySts());//婚姻状态
+//            orederinfo.customerInfo.setNativePlace(user.getNativePlace());//籍贯
+//            orederinfo.customerInfo.setDomicileAddr(user.getNativePlaceAddr());//户籍地
+//            orederinfo.customerInfo.setPhoneNum(user.getMobile());//手机号
+//            orederinfo.customerInfo.setCareerName(user.getHavaJobName());//职业身份
+//            orederinfo.customerInfo.setCompany(user.getCompanyName());//公司名称
+//            orederinfo.customerInfo.setCareerTitle(user.getBusiness());//职务
+//            orederinfo.customerInfo.setAge(user.getUserAge());//年纪
+//            orederinfo.customerInfo.setHasHouseFunding(user.getProFund());//是否有公积金
+//            orederinfo.customerInfo.setHasSocialInsurance(user.getSecailSecurity());//是否有社保
+//            orederinfo.customerInfo.setHaveOwnCar(user.getHaveCar());//名下车产类型
+//            orederinfo.customerInfo.setHaveOwnHouse(user.getHaveHours());//房产类型
+//            orederinfo.customerInfo.setCreditState(user.getTowYearCred());//信用状况
+
             orederinfo.orderInfo.setApplyAmount((Double.parseDouble(HomeCreditDetailAct.creditMoney) * 10000 + ""));//设置金额
             orederinfo.orderInfo.setApplyPeriods(HomeCreditDetailAct.creditMonth);//总期数
 //            orderBean.setPeriodsAmount(HomeCreditDetailAct.monthlyPayments);//单期还款金额
-            orederinfo.customerInfo.setCusName(user.getUserName());//姓名
-            orederinfo.customerInfo.setSex(user.getUserSex());//性别
-            orederinfo.customerInfo.setIdNo(user.getIdentCard());//身份证
+            orederinfo.customerInfo.setCusName("孙少池");//姓名
+            orederinfo.customerInfo.setSex(0);//性别
+            orederinfo.customerInfo.setIdNo("421083199103181635");//身份证
             orederinfo.customerInfo.setCurrentProvince(user.getProvince());//省
             orederinfo.customerInfo.setCurrentCity(user.getCity());//市
             orederinfo.customerInfo.setCurrentRegion(user.getDistrict());//区
             orederinfo.customerInfo.setIsMarried(user.getMarrySts());//婚姻状态
-            orederinfo.customerInfo.setNativePlace(user.getNativePlace());//籍贯
-            orederinfo.customerInfo.setDomicileAddr(user.getNativePlaceAddr());//户籍地
-            orederinfo.customerInfo.setPhoneNum(user.getMobile());//手机号
-            orederinfo.customerInfo.setCareerName(user.getHavaJobName());//职业身份
-            orederinfo.customerInfo.setCompany(user.getCompanyName());//公司名称
-            orederinfo.customerInfo.setCareerTitle(user.getBusiness());//职务
-            orederinfo.customerInfo.setAge(user.getUserAge());//年纪
-            orederinfo.customerInfo.setHasHouseFunding(user.getProFund());//是否有公积金
-            orederinfo.customerInfo.setHasSocialInsurance(user.getSecailSecurity());//是否有社保
-            orederinfo.customerInfo.setHaveOwnCar(user.getHaveCar());//名下车产类型
-            orederinfo.customerInfo.setHaveOwnHouse(user.getHaveHours());//房产类型
-            orederinfo.customerInfo.setCreditState(user.getTowYearCred());//信用状况
+            orederinfo.customerInfo.setNativePlace("甘肃省兰州市城关区");//籍贯
+            orederinfo.customerInfo.setDomicileAddr("甘肃省兰州市城关区");//户籍地
+            orederinfo.customerInfo.setPhoneNum("13917702726");//手机号
+            orederinfo.customerInfo.setCareerName("老板");//职业身份
+            orederinfo.customerInfo.setCompany("上海博猿");//公司名称
+            orederinfo.customerInfo.setCareerTitle("老板");//职务
+            orederinfo.customerInfo.setAge(20);//年纪
+            orederinfo.customerInfo.setHasHouseFunding(1);//是否有公积金
+            orederinfo.customerInfo.setHasSocialInsurance(1);//是否有社保
+            orederinfo.customerInfo.setHaveOwnCar("有");//名下车产类型
+            orederinfo.customerInfo.setHaveOwnHouse("有");//房产类型
+            orederinfo.customerInfo.setCreditState("良好");//信用状况
             RequestManager.getCommManager().submitOrder(orederinfo, new RequestManager.CallBack() {
                 @Override
                 public void onSucess(String result) {

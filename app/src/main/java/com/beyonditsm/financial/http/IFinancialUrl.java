@@ -12,8 +12,8 @@ public interface IFinancialUrl {
 //    String BASE_URL = "http://172.16.5.32:8083";
     /*吕东测试*/
 //    String BASE_URL = "http://172.16.5.59";
-//    String BASE_URL ="http://172.16.6.218:8082";
-    String BASE_URL ="http://172.16.7.196:8083";
+    String BASE_URL ="http://172.16.6.218:8082";
+//    String BASE_URL ="http://172.16.7.196:8083";
     /*袁峰测试*/
 //    String BASE_URL = "http://172.16.6.153:8080";
 //    String BASE_URL = "http://172.16.6.228:8080";
@@ -134,7 +134,7 @@ public interface IFinancialUrl {
     String UPLOAD_small_URL = BASE_URL + API_VERSION + "/common/commonAPI/login/upLoadSmallImage.do";
 
     /*客户提交订单*/
-    String SUBMITORDER_URL = BASE_URL + API_VERSION + "/platform/login/submitOrder.do";
+    String SUBMITORDER_URL = BASE_URL +"/unLogin/submitOrder";
     /*忘记密码*/
     String FOGET_PWD_URL = BASE_URL + API_VERSION + "/manager/unLogin/forgetPassword.do";
     /*发送验证码找回密码的验证码 */
@@ -158,7 +158,7 @@ public interface IFinancialUrl {
     /*根据key查找各种特点*/
     String DIC_MAP_URL = BASE_URL + API_VERSION + "/manager/unLogin/findDictMap.do";
     /*个人信息字典*/
-    String FINDALLBYDICTCOD = BASE_URL +"/productApi" + "/manager/unLogin/findDictMap.do";
+    String FINDALLBYDICTCOD = BASE_URL +"/unLogin/getAllByDictCode";
 
 
     /*抵扣券兑现提交订单*/

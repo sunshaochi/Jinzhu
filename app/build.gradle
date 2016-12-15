@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 android {
     compileSdkVersion 23
-    buildToolsVersion '23.0.3'
+    buildToolsVersion '23.0.2'
 
     dexOptions {
         javaMaxHeapSize "4g"
@@ -92,6 +92,7 @@ dependencies {
     compile files('libs/BaiduLBS_Android.jar')
     compile project(':IMKit')
     compile files('libs/nineoldandroids-2.4.0.jar')
+
 }
 
 buildscript {
@@ -100,7 +101,7 @@ buildscript {
     }
     dependencies {  
 
-        classpath 'com.android.tools.build:gradle:2.2.0'
+        classpath 'com.android.tools.build:gradle:2.2.2'
 ////添加这行
 //        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
 //        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.2'
