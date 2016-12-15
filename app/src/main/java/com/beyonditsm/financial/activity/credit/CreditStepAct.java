@@ -14,16 +14,13 @@ import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
 import com.beyonditsm.financial.entity.ProductBean;
-import com.beyonditsm.financial.entity.ProductInfo;
 import com.beyonditsm.financial.entity.UpLoadEntity;
 import com.beyonditsm.financial.fragment.CreditFirstFrag;
+import com.beyonditsm.financial.fragment.CreditFourthFrag;
 import com.beyonditsm.financial.fragment.CreditOfflineFrag;
 import com.beyonditsm.financial.fragment.CreditSecondFrag;
-import com.beyonditsm.financial.fragment.CreditFourthFrag;
 import com.beyonditsm.financial.fragment.CreditSpeedSecondFrag;
 import com.beyonditsm.financial.fragment.CreditThirFrag;
-import com.beyonditsm.financial.util.MyLogUtils;
-import com.beyonditsm.financial.util.SpUtils;
 import com.tandong.sa.eventbus.EventBus;
 
 import java.util.List;

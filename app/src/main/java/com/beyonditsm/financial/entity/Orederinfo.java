@@ -10,9 +10,9 @@ import java.io.Serializable;
  */
 
 public class Orederinfo implements Parcelable {
-    public productInfoBean productInfo;//产品相关的
-    public orderInfoBean orderInfo;//订单相关
-    public customerInfoBean customerInfo;//用户相关
+    public productInfoBean productInfo = new productInfoBean();//产品相关的
+    public orderInfoBean orderInfo = new orderInfoBean();//订单相关
+    public customerInfoBean customerInfo = new customerInfoBean();//用户相关
 
     public Orederinfo() {
     }

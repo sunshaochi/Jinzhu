@@ -15,7 +15,7 @@ public interface IFinancialUrl {
 
 //    String BASE_URL ="http://172.16.6.218:8082";
 
-//    String BASE_URL ="http://172.16.6.218:8082";
+    String BASE_URL ="http://172.16.6.218:8082";
 
 //    String BASE_URL ="http://172.16.7.196:8083";
     /*袁峰测试*/
@@ -68,7 +68,7 @@ public interface IFinancialUrl {
     //调试地址
 //    String BASE_URL = "http://172.16.5.250:8080";
 //    String BASE_URL="http://172.16.6.216";
-    String BASE_URL = "http://172.16.6.228:8080";
+//    String BASE_URL = "http://172.16.6.228:8080";
 //    String BASE_URL = "http://172.16.6.228:8080";
 
     /**
@@ -137,7 +137,7 @@ public interface IFinancialUrl {
     String UPLOAD_small_URL = BASE_URL + API_VERSION + "/common/commonAPI/login/upLoadSmallImage.do";
 
     /*客户提交订单*/
-    String SUBMITORDER_URL = BASE_URL +"/unLogin/submitOrder";
+    String SUBMITORDER_URL = BASE_URL +"/submitOrder";
     /*忘记密码*/
     String FOGET_PWD_URL = BASE_URL + API_VERSION + "/manager/unLogin/forgetPassword.do";
     /*发送验证码找回密码的验证码 */
@@ -159,10 +159,10 @@ public interface IFinancialUrl {
     /*取消订单*/
 //    String CANCEL_ORDER = BASE_URL + API_VERSION + "/platform/login/modifyToCancelOrderById.do";
     /*根据key查找各种特点*/
-    String DIC_MAP_URL = BASE_URL + API_VERSION + "/manager/unLogin/findDictMap.do";
+    String DIC_MAP_URL = BASE_URL +  "/unLogin/findAllDictMap.do";
     /*个人信息字典*/
 
-    String FINDALLBYDICTCOD = BASE_URL +"/unLogin/getAllByDictCode";
+//    String FINDALLBYDICTCOD = BASE_URL +"/unLogin/getAllByDictCode";
 
 //    String FINDALLBYDICTCOD = BASE_URL + "/productApi" + "/manager/unLogin/findDictMap.do";
 
@@ -199,7 +199,7 @@ public interface IFinancialUrl {
     /*线下订单资料列表*/
     String CREDIT_OFFLINE_LIST_URL = BASE_URL + API_VERSION + "/platform/login/getOfflineOrderDetail.do";
     /*上传资料列表*/
-    String UPLOAD_LIST_URL = BASE_URL + API_VERSION + "/platform/login/findOrderFlow.do";
+    String UPLOAD_LIST_URL = BASE_URL + "/findOrderFlow.do";
     /*查找上传详情*/
     String FIND_FLOW_DETAIL_URL = BASE_URL + API_VERSION + "/platform/login/findFlowDetail.do";
     /*查看是否有增信资料*/
@@ -209,7 +209,7 @@ public interface IFinancialUrl {
     /*提交审核*/
     String APPLAY_CREDIT_URL = BASE_URL + API_VERSION + "/platform/login/applyCredit.do";
     /*订单状态*/
-    String APPLAY_CREDIT_STATUS = BASE_URL + API_VERSION + "/platform/login/applyCreditStatus.do";
+    String APPLAY_CREDIT_STATUS = BASE_URL +"/applyCreditStatus.do";
     /*跳过某个流程*/
     String SKIP_FLOW = BASE_URL + API_VERSION + "/platform/login/skipFlow.do";
     //    /*代言人推荐信息获取*/
