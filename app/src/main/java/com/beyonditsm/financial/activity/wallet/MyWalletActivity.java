@@ -313,7 +313,7 @@ public class MyWalletActivity extends BaseActivity {
      */
     private void getUserInfo() {
 
-        RequestManager.getCommManager().findUserInfo(new RequestManager.CallBack() {
+        RequestManager.getCommManager().findUserInfo(SpUtils.getPhonenumber(getApplicationContext()),new RequestManager.CallBack() {
             @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) {

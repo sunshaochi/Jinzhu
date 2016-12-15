@@ -196,7 +196,7 @@ public class CreditSpeedFirstAct extends BaseActivity {
     }
 
     private void toRegister(UserEntity ue,String phone,String capture){
-        RequestManager.getCommManager().toRegister(ue,phone,capture, new RequestManager.CallBack() {
+        RequestManager.getCommManager().toRegister2(ue,phone,capture, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
                 sendBroadcast(new Intent(MineFragment.UPDATE_USER));

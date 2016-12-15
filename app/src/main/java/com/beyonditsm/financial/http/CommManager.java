@@ -1,8 +1,5 @@
 package com.beyonditsm.financial.http;
 
-import android.text.TextUtils;
-
-import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.entity.ChangePwdEntity;
 import com.beyonditsm.financial.entity.CreditOfflineUploadEntity;
 import com.beyonditsm.financial.entity.HotProduct;
@@ -14,7 +11,6 @@ import com.beyonditsm.financial.entity.UserOrderInfo1;
 import com.beyonditsm.financial.entity.UserOrderInfo3;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
-import com.beyonditsm.financial.util.SpUtils;
 import com.lidroid.xutils.http.client.multipart.content.FileBody;
 import com.tandong.sa.json.Gson;
 
@@ -45,51 +41,22 @@ public class CommManager extends RequestManager {
         Map<String, String> params = new HashMap<>();
         params.put("username", ue.getUsername());
         params.put("password", ue.getPassword());
+        params.put("isElow","false");
+        params.put("roleName","users");
         doPost(IFinancialUrl.LOGIN_URL, params, callBack);
     }
 
-    /**
-     * 注册
-     *
-     * @param ue       用户entity
-     * @param callBack 回调
-     */
-    public void toRegister(UserEntity ue, String phoneNumber, String captcha, CallBack callBack) {
-        List<NameValuePair> queryParams = new ArrayList<>();
-        queryParams.add(new BasicNameValuePair("mobilePhone", phoneNumber));
-        queryParams.add(new BasicNameValuePair("username", ue.getUsername()));
-        queryParams.add(new BasicNameValuePair("captcha", captcha));
-        if (!TextUtils.isEmpty(ue.getReferralCode())) {
-            queryParams.add(new BasicNameValuePair("referralCode", ue.getReferralCode()));
-
-        }
-        if (!TextUtils.isEmpty(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()))){
-            queryParams.add(new BasicNameValuePair("registerArea", SpUtils.getCity(MyApplication.getInstance().getApplicationContext())));
-        }else {
-            queryParams.add(new BasicNameValuePair("registerArea", "全国"));
-        }
-
-        doPost(IFinancialUrl.REGISTER_URL2, queryParams, callBack);
-    }
-
-    /**
-     * 注册
-     *
-     * @param ue       用户entity
-     * @param callBack 回调
-     */
-    public void toRegister2(UserEntity ue, String phoneNumber, String captcha, CallBack callBack) {
-        List<NameValuePair> queryParams = new ArrayList<>();
-        queryParams.add(new BasicNameValuePair("mobilePhone", phoneNumber));
-        queryParams.add(new BasicNameValuePair("userStatus", "users"));
-//        queryParams.add(new BasicNameValuePair("password", captcha));
-
+//    /**
+//     * 注册
+//     *
+//     * @param ue       用户entity
+//     * @param callBack 回调
+//     */
+//    public void toRegister(UserEntity ue, String phoneNumber, String captcha, CallBack callBack) {
+//        List<NameValuePair> queryParams = new ArrayList<>();
+//        queryParams.add(new BasicNameValuePair("mobilePhone", phoneNumber));
 //        queryParams.add(new BasicNameValuePair("username", ue.getUsername()));
-        queryParams.add(new BasicNameValuePair("captcha", captcha));
-//        queryParams.add(new BasicNameValuePair("noValidateSms", captcha));
-        queryParams.add(new BasicNameValuePair("signFrom", IFinancialUrl.MARKET_CODE));
-        queryParams.add(new BasicNameValuePair("referCode", ue.getReferralCode()));
-
+//        queryParams.add(new BasicNameValuePair("captcha", captcha));
 //        if (!TextUtils.isEmpty(ue.getReferralCode())) {
 //            queryParams.add(new BasicNameValuePair("referralCode", ue.getReferralCode()));
 //
@@ -99,13 +66,30 @@ public class CommManager extends RequestManager {
 //        }else {
 //            queryParams.add(new BasicNameValuePair("registerArea", "全国"));
 //        }
+//
+//        doPost(IFinancialUrl.REGISTER_URL2, queryParams, callBack);
+//    }
 
-        doPost(IFinancialUrl.REGISTER_URL2,queryParams, callBack);
+    /**
+     * 注册
+     *
+     * @param ue       用户entity
+     * @param callBack 回调
+     */
+    public void toRegister2(UserEntity ue, String phoneNumber, String captcha, CallBack callBack) {
+        List<NameValuePair> queryParams = new ArrayList<>();
+//        queryParams.add(new BasicNameValuePair("roleName", phoneNumber));
+        queryParams.add(new BasicNameValuePair("phoneNumber", phoneNumber));
+        queryParams.add(new BasicNameValuePair("mobilePhone", phoneNumber));
+        queryParams.add(new BasicNameValuePair("userStatus", "users"));
+        queryParams.add(new BasicNameValuePair("captcha", captcha));
+        queryParams.add(new BasicNameValuePair("signFrom", IFinancialUrl.MARKET_CODE));
+        queryParams.add(new BasicNameValuePair("referCode", ue.getReferralCode()));
+        doPost(IFinancialUrl.REGISTER_URL2,queryParams,callBack);
     }
 
     /**
      * 获取验证码
-     *
      * @param phoneNumber 手机号
      * @param callBack    回调
      */
@@ -132,10 +116,10 @@ public class CommManager extends RequestManager {
      *
      * @param callBack 回调
      */
-    public void findUserInfo(final CallBack callBack) {
+    public void findUserInfo(String mobilephone, final CallBack callBack) {
 //        Map<String, String> params = new HashMap<String, String>();
         List<NameValuePair> params = new ArrayList<>();
-        doPost(IFinancialUrl.USERINFO_URL, params, callBack);
+        doGet(IFinancialUrl.USERINFO_URL, callBack);
     }
 
     /**
@@ -146,6 +130,7 @@ public class CommManager extends RequestManager {
      */
     public void toChangePwd(ChangePwdEntity cpe, final CallBack callBack) {
         Map<String, String> params = new HashMap<>();
+        params.put("username", cpe.getUserName());
         params.put("password", cpe.getPassword());
         params.put("newPassword", cpe.getNewPassword());
         doPost(IFinancialUrl.UPDATE_PWD_URL, params, callBack);

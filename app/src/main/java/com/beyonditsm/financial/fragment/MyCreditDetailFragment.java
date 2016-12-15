@@ -385,8 +385,8 @@ public class MyCreditDetailFragment extends BaseFragment {
                         if (!TextUtils.isEmpty(String.valueOf(data.getPeriodsAmount()))) {
                             tvYueG.setText(data.getPeriodsAmount()+"");
                         }
-                        if (!TextUtils.isEmpty(data.getPayTypeName())) {
-                            tvHf.setText("还款方式：" + data.getPayTypeName());
+                        if (!TextUtils.isEmpty(data.getPaytypemap())) {
+                            tvHf.setText("还款方式：" + data.getPaytypemap());
                         }
 //                        tvT.setText("¥" + data.getTotalAmount());
 
