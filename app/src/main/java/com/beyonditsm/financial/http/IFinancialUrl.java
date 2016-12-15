@@ -201,17 +201,17 @@ public interface IFinancialUrl {
     /*上传资料列表*/
     String UPLOAD_LIST_URL = BASE_URL + "/findOrderFlow.do";
     /*查找上传详情*/
-    String FIND_FLOW_DETAIL_URL = BASE_URL + API_VERSION + "/platform/login/findFlowDetail.do";
+    String FIND_FLOW_DETAIL_URL = BASE_URL + "/findFlowDetail.do";
     /*查看是否有增信资料*/
     String FIND_EXTRA_FlOW_URL = BASE_URL + API_VERSION + "/platform/login/findExtraOrderFlow.do";
     /*提交图片*/
-    String SUBIT_ORDER_FLOW_URL = BASE_URL + API_VERSION + "/platform/login/submitOrderFlow.do";
+    String SUBIT_ORDER_FLOW_URL = BASE_URL + "/submitOrderFlow.do";
     /*提交审核*/
-    String APPLAY_CREDIT_URL = BASE_URL + API_VERSION + "/platform/login/applyCredit.do";
+    String APPLAY_CREDIT_URL = BASE_URL +  "/applyCredit.do";
     /*订单状态*/
     String APPLAY_CREDIT_STATUS = BASE_URL +"/applyCreditStatus.do";
     /*跳过某个流程*/
-    String SKIP_FLOW = BASE_URL + API_VERSION + "/platform/login/skipFlow.do";
+    String SKIP_FLOW = BASE_URL +  "/skipFlow.do";
     //    /*代言人推荐信息获取*/
 //    String SERVANT_RMD_INFO = BASE_URL + API_VERSION + "easyplay/servant/login/getServantSummary.do";
     //    /*代言人推荐信息获取*/

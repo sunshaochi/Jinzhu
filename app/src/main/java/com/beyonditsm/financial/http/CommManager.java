@@ -402,10 +402,7 @@ public class CommManager extends RequestManager {
      * @param callBack 回调
      */
     public void findOrderFlow(String orderId, CallBack callBack) {
-        Map<String, String> params = new HashMap<>();
-        params.put("orderId", orderId);
-        params.put("flowId", "2");
-        doPost(IFinancialUrl.FIND_EXTRA_FlOW_URL, params, callBack);
+        todoGet(IFinancialUrl.UPLOAD_LIST_URL+"?orderId="+orderId+"&flowType=2", callBack);
     }
 
 

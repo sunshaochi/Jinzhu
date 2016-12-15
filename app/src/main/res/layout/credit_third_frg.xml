@@ -87,7 +87,7 @@
                 android:drawableTop="@mipmap/ico_success"
                 android:text="恭喜您申贷资料上传完毕！"
                 android:textColor="#333333"
-                android:textSize="21sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -97,7 +97,7 @@
                 android:drawablePadding="15dp"
                 android:text="我们会以最快速度进行审核"
                 android:textColor="#333333"
-                android:textSize="21sp" />
+                android:textSize="14sp" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -112,7 +112,7 @@
                     android:drawablePadding="15dp"
                     android:text="请您耐心等待结果"
                     android:textColor="#333333"
-                    android:textSize="21sp"
+                    android:textSize="14sp"
                     android:visibility="gone" />
 
                 <LinearLayout
@@ -130,7 +130,7 @@
                         android:drawablePadding="15dp"
                         android:text="若您提交额外增信材料"
                         android:textColor="#333333"
-                        android:textSize="21sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -140,7 +140,7 @@
                         android:drawablePadding="15dp"
                         android:text="将能加快审贷速度"
                         android:textColor="#333333"
-                        android:textSize="21sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
             </FrameLayout>
@@ -155,7 +155,9 @@
 
                 <Button
                     android:id="@+id/crethr_btn1"
-                    android:layout_width="100dp"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
                     android:layout_height="36dp"
                     android:layout_marginRight="5dp"
                     android:background="@drawable/crethr_btn1_bg"

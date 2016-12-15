@@ -27,7 +27,6 @@ import com.beyonditsm.financial.activity.user.MyCreditAct;
 import com.beyonditsm.financial.entity.CreditEvent;
 import com.beyonditsm.financial.entity.UpLoadEntity;
 import com.beyonditsm.financial.http.RequestManager;
-import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.view.AutoDismissDialog;
 import com.beyonditsm.financial.view.LoadingView;
@@ -120,7 +119,7 @@ public class CreditThirFrag extends BaseFragment {
      */
     public void onEvent(CreditEvent event) {
         getUploadList(orderId);
-        applayStatus(orderId);
+//        applayStatus(orderId);
     }
 
     @Override
@@ -153,7 +152,6 @@ public class CreditThirFrag extends BaseFragment {
                     JSONArray array = jsonObject.getJSONArray("data");
                     datas = gson.fromJson(array.toString(), new TypeToken<List<UpLoadEntity>>() {
                     }.getType());
-                    applayStatus(orderId);
                     setIsTvClick(datas);
                     if (adapter == null) {
                         adapter = new MyAdapter(datas);
@@ -163,7 +161,7 @@ public class CreditThirFrag extends BaseFragment {
                     }
                 }else{
                     lvCreditThird.noContent();
-                    applayStatus(orderId);
+                    applayCredit(orderId);
                     new AutoDismissDialog(getContext()).builder().show();
                 }
 
@@ -206,7 +204,7 @@ public class CreditThirFrag extends BaseFragment {
         boolean isClick = true;
         if (list != null && list.size() > 0) {
             for (int i = 0; i < list.size(); i++) {
-                isClick = isClick && ("1".equals(list.get(i).getIsComplete()));
+                isClick = isClick && ("true".equals(list.get(i).getIsComplete()));
             }
         }
 //        if (!TextUtils.isEmpty(orderStatus)) {
@@ -259,21 +257,15 @@ public class CreditThirFrag extends BaseFragment {
             @Override
             public void onSucess(String result) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result);
-                String message = jsonObject.getString("message");
-                if (!"没有可用的增信流程".equals(message)) {
-                    JSONArray array = jsonObject.getJSONArray("data");
-                    CreditStepAct.upList = gson.fromJson(array.toString(), new TypeToken<List<UpLoadEntity>>() {
+                if (jsonObject.get("data") instanceof JSONArray  && jsonObject.getJSONArray("data").length()>0){
+                    CreditStepAct.upList = gson.fromJson(jsonObject.getJSONArray("data").toString(), new TypeToken<List<UpLoadEntity>>() {
                     }.getType());
-
-                } else {
-                    CreditStepAct.upList = null;
-                }
-                if (act_type == 0) {
-//                    EventBus.getDefault().post(new CreditStepAct.FirstEvent(3, orderId));
+                    //                    EventBus.getDefault().post(new CreditStepAct.FirstEvent(3, orderId));
                     llUploadSuccess.setVisibility(View.VISIBLE);
                     llUpload.setVisibility(View.GONE);
                     findUploadSuccess();
-                } else {
+                }else {
+                    CreditStepAct.upList = null;
                     MyToastUtils.showShortToast(getContext(), "订单已提交，请耐心等待审批");
                     mParentActivity.sendBroadcast(new Intent(MyCreditAct.CREDIT_RECEIVER));
                     mParentActivity.sendBroadcast(new Intent(MyCreditDetailFragment.UPDATE_ORDER));
@@ -325,36 +317,36 @@ public class CreditThirFrag extends BaseFragment {
     }
 
 
-    private void applayStatus(final String orderId) {
-        RequestManager.getCommManager().applayStatus(orderId, new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
-                JSONObject object = new JSONObject(result);
-                JSONObject data = object.getJSONObject("data");
-                int r = data.getInt("result");
-                orderSts = data.getString("orderSts");
-                MyLogUtils.info("返回的结果：" + r + ",orderSts:" + orderSts);
-                if (r == 1) {
-                    tvCredit.setBackgroundResource(R.drawable.button_gen);
-                    tvCredit.setEnabled(true);
-                    tvCredit.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            applayCredit(orderId);
-                        }
-                    });
-                } else if (r == 0) {
-                    tvCredit.setBackgroundResource(R.drawable.button_grey);
-                    tvCredit.setEnabled(false);
-                }
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-
-            }
-        });
-    }
+//    private void applayStatus(final String orderId) {
+//        RequestManager.getCommManager().applayStatus(orderId, new RequestManager.CallBack() {
+//            @Override
+//            public void onSucess(String result) throws JSONException {
+//                JSONObject object = new JSONObject(result);
+//                JSONObject data = object.getJSONObject("data");
+//                int r = data.getInt("result");
+//                orderSts = data.getString("orderSts");
+//                MyLogUtils.info("返回的结果：" + r + ",orderSts:" + orderSts);
+//                if (r == 1) {
+//                    tvCredit.setBackgroundResource(R.drawable.button_gen);
+//                    tvCredit.setEnabled(true);
+//                    tvCredit.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            applayCredit(orderId);
+//                        }
+//                    });
+//                } else if (r == 0) {
+//                    tvCredit.setBackgroundResource(R.drawable.button_grey);
+//                    tvCredit.setEnabled(false);
+//                }
+//            }
+//
+//            @Override
+//            public void onError(int status, String msg) {
+//
+//            }
+//        });
+//    }
 
     /**
      * 适配器
@@ -398,7 +390,7 @@ public class CreditThirFrag extends BaseFragment {
                 holder = (ViewHolder) convertView.getTag();
             }
             holder.tvContent.setText(list.get(position).getDisplayName());//流程展示名
-            if ("0".equals(list.get(position).getIsComplete())) {
+            if ("false".equals(list.get(position).getIsComplete())) {
 //                holder.ivUpload.setImageResource(R.mipmap.cm_btn_more_nor);
                 holder.tvIsLoad.setText("未上传");
                 holder.tvState.setVisibility(View.GONE);
