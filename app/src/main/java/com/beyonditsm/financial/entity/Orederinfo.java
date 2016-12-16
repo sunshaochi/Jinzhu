@@ -10,9 +10,9 @@ import java.io.Serializable;
  */
 
 public class Orederinfo implements Parcelable {
-    public productInfoBean productInfo;//产品相关的
-    public orderInfoBean orderInfo;//订单相关
-    public customerInfoBean customerInfo;//用户相关
+    public productInfoBean productInfo = new productInfoBean();//产品相关的
+    public orderInfoBean orderInfo = new orderInfoBean();//订单相关
+    public customerInfoBean customerInfo = new customerInfoBean();//用户相关
 
     public Orederinfo() {
     }
@@ -41,32 +41,8 @@ public class Orederinfo implements Parcelable {
         this.customerInfo = customerInfo;
     }
 
-    protected Orederinfo(Parcel in) {
-    }
 
-    public static final Creator<Orederinfo> CREATOR = new Creator<Orederinfo>() {
-        @Override
-        public Orederinfo createFromParcel(Parcel in) {
-            return new Orederinfo(in);
-        }
-
-        @Override
-        public Orederinfo[] newArray(int size) {
-            return new Orederinfo[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-    }
-
-
-    public class productInfoBean implements Serializable{
+    public class productInfoBean implements Parcelable{
         private String productId;
 
         public String getProductId() {
@@ -76,6 +52,35 @@ public class Orederinfo implements Parcelable {
         public void setProductId(String productId) {
             this.productId = productId;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.productId);
+        }
+
+        public productInfoBean() {
+        }
+
+        protected productInfoBean(Parcel in) {
+            this.productId = in.readString();
+        }
+
+        public final Creator<productInfoBean> CREATOR = new Creator<productInfoBean>() {
+            @Override
+            public productInfoBean createFromParcel(Parcel source) {
+                return new productInfoBean(source);
+            }
+
+            @Override
+            public productInfoBean[] newArray(int size) {
+                return new productInfoBean[size];
+            }
+        };
     }
 
     public class orderInfoBean implements Serializable{
@@ -272,4 +277,33 @@ public class Orederinfo implements Parcelable {
         }
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(this.productInfo, flags);
+        dest.writeSerializable(this.orderInfo);
+        dest.writeSerializable(this.customerInfo);
+    }
+
+    protected Orederinfo(Parcel in) {
+        this.productInfo = in.readParcelable(productInfoBean.class.getClassLoader());
+        this.orderInfo = (orderInfoBean) in.readSerializable();
+        this.customerInfo = (customerInfoBean) in.readSerializable();
+    }
+
+    public static final Creator<Orederinfo> CREATOR = new Creator<Orederinfo>() {
+        @Override
+        public Orederinfo createFromParcel(Parcel source) {
+            return new Orederinfo(source);
+        }
+
+        @Override
+        public Orederinfo[] newArray(int size) {
+            return new Orederinfo[size];
+        }
+    };
 }

@@ -231,11 +231,11 @@ public class CommManager extends RequestManager {
      */
     public void submitOrder(Orederinfo orederinfo, final CallBack callBack) {
         Gson gson=new Gson();
+
+
         Map<String, String> params = new HashMap<>();
+        params.put("order", gson.toJson(orederinfo));
 //       params.put("orderNo", orderBean.getOrderNo());
-        params.put("productInfo",gson.toJson(orederinfo.getProductInfo()));
-        params.put("orderInfo", gson.toJson(orederinfo.getOrderInfo()));
-        params.put("customerInfo", gson.toJson(orederinfo.getCustomerInfo()));
         doPost(IFinancialUrl.SUBMITORDER_URL, params, callBack);
     }
 
@@ -342,8 +342,19 @@ public class CommManager extends RequestManager {
     }
 
 //个人信息字典（查询车产，职业身份，房产，信用状况）
-    public void findDicMap(String dictCod, CallBack callBack) {
-        todoGet(IFinancialUrl.FINDALLBYDICTCOD+"?dictCod="+dictCod, callBack);
+    public void findDicMap(List<String> dictCode, CallBack callBack) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (int i = 0; i < dictCode.size(); i++) {
+            sb.append("\"");
+            sb.append(dictCode.get(i));
+            sb.append("\"");
+            sb.append(",");
+        }
+        sb.deleteCharAt(sb.length()-1);
+        sb.append("]");
+        todoGet(IFinancialUrl.DIC_MAP_URL+"?jsonArrayKey="+sb.toString(), callBack);
+        MyLogUtils.info(IFinancialUrl.DIC_MAP_URL+"?jsonArrayKey="+sb.toString());
     }
 
 
@@ -360,7 +371,7 @@ public class CommManager extends RequestManager {
         Map<String, String> params = new HashMap<>();
         params.put("orderId", orderId);
         params.put("flowType", "1");
-        doPost(IFinancialUrl.UPLOAD_LIST_URL, params, callBack);
+        todoGet(IFinancialUrl.UPLOAD_LIST_URL+"?orderId="+orderId+"&flowType=1", callBack);
     }
 
     /**
@@ -409,10 +420,7 @@ public class CommManager extends RequestManager {
      * @param callBack 回调
      */
     public void findOrderFlow(String orderId, CallBack callBack) {
-        Map<String, String> params = new HashMap<>();
-        params.put("orderId", orderId);
-        params.put("flowId", "2");
-        doPost(IFinancialUrl.FIND_EXTRA_FlOW_URL, params, callBack);
+        todoGet(IFinancialUrl.UPLOAD_LIST_URL+"?orderId="+orderId+"&flowType=2", callBack);
     }
 
 
