@@ -1,7 +1,6 @@
 package com.beyonditsm.financial.fragment;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -693,24 +692,24 @@ public class CreditSecondFrag extends BaseFragment {
             user.setUserName(name.getText().toString());
             user.setCompanyName(companyName.getText().toString());
             user.setBusiness(zhiwu.getText().toString());
-            RequestManager.getCommManager().updateData(user, new RequestManager.CallBack() {
-                @Override
-                public void onSucess(String result) throws JSONException {
-                    String roleName = SpUtils.getRoleName(context);
-                        Intent intent = new Intent(MineFragment.UPDATE_USER);
-                        intent.putExtra(MineFragment.USER_KEY, user);
-                        mParentActivity.sendBroadcast(intent);
-                        mParentActivity.sendBroadcast(new Intent(MineFragment.UPDATE_SCORE));
-
-
-                    toSubmitOrder();//立即申请提交订单
-                }
-
-                @Override
-                public void onError(int status, String msg) {
-                    secondBtnNext.setClickable(true);
-                }
-            });
+//            RequestManager.getCommManager().updateData(user, new RequestManager.CallBack() {
+//                @Override
+//                public void onSucess(String result) throws JSONException {
+//                    String roleName = SpUtils.getRoleName(context);
+//                        Intent intent = new Intent(MineFragment.UPDATE_USER);
+//                        intent.putExtra(MineFragment.USER_KEY, user);
+//                        mParentActivity.sendBroadcast(intent);
+//                        mParentActivity.sendBroadcast(new Intent(MineFragment.UPDATE_SCORE));
+//
+//
+//                    toSubmitOrder();//立即申请提交订单
+//                }
+//
+//                @Override
+//                public void onError(int status, String msg) {
+//                    secondBtnNext.setClickable(true);
+//                }
+//            });
         }
     }
 

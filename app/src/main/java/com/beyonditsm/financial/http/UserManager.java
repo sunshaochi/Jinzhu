@@ -31,10 +31,10 @@ public class UserManager extends RequestManager {
     /**
      * 查询热门产品列表
      *
-     * @param page       热门产品entity
+     * @param
      * @param callBack 回调
      */
-    public void findHotProductList(String page, String rows, CallBack callBack) {
+    public void findHotProductList(String page,String rows, CallBack callBack) {
 
         String cityName;
 //        Map<String, String> params = new HashMap<>();
@@ -48,7 +48,7 @@ public class UserManager extends RequestManager {
         cityName="全国";
         }
 
-        doGet(IFinancialUrl.FIND_HOT_PRODUCT_LIST + "?cityName="+cityName+"&page="+page+"&rows="+rows, callBack);
+        doGet(IFinancialUrl.FIND_HOT_PRODUCT_LIST+"?cityName="+cityName+"&page="+page+"&rows="+rows , callBack);
     }
 
 

@@ -209,7 +209,7 @@ public class HomeCreditDetailAct extends BaseActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         assignViews();//初识化控件
         initAnim();//初识化动画
-        getUserLoginInfo();//获取用户角色
+//        getUserLoginInfo();//获取用户角色
 
         String creditName = getIntent().getStringExtra(CREDIT_NAME);//产品名字
         setTopTitle(creditName);
