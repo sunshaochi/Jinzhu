@@ -38,6 +38,7 @@ import com.tandong.sa.zUImageLoader.core.ImageLoader;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -207,9 +208,10 @@ public class HomeCreditDetailAct extends BaseActivity {
     public void init(Bundle savedInstanceState) {
         //强制关闭键盘
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        assignViews();
-        initAnim();
-        getUserLoginInfo();
+        assignViews();//初识化控件
+        initAnim();//初识化动画
+//        getUserLoginInfo();//获取用户角色
+
         String creditName = getIntent().getStringExtra(CREDIT_NAME);//产品名字
         setTopTitle(creditName);
         if (!TextUtils.isEmpty(creditName)&&creditName.length() > 14) {
@@ -283,7 +285,7 @@ public class HomeCreditDetailAct extends BaseActivity {
                 }
                 if(null!=productEntity){
                     if (null!=productEntity.getMinLoanAmt() && null != productEntity.getMinLoanAmt()){
-                        double curVal = Double.valueOf(creditMoney) * 10000;//当前输入框的金额
+                        double curVal = Double.valueOf(creditMoney);//* 10000;//当前输入框的金额
                         if (TextUtils.isEmpty(creditMonth)) {
                             double minTimeVal = Double.valueOf(productEntity.getMinLoanPeriod());//最小时间
                             creditMonth = minTimeVal + "";
@@ -395,6 +397,7 @@ public class HomeCreditDetailAct extends BaseActivity {
                         Toast.makeText(HomeCreditDetailAct.this, "您输入的金额不在额度范围内", Toast.LENGTH_SHORT).show();
                     } else {
                         AppManager.getAppManager().addActivity(HomeCreditDetailAct.this);
+                        Intent intent1=new Intent();
                         Bundle bundle = new Bundle();
                         bundle.putParcelable(PRODUCTINFO, productEntity);
 //                        bundle.putString(CreditStepAct.TAG_TYPE,"comm");
@@ -424,7 +427,7 @@ public class HomeCreditDetailAct extends BaseActivity {
 
                         creditMonth = tvM.getText().toString();
 
-                        double curVal = Double.valueOf(creditMoney) * 10000;
+                        double curVal = Double.valueOf(creditMoney) ;//* 10000;
                         validateCredit(curVal, creditMonth);
 //                        getMOnthPay(creditMoney, productInfo.getMonthlyRathAvg(), creditMonth);
                     }
@@ -458,9 +461,10 @@ public class HomeCreditDetailAct extends BaseActivity {
      * @param curVal 当前金额
      */
     private void validateCredit(double curVal, String creditMonth) {
-        String monthRath = (Double.valueOf(productEntity.getMinLoanRate()) + Double.valueOf(productEntity.getMaxLoanRate())) / 2 + "";
+        Double monthRath = (Double.valueOf(productEntity.getMinLoanRate()) + Double.valueOf(productEntity.getMaxLoanRate())) / 2 ;
 
-        getMOnthPay(curVal / 10000 + "", monthRath, creditMonth);//获取月供
+//        getMOnthPay(curVal / 10000 + "", monthRath, creditMonth);//获取月供
+        getMonthlyPay(monthRath,curVal,Integer.parseInt(creditMonth));
 
       /*  //如果最小额度在0-1之间
         if((minVal/10000)>0&&(minVal/10000)<1) {
@@ -649,8 +653,9 @@ public class HomeCreditDetailAct extends BaseActivity {
                         }
 
                     }
-                    String monthRath = (Double.valueOf(productEntity.getMinLoanRate()) + Double.valueOf(productEntity.getMaxLoanRate())) / 2 + "";
-                    getMOnthPay(creditMoney, monthRath, creditMonth);//计算月供里面返回总利息和月供
+                    Double monthRath = (Double.valueOf(productEntity.getMinLoanRate()) + Double.valueOf(productEntity.getMaxLoanRate())) / 2;
+//                    getMOnthPay(creditMoney, monthRath, creditMonth);//计算月供里面返回总利息和月供
+                    getMonthlyPay(monthRath,Double.parseDouble(creditMoney),Integer.parseInt(creditMonth));
                 }
             }
 
@@ -659,6 +664,31 @@ public class HomeCreditDetailAct extends BaseActivity {
                 loadView.loadError();
             }
         });
+    }
+
+    /**计算月供
+     * @param rate 利率（最大最小、/2）
+     * @param repaymentMoney(输入的金额)
+     * @param month（期限）
+     */
+    private void getMonthlyPay(double rate,double repaymentMoney ,int month) {
+        double sum = repaymentMoney*10000 * (rate * Math.pow(1 + rate, month)) / (Math.pow(1 + rate, month) - 1);
+        BigDecimal big = new BigDecimal(sum);
+        Double monthpay=big.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();//四舍五入
+        tvMonthPay.setText(monthpay+"");
+        getTotlePay(monthpay,repaymentMoney,month);//计算总利息
+
+    }
+
+    /**
+     * 获取总利息
+     * @param monthlyPay 月供
+     * @param month 月份
+     * @param creditAmount 金额
+     */
+    private void getTotlePay(double monthlyPay,double creditAmount,int month) {
+        Double totle= monthlyPay * month - (creditAmount*10000);
+        tvTotal.setText(totle+"");
     }
 
     /**

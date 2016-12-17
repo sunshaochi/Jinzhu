@@ -11,7 +11,7 @@ import android.widget.ScrollView;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.adapter.BindBankCardAdp;
-import com.beyonditsm.financial.entity.QueryBankCardEntity;
+import com.beyonditsm.financial.entity.BindCardBean;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.MyToastUtils;
@@ -81,7 +81,7 @@ public class BindBankCardAct extends BaseActivity {
                 JSONObject object = new JSONObject(result);
                 JSONArray data = object.getJSONArray("data");
                 Gson gson = new Gson();
-                List<QueryBankCardEntity> list = gson.fromJson(data.toString(), new TypeToken<List<QueryBankCardEntity>>() {
+                List<BindCardBean> list = gson.fromJson(data.toString(), new TypeToken<List<BindCardBean>>() {
                 }.getType());
 //                if (list==null) {
 //                    lvBankCard.setVisibility(View.GONE);

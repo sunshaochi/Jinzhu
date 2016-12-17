@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
@@ -63,6 +65,12 @@ public class MyWalletActivity extends BaseActivity {
     private TextView tv_xj;
     @ViewInject(R.id.dikou)
     private TextView tv_dikou;
+    @ViewInject(R.id.ll_xj)
+    private LinearLayout ll_xj;
+    @ViewInject(R.id.rlyj)
+    private RelativeLayout rlyj;
+    @ViewInject(R.id.yj)
+    private TextView tv_yj;
 //    @ViewInject(R.id.ivPaymentsRed)
 //    private ImageView ivPaymentsRedPoint;//收支明细推送红点
 
@@ -128,14 +136,14 @@ public class MyWalletActivity extends BaseActivity {
         } else {
             setUserInfo();
         }
-        loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
-            @Override
-            public void OnRetry() {
-                getUserLoginInfo();
-                getUserInfo();
-                findServantInfo();
-            }
-        });
+//        loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
+//            @Override
+//            public void OnRetry() {
+//                getUserLoginInfo();
+//                getUserInfo();
+//                findServantInfo();
+//            }
+//        });
         getWalletQuan("15216187360");
     }
 
@@ -177,7 +185,7 @@ public class MyWalletActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.rlMyPayments, R.id.rlMyOrder, R.id.rlxianjin, R.id.rldikou, R.id.rlBindBankCard})
+    @OnClick({R.id.rlMyPayments, R.id.rlMyOrder, R.id.rlxianjin, R.id.rldikou, R.id.rlBindBankCard,R.id.ll_xj,R.id.rlyj})
     public void toClick(View v) {
         Intent intent;
         switch (v.getId()) {
@@ -208,6 +216,17 @@ public class MyWalletActivity extends BaseActivity {
             case R.id.rlBindBankCard:
                 intent = new Intent(MyWalletActivity.this, BindBankCardAct.class);
                 intent.putExtra("userInfo", user);
+                startActivity(intent);
+                break;
+            case R.id.ll_xj:
+                intent = new Intent(MyWalletActivity.this, CashExchange.class);
+                intent.putExtra("userInfo", user);
+                startActivity(intent);
+                break;
+            case R.id.rlyj:
+                intent = new Intent(MyWalletActivity.this, CourtageAct.class);
+                intent.putExtra("userInfo", user);
+                intent.putExtra("yongjin",tv_yj.getText().toString().trim());
                 startActivity(intent);
                 break;
         }
@@ -294,11 +313,11 @@ public class MyWalletActivity extends BaseActivity {
      */
     private void getUserInfo() {
 
-        RequestManager.getCommManager().findUserInfo(new RequestManager.CallBack() {
+        RequestManager.getCommManager().findUserInfo(SpUtils.getPhonenumber(getApplicationContext()),new RequestManager.CallBack() {
             @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) {
-                loadingView.loadComplete();
+//                loadingView.loadComplete();
                 ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
                 user = rd.getData();
                 if (user != null) {
@@ -320,7 +339,7 @@ public class MyWalletActivity extends BaseActivity {
 
             @Override
             public void onError(int status, String msg) {
-                loadingView.loadError();
+//                loadingView.loadError();
             }
         });
     }
@@ -334,7 +353,7 @@ public class MyWalletActivity extends BaseActivity {
             @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) throws JSONException {
-                loadingView.loadComplete();
+//                loadingView.loadComplete();
                 ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
                 user = rd.getData();
                 if (user != null) {
@@ -355,7 +374,7 @@ public class MyWalletActivity extends BaseActivity {
 
             @Override
             public void onError(int status, String msg) {
-                loadingView.loadError();
+//                loadingView.loadError();
             }
         });
     }
@@ -406,11 +425,18 @@ public class MyWalletActivity extends BaseActivity {
                            }else {
                                tv_dikou.setText(0+"");
                            }
+                       }else {
+                           if (!TextUtils.isEmpty(walletQuanBean.getBalance())){
+                               tv_yj.setText(walletQuanBean.getBalance());
+                           }else {
+                               tv_yj.setText(0+"");
+                           }
                        }
                    }
                 }else {
                     tv_xj.setText(0+"");
                     tv_dikou.setText(0+"");
+                    tv_yj.setText(0+"");
                 }
             }
 

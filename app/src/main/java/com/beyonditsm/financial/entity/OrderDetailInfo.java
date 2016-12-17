@@ -193,6 +193,19 @@ public class OrderDetailInfo implements Parcelable {
         private String district;
         private String creditAmount;//授信额
         private String evaluateLevel;//信贷经理评价等级
+        private String paytypemap;
+
+        public String getPaytypemap() {
+            return paytypemap;
+        }
+
+        public void setPaytypemap(String paytypemap) {
+            this.paytypemap = paytypemap;
+        }
+
+        public static Creator<DataEntity> getCREATOR() {
+            return CREATOR;
+        }
 
         public String getCreditAmount() {
             return creditAmount;
@@ -940,6 +953,7 @@ public class OrderDetailInfo implements Parcelable {
             dest.writeString(this.propertyType);
             dest.writeString(this.applyMaterial);
             dest.writeString(this.practicalLoan);
+            dest.writeString(this.bankPracticalPeriods);
             dest.writeString(this.productNo);
             dest.writeString(this.costDescribe);
             dest.writeString(this.clientId);
@@ -974,8 +988,10 @@ public class OrderDetailInfo implements Parcelable {
             dest.writeString(this.province);
             dest.writeString(this.city);
             dest.writeString(this.district);
+            dest.writeString(this.creditAmount);
+            dest.writeString(this.evaluateLevel);
+            dest.writeString(this.paytypemap);
             dest.writeList(this.tasks);
-            dest.writeString(this.bankPracticalPeriods);
         }
 
         protected DataEntity(Parcel in) {
@@ -1021,6 +1037,7 @@ public class OrderDetailInfo implements Parcelable {
             this.propertyType = in.readString();
             this.applyMaterial = in.readString();
             this.practicalLoan = in.readString();
+            this.bankPracticalPeriods = in.readString();
             this.productNo = in.readString();
             this.costDescribe = in.readString();
             this.clientId = in.readString();
@@ -1055,16 +1072,20 @@ public class OrderDetailInfo implements Parcelable {
             this.province = in.readString();
             this.city = in.readString();
             this.district = in.readString();
-            this.bankPracticalPeriods = in.readString();
+            this.creditAmount = in.readString();
+            this.evaluateLevel = in.readString();
+            this.paytypemap = in.readString();
             this.tasks = new ArrayList<TasksEntity>();
-            in.readList(this.tasks, List.class.getClassLoader());
+            in.readList(this.tasks, TasksEntity.class.getClassLoader());
         }
 
         public static final Creator<DataEntity> CREATOR = new Creator<DataEntity>() {
+            @Override
             public DataEntity createFromParcel(Parcel source) {
                 return new DataEntity(source);
             }
 
+            @Override
             public DataEntity[] newArray(int size) {
                 return new DataEntity[size];
             }

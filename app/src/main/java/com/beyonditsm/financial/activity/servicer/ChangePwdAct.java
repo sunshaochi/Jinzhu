@@ -9,6 +9,7 @@ import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.entity.ChangePwdEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.widget.ClearEditText;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
@@ -62,6 +63,7 @@ public class ChangePwdAct extends BaseActivity {
             MyToastUtils.showShortToast(this, "两次输入密码不一致");
         } else {
             ChangePwdEntity changePwdEntity = new ChangePwdEntity();
+            changePwdEntity.setUserName(SpUtils.getPhonenumber(getApplicationContext()));
             changePwdEntity.setPassword(oldpwd);
             changePwdEntity.setNewPassword(newpwd);
             RequestManager.getCommManager().toChangePwd(changePwdEntity, new RequestManager.CallBack() {

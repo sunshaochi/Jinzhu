@@ -10,23 +10,25 @@ import android.widget.ListView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.adapter.RebateAdapter;
-import com.beyonditsm.financial.entity.BalanceEntity;
-import com.beyonditsm.financial.entity.ResultData;
+import com.beyonditsm.financial.entity.BalanceMxEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
-import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.tandong.sa.json.Gson;
+import com.tandong.sa.json.reflect.TypeToken;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 抵扣券fragment
+ * 抵扣券fragment明细
  * Created by Administrator on 2016/1/14.
  */
 public class RebateFragment extends BaseFragment{
@@ -35,6 +37,7 @@ public class RebateFragment extends BaseFragment{
     @ViewInject(R.id.loadingView)
     private LoadingView loadingView;
     //    private List<OrderDealEntity> orderList;
+    private List<BalanceMxEntity> list;
     private RebateAdapter rebateAdapter;
     private int page;
     @SuppressLint("InflateParams")
@@ -82,19 +85,23 @@ public class RebateFragment extends BaseFragment{
             }
         });
     }
-    private List<BalanceEntity.RowsEntity> datas = new ArrayList<>();
+    private List<BalanceMxEntity> datas = new ArrayList<>();
     public void findOrderDealHisory(){
         int rows = 10;
-        RequestManager.getWalletManager().findDeductionHistory(page, rows, new RequestManager.CallBack() {
+        list=new ArrayList<>();
+        RequestManager.getWalletManager().findCashHistory(page, rows,2 ,new RequestManager.CallBack() {
             @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) throws JSONException {
                 loadingView.loadComplete();
                 plv.onPullDownRefreshComplete();
                 plv.onPullUpRefreshComplete();
-                ResultData<BalanceEntity> rd = (ResultData<BalanceEntity>) GsonUtils.json(result, BalanceEntity.class);
-                BalanceEntity balanceEntity = rd.getData();
-                List<BalanceEntity.RowsEntity> list = balanceEntity.getRows();
+                //抵扣券明细
+                JSONObject jsonObject = new JSONObject(result);
+                JSONArray data = jsonObject.getJSONArray("data");
+                Gson gson = new Gson();
+                list = gson.fromJson(data.toString(), new TypeToken<List<BalanceMxEntity>>() {
+                }.getType());
                 if (list==null||list.size()==0){
                     if (page==1){
                         loadingView.noContent();

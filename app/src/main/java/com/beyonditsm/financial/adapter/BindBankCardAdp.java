@@ -3,6 +3,7 @@ package com.beyonditsm.financial.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,7 @@ import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.wallet.BindBankCardAct;
-import com.beyonditsm.financial.entity.QueryBankCardEntity;
+import com.beyonditsm.financial.entity.BindCardBean;
 import com.beyonditsm.financial.http.RequestManager;
 
 import org.json.JSONException;
@@ -23,17 +24,17 @@ import java.util.List;
  */
 public class BindBankCardAdp extends BaseAdapter {
     private Context context;
-    private List<QueryBankCardEntity> list;
+    private List<BindCardBean> list;
     private final LayoutInflater inflater;
     private int status;
 
-    public BindBankCardAdp(Context context, List<QueryBankCardEntity> list) {
+    public BindBankCardAdp(Context context, List<BindCardBean> list) {
         this.context = context;
         this.list = list;
         inflater = LayoutInflater.from(context);
     }
 
-    public void setNotifyChange(List<QueryBankCardEntity> list) {
+    public void setNotifyChange(List<BindCardBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -68,11 +69,13 @@ public class BindBankCardAdp extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        final QueryBankCardEntity queryBankCardEntity = list.get(position);
-        holder.tvBankName.setText(queryBankCardEntity.getBankName());
-        final String cardNo = queryBankCardEntity.getCardNo();
+//        final QueryBankCardEntity queryBankCardEntity = list.get(position);
+        holder.tvBankName.setText(list.get(position).getBankName());
+        final String cardNo = list.get(position).getCardNo();
 
-        status = queryBankCardEntity.getStatus();
+        if(TextUtils.isEmpty(list.get(position).getStatus())){
+            status =Integer.parseInt(list.get(position).getStatus());
+        }
         holder.tvCardNo.setText(cardNo.substring(0,4) + "**** " + "**** " + cardNo.substring(cardNo.length() - 4, cardNo.length()));
 
         holder.tvStatus.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +88,6 @@ public class BindBankCardAdp extends BaseAdapter {
         holder.jiebang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 status = 0;
                 modifyBankCardStatus(cardNo, status);
                 list.remove(position);

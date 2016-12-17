@@ -14,16 +14,13 @@ import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
 import com.beyonditsm.financial.entity.ProductBean;
-import com.beyonditsm.financial.entity.ProductInfo;
 import com.beyonditsm.financial.entity.UpLoadEntity;
 import com.beyonditsm.financial.fragment.CreditFirstFrag;
+import com.beyonditsm.financial.fragment.CreditFourthFrag;
 import com.beyonditsm.financial.fragment.CreditOfflineFrag;
 import com.beyonditsm.financial.fragment.CreditSecondFrag;
-import com.beyonditsm.financial.fragment.CreditFourthFrag;
 import com.beyonditsm.financial.fragment.CreditSpeedSecondFrag;
 import com.beyonditsm.financial.fragment.CreditThirFrag;
-import com.beyonditsm.financial.util.MyLogUtils;
-import com.beyonditsm.financial.util.SpUtils;
 import com.tandong.sa.eventbus.EventBus;
 
 import java.util.List;
@@ -69,9 +66,10 @@ public class CreditStepAct extends BaseActivity {
         credit_type = getIntent().getStringExtra(CreditSpeedDetailAct.CREDIT_TYPE);//急速度产品
         EventBus.getDefault().register(this);
         fragmentManager = getSupportFragmentManager();
-        if (TextUtils.isEmpty(SpUtils.getRoleName(this))) {
-            setTabSelection(0);//未登陆
-        } else if (TextUtils.isEmpty(credit_type)){
+//        if (TextUtils.isEmpty(SpUtils.getRoleName(this))) {
+//            setTabSelection(0);//未登陆
+//        } else
+        if (TextUtils.isEmpty(credit_type)){
             setTabSelection(1);//快速判断资质普通产品过来走的这步
         }else if (!TextUtils.isEmpty(credit_type)&&"speed".equals(credit_type)){
             setTabSelection(5);

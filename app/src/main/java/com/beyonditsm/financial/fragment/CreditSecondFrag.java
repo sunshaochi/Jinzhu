@@ -1,7 +1,6 @@
 package com.beyonditsm.financial.fragment;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -23,7 +22,6 @@ import android.widget.Toast;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.credit.CreditStepAct;
 import com.beyonditsm.financial.activity.user.HomeCreditDetailAct;
-import com.beyonditsm.financial.entity.DictionaryType;
 import com.beyonditsm.financial.entity.JJTCityEntity;
 import com.beyonditsm.financial.entity.JJTCounyEntity;
 import com.beyonditsm.financial.entity.JJTProvinceEntity;
@@ -55,6 +53,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -149,16 +148,20 @@ public class CreditSecondFrag extends BaseFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        getData();//获取个人资料并给界面赋值
+//        getData();//获取个人资料并给界面赋值
         addressUtil = new AddressUtil(mParentActivity);
-        getDictionaryContent(0, "jobType");//职业身份获取身份列表供选择
-        getDictionaryContent(1, "cardProperty");//名下车产
-        getDictionaryContent(2, "houseProperty");//名下房产
-        getDictionaryContent(3, " creidtType");//信用状况
+        List<String> keyLists = new ArrayList<>();
+        keyLists.add("jobType");
+        keyLists.add("cardProperty");
+        keyLists.add("houseProperty");
+        keyLists.add("creidtType");
+        user = new UserEntity();
+        user.setUserSex(1);
+        getDictionaryContent(keyLists);//职业身份获取身份列表供选择
         map.put(1, false);
         map.put(2, false);
         productInfo = getArguments().getParcelable(HomeCreditDetailAct.PRODUCTINFO);//取到传递过来的产品
-
+        queryProvince();//获取省份
         loadView.setOnRetryListener(new LoadingView.OnRetryListener() {
             @Override
             public void OnRetry() {
@@ -233,6 +236,7 @@ public class CreditSecondFrag extends BaseFragment {
             case R.id.second_btn_next://下一步
                 secondBtnNext.setClickable(false);
                 upData();
+//                toSubmitOrder();
                 break;
             case R.id.rlPosition://常住地
 //                DialogChooseAdress dialogChooseAdress = new DialogChooseAdress(mParentActivity).builder();
@@ -473,32 +477,42 @@ public class CreditSecondFrag extends BaseFragment {
     }
 
     //职业身份弹出框
-    private void getDictionaryContent(final int pos, String key) {
+    private void getDictionaryContent( List<String> key) {
 
         RequestManager.getCommManager().findDicMap(key, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-//                JSONObject jsonObject = new JSONObject(result);
-//                JSONArray dataArr = jsonObject.getJSONArray("data");
+
+                JSONObject jsonObject = new JSONObject(result);
+                JSONObject data = jsonObject.getJSONObject("data");
                 Gson gson = new Gson();
-                switch (pos) {
-                    case 0:
-                        jobList = gson.fromJson(result.toString(), new TypeToken<List<RelationEntity>>() {
-                        }.getType());//职业身份
-                        break;
-                    case 1:
-                        carList = gson.fromJson(result.toString(), new TypeToken<List<RelationEntity>>() {
-                        }.getType());
-                        break;
-                    case 2:
-                        hourseList = gson.fromJson(result.toString(), new TypeToken<List<RelationEntity>>() {
-                        }.getType());
-                        break;
-                    case 3:
-                        creditList = gson.fromJson(result.toString(), new TypeToken<List<RelationEntity>>() {
-                        }.getType());
-                        break;
-                }
+                jobList = gson.fromJson(data.getJSONArray("jobType").toString(),new TypeToken<List<RelationEntity>>() {
+                       }.getType());
+                loadView.loadComplete();
+                carList = gson.fromJson(data.getJSONArray("cardProperty").toString(),new TypeToken<List<RelationEntity>>() {
+                }.getType());
+                hourseList = gson.fromJson(data.getJSONArray("houseProperty").toString(),new TypeToken<List<RelationEntity>>() {
+                }.getType());
+                creditList = gson.fromJson(data.getJSONArray("creidtType").toString(),new TypeToken<List<RelationEntity>>() {
+                }.getType());
+//                switch (pos) {
+//                    case 0:
+//                        jobList = gson.fromJson(result.toString(), new TypeToken<List<RelationEntity>>() {
+//                        }.getType());//职业身份
+//                        break;
+//                    case 1:
+//                        carList = gson.fromJson(result.toString(), new TypeToken<List<RelationEntity>>() {
+//                        }.getType());
+//                        break;
+//                    case 2:
+//                        hourseList = gson.fromJson(result.toString(), new TypeToken<List<RelationEntity>>() {
+//                        }.getType());
+//                        break;
+//                    case 3:
+//                        creditList = gson.fromJson(result.toString(), new TypeToken<List<RelationEntity>>() {
+//                        }.getType());
+//                        break;
+//                }
 
             }
 
@@ -514,7 +528,7 @@ public class CreditSecondFrag extends BaseFragment {
      * 获取个人资料
      */
     private void getData() {
-        RequestManager.getCommManager().findUserInfo(new RequestManager.CallBack() {
+        RequestManager.getCommManager().findUserInfo(SpUtils.getPhonenumber(mParentActivity),new RequestManager.CallBack() {
             @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) throws JSONException {
@@ -694,24 +708,25 @@ public class CreditSecondFrag extends BaseFragment {
             user.setUserName(name.getText().toString());
             user.setCompanyName(companyName.getText().toString());
             user.setBusiness(zhiwu.getText().toString());
-            RequestManager.getCommManager().updateData(user, new RequestManager.CallBack() {
-                @Override
-                public void onSucess(String result) throws JSONException {
-                    String roleName = SpUtils.getRoleName(context);
-                        Intent intent = new Intent(MineFragment.UPDATE_USER);
-                        intent.putExtra(MineFragment.USER_KEY, user);
-                        mParentActivity.sendBroadcast(intent);
-                        mParentActivity.sendBroadcast(new Intent(MineFragment.UPDATE_SCORE));
-
-
-                    toSubmitOrder();//立即申请提交订单
-                }
-
-                @Override
-                public void onError(int status, String msg) {
-                    secondBtnNext.setClickable(true);
-                }
-            });
+            toSubmitOrder();
+//            RequestManager.getCommManager().updateData(user, new RequestManager.CallBack() {
+//                @Override
+//                public void onSucess(String result) throws JSONException {
+//                    String roleName = SpUtils.getRoleName(context);
+//                        Intent intent = new Intent(MineFragment.UPDATE_USER);
+//                        intent.putExtra(MineFragment.USER_KEY, user);
+//                        mParentActivity.sendBroadcast(intent);
+//                        mParentActivity.sendBroadcast(new Intent(MineFragment.UPDATE_SCORE));
+//
+//
+//                    toSubmitOrder();//立即申请提交订单
+//                }
+//
+//                @Override
+//                public void onError(int status, String msg) {
+//                    secondBtnNext.setClickable(true);
+//                }
+//            });
         }
     }
 
@@ -822,7 +837,7 @@ public class CreditSecondFrag extends BaseFragment {
      */
     private void toSubmitOrder() {
 //        OrderBean orderBean = new OrderBean();
-        Orederinfo orederinfo=new Orederinfo();
+        Orederinfo orederinfo = new Orederinfo();
         orederinfo.productInfo.setProductId(productInfo.getProductId());
 //        orderBean.setProductId(productInfo.getProductId());
         if (null == HomeCreditDetailAct.creditMoney) {
@@ -851,6 +866,7 @@ public class CreditSecondFrag extends BaseFragment {
             orederinfo.customerInfo.setHaveOwnCar(user.getHaveCar());//名下车产类型
             orederinfo.customerInfo.setHaveOwnHouse(user.getHaveHours());//房产类型
             orederinfo.customerInfo.setCreditState(user.getTowYearCred());//信用状况
+
             RequestManager.getCommManager().submitOrder(orederinfo, new RequestManager.CallBack() {
                 @Override
                 public void onSucess(String result) {
@@ -860,7 +876,8 @@ public class CreditSecondFrag extends BaseFragment {
 
                     try {
                         JSONObject jsonObject = new JSONObject(result);
-                        reOrderId = jsonObject.getString("data");//获取订单id
+                        JSONObject data = jsonObject.getJSONObject("data");
+                        reOrderId = data.getString("orderId");//获取订单id
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -984,6 +1001,7 @@ public class CreditSecondFrag extends BaseFragment {
         RequestManager.getCommManager().getDistrict(cityCode, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
+                loadView.loadComplete();
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray data = jsonObject.getJSONArray("data");
                 Gson gson = new Gson();

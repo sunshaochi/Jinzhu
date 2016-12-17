@@ -125,6 +125,11 @@ public class MyCreditAct extends BaseActivity {
 
     private List<MyCreditBean.RowsEntity> datas = new ArrayList<>();
 
+    /**
+     *
+     * @param page
+     * @param orderId
+     */
     private void getMycreditList(final int page, final String orderId) {
         MyCreditEntity mce = new MyCreditEntity();
         mce.setPage(page);

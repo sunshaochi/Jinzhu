@@ -1,20 +1,18 @@
 package com.beyonditsm.financial.http;
 
-import android.text.TextUtils;
-
-import com.beyonditsm.financial.MyApplication;
+import com.beyonditsm.financial.entity.AdressBean;
 import com.beyonditsm.financial.entity.ChangePwdEntity;
 import com.beyonditsm.financial.entity.CreditOfflineUploadEntity;
 import com.beyonditsm.financial.entity.HotProduct;
 import com.beyonditsm.financial.entity.MyCreditEntity;
 import com.beyonditsm.financial.entity.Orederinfo;
+import com.beyonditsm.financial.entity.ProfileInfoBean;
 import com.beyonditsm.financial.entity.SumLoadEntity;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.entity.UserOrderInfo1;
 import com.beyonditsm.financial.entity.UserOrderInfo3;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
-import com.beyonditsm.financial.util.SpUtils;
 import com.lidroid.xutils.http.client.multipart.content.FileBody;
 import com.tandong.sa.json.Gson;
 
@@ -45,8 +43,34 @@ public class CommManager extends RequestManager {
         Map<String, String> params = new HashMap<>();
         params.put("username", ue.getUsername());
         params.put("password", ue.getPassword());
+        params.put("isElow","false");
+//        params.put("roleName","users");
         doPost(IFinancialUrl.LOGIN_URL, params, callBack);
     }
+
+//    /**
+//     * 注册
+//     *
+//     * @param ue       用户entity
+//     * @param callBack 回调
+//     */
+//    public void toRegister(UserEntity ue, String phoneNumber, String captcha, CallBack callBack) {
+//        List<NameValuePair> queryParams = new ArrayList<>();
+//        queryParams.add(new BasicNameValuePair("mobilePhone", phoneNumber));
+//        queryParams.add(new BasicNameValuePair("username", ue.getUsername()));
+//        queryParams.add(new BasicNameValuePair("captcha", captcha));
+//        if (!TextUtils.isEmpty(ue.getReferralCode())) {
+//            queryParams.add(new BasicNameValuePair("referralCode", ue.getReferralCode()));
+//
+//        }
+//        if (!TextUtils.isEmpty(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()))){
+//            queryParams.add(new BasicNameValuePair("registerArea", SpUtils.getCity(MyApplication.getInstance().getApplicationContext())));
+//        }else {
+//            queryParams.add(new BasicNameValuePair("registerArea", "全国"));
+//        }
+//
+//        doPost(IFinancialUrl.REGISTER_URL2, queryParams, callBack);
+//    }
 
     /**
      * 注册
@@ -54,34 +78,27 @@ public class CommManager extends RequestManager {
      * @param ue       用户entity
      * @param callBack 回调
      */
-    public void toRegister(UserEntity ue, String phoneNumber, String captcha, CallBack callBack) {
+    public void toRegister2(UserEntity ue, String phoneNumber, String captcha, CallBack callBack) {
         List<NameValuePair> queryParams = new ArrayList<>();
+//        queryParams.add(new BasicNameValuePair("roleName", phoneNumber));
         queryParams.add(new BasicNameValuePair("phoneNumber", phoneNumber));
-        queryParams.add(new BasicNameValuePair("username", ue.getUsername()));
+        queryParams.add(new BasicNameValuePair("mobilePhone", phoneNumber));
+        queryParams.add(new BasicNameValuePair("userStatus", "users"));
         queryParams.add(new BasicNameValuePair("captcha", captcha));
-        if (!TextUtils.isEmpty(ue.getReferralCode())) {
-            queryParams.add(new BasicNameValuePair("referralCode", ue.getReferralCode()));
-
-        }
-        if (!TextUtils.isEmpty(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()))){
-            queryParams.add(new BasicNameValuePair("registerArea", SpUtils.getCity(MyApplication.getInstance().getApplicationContext())));
-        }else {
-            queryParams.add(new BasicNameValuePair("registerArea", "全国"));
-        }
-
-        doPost(IFinancialUrl.REGISTER_URL, queryParams, callBack);
+        queryParams.add(new BasicNameValuePair("signFrom","Android" ));//IFinancialUrl.MARKET_CODE
+        queryParams.add(new BasicNameValuePair("referCode", ue.getReferralCode()));
+        doPost(IFinancialUrl.REGISTER_URL2,queryParams,callBack);
     }
 
     /**
      * 获取验证码
-     *
      * @param phoneNumber 手机号
      * @param callBack    回调
      */
     public void getCode(String phoneNumber, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
         params.put("phoneNumber", phoneNumber);
-        doPost(IFinancialUrl.GET_CODE, params, callBack);
+        doGet(IFinancialUrl.GET_CODE2+"?phoneNumber="+phoneNumber, callBack);
     }
 
     /**
@@ -101,10 +118,10 @@ public class CommManager extends RequestManager {
      *
      * @param callBack 回调
      */
-    public void findUserInfo(final CallBack callBack) {
+    public void findUserInfo(String mobilephone, final CallBack callBack) {
 //        Map<String, String> params = new HashMap<String, String>();
         List<NameValuePair> params = new ArrayList<>();
-        doPost(IFinancialUrl.USERINFO_URL, params, callBack);
+        doGet(IFinancialUrl.USERINFO_URL, callBack);
     }
 
     /**
@@ -115,6 +132,7 @@ public class CommManager extends RequestManager {
      */
     public void toChangePwd(ChangePwdEntity cpe, final CallBack callBack) {
         Map<String, String> params = new HashMap<>();
+        params.put("username", cpe.getUserName());
         params.put("password", cpe.getPassword());
         params.put("newPassword", cpe.getNewPassword());
         doPost(IFinancialUrl.UPDATE_PWD_URL, params, callBack);
@@ -145,14 +163,29 @@ public class CommManager extends RequestManager {
 
     /**
      * 更新资料
-     *
      * @param ue       用户entity
      * @param callBack 回调
      */
-    public void updateData(UserEntity ue, CallBack callBack) {
+    public void updateData(ProfileInfoBean ue, AdressBean adressBean,String phoneNum, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
 //        MyLogUtils.info("客户信息：" + GsonUtils.bean2Json(ue));
         String json = GsonUtils.bean2Json(ue);
+        String json2=GsonUtils.bean2Json(adressBean);
+
+        JSONObject obj2 = null;
+        try {
+            obj2 = new JSONObject(json2);
+            Iterator<String> it2 = obj2.keys();
+            while (it2.hasNext()) {
+                String key = it2.next();
+                params.put(key, String.valueOf(obj2.get(key)));
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
         try {
             JSONObject obj = new JSONObject(json);
             if ((obj.toString()).contains("createTime")) {
@@ -172,6 +205,7 @@ public class CommManager extends RequestManager {
                 String key = it.next();
                 params.put(key, String.valueOf(obj.get(key)));
             }
+            params.put("mobilePhone", phoneNum);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -196,12 +230,12 @@ public class CommManager extends RequestManager {
      * @param callBack  回调
      */
     public void submitOrder(Orederinfo orederinfo, final CallBack callBack) {
-       Gson gson=new Gson();
+        Gson gson=new Gson();
+
+
         Map<String, String> params = new HashMap<>();
+        params.put("order", gson.toJson(orederinfo));
 //       params.put("orderNo", orderBean.getOrderNo());
-        params.put("productInfo",gson.toJson(orederinfo.getProductInfo()));
-        params.put("orderInfo", gson.toJson(orederinfo.getOrderInfo()));
-        params.put("customerInfo", gson.toJson(orederinfo.getCustomerInfo()));
         doPost(IFinancialUrl.SUBMITORDER_URL, params, callBack);
     }
 
@@ -308,8 +342,19 @@ public class CommManager extends RequestManager {
     }
 
 //个人信息字典（查询车产，职业身份，房产，信用状况）
-    public void findDicMap(String dictCod, CallBack callBack) {
-        todoGet(IFinancialUrl.FINDALLBYDICTCOD+"?dictCod="+dictCod, callBack);
+    public void findDicMap(List<String> dictCode, CallBack callBack) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (int i = 0; i < dictCode.size(); i++) {
+            sb.append("\"");
+            sb.append(dictCode.get(i));
+            sb.append("\"");
+            sb.append(",");
+        }
+        sb.deleteCharAt(sb.length()-1);
+        sb.append("]");
+        todoGet(IFinancialUrl.DIC_MAP_URL+"?jsonArrayKey="+sb.toString(), callBack);
+        MyLogUtils.info(IFinancialUrl.DIC_MAP_URL+"?jsonArrayKey="+sb.toString());
     }
 
 
@@ -320,11 +365,13 @@ public class CommManager extends RequestManager {
      * 获取上传资料列表
      *
      * @param orderId 订单id
+     * flowType 1-必填流程，2-增信流程
      */
     public void getUpLoadList(String orderId, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
         params.put("orderId", orderId);
-        doPost(IFinancialUrl.UPLOAD_LIST_URL, params, callBack);
+        params.put("flowType", "1");
+        todoGet(IFinancialUrl.UPLOAD_LIST_URL+"?orderId="+orderId+"&flowType=1", callBack);
     }
 
     /**
@@ -369,12 +416,11 @@ public class CommManager extends RequestManager {
      * 查看是否需要增信资料
      *
      * @param orderId  订单id
+     * flowId 1-查询普通申贷流程  2-查询增信流程
      * @param callBack 回调
      */
     public void findOrderFlow(String orderId, CallBack callBack) {
-        Map<String, String> params = new HashMap<>();
-        params.put("orderId", orderId);
-        doPost(IFinancialUrl.FIND_EXTRA_FlOW_URL, params, callBack);
+        todoGet(IFinancialUrl.UPLOAD_LIST_URL+"?orderId="+orderId+"&flowType=2", callBack);
     }
 
 
@@ -539,6 +585,18 @@ public class CommManager extends RequestManager {
     }
 
     /**
+     * 获取急借通详情
+     *
+     * @param callBack
+     */
+    public void getProductDetail(String productId,CallBack callBack) {
+//        Map<String, String> params = new HashMap<>();
+//        params.put("productId",productId);
+        doGet(IFinancialUrl.GETSHORTLOANPRODUCTDETAIL+"?productId="+productId, callBack);
+    }
+
+
+    /**
      * 保存急借通第四版块信息接口（城市门店、身份证）
      *
      * @param callBack
@@ -592,13 +650,13 @@ public class CommManager extends RequestManager {
         params.put("relatives1MobilePhone",entity3.getRelatives1MobilePhone());
         params.put("relatives2Name",entity3.getRelatives2Name());
         params.put("relatives2Rs",entity3.getRelatives2Rs());
-        params.put("relatives2MobilePhone ", entity3.getRelatives2MobilePhone());
+        params.put("relatives2MobilePhone", entity3.getRelatives2MobilePhone());
         params.put("colleagueName", entity3.getColleagueName());
         params.put("colleagueRs", entity3.getColleagueRs());
-        params.put("colleagueMobilePhone ", entity3.getColleagueMobilePhone());
+        params.put("colleagueMobilePhone", entity3.getColleagueMobilePhone());
         params.put("ecName", entity3.getEcName());
         params.put("ecRs", entity3.getEcRs());
-        params.put("ecMobilePhone ", entity3.getEcMobilePhone());
+        params.put("ecMobilePhone", entity3.getEcMobilePhone());
         doPost(IFinancialUrl.SAVE_USER_ORDER_INFO3, params, callBack);
     }
 
@@ -635,26 +693,29 @@ public class CommManager extends RequestManager {
      * @param callBack
      */
     public void queryAllProvince(CallBack callBack){
-        Map<String, String> params = new HashMap<>();
-        doPost(IFinancialUrl.QUERY_ALL_PROVINCE, params, callBack);
+//        Map<String, String> params = new HashMap<>();
+//        doPost(IFinancialUrl.QUERY_ALL_PROVINCE, params, callBack);
+        doGet(IFinancialUrl.QUERY_ALL_PROVINCE,callBack);
     }
     /**
      * 急借通市查询接口
      * @param callBack
      */
     public void queryAllCity(String parentId,CallBack callBack){
-        Map<String, String> params = new HashMap<>();
-        params.put("parentId",parentId+"");
-        doPost(IFinancialUrl.QUERY_ALL_CITY, params, callBack);
+//        Map<String, String> params = new HashMap<>();
+//        params.put("parentId",parentId+"");
+//        doPost(IFinancialUrl.QUERY_ALL_CITY, params, callBack);
+        doGet(IFinancialUrl.QUERY_ALL_CITY+"?parentId="+parentId,callBack);
     }
     /**
      * 急借通区查询接口
      * @param callBack
      */
     public void queryAllArea(String parentId,CallBack callBack) {
-        Map<String, String> params = new HashMap<>();
-        params.put("parentId", parentId);
-        doPost(IFinancialUrl.QUERY_ALL_AREA, params, callBack);
+//        Map<String, String> params = new HashMap<>();
+//        params.put("parentId", parentId);
+//        doPost(IFinancialUrl.QUERY_ALL_AREA, params, callBack);
+        doGet(IFinancialUrl.QUERY_ALL_AREA+"?parentId="+parentId,callBack);
     }
 
 
@@ -673,6 +734,16 @@ public class CommManager extends RequestManager {
      */
     public void getEducation(CallBack callBack){
         Map<String, String> params = new HashMap<>();
+        List<String> list = new ArrayList<>();
+        list.add("Salary");
+        list.add("Working_property");
+        list.add("Unit_property");
+        list.add("liveType");
+        list.add("relation");
+        list.add("education");
+        list.add("maritalStatus");
+        String jsonArray = GsonUtils.bean2Json(list);
+        params.put("jsonArrayKey",jsonArray);
         doPost(IFinancialUrl.EDUCATION,params,callBack);
     }
 

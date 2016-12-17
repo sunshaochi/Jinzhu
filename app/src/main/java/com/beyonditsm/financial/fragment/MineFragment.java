@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -26,13 +25,11 @@ import com.beyonditsm.financial.activity.user.MyRecommAct;
 import com.beyonditsm.financial.activity.user.SettingAct;
 import com.beyonditsm.financial.activity.user.UpdateAct;
 import com.beyonditsm.financial.activity.wallet.MyWalletActivity;
-import com.beyonditsm.financial.db.FriendDao;
 import com.beyonditsm.financial.db.MessageDao;
-import com.beyonditsm.financial.entity.FriendBean;
+import com.beyonditsm.financial.entity.AdressBean;
+import com.beyonditsm.financial.entity.ProfileInfoBean;
 import com.beyonditsm.financial.entity.ResultData;
-import com.beyonditsm.financial.entity.UserEntity;
-import com.beyonditsm.financial.entity.UserLoginEntity;
-import com.beyonditsm.financial.http.IFinancialUrl;
+import com.beyonditsm.financial.entity.UserLoginBean;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
@@ -40,17 +37,17 @@ import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.CircleImageView;
 import com.beyonditsm.financial.view.MinePageLoadingView;
 import com.beyonditsm.financial.widget.MyAlertDialog;
-import com.beyonditsm.financial.widget.ScaleAllImageView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.eventbus.EventBus;
 import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
-import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import cn.jpush.android.api.JPushInterface;
@@ -58,7 +55,6 @@ import cn.jpush.android.api.TagAliasCallback;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.CSCustomServiceInfo;
-import io.rong.imlib.model.UserInfo;
 
 /**
  * 我的
@@ -95,10 +91,12 @@ public class MineFragment extends BaseFragment {
 
     @ViewInject(R.id.rlHelp)
     private RelativeLayout rlHelp;
-    private UserEntity user;//用户信息
+    private UserLoginBean user;//用户信息
     public static final String USER_KEY = "user_info";
     private boolean isLogin;
-
+    private AdressBean adressBean;
+    private List<AdressBean> adressBeanList=new ArrayList<>();
+    private ProfileInfoBean profileInfoBean;
     String grade;//超过百分之多少用户
 
     @SuppressWarnings("deprecation")
@@ -109,7 +107,7 @@ public class MineFragment extends BaseFragment {
             .cacheInMemory(true) // 设置下载的图片是否缓存在内存中
             .cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
             .build(); // 创建配置过得DisplayImageOption对象
-    private UserLoginEntity ule;
+    private UserLoginBean ule;
     private DisplayRedReceiver displayRedReceiver;
     private HideRedReceiver hideRedReceiver;
     private WalletRedReceiver walletRedReceiver;
@@ -142,8 +140,8 @@ public class MineFragment extends BaseFragment {
         } else {
             isLogin = true;
             tvExit.setVisibility(View.VISIBLE);
-//            getUserInfo();
-            getUserLoginInfo();
+            getUserInfo();
+//            getUserLoginInfo();
         }
 
         svMine.smoothScrollTo(0, 20);
@@ -301,11 +299,11 @@ public class MineFragment extends BaseFragment {
                 CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
                 CSCustomServiceInfo csInfo;
                 if (user !=null){
-                    csInfo = csBuilder.nickName(user.getRoleName() == null ||user.getRoleName().equals("")?tvName.getText().toString():user.getRoleName()+"")
-                            .city(user.getCity()+"")
-                            .address(user.getDetailAddr()+"")
-                            .age(user.getUserAge()+"")
-                            .email(user.getEmail()+"").build();
+                    csInfo = csBuilder.nickName("users")//user.getRoleName() == null ||user.getRoleName().equals("")?tvName.getText().toString():user.getRoleName()+""
+                            .city(adressBean.getCity()+"")
+                            .address(adressBean.getAddress()+"")
+                            .age(profileInfoBean.getAge()+"")
+                            .email(profileInfoBean.getEmail()+"").build();
                 }else {
                     csInfo = csBuilder.nickName(tvName.getText().toString()).build();
                 }
@@ -331,32 +329,39 @@ public class MineFragment extends BaseFragment {
      */
     private void getUserInfo() {
 
-        RequestManager.getCommManager().findUserInfo(new RequestManager.CallBack() {
+        RequestManager.getCommManager().findUserInfo( SpUtils.getPhonenumber(getContext()),new RequestManager.CallBack() {
             @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) {
-                ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
+                ResultData<UserLoginBean> rd = (ResultData<UserLoginBean>) GsonUtils.json(result, UserLoginBean.class);
                 user = rd.getData();
                 if (user != null) {
-                    if (!TextUtils.isEmpty(user.getAccountName())) {
-                        tvName.setText(user.getAccountName());
+                    if (user.getProfileInfoBean()!=null){
+                        profileInfoBean=user.getProfileInfoBean();
+                        if (!TextUtils.isEmpty(profileInfoBean.getName())) {
+                            tvName.setText(profileInfoBean.getName());
+                        }
                     }
+                    if (user.getAdress()!=null){
+                        adressBean= user.getAdress();
+                    }
+
 //                    tvGrade.setText(user.getCreditGrade());
 
 
-                    ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon(), civHead, options);
-                    if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
-                        if (!TextUtils.isEmpty(user.getAccountId())) {
-                            RongIM.getInstance().setCurrentUserInfo(new UserInfo(user.getAccountId(), user.getUserName(),
-                                    Uri.parse(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon())));
-                            RongIM.getInstance().setMessageAttachedUserInfo(true);
-                            FriendBean bean = new FriendBean();
-                            bean.setUserHead(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon());
-                            bean.setUserName(user.getUserName());
-                            bean.setUserId(user.getAccountId());
-                            FriendDao.saveMes(bean);
-                        }
-                    }
+//                    ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon(), civHead, options);获取个人头像
+//                    if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
+//                        if (!TextUtils.isEmpty(profileInfoBean.get())) {
+//                            RongIM.getInstance().setCurrentUserInfo(new UserInfo(user.getAccountId(), user.getUserName(),
+//                                    Uri.parse(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon())));
+//                            RongIM.getInstance().setMessageAttachedUserInfo(true);
+//                            FriendBean bean = new FriendBean();
+//                            bean.setUserHead(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon());
+//                            bean.setUserName(user.getUserName());
+//                            bean.setUserId(user.getAccountId());
+//                            FriendDao.saveMes(bean);
+//                        }
+//                    }
                     minePageLoadingView.loadComplete();
                 } else {
                     minePageLoadingView.loadError();
@@ -407,7 +412,7 @@ public class MineFragment extends BaseFragment {
         getActivity().registerReceiver(hideRedReceiver, new IntentFilter(HIDE_POINT));
         getActivity().registerReceiver(walletRedReceiver, new IntentFilter(WALLET_POINT));
         getActivity().registerReceiver(hideWalletRedReceiver, new IntentFilter(HIDE_WALLET_POINT));
-        getUserLoginInfo();
+//        getUserLoginInfo();
     }
 
     @Override
@@ -457,8 +462,9 @@ public class MineFragment extends BaseFragment {
         public void onReceive(Context context, Intent intent) {
             user = intent.getParcelableExtra(USER_KEY);
             if (user != null) {
-                tvName.setText(user.getUserName());
-                ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon(), civHead, options);
+//                tvName.setText(user.getName());
+//                暂时没有头像，注掉，后台无返回。
+//                ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon(), civHead, options);
             } else {
                 tvExit.setVisibility(View.VISIBLE);
                 isLogin = true;
@@ -503,25 +509,28 @@ public class MineFragment extends BaseFragment {
                 JSONObject obj = new JSONObject(result);
                 int status = obj.getInt("status");
                 if (status == 200) {
-                    ResultData<UserLoginEntity> rd = (ResultData<UserLoginEntity>) GsonUtils.json(result, UserLoginEntity.class);
+                    ResultData<UserLoginBean> rd = (ResultData<UserLoginBean>) GsonUtils.json(result, UserLoginBean.class);
                     ule = rd.getData();
                     if (ule != null) {
-                        int vipLevel = ule.getVipLevel();
-                        if (vipLevel == 0) {
-                            ivVipLevel.setBackgroundResource(R.mipmap.vip_nomal);
-                        } else if (vipLevel == 1) {
-                            ivVipLevel.setBackgroundResource(R.mipmap.vip1);
-                        } else if (vipLevel == 2) {
-                            ivVipLevel.setBackgroundResource(R.mipmap.vip2);
-                        } else if (vipLevel == 3) {
-                            ivVipLevel.setBackgroundResource(R.mipmap.vip3);
-                        } else if (vipLevel == 4) {
-                            ivVipLevel.setBackgroundResource(R.mipmap.vip4);
-                        } else if (vipLevel == 5) {
-                            ivVipLevel.setBackgroundResource(R.mipmap.vip5);
-                        } else if (vipLevel == 6) {
-                            ivVipLevel.setBackgroundResource(R.mipmap.vip6);
+                        if (ule.getProfileInfoBean()!=null){
+//                            user=ule.getProfileInfoBean();
                         }
+//                        int vipLevel = ule.getVipLevel();
+//                        if (vipLevel == 0) {
+//                            ivVipLevel.setBackgroundResource(R.mipmap.vip_nomal);
+//                        } else if (vipLevel == 1) {
+//                            ivVipLevel.setBackgroundResource(R.mipmap.vip1);
+//                        } else if (vipLevel == 2) {
+//                            ivVipLevel.setBackgroundResource(R.mipmap.vip2);
+//                        } else if (vipLevel == 3) {
+//                            ivVipLevel.setBackgroundResource(R.mipmap.vip3);
+//                        } else if (vipLevel == 4) {
+//                            ivVipLevel.setBackgroundResource(R.mipmap.vip4);
+//                        } else if (vipLevel == 5) {
+//                            ivVipLevel.setBackgroundResource(R.mipmap.vip5);
+//                        } else if (vipLevel == 6) {
+//                            ivVipLevel.setBackgroundResource(R.mipmap.vip6);
+//                        }
                     }
                 }
 

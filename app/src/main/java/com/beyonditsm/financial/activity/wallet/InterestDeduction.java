@@ -15,14 +15,15 @@ import android.widget.Toast;
 import com.beyonditsm.financial.AppManager;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
+import com.beyonditsm.financial.entity.BindCardBean;
 import com.beyonditsm.financial.entity.OrderBean;
-import com.beyonditsm.financial.entity.QueryBankCardEntity;
+import com.beyonditsm.financial.entity.OrderBean2;
+import com.beyonditsm.financial.entity.QueRenOrderBean;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GsonUtils;
-import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.widget.DialogChooseProvince;
@@ -72,18 +73,18 @@ public class InterestDeduction extends BaseActivity {
     private EditText zjPassword;//资金密码
     @ViewInject(R.id.tv_minPayment)
     private TextView tvMinPayment;//最小兑换金额
-
-    private OrderBean orderBean,orderBeanLixi;//订单实体
+    private OrderBean orderBeanLixi;
+    private QueRenOrderBean orderBean;//订单实体
     private UserEntity user;//用户实体
 
-    private List<OrderBean> list;
+    private List<OrderBean2> list;
     private int position;//选择订单号的位置
 
     private double MIN_MARK = 0.0;
     private double MAX_MARK = 0.0;
-    private List<QueryBankCardEntity> bindList;
+    private List<BindCardBean> bindList;
     private int minPayment;
-
+    private  String uid;
     @Override
     public void setLayout() {
         setContentView(R.layout.act_interest_exchange);
@@ -112,7 +113,7 @@ public class InterestDeduction extends BaseActivity {
 
             }
         }
-        getOrderNoList();
+        getOrderNoList(uid);
         findBankCard();
         getMinExchange();
 
@@ -244,8 +245,14 @@ public class InterestDeduction extends BaseActivity {
                             @Override
                             public void onClick(int which) {
                                 creName.setText(list.get(which-1).getOrderNo());
+                                if (!TextUtils.isEmpty(list.get(which-1).getDeductibleInterest())){
+                                    deductionDebit.setText(list.get(which-1).getDeductibleInterest()+"元");
+                                }else {
+                                    deductionDebit.setText("0+元");
+
+                                }
                                 position=which-1;
-                                getLiXiByOrder(creName.getText().toString());
+//                                getLiXiByOrder(creName.getText().toString());
                             }
                         });
                     }
@@ -257,21 +264,22 @@ public class InterestDeduction extends BaseActivity {
                 if(isValidate()){
                     setOrderBean();
                         if (!TextUtils.isEmpty(zjPassword.getText().toString().trim())) {
-                            RequestManager.getWalletManager().submitDeductionTOrder(orderBean, zjPassword.getText().toString(), new RequestManager.CallBack() {
+                            orderBean.setFundPassword(zjPassword.getText().toString().trim());
+                            RequestManager.getWalletManager().comitOrder(orderBean, new RequestManager.CallBack() {
                                 @Override
                                 public void onSucess(String result) throws JSONException {
                                     Intent intent = new Intent(InterestDeduction.this, OrderCommitSusAct.class);
                                     startActivity(intent);
-                                    MyLogUtils.degug(orderBean.getUserName() + ">" + orderBean.getBankName() + ">" + orderBean.getBankCardNo()
-                                            + ">" + orderBean.getCashOutAmount() + ">" + orderBean.getOrderNo() + ">" + zjPassword.getText().toString());
+//                                    MyLogUtils.degug(orderBean.getUserName() + ">" + orderBean.getBankName() + ">" + orderBean.getBankCardNo()
+//                                            + ">" + orderBean.getCashOutAmount() + ">" + orderBean.getOrderNo() + ">" + zjPassword.getText().toString());
 
                                 }
 
                                 @Override
                                 public void onError(int status, String msg) {
                                     Toast.makeText(InterestDeduction.this, msg, Toast.LENGTH_SHORT).show();
-                                    MyLogUtils.degug(orderBean.getUserName() + ">" + orderBean.getBankName() + ">" + orderBean.getBankCardNo()
-                                            + ">" + orderBean.getCashOutAmount() + ">" + orderBean.getOrderNo() + ">" + zjPassword.getText().toString());
+//                                    MyLogUtils.degug(orderBean.getUserName() + ">" + orderBean.getBankName() + ">" + orderBean.getBankCardNo()
+//                                            + ">" + orderBean.getCashOutAmount() + ">" + orderBean.getOrderNo() + ">" + zjPassword.getText().toString());
 
                                 }
                             });
@@ -306,16 +314,16 @@ public class InterestDeduction extends BaseActivity {
      * 给订单实体赋值
      */
     private void setOrderBean(){
-        orderBean=new OrderBean();
+        orderBean=new QueRenOrderBean();
         if(!TextUtils.isEmpty(name.getText().toString())){
-            orderBean.setUserName(name.getText().toString());
+            orderBean.setName(name.getText().toString());
         }
         if(!TextUtils.isEmpty(bankName.getText().toString())){
             orderBean.setBankName(bankName.getText().toString());
         }
         if(!TextUtils.isEmpty(bankCount.getText().toString())){
             if(FinancialUtil.checkBankCard(bankCount.getText().toString())) {
-                orderBean.setBankCardNo(bankCount.getText().toString());
+                orderBean.setBankCard(bankCount.getText().toString());
             }else {
                 bankCount.setText("");
                 Toast.makeText(InterestDeduction.this,"请输入正确的银行卡号",Toast.LENGTH_SHORT).show();
@@ -323,15 +331,16 @@ public class InterestDeduction extends BaseActivity {
             }
         }
         if (!TextUtils.isEmpty(depositBank.getText().toString())){
-            orderBean.setDepositBank(depositBank.getText().toString());
+            orderBean.setBankBranchName(depositBank.getText().toString());
         }
         if(!TextUtils.isEmpty(tvlixixianjin.getText().toString())){
-            orderBean.setCashOutAmount(Double.parseDouble(tvlixixianjin.getText().toString()));
+            orderBean.setAmount(tvlixixianjin.getText().toString());
         }
         if(!TextUtils.isEmpty(creName.getText().toString())){
             orderBean.setOrderNo(creName.getText().toString());
-            orderBean.setOrderId(list.get(position).getOrderId());
+//            orderBean.setOrderId(list.get(position).getOrderId());
         }
+        orderBean.setType(2+"");
     }
 
     private boolean isValidate(){
@@ -395,16 +404,15 @@ public class InterestDeduction extends BaseActivity {
     /**
      * 获取个人贷款订单编号列表
      */
-    private void getOrderNoList(){
-        RequestManager.getWalletManager().findOrderNoListByUserName(new RequestManager.CallBack() {
+    private void getOrderNoList(String uid){
+        RequestManager.getWalletManager().findOrderNoListByUserName(uid,new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
                 list=new ArrayList<>();
-
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray dataArr = jsonObject.getJSONArray("data");
                 Gson gson = new Gson();
-                list = gson.fromJson(dataArr.toString(), new TypeToken<List<OrderBean>>() {
+                list = gson.fromJson(dataArr.toString(), new TypeToken<List<OrderBean2>>() {
                 }.getType());
 
 
@@ -453,12 +461,12 @@ public class InterestDeduction extends BaseActivity {
                 JSONObject object = new JSONObject(result);
                 JSONArray data = object.getJSONArray("data");
                 Gson gson = new Gson();
-                bindList = gson.fromJson(data.toString(), new TypeToken<List<QueryBankCardEntity>>() {
+                bindList = gson.fromJson(data.toString(), new TypeToken<List<BindCardBean>>() {
                 }.getType());
 
                 if (bindList != null) {
                     for (int i = 0; i < bindList.size(); i++) {
-                        int status = bindList.get(i).getStatus();
+                        int status =Integer.parseInt(bindList.get(i).getStatus());
                         if (status == 2) {
                             if (!TextUtils.isEmpty(bindList.get(i).getBankName())) {
                                 bankName.setText(bindList.get(i).getBankName());

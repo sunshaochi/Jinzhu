@@ -8,6 +8,11 @@
     android:paddingLeft="15dp"
     android:paddingTop="10dp">
 
+    <View
+        android:visibility="gone"
+        style="@style/view_line"
+        android:layout_marginTop="10dp"></View>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -63,30 +68,38 @@
 
         </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/image_logo"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="5dp" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/creditName"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#333333"
-                android:textSize="16sp" />
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/image_logo"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="5dp" />
+
+                <TextView
+                    android:id="@+id/creditName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#333333"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/cycle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
                 android:textColor="#666666"
                 android:textSize="12sp" />
 
@@ -143,8 +156,4 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
-    <View
-        style="@style/view_line"
-        android:layout_marginTop="10dp"></View>
 </LinearLayout>

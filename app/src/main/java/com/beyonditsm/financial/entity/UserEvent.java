@@ -6,12 +6,12 @@ package com.beyonditsm.financial.entity;
  */
 public class UserEvent {
 
-    public UserEntity ue;
+    public ProfileInfoBean ue;
     public CreditManager cm;
     public ServantEntity se;
     public int position;
     public String type;
-    public UserEvent(UserEntity ueI,int posi){
+    public UserEvent(ProfileInfoBean ueI,int posi){
         ue=ueI;
         position=posi;
     }

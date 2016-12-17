@@ -17,10 +17,13 @@ import com.beyonditsm.financial.entity.JJTCityEntity;
 import com.beyonditsm.financial.entity.JJTCounyEntity;
 import com.beyonditsm.financial.entity.JJTProvinceEntity;
 import com.beyonditsm.financial.entity.RelationEntity;
+import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UnitPropertyEntity;
+import com.beyonditsm.financial.entity.ZidianBean;
 import com.beyonditsm.financial.http.CommManager;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.CheckUtil;
+import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
@@ -147,12 +150,40 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
     public void init(Bundle savedInstanceState) {
         setTopTitle("快速判断资质");
         setLeftTv("返回");
-        orderId = getIntent().getStringExtra(CreditSpeedSecond_1Act.ORDER_ID);
-        queryUnitProperty();//获取单位性质
-        queryWorkingProperty();//获取工作性质
-        querySalary();//获取月薪发放形式
+        orderId = getIntent().getStringExtra(CreditSpeedSecond_1Act.ORDER_ID);//拿到第一步的订单已id;
         queryAllProvince();//获取省
+
+//        queryUnitProperty();//获取单位性质
+//        queryWorkingProperty();//获取工作性质
+//        querySalary();//获取月薪发放形式
+        getZidian();//获取工资发放形式，工作性质，月薪发放形式
         initText();
+    }
+    //获取字典信息（）
+    private void getZidian() {
+        RequestManager.getCommManager().getEducation(new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+//                JSONObject jsonObject = new JSONObject(result);
+//                JSONArray data = jsonObject.getJSONArray("data");
+//                JSONArray salary=data.getJSONArray(0);
+//                JSONArray salary=data.getJSONArray(0);
+//                Gson gson = new Gson();
+//                eduList = gson.fromJson(data.toString(), new TypeToken<List<RelationEntity>>() {
+//                }.getType());
+                ResultData<ZidianBean> rd= ( ResultData<ZidianBean>) GsonUtils.json(result,ZidianBean.class);
+                ZidianBean zidianBean=rd.getData();
+                workPropertyList=zidianBean.getWorking_property();//工作性质
+                unitPropertyList=zidianBean.getUnit_property();//单位性质
+                salaryPropertyList=zidianBean.getSalary();//月薪发放形式
+
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
+            }
+        });
     }
 
     /*初始化页面字体显示*/
@@ -207,8 +238,8 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
                             sb.append(adress.get(i));
                         }
                         companyProvince = provinceList.get(id.get(0)).getId();
-                        companyCity = cityEntityList.get(id.get(0)).getId();
-                        companyArea = counyEntityList.get(id.get(0)).getId();
+                        companyCity = cityEntityList.get(id.get(1)).getId();
+                        companyArea = counyEntityList.get(id.get(2)).getId();
                         tvSpeedSelectCompanyAddress.setText(sb.toString());
                     }
                 });
@@ -228,60 +259,60 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
         }
     }
 
-    /*查询工作性质*/
-    private void queryWorkingProperty() {
-        CommManager.getCommManager().queryWorkingProperty(new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
-                JSONObject jsonObject = new JSONObject(result);
-                JSONArray data = jsonObject.getJSONArray("data");
-                workPropertyList = new Gson().fromJson(data.toString(), new TypeToken<List<UnitPropertyEntity>>() {
-                }.getType());
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-
-            }
-        });
-    }
-
-    /*查询单位性质*/
-    private void queryUnitProperty() {
-        CommManager.getCommManager().queryUnitProperty(new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
-                JSONObject jsonObject = new JSONObject(result);
-                JSONArray data = jsonObject.getJSONArray("data");
-                unitPropertyList = new Gson().fromJson(data.toString(), new TypeToken<List<UnitPropertyEntity>>() {
-                }.getType());
-
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-
-            }
-        });
-    }
-
-    /*查询月薪发放形式*/
-    private void querySalary() {
-        CommManager.getCommManager().querySalary(new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
-                JSONObject jsonObject = new JSONObject(result);
-                JSONArray data = jsonObject.getJSONArray("data");
-                salaryPropertyList = new Gson().fromJson(data.toString(), new TypeToken<List<UnitPropertyEntity>>() {
-                }.getType());
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-
-            }
-        });
-    }
+//    /*查询工作性质*/
+//    private void queryWorkingProperty() {
+//        CommManager.getCommManager().queryWorkingProperty(new RequestManager.CallBack() {
+//            @Override
+//            public void onSucess(String result) throws JSONException {
+//                JSONObject jsonObject = new JSONObject(result);
+//                JSONArray data = jsonObject.getJSONArray("data");
+//                workPropertyList = new Gson().fromJson(data.toString(), new TypeToken<List<UnitPropertyEntity>>() {
+//                }.getType());
+//            }
+//
+//            @Override
+//            public void onError(int status, String msg) {
+//
+//            }
+//        });
+//    }
+//
+//    /*查询单位性质*/
+//    private void queryUnitProperty() {
+//        CommManager.getCommManager().queryUnitProperty(new RequestManager.CallBack() {
+//            @Override
+//            public void onSucess(String result) throws JSONException {
+//                JSONObject jsonObject = new JSONObject(result);
+//                JSONArray data = jsonObject.getJSONArray("data");
+//                unitPropertyList = new Gson().fromJson(data.toString(), new TypeToken<List<UnitPropertyEntity>>() {
+//                }.getType());
+//
+//            }
+//
+//            @Override
+//            public void onError(int status, String msg) {
+//
+//            }
+//        });
+//    }
+//
+//    /*查询月薪发放形式*/
+//    private void querySalary() {
+//        CommManager.getCommManager().querySalary(new RequestManager.CallBack() {
+//            @Override
+//            public void onSucess(String result) throws JSONException {
+//                JSONObject jsonObject = new JSONObject(result);
+//                JSONArray data = jsonObject.getJSONArray("data");
+//                salaryPropertyList = new Gson().fromJson(data.toString(), new TypeToken<List<UnitPropertyEntity>>() {
+//                }.getType());
+//            }
+//
+//            @Override
+//            public void onError(int status, String msg) {
+//
+//            }
+//        });
+//    }
 
     /*省查询*/
     private void queryAllProvince() {
@@ -388,13 +419,13 @@ public class CreditSpeedSecond_2Act extends BaseActivity implements JJTInterface
                     MyLogUtils.info("which"+which+"");
                     switch (CURRENT_SELECT){
                         case RL_SPEEDCOMPANYTYPE:
-                            companyType = unitPropertyList.get(which-1).getDictSubId()+"";
+                            companyType = unitPropertyList.get(which-1).getOptionValue()+"";
                             break;
                         case RL_SPEEDSALARYTYPE:
-                            salaryType = salaryPropertyList.get(which-1).getDictSubId()+"";
+                            salaryType = salaryPropertyList.get(which-1).getOptionValue()+"";
                             break;
                         case RL_SPEEDWORKTYPE:
-                            workType = workPropertyList.get(which-1).getDictSubId()+"";
+                            workType = workPropertyList.get(which-1).getOptionValue()+"";
                             break;
                     }
                 }

@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.entity.AddBankCardEntity;
-import com.beyonditsm.financial.entity.BankListEntity;
+import com.beyonditsm.financial.entity.BanksBean;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
@@ -49,7 +49,7 @@ public class AddBankCardAct extends BaseActivity {
     @ViewInject(R.id.tv_sureAdd)
     private TextView tvSureAdd;
     private UserEntity user;//用户实体
-    private List<BankListEntity> bankList;
+    private List<BanksBean> bankList;
     private int bankNamePos;
 
     @Override
@@ -135,7 +135,7 @@ public class AddBankCardAct extends BaseActivity {
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray dataArr = jsonObject.getJSONArray("data");
                 Gson gson = new Gson();
-                bankList = gson.fromJson(dataArr.toString(), new TypeToken<List<BankListEntity>>() {
+                bankList = gson.fromJson(dataArr.toString(), new TypeToken<List<BanksBean>>() {
                 }.getType());
             }
 
