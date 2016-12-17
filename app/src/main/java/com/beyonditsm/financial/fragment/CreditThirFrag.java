@@ -2,6 +2,7 @@ package com.beyonditsm.financial.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -27,6 +28,7 @@ import com.beyonditsm.financial.activity.user.MyCreditAct;
 import com.beyonditsm.financial.entity.CreditEvent;
 import com.beyonditsm.financial.entity.UpLoadEntity;
 import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.view.AutoDismissDialog;
 import com.beyonditsm.financial.view.LoadingView;
@@ -119,8 +121,8 @@ public class CreditThirFrag extends BaseFragment {
      */
     public void onEvent(CreditEvent event) {
         getUploadList(orderId);
-//        applayStatus(orderId);
     }
+
 
     @Override
     public void onDestroy() {
@@ -152,7 +154,7 @@ public class CreditThirFrag extends BaseFragment {
                     JSONArray array = jsonObject.getJSONArray("data");
                     datas = gson.fromJson(array.toString(), new TypeToken<List<UpLoadEntity>>() {
                     }.getType());
-                    setIsTvClick(datas);
+
                     if (adapter == null) {
                         adapter = new MyAdapter(datas);
                         lvCredit.setAdapter(adapter);
@@ -162,10 +164,14 @@ public class CreditThirFrag extends BaseFragment {
                 }else{
                     lvCreditThird.noContent();
                     applayCredit(orderId);
-                    new AutoDismissDialog(getContext()).builder().show();
+                    MyDismissDialog myDismissDialog = new MyDismissDialog(getContext());
+                    myDismissDialog.builder().show();
                 }
-
+                applayStatus(orderId);
+                setIsTvClick(datas);
             }
+
+
 
             @Override
             public void onError(int status, String msg) {
@@ -180,6 +186,14 @@ public class CreditThirFrag extends BaseFragment {
             }
         });
     }
+
+    private static class MyDismissDialog extends AutoDismissDialog{
+
+        MyDismissDialog(Context context) {
+            super(context);
+        }
+    }
+
 
     /**
      * 提交审核
@@ -317,36 +331,36 @@ public class CreditThirFrag extends BaseFragment {
     }
 
 
-//    private void applayStatus(final String orderId) {
-//        RequestManager.getCommManager().applayStatus(orderId, new RequestManager.CallBack() {
-//            @Override
-//            public void onSucess(String result) throws JSONException {
-//                JSONObject object = new JSONObject(result);
-//                JSONObject data = object.getJSONObject("data");
-//                int r = data.getInt("result");
-//                orderSts = data.getString("orderSts");
-//                MyLogUtils.info("返回的结果：" + r + ",orderSts:" + orderSts);
-//                if (r == 1) {
-//                    tvCredit.setBackgroundResource(R.drawable.button_gen);
-//                    tvCredit.setEnabled(true);
-//                    tvCredit.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            applayCredit(orderId);
-//                        }
-//                    });
-//                } else if (r == 0) {
-//                    tvCredit.setBackgroundResource(R.drawable.button_grey);
-//                    tvCredit.setEnabled(false);
-//                }
-//            }
-//
-//            @Override
-//            public void onError(int status, String msg) {
-//
-//            }
-//        });
-//    }
+    private void applayStatus(final String orderId) {
+        RequestManager.getCommManager().applayStatus(orderId, new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                JSONObject object = new JSONObject(result);
+                JSONObject data = object.getJSONObject("data");
+                int r = data.getInt("result");
+                orderSts = data.getString("orderSts");
+                MyLogUtils.info("返回的结果：" + r + ",orderSts:" + orderSts);
+                if (r == 1) {
+                    tvCredit.setBackgroundResource(R.drawable.button_gen);
+                    tvCredit.setEnabled(true);
+                    tvCredit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            applayCredit(orderId);
+                        }
+                    });
+                } else if (r == 0) {
+                    tvCredit.setBackgroundResource(R.drawable.button_grey);
+                    tvCredit.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+
+            }
+        });
+    }
 
     /**
      * 适配器

@@ -245,6 +245,7 @@ public class CreditStepAct extends BaseActivity {
         super.onDestroy();
         EventBus.getDefault().unregister(this);//反注册EventBus
         unregisterReceiver(myRevice);
+        activityInstance = null;
         myRevice = null;
         orderId = null;
         upList = null;

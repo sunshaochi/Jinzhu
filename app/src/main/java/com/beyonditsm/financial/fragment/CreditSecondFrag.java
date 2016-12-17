@@ -105,8 +105,8 @@ public class CreditSecondFrag extends BaseFragment {
     private boolean creditSelect = false;
     public static final String USER_KEY = "user_info";
     public static final String PRODUCT_KEY = "product_info";
-    private Map<Integer, Boolean> map = new HashMap<>();
-    private UserEntity user;
+    public Map<Integer, Boolean> map = new HashMap<>();
+    public UserEntity user;
     private String haveHoursId;
     private String haveCarId;
     private String jobId;
@@ -121,6 +121,7 @@ public class CreditSecondFrag extends BaseFragment {
     private DialogJJTAddress dialogJJTAddress;
     private List<JJTCityEntity> cityList;
     private List<JJTCounyEntity> counyList;
+    private List<String> keyLists;
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -150,16 +151,15 @@ public class CreditSecondFrag extends BaseFragment {
     public void initData(Bundle savedInstanceState) {
 //        getData();//获取个人资料并给界面赋值
         addressUtil = new AddressUtil(mParentActivity);
-        List<String> keyLists = new ArrayList<>();
+        keyLists = new ArrayList<>();
         keyLists.add("jobType");
         keyLists.add("cardProperty");
         keyLists.add("houseProperty");
         keyLists.add("creidtType");
+        getDictionaryContent(keyLists);//职业身份获取身份列表供选择
         user = new UserEntity();
         user.setUserSex(1);
-        getDictionaryContent(keyLists);//职业身份获取身份列表供选择
-        map.put(1, false);
-        map.put(2, false);
+
         productInfo = getArguments().getParcelable(HomeCreditDetailAct.PRODUCTINFO);//取到传递过来的产品
         queryProvince();//获取省份
         loadView.setOnRetryListener(new LoadingView.OnRetryListener() {
@@ -406,20 +406,28 @@ public class CreditSecondFrag extends BaseFragment {
             case R.id.rl_home:
                 //无房产、商品房、 住宅、 商铺、 办公楼、 厂房、经济/限价房、房改/危改房
 
-                dialog = new MySelfSheetDialog(mParentActivity).builder();
-                if (hourseList.size() != 0) {
-                    for (int i = 0; i < hourseList.size(); i++) {
-                        dialog.addSheetItem(hourseList.get(i).getOptionName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
-                            @Override
-                            public void onClick(int which) {
-                                hourseSelect = true;
-                                tvHome.setText(hourseList.get(which - 1).getOptionName());
-                                hoursePos = which - 1;
-                            }
-                        });
+                try{
+
+                    dialog = new MySelfSheetDialog(mParentActivity).builder();
+
+                    if (hourseList.size() != 0) {
+                        for (int i = 0; i < hourseList.size(); i++) {
+                            dialog.addSheetItem(hourseList.get(i).getOptionName(), null, new MySelfSheetDialog.OnSheetItemClickListener() {
+                                @Override
+                                public void onClick(int which) {
+                                    hourseSelect = true;
+                                    tvHome.setText(hourseList.get(which - 1).getOptionName());
+                                    hoursePos = which - 1;
+                                }
+                            });
+                        }
                     }
+                    dialog.show();
                 }
-                dialog.show();
+                catch (NullPointerException e){
+                    getDictionaryContent(keyLists);
+                }
+
                 break;
             case R.id.rl_car:
                 //无车 、名下有车 、有车，但车已被抵押 、无车，准备购买
@@ -518,6 +526,7 @@ public class CreditSecondFrag extends BaseFragment {
 
             @Override
             public void onError(int status, String msg) {
+                loadView.loadError();
                 secondBtnNext.setClickable(true);
                 Toast.makeText(mParentActivity, msg, Toast.LENGTH_SHORT).show();
             }
@@ -1047,5 +1056,15 @@ public class CreditSecondFrag extends BaseFragment {
             }
         }
         return "";
+    }
+    private class InitThread extends Thread{
+        @Override
+        public void run() {
+            super.run();
+            user = new UserEntity();
+            user.setUserSex(1);
+            map.put(1, false);
+            map.put(2, false);
+        }
     }
 }

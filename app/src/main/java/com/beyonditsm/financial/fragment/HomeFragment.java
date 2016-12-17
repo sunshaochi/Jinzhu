@@ -33,7 +33,6 @@ import com.beyonditsm.financial.entity.HomeHotProductEntity;
 import com.beyonditsm.financial.entity.HotNewsEntity;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserLoginEntity;
-import com.beyonditsm.financial.entity.WalletQuanBean;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
@@ -152,7 +151,7 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
             ParamsUtil.getInstance().setReLogin(false);
             getLocation();
         }
-        getUserLoginInfo();
+//        getUserLoginInfo();
         cbHomeBanner.startTurning(5000);
     }
 
