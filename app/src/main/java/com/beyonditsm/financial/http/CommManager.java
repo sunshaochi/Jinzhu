@@ -152,8 +152,9 @@ public class CommManager extends RequestManager {
      * @param mce      我的贷款实体类
      * @param callBack 回调
      */
-    public void myCredit(MyCreditEntity mce, final CallBack callBack) {
+    public void myCredit(String mobilePhone,MyCreditEntity mce,final CallBack callBack) {
         Map<String, String> params = new HashMap<>();
+        params.put("mobilePhone",mobilePhone);
         params.put("page", mce.getPage() + "");
         params.put("rows", mce.getRows() + "");
         doPost(IFinancialUrl.USERCREDIT_URL, params, callBack);
