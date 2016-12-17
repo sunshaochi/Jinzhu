@@ -133,13 +133,13 @@ public class ApplicationAct extends BaseActivity {
         setLisitener();
         String city = SpUtils.getCity(MyApplication.getInstance().getApplicationContext());
         llSearchTitle.setVisibility(View.GONE);
-        if (TextUtils.isEmpty(city)) {
-            getSortParam(ParamsUtil.getInstance().getChangedCity());
-        } else {
-            getSortParam(city);
-            initTit();
-        }
-
+//        if (TextUtils.isEmpty(city)) {
+//            getSortParam(ParamsUtil.getInstance().getChangedCity());
+//        } else {
+//            getSortParam(city);
+//            initTit();
+//        }
+        getSortParam();//获取顶部筛选条件
         tvTitle.setText("贷款");
         initTit();
         loadView.setNoContentTxt("暂无此类产品，换个条件试试");
@@ -159,21 +159,19 @@ public class ApplicationAct extends BaseActivity {
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 plv.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
                 currentP = 1;
-                getCredit(ParamsUtil.getInstance().getUle().getUsername(), SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
-
+                getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cMoney,cTime,cBank,cSort,"ASC",currentP, pageSize);
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 currentP++;
-                getCredit(ParamsUtil.getInstance().getUle().getUsername(), SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
-            }
+                getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cMoney,cTime,cBank,cSort,"ASC",currentP, pageSize);            }
         });
-        getCredit(ParamsUtil.getInstance().getUle().getUsername(), SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
+        getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cMoney,cTime,cBank,cSort,"ASC",currentP, pageSize);
         loadView.setOnRetryListener(new LoadingView.OnRetryListener() {
             @Override
             public void OnRetry() {
-                getSortParam(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()) + "");
+                getSortParam();
                 getCredit(ParamsUtil.getInstance().getUle().getUsername(), SpUtils.getCity(MyApplication.getInstance().getApplicationContext()) + "", cBank, cSort, cMoney, cTime, currentP, pageSize);
             }
         });
@@ -206,7 +204,7 @@ public class ApplicationAct extends BaseActivity {
 //        }
 //    }
 
-    private void getSortParam(String cityName) {
+    private void getSortParam() {
         RequestManager.getCommManager().findSortParam( new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
@@ -214,27 +212,27 @@ public class ApplicationAct extends BaseActivity {
                 ResultData<ProductSortEntity> rd = (ResultData<ProductSortEntity>) GsonUtils.json(result, ProductSortEntity.class);
                 ProductSortEntity productSortEntity = rd.getData();
                 llSearchTitle.setVisibility(View.VISIBLE);
-                orgTypeInfos = productSortEntity.getOrgType();
+                orgTypeInfos = productSortEntity.getOrgType();//机构集合
                 ProductSortEntity.OrgTypeBean orgTypeBean = new ProductSortEntity.OrgTypeBean();
-                orgTypeBean.setOrgId("");
-                orgTypeBean.setOrgName("全部机构");
-                orgTypeInfos.add(0, orgTypeBean);
-                ParamsUtil.getInstance().setOrgTypeInfos(orgTypeInfos);
-                productInfos = productSortEntity.getProductOrder();
+                orgTypeBean.setDictSubId("");
+                orgTypeBean.setOptionName("全部机构");
+                orgTypeInfos.add(0, orgTypeBean);//机构集合里面加一个
+                ParamsUtil.getInstance().setOrgTypeInfos(orgTypeInfos);//机构
+                productInfos = productSortEntity.getProductOrder();//排序集合
                 ProductSortEntity.ProductOrderBean productOrderBean = new ProductSortEntity.ProductOrderBean();
-                productOrderBean.setOrderKey("");
-                productOrderBean.setOrderVal("综合排序");
-                productInfos.add(0, productOrderBean);
-                moneyScopeInfos = productSortEntity.getMoneyScope();
+                productOrderBean.setDictSubId("");//排序
+                productOrderBean.setOptionName("综合排序");
+                productInfos.add(0, productOrderBean);//排序集合里面加一个
+                moneyScopeInfos = productSortEntity.getMoneyScope();//金额集合
                 ProductSortEntity.MoneyScopeBean moneyScopeBean = new ProductSortEntity.MoneyScopeBean();
-                moneyScopeBean.setMoneyKey("");
-                moneyScopeBean.setMoneyVal("金额范围");
-                moneyScopeInfos.add(0, moneyScopeBean);
-                loanTermInfos = productSortEntity.getLoanTerm();
+                moneyScopeBean.setDictSubId("");
+                moneyScopeBean.setOptionName("金额范围");//金额集合里面加一个
+                moneyScopeInfos.add(0, moneyScopeBean);//金额
+                loanTermInfos = productSortEntity.getLoanTerm();//期限集合
                 ProductSortEntity.LoanTermBean loanTermBean = new ProductSortEntity.LoanTermBean();
-                loanTermBean.setTermKey("");
-                loanTermBean.setTermVal("贷款期限");
-                loanTermInfos.add(0, loanTermBean);
+                loanTermBean.setDictSubId("");
+                loanTermBean.setOptionName("贷款期限");//期限集合加一个
+                loanTermInfos.add(0, loanTermBean);//期限
             }
 
             @Override
@@ -246,13 +244,13 @@ public class ApplicationAct extends BaseActivity {
     }
     private List<ProductBean> datas = new ArrayList<>();
 
-    private void getCredit(String userName, final String area, final String orgType, String productOrder, String moneyScope, String loanTerm, final int currentPage, int rows) {
+    private void getCredit(String cityId, String creditMoney, String creditTime, String orgTypeKey, String productOrder, String orderByOfType, final int currentPage, int rows) {
 
-        RequestManager.getMangManger().findProductByParam(userName, area, orgType, productOrder, moneyScope, loanTerm, currentPage, rows, new RequestManager.CallBack() {
+        RequestManager.getMangManger().findProductList(cityId, creditMoney, creditTime, orgTypeKey, productOrder, orderByOfType, currentPage, rows, new RequestManager.CallBack() {
 
             @Override
             public void onSucess(String result) {
-                MyLogUtils.info("获取列表时传的机构类型：" + orgType);
+//                MyLogUtils.info("获取列表时传的机构类型：" + orgType);
                 loadView.loadComplete();
                 plv.onPullDownRefreshComplete();
                 plv.onPullUpRefreshComplete();

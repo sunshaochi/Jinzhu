@@ -15,12 +15,13 @@ public interface IFinancialUrl {
 
 //    String BASE_URL ="http://172.16.6.218:8082";
 
-    String BASE_URL = "http://172.16.6.228:8080";
+//    String BASE_URL ="http://172.16.6.218:8082";
+//    String BASE_URL ="http://172.16.6.159:8061";
 
 //    String BASE_URL ="http://172.16.7.196:8083";
     /*袁峰测试*/
 //    String BASE_URL = "http://172.16.6.153:8080";
-//    String BASE_URL = "http://172.16.6.228:8080";
+    String BASE_URL = "http://172.16.6.228:8080";
     /*验收环境地址*/
 //    String BASE_URL = "http://test.myjinzhu.com:8086";
 ////        /*验收环境游戏地址*/
@@ -99,7 +100,7 @@ public interface IFinancialUrl {
     /*通过产品表相关参数查询产品信息*/
     String FIND_PRODUCT_LIST_URL = BASE_URL + API_VERSION + "/platform/unLogin/productList.do";
     /*我的贷款*/
-    String USERCREDIT_URL = BASE_URL + API_VERSION + "/platform/login/findOrderListByUserName.do";
+    String USERCREDIT_URL = BASE_URL +"/getOrderlist.do";
     /*查询我推荐的好友列表*/
     String FIND_MY_FRIEND_LIST_URL = BASE_URL + API_VERSION + "/platform/login/findMyFriendListByParams.do";
 
@@ -110,7 +111,7 @@ public interface IFinancialUrl {
     String FIND_PRODCUT_BY_PARAM = BASE_URL + "/unLogin/getProductsFromOffline";
 
     /*獲取推薦产品*/
-    String RECOMMENDPRODUCTS = BASE_URL + "/productApi" + "/unLogin/getRecommendProducts";
+    String RECOMMENDPRODUCTS = BASE_URL + "/unLogin/getRecommendProducts";
 
     /*根据code值获取字典列表*/
     String FINDALLDICTMAP_URL = BASE_URL + "/unLogin/getAllByDictCode";
@@ -226,7 +227,7 @@ public interface IFinancialUrl {
     /*线下订单上传资料*/
     String SAVE_OR_UPDATE_ORDER_IMAGE = BASE_URL + API_VERSION + "/platform/login/saveOrUpdateOrderImage.do";
     /*获取信用卡信息*/
-    String GET_CREDIT_CARD_INFO = BASE_URL + API_VERSION + "/creditCard/unlogin/getCreditCards.do";
+    String GET_CREDIT_CARD_INFO = BASE_URL + "/creditCard/unlogin/getCreditCards.do";
     /*在登录状态，点击申卡时,调用统计函数*/
     String APPLY_CREDIT_CARD_CLICK = BASE_URL + API_VERSION + "/creditCard/login/applyCreditCardClick.do";
     /*获取首页Banner*/
