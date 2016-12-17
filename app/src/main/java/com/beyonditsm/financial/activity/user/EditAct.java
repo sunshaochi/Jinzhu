@@ -51,10 +51,11 @@ public class EditAct extends BaseActivity {
         setLeftTv("返回");
         userInfo2 = getIntent().getParcelableExtra(MineFragment.USER_KEY);
 //        userInfo=new ProfileInfoBean();
-        if (userInfo2!=null){
-            userInfo = userInfo2.getProfileInfoBean();
-        }else {
-            userInfo=new ProfileInfoBean();
+        if (userInfo2 != null) {
+            userInfo = userInfo2.getProfileInfo();
+            adressBean = userInfo2.getAddress();
+        } else {
+            userInfo = new ProfileInfoBean();
         }
         TYPE = getIntent().getIntExtra(USER_TYPE, 0);
         setTopT(TYPE);
@@ -106,12 +107,12 @@ public class EditAct extends BaseActivity {
                         break;
                     case 8:
                         if (!TextUtils.isEmpty(content)) {
-                            if (userInfo==null){
-                                userInfo=new ProfileInfoBean();
-                                userInfo.setAge(content + "");
-                            }else {
-                                userInfo.setAge(content);
-                            }
+//                            if (userInfo==null){
+//                                userInfo=new ProfileInfoBean();
+//                                userInfo.setAge(content + "");
+//                            }else {
+                            userInfo.setAge(content);
+//                            }
                         }
                         break;
                 }
@@ -220,16 +221,18 @@ public class EditAct extends BaseActivity {
      *
      * @param ue 用户实体类
      */
-    private void updateData(final ProfileInfoBean ue, AdressBean adressBean) {
+    private void updateData(final ProfileInfoBean ue, final AdressBean adressBean) {
+//        ue.setProfileId(SpUtils.getProfileid(EditAct.this));
+//        adressBean.setAddressId(SpUtils.getAddressid(EditAct.this));
         RequestManager.getCommManager().updateData(ue, adressBean, SpUtils.getPhonenumber(getApplicationContext()), new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
+                userInfo2.setProfileInfo(ue);
+                userInfo2.setAddress(adressBean);
                 EventBus.getDefault().post(new UserEvent(ue, TYPE));
-
                 Intent intent = new Intent(MineFragment.UPDATE_USER);
-                intent.putExtra(MineFragment.USER_KEY, ue);
+                intent.putExtra(MineFragment.USER_KEY, userInfo2);
                 sendBroadcast(intent);
-
                 MyToastUtils.showShortToast(getApplicationContext(), "更新成功");
                 finish();
             }

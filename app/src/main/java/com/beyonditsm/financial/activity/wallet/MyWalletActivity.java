@@ -16,12 +16,12 @@ import android.widget.TextView;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.MainActivity;
+import com.beyonditsm.financial.entity.ProfileInfoBean;
 import com.beyonditsm.financial.entity.ResultData;
-import com.beyonditsm.financial.entity.UserEntity;
+import com.beyonditsm.financial.entity.UserLoginBean;
 import com.beyonditsm.financial.entity.UserLoginEntity;
 import com.beyonditsm.financial.entity.WalletQuanBean;
 import com.beyonditsm.financial.fragment.MineFragment;
-import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
@@ -33,7 +33,6 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.json.Gson;
 import com.tandong.sa.json.reflect.TypeToken;
 import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
-import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -85,7 +84,8 @@ public class MyWalletActivity extends BaseActivity {
             .build(); // 创建配置过得DisplayImageOption对象
 
     private UserLoginEntity ule;//用户登录信息
-    private UserEntity user;//用户信息
+    private ProfileInfoBean user;//用户信息
+    private UserLoginBean user2;
     private PaymentsRedDisReceiver paymentsRedDisReceiver;
     private PaymentsRedHideReceiver paymentsRedHideReceiver;
     private List<WalletQuanBean> walletList=new ArrayList<>();
@@ -102,8 +102,12 @@ public class MyWalletActivity extends BaseActivity {
         setTopTitle("我的钱包");
         //强制关闭键盘
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        ule = getIntent().getParcelableExtra("userLogin");
-        user = getIntent().getParcelableExtra("userInfo");
+//        ule = getIntent().getParcelableExtra("userLogin");
+        user2 = getIntent().getParcelableExtra("userInfo");
+        if (user2!=null){
+            user=  user2.getProfileInfo();
+        }
+//        user = getIntent().getParcelableExtra("userInfo");
         String isUpgrade = SpUtils.getIsUpgrade(getApplicationContext());
         if (!TextUtils.isEmpty(isUpgrade) && "isUpgrade".equals(isUpgrade)) {
 //            ivPaymentsRedPoint.setVisibility(View.VISIBLE);
@@ -122,43 +126,45 @@ public class MyWalletActivity extends BaseActivity {
         } else {
             setUserLogin();
         }
-        if (user == null) {
-            if (ule != null) {
-                if (ule.getDescription().contains("用户")) {
-                    getUserInfo();
-                    setUserInfo();
-                }
-                if (ule.getDescription().contains("服务者")) {
-                    findServantInfo();
-                    setUserInfo();
-                }
-            }
-        } else {
-            setUserInfo();
-        }
-//        loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
-//            @Override
-//            public void OnRetry() {
-//                getUserLoginInfo();
+//        if (user == null) {
+//            if (ule != null) {
+//                if (ule.getDescription().contains("用户")) {
+//                    getUserInfo();
+//                    setUserInfo();
+//                }
+//                if (ule.getDescription().contains("服务者")) {
+//                    findServantInfo();
+//                    setUserInfo();
+//                }
+//            }
+//        } else {
+        getWalletQuan(user.getMobilePhone());
+//        setUserInfo();
+//        }
+        loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
+            @Override
+            public void OnRetry() {
+                getUserLoginInfo();
 //                getUserInfo();
 //                findServantInfo();
-//            }
-//        });
-        getWalletQuan("15216187360");
+                getWalletQuan(user.getMobilePhone());
+            }
+        });
+//        getWalletQuan(user.getMobilePhone());
     }
 
     private void setUserLogin() {
-        if (ule != null) {
-            if (!TextUtils.isEmpty(ule.getDescription())) {
+        if (user != null) {
+//            if (!TextUtils.isEmpty(user.get())) {
 //                tvName.setText(ule.getDescription());
                 tvName.setText("代言人");
+//            }
+            if (!TextUtils.isEmpty(user.getMobilePhone())) {
+                tvPhone.setText(user.getMobilePhone());
             }
-            if (!TextUtils.isEmpty(ule.getUsername())) {
-                tvPhone.setText(ule.getUsername());
-            }
-            if(null != ParamsUtil.getInstance().getUserID() && !"".equals(ParamsUtil.getInstance().getUserID())){
-                tvPhone.setText(ParamsUtil.getInstance().getUserID());
-            }
+//            if(null != ParamsUtil.getInstance().getUserID() && !"".equals(ParamsUtil.getInstance().getUserID())){
+//                tvPhone.setText(ParamsUtil.getInstance().getUserID());
+//            }
 
 
 
@@ -166,24 +172,24 @@ public class MyWalletActivity extends BaseActivity {
     }
 
 
-    private void setUserInfo() {
-        if (user != null) {
-            if (!TextUtils.isEmpty(user.getCashTicketAmount())) {
-                double dCashA = Double.valueOf(user.getCashTicketAmount());
-                tvExangeMoney.setText((long) dCashA + "");
-            }
-            if (!TextUtils.isEmpty(user.getUnCashTicketAmount())) {
-                double unCashA = Double.valueOf(user.getUnCashTicketAmount());
-                tvWeitGetMoney.setText((long) unCashA + "");
-            }
-            if (!TextUtils.isEmpty(user.getDeductionTicketAmount())) {
-                double deductionA = Double.valueOf(user.getDeductionTicketAmount());
-                tvDikouMoney.setText((long) deductionA + "");
-            }
-            ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon(), civHead, options);
-
-        }
-    }
+//    private void setUserInfo() {
+//        if (user != null) {
+//            if (!TextUtils.isEmpty(user.getCashTicketAmount())) {
+//                double dCashA = Double.valueOf(user.getCashTicketAmount());
+//                tvExangeMoney.setText((long) dCashA + "");
+//            }
+//            if (!TextUtils.isEmpty(user.getUnCashTicketAmount())) {
+//                double unCashA = Double.valueOf(user.getUnCashTicketAmount());
+//                tvWeitGetMoney.setText((long) unCashA + "");
+//            }
+//            if (!TextUtils.isEmpty(user.getDeductionTicketAmount())) {
+//                double deductionA = Double.valueOf(user.getDeductionTicketAmount());
+//                tvDikouMoney.setText((long) deductionA + "");
+//            }
+//            ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon(), civHead, options);
+//
+//        }
+//    }
 
     @OnClick({R.id.rlMyPayments, R.id.rlMyOrder, R.id.rlxianjin, R.id.rldikou, R.id.rlBindBankCard,R.id.ll_xj,R.id.rlyj})
     public void toClick(View v) {
@@ -209,7 +215,8 @@ public class MyWalletActivity extends BaseActivity {
             //抵扣券
             case R.id.rldikou:
                 intent = new Intent(MyWalletActivity.this, InterestDeduction.class);
-                intent.putExtra("userInfo", user);
+//                intent.putExtra("userInfo", user);
+                intent.putExtra("dikou",tv_dikou.getText().toString().trim());
                 startActivity(intent);
                 break;
             //绑定银行卡
@@ -220,12 +227,13 @@ public class MyWalletActivity extends BaseActivity {
                 break;
             case R.id.ll_xj:
                 intent = new Intent(MyWalletActivity.this, CashExchange.class);
-                intent.putExtra("userInfo", user);
+//                intent.putExtra("userInfo", user);
+                intent.putExtra("xianjin",tv_xj.getText().toString().trim());
                 startActivity(intent);
                 break;
             case R.id.rlyj:
                 intent = new Intent(MyWalletActivity.this, CourtageAct.class);
-                intent.putExtra("userInfo", user);
+//                intent.putExtra("userInfo", user);
                 intent.putExtra("yongjin",tv_yj.getText().toString().trim());
                 startActivity(intent);
                 break;
@@ -247,14 +255,14 @@ public class MyWalletActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (ule != null) {
-            if (ule.getDescription().contains("服务者")) {
-                findServantInfo();
-            }
-            if (ule.getDescription().contains("用户")) {
-                getUserInfo();
-            }
-        }
+//        if (ule != null) {
+//            if (ule.getDescription().contains("服务者")) {
+//                findServantInfo();
+//            }
+//            if (ule.getDescription().contains("用户")) {
+//                getUserInfo();
+//            }
+//        }
     }
 
     @Override
@@ -311,73 +319,73 @@ public class MyWalletActivity extends BaseActivity {
     /**
      * 获取用户信息
      */
-    private void getUserInfo() {
-
-        RequestManager.getCommManager().findUserInfo(SpUtils.getPhonenumber(getApplicationContext()),new RequestManager.CallBack() {
-            @SuppressWarnings("unchecked")
-            @Override
-            public void onSucess(String result) {
-//                loadingView.loadComplete();
-                ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
-                user = rd.getData();
-                if (user != null) {
-                    if (!TextUtils.isEmpty(user.getCashTicketAmount())) {
-                        double dCashA = Double.valueOf(user.getCashTicketAmount());
-                        tvExangeMoney.setText((long) dCashA + "");
-                    }
-                    if (!TextUtils.isEmpty(user.getUnCashTicketAmount())) {
-                        double unCashA = Double.valueOf(user.getUnCashTicketAmount());
-                        tvWeitGetMoney.setText((long) unCashA + "");
-                    }
-                    if (!TextUtils.isEmpty(user.getDeductionTicketAmount())) {
-                        double deductionA = Double.valueOf(user.getDeductionTicketAmount());
-                        tvDikouMoney.setText((long) deductionA + "");
-                    }
-
-                }
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-//                loadingView.loadError();
-            }
-        });
-    }
+//    private void getUserInfo() {
+//
+//        RequestManager.getCommManager().findUserInfo(SpUtils.getPhonenumber(getApplicationContext()),new RequestManager.CallBack() {
+//            @SuppressWarnings("unchecked")
+//            @Override
+//            public void onSucess(String result) {
+////                loadingView.loadComplete();
+//                ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
+//                user = rd.getData();
+//                if (user != null) {
+//                    if (!TextUtils.isEmpty(user.getCashTicketAmount())) {
+//                        double dCashA = Double.valueOf(user.getCashTicketAmount());
+//                        tvExangeMoney.setText((long) dCashA + "");
+//                    }
+//                    if (!TextUtils.isEmpty(user.getUnCashTicketAmount())) {
+//                        double unCashA = Double.valueOf(user.getUnCashTicketAmount());
+//                        tvWeitGetMoney.setText((long) unCashA + "");
+//                    }
+//                    if (!TextUtils.isEmpty(user.getDeductionTicketAmount())) {
+//                        double deductionA = Double.valueOf(user.getDeductionTicketAmount());
+//                        tvDikouMoney.setText((long) deductionA + "");
+//                    }
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onError(int status, String msg) {
+////                loadingView.loadError();
+//            }
+//        });
+//    }
 
     /**
      * 获取代言人信息
      */
-    private void findServantInfo() {
-
-        RequestManager.getServicerManager().findServantDetail(new RequestManager.CallBack() {
-            @SuppressWarnings("unchecked")
-            @Override
-            public void onSucess(String result) throws JSONException {
-//                loadingView.loadComplete();
-                ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
-                user = rd.getData();
-                if (user != null) {
-                    if (!TextUtils.isEmpty(user.getCashTicketAmount())) {
-                        double dCashA = Double.valueOf(user.getCashTicketAmount());
-                        tvExangeMoney.setText((long) dCashA + "");
-                    }
-                    if (!TextUtils.isEmpty(user.getUnCashTicketAmount())) {
-                        double unCashA = Double.valueOf(user.getUnCashTicketAmount());
-                        tvWeitGetMoney.setText((long) unCashA + "");
-                    }
-                    if (!TextUtils.isEmpty(user.getDeductionTicketAmount())) {
-                        double deductionA = Double.valueOf(user.getDeductionTicketAmount());
-                        tvDikouMoney.setText((long) deductionA + "");
-                    }
-                }
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-//                loadingView.loadError();
-            }
-        });
-    }
+//    private void findServantInfo() {
+//
+//        RequestManager.getServicerManager().findServantDetail(new RequestManager.CallBack() {
+//            @SuppressWarnings("unchecked")
+//            @Override
+//            public void onSucess(String result) throws JSONException {
+////                loadingView.loadComplete();
+//                ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
+//                user = rd.getData();
+//                if (user != null) {
+//                    if (!TextUtils.isEmpty(user.getCashTicketAmount())) {
+//                        double dCashA = Double.valueOf(user.getCashTicketAmount());
+//                        tvExangeMoney.setText((long) dCashA + "");
+//                    }
+//                    if (!TextUtils.isEmpty(user.getUnCashTicketAmount())) {
+//                        double unCashA = Double.valueOf(user.getUnCashTicketAmount());
+//                        tvWeitGetMoney.setText((long) unCashA + "");
+//                    }
+//                    if (!TextUtils.isEmpty(user.getDeductionTicketAmount())) {
+//                        double deductionA = Double.valueOf(user.getDeductionTicketAmount());
+//                        tvDikouMoney.setText((long) deductionA + "");
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onError(int status, String msg) {
+////                loadingView.loadError();
+//            }
+//        });
+//    }
 
     public static final String DISPLAY = "display";
     public class PaymentsRedDisReceiver extends BroadcastReceiver{

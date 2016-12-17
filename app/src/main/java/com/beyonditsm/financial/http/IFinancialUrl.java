@@ -15,7 +15,7 @@ public interface IFinancialUrl {
 
 //    String BASE_URL ="http://172.16.6.218:8082";
 
-    String BASE_URL ="http://172.16.6.218:8082";
+    String BASE_URL = "http://172.16.6.228:8080";
 
 //    String BASE_URL ="http://172.16.7.196:8083";
     /*袁峰测试*/
@@ -137,9 +137,9 @@ public interface IFinancialUrl {
     String UPLOAD_small_URL = BASE_URL + API_VERSION + "/common/commonAPI/login/upLoadSmallImage.do";
 
     /*客户提交订单*/
-    String SUBMITORDER_URL = BASE_URL +"/submitOrder";
+    String SUBMITORDER_URL = BASE_URL + "/submitOrder";
     /*忘记密码*/
-    String FOGET_PWD_URL = BASE_URL + API_VERSION + "/manager/unLogin/forgetPassword.do";
+//    String FOGET_PWD_URL = BASE_URL + API_VERSION + "/manager/unLogin/forgetPassword.do";
     /*发送验证码找回密码的验证码 */
 //    String FPRGET_PWD_SMSCAPTCHA = BASE_URL + API_VERSION + "/manager/unLogin/forgetPasswordSmsCaptcha.do";
     /*计算月供*/
@@ -159,13 +159,12 @@ public interface IFinancialUrl {
     /*取消订单*/
 //    String CANCEL_ORDER = BASE_URL + API_VERSION + "/platform/login/modifyToCancelOrderById.do";
     /*根据key查找各种特点*/
-    String DIC_MAP_URL = BASE_URL +  "/unLogin/findAllDictMap.do";
+    String DIC_MAP_URL = BASE_URL + "/unLogin/findAllDictMap.do";
     /*个人信息字典*/
 
 //    String FINDALLBYDICTCOD = BASE_URL +"/unLogin/getAllByDictCode";
 
 //    String FINDALLBYDICTCOD = BASE_URL + "/productApi" + "/manager/unLogin/findDictMap.do";
-
 
 
     /*抵扣券兑现提交订单*/
@@ -207,11 +206,11 @@ public interface IFinancialUrl {
     /*提交图片*/
     String SUBIT_ORDER_FLOW_URL = BASE_URL + "/submitOrderFlow.do";
     /*提交审核*/
-    String APPLAY_CREDIT_URL = BASE_URL +  "/applyCredit.do";
+    String APPLAY_CREDIT_URL = BASE_URL + "/applyCredit.do";
     /*订单状态*/
-    String APPLAY_CREDIT_STATUS = BASE_URL +"/applyCreditStatus.do";
+    String APPLAY_CREDIT_STATUS = BASE_URL + "/applyCreditStatus.do";
     /*跳过某个流程*/
-    String SKIP_FLOW = BASE_URL +  "/skipFlow.do";
+    String SKIP_FLOW = BASE_URL + "/skipFlow.do";
     //    /*代言人推荐信息获取*/
 //    String SERVANT_RMD_INFO = BASE_URL + API_VERSION + "easyplay/servant/login/getServantSummary.do";
     //    /*代言人推荐信息获取*/
@@ -318,11 +317,11 @@ public interface IFinancialUrl {
     /*登录*/
     String LOGIN_URL = BASE_URL + "/userlogin/unLogin/login";
     /*取消订单*/
-    String CANCEL_ORDER = BASE_URL  + "/order/updateOrderStatus";
+    String CANCEL_ORDER = BASE_URL + "/order/updateOrderStatus";
     /*代言人推荐信息获取*/
-    String SERVANT_RMD_INFO = BASE_URL+ "easyplay/servant/login/getServantSummary.do";
+    String SERVANT_RMD_INFO = BASE_URL + "easyplay/servant/login/getServantSummary.do";
     /*查找获取登录用户个人信息*/
-    String USERINFO_URL = BASE_URL  + "/customer/getAccountInfo";
+    String USERINFO_URL = BASE_URL + "/customer/getAccountInfo";
     /*修改密码*/
     String UPDATE_PWD_URL = BASE_URL + "/customer/unLogin/modifyUserPassword";
     /*发送验证码找回密码的验证码 */
@@ -330,11 +329,16 @@ public interface IFinancialUrl {
     /*更新位置*/
     String UPDATE_LOCATION = BASE_URL + "/customer/updateLocation";
     /* 查询热门产品列表*/
-    String FIND_HOT_PRODUCT_LIST = BASE_URL+ "/weekhotproduct/unLogin/getWeekHotListsByCity";
+    String FIND_HOT_PRODUCT_LIST = BASE_URL + "/weekhotproduct/unLogin/getWeekHotListsByCity";
     /*退出*/
-    String LOGINOUT_URL = BASE_URL  + "/userlogin/unLogin/logout";
+    String LOGINOUT_URL = BASE_URL + "/userlogin/unLogin/logout";
     /* 获得当前登陆人的信息*/
-    String USER_LOGIN_URL = BASE_URL  + "/customer/getAccountInfo";
+    String USER_LOGIN_URL = BASE_URL + "/customer/getAccountInfo";
     /*修改用户信息*/
-    String UPDATE_USER_URL = BASE_URL  + "/customer/modifyCustomer";
+    String UPDATE_USER_URL = BASE_URL + "/customer/modifyCustomer";
+    /*忘记密码*/
+    String FOGET_PWD_URL = BASE_URL + "/customer/unLogin/forgetPassword";
+    //    忘记密码短信验证码校验
+    String FOGET_PWD_JY_URL = BASE_URL + "/customer/unLogin/checkSMSCaptcha";
+
 }

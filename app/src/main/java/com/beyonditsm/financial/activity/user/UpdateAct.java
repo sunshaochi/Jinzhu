@@ -150,13 +150,13 @@ public class UpdateAct extends BaseActivity {
         userLoginBean = getIntent().getParcelableExtra(MineFragment.USER_KEY);
         //把用户信息放进去
         if (userLoginBean != null) {
-            if (userLoginBean.getProfileInfoBean()!=null){
-                userInfo=userLoginBean.getProfileInfoBean();
-                adressBean=userLoginBean.getAdress();
+            if (userLoginBean.getProfileInfo()!=null){
+                userInfo=userLoginBean.getProfileInfo();
+                adressBean=userLoginBean.getAddress();
                 setUserMes(userInfo,adressBean);
             }else {
                 userInfo=new ProfileInfoBean();
-                adressBean=userLoginBean.getAdress();
+                adressBean=userLoginBean.getAddress();
                 setUserMes(userInfo,adressBean);
             }
         } else{
@@ -406,13 +406,13 @@ public class UpdateAct extends BaseActivity {
             if (!TextUtils.isEmpty(userInfo.getIdNo())) {
                 tvCard.setText(userInfo.getIdNo());
             }
-            if (userInfo.isMarried()) {
+//            if (userInfo.isMarried()) {
                 if (userInfo.isMarried()) {
                     tvMarry.setText("已婚");
                 } else {
                     tvMarry.setText("未婚");
                 }
-            }
+//            }
             if (!TextUtils.isEmpty(userInfo.getNativePlace())) {//籍贯地址
                 tvnative.setText(userInfo.getNativePlace());
             }
@@ -436,7 +436,7 @@ public class UpdateAct extends BaseActivity {
      *
      * @param ue 用户实体类
      */
-    private void updateData(final ProfileInfoBean ue, AdressBean adressBean,final int iType) {
+    private void updateData(final ProfileInfoBean ue, final AdressBean adressBean, final int iType) {
         RequestManager.getCommManager().updateData(ue,adressBean,SpUtils.getPhonenumber(getApplicationContext()), new RequestManager.CallBack() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -470,7 +470,9 @@ public class UpdateAct extends BaseActivity {
                         break;
                 }
                 Intent intent = new Intent(MineFragment.UPDATE_USER);
-                intent.putExtra(MineFragment.USER_KEY, ue);
+                userLoginBean.setProfileInfo(ue);
+                userLoginBean.setAddress(adressBean);
+                intent.putExtra(MineFragment.USER_KEY, userLoginBean);
                 sendBroadcast(intent);
 
                 MyToastUtils.showShortToast(getApplicationContext(), "更新成功");
@@ -499,9 +501,9 @@ public class UpdateAct extends BaseActivity {
                     Intent intent = new Intent(MineFragment.UPDATE_USER);
                     intent.putExtra(MineFragment.USER_KEY, userLoginBean);
                     sendBroadcast(intent);
-                    if (userLoginBean.getProfileInfoBean()!=null){
-                        userInfo=userLoginBean.getProfileInfoBean();
-                        adressBean=userLoginBean.getAdress();
+                    if (userLoginBean.getProfileInfo()!=null){
+                        userInfo=userLoginBean.getProfileInfo();
+                        adressBean=userLoginBean.getAddress();
                         setUserMes(userInfo,adressBean);
                     }
                 }
@@ -565,7 +567,7 @@ public class UpdateAct extends BaseActivity {
     /**
      * 上传图片
      *
-     * @param file 文件
+     * @param  文件
      */
 //    private void uploadFile(final String file) {
 //        Map<String, FileBody> fileMaps = new HashMap<>();

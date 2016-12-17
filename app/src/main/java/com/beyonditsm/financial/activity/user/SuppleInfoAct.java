@@ -104,8 +104,8 @@ public class SuppleInfoAct extends BaseActivity {
         addressUtil = new AddressUtil(this);
         userLoginBean=getIntent().getParcelableExtra(MineFragment.USER_KEY);
         if (userLoginBean!=null){
-           userinfo= userLoginBean.getProfileInfoBean();
-           adressBean= userLoginBean.getAdress();
+           userinfo= userLoginBean.getProfileInfo();
+           adressBean= userLoginBean.getAddress();
         }
         if(userinfo!=null){
             setUserMe(userinfo,adressBean);
@@ -333,9 +333,9 @@ public class SuppleInfoAct extends BaseActivity {
                     Intent intent = new Intent(MineFragment.UPDATE_USER);
                     intent.putExtra(MineFragment.USER_KEY, userLoginBean);
                     sendBroadcast(intent);
-                    if (userLoginBean.getProfileInfoBean()!=null){
-                        userinfo=userLoginBean.getProfileInfoBean();
-                        adressBean=userLoginBean.getAdress();
+                    if (userLoginBean.getProfileInfo()!=null){
+                        userinfo=userLoginBean.getProfileInfo();
+                        adressBean=userLoginBean.getAddress();
                         setUserMe(userinfo,adressBean);
                     }
                 }

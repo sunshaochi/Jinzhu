@@ -175,6 +175,12 @@ public class CommManager extends RequestManager {
         JSONObject obj2 = null;
         try {
             obj2 = new JSONObject(json2);
+            if ((obj2.toString()).contains("createTime")) {
+                obj2.remove("createTime");
+            }
+            if ((obj2.toString()).contains("updateTime")) {
+                obj2.remove("updateTime");
+            }
             Iterator<String> it2 = obj2.keys();
             while (it2.hasNext()) {
                 String key = it2.next();
@@ -200,12 +206,22 @@ public class CommManager extends RequestManager {
             if ((obj.toString()).contains("modifyPersonId")) {
                 obj.remove("modifyPersonId");
             }
+            if ((obj.toString()).contains("updateTime")) {
+                obj.remove("updateTime");
+            }
+            if ((obj.toString()).contains("mobilePhone")) {
+                obj.remove("mobilePhone");
+            }
+            if ((obj.toString()).contains("customerId")) {
+                obj.remove("customerId");
+            }
+
             Iterator<String> it = obj.keys();
             while (it.hasNext()) {
                 String key = it.next();
                 params.put(key, String.valueOf(obj.get(key)));
             }
-            params.put("mobilePhone", phoneNum);
+//            params.put("mobilePhone", phoneNum);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -263,6 +279,7 @@ public class CommManager extends RequestManager {
         doPost(IFinancialUrl.FOGET_PWD_URL, params, callBack);
     }
 
+
     /**
      * 发送验证码找回密码验证码
      *
@@ -272,9 +289,20 @@ public class CommManager extends RequestManager {
     public void findpwbyCode(String phoneNumber, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
         params.put("phoneNumber", phoneNumber);
-        doPost(IFinancialUrl.FPRGET_PWD_SMSCAPTCHA, params, callBack);
+        doPost(IFinancialUrl.FPRGET_PWD_SMSCAPTCHA,params, callBack);
     }
-
+    /**
+     * 忘记密码
+     * 校验验证码
+     * @param
+     * @param callBack    回调
+     */
+    public void fogetJyPwd(String phoneNumber, String captcha,CallBack callBack) {
+        Map<String, String> params = new HashMap<>();
+        params.put("phoneNumber", phoneNumber);
+        params.put("captcha", captcha);
+        doPost(IFinancialUrl.FOGET_PWD_JY_URL, params, callBack);
+    }
 
     /**
      * 用户查看订单详情

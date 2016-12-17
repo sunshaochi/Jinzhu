@@ -30,6 +30,7 @@ import com.beyonditsm.financial.entity.AdressBean;
 import com.beyonditsm.financial.entity.ProfileInfoBean;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserLoginBean;
+import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
@@ -41,6 +42,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.eventbus.EventBus;
 import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
+import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -238,7 +240,7 @@ public class MineFragment extends BaseFragment {
             //我的钱包
             case R.id.rlWallet:
                 intent = new Intent(getActivity(), MyWalletActivity.class);
-                intent.putExtra("userLogin", ule);
+//                intent.putExtra("userLogin", ule);
                 intent.putExtra("userInfo", user);
                 getActivity().startActivity(intent);
                 break;
@@ -336,14 +338,16 @@ public class MineFragment extends BaseFragment {
                 ResultData<UserLoginBean> rd = (ResultData<UserLoginBean>) GsonUtils.json(result, UserLoginBean.class);
                 user = rd.getData();
                 if (user != null) {
-                    if (user.getProfileInfoBean()!=null){
-                        profileInfoBean=user.getProfileInfoBean();
+                    if (user.getProfileInfo()!=null){
+                        profileInfoBean=user.getProfileInfo();
+                        SpUtils.setProfileid(getContext(),profileInfoBean.getProfileId());
                         if (!TextUtils.isEmpty(profileInfoBean.getName())) {
                             tvName.setText(profileInfoBean.getName());
                         }
                     }
-                    if (user.getAdress()!=null){
-                        adressBean= user.getAdress();
+                    if (user.getAddress()!=null){
+                        adressBean= user.getAddress();
+                        SpUtils.setAddressid(getContext(),adressBean.getAddressId());
                     }
 
 //                    tvGrade.setText(user.getCreditGrade());
@@ -462,9 +466,10 @@ public class MineFragment extends BaseFragment {
         public void onReceive(Context context, Intent intent) {
             user = intent.getParcelableExtra(USER_KEY);
             if (user != null) {
-//                tvName.setText(user.getName());
+                ProfileInfoBean profileInfo = user.getProfileInfo();
+                tvName.setText(profileInfo.getName());
 //                暂时没有头像，注掉，后台无返回。
-//                ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon(), civHead, options);
+                ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + profileInfo.getAvatarPic(), civHead, options);
             } else {
                 tvExit.setVisibility(View.VISIBLE);
                 isLogin = true;
@@ -512,7 +517,7 @@ public class MineFragment extends BaseFragment {
                     ResultData<UserLoginBean> rd = (ResultData<UserLoginBean>) GsonUtils.json(result, UserLoginBean.class);
                     ule = rd.getData();
                     if (ule != null) {
-                        if (ule.getProfileInfoBean()!=null){
+                        if (ule.getProfileInfo()!=null){
 //                            user=ule.getProfileInfoBean();
                         }
 //                        int vipLevel = ule.getVipLevel();
