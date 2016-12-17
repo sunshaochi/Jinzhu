@@ -11,19 +11,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
-import com.beyonditsm.financial.entity.HomeHotProductEntity;
+import com.beyonditsm.financial.entity.HomeHotProductBean;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
 import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Administrator on 2015/12/8
  */
 public class HomeCreditAdapter extends BaseAdapter {
-    private List<HomeHotProductEntity> list;
+    private List<HomeHotProductBean> list;
     private final LayoutInflater inflater;
 
     @SuppressWarnings("deprecation")
@@ -35,11 +34,11 @@ public class HomeCreditAdapter extends BaseAdapter {
             .cacheOnDisk(true) // 设置下载的图片是否缓存在SD卡中
             .build(); // 创建配置过得DisplayImageOption对象
 
-    public HomeCreditAdapter(Context context,List<HomeHotProductEntity> list) {
+    public HomeCreditAdapter(Context context,List<HomeHotProductBean> list) {
         this.list = list;
         inflater = LayoutInflater.from(context);
     }
-    public void setDatas(List<HomeHotProductEntity> list){
+    public void setDatas(List<HomeHotProductBean> list){
         this.list = list;
         notifyDataSetChanged();
     }
@@ -80,58 +79,58 @@ public class HomeCreditAdapter extends BaseAdapter {
         }else{
             holder = (ViewHolder) convertView.getTag();
         }
-        Map<String,String> map=list.get(position).getProductCharas();
-        if(map==null||map.size()==0){
-            holder.fast.setVisibility(View.GONE);
-            holder.sd.setVisibility(View.GONE);
-            holder.down.setVisibility(View.GONE);
-        }else{
-            String FAST = "2c908c7651474aa40151478b13820002";
-            if(map.get(FAST)!=null){
-                holder.fast.setVisibility(View.VISIBLE);
-            }else {
-                holder.fast.setVisibility(View.GONE);
+//        Map<String,String> map=list.get(position).getProductCharas();
+//        if(map==null||map.size()==0){
+//            holder.fast.setVisibility(View.GONE);
+//            holder.sd.setVisibility(View.GONE);
+//            holder.down.setVisibility(View.GONE);
+//        }else{
+//            String FAST = "2c908c7651474aa40151478b13820002";
+//            if(map.get(FAST)!=null){
+//                holder.fast.setVisibility(View.VISIBLE);
+//            }else {
+//                holder.fast.setVisibility(View.GONE);
+//
+//            }
+//
+//            String BIANJIE = "2c908c7651474aa40151478beed50003";
+//            if(map.get(BIANJIE)!=null){
+//                holder.sd.setVisibility(View.VISIBLE);
+//            }else {
+//                holder.sd.setVisibility(View.GONE);
+//
+//            }
+//
+//            String LILV = "2c908c7651474aa40151478c2fc70004";
+//            if(map.get(LILV)!=null){
+//                holder.down.setVisibility(View.VISIBLE);
+//            }else {
+//                holder.down.setVisibility(View.GONE);
+//
+//            }
+//        }
 
-            }
+//        HomeHotProductBean hotProductEntity =  list.get(position);
+         ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + list.get(position).getAndroidProductLogo(), holder.ivProductLogo, options);
 
-            String BIANJIE = "2c908c7651474aa40151478beed50003";
-            if(map.get(BIANJIE)!=null){
-                holder.sd.setVisibility(View.VISIBLE);
-            }else {
-                holder.sd.setVisibility(View.GONE);
-
-            }
-
-            String LILV = "2c908c7651474aa40151478c2fc70004";
-            if(map.get(LILV)!=null){
-                holder.down.setVisibility(View.VISIBLE);
-            }else {
-                holder.down.setVisibility(View.GONE);
-
-            }
-        }
-
-         HomeHotProductEntity hotProductEntity =  list.get(position);
-         ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + hotProductEntity.getAndroidProductLogo(), holder.ivProductLogo, options);
-
-        if(hotProductEntity.getMonthlyRateMin().equals(hotProductEntity.getMonthlyRateMax())){
-            holder.tvRate.setText(hotProductEntity.getMonthlyRateMin()+"");
+        if(list.get(position).getMinLoanPeriod().equals(list.get(position).getMaxLoanRate())){
+            holder.tvRate.setText(list.get(position).getMinLoanPeriod()+"");
             holder.tvRate.setTextSize(28);
             holder.tvSymbol.setVisibility(View.VISIBLE);
             holder.tvSymbol.setTextSize(18);
 
         }else{
 //            DecimalFormat df = new DecimalFormat("0.00");
-            holder.tvRate.setText(hotProductEntity.getMonthlyRateMin() + "%~" + hotProductEntity.getMonthlyRateMax()+"%");
+            holder.tvRate.setText(list.get(position).getMinLoanPeriod() + "%~" + list.get(position).getMaxLoanRate()+"%");
             holder.tvRate.setTextSize(14);
             holder.tvSymbol.setVisibility(View.GONE);
         }
 
-        if (!TextUtils.isEmpty(hotProductEntity.getProductName())) {
-            holder.tvCreditName.setText(hotProductEntity.getProductName());
+        if (!TextUtils.isEmpty(list.get(position).getProductName())) {
+            holder.tvCreditName.setText(list.get(position).getProductName());
         }
-        if (hotProductEntity.getLoanPeriod()!=null) {
-            holder.tvCycle.setText("放款周期：" + hotProductEntity.getLoanPeriod() + "个工作日");
+        if (list.get(position).getPreLoanPeriod()!=null) {
+            holder.tvCycle.setText("放款周期：" + list.get(position).getPreLoanPeriod() + "个工作日");
         }
         return convertView;
     }

@@ -386,10 +386,10 @@
                 android:visibility="gone" />
         </LinearLayout>
 
-        <!--<com.beyonditsm.financial.view.LoadingView-->
-            <!--android:visibility="gone"-->
-            <!--android:id="@+id/loadingView"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"></com.beyonditsm.financial.view.LoadingView>-->
+        <com.beyonditsm.financial.view.LoadingView
+            android:visibility="gone"
+            android:id="@+id/loadingView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></com.beyonditsm.financial.view.LoadingView>
     </FrameLayout>
 </LinearLayout>

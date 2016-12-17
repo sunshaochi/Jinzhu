@@ -83,16 +83,16 @@ public class MyCreditAct extends BaseActivity {
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 plv.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
                 currentPage = 1;
-                getMycreditList(currentPage,orderId);
+                getMycreditList(SpUtils.getPhonenumber(MyApplication.getInstance().getApplicationContext()),currentPage);
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 currentPage++;
-                getMycreditList(currentPage,orderId);
+                getMycreditList(SpUtils.getPhonenumber(MyApplication.getInstance().getApplicationContext()),currentPage);
             }
         });
-        getMycreditList(currentPage, orderId);
+        getMycreditList(SpUtils.getPhonenumber(MyApplication.getInstance().getApplicationContext()),currentPage);
         plv.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -111,7 +111,7 @@ public class MyCreditAct extends BaseActivity {
         loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
             @Override
             public void OnRetry() {
-                getMycreditList(currentPage, orderId);
+                getMycreditList(SpUtils.getPhonenumber(MyApplication.getInstance().getApplicationContext()),currentPage);
             }
         });
         rlBack.setOnClickListener(new View.OnClickListener() {
@@ -126,15 +126,15 @@ public class MyCreditAct extends BaseActivity {
     private List<MyCreditBean.RowsEntity> datas = new ArrayList<>();
 
     /**
-     *
+     *mobilePhone 手机号
      * @param page
-     * @param orderId
+     * @param
      */
-    private void getMycreditList(final int page, final String orderId) {
+    private void getMycreditList(String mobilePhone,final int page) {
         MyCreditEntity mce = new MyCreditEntity();
         mce.setPage(page);
         mce.setRows(10);
-        RequestManager.getCommManager().myCredit(mce, new RequestManager.CallBack() {
+        RequestManager.getCommManager().myCredit(mobilePhone,mce, new RequestManager.CallBack() {
             @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) {
@@ -191,10 +191,10 @@ public class MyCreditAct extends BaseActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        String orderId = SpUtils.getOrderId(MyApplication.getInstance());
-        if (!TextUtils.isEmpty(orderId)){
-            getMycreditList(currentPage,orderId);
-        }
+//        String orderId = SpUtils.getOrderId(MyApplication.getInstance());
+//        if (!TextUtils.isEmpty(orderId)){
+            getMycreditList(SpUtils.getPhonenumber(MyApplication.getInstance().getApplicationContext()),currentPage);
+//        }
     }
 
     @Override
@@ -216,7 +216,7 @@ public class MyCreditAct extends BaseActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             currentPage = 1;
-            getMycreditList(currentPage, orderId);
+            getMycreditList(SpUtils.getPhonenumber(MyApplication.getInstance().getApplicationContext()),currentPage);
         }
     }
 
@@ -228,7 +228,7 @@ public class MyCreditAct extends BaseActivity {
             String orderId = SpUtils.getOrderId(MyApplication.getInstance());
             MyLogUtils.info("广播发回来的orderID"+orderId);
             currentPage = 1;
-            getMycreditList(currentPage, orderId);
+            getMycreditList(SpUtils.getPhonenumber(MyApplication.getInstance().getApplicationContext()),currentPage);
         }
     }
 

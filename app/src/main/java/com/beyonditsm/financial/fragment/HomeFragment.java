@@ -29,7 +29,7 @@ import com.beyonditsm.financial.activity.user.creditcard.CreditCardAct;
 import com.beyonditsm.financial.adapter.HomeCreditAdapter;
 import com.beyonditsm.financial.adapter.HotNewsAdapter;
 import com.beyonditsm.financial.entity.BannerEntity;
-import com.beyonditsm.financial.entity.HomeHotProductEntity;
+import com.beyonditsm.financial.entity.HomeHotProductBean;
 import com.beyonditsm.financial.entity.HotNewsEntity;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserLoginEntity;
@@ -103,7 +103,7 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
 //    private RelativeLayout rlStatusBar;
     private int currentPage = 1;
     private HomeCreditAdapter adapter;
-    private List<HomeHotProductEntity> hotList;
+    private List<HomeHotProductBean> hotList;
     private UserLoginEntity ule;
     private boolean productLoaded = false;
     private boolean newsLoaded = false;
@@ -317,14 +317,14 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
                 break;
             case R.id.ll_creditCard://信用卡
 //                MyToastUtils.showShortToast(getContext(), "敬请期待");
-                if (TextUtils.isEmpty(SpUtils.getRoleName(context).toString())) {
-                    MyToastUtils.showShortToast(getContext(), "请先登录金蛛账号");
-                    Intent goLog = new Intent(context, LoginAct.class);
-                    context.startActivity(goLog);
-                } else {
+//                if (TextUtils.isEmpty(SpUtils.getRoleName(context).toString())) {
+//                    MyToastUtils.showShortToast(getContext(), "请先登录金蛛账号");
+//                    Intent goLog = new Intent(context, LoginAct.class);
+//                    context.startActivity(goLog);
+//                } else {
                     intent = new Intent(mParentActivity, CreditCardAct.class);
                     startActivity(intent);
-                }
+//                }
                 break;
 
             case R.id.ll_gps://GPS
@@ -343,7 +343,7 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
                                 @Override
                                 public void onClick(View v) {
                                     if (!"".equals(SpUtils.getRoleName(mParentActivity))) {
-                                        updateLocation(adress.get(1));
+                                        updateLocation(adress.get(1));//更新城市地址。
                                     }
                                     if (adress.get(1).length() > 4) {
                                         tvCity.setText(adress.get(1).substring(0, 4) + "...");
@@ -386,7 +386,7 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
 
     }
 
-    private List<HomeHotProductEntity> datas = new ArrayList<>();
+    private List<HomeHotProductBean> datas = new ArrayList<>();
 
     /**
      * 获取热门产品列表
@@ -413,9 +413,10 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
 //                plvHotCredit.onPullDownRefreshComplete();
 
                         JSONObject object = new JSONObject(result);
-                        JSONArray data = object.getJSONArray("data");
+                        JSONObject data = object.getJSONObject("data");
+                        JSONArray data2=  data.getJSONArray("rows");
                         Gson gson = new Gson();
-                        hotList = gson.fromJson(data.toString(), new TypeToken<List<HomeHotProductEntity>>() {
+                        hotList = gson.fromJson(data2.toString(), new TypeToken<List<HomeHotProductBean>>() {
                         }.getType());
 //                if (data == null) {
 //                    loadingView.noContent();

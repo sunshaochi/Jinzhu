@@ -18,13 +18,16 @@ import android.widget.TextView;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.db.FriendDao;
+import com.beyonditsm.financial.entity.AdressBean;
 import com.beyonditsm.financial.entity.FriendBean;
 import com.beyonditsm.financial.entity.JJTCityEntity;
 import com.beyonditsm.financial.entity.JJTCounyEntity;
 import com.beyonditsm.financial.entity.JJTProvinceEntity;
+import com.beyonditsm.financial.entity.ProfileInfoBean;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.entity.UserEvent;
+import com.beyonditsm.financial.entity.UserLoginBean;
 import com.beyonditsm.financial.fragment.MineFragment;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
@@ -68,8 +71,8 @@ import io.rong.imlib.model.UserInfo;
  * Created by wangbin on 15/11/12.
  */
 public class UpdateAct extends BaseActivity {
-    private UserEntity userInfo;//传过来的user信息
-
+    private ProfileInfoBean userInfo;//传过来的user信息
+    private UserLoginBean userLoginBean;
     @SuppressWarnings("deprecation")
     private DisplayImageOptions options = new DisplayImageOptions.Builder()
             .showStubImage(R.mipmap.ava_default) // 设置图片下载期间显示的图片
@@ -100,6 +103,7 @@ public class UpdateAct extends BaseActivity {
     private TextView tvLocal;
 
     private AddressUtil addressUtil;
+    private AdressBean adressBean=new AdressBean();
     private List<JJTProvinceEntity> provinceList;
     private DialogJJTAddress dialogJJTAddress;
     private List<JJTCityEntity> cityList;
@@ -143,24 +147,32 @@ public class UpdateAct extends BaseActivity {
         //强制关闭键盘
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         addressUtil = new AddressUtil(this);
-//        userInfo = getIntent().getParcelableExtra(MineFragment.USER_KEY);
-//        //把用户信息放进去
-//        if (userInfo != null) {
-//            setUserMes(userInfo);
-//        } else{
+        userLoginBean = getIntent().getParcelableExtra(MineFragment.USER_KEY);
+        //把用户信息放进去
+        if (userLoginBean != null) {
+            if (userLoginBean.getProfileInfo()!=null){
+                userInfo=userLoginBean.getProfileInfo();
+                adressBean=userLoginBean.getAddress();
+                setUserMes(userInfo,adressBean);
+            }else {
+                userInfo=new ProfileInfoBean();
+                adressBean=userLoginBean.getAddress();
+                setUserMes(userInfo,adressBean);
+            }
+        } else{
             getUserInfo();
-//        }
+        }
         //注册EventBus
         EventBus.getDefault().register(this);
         cbSelectSex.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    userInfo.setUserSex(0);
-                    updateData(userInfo, 5);
+                    userInfo.setSex(0+"");
+                    updateData(userInfo,adressBean, 5);
                 } else {
-                    userInfo.setUserSex(1);
-                    updateData(userInfo, 5);
+                    userInfo.setSex(1+"");
+                    updateData(userInfo,adressBean, 5);
                 }
             }
         });
@@ -177,24 +189,24 @@ public class UpdateAct extends BaseActivity {
         userInfo = event.ue;
         switch (event.position) {
             case 0://真实姓名
-                tvName.setText(event.ue.getUserName());
+                tvName.setText(event.ue.getName());
                 break;
             case 1://身份证号
-                tvCard.setText(userInfo.getIdentCard());
-                if (userInfo.getUserSex() == 0) {
+                tvCard.setText(userInfo.getIdNo());
+                if (TextUtils.equals(userInfo.getSex(),0+"")) {
                     cbSelectSex.setChecked(true);
                 } else {
                     cbSelectSex.setChecked(false);
                 }
-                if (userInfo.getUserAge() != null)
-                    tvAge.setText(userInfo.getUserAge() + "");
+                if (userInfo.getAge() != null)
+                    tvAge.setText(userInfo.getAge() + "");
                 tvnative.setText(userInfo.getNativePlace());
                 break;
             case 8://修改年龄
-                tvAge.setText(userInfo.getUserAge() + "");
+                tvAge.setText(userInfo.getAge() + "");
                 break;
             case 10://修改性别
-                if (userInfo.getUserSex() == 0) {
+                if (TextUtils.equals(userInfo.getSex(),0+"")) {
                     cbSelectSex.setChecked(true);
                 } else {
                     cbSelectSex.setChecked(false);
@@ -232,13 +244,13 @@ public class UpdateAct extends BaseActivity {
             case R.id.rlName://真实姓名
                 intent = new Intent(this, EditAct.class);
                 intent.putExtra(EditAct.USER_TYPE, 0);
-                intent.putExtra(MineFragment.USER_KEY, userInfo);
+                intent.putExtra(MineFragment.USER_KEY, userLoginBean);
                 startActivity(intent);
                 break;
             case R.id.rlCard://身份证号
                 intent = new Intent(this, EditAct.class);
                 intent.putExtra(EditAct.USER_TYPE, 1);
-                intent.putExtra(MineFragment.USER_KEY, userInfo);
+                intent.putExtra(MineFragment.USER_KEY, userLoginBean);
                 startActivity(intent);
                 break;
             case R.id.rlLocal://常住地
@@ -265,21 +277,21 @@ public class UpdateAct extends BaseActivity {
                         defaultCity = adress.get(1);
                         if (!TextUtils.isEmpty(defaultCity)){
                             String cityCode = queryCityCodeByName(defaultCity);
-                            userInfo.setCity(cityCode);
+                            adressBean.setCity(defaultCity);
                         }else {
-                            userInfo.setCity("");
+                            adressBean.setCity("");
                         }
                         defaultArea = adress.get(2);
 
                         if (!TextUtils.isEmpty(defaultArea)){
                             String districtCode = queryAreaCodeByName(defaultArea);
-                            userInfo.setDistrict(districtCode);
+                            adressBean.setDistrict(defaultArea);
                         }
 
-                        userInfo.setProvince(provinceCode);
+                        adressBean.setProvince(defaultProvince);
 
 
-                        updateData(userInfo, 3);
+                        updateData(userInfo,adressBean, 3);
                     }
                 });
                 break;
@@ -303,10 +315,14 @@ public class UpdateAct extends BaseActivity {
                         String nativePlaceCityCode = queryCityCodeByName(nativePlaceCity);
                         nativePlaceDistrict = adress.get(2);
                         String nativePlaceCounyCode = queryAreaCodeByName(nativePlaceDistrict);
-                        userInfo.setNativePlaceProvince(nativePlaceProvinceCode);
-                        userInfo.setNativePlaceCity(nativePlaceCityCode);
-                        userInfo.setNativePlaceDistrict(nativePlaceCounyCode);
-                        updateData(userInfo, 4);
+                        userInfo.setNativePlace(nativePlaceProvince+nativePlaceCity+nativePlaceDistrict);
+//                        adressBean.setAddress(nativePlaceAddrDistrict);
+//                        adressBean.setProvince(nativePlaceProvince);
+//                        adressBean.setCity(nativePlaceCity);
+
+//                        adressBean.setCity(nativePlaceCityCode);
+//                        adressBean.set(nativePlaceCounyCode);
+                        updateData(userInfo,adressBean, 4);
                     }
                 });
                 break;
@@ -330,17 +346,19 @@ public class UpdateAct extends BaseActivity {
                         String nativePlaceAddrCityCode = queryCityCodeByName(nativePlaceAddrCity);
                         nativePlaceAddrDistrict = adress.get(2);
                         String nativePlaceAddrCounyCode = queryAreaCodeByName(nativePlaceAddrDistrict);
-                        userInfo.setNativePlaceAddrProvince(nativePlaceAddrProvinceCode);
-                        userInfo.setNativePlaceAddrCity(nativePlaceAddrCityCode);
-                        userInfo.setNativePlaceAddrDistrict(nativePlaceAddrCounyCode);
-                        updateData(userInfo, 2);
+                        userInfo.setHomeAddress(nativePlaceAddrProvince+nativePlaceAddrCity+nativePlaceDistrict);
+
+//                        userInfo.setNativePlaceAddrProvince(nativePlaceAddrProvinceCode);
+//                        userInfo.setNativePlaceAddrCity(nativePlaceAddrCityCode);
+//                        userInfo.setNativePlaceAddrDistrict(nativePlaceAddrCounyCode);
+                        updateData(userInfo,adressBean, 2);
                     }
                 });
                 break;
             case R.id.rlAge://年龄
                 intent = new Intent(this, EditAct.class);
                 intent.putExtra(EditAct.USER_TYPE, 8);
-                intent.putExtra(MineFragment.USER_KEY, userInfo);
+                intent.putExtra(MineFragment.USER_KEY, userLoginBean);
                 startActivity(intent);
                 break;
             case R.id.rlMarry://婚姻状况
@@ -348,14 +366,14 @@ public class UpdateAct extends BaseActivity {
                 mDialog.builder().addSheetItem("未婚", MySelfSheetDialog.SheetItemColor.Blue, new MySelfSheetDialog.OnSheetItemClickListener() {
                     @Override
                     public void onClick(int which) {
-                        userInfo.setMarrySts(0);
-                        updateData(userInfo, 0);
+                        userInfo.setMarried(false);
+                        updateData(userInfo,adressBean, 0);
                     }
                 }).addSheetItem("已婚", MySelfSheetDialog.SheetItemColor.Blue, new MySelfSheetDialog.OnSheetItemClickListener() {
                     @Override
                     public void onClick(int which) {
-                        userInfo.setMarrySts(1);
-                        updateData(userInfo, 0);
+                        userInfo.setMarried(true);
+                        updateData(userInfo,adressBean, 0);
                     }
                 }).show();
                 break;
@@ -368,41 +386,46 @@ public class UpdateAct extends BaseActivity {
      * @param userInfo 用户实体类
      */
     @SuppressLint("SetTextI18n")
-    private void setUserMes(UserEntity userInfo) {
+    private void setUserMes(ProfileInfoBean userInfo ,AdressBean adressBean) {
         if (userInfo != null) {
-            ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + userInfo.getHeadIcon(), civHead, options);
-            if (userInfo.getUserSex() != null) {
-                if (userInfo.getUserSex() == 0) {
+//            ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + userInfo.getHeadIcon(), civHead, options);
+            if (userInfo.getSex() != null) {
+                if (TextUtils.equals(userInfo.getSex(),0+"")) {
                     cbSelectSex.setChecked(true);
                 } else {
                     cbSelectSex.setChecked(false);
                 }
             }
 
-            if (userInfo.getUserAge() != null) {
-                tvAge.setText(userInfo.getUserAge() + "");
+            if (userInfo.getAge() != null) {
+                tvAge.setText(userInfo.getAge() + "");
             }
-            if (!TextUtils.isEmpty(userInfo.getUserName())) {
-                tvName.setText(userInfo.getUserName());
+            if (!TextUtils.isEmpty(userInfo.getName())) {
+                tvName.setText(userInfo.getName());
             }
-            if (!TextUtils.isEmpty(userInfo.getIdentCard())) {
-                tvCard.setText(userInfo.getIdentCard());
+            if (!TextUtils.isEmpty(userInfo.getIdNo())) {
+                tvCard.setText(userInfo.getIdNo());
             }
-            if (userInfo.getMarrySts() != null) {
-                if (userInfo.getMarrySts() == 0) {
-                    tvMarry.setText("未婚");
-                } else {
+//            if (userInfo.isMarried()) {
+                if (userInfo.isMarried()) {
                     tvMarry.setText("已婚");
+                } else {
+                    tvMarry.setText("未婚");
                 }
+//            }
+            if (!TextUtils.isEmpty(userInfo.getNativePlace())) {//籍贯地址
+                tvnative.setText(userInfo.getNativePlace());
             }
-            if (!TextUtils.isEmpty(userInfo.getNativePlaceApp())) {//籍贯地址
-                tvnative.setText(userInfo.getNativePlaceApp());
+            if (!TextUtils.isEmpty(userInfo.getHomeAddress())) {//户籍地址
+                tvHouseHold.setText(userInfo.getHomeAddress());
             }
-            if (!TextUtils.isEmpty(userInfo.getNativePlaceAddrApp())) {//户籍地址
-                tvHouseHold.setText(userInfo.getNativePlaceAddrApp());
-            }
-            if (!TextUtils.isEmpty(userInfo.getDefaultAddrApp())) {//常住地
-                tvLocal.setText(userInfo.getDefaultAddrApp());
+
+            if (adressBean!=null) {//常住地
+                if (!TextUtils.isEmpty(adressBean.getProvince())){
+                    tvLocal.setText(adressBean.getProvince()+adressBean.getCity()+adressBean.getDistrict());
+                }else {
+                    tvLocal.setText(adressBean.getCity()+adressBean.getDistrict());
+                }
             }
 
         }
@@ -413,17 +436,17 @@ public class UpdateAct extends BaseActivity {
      *
      * @param ue 用户实体类
      */
-    private void updateData(final UserEntity ue, final int iType) {
-        RequestManager.getCommManager().updateData(ue, new RequestManager.CallBack() {
+    private void updateData(final ProfileInfoBean ue, final AdressBean adressBean, final int iType) {
+        RequestManager.getCommManager().updateData(ue,adressBean,SpUtils.getPhonenumber(getApplicationContext()), new RequestManager.CallBack() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onSucess(String result) {
                 switch (iType) {
                     case 0://婚姻状况
-                        if (ue.getMarrySts() == 0) {
-                            tvMarry.setText("未婚");
-                        } else {
+                        if (ue.isMarried()) {
                             tvMarry.setText("已婚");
+                        } else {
+                            tvMarry.setText("未婚");
                         }
                         break;
                     case 1://上传头像
@@ -439,7 +462,7 @@ public class UpdateAct extends BaseActivity {
                         tvnative.setText(nativePlaceProvince + nativePlaceCity + nativePlaceDistrict);
                         break;
                     case 5://性别
-                        if (ue.getUserSex() == 1) {
+                        if (TextUtils.equals(ue.getSex(),1+"")) {
                             cbSelectSex.setChecked(false);
                         } else {
                             cbSelectSex.setChecked(true);
@@ -447,7 +470,9 @@ public class UpdateAct extends BaseActivity {
                         break;
                 }
                 Intent intent = new Intent(MineFragment.UPDATE_USER);
-                intent.putExtra(MineFragment.USER_KEY, ue);
+                userLoginBean.setProfileInfo(ue);
+                userLoginBean.setAddress(adressBean);
+                intent.putExtra(MineFragment.USER_KEY, userLoginBean);
                 sendBroadcast(intent);
 
                 MyToastUtils.showShortToast(getApplicationContext(), "更新成功");
@@ -470,13 +495,17 @@ public class UpdateAct extends BaseActivity {
             @Override
             public void onSucess(String result) {
 //                loadingView.loadComplete();
-                ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
-                userInfo = rd.getData();
-                if (userInfo != null) {
+                ResultData<UserLoginBean> rd = (ResultData<UserLoginBean>) GsonUtils.json(result, UserLoginBean.class);
+                userLoginBean = rd.getData();
+                if (userLoginBean != null) {
                     Intent intent = new Intent(MineFragment.UPDATE_USER);
-                    intent.putExtra(MineFragment.USER_KEY, userInfo);
+                    intent.putExtra(MineFragment.USER_KEY, userLoginBean);
                     sendBroadcast(intent);
-                    setUserMes(userInfo);
+                    if (userLoginBean.getProfileInfo()!=null){
+                        userInfo=userLoginBean.getProfileInfo();
+                        adressBean=userLoginBean.getAddress();
+                        setUserMes(userInfo,adressBean);
+                    }
                 }
             }
 
@@ -502,7 +531,7 @@ public class UpdateAct extends BaseActivity {
             Bitmap bitmap = MyBitmapUtils.decodeUriAsBitmap(UpdateAct.this, imageUri);
             File userbanner = MyBitmapUtils.saveBitmap(bitmap, "userhead.png");
             MyLogUtils.info("userbanner.getPath+" + userbanner.getPath());
-            uploadFile(userbanner.getPath());
+//            uploadFile(userbanner.getPath());
         }
 
 //        Uri uri = null;
@@ -538,38 +567,38 @@ public class UpdateAct extends BaseActivity {
     /**
      * 上传图片
      *
-     * @param file 文件
+     * @param  文件
      */
-    private void uploadFile(final String file) {
-        Map<String, FileBody> fileMaps = new HashMap<>();
-        FileBody fb = new FileBody(new File(file));
-        fileMaps.put("file", fb);
-
-        RequestManager.getCommManager().loadSmalImage(fileMaps, new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) {
-                RongIM.getInstance().refreshUserInfoCache(new UserInfo(userInfo.getAccountId(), userInfo.getUserName(),
-                        Uri.parse(IFinancialUrl.BASE_IMAGE_URL + result)));
-                FriendBean friendBean = new FriendBean();
-                friendBean.setUserHead(IFinancialUrl.BASE_IMAGE_URL + result);
-                friendBean.setUserId(userInfo.getAccountId());
-                friendBean.setUserName(userInfo.getUserName());
-                FriendDao.updateUser(friendBean);
-
-                ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + result, civHead, options);
-                userInfo.setHeadIcon(result);
-                updateData(userInfo, 1);
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-                MyLogUtils.info(msg);
-            }
-        });
-    }
+//    private void uploadFile(final String file) {
+//        Map<String, FileBody> fileMaps = new HashMap<>();
+//        FileBody fb = new FileBody(new File(file));
+//        fileMaps.put("file", fb);
+//
+//        RequestManager.getCommManager().loadSmalImage(fileMaps, new RequestManager.CallBack() {
+//            @Override
+//            public void onSucess(String result) {
+//                RongIM.getInstance().refreshUserInfoCache(new UserInfo(userInfo.getAccountId(), userInfo.getUserName(),
+//                        Uri.parse(IFinancialUrl.BASE_IMAGE_URL + result)));
+//                FriendBean friendBean = new FriendBean();
+//                friendBean.setUserHead(IFinancialUrl.BASE_IMAGE_URL + result);
+//                friendBean.setUserId(userInfo.getAccountId());
+//                friendBean.setUserName(userInfo.getUserName());
+//                FriendDao.updateUser(friendBean);
+//
+//                ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + result, civHead, options);
+//                userInfo.setHeadIcon(result);
+//                updateData(userInfo, 1);
+//            }
+//
+//            @Override
+//            public void onError(int status, String msg) {
+//                MyLogUtils.info(msg);
+//            }
+//        });
+//    }
 
     private void queryProvince() {
-        RequestManager.getCommManager().queryProvince(new RequestManager.CallBack() {
+        RequestManager.getCommManager().getProvince(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result);
@@ -608,7 +637,7 @@ public class UpdateAct extends BaseActivity {
     }
 
     private void queryCity(String provinceCode) {
-        RequestManager.getCommManager().queryCity(provinceCode, new RequestManager.CallBack() {
+        RequestManager.getCommManager().getCity(provinceCode, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result);
@@ -655,7 +684,7 @@ public class UpdateAct extends BaseActivity {
     }
 
     private void queryDistrict(String cityCode) {
-        RequestManager.getCommManager().queryDistrict(cityCode, new RequestManager.CallBack() {
+        RequestManager.getCommManager().getDistrict(cityCode, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
                 JSONObject jsonObject = new JSONObject(result);

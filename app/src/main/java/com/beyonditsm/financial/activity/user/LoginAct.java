@@ -17,10 +17,13 @@ import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.MainActivity;
+import com.beyonditsm.financial.activity.speedcredit.CreditSpeedFirstAct;
 import com.beyonditsm.financial.entity.UserEntity;
+import com.beyonditsm.financial.fragment.MineFragment;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
+import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.AutoAnimImageView;
 import com.beyonditsm.financial.widget.ClearEditText;
 import com.lidroid.xutils.view.annotation.event.OnClick;
@@ -34,7 +37,7 @@ import io.rong.imlib.RongIMClient;
  * 登录
  * Created by wangbin on 15/11/11.
  */
-public class LoginAct extends BaseActivity{
+public class LoginAct extends BaseActivity {
 
     private ClearEditText loginPhone;//手机号
     private ClearEditText loginPwd;//密码
@@ -44,7 +47,7 @@ public class LoginAct extends BaseActivity{
 
     private String phone, pwd;
 
-    public static final String LOGIN_TYPE="login_type";
+    public static final String LOGIN_TYPE = "login_type";
     private int LTYPE;
     private String type;
 
@@ -67,13 +70,13 @@ public class LoginAct extends BaseActivity{
         setLeftTv("返回");
         setTopTitle("用户登录");
         type = getIntent().getStringExtra("TYPE");
-        LTYPE=getIntent().getIntExtra(LOGIN_TYPE,0);
+        LTYPE = getIntent().getIntExtra(LOGIN_TYPE, 0);
         AppManager.getAppManager().addActivity(this);
         assignViews();
         int flag = getIntent().getIntExtra("FLAG", 1);
-        if (flag == 0){
+        if (flag == 0) {
             login_zc.setVisibility(View.INVISIBLE);
-        }else{
+        } else {
             login_zc.setVisibility(View.VISIBLE);
         }
         loginPhone.addTextChangedListener(new TextWatcher() {
@@ -119,7 +122,7 @@ public class LoginAct extends BaseActivity{
         });
     }
 
-    @OnClick({R.id.login_btn, R.id.login_lost_pwd, R.id.tvRight,R.id.login_zc,R.id.rl_back})
+    @OnClick({R.id.login_btn, R.id.login_lost_pwd, R.id.tvRight, R.id.login_zc, R.id.rl_back})
     public void todo(View view) {
         switch (view.getId()) {
             /*登录*/
@@ -131,7 +134,7 @@ public class LoginAct extends BaseActivity{
                     progressBar1.setVisibility(View.VISIBLE);
                     UserEntity ue = new UserEntity();
                     ue.setUsername(phone);
-                    ParamsUtil.getInstance().setUserID(loginPhone.getText().toString()+"");
+                    ParamsUtil.getInstance().setUserID(loginPhone.getText().toString() + "");
                     ue.setPassword(pwd);
                     toLogin(ue);
                 }
@@ -145,11 +148,11 @@ public class LoginAct extends BaseActivity{
                 gotoActivity(RegisterAct.class, false);
                 break;
             case R.id.rl_back:
-                if(LTYPE==1){
-                    Intent intent=new Intent(LoginAct.this,MainActivity.class);
+                if (LTYPE == 1) {
+                    Intent intent = new Intent(LoginAct.this, MainActivity.class);
                     startActivity(intent);
                     finish();
-                }else {
+                } else {
                     sendBroadcast(new Intent(MainActivity.UPDATATAB));
                     finish();
                 }
@@ -160,11 +163,11 @@ public class LoginAct extends BaseActivity{
 
     @Override
     public void onBackPressed() {
-        if(LTYPE==1){
-            Intent intent=new Intent(LoginAct.this,MainActivity.class);
+        if (LTYPE == 1) {
+            Intent intent = new Intent(LoginAct.this, MainActivity.class);
             startActivity(intent);
             finish();
-        }else {
+        } else {
             sendBroadcast(new Intent(MainActivity.UPDATATAB));
             finish();
         }
@@ -201,120 +204,114 @@ public class LoginAct extends BaseActivity{
         RequestManager.getCommManager().toLogin(ue, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
-//                RequestManager.getUserManager().cancelOrder("", new RequestManager.CallBack() {
-//                    @Override
-//                    public void onSucess(String result) throws JSONException {
+                SpUtils.setPhonenumber(getApplicationContext(), ue.getUsername());
+                SpUtils.setRoleName(getApplicationContext(), "users");
+                sendBroadcast(new Intent(MainActivity.UPDATATAB));
+                sendBroadcast(new Intent(MineFragment.UPDATE_USER));
+                sendBroadcast(new Intent(CreditSpeedFirstAct.GET_LOGIN_STATUS));
+                finish();
+                loginBtn.setEnabled(true);
+                progressBar1.setVisibility(View.GONE);
+//                try {
+//                    updateLocation(ParamsUtil.getInstance().getChangedCity());
+//                    ParamsUtil.getInstance().setReLogin(true);
+//                    TestinAgent.setUserInfo(ue.getUserName()+"");
+//                    JSONObject objects = new JSONObject(result);
+//                    JSONObject datas = objects.getJSONObject("data");
+//                    String token = datas.optString("rcToken");
+//                    loginBtn.setEnabled(true);
+//                    progressBar1.setVisibility(View.GONE);
+//                    if (ConstantValue.STEP == 10) {
+//                        sendBroadcast(new Intent(CreditStepAct.UPDATA));
+//                        try {
+//                            JSONObject jsonObject = new JSONObject(result);
+//                            JSONObject data = jsonObject.getJSONObject("data");
+//                            String roleName = data.getString("roleName");
+//                            String accountId=data.optString("accountAlias");
+//                            String agencyIdTag=data.optString("agencyIdTag");
+//                            SpUtils.setRoleName(getApplicationContext(), "users");
+//                            SpUtils.setToken(getApplicationContext(), token);
+////
+//                            if(JPushInterface.isPushStopped(getApplicationContext())){
+//                                JPushInterface.resumePush(getApplicationContext());
+//                            }
+//                            Set<String> set= new HashSet<>();
+//                            if(!TextUtils.isEmpty(agencyIdTag)){
+//                                set.add(agencyIdTag);
+//                            }
+//
+//                            JPushInterface.setAliasAndTags(getApplicationContext(),accountId, set, new TagAliasCallback() {
+//                                @Override
+//                                public void gotResult(int arg0, String arg1, Set<String> arg2) {
+//                                    // TODO Auto-generated method stub
+//
+//                                }
+//                            });
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+////                        connect(SpUtils.getT);
+//                        if (!TextUtils.isEmpty(type)&&type.equals("speed")){
+//                            sendBroadcast(new Intent(CreditSpeedFirstAct.GET_LOGIN_STATUS));
+//                            gotoActivity(CreditSpeedSecond_1Act.class,true);
+//                        }
+//                        finish();
+//                        ConstantValue.STEP = 0;
+//                    } else {
+//                        EventBus.getDefault().post(new LoginEvent(1));
+//                        try {
+//                            JSONObject jsonObject = new JSONObject(result);
+//                            JSONObject data = jsonObject.getJSONObject("data");
+//                            String roleName = data.getString("roleName");
+//                            String accountId=data.optString("accountAlias");
+//                            String agencyIdTag=data.optString("agencyIdTag");
+//                            SpUtils.setRoleName(getApplicationContext(), "users");
+//                            SpUtils.setToken(getApplicationContext(), token);
+//
+//                            if(JPushInterface.isPushStopped(getApplicationContext())){
+//                                JPushInterface.resumePush(getApplicationContext());
+//                            }
+//                            Set<String> set= new HashSet<>();
+//                            if(!TextUtils.isEmpty(agencyIdTag)){
+//                                set.add(agencyIdTag);
+//                            }
+//                            JPushInterface.setAliasAndTags(getApplicationContext(),accountId, set, new TagAliasCallback() {
+//                                @Override
+//                                public void gotResult(int arg0, String arg1, Set<String> arg2) {
+//                                    // TODO Auto-generated method stub
+//
+//                                }
+//                            });
+//                                connect(SpUtils.getToken(getApplicationContext()));
+//                             if (SpUtils.getRoleName(getApplicationContext()).equals("ROLE_COMMON_CLIENT")) {
+//                                sendBroadcast(new Intent(MainActivity.UPDATATAB));
+//                                sendBroadcast(new Intent(MineFragment.UPDATE_USER));
+//                                if(null != ParamsUtil.getInstance().getServiceMainAct()){
+//                                    ParamsUtil.getInstance().getServiceMainAct().finish();
+//                                }
+//                                gotoActivity(MainActivity.class, true);
+//                            } else {
+//                                sendBroadcast(new Intent(MainActivity.UPDATATAB));
+//                                sendBroadcast(new Intent(MineFragment.UPDATE_USER));
+//                                if(null != ParamsUtil.getInstance().getServiceMainAct()){
+//                                    ParamsUtil.getInstance().getServiceMainAct().finish();
+//                                }
+//                                gotoActivity(MainActivity.class, true);
+////                                sendBroadcast(new Intent(ServiceMainAct.UPDATATAB));
+////                                if(null != ParamsUtil.getInstance().getMainAct()){
+////                                    ParamsUtil.getInstance().getMainAct().finish();
+////                                }
+////
+////                                gotoActivity(ServiceMainAct.class, true);
+//
+//                            }
+//                            loginBtn.setEnabled(true);
+//                            progressBar1.setVisibility(View.GONE);
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
 //
 //                    }
-//
-//                    @Override
-//                    public void onError(int status, String msg) {
-//
-//                    }
-//                });
-
-////                    SpUtils.setPhonenumber(getApplicationContext(),ue.getUsername());
-////                try {
-////                    updateLocation(ParamsUtil.getInstance().getChangedCity());
-////                    ParamsUtil.getInstance().setReLogin(true);
-////                    TestinAgent.setUserInfo(ue.getUserName()+"");
-////                    JSONObject objects = new JSONObject(result);
-////                    JSONObject datas = objects.getJSONObject("data");
-////                    String token = datas.optString("rcToken");
-////
-////                    loginBtn.setEnabled(true);
-////                    progressBar1.setVisibility(View.GONE);
-////                    if (ConstantValue.STEP == 10) {
-////                        sendBroadcast(new Intent(CreditStepAct.UPDATA));
-////                        try {
-////                            JSONObject jsonObject = new JSONObject(result);
-////                            JSONObject data = jsonObject.getJSONObject("data");
-////                            String roleName = data.getString("roleName");
-////                            String accountId=data.optString("accountAlias");
-////                            String agencyIdTag=data.optString("agencyIdTag");
-////                            SpUtils.setRoleName(getApplicationContext(), roleName);
-////                            SpUtils.setToken(getApplicationContext(), token);
-//////
-////                            if(JPushInterface.isPushStopped(getApplicationContext())){
-////                                JPushInterface.resumePush(getApplicationContext());
-////                            }
-////                            Set<String> set= new HashSet<>();
-////                            if(!TextUtils.isEmpty(agencyIdTag)){
-////                                set.add(agencyIdTag);
-////                            }
-////
-////                            JPushInterface.setAliasAndTags(getApplicationContext(),accountId, set, new TagAliasCallback() {
-////                                @Override
-////                                public void gotResult(int arg0, String arg1, Set<String> arg2) {
-////                                    // TODO Auto-generated method stub
-////
-////                                }
-////                            });
-////                        } catch (JSONException e) {
-////                            e.printStackTrace();
-////                        }
-//////                        connect(SpUtils.getT);
-////                        if (!TextUtils.isEmpty(type)&&type.equals("speed")){
-////                            sendBroadcast(new Intent(CreditSpeedFirstAct.GET_LOGIN_STATUS));
-////                            gotoActivity(CreditSpeedSecond_1Act.class,true);
-////                        }
-////                        finish();
-////                        ConstantValue.STEP = 0;
-////                    } else {
-////                        EventBus.getDefault().post(new LoginEvent(1));
-////                        try {
-////                            JSONObject jsonObject = new JSONObject(result);
-////                            JSONObject data = jsonObject.getJSONObject("data");
-////                            String roleName = data.getString("roleName");
-////                            String accountId=data.optString("accountAlias");
-////                            String agencyIdTag=data.optString("agencyIdTag");
-////                            SpUtils.setRoleName(getApplicationContext(), roleName);
-////                            SpUtils.setToken(getApplicationContext(), token);
-////
-////                            if(JPushInterface.isPushStopped(getApplicationContext())){
-////                                JPushInterface.resumePush(getApplicationContext());
-////                            }
-////                            Set<String> set= new HashSet<>();
-////                            if(!TextUtils.isEmpty(agencyIdTag)){
-////                                set.add(agencyIdTag);
-////                            }
-////                            JPushInterface.setAliasAndTags(getApplicationContext(),accountId, set, new TagAliasCallback() {
-////                                @Override
-////                                public void gotResult(int arg0, String arg1, Set<String> arg2) {
-////                                    // TODO Auto-generated method stub
-////
-////                                }
-////                            });
-////                                connect(SpUtils.getToken(getApplicationContext()));
-////                             if (SpUtils.getRoleName(getApplicationContext()).equals("ROLE_COMMON_CLIENT")) {
-////                                sendBroadcast(new Intent(MainActivity.UPDATATAB));
-////                                sendBroadcast(new Intent(MineFragment.UPDATE_USER));
-////                                if(null != ParamsUtil.getInstance().getServiceMainAct()){
-////                                    ParamsUtil.getInstance().getServiceMainAct().finish();
-////                                }
-////                                gotoActivity(MainActivity.class, true);
-////                            } else {
-////                                sendBroadcast(new Intent(MainActivity.UPDATATAB));
-////                                sendBroadcast(new Intent(MineFragment.UPDATE_USER));
-////                                if(null != ParamsUtil.getInstance().getServiceMainAct()){
-////                                    ParamsUtil.getInstance().getServiceMainAct().finish();
-////                                }
-////                                gotoActivity(MainActivity.class, true);
-//////                                sendBroadcast(new Intent(ServiceMainAct.UPDATATAB));
-//////                                if(null != ParamsUtil.getInstance().getMainAct()){
-//////                                    ParamsUtil.getInstance().getMainAct().finish();
-//////                                }
-//////
-//////                                gotoActivity(ServiceMainAct.class, true);
-////
-////                            }
-////                            loginBtn.setEnabled(true);
-////                            progressBar1.setVisibility(View.GONE);
-////                        } catch (JSONException e) {
-////                            e.printStackTrace();
-////                        }
-////
-////                    }
 //
 //
 ////                    connect(token,result);
@@ -407,6 +404,7 @@ public class LoginAct extends BaseActivity{
 //            }
 //        });
 //    }
+
     /**
      * 登录
      */
@@ -419,7 +417,7 @@ public class LoginAct extends BaseActivity{
     }
 
 
-    private void updateLocation(String area){
+    private void updateLocation(String area) {
         RequestManager.getCommManager().updateLocation(area, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {

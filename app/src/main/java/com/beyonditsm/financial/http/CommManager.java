@@ -1,10 +1,12 @@
 package com.beyonditsm.financial.http;
 
+import com.beyonditsm.financial.entity.AdressBean;
 import com.beyonditsm.financial.entity.ChangePwdEntity;
 import com.beyonditsm.financial.entity.CreditOfflineUploadEntity;
 import com.beyonditsm.financial.entity.HotProduct;
 import com.beyonditsm.financial.entity.MyCreditEntity;
 import com.beyonditsm.financial.entity.Orederinfo;
+import com.beyonditsm.financial.entity.ProfileInfoBean;
 import com.beyonditsm.financial.entity.SumLoadEntity;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.entity.UserOrderInfo1;
@@ -42,7 +44,7 @@ public class CommManager extends RequestManager {
         params.put("username", ue.getUsername());
         params.put("password", ue.getPassword());
         params.put("isElow","false");
-        params.put("roleName","users");
+//        params.put("roleName","users");
         doPost(IFinancialUrl.LOGIN_URL, params, callBack);
     }
 
@@ -83,7 +85,7 @@ public class CommManager extends RequestManager {
         queryParams.add(new BasicNameValuePair("mobilePhone", phoneNumber));
         queryParams.add(new BasicNameValuePair("userStatus", "users"));
         queryParams.add(new BasicNameValuePair("captcha", captcha));
-        queryParams.add(new BasicNameValuePair("signFrom", IFinancialUrl.MARKET_CODE));
+        queryParams.add(new BasicNameValuePair("signFrom","Android" ));//IFinancialUrl.MARKET_CODE
         queryParams.add(new BasicNameValuePair("referCode", ue.getReferralCode()));
         doPost(IFinancialUrl.REGISTER_URL2,queryParams,callBack);
     }
@@ -152,8 +154,9 @@ public class CommManager extends RequestManager {
      * @param mce      我的贷款实体类
      * @param callBack 回调
      */
-    public void myCredit(MyCreditEntity mce, final CallBack callBack) {
+    public void myCredit(String mobilePhone,MyCreditEntity mce,final CallBack callBack) {
         Map<String, String> params = new HashMap<>();
+        params.put("mobilePhone",mobilePhone);
         params.put("page", mce.getPage() + "");
         params.put("rows", mce.getRows() + "");
         doPost(IFinancialUrl.USERCREDIT_URL, params, callBack);
@@ -161,14 +164,35 @@ public class CommManager extends RequestManager {
 
     /**
      * 更新资料
-     *
      * @param ue       用户entity
      * @param callBack 回调
      */
-    public void updateData(UserEntity ue, CallBack callBack) {
+    public void updateData(ProfileInfoBean ue, AdressBean adressBean,String phoneNum, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
 //        MyLogUtils.info("客户信息：" + GsonUtils.bean2Json(ue));
         String json = GsonUtils.bean2Json(ue);
+        String json2=GsonUtils.bean2Json(adressBean);
+
+        JSONObject obj2 = null;
+        try {
+            obj2 = new JSONObject(json2);
+            if ((obj2.toString()).contains("createTime")) {
+                obj2.remove("createTime");
+            }
+            if ((obj2.toString()).contains("updateTime")) {
+                obj2.remove("updateTime");
+            }
+            Iterator<String> it2 = obj2.keys();
+            while (it2.hasNext()) {
+                String key = it2.next();
+                params.put(key, String.valueOf(obj2.get(key)));
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
         try {
             JSONObject obj = new JSONObject(json);
             if ((obj.toString()).contains("createTime")) {
@@ -183,11 +207,22 @@ public class CommManager extends RequestManager {
             if ((obj.toString()).contains("modifyPersonId")) {
                 obj.remove("modifyPersonId");
             }
+            if ((obj.toString()).contains("updateTime")) {
+                obj.remove("updateTime");
+            }
+            if ((obj.toString()).contains("mobilePhone")) {
+                obj.remove("mobilePhone");
+            }
+            if ((obj.toString()).contains("customerId")) {
+                obj.remove("customerId");
+            }
+
             Iterator<String> it = obj.keys();
             while (it.hasNext()) {
                 String key = it.next();
                 params.put(key, String.valueOf(obj.get(key)));
             }
+//            params.put("mobilePhone", phoneNum);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -245,6 +280,7 @@ public class CommManager extends RequestManager {
         doPost(IFinancialUrl.FOGET_PWD_URL, params, callBack);
     }
 
+
     /**
      * 发送验证码找回密码验证码
      *
@@ -254,9 +290,20 @@ public class CommManager extends RequestManager {
     public void findpwbyCode(String phoneNumber, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
         params.put("phoneNumber", phoneNumber);
-        doPost(IFinancialUrl.FPRGET_PWD_SMSCAPTCHA, params, callBack);
+        doPost(IFinancialUrl.FPRGET_PWD_SMSCAPTCHA,params, callBack);
     }
-
+    /**
+     * 忘记密码
+     * 校验验证码
+     * @param
+     * @param callBack    回调
+     */
+    public void fogetJyPwd(String phoneNumber, String captcha,CallBack callBack) {
+        Map<String, String> params = new HashMap<>();
+        params.put("phoneNumber", phoneNumber);
+        params.put("captcha", captcha);
+        doPost(IFinancialUrl.FOGET_PWD_JY_URL, params, callBack);
+    }
 
     /**
      * 用户查看订单详情

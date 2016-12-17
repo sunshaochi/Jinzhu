@@ -258,13 +258,13 @@ public class MainActivity extends BaseActivity {
                 break;
             //我的
             case R.id.llMine:
-                if (TextUtils.isEmpty(SpUtils.getRoleName(MainActivity.this))) {
-                    gotoActivity(LoginAct.class, false);
-                } else {
+//                if (TextUtils.isEmpty(SpUtils.getRoleName(MainActivity.this))) {
+//                    gotoActivity(LoginAct.class, false);
+//                } else {
                     setAllTabNor();
                     setTabSelection(3);
                     setCheckItem(3);
-                }
+//                }
                 break;
 
         }

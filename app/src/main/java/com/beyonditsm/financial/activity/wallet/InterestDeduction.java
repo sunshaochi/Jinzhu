@@ -20,11 +20,11 @@ import com.beyonditsm.financial.entity.OrderBean;
 import com.beyonditsm.financial.entity.OrderBean2;
 import com.beyonditsm.financial.entity.QueRenOrderBean;
 import com.beyonditsm.financial.entity.ResultData;
-import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.widget.DialogChooseProvince;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -75,8 +75,8 @@ public class InterestDeduction extends BaseActivity {
     private TextView tvMinPayment;//最小兑换金额
     private OrderBean orderBeanLixi;
     private QueRenOrderBean orderBean;//订单实体
-    private UserEntity user;//用户实体
-
+//    private UserEntity user;//用户实体
+    private String dikou;
     private List<OrderBean2> list;
     private int position;//选择订单号的位置
 
@@ -98,22 +98,27 @@ public class InterestDeduction extends BaseActivity {
         setTopTitle("抵扣利息");
 
 
-        user=getIntent().getParcelableExtra("userInfo");
-        if(user!=null){
-//            if (!TextUtils.isEmpty(user.getUserName())){
-//                name.setText(user.getUserName());
-//                name.setEnabled(false);
-//            } else {
-//                user.setUserName(name.getText().toString().trim());
-//            }
-            if(!TextUtils.isEmpty(user.getDeductionTicketAmount())){
-                double dCashA=Double.valueOf(user.getDeductionTicketAmount());
-                tvDikouMoney.setText((long)dCashA+"");
-                MAX_MARK=Double.parseDouble(user.getDeductionTicketAmount());
-
-            }
+        dikou=getIntent().getParcelableExtra("dikou");
+        if (TextUtils.isEmpty(dikou)){
+            tvDikouMoney.setText(0+"");
+        }else {
+            tvDikouMoney.setText(dikou);
         }
-        getOrderNoList(uid);
+//        if(user!=null){
+////            if (!TextUtils.isEmpty(user.getUserName())){
+////                name.setText(user.getUserName());
+////                name.setEnabled(false);
+////            } else {
+////                user.setUserName(name.getText().toString().trim());
+////            }
+//            if(!TextUtils.isEmpty(user.getDeductionTicketAmount())){
+//                double dCashA=Double.valueOf(user.getDeductionTicketAmount());
+//                tvDikouMoney.setText((long)dCashA+"");
+//                MAX_MARK=Double.parseDouble(user.getDeductionTicketAmount());
+//
+//            }
+//        }
+        getOrderNoList(SpUtils.getPhonenumber(InterestDeduction.this));
         findBankCard();
         getMinExchange();
 
@@ -303,7 +308,7 @@ public class InterestDeduction extends BaseActivity {
             //设置资金密码
             case R.id.tvset:
                 intent=new Intent(InterestDeduction.this,SetPwdActivity.class);
-                intent.putExtra("userPhone",user.getAccountName());
+                intent.putExtra("userPhone", SpUtils.getPhonenumber(InterestDeduction.this));
                 startActivity(intent);
                 break;
 

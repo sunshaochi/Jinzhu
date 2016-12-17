@@ -223,18 +223,18 @@ public class FindPwdAct extends BaseActivity {
                     findetpwd.requestFocus();
                     return;
                 }
-
+                checkSms(name,authcode);
                 MyLogUtils.info(SMSCode.getText().toString() + "sss" + getResponseStr(responseArray));
 
-                if ((SMSCode.getText().toString() + "").trim().toLowerCase().equals(getResponseStr(responseArray).toLowerCase().trim())) {
-                    Intent intent = new Intent(FindPwdAct.this, UpdatePwdAct.class);
-                    intent.putExtra(PHONENUM, name);
-                    intent.putExtra(CAPTCHA, authcode);
-                    startActivity(intent);
-
-                } else {
-                    MyToastUtils.showShortToast(getApplicationContext(), "图形校验码错误");
-                }
+//                if ((SMSCode.getText().toString() + "").trim().toLowerCase().equals(getResponseStr(responseArray).toLowerCase().trim())) {
+//                    Intent intent = new Intent(FindPwdAct.this, UpdatePwdAct.class);
+//                    intent.putExtra(PHONENUM, name);
+//                    intent.putExtra(CAPTCHA, authcode);
+//                    startActivity(intent);
+//
+//                } else {
+//                    MyToastUtils.showShortToast(getApplicationContext(), "图形校验码错误");
+//                }
 
 //                SMSCaptchaFogetPassword(name,SMSCode.getText().toString()+"");
 
@@ -282,6 +282,28 @@ public class FindPwdAct extends BaseActivity {
             }
         }
     };
+
+    /**
+     * 校验短信验证码
+     * @param phoneNum
+     * @param capch
+     */
+    private void checkSms(final String phoneNum, final String capch){
+        RequestManager.getCommManager().fogetJyPwd(phoneNum, capch, new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                Intent intent = new Intent(FindPwdAct.this, UpdatePwdAct.class);
+                intent.putExtra(PHONENUM, phoneNum);
+                intent.putExtra(CAPTCHA, capch);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+                MyToastUtils.showShortToast(getApplicationContext(),msg );
+            }
+        });
+    }
 }
 
 
