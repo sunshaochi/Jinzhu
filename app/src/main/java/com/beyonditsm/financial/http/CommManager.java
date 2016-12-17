@@ -1,10 +1,12 @@
 package com.beyonditsm.financial.http;
 
+import com.beyonditsm.financial.entity.AdressBean;
 import com.beyonditsm.financial.entity.ChangePwdEntity;
 import com.beyonditsm.financial.entity.CreditOfflineUploadEntity;
 import com.beyonditsm.financial.entity.HotProduct;
 import com.beyonditsm.financial.entity.MyCreditEntity;
 import com.beyonditsm.financial.entity.Orederinfo;
+import com.beyonditsm.financial.entity.ProfileInfoBean;
 import com.beyonditsm.financial.entity.SumLoadEntity;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.entity.UserOrderInfo1;
@@ -42,7 +44,7 @@ public class CommManager extends RequestManager {
         params.put("username", ue.getUsername());
         params.put("password", ue.getPassword());
         params.put("isElow","false");
-        params.put("roleName","users");
+//        params.put("roleName","users");
         doPost(IFinancialUrl.LOGIN_URL, params, callBack);
     }
 
@@ -83,7 +85,7 @@ public class CommManager extends RequestManager {
         queryParams.add(new BasicNameValuePair("mobilePhone", phoneNumber));
         queryParams.add(new BasicNameValuePair("userStatus", "users"));
         queryParams.add(new BasicNameValuePair("captcha", captcha));
-        queryParams.add(new BasicNameValuePair("signFrom", IFinancialUrl.MARKET_CODE));
+        queryParams.add(new BasicNameValuePair("signFrom","Android" ));//IFinancialUrl.MARKET_CODE
         queryParams.add(new BasicNameValuePair("referCode", ue.getReferralCode()));
         doPost(IFinancialUrl.REGISTER_URL2,queryParams,callBack);
     }
@@ -162,14 +164,29 @@ public class CommManager extends RequestManager {
 
     /**
      * 更新资料
-     *
      * @param ue       用户entity
      * @param callBack 回调
      */
-    public void updateData(UserEntity ue, CallBack callBack) {
+    public void updateData(ProfileInfoBean ue, AdressBean adressBean,String phoneNum, CallBack callBack) {
         Map<String, String> params = new HashMap<>();
 //        MyLogUtils.info("客户信息：" + GsonUtils.bean2Json(ue));
         String json = GsonUtils.bean2Json(ue);
+        String json2=GsonUtils.bean2Json(adressBean);
+
+        JSONObject obj2 = null;
+        try {
+            obj2 = new JSONObject(json2);
+            Iterator<String> it2 = obj2.keys();
+            while (it2.hasNext()) {
+                String key = it2.next();
+                params.put(key, String.valueOf(obj2.get(key)));
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
         try {
             JSONObject obj = new JSONObject(json);
             if ((obj.toString()).contains("createTime")) {
@@ -189,6 +206,7 @@ public class CommManager extends RequestManager {
                 String key = it.next();
                 params.put(key, String.valueOf(obj.get(key)));
             }
+            params.put("mobilePhone", phoneNum);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -403,10 +421,7 @@ public class CommManager extends RequestManager {
      * @param callBack 回调
      */
     public void findOrderFlow(String orderId, CallBack callBack) {
-        Map<String, String> params = new HashMap<>();
-        params.put("orderId", orderId);
-        params.put("flowId", "2");
-        doPost(IFinancialUrl.FIND_EXTRA_FlOW_URL, params, callBack);
+        todoGet(IFinancialUrl.UPLOAD_LIST_URL+"?orderId="+orderId+"&flowType=2", callBack);
     }
 
 

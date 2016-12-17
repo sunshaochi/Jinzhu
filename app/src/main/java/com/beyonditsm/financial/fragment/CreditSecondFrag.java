@@ -876,7 +876,8 @@ public class CreditSecondFrag extends BaseFragment {
 
                     try {
                         JSONObject jsonObject = new JSONObject(result);
-                        reOrderId = jsonObject.getString("data");//获取订单id
+                        JSONObject data = jsonObject.getJSONObject("data");
+                        reOrderId = data.getString("orderId");//获取订单id
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

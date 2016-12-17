@@ -13,13 +13,16 @@ import android.view.View;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
-import com.beyonditsm.financial.entity.UserEntity;
+import com.beyonditsm.financial.entity.AdressBean;
+import com.beyonditsm.financial.entity.ProfileInfoBean;
 import com.beyonditsm.financial.entity.UserEvent;
+import com.beyonditsm.financial.entity.UserLoginBean;
 import com.beyonditsm.financial.fragment.MineFragment;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.IdcardUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.widget.ClearEditText;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.tandong.sa.eventbus.EventBus;
@@ -32,8 +35,9 @@ public class EditAct extends BaseActivity {
     @ViewInject(R.id.etM)
     private ClearEditText etM;
 
-    private UserEntity userInfo;
-
+    private UserLoginBean userInfo2 = new UserLoginBean();
+    private ProfileInfoBean userInfo;
+    private AdressBean adressBean;
     private int TYPE;//0真实姓名 1身份证号，2/籍贯 3户籍地址 4、收支银行 5、收支支行 6、银行账号 7、邮箱
     public static String USER_TYPE = "type";
 
@@ -45,67 +49,77 @@ public class EditAct extends BaseActivity {
     @Override
     public void init(Bundle savedInstanceState) {
         setLeftTv("返回");
-        userInfo=getIntent().getParcelableExtra(MineFragment.USER_KEY);
+        userInfo2 = getIntent().getParcelableExtra(MineFragment.USER_KEY);
+//        userInfo=new ProfileInfoBean();
+        if (userInfo2!=null){
+            userInfo = userInfo2.getProfileInfoBean();
+        }else {
+            userInfo=new ProfileInfoBean();
+        }
         TYPE = getIntent().getIntExtra(USER_TYPE, 0);
         setTopT(TYPE);
-        if(!TextUtils.isEmpty(etM.getText().toString().trim())){
+        if (!TextUtils.isEmpty(etM.getText().toString().trim())) {
             etM.setSelection(etM.getText().toString().length());
         }
         setRightBtn("提交", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String content=etM.getText().toString().trim();
-                if(TextUtils.isEmpty(content)){
-                    MyToastUtils.showShortToast(getApplicationContext(),"请先完成输入");
+                String content = etM.getText().toString().trim();
+                if (TextUtils.isEmpty(content)) {
+                    MyToastUtils.showShortToast(getApplicationContext(), "请先完成输入");
                     return;
                 }
 
 
-                switch (TYPE){
+                switch (TYPE) {
                     case 0://真实姓名
-                        if (!FinancialUtil.isInputChinese(content)){
-                            MyToastUtils.showShortToast(getApplicationContext(),"真实姓名必须为中文！");
+                        if (!FinancialUtil.isInputChinese(content)) {
+                            MyToastUtils.showShortToast(getApplicationContext(), "真实姓名必须为中文！");
                             return;
-                        }else{
-                            userInfo.setUserName(content);
+                        } else {
+                            userInfo.setName(content);
                         }
 
                         break;
                     case 1://身份证号
-                        if(!IdcardUtils.validateCard(content)){
-                            MyToastUtils.showShortToast(getApplicationContext(),"请输入合法的身份证号");
+                        if (!IdcardUtils.validateCard(content)) {
+                            MyToastUtils.showShortToast(getApplicationContext(), "请输入合法的身份证号");
                             return;
                         }
                         if (!TextUtils.isEmpty(content)) {
-                            userInfo.setIdentCard(content);
+                            userInfo.setIdNo(content);
                         }
-                        if(userInfo.getUserAge()==null)
-                        userInfo.setUserAge(IdcardUtils.getAgeByIdCard(content));
+                        if (userInfo.getAge() == null)
+                            userInfo.setAge(IdcardUtils.getAgeByIdCard(content) + "");
 
-                        if(userInfo.getUserSex()==null) {
+                        if (userInfo.getSex() == null) {
                             if ("M".equals(IdcardUtils.getGenderByIdCard(content))) {
-                                userInfo.setUserSex(1);
+                                userInfo.setSex(1 + "");
                             } else if ("F".equals(IdcardUtils.getGenderByIdCard(content))) {
-                                userInfo.setUserSex(0);
+                                userInfo.setSex(0 + "");
                             }
                         }
-                        if(TextUtils.isEmpty(userInfo.getNativePlace())) {
+                        if (TextUtils.isEmpty(userInfo.getNativePlace())) {
                             userInfo.setNativePlace(IdcardUtils.getProvinceByIdCard(content));
                         }
 
                         break;
                     case 8:
                         if (!TextUtils.isEmpty(content)) {
-                            userInfo.setUserAge(Integer.valueOf(content));
+                            if (userInfo==null){
+                                userInfo=new ProfileInfoBean();
+                                userInfo.setAge(content + "");
+                            }else {
+                                userInfo.setAge(content);
+                            }
                         }
                         break;
                 }
-                updateData(userInfo);
+                updateData(userInfo, adressBean);
 
             }
         });
     }
-
 
 
     /**
@@ -120,8 +134,8 @@ public class EditAct extends BaseActivity {
             case 0:
                 setTopTitle("真实姓名");
                 etM.setHint("请输入真实姓名");
-                if(userInfo!=null&&!TextUtils.isEmpty(userInfo.getUserName())){
-                    etM.setText(userInfo.getUserName());
+                if (userInfo != null && !TextUtils.isEmpty(userInfo.getName())) {
+                    etM.setText(userInfo.getName());
                 }
                 etM.addTextChangedListener(new TextWatcher() {
                     @Override
@@ -131,7 +145,7 @@ public class EditAct extends BaseActivity {
 
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        if (!FinancialUtil.isInputChinese(etM.getText().toString())){
+                        if (!FinancialUtil.isInputChinese(etM.getText().toString())) {
                             etM.setError("真实姓名必须为中文！");
                         }
                     }
@@ -149,7 +163,7 @@ public class EditAct extends BaseActivity {
                 etM.setKeyListener(new NumberKeyListener() {
                     @Override
                     protected char[] getAcceptedChars() {
-                        return new char[]{'0','1','2','3','4','5','6','7','8','9','x','X'};
+                        return new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'x', 'X'};
                     }
 
                     @Override
@@ -158,8 +172,8 @@ public class EditAct extends BaseActivity {
                     }
                 });
 //                etM.setKeyListener(new DigitsKeyListener(false,true));
-                if(userInfo!=null&&!TextUtils.isEmpty(userInfo.getIdentCard())){
-                    etM.setText(userInfo.getIdentCard());
+                if (userInfo != null && !TextUtils.isEmpty(userInfo.getIdNo())) {
+                    etM.setText(userInfo.getIdNo());
                 }
                 break;
             case 2:
@@ -194,8 +208,8 @@ public class EditAct extends BaseActivity {
                 etM.setInputType(InputType.TYPE_CLASS_NUMBER);
                 etM.setFilters(new InputFilter[]{new InputFilter.LengthFilter(3)});
                 etM.setHint("请输入年龄");
-                if(userInfo!=null&&userInfo.getUserAge()!=null){
-                    etM.setText(userInfo.getUserAge()+"");
+                if (userInfo != null && userInfo.getAge() != null) {
+                    etM.setText(userInfo.getAge() + "");
                 }
                 break;
         }
@@ -203,10 +217,11 @@ public class EditAct extends BaseActivity {
 
     /**
      * 更新资料
+     *
      * @param ue 用户实体类
      */
-    private void updateData(final UserEntity ue){
-        RequestManager.getCommManager().updateData(ue, new RequestManager.CallBack() {
+    private void updateData(final ProfileInfoBean ue, AdressBean adressBean) {
+        RequestManager.getCommManager().updateData(ue, adressBean, SpUtils.getPhonenumber(getApplicationContext()), new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
                 EventBus.getDefault().post(new UserEvent(ue, TYPE));
@@ -215,13 +230,13 @@ public class EditAct extends BaseActivity {
                 intent.putExtra(MineFragment.USER_KEY, ue);
                 sendBroadcast(intent);
 
-                MyToastUtils.showShortToast(getApplicationContext(),"更新成功");
+                MyToastUtils.showShortToast(getApplicationContext(), "更新成功");
                 finish();
             }
 
             @Override
-            public void onError(int status,String msg) {
-                MyToastUtils.showShortToast(getApplicationContext(),msg);
+            public void onError(int status, String msg) {
+                MyToastUtils.showShortToast(getApplicationContext(), msg);
             }
         });
     }
