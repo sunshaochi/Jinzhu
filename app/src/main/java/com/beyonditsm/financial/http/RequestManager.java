@@ -50,6 +50,7 @@ public class RequestManager {
     private static WalletManager walletManager;//钱包
 
     private static RequestManager manager;
+    private  String cookie;
 
     public static CommManager getCommManager() {
         if (commManager == null) {
@@ -144,7 +145,8 @@ public class RequestManager {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> localHashMap = new HashMap<>();
-                localHashMap.put("Cookie", SpUtils.getCookie(MyApplication.getInstance()));
+//                localHashMap.put("Cookie", SpUtils.getCookie(MyApplication.getInstance()));
+                localHashMap.put("Cookie", SpUtils.getCookie(MyApplication.getInstance().getApplicationContext()));
                 localHashMap.put("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance()));
                 return localHashMap;
             }
@@ -265,14 +267,14 @@ public class RequestManager {
                     public void onResponse(String response) {
                         MyLogUtils.info(response);
                         try {
-                            JSONObject obj = new JSONObject(response);
-                            int status = obj.getInt("status");
-                            if (status == 200) {
+//                            JSONObject obj = new JSONObject(response);
+//                            int status = obj.getInt("status");
+//                            if (status == 200) {
                                 callback.onSucess(response);
-                            } else {
-                                callback.onError(obj.getInt("status"), obj.getString("message"));
-
-                            }
+//                            } else {
+//                                callback.onError(obj.getInt("status"), obj.getString("message"));
+//
+//                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -318,6 +320,7 @@ public class RequestManager {
                 try {
                     Map<String, String> responseHeaders = response.headers;
                     String rawCookies = responseHeaders.get("Set-Cookie");
+                    MyLogUtils.info("Set-Cookie-------:"+rawCookies);
                     String dataString = new String(response.data, "UTF-8");
                     if (!TextUtils.isEmpty(rawCookies))
                         SpUtils.setCooike(MyApplication.getInstance(), rawCookies);

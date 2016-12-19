@@ -5,23 +5,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.MainActivity;
-import com.beyonditsm.financial.activity.credit.CreditUploadAct;
-import com.beyonditsm.financial.activity.speedcredit.CreditSpeedSecond_1Act;
 import com.beyonditsm.financial.activity.speedcredit.listener.DialogListener;
-import com.beyonditsm.financial.entity.UserOrderInfoEntity;
 import com.beyonditsm.financial.entity.VendorEntity;
-import com.beyonditsm.financial.fragment.HomeFragment;
 import com.beyonditsm.financial.http.CommManager;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.CheckUtil;
-import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.widget.DialogCloseBtn;
 import com.beyonditsm.financial.widget.DialogSingalPicker;
@@ -69,6 +64,8 @@ public class CreditSpeedThird_2Act extends BaseActivity {
     TextView tvMsg;
     @ViewInject(R.id.address_detail)
     TextView addreddDetail;
+    @ViewInject(R.id.iv_tip)
+    ImageView ivTip;
     private ArrayList<String> vendorNameList;
     private String frontCardUrl;//身份证正面url
     private String backCardUrl;//身份证反面url
@@ -258,11 +255,14 @@ public class CreditSpeedThird_2Act extends BaseActivity {
                 JSONObject jsonObject  = new JSONObject(result);
                 JSONObject data = jsonObject.getJSONObject("data");
                 String msg = data.getString("msg");
-
+                llSuccess.setVisibility(View.VISIBLE);
                 if (!msg.equals("成功")){
                     tvMsg.setText(msg);
+                    ivTip.setImageResource(R.mipmap.ico_failed);
+                }else {
+                    ivTip.setImageResource(R.mipmap.ico_success);
                 }
-                llSuccess.setVisibility(View.VISIBLE);
+
 
             }
 
