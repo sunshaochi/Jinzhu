@@ -17,15 +17,12 @@ import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
-import com.beyonditsm.financial.db.FriendDao;
 import com.beyonditsm.financial.entity.AdressBean;
-import com.beyonditsm.financial.entity.FriendBean;
 import com.beyonditsm.financial.entity.JJTCityEntity;
 import com.beyonditsm.financial.entity.JJTCounyEntity;
 import com.beyonditsm.financial.entity.JJTProvinceEntity;
 import com.beyonditsm.financial.entity.ProfileInfoBean;
 import com.beyonditsm.financial.entity.ResultData;
-import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.entity.UserEvent;
 import com.beyonditsm.financial.entity.UserLoginBean;
 import com.beyonditsm.financial.fragment.MineFragment;
@@ -62,9 +59,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import io.rong.imkit.RongIM;
-import io.rong.imlib.model.UserInfo;
 
 /**
  * 我的资料
@@ -388,7 +382,7 @@ public class UpdateAct extends BaseActivity {
     @SuppressLint("SetTextI18n")
     private void setUserMes(ProfileInfoBean userInfo ,AdressBean adressBean) {
         if (userInfo != null) {
-//            ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + userInfo.getHeadIcon(), civHead, options);
+            ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + userInfo.getAvatarPic(), civHead, options);
             if (userInfo.getSex() != null) {
                 if (TextUtils.equals(userInfo.getSex(),0+"")) {
                     cbSelectSex.setChecked(true);
@@ -567,16 +561,16 @@ public class UpdateAct extends BaseActivity {
     /**
      * 上传图片
      *
-     * @param  文件
+     * @param
      */
-//    private void uploadFile(final String file) {
-//        Map<String, FileBody> fileMaps = new HashMap<>();
-//        FileBody fb = new FileBody(new File(file));
-//        fileMaps.put("file", fb);
-//
-//        RequestManager.getCommManager().loadSmalImage(fileMaps, new RequestManager.CallBack() {
-//            @Override
-//            public void onSucess(String result) {
+    private void uploadFile(final String file) {
+        Map<String, FileBody> fileMaps = new HashMap<>();
+        FileBody fb = new FileBody(new File(file));
+        fileMaps.put("file", fb);
+
+        RequestManager.getCommManager().loadSmalImage(fileMaps, new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) {
 //                RongIM.getInstance().refreshUserInfoCache(new UserInfo(userInfo.getAccountId(), userInfo.getUserName(),
 //                        Uri.parse(IFinancialUrl.BASE_IMAGE_URL + result)));
 //                FriendBean friendBean = new FriendBean();
@@ -588,14 +582,14 @@ public class UpdateAct extends BaseActivity {
 //                ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + result, civHead, options);
 //                userInfo.setHeadIcon(result);
 //                updateData(userInfo, 1);
-//            }
-//
-//            @Override
-//            public void onError(int status, String msg) {
-//                MyLogUtils.info(msg);
-//            }
-//        });
-//    }
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+                MyLogUtils.info(msg);
+            }
+        });
+    }
 
     private void queryProvince() {
         RequestManager.getCommManager().getProvince(new RequestManager.CallBack() {

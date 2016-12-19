@@ -21,7 +21,7 @@ public interface IFinancialUrl {
 //    String BASE_URL ="http://172.16.7.196:8083";
     /*袁峰测试*/
 //    String BASE_URL = "http://172.16.6.153:8080";
-    String BASE_URL = "http://172.16.6.228:8080";
+//    String BASE_URL = "http://172.16.6.228:8080";
     /*验收环境地址*/
 //    String BASE_URL = "http://test.myjinzhu.com:8086";
 ////        /*验收环境游戏地址*/
@@ -70,7 +70,8 @@ public interface IFinancialUrl {
 //    String BASE_URL = "http://172.16.5.250:8080";
 //    String BASE_URL="http://172.16.6.216";
 //    String BASE_URL = "http://172.16.6.228:8080";
-//    String BASE_URL = "http://172.16.6.228:8080";
+    String BASE_URL = "http://172.16.6.228:8080";
+//    String BASE_URL="http://139.196.227.38:9000";//#  后台
 
     /**
      * @MARKEY_CODE 渠道号设置，默认渠道设置为空字符串
@@ -99,8 +100,7 @@ public interface IFinancialUrl {
 //    String UPDATE_PWD_URL = BASE_URL + API_VERSION + "/manager/login/modifyUserPassword.do";
     /*通过产品表相关参数查询产品信息*/
     String FIND_PRODUCT_LIST_URL = BASE_URL + API_VERSION + "/platform/unLogin/productList.do";
-    /*我的贷款*/
-    String USERCREDIT_URL = BASE_URL +"/getOrderlist.do";
+
     /*查询我推荐的好友列表*/
     String FIND_MY_FRIEND_LIST_URL = BASE_URL + API_VERSION + "/platform/login/findMyFriendListByParams.do";
 
@@ -135,7 +135,7 @@ public interface IFinancialUrl {
     String UPLOAD_URL = BASE_URL + "/uploadFiles.do";
 
     /*上传小图片文件*/
-    String UPLOAD_small_URL = BASE_URL + API_VERSION + "/common/commonAPI/login/upLoadSmallImage.do";
+    String UPLOAD_small_URL = BASE_URL  + "/uploadFiles";
 
     /*客户提交订单*/
     String SUBMITORDER_URL = BASE_URL + "/submitOrder";
@@ -324,7 +324,7 @@ public interface IFinancialUrl {
     /*查找获取登录用户个人信息*/
     String USERINFO_URL = BASE_URL + "/customer/getAccountInfo";
     /*修改密码*/
-    String UPDATE_PWD_URL = BASE_URL + "/customer/unLogin/modifyUserPassword";
+    String UPDATE_PWD_URL = BASE_URL + "customer/unLogin/modifyUserPassword";
     /*发送验证码找回密码的验证码 */
     String FPRGET_PWD_SMSCAPTCHA = BASE_URL + "/customer/unLogin/sendCaptchaPassword";
     /*更新位置*/
@@ -341,5 +341,7 @@ public interface IFinancialUrl {
     String FOGET_PWD_URL = BASE_URL + "/customer/unLogin/forgetPassword";
     //    忘记密码短信验证码校验
     String FOGET_PWD_JY_URL = BASE_URL + "/customer/unLogin/checkSMSCaptcha";
+    /*我的贷款*/
+    String USERCREDIT_URL = BASE_URL +"/getOrderlist";
 
 }

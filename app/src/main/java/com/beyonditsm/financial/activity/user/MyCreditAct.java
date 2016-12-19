@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -21,16 +20,21 @@ import com.beyonditsm.financial.activity.credit.MyCreditDAct;
 import com.beyonditsm.financial.adapter.MyCreditAdapter;
 import com.beyonditsm.financial.entity.MyCreditBean;
 import com.beyonditsm.financial.entity.MyCreditEntity;
-import com.beyonditsm.financial.entity.ResultData;
+import com.beyonditsm.financial.entity.OrderListBean;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
-import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.tandong.sa.json.Gson;
+import com.tandong.sa.json.reflect.TypeToken;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +58,7 @@ public class MyCreditAct extends BaseActivity {
     public static String CREDIT = "credit";
     private PushBroadReceiver pushBroadReceiver;
     private String orderId;
+    private List<OrderListBean> orderList=new ArrayList<>();
     //    private String id;
 
     @Override
@@ -138,29 +143,40 @@ public class MyCreditAct extends BaseActivity {
             @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) {
-                loadingView.loadComplete();
-                plv.onPullUpRefreshComplete();
-                plv.onPullDownRefreshComplete();
-                ResultData<MyCreditBean> rd = (ResultData<MyCreditBean>) GsonUtils.json(result, MyCreditBean.class);
-                MyCreditBean myCreditBean = rd.getData();
-                List<MyCreditBean.RowsEntity> list = myCreditBean.getRows();
-                if (list == null || list.size() == 0) {
-                    if (page == 1)
-                        loadingView.noContent();
-                    else
-                        plv.setHasMoreData(false);
-                    return;
+//                loadingView.loadComplete();
+//                plv.onPullUpRefreshComplete();
+//                plv.onPullDownRefreshComplete();
+                try {
+                    JSONObject objects = new JSONObject(result);
+                    JSONObject datas = objects.getJSONObject("data");
+                    JSONArray list=  datas.getJSONArray("list");
+                    Gson gson = new Gson();
+                    orderList = gson.fromJson(list.toString(), new TypeToken<List<OrderListBean>>() {
+                    }.getType());
+                    MyLogUtils.info("解析后的集合===="+orderList.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                if (page == 1) {
-                    datas.clear();
-                }
-                datas.addAll(list);
-                if (adapter == null) {
-                    adapter = new MyCreditAdapter(getApplicationContext(), datas, orderId);
-                    plv.getRefreshableView().setAdapter(adapter);
-                } else {
-                    adapter.setDatas(datas,orderId);
-                }
+//                ResultData<MyCreditBean> rd = (ResultData<MyCreditBean>) GsonUtils.json(result, MyCreditBean.class);
+//                MyCreditBean myCreditBean = rd.getData();
+//                List<MyCreditBean.RowsEntity> list = myCreditBean.getRows();
+//                if (list == null || list.size() == 0) {
+//                    if (page == 1)
+//                        loadingView.noContent();
+//                    else
+//                        plv.setHasMoreData(false);
+//                    return;
+//                }
+//                if (page == 1) {
+//                    datas.clear();
+//                }
+//                datas.addAll(list);
+//                if (adapter == null) {
+//                    adapter = new MyCreditAdapter(getApplicationContext(), datas, orderId);
+//                    plv.getRefreshableView().setAdapter(adapter);
+//                } else {
+//                    adapter.setDatas(datas,orderId);
+//                }
 
             }
 
