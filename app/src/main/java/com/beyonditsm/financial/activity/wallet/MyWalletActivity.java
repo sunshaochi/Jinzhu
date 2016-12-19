@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.MainActivity;
+import com.beyonditsm.financial.activity.user.LoginAct;
 import com.beyonditsm.financial.entity.ProfileInfoBean;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserLoginBean;
@@ -138,7 +139,12 @@ public class MyWalletActivity extends BaseActivity {
 //                }
 //            }
 //        } else {
-        getWalletQuan(user.getMobilePhone());
+        if (!TextUtils.isEmpty(user.getMobilePhone())){
+            getWalletQuan(user.getMobilePhone());
+        }else {
+            Intent intent=new Intent(MyWalletActivity.this, LoginAct.class);
+            startActivity(intent);
+        }
 //        setUserInfo();
 //        }
         loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {

@@ -17,9 +17,7 @@ import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.MainActivity;
-import com.beyonditsm.financial.activity.speedcredit.CreditSpeedFirstAct;
 import com.beyonditsm.financial.entity.UserEntity;
-import com.beyonditsm.financial.fragment.MineFragment;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
@@ -206,9 +204,9 @@ public class LoginAct extends BaseActivity {
             public void onSucess(String result) {
                 SpUtils.setPhonenumber(getApplicationContext(), ue.getUsername());
                 SpUtils.setRoleName(getApplicationContext(), "users");
-                sendBroadcast(new Intent(MainActivity.UPDATATAB));
-                sendBroadcast(new Intent(MineFragment.UPDATE_USER));
-                sendBroadcast(new Intent(CreditSpeedFirstAct.GET_LOGIN_STATUS));
+//                sendBroadcast(new Intent(MainActivity.UPDATATAB));
+//                sendBroadcast(new Intent(MineFragment.UPDATE_USER));
+//                sendBroadcast(new Intent(CreditSpeedFirstAct.GET_LOGIN_STATUS));
                 finish();
                 loginBtn.setEnabled(true);
                 progressBar1.setVisibility(View.GONE);

@@ -16,9 +16,7 @@ import android.widget.RelativeLayout;
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
-import com.beyonditsm.financial.activity.credit.MyCreditDAct;
 import com.beyonditsm.financial.adapter.MyCreditAdapter;
-import com.beyonditsm.financial.entity.MyCreditBean;
 import com.beyonditsm.financial.entity.MyCreditEntity;
 import com.beyonditsm.financial.entity.OrderListBean;
 import com.beyonditsm.financial.http.RequestManager;
@@ -101,16 +99,16 @@ public class MyCreditAct extends BaseActivity {
         plv.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(MyCreditAct.this, MyCreditDAct.class);
-                MyCreditBean.RowsEntity credit = datas.get(position);
+//                Intent intent = new Intent(MyCreditAct.this, MyCreditDAct.class);
+//                MyCreditBean.RowsEntity credit = datas.get(position);
 //                if (position==0){
 //                    intent.putExtra("type","comm");
 //                }else if (position==1){
 //                    intent.putExtra("type","speed");
 //                }
-                intent.putExtra(CREDIT, credit);
+//                intent.putExtra(CREDIT, credit);
 //                intent.putExtra("position", position);
-                startActivity(intent);
+//                startActivity(intent);
             }
         });
         loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
@@ -128,7 +126,7 @@ public class MyCreditAct extends BaseActivity {
 
     }
 
-    private List<MyCreditBean.RowsEntity> datas = new ArrayList<>();
+    private List<OrderListBean> datas = new ArrayList<>();
 
     /**
      *mobilePhone 手机号
@@ -143,9 +141,9 @@ public class MyCreditAct extends BaseActivity {
             @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) {
-//                loadingView.loadComplete();
-//                plv.onPullUpRefreshComplete();
-//                plv.onPullDownRefreshComplete();
+                loadingView.loadComplete();
+                plv.onPullUpRefreshComplete();
+                plv.onPullDownRefreshComplete();
                 try {
                     JSONObject objects = new JSONObject(result);
                     JSONObject datas = objects.getJSONObject("data");
@@ -160,23 +158,23 @@ public class MyCreditAct extends BaseActivity {
 //                ResultData<MyCreditBean> rd = (ResultData<MyCreditBean>) GsonUtils.json(result, MyCreditBean.class);
 //                MyCreditBean myCreditBean = rd.getData();
 //                List<MyCreditBean.RowsEntity> list = myCreditBean.getRows();
-//                if (list == null || list.size() == 0) {
-//                    if (page == 1)
-//                        loadingView.noContent();
-//                    else
-//                        plv.setHasMoreData(false);
-//                    return;
-//                }
-//                if (page == 1) {
-//                    datas.clear();
-//                }
-//                datas.addAll(list);
-//                if (adapter == null) {
-//                    adapter = new MyCreditAdapter(getApplicationContext(), datas, orderId);
-//                    plv.getRefreshableView().setAdapter(adapter);
-//                } else {
-//                    adapter.setDatas(datas,orderId);
-//                }
+                if (orderList == null || orderList.size() == 0) {
+                    if (page == 1)
+                        loadingView.noContent();
+                    else
+                        plv.setHasMoreData(false);
+                    return;
+                }
+                if (page == 1) {
+                    datas.clear();
+                }
+                datas.addAll(orderList);
+                if (adapter == null) {
+                    adapter = new MyCreditAdapter(getApplicationContext(), datas);
+                    plv.getRefreshableView().setAdapter(adapter);
+                } else {
+                    adapter.setDatas(datas);
+                }
 
             }
 
