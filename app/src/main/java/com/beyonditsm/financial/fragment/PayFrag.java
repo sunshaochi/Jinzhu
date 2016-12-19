@@ -16,6 +16,7 @@ import com.beyonditsm.financial.entity.TiXianBean;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshListView;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -61,7 +62,7 @@ public class PayFrag extends BaseFragment {
         plv_jl.getRefreshableView().setVerticalScrollBarEnabled(false);
         plv_jl.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
         plv_jl.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
-        getTiXianHistory(userId,page,rows);
+        getTiXianHistory(SpUtils.getPhonenumber(getContext()),page,rows);
 
     }
 

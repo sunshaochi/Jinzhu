@@ -80,8 +80,10 @@ public class WalletManager extends RequestManager{
 //    }
     /*现金券收支明细*/
     //1现金，2抵扣卷
-    public void findCashHistory(int page,int rows,int type,CallBack callBack){
+    public void findCashHistory(String uid,int page,int rows,int type,CallBack callBack){
         List<NameValuePair> queryParams = new ArrayList<>();
+
+        queryParams.add(new BasicNameValuePair("uid",uid));
         queryParams.add(new BasicNameValuePair("page", page + ""));
         queryParams.add(new BasicNameValuePair("rows", rows + ""));
         queryParams.add(new BasicNameValuePair("type",type+""));

@@ -36,7 +36,6 @@ import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.CircleImageView;
-import com.beyonditsm.financial.view.MinePageLoadingView;
 import com.beyonditsm.financial.widget.MyAlertDialog;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
@@ -88,8 +87,8 @@ public class MineFragment extends BaseFragment {
     private ImageView ivVipLevel;
     @ViewInject(R.id.sv_mine)
     private ScrollView svMine;
-    @ViewInject(R.id.mplv_mine)
-    private MinePageLoadingView minePageLoadingView;
+//    @ViewInject(R.id.mplv_mine)
+//    private MinePageLoadingView minePageLoadingView;
 
     @ViewInject(R.id.rlHelp)
     private RelativeLayout rlHelp;
@@ -135,14 +134,15 @@ public class MineFragment extends BaseFragment {
             ivRedPoint.setVisibility(View.VISIBLE);
             msg_top_point.setVisibility(View.VISIBLE);
         }
-        if ("".equals(SpUtils.getRoleName(context))) {
+        if (TextUtils.isEmpty(SpUtils.getUsername(getContext()))) {
             isLogin = false;
             tvName.setText("去登录");
             tvExit.setVisibility(View.GONE);
         } else {
             isLogin = true;
+            tvName.setText(SpUtils.getUsername(getContext()));
             tvExit.setVisibility(View.VISIBLE);
-            getUserInfo();
+//            getUserInfo();
 //            getUserLoginInfo();
         }
 
@@ -154,49 +154,49 @@ public class MineFragment extends BaseFragment {
 
     @Override
     public void setListener() {
-        minePageLoadingView.setOnRetryListener(new MinePageLoadingView.OnRetryListener() {
-            @Override
-            public void OnRetry() {
-                getUserInfo();
-            }
-        });
-        minePageLoadingView.setOnLogOutListener(new MinePageLoadingView.OnLogOutListener() {
-            @Override
-            public void OnLogOut() {
-                RequestManager.getCommManager().toLoginOut(new RequestManager.CallBack() {
-                    @Override
-                    public void onSucess(String result) {
-                        if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
-                            RongIM.getInstance().logout();
-                        }
-                    }
-
-                    @Override
-                    public void onError(int status, String msg) {
-
-                    }
-                });
-                Set<String> set = new HashSet<>();
-                JPushInterface.setAliasAndTags(getActivity(), "", set, new TagAliasCallback() {
-                    @Override
-                    public void gotResult(int i, String s, Set<String> set) {
-
-                    }
-                });
-
-                JPushInterface.clearAllNotifications(getActivity());
-//                        FriendDao.deleteAllMes();
-                MessageDao.deleteAllMes();
-                SpUtils.clearSp(getContext());
-                SpUtils.clearOrderId(getContext());
-                getActivity().sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
-                ivWalletRedPoint.setVisibility(View.GONE);
-                msg_top_point.setVisibility(View.GONE);
-                ivRedPoint.setVisibility(View.GONE);
-                EventBus.getDefault().post(new SwitchEvent());
-
-            }
-        });
+//        minePageLoadingView.setOnRetryListener(new MinePageLoadingView.OnRetryListener() {
+//            @Override
+//            public void OnRetry() {
+//                getUserInfo();
+//            }
+//        });
+//        minePageLoadingView.setOnLogOutListener(new MinePageLoadingView.OnLogOutListener() {
+//            @Override
+//            public void OnLogOut() {
+//                RequestManager.getCommManager().toLoginOut(new RequestManager.CallBack() {
+//                    @Override
+//                    public void onSucess(String result) {
+//                        if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
+//                            RongIM.getInstance().logout();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(int status, String msg) {
+//
+//                    }
+//                });
+//                Set<String> set = new HashSet<>();
+//                JPushInterface.setAliasAndTags(getActivity(), "", set, new TagAliasCallback() {
+//                    @Override
+//                    public void gotResult(int i, String s, Set<String> set) {
+//
+//                    }
+//                });
+//
+//                JPushInterface.clearAllNotifications(getActivity());
+////                        FriendDao.deleteAllMes();
+//                MessageDao.deleteAllMes();
+//                SpUtils.clearSp(getContext());
+//                SpUtils.clearOrderId(getContext());
+//                getActivity().sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
+//                ivWalletRedPoint.setVisibility(View.GONE);
+//                msg_top_point.setVisibility(View.GONE);
+//                ivRedPoint.setVisibility(View.GONE);
+//                EventBus.getDefault().post(new SwitchEvent());
+//
+//            }
+//        });
     }
 
     @OnClick({R.id.rlMyCode, R.id.rlRecomm, R.id.rlLines, R.id.rlMyCredit, R.id.rlSet, R.id.tvExit,
@@ -262,6 +262,28 @@ public class MineFragment extends BaseFragment {
                                 if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
                                     RongIM.getInstance().logout();
                                 }
+                                Set<String> set = new HashSet<>();
+                                JPushInterface.setAliasAndTags(getActivity(), "", set, new TagAliasCallback() {
+                                    @Override
+                                    public void gotResult(int i, String s, Set<String> set) {
+
+                                    }
+                                });
+
+                                JPushInterface.clearAllNotifications(getActivity());
+//                        FriendDao.deleteAllMes();
+                                MessageDao.deleteAllMes();
+                                SpUtils.clearSp(getContext());
+                                SpUtils.clearUserName(getContext());
+                                SpUtils.clearOrderId(getContext());
+                                getActivity().sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
+                                ivWalletRedPoint.setVisibility(View.GONE);
+                                msg_top_point.setVisibility(View.GONE);
+                                ivRedPoint.setVisibility(View.GONE);
+                                EventBus.getDefault().post(new SwitchEvent());
+                                isLogin = false;
+                                tvName.setText("去登录");
+                                tvExit.setVisibility(View.GONE);
                             }
 
                             @Override
@@ -269,24 +291,7 @@ public class MineFragment extends BaseFragment {
 
                             }
                         });
-                        Set<String> set = new HashSet<>();
-                        JPushInterface.setAliasAndTags(getActivity(), "", set, new TagAliasCallback() {
-                            @Override
-                            public void gotResult(int i, String s, Set<String> set) {
 
-                            }
-                        });
-
-                        JPushInterface.clearAllNotifications(getActivity());
-//                        FriendDao.deleteAllMes();
-                        MessageDao.deleteAllMes();
-                        SpUtils.clearSp(getContext());
-                        SpUtils.clearOrderId(getContext());
-                        getActivity().sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
-                        ivWalletRedPoint.setVisibility(View.GONE);
-                        msg_top_point.setVisibility(View.GONE);
-                        ivRedPoint.setVisibility(View.GONE);
-                        EventBus.getDefault().post(new SwitchEvent());
                     }
                 }).setNegativeButton("取消", null).show();
                 break;
@@ -326,58 +331,60 @@ public class MineFragment extends BaseFragment {
     public class SwitchEvent {
     }
 
-    /**
-     * 获取用户信息
-     */
-    private void getUserInfo() {
-
-        RequestManager.getCommManager().findUserInfo( SpUtils.getPhonenumber(getContext()),new RequestManager.CallBack() {
-            @SuppressWarnings("unchecked")
-            @Override
-            public void onSucess(String result) {
-                ResultData<UserLoginBean> rd = (ResultData<UserLoginBean>) GsonUtils.json(result, UserLoginBean.class);
-                user = rd.getData();
-                if (user != null) {
-                    if (user.getProfileInfo()!=null){
-                        profileInfoBean=user.getProfileInfo();
-                        SpUtils.setProfileid(getContext(),profileInfoBean.getProfileId());
-                        if (!TextUtils.isEmpty(profileInfoBean.getName())) {
-                            tvName.setText(profileInfoBean.getName());
-                        }
-                    }
-                    if (user.getAddress()!=null){
-                        adressBean= user.getAddress();
-                        SpUtils.setAddressid(getContext(),adressBean.getAddressId());
-                    }
-
-//                    tvGrade.setText(user.getCreditGrade());
-
-
-//                    ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon(), civHead, options);获取个人头像
-//                    if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
-//                        if (!TextUtils.isEmpty(profileInfoBean.get())) {
-//                            RongIM.getInstance().setCurrentUserInfo(new UserInfo(user.getAccountId(), user.getUserName(),
-//                                    Uri.parse(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon())));
-//                            RongIM.getInstance().setMessageAttachedUserInfo(true);
-//                            FriendBean bean = new FriendBean();
-//                            bean.setUserHead(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon());
-//                            bean.setUserName(user.getUserName());
-//                            bean.setUserId(user.getAccountId());
-//                            FriendDao.saveMes(bean);
+//    /**
+//     * 获取用户信息
+//     */
+//    private void getUserInfo() {
+//
+//        RequestManager.getCommManager().findUserInfo( SpUtils.getPhonenumber(getContext()),new RequestManager.CallBack() {
+//            @SuppressWarnings("unchecked")
+//            @Override
+//            public void onSucess(String result) {
+//                ResultData<UserLoginBean> rd = (ResultData<UserLoginBean>) GsonUtils.json(result, UserLoginBean.class);
+//                user = rd.getData();
+//                if (user != null) {
+//                    if (user.getProfileInfo()!=null){
+//                        profileInfoBean=user.getProfileInfo();
+//                        SpUtils.setProfileid(getContext(),profileInfoBean.getProfileId());
+//                        if (!TextUtils.isEmpty(profileInfoBean.getName())) {
+//                            tvName.setText(profileInfoBean.getName());
 //                        }
 //                    }
-                    minePageLoadingView.loadComplete();
-                } else {
-                    minePageLoadingView.loadError();
-                }
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-                minePageLoadingView.loadError();
-            }
-        });
-    }
+//                    if (user.getAddress()!=null){
+//                        adressBean= user.getAddress();
+//                        SpUtils.setAddressid(getContext(),adressBean.getAddressId());
+//                    }
+//
+////                    tvGrade.setText(user.getCreditGrade());
+//
+//
+////                    ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon(), civHead, options);获取个人头像
+////                    if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
+////                        if (!TextUtils.isEmpty(profileInfoBean.get())) {
+////                            RongIM.getInstance().setCurrentUserInfo(new UserInfo(user.getAccountId(), user.getUserName(),
+////                                    Uri.parse(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon())));
+////                            RongIM.getInstance().setMessageAttachedUserInfo(true);
+////                            FriendBean bean = new FriendBean();
+////                            bean.setUserHead(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon());
+////                            bean.setUserName(user.getUserName());
+////                            bean.setUserId(user.getAccountId());
+////                            FriendDao.saveMes(bean);
+////                        }
+////                    }
+////                    minePageLoadingView.loadComplete();
+//                } else {
+////                    minePageLoadingView.loadError();
+//                }
+//            }
+//
+//            @Override
+//            public void onError(int status, String msg) {
+////                minePageLoadingView.loadError();
+////                minePageLoadingView.loadComplete();
+////                tvName.setText("去登录");
+//            }
+//        });
+//    }
 
 
 
@@ -467,14 +474,16 @@ public class MineFragment extends BaseFragment {
             user = intent.getParcelableExtra(USER_KEY);
             if (user != null) {
                 ProfileInfoBean profileInfo = user.getProfileInfo();
-                tvName.setText(profileInfo.getName());
+                if (TextUtils.isEmpty(profileInfo.getName())){
+                    tvName.setText(profileInfo.getName());
+                }
 //                暂时没有头像，注掉，后台无返回。
                 ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + profileInfo.getAvatarPic(), civHead, options);
             } else {
                 tvExit.setVisibility(View.VISIBLE);
                 isLogin = true;
                 tvName.setText("");
-                getUserInfo();
+//                getUserInfo();
             }
         }
     }
@@ -486,7 +495,7 @@ public class MineFragment extends BaseFragment {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            getUserInfo();
+//            getUserInfo();
         }
     }
 
@@ -551,7 +560,18 @@ public class MineFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        getUserInfo();
+//        getUserInfo();
+        if (TextUtils.isEmpty(SpUtils.getUsername(getContext()))) {
+            isLogin = false;
+            tvName.setText("去登录");
+            tvExit.setVisibility(View.GONE);
+        } else {
+            isLogin = true;
+            tvName.setText(SpUtils.getUsername(getContext()));
+            tvExit.setVisibility(View.VISIBLE);
+//            getUserInfo();
+//            getUserLoginInfo();
+        }
 
     }
 
