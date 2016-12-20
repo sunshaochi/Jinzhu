@@ -213,7 +213,7 @@ public class LoginAct extends BaseActivity {
                 loginBtn.setEnabled(true);
                 progressBar1.setVisibility(View.GONE);
                 finish();
-//                getUserInfo();
+                getUserInfo();
 //                Intent intent=new Intent(MineFragment.USER_KEY);
 //                intent.putParcelableArrayListExtra(MineFragment.USER_KEY,)
 //                sendBroadcast(new Intent(MainActivity.UPDATATAB));
@@ -442,7 +442,7 @@ public class LoginAct extends BaseActivity {
      */
     private void getUserInfo() {
 
-        RequestManager.getCommManager().findUserInfo( SpUtils.getPhonenumber(getApplicationContext()),new RequestManager.CallBack() {
+        RequestManager.getCommManager().findUserInfo( "",new RequestManager.CallBack() {
             @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) {

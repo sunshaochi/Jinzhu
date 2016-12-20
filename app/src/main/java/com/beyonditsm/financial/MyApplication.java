@@ -15,6 +15,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.beyonditsm.financial.activity.LoadResActivity;
+import com.beyonditsm.financial.util.CustomImageDownloader;
 import com.beyonditsm.financial.util.PackageUtil;
 import com.lidroid.xutils.util.LogUtils;
 import com.tandong.sa.sql.util.Log;
@@ -253,6 +254,7 @@ public class MyApplication extends Application {
                 // 线程池内加载的数量
                 .threadPriority(Thread.NORM_PRIORITY - 1)
                 .denyCacheImageMultipleSizesInMemory()
+                .imageDownloader(new CustomImageDownloader(context))
                 .diskCacheFileNameGenerator(new Md5FileNameGenerator())
                 .diskCacheSize(50 * 1024 * 1024)
                 .tasksProcessingOrder(QueueProcessingType.LIFO)
