@@ -3,46 +3,60 @@ package com.beyonditsm.financial.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
-
 /**
  * Created by bitch-1 on 2016/12/6.
  */
 
 public class Orederinfo implements Parcelable {
-    public productInfoBean productInfo = new productInfoBean();//产品相关的
-    public orderInfoBean orderInfo = new orderInfoBean();//订单相关
-    public customerInfoBean customerInfo = new customerInfoBean();//用户相关
 
-    public Orederinfo() {
-    }
+    /**
+     * productInfo : {"productId":"142e7774d7c14ced91bba5cf10638c10"}
+     * orderInfo : {"applyAmount":30000,"applyPeriods":12}
+     * customerInfo : {"cusName":"小明","sex":1,"idNo":"511702198304257904","currentProvince":"0001","currentCity":"0003","currentRegion":"0032","isMarried":1,"nativePlace":"安徽","domicileAddr":"安徽","phoneNum":"13678651234","careerName":"32446354dsaa2134da","company":"百度","careerTitle":"93249832420dsfsa43","age":32,"hasHouseFunding":1,"hasSocialInsurance":1,"haveOwnCar":"984329ujisekjsdk","haveOwnHouse":"89324uiijewjk","creditState":"98432jidsoi3278"}
+     */
 
-    public productInfoBean getProductInfo() {
+    private ProductInfoBean productInfo;
+    private OrderInfoBean orderInfo;
+    private CustomerInfoBean customerInfo;
+
+    public ProductInfoBean getProductInfo() {
+        if (productInfo == null) {
+            productInfo = new ProductInfoBean();
+        }
         return productInfo;
     }
 
-    public void setProductInfo(productInfoBean productInfo) {
+    public void setProductInfo(ProductInfoBean productInfo) {
         this.productInfo = productInfo;
     }
 
-    public orderInfoBean getOrderInfo() {
+    public OrderInfoBean getOrderInfo() {
+        if (orderInfo == null) {
+            orderInfo = new OrderInfoBean();
+        }
         return orderInfo;
     }
 
-    public void setOrderInfo(orderInfoBean orderInfo) {
+    public void setOrderInfo(OrderInfoBean orderInfo) {
         this.orderInfo = orderInfo;
     }
 
-    public customerInfoBean getCustomerInfo() {
+    public CustomerInfoBean getCustomerInfo() {
+        if (customerInfo == null) {
+            customerInfo = new CustomerInfoBean();
+        }
         return customerInfo;
     }
 
-    public void setCustomerInfo(customerInfoBean customerInfo) {
+    public void setCustomerInfo(CustomerInfoBean customerInfo) {
         this.customerInfo = customerInfo;
     }
 
+    public static class ProductInfoBean implements Parcelable {
+        /**
+         * productId : 142e7774d7c14ced91bba5cf10638c10
+         */
 
-    public class productInfoBean implements Parcelable{
         private String productId;
 
         public String getProductId() {
@@ -63,27 +77,32 @@ public class Orederinfo implements Parcelable {
             dest.writeString(this.productId);
         }
 
-        public productInfoBean() {
+        public ProductInfoBean() {
         }
 
-        protected productInfoBean(Parcel in) {
+        protected ProductInfoBean(Parcel in) {
             this.productId = in.readString();
         }
 
-        public final Creator<productInfoBean> CREATOR = new Creator<productInfoBean>() {
+        public static final Creator<ProductInfoBean> CREATOR = new Creator<ProductInfoBean>() {
             @Override
-            public productInfoBean createFromParcel(Parcel source) {
-                return new productInfoBean(source);
+            public ProductInfoBean createFromParcel(Parcel source) {
+                return new ProductInfoBean(source);
             }
 
             @Override
-            public productInfoBean[] newArray(int size) {
-                return new productInfoBean[size];
+            public ProductInfoBean[] newArray(int size) {
+                return new ProductInfoBean[size];
             }
         };
     }
 
-    public class orderInfoBean implements Serializable{
+    public static class OrderInfoBean implements Parcelable {
+        /**
+         * applyAmount : 30000
+         * applyPeriods : 12
+         */
+
         private String applyAmount;
         private String applyPeriods;
 
@@ -102,27 +121,81 @@ public class Orederinfo implements Parcelable {
         public void setApplyPeriods(String applyPeriods) {
             this.applyPeriods = applyPeriods;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.applyAmount);
+            dest.writeString(this.applyPeriods);
+        }
+
+        public OrderInfoBean() {
+        }
+
+        protected OrderInfoBean(Parcel in) {
+            this.applyAmount = in.readString();
+            this.applyPeriods = in.readString();
+        }
+
+        public static final Creator<OrderInfoBean> CREATOR = new Creator<OrderInfoBean>() {
+            @Override
+            public OrderInfoBean createFromParcel(Parcel source) {
+                return new OrderInfoBean(source);
+            }
+
+            @Override
+            public OrderInfoBean[] newArray(int size) {
+                return new OrderInfoBean[size];
+            }
+        };
     }
-    public class customerInfoBean implements Serializable{
-       private String cusName;//用户姓名,
-        private int sex;//性别,
-        private String idNo;//身份证号,
-        private String currentProvince;// 常住地省,
-        private String currentCity;//常住地市,
-        private String currentRegion;// 常住地区,
-        private int isMarried;// 婚姻状况,
-        private String nativePlace;// 籍贯,
-        private String domicileAddr;// 户籍地,
-        private String phoneNum;// 手机号码,
-        private String careerName;// 职业身份,
-        private String company;// 公司,
-        private String careerTitle;//职务,
-        private int age;//年龄,
-        private int hasHouseFunding;//是否有公积金,
-        private int hasSocialInsurance;// 是否有社保,
-        private String haveOwnCar;//是否有,
-        private String haveOwnHouse;//是否有房,
-        private String creditState;//信用状况
+
+    public static class CustomerInfoBean implements Parcelable {
+        /**
+         * cusName : 小明
+         * sex : 1
+         * idNo : 511702198304257904
+         * currentProvince : 0001
+         * currentCity : 0003
+         * currentRegion : 0032
+         * isMarried : 1
+         * nativePlace : 安徽
+         * domicileAddr : 安徽
+         * phoneNum : 13678651234
+         * careerName : 32446354dsaa2134da
+         * company : 百度
+         * careerTitle : 93249832420dsfsa43
+         * age : 32
+         * hasHouseFunding : 1
+         * hasSocialInsurance : 1
+         * haveOwnCar : 984329ujisekjsdk
+         * haveOwnHouse : 89324uiijewjk
+         * creditState : 98432jidsoi3278
+         */
+
+        private String cusName;
+        private String sex;
+        private String idNo;
+        private String currentProvince;
+        private String currentCity;
+        private String currentRegion;
+        private String isMarried;
+        private String nativePlace;
+        private String domicileAddr;
+        private String phoneNum;
+        private String careerName;
+        private String company;
+        private String careerTitle;
+        private String age;
+        private String hasHouseFunding;
+        private String hasSocialInsurance;
+        private String haveOwnCar;
+        private String haveOwnHouse;
+        private String creditState;
 
         public String getCusName() {
             return cusName;
@@ -132,11 +205,11 @@ public class Orederinfo implements Parcelable {
             this.cusName = cusName;
         }
 
-        public int getSex() {
+        public String getSex() {
             return sex;
         }
 
-        public void setSex(int sex) {
+        public void setSex(String sex) {
             this.sex = sex;
         }
 
@@ -172,11 +245,11 @@ public class Orederinfo implements Parcelable {
             this.currentRegion = currentRegion;
         }
 
-        public int getIsMarried() {
+        public String getIsMarried() {
             return isMarried;
         }
 
-        public void setIsMarried(int isMarried) {
+        public void setIsMarried(String isMarried) {
             this.isMarried = isMarried;
         }
 
@@ -228,27 +301,27 @@ public class Orederinfo implements Parcelable {
             this.careerTitle = careerTitle;
         }
 
-        public int getAge() {
+        public String getAge() {
             return age;
         }
 
-        public void setAge(int age) {
+        public void setAge(String age) {
             this.age = age;
         }
 
-        public int getHasHouseFunding() {
+        public String getHasHouseFunding() {
             return hasHouseFunding;
         }
 
-        public void setHasHouseFunding(int hasHouseFunding) {
+        public void setHasHouseFunding(String hasHouseFunding) {
             this.hasHouseFunding = hasHouseFunding;
         }
 
-        public int getHasSocialInsurance() {
+        public String getHasSocialInsurance() {
             return hasSocialInsurance;
         }
 
-        public void setHasSocialInsurance(int hasSocialInsurance) {
+        public void setHasSocialInsurance(String hasSocialInsurance) {
             this.hasSocialInsurance = hasSocialInsurance;
         }
 
@@ -275,6 +348,74 @@ public class Orederinfo implements Parcelable {
         public void setCreditState(String creditState) {
             this.creditState = creditState;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.cusName);
+            dest.writeString(this.sex);
+            dest.writeString(this.idNo);
+            dest.writeString(this.currentProvince);
+            dest.writeString(this.currentCity);
+            dest.writeString(this.currentRegion);
+            dest.writeString(this.isMarried);
+            dest.writeString(this.nativePlace);
+            dest.writeString(this.domicileAddr);
+            dest.writeString(this.phoneNum);
+            dest.writeString(this.careerName);
+            dest.writeString(this.company);
+            dest.writeString(this.careerTitle);
+            dest.writeString(this.age);
+            dest.writeString(this.hasHouseFunding);
+            dest.writeString(this.hasSocialInsurance);
+            dest.writeString(this.haveOwnCar);
+            dest.writeString(this.haveOwnHouse);
+            dest.writeString(this.creditState);
+        }
+
+        public CustomerInfoBean() {
+        }
+
+        protected CustomerInfoBean(Parcel in) {
+            this.cusName = in.readString();
+            this.sex = in.readString();
+            this.idNo = in.readString();
+            this.currentProvince = in.readString();
+            this.currentCity = in.readString();
+            this.currentRegion = in.readString();
+            this.isMarried = in.readString();
+            this.nativePlace = in.readString();
+            this.domicileAddr = in.readString();
+            this.phoneNum = in.readString();
+            this.careerName = in.readString();
+            this.company = in.readString();
+            this.careerTitle = in.readString();
+            this.age = in.readString();
+            this.hasHouseFunding = in.readString();
+            this.hasSocialInsurance = in.readString();
+            this.haveOwnCar = in.readString();
+            this.haveOwnHouse = in.readString();
+            this.creditState = in.readString();
+        }
+
+        public static final Creator<CustomerInfoBean> CREATOR = new Creator<CustomerInfoBean>() {
+            @Override
+            public CustomerInfoBean createFromParcel(Parcel source) {
+                return new CustomerInfoBean(source);
+            }
+
+            @Override
+            public CustomerInfoBean[] newArray(int size) {
+                return new CustomerInfoBean[size];
+            }
+        };
+    }
+
+    public Orederinfo() {
     }
 
     @Override
@@ -285,14 +426,14 @@ public class Orederinfo implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeParcelable(this.productInfo, flags);
-        dest.writeSerializable(this.orderInfo);
-        dest.writeSerializable(this.customerInfo);
+        dest.writeParcelable(this.orderInfo, flags);
+        dest.writeParcelable(this.customerInfo, flags);
     }
 
     protected Orederinfo(Parcel in) {
-        this.productInfo = in.readParcelable(productInfoBean.class.getClassLoader());
-        this.orderInfo = (orderInfoBean) in.readSerializable();
-        this.customerInfo = (customerInfoBean) in.readSerializable();
+        this.productInfo = in.readParcelable(ProductInfoBean.class.getClassLoader());
+        this.orderInfo = in.readParcelable(OrderInfoBean.class.getClassLoader());
+        this.customerInfo = in.readParcelable(CustomerInfoBean.class.getClassLoader());
     }
 
     public static final Creator<Orederinfo> CREATOR = new Creator<Orederinfo>() {

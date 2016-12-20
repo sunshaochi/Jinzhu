@@ -3,6 +3,8 @@ package com.beyonditsm.financial.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 /**
  * Created by bitch-1 on 2016/12/2.
  */
@@ -23,7 +25,7 @@ public class ProductBean implements Parcelable{
     private  String applyDetailDesc;//:这是详细说明
     private String applyMaterialDesc;// 申贷所需材料
     private String preLoanPeriod;//放款周期（工作日）
-    private String paymentTerm;//还款方式
+    private List<String> paymentTerm;//还款方式
     private  String productLogo;//贷款log
     private String disposableRateMin;//一次性费率最小
     private String disposableRateMax;//一次性费率最大值
@@ -185,11 +187,11 @@ public class ProductBean implements Parcelable{
         this.preLoanPeriod = preLoanPeriod;
     }
 
-    public String getPaymentTerm() {
+    public List<String> getPaymentTerm() {
         return paymentTerm;
     }
 
-    public void setPaymentTerm(String paymentTerm) {
+    public void setPaymentTerm(List<String> paymentTerm) {
         this.paymentTerm = paymentTerm;
     }
 
@@ -215,7 +217,7 @@ public class ProductBean implements Parcelable{
         dest.writeString(this.applyDetailDesc);
         dest.writeString(this.applyMaterialDesc);
         dest.writeString(this.preLoanPeriod);
-        dest.writeString(this.paymentTerm);
+        dest.writeStringList(this.paymentTerm);
         dest.writeString(this.productLogo);
         dest.writeString(this.disposableRateMin);
         dest.writeString(this.disposableRateMax);
@@ -238,7 +240,6 @@ public class ProductBean implements Parcelable{
         this.applyDetailDesc = in.readString();
         this.applyMaterialDesc = in.readString();
         this.preLoanPeriod = in.readString();
-        this.paymentTerm = in.readString();
         this.productLogo = in.readString();
         this.disposableRateMin = in.readString();
         this.disposableRateMax = in.readString();

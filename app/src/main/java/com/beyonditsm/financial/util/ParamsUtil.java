@@ -2,6 +2,7 @@ package com.beyonditsm.financial.util;
 
 import android.app.Activity;
 
+import com.beyonditsm.financial.entity.CreditSpeedEntity;
 import com.beyonditsm.financial.entity.JJTCityEntity;
 import com.beyonditsm.financial.entity.JJTCounyEntity;
 import com.beyonditsm.financial.entity.JJTProvinceEntity;
@@ -46,6 +47,15 @@ public class ParamsUtil {
     private List<JJTProvinceEntity> provinceEntityList;
     private List<JJTCityEntity> cityEntityList;
     private List<JJTCounyEntity> counyEntityList;
+    private ArrayList<CreditSpeedEntity.ResideStatusmapBean> propertyTypeList;
+
+    public ArrayList<CreditSpeedEntity.ResideStatusmapBean> getPropertyTypeList() {
+        return propertyTypeList;
+    }
+
+    public void setPropertyTypeList(ArrayList<CreditSpeedEntity.ResideStatusmapBean> propertyTypeList) {
+        this.propertyTypeList = propertyTypeList;
+    }
 
     public List<JJTCounyEntity> getCounyEntityList() {
         return counyEntityList;

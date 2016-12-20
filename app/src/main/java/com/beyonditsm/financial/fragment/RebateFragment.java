@@ -13,6 +13,7 @@ import com.beyonditsm.financial.adapter.RebateAdapter;
 import com.beyonditsm.financial.entity.BalanceMxEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
+import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
@@ -89,7 +90,7 @@ public class RebateFragment extends BaseFragment{
     public void findOrderDealHisory(){
         int rows = 10;
         list=new ArrayList<>();
-        RequestManager.getWalletManager().findCashHistory(page, rows,2 ,new RequestManager.CallBack() {
+        RequestManager.getWalletManager().findCashHistory(SpUtils.getPhonenumber(getContext()),page, rows,2 ,new RequestManager.CallBack() {
             @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) throws JSONException {

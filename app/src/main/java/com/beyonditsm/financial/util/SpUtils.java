@@ -32,6 +32,10 @@ public class SpUtils {
     private static final String GETPERMISSION = "get_permission";
     private static final String CITY = "user_city"; //定位城市
     private static  final String PHONENUMBER="phoneNum";
+    private static final String PROFILEID="profileId";//个人信息id
+    private static final String ADDRESSID="addressId";//用户地址id
+    private static final String USERNAME="addressId";//用户地址id
+
     public SpUtils() {
 
     }
@@ -73,6 +77,16 @@ public class SpUtils {
     public static SharedPreferences getPhoneNumSp(Context context){
         return context.getSharedPreferences(PHONENUMBER,Context.MODE_PRIVATE);
     }
+    public static SharedPreferences getProfileId(Context context){
+        return context.getSharedPreferences(PROFILEID,Context.MODE_PRIVATE);
+    }
+    public static SharedPreferences getAddressId(Context context){
+        return context.getSharedPreferences(ADDRESSID,Context.MODE_PRIVATE);
+    }
+    public static SharedPreferences getUserName(Context context){
+        return context.getSharedPreferences(USERNAME,Context.MODE_PRIVATE);
+
+    }
     /**
      * 定位的城市名称
      * @param context
@@ -87,6 +101,21 @@ public class SpUtils {
     }
 
     /**
+     * 定位的城市名称
+     * @param context
+     * @param city
+     */
+    public static void setUsername(Context context, String city) {
+        getUserName(context).edit().putString(USERNAME, city).commit();
+    }
+
+    public static String getUsername(Context context) {
+        return getUserName(context).getString(USERNAME, "");
+    }
+
+
+
+    /**
      * 获取手机号码
      * @param context
      * @param phone
@@ -96,6 +125,29 @@ public class SpUtils {
     }
     public static String getPhonenumber(Context context){
         return getPhoneNumSp(context).getString(PHONENUMBER,"");
+    }
+
+    /**
+     * 获取返回用户id
+     * @param context
+     * @param phone
+     */
+    public static void setProfileid(Context context,String phone){
+        getProfileId(context).edit().putString(PROFILEID,phone).commit();
+    }
+    public static String getProfileid(Context context){
+        return getPhoneNumSp(context).getString(PROFILEID,"");
+    }
+    /**
+     * 获取用户地址id
+     * @param context
+     * @param phone
+     */
+    public static void setAddressid(Context context,String phone){
+        getAddressId(context).edit().putString(ADDRESSID,phone).commit();
+    }
+    public static String getAddressid(Context context){
+        return getAddressId(context).getString(ADDRESSID,"");
     }
     /**
      * 是否第一次进入app
@@ -195,6 +247,10 @@ public class SpUtils {
 
     public static void clearRoleName(Context context) {
         getRoleNameSp(context).edit().clear().commit();
+    }
+
+    public static void clearUserName(Context context){
+        getUserName(context).edit().clear().commit();
     }
 
     /**

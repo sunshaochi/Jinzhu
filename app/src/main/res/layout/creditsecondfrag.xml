@@ -107,7 +107,25 @@
                     </RelativeLayout>
 
                     <View style="@style/view_line"></View>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
+                        <TextView
+                            style="@style/tv_primary_style"
+                            android:layout_centerVertical="true"
+                            android:text="手机号" />
+
+                        <EditText
+                            android:id="@+id/et_phoneNumber"
+                            style="@style/cre_et"
+                            android:hint="请输入手机号码"
+                            android:maxLength="18"
+                            android:inputType="number"
+                            android:digits="0123456789"/>
+                    </RelativeLayout>
+
+                    <View style="@style/view_line"></View>
                     <RelativeLayout
                         android:id="@+id/rlPosition"
                         android:layout_width="match_parent"
@@ -178,11 +196,11 @@
                             android:text="籍贯" />
 
 
-                        <TextView
+                        <EditText
                             android:id="@+id/tv_jiguan"
                             style="@style/cre_et"
                             android:gravity="center_vertical"
-                            android:hint="请选择籍贯"
+                            android:hint="请输入籍贯"
                             android:maxLength="20"
                             android:textColor="#333333" />
                     </RelativeLayout>
@@ -199,11 +217,11 @@
                             android:layout_centerVertical="true"
                             android:text="户籍地址" />
 
-                        <TextView
+                        <EditText
                             android:id="@+id/tv_address"
                             style="@style/cre_et"
                             android:gravity="center_vertical"
-                            android:hint="请选择户籍地址"
+                            android:hint="请输入户籍"
                             android:maxLength="20"
                             android:textColor="#333333" />
                     </RelativeLayout>

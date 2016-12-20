@@ -1,6 +1,7 @@
 package com.beyonditsm.financial.http;
 
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 
@@ -50,6 +51,7 @@ public class RequestManager {
     private static WalletManager walletManager;//钱包
 
     private static RequestManager manager;
+    private  String cookie;
 
     public static CommManager getCommManager() {
         if (commManager == null) {
@@ -122,6 +124,12 @@ public class RequestManager {
                         MyLogUtils.info(response);
                         try {
                             JSONObject obj = new JSONObject(response);
+                            if (obj.has("statusCode")){
+                                Intent unlogin = new Intent();
+                                unlogin.setAction("UNLOGIN");
+                                MyApplication.getInstance().getApplicationContext().sendBroadcast(unlogin);
+                                return;
+                            }
                             int status = obj.getInt("status");
                             if (status == 200) {
                                 callback.onSucess(response);
@@ -144,7 +152,8 @@ public class RequestManager {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> localHashMap = new HashMap<>();
-                localHashMap.put("Cookie", SpUtils.getCookie(MyApplication.getInstance()));
+//                localHashMap.put("Cookie", SpUtils.getCookie(MyApplication.getInstance()));
+                localHashMap.put("Cookie", SpUtils.getCookie(MyApplication.getInstance().getApplicationContext()));
                 localHashMap.put("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance()));
                 return localHashMap;
             }
@@ -179,7 +188,19 @@ public class RequestManager {
            @Override
            public void onResponse(String s) {
                try {
-                   callback.onSucess(s);
+                   JSONObject obj = new JSONObject(s);
+                   if (obj.has("statusCode")){
+                       Intent unlogin = new Intent();
+                       unlogin.setAction("UNLOGIN");
+                       MyApplication.getInstance().getApplicationContext().sendBroadcast(unlogin);
+                       return;
+                   }
+                   if (obj.getInt("status")==200){
+                       callback.onSucess(s);
+                   }else {
+                       callback.onError(obj.getInt("status"),obj.getString("message"));
+                   }
+
                } catch (JSONException e) {
                    e.printStackTrace();
                }
@@ -266,6 +287,12 @@ public class RequestManager {
                         MyLogUtils.info(response);
                         try {
                             JSONObject obj = new JSONObject(response);
+                            if (obj.has("statusCode")){
+                                Intent unlogin = new Intent();
+                                unlogin.setAction("UNLOGIN");
+                                MyApplication.getInstance().getApplicationContext().sendBroadcast(unlogin);
+                                return;
+                            }
                             int status = obj.getInt("status");
                             if (status == 200) {
                                 callback.onSucess(response);
@@ -318,6 +345,7 @@ public class RequestManager {
                 try {
                     Map<String, String> responseHeaders = response.headers;
                     String rawCookies = responseHeaders.get("Set-Cookie");
+                    MyLogUtils.info("Set-Cookie-------:"+rawCookies);
                     String dataString = new String(response.data, "UTF-8");
                     if (!TextUtils.isEmpty(rawCookies))
                         SpUtils.setCooike(MyApplication.getInstance(), rawCookies);
@@ -372,6 +400,12 @@ public class RequestManager {
                 MyLogUtils.info(result);
                 try {
                     JSONObject obj = new JSONObject(result);
+                    if (obj.has("statusCode")){
+                        Intent unlogin = new Intent();
+                        unlogin.setAction("UNLOGIN");
+                        MyApplication.getInstance().getApplicationContext().sendBroadcast(unlogin);
+                        return;
+                    }
                     int status = obj.getInt("status");
                     if (status == 200) {
                         callBack.onSucess(result);

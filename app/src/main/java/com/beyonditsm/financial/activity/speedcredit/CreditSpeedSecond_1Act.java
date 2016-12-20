@@ -11,7 +11,6 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
@@ -26,7 +25,6 @@ import com.beyonditsm.financial.entity.RelationEntity;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserOrderInfo1;
 import com.beyonditsm.financial.entity.ZidianBean;
-import com.beyonditsm.financial.fragment.SpeedCreditFrag;
 import com.beyonditsm.financial.http.CommManager;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
@@ -200,7 +198,7 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
         totalLoanInterest = getIntent().getStringExtra(CreditSpeedDetailAct.TOTALLOANINTEREST);//总利息
         realMonthlyRate = getIntent().getStringExtra(CreditSpeedDetailAct.REALMONTHLYRATE);//最小利率
 
-        propetyTypesList = (List<CreditSpeedEntity.ResideStatusmapBean>) getIntent().getSerializableExtra("propertyTypeList");//居住状况
+        propetyTypesList = ParamsUtil.getInstance().getPropertyTypeList();//居住状况
         userOrderInfo1 = new UserOrderInfo1();
         initText();
         loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
@@ -314,6 +312,7 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
 
                     userOrderInfo1.setDomicileAddress(etSpeedResidentDetail.getText().toString().trim());//常驻地详情
 //                    userOrderInfo1.setResSts(tvSpeedSelectLivingConditions.getText().toString().trim());
+                    userOrderInfo1.setCurrentAddress(tvSpeedResidentDetail.getText().toString().trim());
                     saveEsseatialInfo(userOrderInfo1);
 
                 }

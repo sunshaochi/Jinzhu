@@ -9,13 +9,13 @@ import android.os.Parcelable;
  */
 
 public class UserLoginBean implements Parcelable {
-    private AdressBean adress;//地址历史列表
+    private AdressBean address;//地址历史列表
     private String userStatus;//用户类别
-    private ProfileInfoBean profileInfoBean;
+    private ProfileInfoBean profileInfo;
     private String referCode;
     private String invitationCode;
     private String username;
-    private CreditInfoBean creditInfoBean;
+    private CreditInfoBean creditInfo;
 
 
     public String getUserStatus() {
@@ -24,14 +24,6 @@ public class UserLoginBean implements Parcelable {
 
     public void setUserStatus(String userStatus) {
         this.userStatus = userStatus;
-    }
-
-    public ProfileInfoBean getProfileInfoBean() {
-        return profileInfoBean;
-    }
-
-    public void setProfileInfoBean(ProfileInfoBean profileInfoBean) {
-        this.profileInfoBean = profileInfoBean;
     }
 
     public String getReferCode() {
@@ -58,21 +50,28 @@ public class UserLoginBean implements Parcelable {
         this.username = username;
     }
 
-    public CreditInfoBean getCreditInfoBean() {
-        return creditInfoBean;
+    public AdressBean getAddress() {
+        return address;
     }
 
-    public void setCreditInfoBean(CreditInfoBean creditInfoBean) {
-        this.creditInfoBean = creditInfoBean;
+    public void setAddress(AdressBean address) {
+        this.address = address;
     }
 
-
-    public AdressBean getAdress() {
-        return adress;
+    public ProfileInfoBean getProfileInfo() {
+        return profileInfo;
     }
 
-    public void setAdress(AdressBean adress) {
-        this.adress = adress;
+    public void setProfileInfo(ProfileInfoBean profileInfo) {
+        this.profileInfo = profileInfo;
+    }
+
+    public CreditInfoBean getCreditInfo() {
+        return creditInfo;
+    }
+
+    public void setCreditInfo(CreditInfoBean creditInfo) {
+        this.creditInfo = creditInfo;
     }
 
     @Override
@@ -82,26 +81,26 @@ public class UserLoginBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(this.adress, flags);
+        dest.writeParcelable(this.address, flags);
         dest.writeString(this.userStatus);
-        dest.writeParcelable(this.profileInfoBean, flags);
+        dest.writeParcelable(this.profileInfo, flags);
         dest.writeString(this.referCode);
         dest.writeString(this.invitationCode);
         dest.writeString(this.username);
-        dest.writeParcelable(this.creditInfoBean, flags);
+        dest.writeParcelable(this.creditInfo, flags);
     }
 
     public UserLoginBean() {
     }
 
     protected UserLoginBean(Parcel in) {
-        this.adress = in.readParcelable(AdressBean.class.getClassLoader());
+        this.address = in.readParcelable(AdressBean.class.getClassLoader());
         this.userStatus = in.readString();
-        this.profileInfoBean = in.readParcelable(ProfileInfoBean.class.getClassLoader());
+        this.profileInfo = in.readParcelable(ProfileInfoBean.class.getClassLoader());
         this.referCode = in.readString();
         this.invitationCode = in.readString();
         this.username = in.readString();
-        this.creditInfoBean = in.readParcelable(CreditInfoBean.class.getClassLoader());
+        this.creditInfo = in.readParcelable(CreditInfoBean.class.getClassLoader());
     }
 
     public static final Creator<UserLoginBean> CREATOR = new Creator<UserLoginBean>() {

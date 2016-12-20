@@ -616,8 +616,12 @@ public class HomeCreditDetailAct extends BaseActivity {
 //            tvLimit.setText(getIntent().getStringExtra(CREDIT_TIME));
                     tvLim.setText("期限范围：" + productEntity.getMinLoanPeriod() + "~" + productEntity.getMaxLoanPeriod() + "月");
 //            tvMonthPay.setText("¥" + productInfo.getMonthlyPay());
-                    if (!TextUtils.isEmpty(productEntity.getPaymentTerm())) {
-                        tvPaytype.setText("还款方式：" + productEntity.getPaymentTerm());
+                    if (productEntity.getPaymentTerm() != null && productEntity.getPaymentTerm().size()>0) {
+                        StringBuilder sb = new StringBuilder();
+                        for (int i = 0; i < productEntity.getPaymentTerm().size(); i++) {
+                            sb.append(productEntity.getPaymentTerm().get(i));
+                        }
+                        tvPaytype.setText("还款方式：" + sb);
                     }
 //            tvTotal.setText(productInfo.getTotalInterest());
                     if (!TextUtils.isEmpty(productEntity.getPreLoanPeriod())) {

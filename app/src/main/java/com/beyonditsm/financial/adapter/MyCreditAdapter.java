@@ -7,11 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
-import com.beyonditsm.financial.entity.MyCreditBean;
+import com.beyonditsm.financial.entity.OrderBean3;
+import com.beyonditsm.financial.entity.OrderListBean;
+import com.beyonditsm.financial.entity.ProductBean2;
+import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
 import java.util.List;
 
@@ -21,18 +23,18 @@ import java.util.List;
  */
 public  class MyCreditAdapter extends BaseAdapter {
     private Context context;
-    private List<MyCreditBean.RowsEntity> list;
+    private List<OrderListBean> list;
     private String orderId;
 
     java.text.DecimalFormat df = new java.text.DecimalFormat("#0.00");//保留小数
 
-    public void setDatas(List<MyCreditBean.RowsEntity> list,String orderId) {
+    public void setDatas(List<OrderListBean> list) {
         this.list = list;
         this.orderId = orderId;
         notifyDataSetChanged();
     }
 
-    public MyCreditAdapter(Context context, List<MyCreditBean.RowsEntity> list,String orderId) {
+    public MyCreditAdapter(Context context, List<OrderListBean> list) {
         this.context = context;
         this.list = list;
         this.orderId = orderId;
@@ -71,9 +73,128 @@ public  class MyCreditAdapter extends BaseAdapter {
             holder.tv_dkname= (TextView) convertView.findViewById(R.id.tv_dkname);
             holder.tv_dkje= (TextView) convertView.findViewById(R.id.tv_dkje);
             holder.tv_dksj= (TextView) convertView.findViewById(R.id.tv_dksj);
+            holder.iv_iv_tubiao= (ImageView) convertView.findViewById(R.id.iv_tubiao);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
+        }
+        OrderBean3 order = list.get(position).getOrder();
+        ProductBean2 product = list.get(position).getProduct();
+        if (product!=null){
+            if (!TextUtils.isEmpty(product.getProductLogo())){
+                ImageLoader.getInstance().displayImage(product.getProductLogo(),holder.iv_iv_tubiao);
+            }
+        }
+        if (order!=null){
+            holder.tv_bianhao.setText(order.getOrderNo());
+            if (!TextUtils.isEmpty(order.getOrderType())){
+                if (TextUtils.equals(order.getOrderType(),"1")){
+                    holder.tv_dkname.setText("线上订单");
+                }else  if (TextUtils.equals(order.getOrderType(),"2")){
+                    holder.tv_dkname.setText("CC订单");
+                }else if (TextUtils.equals(order.getOrderType(),"3")){
+                    holder.tv_dkname.setText("地推订单");
+                }else if (TextUtils.equals(order.getOrderType(),"4")){
+                    holder.tv_dkname.setText("急贷通");
+                }
+            }
+            if (!TextUtils.isEmpty(order.getOrderStatus())){
+                if ("ORGANIZATION_APPROVAL".equals(order.getOrderStatus())) {
+            holder.tv_zhuangtai.setText("机构审批中");
+            holder.tv_zhuangtai.setTextColor(Color.parseColor("#ff6633"));
+
+        } else if ("CREDIT_MANAGER_GRAB".equals(order.getOrderStatus())) {
+            holder.tv_zhuangtai.setText("待抢单");
+            holder.tv_zhuangtai.setTextColor(Color.parseColor("#ff6633"));
+        }else if ("CREDIT_MANAGER_APPROVAL".equals(order.getOrderStatus())){
+            holder.tv_zhuangtai.setText("已抢单");
+            holder.tv_zhuangtai.setTextColor(Color.parseColor("#ff6633"));
+        }else if ("PASS".equals(order.getOrderStatus())) {
+            holder.tv_zhuangtai.setText("审批通过");
+            holder.tv_zhuangtai.setTextColor(Color.parseColor("#1fd45f"));
+
+        } else if ("WAIT_BACKGROUND_APPROVAL".equals(order.getOrderStatus())) {
+            holder.tv_zhuangtai.setText("待审批");
+            holder.tv_zhuangtai.setTextColor(Color.parseColor("#ff6633"));
+
+        } else if ("SUPPLEMENT_DATA".equals(order.getOrderStatus())) {
+            holder.tv_zhuangtai.setText("补件中");
+            holder.tv_zhuangtai.setTextColor(Color.parseColor("#ff6633"));
+
+        } else if ("NO_PASS".equals(order.getOrderStatus())) {
+            holder.tv_zhuangtai.setText("审批不通过");
+            holder.tv_zhuangtai.setTextColor(Color.parseColor("#ff0000"));
+        } else if ("CANCEL_REQUET".equals(order.getOrderStatus())) {
+            holder.tv_zhuangtai.setText("已取消");
+            holder.tv_zhuangtai.setTextColor(Color.parseColor("#ff8383"));
+        } else if ("DRAFT".equals(order.getOrderStatus())) {
+            holder.tv_zhuangtai.setText("资料待上传");
+            holder.tv_zhuangtai.setTextColor(Color.parseColor("#ff6633"));
+        }else if ("REJECT".equals(order.getOrderStatus())){
+            holder.tv_zhuangtai.setText("驳回");
+            holder.tv_zhuangtai.setTextColor(Color.parseColor("#ff0000"));
+        }else if (TextUtils.equals("CREDIT_MANAGER_DRAFT",order.getOrderStatus())){
+                    holder.tv_zhuangtai.setText("信贷经理-资料待上传");
+                }
+                else if (TextUtils.equals("AREA_MANAGER_APPROVAL",order.getOrderStatus())){
+                    holder.tv_zhuangtai.setText("区域经理-审批");
+                }else if (TextUtils.equals("ELECTRICPIN_TOBE_DISTRIBUTED",order.getOrderStatus())){
+                    holder.tv_zhuangtai.setText("电销待分派");
+                }else if (TextUtils.equals("ELECTRICPIN_EXAMINING",order.getOrderStatus())){
+                    holder.tv_zhuangtai.setText("电销审批中");
+                }else if (TextUtils.equals("ELECTRICPIN_PATCH",order.getOrderStatus())){
+                    holder.tv_zhuangtai.setText("电销补件中");
+                }else if (TextUtils.equals("ELECTRICPIN_LOANEND",order.getOrderStatus())){
+                    holder.tv_zhuangtai.setText("申贷结束");
+                }else if (TextUtils.equals("ELECTRICPIN_LEADER_EXAMINING",order.getOrderStatus())){
+                    holder.tv_zhuangtai.setText("电销主管审批中");
+                }else if (TextUtils.equals("AREA_MANAGER_EXAMINE",order.getOrderStatus())){
+                    holder.tv_zhuangtai.setText("区域经理审批");
+                }else if (TextUtils.equals("CREDIT_MANAGER_PATCH",order.getOrderStatus())){
+                    holder.tv_zhuangtai.setText("信贷经理补件");
+                }else if (TextUtils.equals("AGENT_EXAMINE",order.getOrderStatus())){
+                    holder.tv_zhuangtai.setText("代理商审批");
+                }else if (TextUtils.equals("AREA_MANAGER_PATCH",order.getOrderStatus())){
+                    holder.tv_zhuangtai.setText("区域经理补件");
+                }else if (TextUtils.equals("RISK_TOBE_DISTRIBUTED",order.getOrderStatus())){
+                    holder.tv_zhuangtai.setText("风控分派中");
+                }else if (TextUtils.equals("PLATFORM_FIRSTEXAMINING",order.getOrderStatus())){
+                    holder.tv_zhuangtai.setText("平台初审中");
+                }else if (TextUtils.equals("RISK_PATCH",order.getOrderStatus())){
+                    holder.tv_zhuangtai.setText("风控补件中");
+                }else if (TextUtils.equals("FIRSTEXAMINING_PASS",order.getOrderStatus())){
+                    holder.tv_zhuangtai.setText("初审通过");
+                }else if (TextUtils.equals("FIRSTEXAMINING_REFUSE",order.getOrderStatus())){
+                    holder.tv_zhuangtai.setText("初审拒绝");
+                }else if (TextUtils.equals("PLATFORM_REFUSE",order.getOrderStatus())){
+                    holder.tv_zhuangtai.setText("平台拒绝");
+                }else if (TextUtils.equals("RECOMMEND_TO_OTHERS",order.getOrderStatus())){
+                    holder.tv_zhuangtai.setText("推荐其他产品");
+                }else if (TextUtils.equals("RISK_LOAN_END",order.getOrderStatus())){
+                    holder.tv_zhuangtai.setText("申贷结束");
+                }else if (TextUtils.equals("PLATFORM_PASS",order.getOrderStatus())){
+                    holder.tv_zhuangtai.setText("平台通过");
+                }else if (TextUtils.equals("TOBE_SIGNED",order.getOrderStatus())){
+                    holder.tv_zhuangtai.setText("待面签");
+                }else if (TextUtils.equals("SIGNED_CONFIRM",order.getOrderStatus())){
+                    holder.tv_zhuangtai.setText("已面签待确认");
+                }else if (TextUtils.equals("SIGNED_DONE",order.getOrderStatus())){
+                    holder.tv_zhuangtai.setText("已面签");
+                }else if (TextUtils.equals("SUBMIT_ORG",order.getOrderStatus())){
+                    holder.tv_zhuangtai.setText("提交机构");
+                }else if (TextUtils.equals("LOAN_SUCC",order.getOrderStatus())){
+                    holder.tv_zhuangtai.setText("银行通过");
+                }else if (TextUtils.equals("LOAN_FAIL",order.getOrderStatus())){
+                    holder.tv_zhuangtai.setText("银行拒绝");
+                }
+            }
+            if (!TextUtils.isEmpty(order.getApplyAmount())){
+                holder.tv_dkje.setText("贷款金额："+order.getApplyAmount());
+            }
+            if (order.getApplyPeriods()!=0){
+                holder.tv_dksj.setText("贷款期限："+order.getApplyPeriods()+"个月");
+            }
+
         }
 //        if (!TextUtils.isEmpty(orderId)) {
 //            if (list.get(position).getId().equals(orderId)) {
