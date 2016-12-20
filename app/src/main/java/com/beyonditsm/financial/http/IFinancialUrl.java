@@ -13,7 +13,7 @@ public interface IFinancialUrl {
     /*吕东测试*/
 //    String BASE_URL = "http://172.16.5.59";
 
-//    String BASE_URL ="http://172.16.6.218:8082";
+    String BASE_URL ="http://172.16.6.218:8082";
 
 //    String BASE_URL ="http://172.16.6.218:8082";
 //    String BASE_URL ="http://172.16.6.159:8061";
@@ -71,7 +71,7 @@ public interface IFinancialUrl {
 //    String BASE_URL="http://172.16.6.216";
 //    String BASE_URL = "http://172.16.6.228:8080";
 //    String BASE_URL = "http://172.16.6.228:8080";
-    String BASE_URL="http://172.16.5.32:8083";
+//    String BASE_URL="http://172.16.5.32:8083";
 //    String BASE_URL="http://139.196.227.38:9000";//#  后台
 
     /**
@@ -344,5 +344,7 @@ public interface IFinancialUrl {
     String FOGET_PWD_JY_URL = BASE_URL + "/customer/unLogin/checkSMSCaptcha";
     /*我的贷款*/
     String USERCREDIT_URL = BASE_URL +"/getOrderlist";
+    /*查询申贷资料*/
+    String GET_CUSTOMER_INFO4_APPLY_ORDER = BASE_URL + "/getCustomerInfo4ApplyOrder";
 
 }

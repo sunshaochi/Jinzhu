@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.user.LoginAct;
+import com.beyonditsm.financial.util.ParamsUtil;
 import com.lidroid.xutils.ViewUtils;
 import com.tandong.sa.activity.SmartFragmentActivity;
 import com.umeng.analytics.MobclickAgent;
@@ -178,9 +179,10 @@ public abstract class BaseActivity extends SmartFragmentActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             // TODO Auto-generated method stub
-            Intent intent1 = new Intent(context, LoginAct.class);
-            startActivity(intent1);
-
+            if (!ParamsUtil.getInstance().isLogin){
+                Intent intent1 = new Intent(context, LoginAct.class);
+                startActivity(intent1);
+            }
         }
     };
 }

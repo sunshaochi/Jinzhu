@@ -210,7 +210,19 @@ public class RequestManager {
            public void onErrorResponse(VolleyError volleyError) {
                callback.onError(no_net, "亲，网络不给力");
            }
-       });
+       }){
+           @Override
+           public Map<String, String> getHeaders() throws AuthFailureError {
+               HashMap<String, String> localHashMap = new HashMap<>();
+               localHashMap.put("Cookie", SpUtils.getCookie(MyApplication.getInstance()));
+               if("".equals(IFinancialUrl.MARKET_CODE)){
+                   localHashMap.put("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance()));
+               }else {
+                   localHashMap.put("User-Agent", "Jinzhu Android Client " + FinancialUtil.getAppVer(MyApplication.getInstance())+"&"+ IFinancialUrl.MARKET_CODE);
+               }
+               return localHashMap;
+           }
+       };
 
         // 设定超时时间
         request.setRetryPolicy(new DefaultRetryPolicy(5000, 1, 1.0f));

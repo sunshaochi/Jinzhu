@@ -31,6 +31,7 @@ import com.beyonditsm.financial.entity.ProductBean;
 import com.beyonditsm.financial.entity.RelationEntity;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserEntity;
+import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.AddressUtil;
 import com.beyonditsm.financial.util.FinancialUtil;
@@ -49,6 +50,7 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.eventbus.EventBus;
 import com.tandong.sa.json.Gson;
 import com.tandong.sa.json.reflect.TypeToken;
+import com.tencent.connect.UserInfo;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -105,10 +107,10 @@ public class CreditSecondFrag extends BaseFragment {
     private boolean carSelect = false;
     private boolean hourseSelect = false;
     private boolean creditSelect = false;
-    public static final String USER_KEY = "user_info";
-    public static final String PRODUCT_KEY = "product_info";
+    public final String USER_KEY = "user_info";
+    public final String PRODUCT_KEY = "product_info";
     public Map<Integer, Boolean> map = new HashMap<>();
-    public GetCustomerDataBean user;
+    private   GetCustomerDataBean user;
     private String haveHoursId;
     private String haveCarId;
     private String jobId;
@@ -124,6 +126,10 @@ public class CreditSecondFrag extends BaseFragment {
     private List<JJTCityEntity> cityList;
     private List<JJTCounyEntity> counyList;
     private List<String> keyLists;
+
+    private Orederinfo orederinfo;
+
+    private Thread thread;
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -499,7 +505,6 @@ public class CreditSecondFrag extends BaseFragment {
                 Gson gson = new Gson();
                 jobList = gson.fromJson(data.getJSONArray("jobType").toString(),new TypeToken<List<RelationEntity>>() {
                        }.getType());
-                loadView.loadComplete();
                 carList = gson.fromJson(data.getJSONArray("cardProperty").toString(),new TypeToken<List<RelationEntity>>() {
                 }.getType());
                 hourseList = gson.fromJson(data.getJSONArray("houseProperty").toString(),new TypeToken<List<RelationEntity>>() {
@@ -540,11 +545,10 @@ public class CreditSecondFrag extends BaseFragment {
      * 获取个人资料
      */
     private void getData() {
-        RequestManager.getCommManager().findUserInfo(SpUtils.getPhonenumber(mParentActivity),new RequestManager.CallBack() {
+        RequestManager.getCommManager().getCustomerInfo4ApplyOrder(new RequestManager.CallBack() {
             @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) throws JSONException {
-                loadView.loadComplete();
                 ResultData<GetCustomerDataBean> rd = (ResultData<GetCustomerDataBean>) GsonUtils.json(result, GetCustomerDataBean.class);
                 user = rd.getData();
                 if (user != null) {
@@ -552,6 +556,30 @@ public class CreditSecondFrag extends BaseFragment {
                     haveCarId = user.getHaveOwnCar();
                     jobId = user.getCareerName();
                     creditId = user.getCreditState();
+                    if (!TextUtils.isEmpty(haveHoursId))
+                        for (int i = 0; i < hourseList.size(); i++) {
+                            if ( hourseList.get(i).getDictSubId().equals(haveHoursId)){
+                                tvHome.setText(hourseList.get(i).getOptionName());
+                            }
+                        }
+                    if (!TextUtils.isEmpty(haveCarId))
+                    for (int i = 0; i < carList.size(); i++) {
+                        if ( carList.get(i).getDictSubId().equals(haveCarId)){
+                            tvCar.setText(carList.get(i).getOptionName());
+                        }
+                    }
+                    if (!TextUtils.isEmpty(jobId))
+                    for (int i = 0; i < jobList.size(); i++) {
+                        if ( jobList.get(i).getDictSubId().equals(jobId)){
+                            tvWork.setText(jobList.get(i).getOptionName());
+                        }
+                    }
+                    if (!TextUtils.isEmpty(creditId))
+                    for (int i = 0; i < creditList.size(); i++) {
+                        if ( creditList.get(i).getDictSubId().equals(haveHoursId)){
+                            tvXy.setText(creditList.get(i).getOptionName());
+                        }
+                    }
                     if (!TextUtils.isEmpty(user.getCusName())) {
                         name.setText(user.getCusName());
                         name.setSelection(user.getCusName().length());
@@ -583,10 +611,12 @@ public class CreditSecondFrag extends BaseFragment {
                     }
 
                     if (!TextUtils.isEmpty(user.isHasHouseFunding()) ) {
-                        if (user.isHasHouseFunding().equals("0") ) {
+                        if (user.isHasHouseFunding().equals("true") ) {
                             tvGjj.setText("是");
+                            user.setHasHouseFunding("1");
                         } else {
                             tvGjj.setText("否");
+                            user.setHasHouseFunding("0");
                         }
                     }
 
@@ -627,10 +657,15 @@ public class CreditSecondFrag extends BaseFragment {
                     }
 
                     if (!TextUtils.isEmpty(user.isHasSocialInsurance())) {
-                        if (user.isHasSocialInsurance().equals("0"))
+                        if (user.isHasSocialInsurance().equals("false")){
                             tvSb.setText("否");
-                        else
+                            user.setHasSocialInsurance("0");
+                        }
+                        else{
                             tvSb.setText("是");
+                            user.setHasSocialInsurance("1");
+                        }
+
                     }
 
                     if (!TextUtils.isEmpty(user.getHaveOwnHouse()) && !TextUtils.isEmpty(user.getHaveOwnHouse())) {//房产类型
@@ -679,7 +714,7 @@ public class CreditSecondFrag extends BaseFragment {
             user.setPhoneNum(phoneNumber.getText().toString());
             user.setAge(age.getText().toString());
             if (carSelect) {
-                user.setHaveOwnCar(carList.get(carPos).getId());//车产
+                user.setHaveOwnCar(carList.get(carPos).getDictSubId());//车产
 //                user.setHaveCarName(carList.get(carPos).getName());
             } else {
                 if (!TextUtils.isEmpty(haveCarId) ) {
@@ -687,21 +722,21 @@ public class CreditSecondFrag extends BaseFragment {
                 }
             }
             if (jobSelect) {
-                user.setCareerName(jobList.get(jobPos).getId());//职业身份
+                user.setCareerName(jobList.get(jobPos).getDictSubId());//职业身份
             } else {
                 if (!TextUtils.isEmpty(jobId)) {
                     user.setCareerName(jobId);
                 }
             }
             if (hourseSelect) {
-                user.setHaveOwnHouse(hourseList.get(hoursePos).getId());//房产
+                user.setHaveOwnHouse(hourseList.get(hoursePos).getDictSubId());//房产
             } else {
                 if (!TextUtils.isEmpty(haveHoursId)) {
                     user.setHaveOwnHouse(haveHoursId);
                 }
             }
             if (creditSelect) {
-                user.setCreditState(creditList.get(creditPos).getId());//信用状况
+                user.setCreditState(creditList.get(creditPos).getDictSubId());//信用状况
             } else {
                 if (!TextUtils.isEmpty(creditId)) {
                     user.setCreditState(creditId);
@@ -845,7 +880,7 @@ public class CreditSecondFrag extends BaseFragment {
      */
     private void toSubmitOrder() {
 //        OrderBean orderBean = new OrderBean();
-        Orederinfo orederinfo = new Orederinfo();
+        orederinfo = new Orederinfo();
         orederinfo.getProductInfo().setProductId(productInfo.getProductId());
 //        orderBean.setProductId(productInfo.getProductId());
         if (null == HomeCreditDetailAct.creditMoney) {
@@ -875,6 +910,7 @@ public class CreditSecondFrag extends BaseFragment {
             orederinfo.getCustomerInfo().setHaveOwnHouse(user.getHaveOwnHouse());//房产类型
             orederinfo.getCustomerInfo().setCreditState(user.getCreditState());//信用状况
 
+
             RequestManager.getCommManager().submitOrder(orederinfo, new RequestManager.CallBack() {
                 @Override
                 public void onSucess(String result) {
@@ -889,28 +925,28 @@ public class CreditSecondFrag extends BaseFragment {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            while (i > 0) {
-                                try {
-                                    Thread.sleep(1000);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
+                        thread = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                while (i > 0) {
+                                    try {
+                                        Thread.sleep(1000);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                    i--;
+                                    handler.sendEmptyMessage(i);
+
                                 }
-                                i--;
-                                handler.sendEmptyMessage(i);
-
                             }
-                        }
-                    }).start();
-
+                        });
+                        thread.start();
                 }
 
                 @Override
                 public void onError(int status, String msg) {
                     secondBtnNext.setClickable(true);
-                    MyToastUtils.showShortToast(mParentActivity, msg);
+//                        MyToastUtils.showShortToast(mParentActivity, msg);
                 }
             });
         }
@@ -1057,4 +1093,10 @@ public class CreditSecondFrag extends BaseFragment {
         return "";
     }
 
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        thread.interrupt();
+    }
 }
