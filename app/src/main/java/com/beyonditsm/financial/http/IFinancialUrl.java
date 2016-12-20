@@ -81,7 +81,7 @@ public interface IFinancialUrl {
         String API_VERSION = "/easyplay";
 //    String API_VERSION = "/file";
 
-    String BASE_IMAGE_URL = BASE_URL + API_VERSION + "/";
+    String BASE_IMAGE_URL = BASE_URL +  "/file/";
 
     /*登录*/
 //    String LOGIN_URL = BASE_URL + API_VERSION + "/manager/unLogin/login.do";

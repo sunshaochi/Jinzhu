@@ -157,23 +157,21 @@ public class CreditSecondFrag extends BaseFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        getData();//获取个人资料并给界面赋值
         addressUtil = new AddressUtil(mParentActivity);
         keyLists = new ArrayList<>();
         keyLists.add("jobType");
         keyLists.add("cardProperty");
         keyLists.add("houseProperty");
         keyLists.add("creidtType");
-        getDictionaryContent(keyLists);//职业身份获取身份列表供选择
+        getDictionaryContent(keyLists);//职业身份获取身份列表供选择、获取用户信息并负值、获取省市区
         user = new GetCustomerDataBean();
         user.setSex("1");
 
         productInfo = getArguments().getParcelable(HomeCreditDetailAct.PRODUCTINFO);//取到传递过来的产品
-        queryProvince();//获取省份
         loadView.setOnRetryListener(new LoadingView.OnRetryListener() {
             @Override
             public void OnRetry() {
-                getData();
+                getDictionaryContent(keyLists);
             }
         });
     }
@@ -511,6 +509,7 @@ public class CreditSecondFrag extends BaseFragment {
                 }.getType());
                 creditList = gson.fromJson(data.getJSONArray("creidtType").toString(),new TypeToken<List<RelationEntity>>() {
                 }.getType());
+                getData();
 //                switch (pos) {
 //                    case 0:
 //                        jobList = gson.fromJson(result.toString(), new TypeToken<List<RelationEntity>>() {
@@ -576,7 +575,7 @@ public class CreditSecondFrag extends BaseFragment {
                     }
                     if (!TextUtils.isEmpty(creditId))
                     for (int i = 0; i < creditList.size(); i++) {
-                        if ( creditList.get(i).getDictSubId().equals(haveHoursId)){
+                        if ( creditList.get(i).getDictSubId().equals(creditId)){
                             tvXy.setText(creditList.get(i).getOptionName());
                         }
                     }
@@ -600,10 +599,6 @@ public class CreditSecondFrag extends BaseFragment {
                         } else if (user.equals("0") ) {
                             cbSelectSex.setChecked(true);
                         }
-                    }
-
-                    if (!TextUtils.isEmpty(user.getCareerName())) {//职业身份
-                        tvWork.setText(user.getCareerName());
                     }
 
                     if (!TextUtils.isEmpty(user.getAge())) {
@@ -668,14 +663,6 @@ public class CreditSecondFrag extends BaseFragment {
 
                     }
 
-                    if (!TextUtils.isEmpty(user.getHaveOwnHouse()) && !TextUtils.isEmpty(user.getHaveOwnHouse())) {//房产类型
-                        tvHome.setText(user.getHaveOwnHouse());
-                    }
-
-                    if (!TextUtils.isEmpty(user.getHaveOwnCar())) {//车产
-                        tvCar.setText(user.getHaveOwnCar());
-                    }
-
                     if (!TextUtils.isEmpty(user.getCompany())) {
                         companyName.setText(user.getCompany());
                     }
@@ -684,9 +671,6 @@ public class CreditSecondFrag extends BaseFragment {
                         zhiwu.setText(user.getCareerTitle());
                     }
 
-                    if (!TextUtils.isEmpty(user.getCreditState())) {//信用
-                        tvXy.setText(user.getCreditState());
-                    }
                 }
 
                 queryProvince();//获取省份
@@ -1013,7 +997,7 @@ public class CreditSecondFrag extends BaseFragment {
 
             @Override
             public void onError(int status, String msg) {
-
+                loadView.loadError();
             }
         });
     }
@@ -1036,7 +1020,7 @@ public class CreditSecondFrag extends BaseFragment {
 
             @Override
             public void onError(int status, String msg) {
-
+                loadView.loadError();
             }
         });
     }
@@ -1058,7 +1042,7 @@ public class CreditSecondFrag extends BaseFragment {
 
             @Override
             public void onError(int status, String msg) {
-
+                loadView.loadError();
             }
         });
     }
@@ -1097,6 +1081,8 @@ public class CreditSecondFrag extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (thread!=null)
+        if (thread.isAlive())
         thread.interrupt();
     }
 }

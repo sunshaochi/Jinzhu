@@ -180,6 +180,7 @@ public abstract class BaseActivity extends SmartFragmentActivity {
         public void onReceive(Context context, Intent intent) {
             // TODO Auto-generated method stub
             if (!ParamsUtil.getInstance().isLogin){
+                ParamsUtil.getInstance().setLogin(true);
                 Intent intent1 = new Intent(context, LoginAct.class);
                 startActivity(intent1);
             }

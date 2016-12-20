@@ -74,7 +74,6 @@ public class LoginAct extends BaseActivity {
     public void init(Bundle savedInstanceState) {
         setLeftTv("返回");
         setTopTitle("用户登录");
-        ParamsUtil.getInstance().setLogin(true);
         type = getIntent().getStringExtra("TYPE");
         LTYPE = getIntent().getIntExtra(LOGIN_TYPE, 0);
         AppManager.getAppManager().addActivity(this);
