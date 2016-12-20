@@ -13,7 +13,7 @@ public interface IFinancialUrl {
     /*吕东测试*/
 //    String BASE_URL = "http://172.16.5.59";
 
-//    String BASE_URL ="http://172.16.6.218:8082";
+    String BASE_URL ="http://172.16.6.218:8082";
 
 //    String BASE_URL ="http://172.16.6.218:8082";
 //    String BASE_URL ="http://172.16.6.159:8061";
@@ -71,17 +71,21 @@ public interface IFinancialUrl {
 //    String BASE_URL="http://172.16.6.216";
 //    String BASE_URL = "http://172.16.6.228:8080";
 //    String BASE_URL = "http://172.16.6.228:8080";
+<<<<<<< HEAD
       String BASE_URL="http://139.196.227.53:9010";
+=======
+//    String BASE_URL="http://172.16.5.32:8083";
+>>>>>>> 68d9dc21dbfb45ce81b7113f4a1b0705c2a5fbfa
 //    String BASE_URL="http://139.196.227.38:9000";//#  后台
 
     /**
      * @MARKEY_CODE 渠道号设置，默认渠道设置为空字符串
      */
     String MARKET_CODE = "qudao4";
-    //    String API_VERSION = "/easyplay";
-    String API_VERSION = "/file";
+        String API_VERSION = "/easyplay";
+//    String API_VERSION = "/file";
 
-    String BASE_IMAGE_URL = BASE_URL + API_VERSION + "/";
+    String BASE_IMAGE_URL = BASE_URL +  "/file/";
 
     /*登录*/
 //    String LOGIN_URL = BASE_URL + API_VERSION + "/manager/unLogin/login.do";
@@ -333,7 +337,7 @@ public interface IFinancialUrl {
     /* 查询热门产品列表*/
     String FIND_HOT_PRODUCT_LIST = BASE_URL + "/weekhotproduct/unLogin/getWeekHotListsByCity";
     /*退出*/
-    String LOGINOUT_URL = BASE_URL + "/userlogin/unLogin/logout";
+    String LOGINOUT_URL = BASE_URL + "/userlogin/logout";
     /* 获得当前登陆人的信息*/
     String USER_LOGIN_URL = BASE_URL + "/customer/getAccountInfo";
     /*修改用户信息*/
@@ -344,5 +348,7 @@ public interface IFinancialUrl {
     String FOGET_PWD_JY_URL = BASE_URL + "/customer/unLogin/checkSMSCaptcha";
     /*我的贷款*/
     String USERCREDIT_URL = BASE_URL +"/getOrderlist";
+    /*查询申贷资料*/
+    String GET_CUSTOMER_INFO4_APPLY_ORDER = BASE_URL + "/getCustomerInfo4ApplyOrder";
 
 }

@@ -23,7 +23,6 @@ import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.speedcredit.creditspeedthied.CreditSpeedThird_2Act;
 import com.beyonditsm.financial.activity.user.BannerDetailAct;
-import com.beyonditsm.financial.activity.user.LoginAct;
 import com.beyonditsm.financial.db.FriendDao;
 import com.beyonditsm.financial.entity.FriendBean;
 import com.beyonditsm.financial.entity.ResultData;
@@ -34,7 +33,6 @@ import com.beyonditsm.financial.fragment.MineFragment;
 import com.beyonditsm.financial.fragment.RecomFragment;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
-import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GeneralUtils;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
@@ -181,16 +179,16 @@ public class MainActivity extends BaseActivity {
 
         setTabSelection(0);
         setCheckItem(0);
-        String token = SpUtils.getToken(MainActivity.this);
-        if (!TextUtils.isEmpty(token)) {
-            getUserInfo();
-            if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
-                RongIM.getInstance().setOnReceiveUnreadCountChangedListener
-                        (new MyReceiveUnreadCountChangedListener(), Conversation.ConversationType.PRIVATE);
-            }
-        }
+//        String token = SpUtils.getToken(MainActivity.this);
+//        if (!TextUtils.isEmpty(token)) {
+//            getUserInfo();
+//            if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
+//                RongIM.getInstance().setOnReceiveUnreadCountChangedListener
+//                        (new MyReceiveUnreadCountChangedListener(), Conversation.ConversationType.PRIVATE);
+//            }
+//        }
         //检查版本更新
-        gUtils.toVersion(MainActivity.this, FinancialUtil.getAppVer(MainActivity.this), 1);
+//        gUtils.toVersion(MainActivity.this, FinancialUtil.getAppVer(MainActivity.this), 1);
 
 
     }

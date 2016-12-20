@@ -17,6 +17,7 @@ import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.tandong.sa.json.Gson;
@@ -84,7 +85,7 @@ public class AddBankCardAct extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AddBankCardAct.this, SetPwdActivity.class);
-                intent.putExtra("userPhone", user.getAccountName());
+                intent.putExtra("userPhone", SpUtils.getPhonenumber(getApplicationContext()));
                 startActivity(intent);
             }
         });

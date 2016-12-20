@@ -211,12 +211,12 @@ public class SettingAct extends BaseActivity {
             //检测新版本
             case R.id.rlcheck:
 
-                if (isStart || isUploading) {
-                    rlCheck.setClickable(false);
-                    MyToastUtils.showShortToast(getApplicationContext(), "正在努力升级新版本，请稍等...");
-                } else {
-                    gUtils.toVersion(SettingAct.this, FinancialUtil.getAppVer(SettingAct.this), 0);
-                }
+//                if (isStart || isUploading) {
+//                    rlCheck.setClickable(false);
+//                    MyToastUtils.showShortToast(getApplicationContext(), "正在努力升级新版本，请稍等...");
+//                } else {
+//                    gUtils.toVersion(SettingAct.this, FinancialUtil.getAppVer(SettingAct.this), 0);
+//                }
                 break;
             //关于
             case R.id.rlAbout:

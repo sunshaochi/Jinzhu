@@ -34,6 +34,8 @@ public class SpUtils {
     private static  final String PHONENUMBER="phoneNum";
     private static final String PROFILEID="profileId";//个人信息id
     private static final String ADDRESSID="addressId";//用户地址id
+    private static final String USERNAME="addressId";//用户地址id
+
     public SpUtils() {
 
     }
@@ -81,6 +83,10 @@ public class SpUtils {
     public static SharedPreferences getAddressId(Context context){
         return context.getSharedPreferences(ADDRESSID,Context.MODE_PRIVATE);
     }
+    public static SharedPreferences getUserName(Context context){
+        return context.getSharedPreferences(USERNAME,Context.MODE_PRIVATE);
+
+    }
     /**
      * 定位的城市名称
      * @param context
@@ -93,6 +99,21 @@ public class SpUtils {
     public static String getCity(Context context) {
         return getCitySp(context).getString(CITY, "");
     }
+
+    /**
+     * 定位的城市名称
+     * @param context
+     * @param city
+     */
+    public static void setUsername(Context context, String city) {
+        getUserName(context).edit().putString(USERNAME, city).commit();
+    }
+
+    public static String getUsername(Context context) {
+        return getUserName(context).getString(USERNAME, "");
+    }
+
+
 
     /**
      * 获取手机号码
@@ -226,6 +247,10 @@ public class SpUtils {
 
     public static void clearRoleName(Context context) {
         getRoleNameSp(context).edit().clear().commit();
+    }
+
+    public static void clearUserName(Context context){
+        getUserName(context).edit().clear().commit();
     }
 
     /**

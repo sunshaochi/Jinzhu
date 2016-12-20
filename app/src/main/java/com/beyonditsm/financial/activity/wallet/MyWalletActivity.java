@@ -108,25 +108,38 @@ public class MyWalletActivity extends BaseActivity {
         if (user2!=null){
             user=  user2.getProfileInfo();
         }
+        if (!TextUtils.isEmpty(SpUtils.getPhonenumber(getApplicationContext()))){
+            getWalletQuan(SpUtils.getPhonenumber(getApplicationContext()));
+        }else {
+            finish();
+            Intent intent=new Intent(MyWalletActivity.this, LoginAct.class);
+            startActivity(intent);
+        }
+        tvName.setText("代言人");
+        if (!TextUtils.isEmpty(SpUtils.getPhonenumber(getApplicationContext()))){
+            tvPhone.setText(SpUtils.getPhonenumber(getApplicationContext()));
+
+        }
 //        user = getIntent().getParcelableExtra("userInfo");
-        String isUpgrade = SpUtils.getIsUpgrade(getApplicationContext());
-        if (!TextUtils.isEmpty(isUpgrade) && "isUpgrade".equals(isUpgrade)) {
+//        String isUpgrade = SpUtils.getIsUpgrade(getApplicationContext());
+//        if (!TextUtils.isEmpty(isUpgrade) && "isUpgrade".equals(isUpgrade)) {
 //            ivPaymentsRedPoint.setVisibility(View.VISIBLE);
-        } else {
+//        } else {
 //            ivPaymentsRedPoint.setVisibility(View.GONE);
-        }
-        String receiveReward = SpUtils.getReceiveReward(getApplicationContext());
-        if (!TextUtils.isEmpty(receiveReward)&&"isReceive".equals(receiveReward)){
+//        }
+//        String receiveReward = SpUtils.getReceiveReward(getApplicationContext());
+//        if (!TextUtils.isEmpty(receiveReward)&&"isReceive".equals(receiveReward)){
 //            ivPaymentsRedPoint.setVisibility(View.VISIBLE);
-        }else{
+//        }else{
 //            ivPaymentsRedPoint.setVisibility(View.GONE);
-        }
-        if (ule == null) {
-            getUserLoginInfo();
-            setUserLogin();
-        } else {
-            setUserLogin();
-        }
+//        }
+//
+//        if (ule == null) {
+//            getUserLoginInfo();
+//            setUserLogin();
+//        } else {
+//            setUserLogin();
+//        }
 //        if (user == null) {
 //            if (ule != null) {
 //                if (ule.getDescription().contains("用户")) {
@@ -139,21 +152,28 @@ public class MyWalletActivity extends BaseActivity {
 //                }
 //            }
 //        } else {
-        if (!TextUtils.isEmpty(user.getMobilePhone())){
-            getWalletQuan(user.getMobilePhone());
-        }else {
-            Intent intent=new Intent(MyWalletActivity.this, LoginAct.class);
-            startActivity(intent);
-        }
+//        if (user!=null){
+//            if (!TextUtils.isEmpty(user.getMobilePhone())){
+//                getWalletQuan(user.getMobilePhone());
+//            }
+//        }else {
+//            finish();
+//            Intent intent=new Intent(MyWalletActivity.this, LoginAct.class);
+//            startActivity(intent);
+//        }
+
 //        setUserInfo();
 //        }
         loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
             @Override
             public void OnRetry() {
-                getUserLoginInfo();
+//                getUserLoginInfo();
 //                getUserInfo();
 //                findServantInfo();
-                getWalletQuan(user.getMobilePhone());
+//                getWalletQuan(user.getMobilePhone());
+                if (!TextUtils.isEmpty(SpUtils.getPhonenumber(getApplicationContext()))){
+                    getWalletQuan(SpUtils.getPhonenumber(getApplicationContext()));
+                }
             }
         });
 //        getWalletQuan(user.getMobilePhone());
@@ -419,8 +439,16 @@ public class MyWalletActivity extends BaseActivity {
         RequestManager.getWalletManager().getWalletQuan(uid, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
+                loadingView.loadComplete();
                 JSONObject jsonObject = new JSONObject(result);
+                if (TextUtils.isEmpty(jsonObject.getString("data"))){
+                    tv_xj.setText("可兑换：0");
+                    tv_yj.setText(0+"");
+                    tv_dikou.setText(0+"");
+                    return;
+                }
                 JSONArray data = jsonObject.getJSONArray("data");
+
                 Gson gson = new Gson();
                 walletList = gson.fromJson(data.toString(), new TypeToken<List<WalletQuanBean>>() {
                 }.getType());
@@ -456,7 +484,7 @@ public class MyWalletActivity extends BaseActivity {
 
             @Override
             public void onError(int status, String msg) {
-
+                loadingView.loadError();
             }
         });
     }
