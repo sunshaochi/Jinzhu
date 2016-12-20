@@ -599,11 +599,11 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/ll_xy"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="15dp"
-                                android:orientation="horizontal"
-                                android:visibility="gone">
+                                android:orientation="horizontal">
 
                                 <TextView
                                     style="@style/tv_second_style"
@@ -621,6 +621,7 @@
 
                     <!--贷款提速-->
                     <LinearLayout
+                        android:visibility="gone"
                         android:id="@+id/llts"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -733,7 +734,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
                 android:background="#ffffff"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/start_msg"

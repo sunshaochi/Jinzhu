@@ -29,6 +29,7 @@ import com.beyonditsm.financial.db.FriendDao;
 import com.beyonditsm.financial.entity.FriendBean;
 import com.beyonditsm.financial.entity.MyCreditBean;
 import com.beyonditsm.financial.entity.OrderDetailInfo;
+import com.beyonditsm.financial.entity.OrderListBean;
 import com.beyonditsm.financial.entity.SpeedOrderInfo;
 import com.beyonditsm.financial.entity.TaskEntity;
 import com.beyonditsm.financial.http.CommManager;
@@ -209,6 +210,8 @@ public class SpeedCreditDetailFragment extends BaseFragment {
     private TextView tvWorkProperty;
     private MyCreditBean.RowsEntity rowe;
 
+    private OrderListBean orderListBean;
+
 
     private String STEP = "";
     private Map<Integer, Boolean> map = new HashMap<>();
@@ -254,12 +257,12 @@ public class SpeedCreditDetailFragment extends BaseFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         addressUtil = new AddressUtil(getActivity());
-        rowe = getArguments().getParcelable("rowe");
+        orderListBean = getArguments().getParcelable("orderListBean");
         if (rowe != null) {
-            tvName.setText(rowe.getProductName());
+            tvName.setText(orderListBean.getProduct().getProductName());
         }
         dialog = new FinalLoadDialog(getActivity());
-        ShortLoanOrderDetail(rowe.getId());
+        ShortLoanOrderDetail(orderListBean.getOrder().getOrderId());
 
 //        obaDown = ObjectAnimator.ofFloat(ivSlide, "rotation", 0,
 //                180);

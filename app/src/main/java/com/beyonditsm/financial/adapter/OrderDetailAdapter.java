@@ -16,6 +16,8 @@ import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.db.FriendDao;
 import com.beyonditsm.financial.entity.FriendBean;
 import com.beyonditsm.financial.entity.OrderDealEntity;
+import com.beyonditsm.financial.entity.OrderWorkMarkBean;
+import com.beyonditsm.financial.util.MyLogUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,17 +26,18 @@ import java.util.List;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 
-/**
+/**implements View.OnClickListener
  * 我的贷款——贷款详情Adapter
  * Created by Administrator on 2015/12/15.
  */
-public class OrderDetailAdapter extends BaseAdapter implements View.OnClickListener {
-    private List<OrderDealEntity> orderList;
+public class OrderDetailAdapter extends BaseAdapter  {
+//    private List<OrderDealEntity> orderList;
+    private List<OrderWorkMarkBean>list;
     private Context context;
     private final LayoutInflater inflater;
 
-    public OrderDetailAdapter(Context context, List<OrderDealEntity> orderList) {
-        this.orderList = orderList;
+    public OrderDetailAdapter(Context context, List<OrderWorkMarkBean>list) {
+        this.list = list;
         this.context = context;
         inflater = LayoutInflater.from(context);
     }
@@ -45,12 +48,12 @@ public class OrderDetailAdapter extends BaseAdapter implements View.OnClickListe
 
     @Override
     public int getCount() {
-        return orderList != null ? orderList.size() : 0;
+        return list != null ? list.size() : 0;
     }
 
     @Override
     public Object getItem(int position) {
-        return orderList != null ? orderList.get(position) : null;
+        return list != null ? list.get(position) : null;
     }
 
     @Override
@@ -77,18 +80,20 @@ public class OrderDetailAdapter extends BaseAdapter implements View.OnClickListe
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        OrderDealEntity ode = orderList.get(position);
+        OrderWorkMarkBean ode = list.get(position);
 //        if (position==0){
 //            holder.llListHead.setVisibility(View.VISIBLE);
 //        }
 //        if (position==orderList.size()-1){
 //            holder.llListFoot.setVisibility(View.VISIBLE);
 //        }
-        if (!TextUtils.isEmpty(ode.getDealName())) {
-            holder.tvCreditStatus.setText(ode.getDealName());
+        if (!TextUtils.isEmpty(ode.getStatus())) {
+            holder.tvCreditStatus.setText(ode.getStatus());
         }
 
-        Date date = new Date(ode.getDealTime());
+        Date date = new Date();
+        date.setTime(Long.parseLong(ode.getCreateTime()));
+        MyLogUtils.info(date.toString());
         @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         holder.tvCreditTime.setText(sdf.format(date));
 
@@ -98,83 +103,83 @@ public class OrderDetailAdapter extends BaseAdapter implements View.OnClickListe
 //            holder.ivConnection.setTag(position);
 //            holder.ivConnection.setOnClickListener(this);
 //        }
-        if (!TextUtils.isEmpty(ode.getOrderFlowStatus())&&!TextUtils.isEmpty(ode.getUserId())) {
-            if ("CUSTOMER_SUBMIT".equals(ode.getOrderFlowStatus())) {//客户提交订单
-                holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_f);
-            }
-            if ("PLATFORM_PASS".equals(ode.getOrderFlowStatus())) {//平台审批通过
-                holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_f);
-            }
-            if ("PLATFORM_REJECT".equals(ode.getOrderFlowStatus())){//平台审批不通过
-                holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_failed);
-                holder.tvCreditStatus.setText("平台审批不通过");
-            }
-            if ("CREDITMANAGER_CATCH_ORDER".equals(ode.getOrderFlowStatus())) {//信贷经理已抢单
-                holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_sec);
-                holder.ivConnection.setVisibility(View.VISIBLE);
-                holder.ivConnection.setBackgroundResource(R.drawable.button_chat_r);
-                holder.ivConnection.setTag(position);
-                holder.ivConnection.setOnClickListener(this);
-            }
-            if ("CREDIT_MANAGER_PASS".equals(ode.getOrderFlowStatus())) {//信贷经理审批通过
-                holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_f);
-                holder.ivConnection.setVisibility(View.VISIBLE);
-                holder.ivConnection.setBackgroundResource(R.drawable.button_chat_r);
-                holder.ivConnection.setTag(position);
-                holder.ivConnection.setOnClickListener(this);
-            }
-            if ("CREDIT_MANAGER_SUPPLEMENT".equals(ode.getOrderFlowStatus())) {//信贷经理要求补件
-                holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_middle);
-                holder.ivConnection.setVisibility(View.VISIBLE);
-                holder.ivConnection.setBackgroundResource(R.drawable.button_chat_r);
-                holder.ivConnection.setTag(position);
-                holder.ivConnection.setOnClickListener(this);
-            }
-            if (!"CREDIT_MANAGER_PASS".equals(ode.getOrderFlowStatus())&&!"CREDITMANAGER_CATCH_ORDER".equals(ode.getOrderFlowStatus())&&!"CREDIT_MANAGER_SUPPLEMENT".equals(ode.getOrderFlowStatus())){
-                holder.ivConnection.setVisibility(View.GONE);
-            }
-            if ("ORDER_AUTO_RELEASE".equals(ode.getOrderFlowStatus())) {//订单处理超时
-                holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_failed);
-            }
-            if ("ORG_PASS".equals(ode.getOrderFlowStatus())) {//机构审批通过
-                holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_suc);
-            }
-            if ("ORG_REJECT".equals(ode.getOrderFlowStatus())) {//机构驳回申请
-                holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_failed);
-            }
-            if ("ORG_SUPPLEMENT".equals(ode.getOrderFlowStatus())) {//机构要求补件
-                holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_middle);
-            }
-            if ("CUSTOMER_CANCEL_ORDER".equals(ode.getOrderFlowStatus())){//取消订单
-                holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_failed);
-            }
-            if ("DATA_REJECT_UPDATA".equals(ode.getOrderFlowStatus())){//资料驳回
-                holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_failed);
-            }
-            if (!"DATA_REJECT_UPDATA".equals(ode.getOrderFlowStatus())&&!"CUSTOMER_CANCEL_ORDER".equals(ode.getOrderFlowStatus())&&!"ORG_REJECT".equals(ode.getOrderFlowStatus())&&!"ORDER_AUTO_RELEASE".equals(ode.getOrderFlowStatus())){
-                holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_f);
-            }
-        }
+//        if (!TextUtils.isEmpty(ode.getOrderFlowStatus())&&!TextUtils.isEmpty(ode.getUserId())) {
+//            if ("CUSTOMER_SUBMIT".equals(ode.getOrderFlowStatus())) {//客户提交订单
+//                holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_f);
+//            }
+//            if ("PLATFORM_PASS".equals(ode.getOrderFlowStatus())) {//平台审批通过
+//                holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_f);
+//            }
+//            if ("PLATFORM_REJECT".equals(ode.getOrderFlowStatus())){//平台审批不通过
+//                holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_failed);
+//                holder.tvCreditStatus.setText("平台审批不通过");
+//            }
+//            if ("CREDITMANAGER_CATCH_ORDER".equals(ode.getOrderFlowStatus())) {//信贷经理已抢单
+//                holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_sec);
+//                holder.ivConnection.setVisibility(View.VISIBLE);
+//                holder.ivConnection.setBackgroundResource(R.drawable.button_chat_r);
+//                holder.ivConnection.setTag(position);
+//                holder.ivConnection.setOnClickListener(this);
+//            }
+//            if ("CREDIT_MANAGER_PASS".equals(ode.getOrderFlowStatus())) {//信贷经理审批通过
+//                holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_f);
+//                holder.ivConnection.setVisibility(View.VISIBLE);
+//                holder.ivConnection.setBackgroundResource(R.drawable.button_chat_r);
+//                holder.ivConnection.setTag(position);
+//                holder.ivConnection.setOnClickListener(this);
+//            }
+//            if ("CREDIT_MANAGER_SUPPLEMENT".equals(ode.getOrderFlowStatus())) {//信贷经理要求补件
+//                holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_middle);
+//                holder.ivConnection.setVisibility(View.VISIBLE);
+//                holder.ivConnection.setBackgroundResource(R.drawable.button_chat_r);
+//                holder.ivConnection.setTag(position);
+//                holder.ivConnection.setOnClickListener(this);
+//            }
+//            if (!"CREDIT_MANAGER_PASS".equals(ode.getOrderFlowStatus())&&!"CREDITMANAGER_CATCH_ORDER".equals(ode.getOrderFlowStatus())&&!"CREDIT_MANAGER_SUPPLEMENT".equals(ode.getOrderFlowStatus())){
+//                holder.ivConnection.setVisibility(View.GONE);
+//            }
+//            if ("ORDER_AUTO_RELEASE".equals(ode.getOrderFlowStatus())) {//订单处理超时
+//                holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_failed);
+//            }
+//            if ("ORG_PASS".equals(ode.getOrderFlowStatus())) {//机构审批通过
+//                holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_suc);
+//            }
+//            if ("ORG_REJECT".equals(ode.getOrderFlowStatus())) {//机构驳回申请
+//                holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_failed);
+//            }
+//            if ("ORG_SUPPLEMENT".equals(ode.getOrderFlowStatus())) {//机构要求补件
+//                holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_middle);
+//            }
+//            if ("CUSTOMER_CANCEL_ORDER".equals(ode.getOrderFlowStatus())){//取消订单
+//                holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_failed);
+//            }
+//            if ("DATA_REJECT_UPDATA".equals(ode.getOrderFlowStatus())){//资料驳回
+//                holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_failed);
+//            }
+//            if (!"DATA_REJECT_UPDATA".equals(ode.getOrderFlowStatus())&&!"CUSTOMER_CANCEL_ORDER".equals(ode.getOrderFlowStatus())&&!"ORG_REJECT".equals(ode.getOrderFlowStatus())&&!"ORDER_AUTO_RELEASE".equals(ode.getOrderFlowStatus())){
+//                holder.ivIconStatus.setBackgroundResource(R.drawable.ico_status_f);
+//            }
+//        }
         return convertView;
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.iv_connetion:
-                int position = (int) view.getTag();
-                String userId = orderList.get(position).getUserId();
-                String roleName = orderList.get(position).getNickName();
-                if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
-                    RongIM.getInstance().startPrivateChat(context, userId, roleName);
-                    FriendBean friendBean = new FriendBean();
-                    friendBean.setUserId(userId);
-                    friendBean.setUserName(roleName);
-                    FriendDao.saveMes(friendBean);
-                }
-                break;
-        }
-    }
+//    @Override
+//    public void onClick(View view) {
+//        switch (view.getId()) {
+//            case R.id.iv_connetion:
+//                int position = (int) view.getTag();
+//                String userId = orderList.get(position).getUserId();
+//                String roleName = orderList.get(position).getNickName();
+//                if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
+//                    RongIM.getInstance().startPrivateChat(context, userId, roleName);
+//                    FriendBean friendBean = new FriendBean();
+//                    friendBean.setUserId(userId);
+//                    friendBean.setUserName(roleName);
+//                    FriendDao.saveMes(friendBean);
+//                }
+//                break;
+//        }
+//    }
 
     class ViewHolder {
         ImageView ivIconStatus;

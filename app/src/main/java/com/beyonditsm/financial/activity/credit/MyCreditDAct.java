@@ -16,6 +16,7 @@ import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.user.MyCreditAct;
 import com.beyonditsm.financial.entity.MyCreditBean;
+import com.beyonditsm.financial.entity.OrderListBean;
 import com.beyonditsm.financial.fragment.MineFragment;
 import com.beyonditsm.financial.fragment.MyCreditDetailFragment;
 import com.beyonditsm.financial.fragment.MyCreditStatusFragment;
@@ -51,6 +52,8 @@ public class MyCreditDAct extends BaseActivity {
     private MyCreditBean.RowsEntity rowe;
     private int position;
 
+    private OrderListBean orderListBean;
+
     private final String[] mTitles = {"贷款状态", "贷款详情"};
 //    private String type;
 
@@ -70,12 +73,13 @@ public class MyCreditDAct extends BaseActivity {
         setLeftTv("返回");
         setTopTitle("贷款详情");
 //        type = getIntent().getStringExtra("type");
-        rowe = getIntent().getParcelableExtra(MyCreditAct.CREDIT);
+//        rowe = getIntent().getParcelableExtra(MyCreditAct.CREDIT);
+        orderListBean=getIntent().getParcelableExtra("orderListBean");//传递过来的单一实体
         String orderId = SpUtils.getOrderId(MyApplication.getInstance());
         MyLogUtils.info("获取到已保存的orderID+" + orderId);
         initViewpager();
         if (!TextUtils.isEmpty(orderId)) {
-            if (orderId.equals(rowe.getId())) {
+            if (orderId.equals(orderListBean.getOrder().getOrderId())) {
 //                tlCreditDetail.setMsgMargin(1,60,10);
                 tlCreditDetail.showDot(1);
             }
@@ -94,7 +98,7 @@ public class MyCreditDAct extends BaseActivity {
         String orderId = SpUtils.getOrderId(MyApplication.getInstance());
         MyLogUtils.info("重新获取到已保存的orderID+" + orderId);
         if (!TextUtils.isEmpty(orderId)) {
-            if (orderId.equals(rowe.getId())) {
+            if (orderId.equals(orderListBean.getOrder().getOrderId())) {
 //                tlCreditDetail.setMsgMargin(1,30,10);
                 tlCreditDetail.showDot(0);
             }
@@ -126,9 +130,9 @@ public class MyCreditDAct extends BaseActivity {
                 }
             });
         } else {
-            if ("CANCEL_REQUET".equals(rowe.getOrderSts())) {
+            if ("CANCEL_REQUET".equals(orderListBean.getOrder().getOrderStatus())) {
                 setRightVG(false);
-            } else if ("WAIT_BACKGROUND_APPROVAL".equals(rowe.getOrderSts()) || "CREDIT_MANAGER_GRAB".equals(rowe.getOrderSts())) {
+            } else if ("WAIT_BACKGROUND_APPROVAL".equals(orderListBean.getOrder().getOrderStatus()) || "CREDIT_MANAGER_GRAB".equals(orderListBean.getOrder().getOrderStatus())) {
                 setCancel();
             }
         }
@@ -142,7 +146,7 @@ public class MyCreditDAct extends BaseActivity {
                 dialog.builder().setTitle("提示").setMsg("确认取消订单？").setPositiveButton("确定", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        RequestManager.getUserManager().cancelOrder(rowe.getId(), new RequestManager.CallBack() {
+                        RequestManager.getUserManager().cancelOrder(orderListBean.getOrder().getOrderId(), new RequestManager.CallBack() {
                             @Override
                             public void onSucess(String result) throws JSONException {
 
@@ -176,11 +180,10 @@ public class MyCreditDAct extends BaseActivity {
     @SuppressWarnings("deprecation")
     private void initViewpager() {
         ArrayList<Fragment> fragmentList = new ArrayList<>();
-
         Bundle bundle = new Bundle();
-        bundle.putParcelable("rowe", rowe);
+        bundle.putParcelable("orderListBean", orderListBean);
         Fragment detailFragment;
-        if (rowe.getOrderType().equals("4")) {//急借通
+        if (orderListBean.getOrder().getOrderType().equals("4")) {//急借通
             detailFragment = new SpeedCreditDetailFragment();
         } else {
             detailFragment = new MyCreditDetailFragment();//贷款详情
@@ -189,7 +192,6 @@ public class MyCreditDAct extends BaseActivity {
             fragmentList.add(statusFragment);
         }
 
-        detailFragment.setArguments(bundle);
         detailFragment.setArguments(bundle);
 
 //        if ("comm".equals(type)) {

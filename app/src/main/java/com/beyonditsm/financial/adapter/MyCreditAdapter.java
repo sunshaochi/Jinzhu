@@ -13,6 +13,7 @@ import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.entity.OrderBean3;
 import com.beyonditsm.financial.entity.OrderListBean;
 import com.beyonditsm.financial.entity.ProductBean2;
+import com.beyonditsm.financial.http.IFinancialUrl;
 import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
 import java.util.List;
@@ -82,22 +83,25 @@ public  class MyCreditAdapter extends BaseAdapter {
         ProductBean2 product = list.get(position).getProduct();
         if (product!=null){
             if (!TextUtils.isEmpty(product.getProductLogo())){
-                ImageLoader.getInstance().displayImage(product.getProductLogo(),holder.iv_iv_tubiao);
+                ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL+product.getProductLogo(),holder.iv_iv_tubiao);
+            }
+            if(!TextUtils.isEmpty(product.getProductName())){
+                holder.tv_dkname.setText(product.getProductName());
             }
         }
         if (order!=null){
             holder.tv_bianhao.setText(order.getOrderNo());
-            if (!TextUtils.isEmpty(order.getOrderType())){
-                if (TextUtils.equals(order.getOrderType(),"1")){
-                    holder.tv_dkname.setText("线上订单");
-                }else  if (TextUtils.equals(order.getOrderType(),"2")){
-                    holder.tv_dkname.setText("CC订单");
-                }else if (TextUtils.equals(order.getOrderType(),"3")){
-                    holder.tv_dkname.setText("地推订单");
-                }else if (TextUtils.equals(order.getOrderType(),"4")){
-                    holder.tv_dkname.setText("急贷通");
-                }
-            }
+//            if (!TextUtils.isEmpty(order.getOrderType())){
+//                if (TextUtils.equals(order.getOrderType(),"1")){
+//                    holder.tv_dkname.setText("线上订单");
+//                }else  if (TextUtils.equals(order.getOrderType(),"2")){
+//                    holder.tv_dkname.setText("CC订单");
+//                }else if (TextUtils.equals(order.getOrderType(),"3")){
+//                    holder.tv_dkname.setText("地推订单");
+//                }else if (TextUtils.equals(order.getOrderType(),"4")){
+//                    holder.tv_dkname.setText("急贷通");
+//                }
+//            }
             if (!TextUtils.isEmpty(order.getOrderStatus())){
                 if ("ORGANIZATION_APPROVAL".equals(order.getOrderStatus())) {
             holder.tv_zhuangtai.setText("机构审批中");
