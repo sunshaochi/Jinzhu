@@ -149,7 +149,7 @@ public class CreditSecondFrag extends BaseFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-//        getData();//获取个人资料并给界面赋值
+        getData();//获取个人资料并给界面赋值
         addressUtil = new AddressUtil(mParentActivity);
         keyLists = new ArrayList<>();
         keyLists.add("jobType");

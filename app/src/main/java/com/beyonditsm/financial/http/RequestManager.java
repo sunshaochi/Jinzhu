@@ -1,6 +1,7 @@
 package com.beyonditsm.financial.http;
 
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 
@@ -123,6 +124,12 @@ public class RequestManager {
                         MyLogUtils.info(response);
                         try {
                             JSONObject obj = new JSONObject(response);
+                            if (obj.has("statusCode")){
+                                Intent unlogin = new Intent();
+                                unlogin.setAction("UNLOGIN");
+                                MyApplication.getInstance().getApplicationContext().sendBroadcast(unlogin);
+                                return;
+                            }
                             int status = obj.getInt("status");
                             if (status == 200) {
                                 callback.onSucess(response);
@@ -181,7 +188,19 @@ public class RequestManager {
            @Override
            public void onResponse(String s) {
                try {
-                   callback.onSucess(s);
+                   JSONObject obj = new JSONObject(s);
+                   if (obj.has("statusCode")){
+                       Intent unlogin = new Intent();
+                       unlogin.setAction("UNLOGIN");
+                       MyApplication.getInstance().getApplicationContext().sendBroadcast(unlogin);
+                       return;
+                   }
+                   if (obj.getInt("status")==200){
+                       callback.onSucess(s);
+                   }else {
+                       callback.onError(obj.getInt("status"),obj.getString("message"));
+                   }
+
                } catch (JSONException e) {
                    e.printStackTrace();
                }
@@ -267,14 +286,20 @@ public class RequestManager {
                     public void onResponse(String response) {
                         MyLogUtils.info(response);
                         try {
-//                            JSONObject obj = new JSONObject(response);
-//                            int status = obj.getInt("status");
-//                            if (status == 200) {
+                            JSONObject obj = new JSONObject(response);
+                            if (obj.has("statusCode")){
+                                Intent unlogin = new Intent();
+                                unlogin.setAction("UNLOGIN");
+                                MyApplication.getInstance().getApplicationContext().sendBroadcast(unlogin);
+                                return;
+                            }
+                            int status = obj.getInt("status");
+                            if (status == 200) {
                                 callback.onSucess(response);
-//                            } else {
-//                                callback.onError(obj.getInt("status"), obj.getString("message"));
-//
-//                            }
+                            } else {
+                                callback.onError(obj.getInt("status"), obj.getString("message"));
+
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -375,6 +400,12 @@ public class RequestManager {
                 MyLogUtils.info(result);
                 try {
                     JSONObject obj = new JSONObject(result);
+                    if (obj.has("statusCode")){
+                        Intent unlogin = new Intent();
+                        unlogin.setAction("UNLOGIN");
+                        MyApplication.getInstance().getApplicationContext().sendBroadcast(unlogin);
+                        return;
+                    }
                     int status = obj.getInt("status");
                     if (status == 200) {
                         callBack.onSucess(result);

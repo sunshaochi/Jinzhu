@@ -181,16 +181,16 @@ public class MainActivity extends BaseActivity {
 
         setTabSelection(0);
         setCheckItem(0);
-        String token = SpUtils.getToken(MainActivity.this);
-        if (!TextUtils.isEmpty(token)) {
-            getUserInfo();
-            if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
-                RongIM.getInstance().setOnReceiveUnreadCountChangedListener
-                        (new MyReceiveUnreadCountChangedListener(), Conversation.ConversationType.PRIVATE);
-            }
-        }
+//        String token = SpUtils.getToken(MainActivity.this);
+//        if (!TextUtils.isEmpty(token)) {
+//            getUserInfo();
+//            if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
+//                RongIM.getInstance().setOnReceiveUnreadCountChangedListener
+//                        (new MyReceiveUnreadCountChangedListener(), Conversation.ConversationType.PRIVATE);
+//            }
+//        }
         //检查版本更新
-        gUtils.toVersion(MainActivity.this, FinancialUtil.getAppVer(MainActivity.this), 1);
+//        gUtils.toVersion(MainActivity.this, FinancialUtil.getAppVer(MainActivity.this), 1);
 
 
     }

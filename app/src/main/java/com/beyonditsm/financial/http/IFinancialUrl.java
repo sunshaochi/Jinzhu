@@ -71,15 +71,15 @@ public interface IFinancialUrl {
 //    String BASE_URL="http://172.16.6.216";
 //    String BASE_URL = "http://172.16.6.228:8080";
 //    String BASE_URL = "http://172.16.6.228:8080";
-    String BASE_URL="http://139.196.227.53:9010";
+    String BASE_URL="http://172.16.5.32:8083";
 //    String BASE_URL="http://139.196.227.38:9000";//#  后台
 
     /**
      * @MARKEY_CODE 渠道号设置，默认渠道设置为空字符串
      */
     String MARKET_CODE = "qudao4";
-    //    String API_VERSION = "/easyplay";
-    String API_VERSION = "/file";
+        String API_VERSION = "/easyplay";
+//    String API_VERSION = "/file";
 
     String BASE_IMAGE_URL = BASE_URL + API_VERSION + "/";
 

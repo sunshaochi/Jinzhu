@@ -343,7 +343,7 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
                                 @Override
                                 public void onClick(View v) {
                                     if (!"".equals(SpUtils.getRoleName(mParentActivity))) {
-                                        updateLocation(adress.get(1));//更新城市地址。
+//                                        updateLocation(adress.get(1));//更新城市地址。
                                     }
                                     if (adress.get(1).length() > 4) {
                                         tvCity.setText(adress.get(1).substring(0, 4) + "...");
@@ -518,7 +518,7 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
                         @Override
                         public void onClick(View v) {
                             if (!"".equals(SpUtils.getRoleName(mParentActivity))) {
-                                updateLocation(ParamsUtil.getInstance().getChangedCity());
+//                                updateLocation(ParamsUtil.getInstance().getChangedCity());
                             }
                             tvCity.setText(ParamsUtil.getInstance().getChangedCity());
                             SpUtils.setCity(MyApplication.getInstance().getApplicationContext(), ParamsUtil.getInstance().getChangedCity());
