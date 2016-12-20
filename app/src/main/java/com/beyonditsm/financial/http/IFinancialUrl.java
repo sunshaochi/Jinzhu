@@ -333,7 +333,7 @@ public interface IFinancialUrl {
     /* 查询热门产品列表*/
     String FIND_HOT_PRODUCT_LIST = BASE_URL + "/weekhotproduct/unLogin/getWeekHotListsByCity";
     /*退出*/
-    String LOGINOUT_URL = BASE_URL + "/userlogin/unLogin/logout";
+    String LOGINOUT_URL = BASE_URL + "/userlogin/logout";
     /* 获得当前登陆人的信息*/
     String USER_LOGIN_URL = BASE_URL + "/customer/getAccountInfo";
     /*修改用户信息*/

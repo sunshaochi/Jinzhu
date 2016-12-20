@@ -131,9 +131,10 @@
             <View style="@style/view_line"></View>
 
             <RelativeLayout
+
                 android:id="@+id/rlcheck"
                 style="@style/rl_mine_style"
-                android:visibility="visible">
+                android:visibility="gone">
 
 
                 <TextView
