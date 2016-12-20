@@ -16,6 +16,8 @@ import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.adapter.OrderDetailAdapter;
 import com.beyonditsm.financial.entity.MyCreditBean;
 import com.beyonditsm.financial.entity.OrderDealEntity;
+import com.beyonditsm.financial.entity.OrderListBean;
+import com.beyonditsm.financial.entity.OrderWorkMarkBean;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.view.LoadingView;
@@ -44,6 +46,8 @@ public class MyCreditStatusFragment extends BaseFragment {
     private List<OrderDealEntity> orderList;
     private OrderDetailAdapter detailAdapter;
     private MyBroadCastReceiver receiver;
+    private OrderListBean orderListBean;
+    private List<OrderWorkMarkBean>list;
 
     @SuppressLint("InflateParams")
     @Override
@@ -53,7 +57,8 @@ public class MyCreditStatusFragment extends BaseFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        rowe = getArguments().getParcelable("rowe");
+//        rowe = getArguments().getParcelable("rowe");
+        orderListBean = getArguments().getParcelable("orderListBean");
         plvCreditStatus.setPullRefreshEnabled(true);
         plvCreditStatus.setScrollLoadEnabled(false);
         plvCreditStatus.setPullLoadEnabled(false);
@@ -62,7 +67,10 @@ public class MyCreditStatusFragment extends BaseFragment {
         plvCreditStatus.getRefreshableView().setVerticalScrollBarEnabled(false);
         plvCreditStatus.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
         plvCreditStatus.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
-        findOrderDealHisory(rowe.getId());
+       if(orderListBean.getOrderWorkMark()!=null){
+         list=orderListBean.getOrderWorkMark();
+       }
+        findOrderDealHisory(list);
     }
 
     @Override
@@ -70,7 +78,7 @@ public class MyCreditStatusFragment extends BaseFragment {
         plvCreditStatus.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-                findOrderDealHisory(rowe.getId());
+                findOrderDealHisory(list);
             }
 
             @Override
@@ -81,43 +89,55 @@ public class MyCreditStatusFragment extends BaseFragment {
         loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
             @Override
             public void OnRetry() {
-                findOrderDealHisory(rowe.getId());
+                findOrderDealHisory(list);
             }
         });
     }
 
 
-    public void findOrderDealHisory(String orderId) {
-        RequestManager.getUserManager().findOrderDealHistory(orderId, new RequestManager.CallBack() {
-            @Override
-            public void onSucess(String result) throws JSONException {
-                loadingView.loadComplete();
-                plvCreditStatus.onPullDownRefreshComplete();
-                JSONObject object = new JSONObject(result);
-                JSONArray data = object.getJSONArray("data");
-                if (data == null) {
-                    loadingView.noContent();
-                }
-                Gson gson = new Gson();
-                if (data != null) {
-                    orderList = gson.fromJson(data.toString(), new TypeToken<List<OrderDealEntity>>() {
-                    }.getType());
-                }
-                Collections.reverse(orderList);
-                if (detailAdapter == null) {
-                    detailAdapter = new OrderDetailAdapter(getActivity(), orderList);
+    public void findOrderDealHisory(List<OrderWorkMarkBean>list) {
+//        RequestManager.getUserManager().findOrderDealHistory(orderId, new RequestManager.CallBack() {
+//            @Override
+//            public void onSucess(String result) throws JSONException {
+//                loadingView.loadComplete();
+//                plvCreditStatus.onPullDownRefreshComplete();
+//                JSONObject object = new JSONObject(result);
+//                JSONArray data = object.getJSONArray("data");
+//                if (data == null) {
+//                    loadingView.noContent();
+//                }
+//                Gson gson = new Gson();
+//                if (data != null) {
+//                    orderList = gson.fromJson(data.toString(), new TypeToken<List<OrderDealEntity>>() {
+//                    }.getType());
+//                }
+//                Collections.reverse(orderList);
+//                if (detailAdapter == null) {
+//                    detailAdapter = new OrderDetailAdapter(getActivity(), orderList);
+//                    plvCreditStatus.getRefreshableView().setAdapter(detailAdapter);
+//                } else {
+//                    detailAdapter.setDatas();
+//                }
+//            }
+//
+//            @Override
+//            public void onError(int status, String msg) {
+//                plvCreditStatus.onPullDownRefreshComplete();
+//                loadingView.loadError();
+//            }
+//        });
+        if(list.size()==0){
+            loadingView.noContent();
+        }else if(list.size()>0){
+            if (detailAdapter == null) {
+                    detailAdapter = new OrderDetailAdapter(getActivity(), list);
                     plvCreditStatus.getRefreshableView().setAdapter(detailAdapter);
                 } else {
                     detailAdapter.setDatas();
                 }
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-                plvCreditStatus.onPullDownRefreshComplete();
-                loadingView.loadError();
-            }
-        });
+        }else {
+            loadingView.loadError();
+        }
     }
 
     @Override
@@ -144,7 +164,7 @@ public class MyCreditStatusFragment extends BaseFragment {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            findOrderDealHisory(rowe.getId());
+            findOrderDealHisory(list);
         }
     }
 }

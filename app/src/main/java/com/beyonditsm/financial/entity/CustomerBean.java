@@ -112,12 +112,12 @@ public class CustomerBean implements Parcelable {
     /**
      * 是否有公积金. 0:无，1:有
      */
-    private Boolean hasHouseFunding;
+    private Boolean hasHouseFunding=false;
 
     /**
      * 是否有本地社保. 0:无，1:有
      */
-    private Boolean hasSocialInsurance;
+    private Boolean hasSocialInsurance=false;
 
     /**
      * 是否有车

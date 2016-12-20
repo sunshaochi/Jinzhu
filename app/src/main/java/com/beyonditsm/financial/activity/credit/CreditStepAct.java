@@ -78,9 +78,9 @@ public class CreditStepAct extends BaseActivity {
         if (getIntent().getIntExtra("credit_upload", 0) == 1) {
 //            MyLogUtils.error("orderType===="+orderType);
             if(!TextUtils.isEmpty(orderType)){
-                if (Integer.valueOf(orderType) == 2) {
+                if (Integer.valueOf(orderType) == 2) {//线下
                     setTabSelection(4);
-                } else  {
+                } else  {//线上
                     setTabSelection(2);
                 }
             }else{

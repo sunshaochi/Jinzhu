@@ -71,7 +71,7 @@ public interface IFinancialUrl {
 //    String BASE_URL="http://172.16.6.216";
 //    String BASE_URL = "http://172.16.6.228:8080";
 //    String BASE_URL = "http://172.16.6.228:8080";
-    String BASE_URL="http://139.196.227.53:9010";
+      String BASE_URL="http://139.196.227.53:9010";
 //    String BASE_URL="http://139.196.227.38:9000";//#  后台
 
     /**
