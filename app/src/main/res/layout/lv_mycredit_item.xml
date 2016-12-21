@@ -155,9 +155,10 @@
             android:layout_width="match_parent"
             android:layout_height="40dp">
             <TextView
+                android:textColor="#999999"
                 android:id="@+id/tv_dkname"
                 android:textSize="15sp"
-                android:text="快速贷"
+                android:text=""
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <LinearLayout

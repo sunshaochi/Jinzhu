@@ -118,7 +118,6 @@ public class MineFragment extends BaseFragment {
         return inflater.inflate(R.layout.fragment_mine, null);
     }
 
-
     @Override
     public void initData(Bundle savedInstanceState) {
 

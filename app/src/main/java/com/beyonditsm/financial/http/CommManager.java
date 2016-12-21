@@ -163,6 +163,14 @@ public class CommManager extends RequestManager {
     }
 
     /**
+     * 查询申贷第一步资料
+     */
+    public void getCustomerInfo4ApplyOrder(final CallBack callBack) {
+        Map<String, String> params = new HashMap<>();
+        todoGet(IFinancialUrl.GET_CUSTOMER_INFO4_APPLY_ORDER,callBack);
+    }
+
+    /**
      * 更新资料
      * @param ue       用户entity
      * @param callBack 回调

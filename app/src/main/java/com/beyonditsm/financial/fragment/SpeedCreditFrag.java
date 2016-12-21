@@ -19,6 +19,7 @@ import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GsonUtils;
+import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
@@ -114,6 +115,7 @@ public class SpeedCreditFrag extends BaseFragment {
 
             @Override
             public void onError(int status, String msg) {
+                MyToastUtils.showShortToast(getActivity(),msg);
                 lvSpeedCredit.onPullDownRefreshComplete();
                 lvSpeedCredit.onPullUpRefreshComplete();
                 loadingSpeedCredit.loadError();

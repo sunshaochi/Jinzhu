@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
+import com.beyonditsm.financial.activity.credit.MyCreditDAct;
 import com.beyonditsm.financial.adapter.MyCreditAdapter;
 import com.beyonditsm.financial.entity.MyCreditEntity;
 import com.beyonditsm.financial.entity.OrderListBean;
@@ -99,8 +100,9 @@ public class MyCreditAct extends BaseActivity {
         plv.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent intent = new Intent(MyCreditAct.this, MyCreditDAct.class);
+                Intent intent = new Intent(MyCreditAct.this, MyCreditDAct.class);
 //                MyCreditBean.RowsEntity credit = datas.get(position);
+                OrderListBean orderListBean=orderList.get(position);
 //                if (position==0){
 //                    intent.putExtra("type","comm");
 //                }else if (position==1){
@@ -108,7 +110,8 @@ public class MyCreditAct extends BaseActivity {
 //                }
 //                intent.putExtra(CREDIT, credit);
 //                intent.putExtra("position", position);
-//                startActivity(intent);
+                intent.putExtra("orderListBean",orderListBean);
+                startActivity(intent);
             }
         });
         loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
@@ -151,7 +154,7 @@ public class MyCreditAct extends BaseActivity {
                     Gson gson = new Gson();
                     orderList = gson.fromJson(list.toString(), new TypeToken<List<OrderListBean>>() {
                     }.getType());
-                    MyLogUtils.info("解析后的集合===="+orderList.toString());
+//                    MyLogUtils.info("解析后的集合===="+orderList.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

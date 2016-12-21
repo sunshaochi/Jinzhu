@@ -141,6 +141,7 @@ public class UpdateAct extends BaseActivity {
         //强制关闭键盘
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         addressUtil = new AddressUtil(this);
+        adressBean = new AdressBean();
         userLoginBean = getIntent().getParcelableExtra(MineFragment.USER_KEY);
         //把用户信息放进去
         if (userLoginBean != null) {

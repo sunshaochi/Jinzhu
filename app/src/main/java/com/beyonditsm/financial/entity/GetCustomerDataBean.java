@@ -4,161 +4,74 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Q164454216
- * Created by xiaoke on 2016/12/18.
+ * Created by xuleyuan on 20/12/16.
  */
 
-public class CustomerBean implements Parcelable {
+public class GetCustomerDataBean implements Parcelable {
+
     /**
-     * 订单的客户信息ID
+     * orderCustomerId : 用户id
+     * idNo : 370104199207181319 身份证
+     * orderId : null 订单编号
+     * uid : null uid
+     * phoneNum : null 手机号
+     * cusName : 徐乐源 用户名称
+     * cusRegion : null 
+     * cusOrigin : null
+     * sex : 1 性别
+     * age : 11 年龄
+     * isInBlacklist : null 在黑名单中
+     * isMarried : false 已婚
+     * nativePlace : null 
+     * currentProvince : 110000
+     * currentCity : 110100
+     * currentRegion : 110113
+     * domicileAddr : null
+     * careerName : null
+     * company : 吐了
+     * careerTitle : 啦啦啦
+     * hasHouseFunding : true
+     * hasSocialInsurance : false
+     * haveOwnCar : null
+     * haveOwnHouse : null
+     * creditState : null
+     * createUser : null
+     * createTime : null
+     * updateUser : null
+     * updateTime : null
+     * customerInfo : null
      */
+
     private String orderCustomerId;
-
-    /**
-     * 身份证号码
-     */
     private String idNo;
-
-    /**
-     * 订单ID
-     */
     private String orderId;
-
-    /**
-     * 用户ID
-     */
     private String uid;
-
-    /**
-     * 手机号
-     */
     private String phoneNum;
-
-    /**
-     * 客户姓名
-     */
     private String cusName;
-
-    /**
-     * 地区
-     */
     private String cusRegion;
-
-    /**
-     * 客户来源
-     */
     private String cusOrigin;
-
-    /**
-     * 性别
-     */
-    private Byte sex;
-
-    /**
-     * 年龄
-     */
-    private Integer age;
-
-    /**
-     * 是否为黑名单
-     */
-    private Boolean isInBlacklist;
-
-    /**
-     * 是否已婚, 0:未婚,1:已婚
-     */
-    private Boolean isMarried;
-
-    /**
-     * 籍贯
-     */
+    private String sex;
+    private String age;
+    private String isInBlacklist;
+    private String isMarried;
     private String nativePlace;
-
-    /**
-     * 常住地省
-     */
     private String currentProvince;
-
-    /**
-     * 常住地市
-     */
-    private String currentCtiy;
-
-    /**
-     * 常住地区
-     */
+    private String currentCity;
     private String currentRegion;
-
-    /**
-     * 户籍地
-     */
     private String domicileAddr;
-
-    /**
-     * 职业身份
-     */
     private String careerName;
-
-    /**
-     * 公司名称
-     */
     private String company;
-
-    /**
-     * 职位
-     */
     private String careerTitle;
-
-    /**
-     * 是否有公积金. 0:无，1:有
-     */
-    private Boolean hasHouseFunding=false;
-
-    /**
-     * 是否有本地社保. 0:无，1:有
-     */
-    private Boolean hasSocialInsurance=false;
-
-    /**
-     * 是否有车
-     */
+    private String hasHouseFunding;
+    private String hasSocialInsurance;
     private String haveOwnCar;
-
-    /**
-     * 是否有房产
-     */
     private String haveOwnHouse;
-
-    /**
-     * 信用状况
-     */
     private String creditState;
-
-    /**
-     * 创建者
-     */
     private String createUser;
-
-    /**
-     * 创建时间
-     */
     private String createTime;
-
-    /**
-     * 更新者
-     */
     private String updateUser;
-
-    /**
-     * 更新时间
-     */
     private String updateTime;
-
-    /**
-     * 订单的完整客户信息，json格式存储
-     */
     private String customerInfo;
-
 
     public String getOrderCustomerId() {
         return orderCustomerId;
@@ -224,36 +137,36 @@ public class CustomerBean implements Parcelable {
         this.cusOrigin = cusOrigin;
     }
 
-    public Byte getSex() {
+    public String getSex() {
         return sex;
     }
 
-    public void setSex(Byte sex) {
+    public void setSex(String sex) {
         this.sex = sex;
     }
 
-    public Integer getAge() {
+    public String getAge() {
         return age;
     }
 
-    public void setAge(Integer age) {
+    public void setAge(String age) {
         this.age = age;
     }
 
-    public Boolean getInBlacklist() {
+    public String getIsInBlacklist() {
         return isInBlacklist;
     }
 
-    public void setInBlacklist(Boolean inBlacklist) {
-        isInBlacklist = inBlacklist;
+    public void setIsInBlacklist(String isInBlacklist) {
+        this.isInBlacklist = isInBlacklist;
     }
 
-    public Boolean getMarried() {
+    public String isIsMarried() {
         return isMarried;
     }
 
-    public void setMarried(Boolean married) {
-        isMarried = married;
+    public void setIsMarried(String isMarried) {
+        this.isMarried = isMarried;
     }
 
     public String getNativePlace() {
@@ -272,12 +185,12 @@ public class CustomerBean implements Parcelable {
         this.currentProvince = currentProvince;
     }
 
-    public String getCurrentCtiy() {
-        return currentCtiy;
+    public String getCurrentCity() {
+        return currentCity;
     }
 
-    public void setCurrentCtiy(String currentCtiy) {
-        this.currentCtiy = currentCtiy;
+    public void setCurrentCity(String currentCity) {
+        this.currentCity = currentCity;
     }
 
     public String getCurrentRegion() {
@@ -320,19 +233,19 @@ public class CustomerBean implements Parcelable {
         this.careerTitle = careerTitle;
     }
 
-    public Boolean getHasHouseFunding() {
+    public String isHasHouseFunding() {
         return hasHouseFunding;
     }
 
-    public void setHasHouseFunding(Boolean hasHouseFunding) {
+    public void setHasHouseFunding(String hasHouseFunding) {
         this.hasHouseFunding = hasHouseFunding;
     }
 
-    public Boolean getHasSocialInsurance() {
+    public String isHasSocialInsurance() {
         return hasSocialInsurance;
     }
 
-    public void setHasSocialInsurance(Boolean hasSocialInsurance) {
+    public void setHasSocialInsurance(String hasSocialInsurance) {
         this.hasSocialInsurance = hasSocialInsurance;
     }
 
@@ -415,20 +328,20 @@ public class CustomerBean implements Parcelable {
         dest.writeString(this.cusName);
         dest.writeString(this.cusRegion);
         dest.writeString(this.cusOrigin);
-        dest.writeValue(this.sex);
-        dest.writeValue(this.age);
-        dest.writeValue(this.isInBlacklist);
-        dest.writeValue(this.isMarried);
+        dest.writeString(this.sex);
+        dest.writeString(this.age);
+        dest.writeString(this.isInBlacklist);
+        dest.writeString(this.isMarried);
         dest.writeString(this.nativePlace);
         dest.writeString(this.currentProvince);
-        dest.writeString(this.currentCtiy);
+        dest.writeString(this.currentCity);
         dest.writeString(this.currentRegion);
         dest.writeString(this.domicileAddr);
         dest.writeString(this.careerName);
         dest.writeString(this.company);
         dest.writeString(this.careerTitle);
-        dest.writeValue(this.hasHouseFunding);
-        dest.writeValue(this.hasSocialInsurance);
+        dest.writeString(this.hasHouseFunding);
+        dest.writeString(this.hasSocialInsurance);
         dest.writeString(this.haveOwnCar);
         dest.writeString(this.haveOwnHouse);
         dest.writeString(this.creditState);
@@ -439,10 +352,10 @@ public class CustomerBean implements Parcelable {
         dest.writeString(this.customerInfo);
     }
 
-    public CustomerBean() {
+    public GetCustomerDataBean() {
     }
 
-    protected CustomerBean(Parcel in) {
+    protected GetCustomerDataBean(Parcel in) {
         this.orderCustomerId = in.readString();
         this.idNo = in.readString();
         this.orderId = in.readString();
@@ -451,20 +364,20 @@ public class CustomerBean implements Parcelable {
         this.cusName = in.readString();
         this.cusRegion = in.readString();
         this.cusOrigin = in.readString();
-        this.sex = (Byte) in.readValue(Byte.class.getClassLoader());
-        this.age = (Integer) in.readValue(Integer.class.getClassLoader());
-        this.isInBlacklist = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.isMarried = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.sex = in.readString();
+        this.age = in.readString();
+        this.isInBlacklist = in.readString();
+        this.isMarried = in.readString();
         this.nativePlace = in.readString();
         this.currentProvince = in.readString();
-        this.currentCtiy = in.readString();
+        this.currentCity = in.readString();
         this.currentRegion = in.readString();
         this.domicileAddr = in.readString();
         this.careerName = in.readString();
         this.company = in.readString();
         this.careerTitle = in.readString();
-        this.hasHouseFunding = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.hasSocialInsurance = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.hasHouseFunding = in.readString();
+        this.hasSocialInsurance = in.readString();
         this.haveOwnCar = in.readString();
         this.haveOwnHouse = in.readString();
         this.creditState = in.readString();
@@ -475,15 +388,15 @@ public class CustomerBean implements Parcelable {
         this.customerInfo = in.readString();
     }
 
-    public static final Creator<CustomerBean> CREATOR = new Creator<CustomerBean>() {
+    public static final Parcelable.Creator<GetCustomerDataBean> CREATOR = new Parcelable.Creator<GetCustomerDataBean>() {
         @Override
-        public CustomerBean createFromParcel(Parcel source) {
-            return new CustomerBean(source);
+        public GetCustomerDataBean createFromParcel(Parcel source) {
+            return new GetCustomerDataBean(source);
         }
 
         @Override
-        public CustomerBean[] newArray(int size) {
-            return new CustomerBean[size];
+        public GetCustomerDataBean[] newArray(int size) {
+            return new GetCustomerDataBean[size];
         }
     };
 }

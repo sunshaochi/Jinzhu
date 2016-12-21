@@ -48,6 +48,15 @@ public class ParamsUtil {
     private List<JJTCityEntity> cityEntityList;
     private List<JJTCounyEntity> counyEntityList;
     private ArrayList<CreditSpeedEntity.ResideStatusmapBean> propertyTypeList;
+    public boolean isLogin = false;
+
+    public boolean isLogin() {
+        return isLogin;
+    }
+
+    public void setLogin(boolean login) {
+        isLogin = login;
+    }
 
     public ArrayList<CreditSpeedEntity.ResideStatusmapBean> getPropertyTypeList() {
         return propertyTypeList;

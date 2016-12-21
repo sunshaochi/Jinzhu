@@ -1,5 +1,9 @@
 package com.beyonditsm.financial.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,6 +14,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
+import com.beyonditsm.financial.activity.user.LoginAct;
+import com.beyonditsm.financial.util.ParamsUtil;
 import com.lidroid.xutils.ViewUtils;
 import com.tandong.sa.activity.SmartFragmentActivity;
 import com.umeng.analytics.MobclickAgent;
@@ -48,11 +54,19 @@ public abstract class BaseActivity extends SmartFragmentActivity {
         // 注入控件
         ViewUtils.inject(this);
         init(savedInstanceState);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("UNLOGIN");
+        this.registerReceiver(mybroad, filter);
 //        MobclickAgent.setDebugMode(true);//集成测试
 //        MyLogUtils.info(getDeviceInfo(getApplicationContext()));
 //        immersed = new NotificationImmersed(this);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.unregisterReceiver(mybroad);
+    }
 
     /**
      * 设置布局
@@ -159,4 +173,17 @@ public abstract class BaseActivity extends SmartFragmentActivity {
         MobclickAgent.onPause(this);
     }
 
+
+    BroadcastReceiver mybroad=new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // TODO Auto-generated method stub
+            if (!ParamsUtil.getInstance().isLogin){
+                ParamsUtil.getInstance().setLogin(true);
+                Intent intent1 = new Intent(context, LoginAct.class);
+                startActivity(intent1);
+            }
+        }
+    };
 }

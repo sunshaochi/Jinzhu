@@ -50,7 +50,7 @@ public class LoginAct extends BaseActivity {
 
     private String phone, pwd;
 
-    public static final String LOGIN_TYPE = "login_type";
+    public final String LOGIN_TYPE = "login_type";
     private int LTYPE;
     private String type;
 
@@ -210,7 +210,9 @@ public class LoginAct extends BaseActivity {
         RequestManager.getCommManager().toLogin(ue, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
-
+                loginBtn.setEnabled(true);
+                progressBar1.setVisibility(View.GONE);
+                finish();
                 getUserInfo();
 //                Intent intent=new Intent(MineFragment.USER_KEY);
 //                intent.putParcelableArrayListExtra(MineFragment.USER_KEY,)
@@ -440,7 +442,7 @@ public class LoginAct extends BaseActivity {
      */
     private void getUserInfo() {
 
-        RequestManager.getCommManager().findUserInfo( SpUtils.getPhonenumber(getApplicationContext()),new RequestManager.CallBack() {
+        RequestManager.getCommManager().findUserInfo( "",new RequestManager.CallBack() {
             @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) {
@@ -459,8 +461,7 @@ public class LoginAct extends BaseActivity {
                         }
                     }
                     finish();
-                    loginBtn.setEnabled(true);
-                    progressBar1.setVisibility(View.GONE);
+
 //                    if (user.getAddress()!=null){
 //                        adressBean= user.getAddress();
 //                        SpUtils.setAddressid(getContext(),adressBean.getAddressId());
@@ -495,5 +496,11 @@ public class LoginAct extends BaseActivity {
 //                tvName.setText("去登录");
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ParamsUtil.getInstance().setLogin(false);
     }
 }
