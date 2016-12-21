@@ -60,7 +60,7 @@ public class PhotoAdapter extends BaseAdapter{
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL+list.get(position).getAccessoryPath(),viewHolder.ivPhoto,options);
+        ImageLoader.getInstance().displayImage(IFinancialUrl.SECURITY_IMAGE_URL+list.get(position).getAccessoryPath(),viewHolder.ivPhoto,options);
         return convertView;
     }
 

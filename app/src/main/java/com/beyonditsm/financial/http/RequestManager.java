@@ -17,6 +17,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.MyLogUtils;
+import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -300,9 +301,12 @@ public class RequestManager {
                         try {
                             JSONObject obj = new JSONObject(response);
                             if (obj.has("statusCode")){
-                                Intent unlogin = new Intent();
-                                unlogin.setAction("UNLOGIN");
-                                MyApplication.getInstance().getApplicationContext().sendBroadcast(unlogin);
+                                if (!ParamsUtil.getInstance().isLogin()) {
+                                    ParamsUtil.getInstance().setLogin(true);
+                                    Intent unlogin = new Intent();
+                                    unlogin.setAction("UNLOGIN");
+                                    MyApplication.getInstance().getApplicationContext().sendBroadcast(unlogin);
+                                }
                                 return;
                             }
                             int status = obj.getInt("status");

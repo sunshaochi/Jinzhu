@@ -643,7 +643,7 @@ public class MineFragment extends BaseFragment {
                         tvName.setText(profileInfo.getName());
                     }
 //                暂时没有头像，注掉，后台无返回。
-                    ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + profileInfo.getAvatarPic(), civHead, options);
+                    ImageLoader.getInstance().displayImage(IFinancialUrl.SECURITY_IMAGE_URL + profileInfo.getAvatarPic(), civHead, options);
                 } else {
                     tvExit.setVisibility(View.VISIBLE);
                     isLogin = true;

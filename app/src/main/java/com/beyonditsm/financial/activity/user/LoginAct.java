@@ -22,6 +22,7 @@ import com.beyonditsm.financial.entity.ProfileInfoBean;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.entity.UserLoginBean;
+import com.beyonditsm.financial.entity.UserLoginEntity;
 import com.beyonditsm.financial.fragment.MineFragment;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.GsonUtils;
@@ -211,10 +212,8 @@ public class LoginAct extends BaseActivity {
         RequestManager.getCommManager().toLogin(ue, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
-                loginBtn.setEnabled(true);
-                progressBar1.setVisibility(View.GONE);
-                Intent intent = new Intent("com.update.user");
-                sendBroadcast(intent);
+                getUserLoginInfo();
+
 //                Intent intent=new Intent(MineFragment.USER_KEY);
 //                intent.putParcelableArrayListExtra(MineFragment.USER_KEY,)
 //                sendBroadcast(new Intent(MainActivity.UPDATATAB));
@@ -381,14 +380,20 @@ public class LoginAct extends BaseActivity {
     }
 
 
-//    /**
-//     * 获取用户的角色信息
-//     */
-//    private void getUserLoginInfo() {
-//        RequestManager.getUserManager().findUserLoginInfo(new RequestManager.CallBack() {
-//            @Override
-//            public void onSucess(String result) throws JSONException {
-//                ResultData<UserLoginEntity> rd = (ResultData<UserLoginEntity>) GsonUtils.json(result, UserLoginEntity.class);
+    /**
+     * 获取用户的角色信息
+     */
+    private void getUserLoginInfo() {
+        RequestManager.getUserManager().findUserLoginInfo(new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                ResultData<UserLoginEntity> rd = (ResultData<UserLoginEntity>) GsonUtils.json(result, UserLoginEntity.class);
+
+                loginBtn.setEnabled(true);
+                progressBar1.setVisibility(View.GONE);
+                SpUtils.setRoleName(MyApplication.getInstance().getApplicationContext(),rd.getData().getRoleName()+"");
+                Intent intent = new Intent("com.update.user");
+                sendBroadcast(intent);
 //                ParamsUtil.getInstance().setUle(rd.getData());
 //                if ("ROLE_CREDIT_MANAGER".equals(roleName)) {
 //                    sendBroadcast(new Intent(ManagerMainAct.UPDATATAB));
@@ -401,17 +406,17 @@ public class LoginAct extends BaseActivity {
 //                    sendBroadcast(new Intent(MainActivity.UPDATATAB));
 //                    sendBroadcast(new Intent(MineFragment.UPDATE_USER));
 //                    gotoActivity(MainActivity.class, true);
-////                    sendBroadcast(new Intent(ServiceMainAct.UPDATATAB));
-////                    gotoActivity(ServiceMainAct.class, true);
-//                }
-//            }
-//
-//            @Override
-//            public void onError(int status, String msg) {
-//                getUserLoginInfo();
-//            }
-//        });
-//    }
+//                    sendBroadcast(new Intent(ServiceMainAct.UPDATATAB));
+//                    gotoActivity(ServiceMainAct.class, true);
+
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+                getUserLoginInfo();
+            }
+        });
+    }
 
     /**
      * 登录

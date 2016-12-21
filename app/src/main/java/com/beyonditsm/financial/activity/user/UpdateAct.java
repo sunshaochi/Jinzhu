@@ -383,7 +383,7 @@ public class UpdateAct extends BaseActivity {
     @SuppressLint("SetTextI18n")
     private void setUserMes(ProfileInfoBean userInfo ,AdressBean adressBean) {
         if (userInfo != null) {
-            ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + userInfo.getAvatarPic(), civHead, options);
+            ImageLoader.getInstance().displayImage(IFinancialUrl.SECURITY_IMAGE_URL + userInfo.getAvatarPic(), civHead, options);
             if (userInfo.getSex() != null) {
                 if (TextUtils.equals(userInfo.getSex(),0+"")) {
                     cbSelectSex.setChecked(true);
