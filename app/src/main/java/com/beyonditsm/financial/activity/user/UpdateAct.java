@@ -526,7 +526,7 @@ public class UpdateAct extends BaseActivity {
             Bitmap bitmap = MyBitmapUtils.decodeUriAsBitmap(UpdateAct.this, imageUri);
             File userbanner = MyBitmapUtils.saveBitmap(bitmap, "userhead.png");
             MyLogUtils.info("userbanner.getPath+" + userbanner.getPath());
-//            uploadFile(userbanner.getPath());
+            uploadFile(userbanner.getPath());
         }
 
 //        Uri uri = null;
