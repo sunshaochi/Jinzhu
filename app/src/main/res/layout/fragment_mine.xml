@@ -307,7 +307,7 @@
                     <RelativeLayout
                         android:id="@+id/rlhp"
                         style="@style/rl_mine_style"
-                        android:visibility="visible"
+                        android:visibility="gone"
 
                         >
 
@@ -465,11 +465,11 @@
             </LinearLayout>
         </ScrollView>
 
-        <!--<com.beyonditsm.financial.view.MinePageLoadingView-->
-            <!--android:visibility="gone"-->
-            <!--android:id="@+id/mplv_mine"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent" />-->
+        <com.beyonditsm.financial.view.MinePageLoadingView
+            android:visibility="gone"
+            android:id="@+id/mplv_mine"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </FrameLayout>
 
 

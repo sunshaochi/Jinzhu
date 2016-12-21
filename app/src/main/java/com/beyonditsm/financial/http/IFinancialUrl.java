@@ -20,7 +20,7 @@ public interface IFinancialUrl {
 
 //    String BASE_URL ="http://172.16.7.196:8083";
     /*袁峰测试*/
-//    String BASE_URL = "http://172.16.6.153:8080";
+//    String BASE_URL = "http://139.196.227.53:9010";
 //    String BASE_URL = "http://172.16.6.228:8080";
     /*验收环境地址*/
 //    String BASE_URL = "http://test.myjinzhu.com:8086";
@@ -70,8 +70,16 @@ public interface IFinancialUrl {
 //    String BASE_URL="http://172.16.6.216";
 //    String BASE_URL = "http://172.16.6.228:8080";
 //    String BASE_URL = "http://172.16.6.228:8080";
+
+
       String BASE_URL="http://139.196.227.53:9010";
+
 //    String BASE_URL="http://172.16.5.32:8083";
+
+//      String BASE_URL="http://139.196.227.53:9010";
+//    String BASE_URL="http://172.16.5.32:8083";
+//    String BASE_URL="http://172.16.5.32:8083";
+
 //    String BASE_URL="http://139.196.227.38:9000";//#  后台
 
     /**

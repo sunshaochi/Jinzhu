@@ -42,6 +42,16 @@ public class ParamsUtil {
     private boolean cityGet;
     private boolean firstLocated = true;
     private List<ProductSortEntity.OrgTypeBean> orgTypeInfos;
+    private List<ProductSortEntity.OrgTypeBean> tjorgTypeInfos;//推荐机构列表
+
+    public List<ProductSortEntity.OrgTypeBean> getTjorgTypeInfos() {
+        return tjorgTypeInfos;
+    }
+
+    public void setTjorgTypeInfos(List<ProductSortEntity.OrgTypeBean> tjorgTypeInfos) {
+        this.tjorgTypeInfos = tjorgTypeInfos;
+    }
+
     private boolean isReLogin = false;
     private boolean isClosing = false;
     private List<JJTProvinceEntity> provinceEntityList;
