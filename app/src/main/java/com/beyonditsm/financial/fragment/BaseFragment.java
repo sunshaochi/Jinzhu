@@ -1,6 +1,9 @@
 package com.beyonditsm.financial.fragment;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -41,13 +44,15 @@ public abstract  class BaseFragment extends Fragment{
         }
         // 注入控件
         ViewUtils.inject(this, view);
-
         setListener();
         return view;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("LOGIN_BACK");
+        context.registerReceiver(mybroad, filter);
         super.onActivityCreated(savedInstanceState);
         initData(savedInstanceState);
     }
@@ -83,6 +88,20 @@ public abstract  class BaseFragment extends Fragment{
      * 对view设置监听事件
      */
     public abstract void setListener();
+    /**
+     * 当登陆返回时调用的方法
+     */
+    public void onLoginBack() {
 
+    }
+
+
+    BroadcastReceiver mybroad = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            onLoginBack();
+        }
+    };
 
 }

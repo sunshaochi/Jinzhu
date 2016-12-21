@@ -42,11 +42,12 @@ public class PayFrag extends BaseFragment {
     private LoadingView loadingView;
 
     private PayAdapter adapter;
-    private  List<TiXianBean> list;
-    private List<TiXianBean> datas=new ArrayList<>();
-    private int page=1;
-    private int rows=10;
+    private List<TiXianBean> list;
+    private List<TiXianBean> datas = new ArrayList<>();
+    private int page = 1;
+    private int rows = 10;
     private String userId;
+
     @Override
     public View initView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.frg_pay, null);
@@ -62,7 +63,7 @@ public class PayFrag extends BaseFragment {
         plv_jl.getRefreshableView().setVerticalScrollBarEnabled(false);
         plv_jl.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
         plv_jl.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
-        getTiXianHistory(SpUtils.getPhonenumber(getContext()),page,rows);
+        getTiXianHistory(SpUtils.getPhonenumber(getContext()), page, rows);
 
     }
 
@@ -74,10 +75,11 @@ public class PayFrag extends BaseFragment {
     //提现记录适配器
     public class PayAdapter extends BaseAdapter {
         private Context context;
-        private List<TiXianBean> txList=new ArrayList<>();
-        public PayAdapter(Context context, List<TiXianBean> txList ) {
+        private List<TiXianBean> txList = new ArrayList<>();
+
+        public PayAdapter(Context context, List<TiXianBean> txList) {
             this.context = context;
-            this.txList=txList;
+            this.txList = txList;
         }
 
         @Override
@@ -101,35 +103,35 @@ public class PayFrag extends BaseFragment {
             if (convertView != null && convertView.getTag() != null) {
                 viewHolder = (ViewHolder) convertView.getTag();
             } else {
-                viewHolder=new ViewHolder();
+                viewHolder = new ViewHolder();
                 convertView = View.inflate(context, R.layout.item_frg_pay, null);
-                viewHolder.iv_statu= (TextView) convertView.findViewById(R.id.iv_statu);
-                viewHolder.tv_sj= (TextView) convertView.findViewById(R.id.tv_sj);
-                viewHolder.tv_bh= (TextView) convertView.findViewById(R.id.tv_tx);
-                viewHolder.tv_je= (TextView) convertView.findViewById(R.id.tv_je);
+                viewHolder.iv_statu = (TextView) convertView.findViewById(R.id.iv_statu);
+                viewHolder.tv_sj = (TextView) convertView.findViewById(R.id.tv_sj);
+                viewHolder.tv_bh = (TextView) convertView.findViewById(R.id.tv_tx);
+                viewHolder.tv_je = (TextView) convertView.findViewById(R.id.tv_je);
                 convertView.setTag(viewHolder);
             }
-            if (!TextUtils.isEmpty(txList.get(position).getCreateTime())){
+            if (!TextUtils.isEmpty(txList.get(position).getCreateTime())) {
                 viewHolder.tv_sj.setText(FinancialUtil.timeToDate(Long.parseLong(txList.get(position).getCreateTime())));
             }
-            if (!TextUtils.isEmpty(txList.get(position).getAmount())){
-                viewHolder.tv_je.setText(txList.get(position).getAmount()+"元");
+            if (!TextUtils.isEmpty(txList.get(position).getAmount())) {
+                viewHolder.tv_je.setText(txList.get(position).getAmount() + "元");
             }
-            if (!TextUtils.isEmpty(txList.get(position).getEnchashmentOrderNo())){
+            if (!TextUtils.isEmpty(txList.get(position).getEnchashmentOrderNo())) {
                 viewHolder.tv_bh.setText(txList.get(position).getEnchashmentOrderNo());
             }
 //            提现状态判定
-            if (TextUtils.equals(txList.get(position).getStatus(),1+"")){
+            if (TextUtils.equals(txList.get(position).getStatus(), 1 + "")) {
                 viewHolder.iv_statu.setText("审批中");
                 viewHolder.iv_statu.setTextColor(Color.parseColor("#f4b529"));
-            }else if (TextUtils.equals(txList.get(position).getStatus(),2+"")){
+            } else if (TextUtils.equals(txList.get(position).getStatus(), 2 + "")) {
                 viewHolder.iv_statu.setText("已通过");
                 viewHolder.iv_statu.setTextColor(Color.parseColor("#5ccb5a"));
 
-            }else if (TextUtils.equals(txList.get(position).getStatus(),3+"")){
+            } else if (TextUtils.equals(txList.get(position).getStatus(), 3 + "")) {
                 viewHolder.iv_statu.setText("已驳回");
                 viewHolder.iv_statu.setTextColor(Color.parseColor("#cfcfcf"));
-            }else if (TextUtils.equals(txList.get(position).getStatus(),4+"")){
+            } else if (TextUtils.equals(txList.get(position).getStatus(), 4 + "")) {
                 viewHolder.iv_statu.setText("已完成");
                 viewHolder.iv_statu.setTextColor(Color.parseColor("#5ccb5a"));
             }
@@ -137,7 +139,7 @@ public class PayFrag extends BaseFragment {
         }
 
         public void update(List<TiXianBean> list) {
-            this.txList=list;
+            this.txList = list;
             notifyDataSetChanged();
         }
 
@@ -151,52 +153,54 @@ public class PayFrag extends BaseFragment {
 
     /**
      * 提现记录
+     *
      * @param uid
      * @param page
      * @param rows
      */
-        private void getTiXianHistory(String uid, final int page, int rows){
-            list=new ArrayList<>();
-            RequestManager.getWalletManager().gettixianHistory(uid, page, rows, new RequestManager.CallBack() {
-                @Override
-                public void onSucess(String result) throws JSONException {
-                    plv_jl.onPullUpRefreshComplete();
-                    plv_jl.onPullDownRefreshComplete();
-                    loadingView.loadComplete();
-                    JSONObject jsonObject = new JSONObject(result);
-                    JSONArray data = jsonObject.getJSONArray("data");
-                    Gson gson = new Gson();
-                    list = gson.fromJson(data.toString(), new TypeToken<List<TiXianBean>>() {
-                    }.getType());
-                    if (list.size()==0){
-                        if (page==1){
-                            loadingView.noContent();
-                        }else {
-                            plv_jl.setHasMoreData(false);
-                        }
-                    }
-                    if (page==1){
-                        datas.clear();
-                    }
-                    datas.addAll(list);
-                    if (datas!=null&&datas.size()>0){
-                        if (adapter==null){
-                            adapter = new PayAdapter(getActivity(),datas);
-                            plv_jl.getRefreshableView().setAdapter(adapter);
-                        }else {
-                            adapter.update(datas);
-                        }
-
+    private void getTiXianHistory(String uid, final int page, int rows) {
+        list = new ArrayList<>();
+        RequestManager.getWalletManager().gettixianHistory(uid, page, rows, new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                loadingView.loadComplete();
+                plv_jl.onPullUpRefreshComplete();
+                plv_jl.onPullDownRefreshComplete();
+                JSONObject jsonObject = new JSONObject(result);
+                JSONObject data = jsonObject.getJSONObject("data");
+                JSONArray data2= data.getJSONArray("rows");
+                Gson gson = new Gson();
+                list = gson.fromJson(data2.toString(), new TypeToken<List<TiXianBean>>() {
+                }.getType());
+                if (list.size() == 0) {
+                    if (page == 1) {
+                        loadingView.noContent();
+                    } else {
+                        plv_jl.setHasMoreData(false);
                     }
                 }
-
-                @Override
-                public void onError(int status, String msg) {
-                    plv_jl.onPullUpRefreshComplete();
-                    plv_jl.onPullDownRefreshComplete();
-                    loadingView.loadError();
-                    MyToastUtils.showLongToast(getActivity(),msg);
+                if (page == 1) {
+                    datas.clear();
                 }
-            });
-        }
+                datas.addAll(list);
+                if (datas != null && datas.size() > 0) {
+                    if (adapter == null) {
+                        adapter = new PayAdapter(getActivity(), datas);
+                        plv_jl.getRefreshableView().setAdapter(adapter);
+                    } else {
+                        adapter.update(datas);
+                    }
+
+                }
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+                plv_jl.onPullUpRefreshComplete();
+                plv_jl.onPullDownRefreshComplete();
+                loadingView.loadError();
+                MyToastUtils.showLongToast(getActivity(), msg);
+            }
+        });
+    }
 }

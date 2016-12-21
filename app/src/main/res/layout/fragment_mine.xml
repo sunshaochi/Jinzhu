@@ -202,7 +202,7 @@
                         <ImageView
                             android:id="@+id/ivRecomm"
                             style="@style/iv_mine"
-                            android:src="@mipmap/ico_friend" />
+                            android:src="@mipmap/icon_friend" />
 
                         <TextView
                             style="@style/tv_second_style"
@@ -307,7 +307,7 @@
                     <RelativeLayout
                         android:id="@+id/rlhp"
                         style="@style/rl_mine_style"
-                        android:visibility="visible"
+                        android:visibility="gone"
 
                         >
 
@@ -408,7 +408,7 @@
                     <ImageView
                         android:id="@+id/ivSet"
                         style="@style/iv_mine"
-                        android:src="@mipmap/ico_settting_sec" />
+                        android:src="@mipmap/icon_settting_sec" />
 
                     <TextView
                         style="@style/tv_second_style"
@@ -465,11 +465,11 @@
             </LinearLayout>
         </ScrollView>
 
-        <!--<com.beyonditsm.financial.view.MinePageLoadingView-->
-            <!--android:visibility="gone"-->
-            <!--android:id="@+id/mplv_mine"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent" />-->
+        <com.beyonditsm.financial.view.MinePageLoadingView
+            android:visibility="gone"
+            android:id="@+id/mplv_mine"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </FrameLayout>
 
 

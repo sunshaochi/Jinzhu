@@ -242,7 +242,7 @@ public class MyWalletActivity extends BaseActivity {
             case R.id.rldikou:
                 intent = new Intent(MyWalletActivity.this, InterestDeduction.class);
 //                intent.putExtra("userInfo", user);
-                intent.putExtra("dikou",tv_dikou.getText().toString().trim());
+                intent.putExtra("dikou",tvDikouMoney.getText().toString().trim());
                 startActivity(intent);
                 break;
             //绑定银行卡
@@ -254,15 +254,15 @@ public class MyWalletActivity extends BaseActivity {
             case R.id.ll_xj:
                 intent = new Intent(MyWalletActivity.this, CashExchange.class);
 //                intent.putExtra("userInfo", user);
-                intent.putExtra("xianjin",tv_xj.getText().toString().trim());
+                intent.putExtra("xianjin",tvWeitGetMoney.getText().toString().trim());
                 startActivity(intent);
                 break;
-            case R.id.rlyj:
-                intent = new Intent(MyWalletActivity.this, CourtageAct.class);
-//                intent.putExtra("userInfo", user);
-                intent.putExtra("yongjin",tv_yj.getText().toString().trim());
-                startActivity(intent);
-                break;
+//            case R.id.rlyj:
+//                intent = new Intent(MyWalletActivity.this, CourtageAct.class);
+////                intent.putExtra("userInfo", user);
+//                intent.putExtra("yongjin",tv_yj.getText().toString().trim());
+//                startActivity(intent);
+//                break;
         }
     }
 
@@ -442,9 +442,9 @@ public class MyWalletActivity extends BaseActivity {
                 loadingView.loadComplete();
                 JSONObject jsonObject = new JSONObject(result);
                 if (TextUtils.isEmpty(jsonObject.getString("data"))){
-                    tv_xj.setText("可兑换：0");
+                    tvWeitGetMoney.setText("可兑换：0");
                     tv_yj.setText(0+"");
-                    tv_dikou.setText(0+"");
+                    tvDikouMoney.setText(0+"");
                     return;
                 }
                 JSONArray data = jsonObject.getJSONArray("data");
@@ -457,28 +457,21 @@ public class MyWalletActivity extends BaseActivity {
                        WalletQuanBean walletQuanBean = walletList.get(i);
                        if (TextUtils.equals(walletQuanBean.getType(),1+"")){
                            if (!TextUtils.isEmpty(walletQuanBean.getBalance())){
-                               tv_xj.setText(walletQuanBean.getBalance());
+                               tvWeitGetMoney.setText(walletQuanBean.getBalance());
                            }else {
-                               tv_xj.setText(0+"");
+                               tvWeitGetMoney.setText(0+"");
                            }
                        }else if (TextUtils.equals(walletQuanBean.getType(),2+"")){
                            if (!TextUtils.isEmpty(walletQuanBean.getBalance())){
-                               tv_dikou.setText(walletQuanBean.getBalance());
+                               tvDikouMoney.setText(walletQuanBean.getBalance());
                            }else {
-                               tv_dikou.setText(0+"");
-                           }
-                       }else {
-                           if (!TextUtils.isEmpty(walletQuanBean.getBalance())){
-                               tv_yj.setText(walletQuanBean.getBalance());
-                           }else {
-                               tv_yj.setText(0+"");
+                               tvDikouMoney.setText(0+"");
                            }
                        }
                    }
                 }else {
-                    tv_xj.setText(0+"");
-                    tv_dikou.setText(0+"");
-                    tv_yj.setText(0+"");
+                    tvWeitGetMoney.setText(0+"");
+                    tvDikouMoney.setText(0+"");
                 }
             }
 
