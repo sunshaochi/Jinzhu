@@ -202,7 +202,7 @@
                         <ImageView
                             android:id="@+id/ivRecomm"
                             style="@style/iv_mine"
-                            android:src="@mipmap/ico_friend" />
+                            android:src="@mipmap/icon_friend" />
 
                         <TextView
                             style="@style/tv_second_style"
@@ -409,7 +409,7 @@
                     <ImageView
                         android:id="@+id/ivSet"
                         style="@style/iv_mine"
-                        android:src="@mipmap/ico_settting_sec" />
+                        android:src="@mipmap/icon_settting_sec" />
 
                     <TextView
                         style="@style/tv_second_style"

@@ -176,6 +176,7 @@ public class RegisterAct extends BaseActivity {
         RequestManager.getCommManager().toRegister2(ue, phoneNumber, captcha, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
+                finish();
                 try {
                     JSONObject object = new JSONObject(result);
                     JSONObject data = object.getJSONObject("data");

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,11 +25,9 @@ import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
 import com.beyonditsm.financial.view.pullfreshview.PullToRefreshBase;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,8 +79,27 @@ public class SpeedCreditFrag extends BaseFragment {
                 loadingSpeedCredit.loadComplete();
                 lvSpeedCredit.onPullDownRefreshComplete();
                 lvSpeedCredit.onPullUpRefreshComplete();
-//                JSONObject jsonObject = new JSONObject(result);
-//                JSONObject data = jsonObject.getJSONObject("data");
+                JSONObject jsonObject = new JSONObject(result);
+                String status = jsonObject.getString("status");
+                if (TextUtils.equals(status,200+"")){
+                    ResultData<CreditSpeedResult> rd = (ResultData<CreditSpeedResult>) GsonUtils.json(result, CreditSpeedResult.class);
+                    CreditSpeedResult pr = rd.getData();
+                    creditSpeedList = pr.getRows();
+
+                    if (creditSpeedList.size() == 0 || creditSpeedList == null) {
+                        if (page == 1) {
+                            loadingSpeedCredit.noContent();
+                        } else {
+                            lvSpeedCredit.setHasMoreData(false);
+                        }
+                    }
+                    if (speedCreditAdapter == null) {
+                        speedCreditAdapter = new SpeedCreditAdapter(getActivity(), creditSpeedList);
+                        lvSpeedCredit.getRefreshableView().setAdapter(speedCreditAdapter);
+                    } else {
+                        speedCreditAdapter.notifyChange(creditSpeedList);
+                    }
+                }
 //                JSONArray rows = data.getJSONArray("rows");
 //                for (int i = 0; i < rows.length(); i++) {
 //                    JSONObject jsonObject1 = rows.getJSONObject(i);
@@ -91,23 +109,7 @@ public class SpeedCreditFrag extends BaseFragment {
 //                    jobIdentitys.add(FinancialUtil.toAnnotationStr(jobIdentitysObj));
 //
 //                }
-                ResultData<CreditSpeedResult> rd = (ResultData<CreditSpeedResult>) GsonUtils.json(result, CreditSpeedResult.class);
-                CreditSpeedResult pr = rd.getData();
-                creditSpeedList = pr.getRows();
 
-                if (creditSpeedList.size() == 0 || creditSpeedList == null) {
-                    if (page == 1) {
-                        loadingSpeedCredit.noContent();
-                    } else {
-                        lvSpeedCredit.setHasMoreData(false);
-                    }
-                }
-                if (speedCreditAdapter == null) {
-                    speedCreditAdapter = new SpeedCreditAdapter(getActivity(), creditSpeedList);
-                    lvSpeedCredit.getRefreshableView().setAdapter(speedCreditAdapter);
-                } else {
-                    speedCreditAdapter.notifyChange(creditSpeedList);
-                }
 
             }
 

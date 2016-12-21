@@ -229,8 +229,11 @@ public class EditAct extends BaseActivity {
             public void onSucess(String result) {
                 userInfo2.setProfileInfo(ue);
                 userInfo2.setAddress(adressBean);
+                if (!TextUtils.isEmpty(ue.getName())){
+                    SpUtils.setUsername(getApplicationContext(),ue.getName());
+                }
                 EventBus.getDefault().post(new UserEvent(ue, TYPE));
-                Intent intent = new Intent(MineFragment.UPDATE_USER);
+                Intent intent = new Intent(MineFragment.USER_KEY);
                 intent.putExtra(MineFragment.USER_KEY, userInfo2);
                 sendBroadcast(intent);
                 MyToastUtils.showShortToast(getApplicationContext(), "更新成功");

@@ -32,7 +32,6 @@ public interface IFinancialUrl {
 //<<<<<<< HEAD
 //    String BASE_URL = "http://139.196.227.38:8086";
 //    String BASE_URL = "http://139.196.227.53:8080";
-//=======
 //    String BASE_URL = "http://139.196.227.38:8080";
 //>>>>>>> jijietong
 
@@ -71,11 +70,9 @@ public interface IFinancialUrl {
 //    String BASE_URL="http://172.16.6.216";
 //    String BASE_URL = "http://172.16.6.228:8080";
 //    String BASE_URL = "http://172.16.6.228:8080";
-//<<<<<<< HEAD
 //      String BASE_URL="http://139.196.227.53:9010";
-//=======
 //    String BASE_URL="http://172.16.5.32:8083";
-//>>>>>>> 68d9dc21dbfb45ce81b7113f4a1b0705c2a5fbfa
+//    String BASE_URL="http://172.16.5.32:8083";
 //    String BASE_URL="http://139.196.227.38:9000";//#  后台
 
     /**
@@ -236,7 +233,7 @@ public interface IFinancialUrl {
     /*在登录状态，点击申卡时,调用统计函数*/
     String APPLY_CREDIT_CARD_CLICK = BASE_URL + API_VERSION + "/creditCard/login/applyCreditCardClick.do";
     /*获取首页Banner*/
-    String GET_BANNER = BASE_URL + API_VERSION + "/platform/unLogin/getPublishedMobileBanners.do";
+//    String GET_BANNER = BASE_URL + "/platform/unLogin/getPublishedMobileBanners.do";
 
     /*急借通列表*/
     String GET_CREDIT_SPEED = BASE_URL + "/unlogin/findProductPager.do";
@@ -348,6 +345,8 @@ public interface IFinancialUrl {
     String FOGET_PWD_JY_URL = BASE_URL + "/customer/unLogin/checkSMSCaptcha";
     /*我的贷款*/
     String USERCREDIT_URL = BASE_URL +"/getOrderlist";
+    /*获取首页Banner*/
+    String GET_BANNER = BASE_URL + "/platform/unLogin/getPublishedMobileBanners.do";
     /*查询申贷资料*/
     String GET_CUSTOMER_INFO4_APPLY_ORDER = BASE_URL + "/getCustomerInfo4ApplyOrder";
 
