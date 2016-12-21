@@ -99,9 +99,10 @@ public class RebateFragment extends BaseFragment{
                 plv.onPullUpRefreshComplete();
                 //抵扣券明细
                 JSONObject jsonObject = new JSONObject(result);
-                JSONArray data = jsonObject.getJSONArray("data");
+                JSONObject data = jsonObject.getJSONObject("data");
+                JSONArray data2= data.getJSONArray("rows");
                 Gson gson = new Gson();
-                list = gson.fromJson(data.toString(), new TypeToken<List<BalanceMxEntity>>() {
+                list = gson.fromJson(data2.toString(), new TypeToken<List<BalanceMxEntity>>() {
                 }.getType());
                 if (list==null||list.size()==0){
                     if (page==1){

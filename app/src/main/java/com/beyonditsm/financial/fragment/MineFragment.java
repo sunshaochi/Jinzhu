@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
-import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.MessageActivity;
 import com.beyonditsm.financial.activity.user.LoginAct;
 import com.beyonditsm.financial.activity.user.MyCreditAct;
@@ -39,7 +38,6 @@ import com.beyonditsm.financial.view.CircleImageView;
 import com.beyonditsm.financial.widget.MyAlertDialog;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
-import com.tandong.sa.eventbus.EventBus;
 import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
 import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
@@ -276,11 +274,11 @@ public class MineFragment extends BaseFragment {
                                 SpUtils.clearSp(getContext());
                                 SpUtils.clearUserName(getContext());
                                 SpUtils.clearOrderId(getContext());
-                                getActivity().sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
-                                ivWalletRedPoint.setVisibility(View.GONE);
-                                msg_top_point.setVisibility(View.GONE);
-                                ivRedPoint.setVisibility(View.GONE);
-                                EventBus.getDefault().post(new SwitchEvent());
+//                                getActivity().sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
+//                                ivWalletRedPoint.setVisibility(View.GONE);
+//                                msg_top_point.setVisibility(View.GONE);
+//                                ivRedPoint.setVisibility(View.GONE);
+//                                EventBus.getDefault().post(new SwitchEvent());
                                 isLogin = false;
                                 tvName.setText("去登录");
                                 tvExit.setVisibility(View.GONE);
@@ -474,7 +472,7 @@ public class MineFragment extends BaseFragment {
             user = intent.getParcelableExtra(USER_KEY);
             if (user != null) {
                 ProfileInfoBean profileInfo = user.getProfileInfo();
-                if (TextUtils.isEmpty(profileInfo.getName())){
+                if (!TextUtils.isEmpty(profileInfo.getName())){
                     tvName.setText(profileInfo.getName());
                 }
 //                暂时没有头像，注掉，后台无返回。
@@ -482,7 +480,7 @@ public class MineFragment extends BaseFragment {
             } else {
                 tvExit.setVisibility(View.VISIBLE);
                 isLogin = true;
-                tvName.setText("");
+                tvName.setText("去登录");
 //                getUserInfo();
             }
         }
