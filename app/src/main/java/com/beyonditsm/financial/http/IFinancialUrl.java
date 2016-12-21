@@ -89,7 +89,8 @@ public interface IFinancialUrl {
         String API_VERSION = "/easyplay";
 //    String API_VERSION = "/file";
 
-    String BASE_IMAGE_URL = BASE_URL +  "/file/";
+    String BASE_IMAGE_URL = BASE_URL +  "/unlogin/file/";
+    String SECURITY_IMAGE_URL =BASE_URL +  "/file/";
 
     /*登录*/
 //    String LOGIN_URL = BASE_URL + API_VERSION + "/manager/unLogin/login.do";
@@ -356,5 +357,6 @@ public interface IFinancialUrl {
     String GET_BANNER = BASE_URL + "/platform/unLogin/getPublishedMobileBanners.do";
     /*查询申贷资料*/
     String GET_CUSTOMER_INFO4_APPLY_ORDER = BASE_URL + "/getCustomerInfo4ApplyOrder";
+
 
 }
