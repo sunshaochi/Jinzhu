@@ -1,6 +1,9 @@
 package com.beyonditsm.financial.fragment;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -41,7 +44,9 @@ public abstract  class BaseFragment extends Fragment{
         }
         // 注入控件
         ViewUtils.inject(this, view);
-
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("UNLOGIN");
+        context.registerReceiver(mybroad, filter);
         setListener();
         return view;
     }
@@ -84,5 +89,12 @@ public abstract  class BaseFragment extends Fragment{
      */
     public abstract void setListener();
 
+    BroadcastReceiver mybroad=new BroadcastReceiver() {
 
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // TODO Auto-generated method stub
+
+        }
+    };
 }
