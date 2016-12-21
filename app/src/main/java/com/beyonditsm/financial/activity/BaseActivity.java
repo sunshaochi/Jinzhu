@@ -175,23 +175,27 @@ public abstract class BaseActivity extends SmartFragmentActivity {
     }
 
 
-    BroadcastReceiver mybroad=new BroadcastReceiver() {
+    BroadcastReceiver mybroad = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
             // TODO Auto-generated method stub
-            if (!ParamsUtil.getInstance().isLogin){
+            if (!ParamsUtil.getInstance().isLogin()) {
                 ParamsUtil.getInstance().setLogin(true);
                 Intent intent1 = new Intent(context, LoginAct.class);
                 startActivityForResult(intent1,REQUEST_LOGIN);
             }
+
         }
     };
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==REQUEST_LOGIN){
+        if (requestCode == REQUEST_LOGIN) {
+            Intent intent = new Intent();
+            intent.setAction("LOGIN_BACK");
+            sendBroadcast(intent);
             onLoginBack();
         }
     }
@@ -199,7 +203,8 @@ public abstract class BaseActivity extends SmartFragmentActivity {
     /**
      * 当登陆返回时调用的方法
      */
-    public void onLoginBack(){
+    public void onLoginBack() {
 
     }
+
 }
