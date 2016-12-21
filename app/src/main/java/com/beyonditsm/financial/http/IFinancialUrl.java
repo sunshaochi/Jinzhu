@@ -340,7 +340,7 @@ public interface IFinancialUrl {
     String UPDATE_USER_URL = BASE_URL + "/customer/modifyCustomer";
     /*忘记密码*/
     String FOGET_PWD_URL = BASE_URL + "/customer/unLogin/forgetPassword";
-    //    忘记密码短信验证码校验
+    //忘记密码短信验证码校验
     String FOGET_PWD_JY_URL = BASE_URL + "/customer/unLogin/checkSMSCaptcha";
     /*我的贷款*/
     String USERCREDIT_URL = BASE_URL +"/getOrderlist";
