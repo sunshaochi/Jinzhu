@@ -22,6 +22,7 @@ import com.beyonditsm.financial.entity.ProfileInfoBean;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.entity.UserLoginBean;
+import com.beyonditsm.financial.fragment.MineFragment;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
@@ -212,12 +213,12 @@ public class LoginAct extends BaseActivity {
             public void onSucess(String result) {
                 loginBtn.setEnabled(true);
                 progressBar1.setVisibility(View.GONE);
-                finish();
-                getUserInfo();
+                Intent intent = new Intent("com.update.user");
+                sendBroadcast(intent);
 //                Intent intent=new Intent(MineFragment.USER_KEY);
 //                intent.putParcelableArrayListExtra(MineFragment.USER_KEY,)
 //                sendBroadcast(new Intent(MainActivity.UPDATATAB));
-//                sendBroadcast(new Intent(MineFragment.UPDATE_USER));
+//                sendBroadcast(new Intent("com.update.user"));
 
 //                try {
 //                    updateLocation(ParamsUtil.getInstance().getChangedCity());
@@ -437,66 +438,7 @@ public class LoginAct extends BaseActivity {
             }
         });
     }
-    /**
-     * 获取用户信息
-     */
-    private void getUserInfo() {
 
-        RequestManager.getCommManager().findUserInfo( "",new RequestManager.CallBack() {
-            @SuppressWarnings("unchecked")
-            @Override
-            public void onSucess(String result) {
-                ResultData<UserLoginBean> rd = (ResultData<UserLoginBean>) GsonUtils.json(result, UserLoginBean.class);
-                sendBroadcast(new Intent(CreditSpeedFirstAct.GET_LOGIN_STATUS));
-                user = rd.getData();
-                if (user != null) {
-                    SpUtils.setPhonenumber(getApplicationContext(), user.getUsername());
-                    SpUtils.setRoleName(getApplicationContext(), "users");
-                    if (user.getProfileInfo()!=null){
-                        profileInfoBean=user.getProfileInfo();
-                        if (!TextUtils.isEmpty(profileInfoBean.getName())) {
-                          SpUtils.setUsername(getApplicationContext(),profileInfoBean.getName());
-                        }else {
-                            SpUtils.setUsername(getApplicationContext(),user.getUsername());
-                        }
-                    }
-                    finish();
-
-//                    if (user.getAddress()!=null){
-//                        adressBean= user.getAddress();
-//                        SpUtils.setAddressid(getContext(),adressBean.getAddressId());
-//                    }
-
-//                    tvGrade.setText(user.getCreditGrade());
-
-
-//                    ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon(), civHead, options);获取个人头像
-//                    if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
-//                        if (!TextUtils.isEmpty(profileInfoBean.get())) {
-//                            RongIM.getInstance().setCurrentUserInfo(new UserInfo(user.getAccountId(), user.getUserName(),
-//                                    Uri.parse(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon())));
-//                            RongIM.getInstance().setMessageAttachedUserInfo(true);
-//                            FriendBean bean = new FriendBean();
-//                            bean.setUserHead(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon());
-//                            bean.setUserName(user.getUserName());
-//                            bean.setUserId(user.getAccountId());
-//                            FriendDao.saveMes(bean);
-//                        }
-//                    }
-//                    minePageLoadingView.loadComplete();
-                } else {
-//                    minePageLoadingView.loadError();
-                }
-            }
-
-            @Override
-            public void onError(int status, String msg) {
-//                minePageLoadingView.loadError();
-//                minePageLoadingView.loadComplete();
-//                tvName.setText("去登录");
-            }
-        });
-    }
 
     @Override
     protected void onDestroy() {

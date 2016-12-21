@@ -328,6 +328,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="5dp"
+                            android:visibility="gone"
                             android:layout_toRightOf="@id/ivhp"
                             android:orientation="horizontal">
 
@@ -465,11 +466,11 @@
             </LinearLayout>
         </ScrollView>
 
-        <!--<com.beyonditsm.financial.view.MinePageLoadingView-->
-            <!--android:visibility="gone"-->
-            <!--android:id="@+id/mplv_mine"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent" />-->
+        <com.beyonditsm.financial.view.MinePageLoadingView
+            android:visibility="gone"
+            android:id="@+id/mplv_mine"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </FrameLayout>
 
 

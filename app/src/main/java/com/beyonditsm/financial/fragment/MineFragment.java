@@ -19,6 +19,7 @@ import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.MessageActivity;
+import com.beyonditsm.financial.activity.speedcredit.CreditSpeedFirstAct;
 import com.beyonditsm.financial.activity.user.LoginAct;
 import com.beyonditsm.financial.activity.user.MyCreditAct;
 import com.beyonditsm.financial.activity.user.MyRecommAct;
@@ -36,6 +37,7 @@ import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.CircleImageView;
+import com.beyonditsm.financial.view.MinePageLoadingView;
 import com.beyonditsm.financial.widget.MyAlertDialog;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
@@ -87,8 +89,8 @@ public class MineFragment extends BaseFragment {
     private ImageView ivVipLevel;
     @ViewInject(R.id.sv_mine)
     private ScrollView svMine;
-//    @ViewInject(R.id.mplv_mine)
-//    private MinePageLoadingView minePageLoadingView;
+    @ViewInject(R.id.mplv_mine)
+    private MinePageLoadingView minePageLoadingView;
 
     @ViewInject(R.id.rlHelp)
     private RelativeLayout rlHelp;
@@ -133,18 +135,18 @@ public class MineFragment extends BaseFragment {
             ivRedPoint.setVisibility(View.VISIBLE);
             msg_top_point.setVisibility(View.VISIBLE);
         }
-        if (TextUtils.isEmpty(SpUtils.getUsername(getContext()))) {
-            isLogin = false;
-            tvName.setText("去登录");
-            tvExit.setVisibility(View.GONE);
-        } else {
-            isLogin = true;
-            tvName.setText(SpUtils.getUsername(getContext()));
-            tvExit.setVisibility(View.VISIBLE);
-//            getUserInfo();
-//            getUserLoginInfo();
-        }
-
+//        if (TextUtils.isEmpty(SpUtils.getUsername(getContext()))) {
+//            isLogin = false;
+//            tvName.setText("去登录");
+//            tvExit.setVisibility(View.GONE);
+//        } else {
+//            isLogin = true;
+//            tvName.setText(SpUtils.getUsername(getContext()));
+//            tvExit.setVisibility(View.VISIBLE);
+////            getUserInfo();
+////            getUserLoginInfo();
+//        }
+        getUserInfo();
         svMine.smoothScrollTo(0, 20);
 //        rlMyData.setFocusable(true);
 //        rlMyData.setFocusableInTouchMode(true);
@@ -205,12 +207,12 @@ public class MineFragment extends BaseFragment {
         switch (v.getId()) {
             //我的资料
             case R.id.rlMyData:
-                if (isLogin) {
+//                if (isLogin) {
                     intent = new Intent(getActivity(), UpdateAct.class);
                     intent.putExtra(MineFragment.USER_KEY, user);
-                } else {
-                    intent = new Intent(getActivity(), LoginAct.class);
-                }
+//                } else {
+//                    intent = new Intent(getActivity(), LoginAct.class);
+//                }
                 startActivity(intent);
                 break;
 
@@ -470,20 +472,8 @@ public class MineFragment extends BaseFragment {
     public class MyBroadCastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            user = intent.getParcelableExtra(USER_KEY);
-            if (user != null) {
-                ProfileInfoBean profileInfo = user.getProfileInfo();
-                if (TextUtils.isEmpty(profileInfo.getName())){
-                    tvName.setText(profileInfo.getName());
-                }
-//                暂时没有头像，注掉，后台无返回。
-                ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + profileInfo.getAvatarPic(), civHead, options);
-            } else {
-                tvExit.setVisibility(View.VISIBLE);
-                isLogin = true;
-                tvName.setText("");
-//                getUserInfo();
-            }
+            getUserInfo();
+
         }
     }
 
@@ -618,5 +608,44 @@ public class MineFragment extends BaseFragment {
             ivWalletRedPoint.setVisibility(View.GONE);
             MyLogUtils.info("MineFragment:我的钱包红点隐藏");
         }
+    }
+
+
+
+    /**
+     * 获取用户信息
+     */
+    private void getUserInfo() {
+
+        RequestManager.getCommManager().findUserInfo( "",new RequestManager.CallBack() {
+            @SuppressWarnings("unchecked")
+            @Override
+            public void onSucess(String result) {
+                ResultData<UserLoginBean> rd = (ResultData<UserLoginBean>) GsonUtils.json(result, UserLoginBean.class);
+                context.sendBroadcast(new Intent(CreditSpeedFirstAct.GET_LOGIN_STATUS));
+                user = rd.getData();
+                minePageLoadingView.loadComplete();
+                if (user != null) {
+                    ProfileInfoBean profileInfo = user.getProfileInfo();
+                    if (!TextUtils.isEmpty(profileInfo.getName())){
+                        tvName.setText(profileInfo.getName());
+                    }
+//                暂时没有头像，注掉，后台无返回。
+                    ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + profileInfo.getAvatarPic(), civHead, options);
+                } else {
+                    tvExit.setVisibility(View.VISIBLE);
+                    isLogin = true;
+                    tvName.setText("");
+//                getUserInfo();
+                }
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+                minePageLoadingView.loadError();
+//                minePageLoadingView.loadComplete();
+//                tvName.setText("去登录");
+            }
+        });
     }
 }
