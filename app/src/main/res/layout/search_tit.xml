@@ -91,7 +91,6 @@
             android:layout_weight="1"
             android:gravity="center"
        />
-
         <ImageView
             android:id="@+id/arrow4"
             android:layout_width="12dp"

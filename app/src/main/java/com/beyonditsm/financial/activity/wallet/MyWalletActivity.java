@@ -164,18 +164,18 @@ public class MyWalletActivity extends BaseActivity {
 
 //        setUserInfo();
 //        }
-        loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
-            @Override
-            public void OnRetry() {
-//                getUserLoginInfo();
-//                getUserInfo();
-//                findServantInfo();
-//                getWalletQuan(user.getMobilePhone());
-                if (!TextUtils.isEmpty(SpUtils.getPhonenumber(getApplicationContext()))){
-                    getWalletQuan(SpUtils.getPhonenumber(getApplicationContext()));
-                }
-            }
-        });
+//        loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
+//            @Override
+//            public void OnRetry() {
+////                getUserLoginInfo();
+////                getUserInfo();
+////                findServantInfo();
+////                getWalletQuan(user.getMobilePhone());
+//                if (!TextUtils.isEmpty(SpUtils.getPhonenumber(getApplicationContext()))){
+//                    getWalletQuan(SpUtils.getPhonenumber(getApplicationContext()));
+//                }
+//            }
+//        });
 //        getWalletQuan(user.getMobilePhone());
     }
 
@@ -439,10 +439,10 @@ public class MyWalletActivity extends BaseActivity {
         RequestManager.getWalletManager().getWalletQuan(uid, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-                loadingView.loadComplete();
+//                loadingView.loadComplete();
                 JSONObject jsonObject = new JSONObject(result);
                 if (TextUtils.isEmpty(jsonObject.getString("data"))){
-                    tvWeitGetMoney.setText("可兑换：0");
+                    tvWeitGetMoney.setText("0");
                     tv_yj.setText(0+"");
                     tvDikouMoney.setText(0+"");
                     return;
@@ -477,7 +477,7 @@ public class MyWalletActivity extends BaseActivity {
 
             @Override
             public void onError(int status, String msg) {
-                loadingView.loadError();
+//                loadingView.loadError();
             }
         });
     }
