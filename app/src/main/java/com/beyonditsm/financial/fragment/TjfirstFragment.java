@@ -490,21 +490,21 @@ public class TjfirstFragment extends BaseFragment {
 
     public boolean isNext() {
         money = tv_money.getText().toString();
-        time = tv_qixian.getText().toString();
-        diqu = tv_diqu.getText().toString();
-        xueli = tv_xueli.getText().toString();
-        huji = tv_huji.getText().toString();
-        xyjl = tv_xyjl.getText().toString();
-        zhiwu = tv_zhiwei.getText().toString();
-        nianji = tv_nianji.getText().toString();
-        gzsc = tv_zhucesc.getText().toString();
-        cc = tv_cc.getText().toString();
-        fc = tv_fc.getText().toString();
-        dfgz = tv_dfgzje.getText().toString();
-        bd = tv_bd.getText().toString();
-        qtzc = tv_qtzc.getText().toString();
-        sbcs = tv_cbsc.getText().toString();
-        if(TextUtils.isEmpty(time)){
+        time = tv_qixian.getText().toString().trim();
+        diqu = tv_diqu.getText().toString().trim();
+        xueli = tv_xueli.getText().toString().trim();
+        huji = tv_huji.getText().toString().trim();
+        xyjl = tv_xyjl.getText().toString().trim();
+        zhiwu = tv_zhiwei.getText().toString().trim();
+        nianji = tv_nianji.getText().toString().trim();
+        gzsc = tv_zhucesc.getText().toString().trim();
+        cc = tv_cc.getText().toString().trim();
+        fc = tv_fc.getText().toString().trim();
+        dfgz = tv_dfgzje.getText().toString().trim();
+        bd = tv_bd.getText().toString().trim();
+        qtzc = tv_qtzc.getText().toString().trim();
+        sbcs = tv_cbsc.getText().toString().trim();
+        if(TextUtils.isEmpty(time)||time.equals("请选择")){
             tujianBean.setCreditTime("");
         }
         if(TextUtils.isEmpty(money)){
@@ -512,46 +512,46 @@ public class TjfirstFragment extends BaseFragment {
         }else {
             tujianBean.setCreditMoney(money);
         }
-        if(TextUtils.isEmpty(xueli)){
+        if(TextUtils.isEmpty(xueli)||xueli.equals("请选择")){
             tujianBean.setEduLevel("");
         }
-        if(TextUtils.isEmpty(huji)){
+        if(TextUtils.isEmpty(huji)||huji.equals("请选择")){
             tujianBean.setDomicile("");
         }else {
             tujianBean.setDomicile(huji);
         }
-        if(TextUtils.isEmpty(xyjl)){
+        if(TextUtils.isEmpty(xyjl)||xyjl.equals("请选择")){
             tujianBean.setCreditStatusKey("");
         }
-        if(TextUtils.isEmpty(nianji)){
+        if(TextUtils.isEmpty(nianji)||nianji.equals("例如:33岁")){
             tujianBean.setAge("");
         }else {
             tujianBean.setAge(nianji);
         }
-        if(TextUtils.isEmpty(zhiwu)){
+        if(TextUtils.isEmpty(zhiwu)||zhiwu.equals("请选择")){
             tujianBean.setJobIdentityKey("");
         }
-        if(TextUtils.isEmpty(gzsc)){
+        if(TextUtils.isEmpty(gzsc)||gzsc.equals("例如:3月")){
             tujianBean.setLicenseTimeLength("");
         }else {
             tujianBean.setLicenseTimeLength(gzsc);
         }
-        if(TextUtils.isEmpty(cc)){
+        if(TextUtils.isEmpty(cc)||cc.equals("请选择")){
             tujianBean.setCarStatusKey("");
         }
-        if(TextUtils.isEmpty(fc)){
+        if(TextUtils.isEmpty(fc)||fc.equals("请选择")){
             tujianBean.setPropertyTypeKey("");
         }
-        if(TextUtils.isEmpty(dfgz)){
+        if(TextUtils.isEmpty(dfgz)||dfgz.equals("请选择")){
             tujianBean.setSalary("");
         }
-        if(TextUtils.isEmpty(bd)){
+        if(TextUtils.isEmpty(bd)||bd.equals("请选择")){
             tujianBean.setGuaranteeSlip("");
         }
-        if(TextUtils.isEmpty(qtzc)){
+        if(TextUtils.isEmpty(qtzc)||qtzc.equals("请选择")){
             tujianBean.setOtherAssets("");
         }
-        if(TextUtils.isEmpty(sbcs)){
+        if(TextUtils.isEmpty(sbcs)||sbcs.equals("例如:24月")){
             tujianBean.setFundTimeLength("");
         }else {
             tujianBean.setFundTimeLength(sbcs);
@@ -672,8 +672,6 @@ public class TjfirstFragment extends BaseFragment {
                 if(requestCode==4){
                     tv_cbsc.setText(str);
                 }
-
-
 
                 break;
             default:

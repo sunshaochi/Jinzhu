@@ -323,6 +323,7 @@ public class DefaultCreditFrag extends BaseFragment {
         switch (v.getId()) {
             case R.id.rb_bank:
                 intent = new Intent(getActivity(), OrgTypeListAct.class);
+                intent.putExtra("type",1);
                 startActivityForResult(intent, ORGQUEST);
                 sbp.hide();
 //                listItem = orgTypeInfos;

@@ -17,6 +17,12 @@ public class OrderListBean implements Parcelable {
     private List<OrderWorkMarkBean> OrderWorkMark;
     private List<FolwmapsBean> folwmaps;
     private List<AttachmentlistBean> Attachmentlist;
+    private String loanPeriodType;//   贷款期限类型(1.年2.月3.周4.日5.期数)
+    private String minLoanPeriod;//  最低贷款期限
+    private String maxLoanPeriod;//   最高贷款期限
+    private String applyMaterialDesc;//   申请材料说明
+    private String address;//   详细地址
+
 
     @Override
     public String toString() {
@@ -28,6 +34,46 @@ public class OrderListBean implements Parcelable {
                 ", folwmaps=" + folwmaps +
                 ", Attachmentlist=" + Attachmentlist +
                 '}';
+    }
+
+    public String getLoanPeriodType() {
+        return loanPeriodType;
+    }
+
+    public void setLoanPeriodType(String loanPeriodType) {
+        this.loanPeriodType = loanPeriodType;
+    }
+
+    public String getMinLoanPeriod() {
+        return minLoanPeriod;
+    }
+
+    public void setMinLoanPeriod(String minLoanPeriod) {
+        this.minLoanPeriod = minLoanPeriod;
+    }
+
+    public String getMaxLoanPeriod() {
+        return maxLoanPeriod;
+    }
+
+    public void setMaxLoanPeriod(String maxLoanPeriod) {
+        this.maxLoanPeriod = maxLoanPeriod;
+    }
+
+    public String getApplyMaterialDesc() {
+        return applyMaterialDesc;
+    }
+
+    public void setApplyMaterialDesc(String applyMaterialDesc) {
+        this.applyMaterialDesc = applyMaterialDesc;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public List<OrderWorkMarkBean> getOrderWorkMark() {
@@ -81,6 +127,9 @@ public class OrderListBean implements Parcelable {
     }
 
 
+    public OrderListBean() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -94,9 +143,11 @@ public class OrderListBean implements Parcelable {
         dest.writeTypedList(this.OrderWorkMark);
         dest.writeTypedList(this.folwmaps);
         dest.writeTypedList(this.Attachmentlist);
-    }
-
-    public OrderListBean() {
+        dest.writeString(this.loanPeriodType);
+        dest.writeString(this.minLoanPeriod);
+        dest.writeString(this.maxLoanPeriod);
+        dest.writeString(this.applyMaterialDesc);
+        dest.writeString(this.address);
     }
 
     protected OrderListBean(Parcel in) {
@@ -106,6 +157,11 @@ public class OrderListBean implements Parcelable {
         this.OrderWorkMark = in.createTypedArrayList(OrderWorkMarkBean.CREATOR);
         this.folwmaps = in.createTypedArrayList(FolwmapsBean.CREATOR);
         this.Attachmentlist = in.createTypedArrayList(AttachmentlistBean.CREATOR);
+        this.loanPeriodType = in.readString();
+        this.minLoanPeriod = in.readString();
+        this.maxLoanPeriod = in.readString();
+        this.applyMaterialDesc = in.readString();
+        this.address = in.readString();
     }
 
     public static final Creator<OrderListBean> CREATOR = new Creator<OrderListBean>() {

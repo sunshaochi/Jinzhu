@@ -75,7 +75,7 @@
     android:gravity="center"
     android:textColor="#FF6600"
     android:textSize="17sp"
-    android:text=""
+    android:text="请选择"
     android:layout_width="wrap_content"
     android:layout_height="match_parent" />
     </RelativeLayout>
@@ -114,7 +114,7 @@
     android:drawableRight="@mipmap/ico_arrow_no"
     style="@style/com_textnots"
     android:id="@+id/tv_diqu"
-    android:text="" />
+    android:text="请选择" />
     </RelativeLayout>
 
     <View
@@ -134,7 +134,7 @@
     android:drawableRight="@mipmap/ico_arrow_no"
     style="@style/com_textnots"
     android:id="@+id/tv_xueli"
-    android:text="" />
+    android:text="请选择" />
 
     </RelativeLayout>
 
@@ -155,7 +155,7 @@
     android:drawableRight="@mipmap/ico_arrow_no"
     style="@style/com_textnots"
     android:id="@+id/tv_huji"
-    android:text="" />
+    android:text="请选择" />
 
     </RelativeLayout>
 
@@ -176,7 +176,7 @@
     android:drawableRight="@mipmap/ico_arrow_no"
     style="@style/com_textnots"
     android:id="@+id/tv_xyjl"
-    android:text="" />
+    android:text="请选择" />
 
     </RelativeLayout>
 
@@ -197,7 +197,7 @@
     android:drawableRight="@mipmap/ico_arrow_no"
     style="@style/com_textnots"
     android:id="@+id/tv_zhiwei"
-    android:text="" />
+    android:text="请选择" />
     </RelativeLayout>
     <View
     style="@style/view_line"
@@ -208,14 +208,14 @@
 
     <TextView
     style="@style/com_textbt"
-    android:text="请输入年纪"
+    android:text="请输入年龄"
     />
 
     <TextView
     android:textSize="17sp"
     style="@style/com_textnots"
     android:id="@+id/tv_nianji"
-    android:text=""
+    android:text="例如:33岁"
     android:layout_alignParentTop="true"
     android:layout_alignParentRight="true"
     android:layout_alignParentEnd="true"
@@ -240,7 +240,7 @@
     android:textSize="17sp"
     style="@style/com_textnots"
     android:id="@+id/tv_zhucesc"
-    android:text="" />
+    android:text="例如:3月" />
 
 
     </RelativeLayout>
@@ -279,7 +279,7 @@
     android:drawableRight="@mipmap/ico_arrow_no"
     style="@style/com_textnots"
     android:id="@+id/tv_cc"
-    android:text="" />
+    android:text="请选择" />
 
     </RelativeLayout>
 
@@ -300,7 +300,7 @@
     android:drawableRight="@mipmap/ico_arrow_no"
     style="@style/com_textnots"
     android:id="@+id/tv_fc"
-    android:text="" />
+    android:text="请选择" />
     </RelativeLayout>
 
     <View
@@ -322,7 +322,7 @@
     android:drawableRight="@mipmap/ico_arrow_no"
     style="@style/com_textnots"
     android:id="@+id/tv_dfgzje"
-    android:text="" />
+    android:text="请选择" />
     </RelativeLayout>
 
     <View
@@ -344,7 +344,7 @@
     android:drawableRight="@mipmap/ico_arrow_no"
     style="@style/com_textnots"
     android:id="@+id/tv_bd"
-    android:text=""
+    android:text="请选择"
     android:layout_alignParentTop="true"
     android:layout_alignParentRight="true"
     android:layout_alignParentEnd="true" />
@@ -368,7 +368,7 @@
     android:drawableRight="@mipmap/ico_arrow_no"
     style="@style/com_textnots"
     android:id="@+id/tv_qtzc"
-    android:text="" />
+    android:text="请选择" />
 
     </RelativeLayout>
     <View
@@ -387,7 +387,7 @@
     android:layout_marginRight="25dp"
     style="@style/com_textnots"
     android:id="@+id/tv_cbsc"
-    android:text="" />
+    android:text="例如:24月" />
 
     </RelativeLayout>
 

@@ -15,6 +15,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.tandong.sa.eventbus.EventBus;
 
 public class OrgTypeListAct extends BaseActivity {
+    private int type;
 
     @ViewInject(R.id.lv_org_type)
     ListView lvOrgType;
@@ -27,7 +28,12 @@ public class OrgTypeListAct extends BaseActivity {
     public void init(Bundle savedInstanceState) {
         setLeftTv("返回");
         setTopTitle("贷款机构");
-        lvOrgType.setAdapter(new OrgTypeAdapter(ParamsUtil.getInstance().getOrgTypeInfos(),OrgTypeListAct.this));
+        type=getIntent().getExtras().getInt("type");
+        if(type==1){
+        lvOrgType.setAdapter(new OrgTypeAdapter(ParamsUtil.getInstance().getOrgTypeInfos(),OrgTypeListAct.this));}
+        else if(type==2){
+            lvOrgType.setAdapter(new OrgTypeAdapter(ParamsUtil.getInstance().getTjorgTypeInfos(),OrgTypeListAct.this));
+        }
         lvOrgType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
