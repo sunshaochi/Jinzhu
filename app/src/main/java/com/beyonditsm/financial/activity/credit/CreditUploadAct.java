@@ -500,7 +500,7 @@ public class CreditUploadAct extends BaseActivity {
             }
             if (list != null && list.size() > 0) {
                 if (position < list.size() && list.get(position) != null) {
-                    ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + list.get(position).getImageUrl(), holder.ivPhoto, options);
+                    ImageLoader.getInstance().displayImage(IFinancialUrl.SECURITY_IMAGE_URL + list.get(position).getImageUrl(), holder.ivPhoto, options);
                     if ("0".equals(list.get(position).getIsPass())) {
                         holder.tvStatus.setText("已驳回");
                         if (!TextUtils.isEmpty(list.get(position).getRemark())) {

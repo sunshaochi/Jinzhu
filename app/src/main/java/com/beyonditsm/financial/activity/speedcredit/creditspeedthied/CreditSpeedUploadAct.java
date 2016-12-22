@@ -143,7 +143,7 @@ public class CreditSpeedUploadAct extends BaseActivity {
                 Intent intent = new Intent();
                 intent.putExtra("url", result);
                 setResult(RESULT_OK, intent);
-                ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + result, ivPhoto, options);
+                ImageLoader.getInstance().displayImage(IFinancialUrl.SECURITY_IMAGE_URL + result, ivPhoto, options);
                 dialog.dismiss();
 //                cib.setImageUrl(result);
 

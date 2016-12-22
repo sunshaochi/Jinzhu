@@ -107,7 +107,7 @@ public class GrabOrderAdp extends BaseAdapter {
             if (!TextUtils.isEmpty(datas.get(i).getUserName())) {
                 holder.tvrate.setText("客户姓名：" + datas.get(i).getUserName());
             }
-            ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + datas.get(i).getImageLogoPath(), holder.ivPic, options);
+            ImageLoader.getInstance().displayImage(IFinancialUrl.SECURITY_IMAGE_URL + datas.get(i).getImageLogoPath(), holder.ivPic, options);
         }
 
         return view;

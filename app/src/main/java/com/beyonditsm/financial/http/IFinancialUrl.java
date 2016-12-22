@@ -89,7 +89,8 @@ public interface IFinancialUrl {
         String API_VERSION = "/easyplay";
 //    String API_VERSION = "/file";
 
-    String BASE_IMAGE_URL = BASE_URL +  "/file/";
+    String BASE_IMAGE_URL = BASE_URL +  "/unlogin/file/";
+    String SECURITY_IMAGE_URL =BASE_URL +  "/file/";
 
     /*登录*/
 //    String LOGIN_URL = BASE_URL + API_VERSION + "/manager/unLogin/login.do";
@@ -293,20 +294,20 @@ public interface IFinancialUrl {
 //    String APPLY_SHORT_LOAN_ORDER = BASE_URL +API_VERSION + "/platform/login/applyShortLoanOrder.do";
 
     //获取提现记录
-    String TIXIAN_HISTORY = BASE_URL + "/easyplay/welfare/selectERsForReception";
+    String TIXIAN_HISTORY = BASE_URL + "/welfare/selectERsForReception";
     //获取可用券总额
-    String WALLET_DISPONIBLES_URL = BASE_URL + "/easyplay/welfare/selectCouponSummaryByUid";
+    String WALLET_DISPONIBLES_URL = BASE_URL + "/welfare/selectCouponSummaryByUid";
     //获取现金券列表
-    String CASH_HISTORY2 = BASE_URL + "/easyplay/welfare/selectCRForReception";
+    String CASH_HISTORY2 = BASE_URL + "/welfare/selectCRForReception";
     //获取贷款产品
-    String GET_CREDIT_PRODUCT = BASE_URL + "/easyplay/welfare/selOrderNoListByUid";
+    String GET_CREDIT_PRODUCT = BASE_URL + "/welfare/selOrderNoListByUid";
     //确认订单
-    String QUEREN_ORDER_URL = BASE_URL + "/easyplay/welfare/insertEnchashment";
+    String QUEREN_ORDER_URL = BASE_URL + "/welfare/insertEnchashment";
 
     /*获取用户绑定的银行卡*/
-    String QUERY_BANK_CARD2 = BASE_URL + "/easyplay/bankcard/queryBankCard";
+    String QUERY_BANK_CARD2 = BASE_URL + "/bankcard/queryBankCard";
     /*获取支持的银行列表*/
-    String QUERY_BANK2 = BASE_URL + "/easyplay/bankcard/queryBank.do";
+    String QUERY_BANK2 = BASE_URL + "/bankcard/queryBank.do";
     /*设置资金密码*/
     String SET_PWD_URL2 = BASE_URL + "/wallet/login/setFundPassword.do";
     /*添加银行卡*/
@@ -317,7 +318,7 @@ public interface IFinancialUrl {
     /*发送验证码不需要图片验证*/
     String GET_CODE2 = BASE_URL + "/customer/unLogin/sendCaptcha";
     /*修改银行卡状态*/
-    String MODIFY_BANK_CARD_STATUS = BASE_URL + "/easyplay/bankcard/modifyBankCard";
+    String MODIFY_BANK_CARD_STATUS = BASE_URL + "/bankcard/modifyBankCard";
 
     /*根据id号查询订单详情*/
     String ORDER_DETAIL_URL = BASE_URL + "/ShortLoanOrderDetail.do";
@@ -329,7 +330,7 @@ public interface IFinancialUrl {
     /*取消订单*/
     String CANCEL_ORDER = BASE_URL + "/order/updateOrderStatus";
     /*代言人推荐信息获取*/
-    String SERVANT_RMD_INFO = BASE_URL + "easyplay/servant/login/getServantSummary.do";
+    String SERVANT_RMD_INFO = BASE_URL + "/servant/login/getServantSummary.do";
     /*查找获取登录用户个人信息*/
     String USERINFO_URL = BASE_URL + "/customer/getAccountInfo";
     /*修改密码*/
@@ -348,7 +349,7 @@ public interface IFinancialUrl {
     String UPDATE_USER_URL = BASE_URL + "/customer/modifyCustomer";
     /*忘记密码*/
     String FOGET_PWD_URL = BASE_URL + "/customer/unLogin/forgetPassword";
-    //    忘记密码短信验证码校验
+    //忘记密码短信验证码校验
     String FOGET_PWD_JY_URL = BASE_URL + "/customer/unLogin/checkSMSCaptcha";
     /*我的贷款*/
     String USERCREDIT_URL = BASE_URL +"/getOrderlist";
@@ -356,5 +357,6 @@ public interface IFinancialUrl {
     String GET_BANNER = BASE_URL + "/platform/unLogin/getPublishedMobileBanners.do";
     /*查询申贷资料*/
     String GET_CUSTOMER_INFO4_APPLY_ORDER = BASE_URL + "/getCustomerInfo4ApplyOrder";
+
 
 }

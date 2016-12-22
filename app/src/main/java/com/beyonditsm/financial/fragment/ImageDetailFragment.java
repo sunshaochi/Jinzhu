@@ -64,7 +64,7 @@ public class ImageDetailFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL+mImageUrl, mImageView, new SimpleImageLoadingListener() {
+		ImageLoader.getInstance().displayImage(IFinancialUrl.SECURITY_IMAGE_URL+mImageUrl, mImageView, new SimpleImageLoadingListener() {
 			@Override
 			public void onLoadingStarted(String imageUri, View view) {
 				progressBar.setVisibility(View.VISIBLE);
