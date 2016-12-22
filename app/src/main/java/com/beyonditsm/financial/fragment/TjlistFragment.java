@@ -100,6 +100,7 @@ public class TjlistFragment extends BaseFragment {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        llSearchTitle.setVisibility(View.GONE);
         tuijianbean=TjfirstFragment.tujianBean;
         initTit();//初识化头部筛选条件
         getSortParam();//获取头部筛选条件
@@ -117,14 +118,14 @@ public class TjlistFragment extends BaseFragment {
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
                 plv.setLastUpdatedLabel(FinancialUtil.getCurrentTime());
                 page=1;
-                getTjproduct(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),tuijianbean.getCreditMoney(),tuijianbean.getCreditTime(), tuijianbean.getEduLevel(), tuijianbean.getDomicile(), tuijianbean.getCreditStatusKey(), tuijianbean.getJobIdentityKey(), tuijianbean.getAge(), tuijianbean.getLicenseTimeLength(), tuijianbean.getCreditStatusKey(), tuijianbean.getPropertyTypeKey(), tuijianbean.getSalary(), tuijianbean.getGuaranteeSlip(), tuijianbean.getOtherAssets(), tuijianbean.getFundTimeLength(),"", page, rows);//获取推荐产品
+                getTjproduct(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cMoney,cTime,cBank,cSort,"ASC",tuijianbean.getEduLevel(), tuijianbean.getDomicile(), tuijianbean.getCreditStatusKey(), tuijianbean.getJobIdentityKey(), tuijianbean.getAge(), tuijianbean.getLicenseTimeLength(), tuijianbean.getCreditStatusKey(), tuijianbean.getPropertyTypeKey(), tuijianbean.getSalary(), tuijianbean.getGuaranteeSlip(), tuijianbean.getOtherAssets(), tuijianbean.getFundTimeLength(),"", page, rows);//获取推荐产品
 
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 page++;
-                getTjproduct(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),tuijianbean.getCreditMoney(),tuijianbean.getCreditTime(), tuijianbean.getEduLevel(), tuijianbean.getDomicile(), tuijianbean.getCreditStatusKey(), tuijianbean.getJobIdentityKey(), tuijianbean.getAge(), tuijianbean.getLicenseTimeLength(), tuijianbean.getCreditStatusKey(), tuijianbean.getPropertyTypeKey(), tuijianbean.getSalary(), tuijianbean.getGuaranteeSlip(), tuijianbean.getOtherAssets(), tuijianbean.getFundTimeLength(),"", page, rows);//获取推荐产品
+                getTjproduct(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cMoney,cTime,cBank,cSort,"ASC",tuijianbean.getEduLevel(), tuijianbean.getDomicile(), tuijianbean.getCreditStatusKey(), tuijianbean.getJobIdentityKey(), tuijianbean.getAge(), tuijianbean.getLicenseTimeLength(), tuijianbean.getCreditStatusKey(), tuijianbean.getPropertyTypeKey(), tuijianbean.getSalary(), tuijianbean.getGuaranteeSlip(), tuijianbean.getOtherAssets(), tuijianbean.getFundTimeLength(),"", page, rows);//获取推荐产品
 
             }
         });
@@ -150,11 +151,11 @@ public class TjlistFragment extends BaseFragment {
         loadView.setOnRetryListener(new LoadingView.OnRetryListener() {
             @Override
             public void OnRetry() {
-                getTjproduct(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),tuijianbean.getCreditMoney(),tuijianbean.getCreditTime(), tuijianbean.getEduLevel(), tuijianbean.getDomicile(), tuijianbean.getCreditStatusKey(), tuijianbean.getJobIdentityKey(), tuijianbean.getAge(), tuijianbean.getLicenseTimeLength(), tuijianbean.getCreditStatusKey(), tuijianbean.getPropertyTypeKey(), tuijianbean.getSalary(), tuijianbean.getGuaranteeSlip(), tuijianbean.getOtherAssets(), tuijianbean.getFundTimeLength(),"", page, rows);//获取推荐产品
+                getTjproduct(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cMoney,cTime,cBank,cSort,"ASC",tuijianbean.getEduLevel(), tuijianbean.getDomicile(), tuijianbean.getCreditStatusKey(), tuijianbean.getJobIdentityKey(), tuijianbean.getAge(), tuijianbean.getLicenseTimeLength(), tuijianbean.getCreditStatusKey(), tuijianbean.getPropertyTypeKey(), tuijianbean.getSalary(), tuijianbean.getGuaranteeSlip(), tuijianbean.getOtherAssets(), tuijianbean.getFundTimeLength(),"", page, rows);//获取推荐产品
             }
         });
         //获取推荐列表
-        getTjproduct(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),tuijianbean.getCreditMoney(),tuijianbean.getCreditTime(), tuijianbean.getEduLevel(), tuijianbean.getDomicile(), tuijianbean.getCreditStatusKey(), tuijianbean.getJobIdentityKey(), tuijianbean.getAge(), tuijianbean.getLicenseTimeLength(), tuijianbean.getCreditStatusKey(), tuijianbean.getPropertyTypeKey(), tuijianbean.getSalary(), tuijianbean.getGuaranteeSlip(), tuijianbean.getOtherAssets(), tuijianbean.getFundTimeLength(),"", page, rows);//获取推荐产品
+        getTjproduct(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cMoney,cTime,cBank,cSort,"ABS", tuijianbean.getEduLevel(), tuijianbean.getDomicile(), tuijianbean.getCreditStatusKey(), tuijianbean.getJobIdentityKey(), tuijianbean.getAge(), tuijianbean.getLicenseTimeLength(), tuijianbean.getCreditStatusKey(), tuijianbean.getPropertyTypeKey(), tuijianbean.getSalary(), tuijianbean.getGuaranteeSlip(), tuijianbean.getOtherAssets(), tuijianbean.getFundTimeLength(),"", page, rows);//获取推荐产品
 
     }
 
@@ -168,8 +169,8 @@ public class TjlistFragment extends BaseFragment {
         rbTime.setText("贷款期限");
         cBank = "";
         cSort = "";
-        cTime = "";
-        cMoney = "";
+        cTime =tuijianbean.getCreditTime();
+        cMoney = tuijianbean.getCreditMoney();
     }
 
     /**
@@ -179,29 +180,28 @@ public class TjlistFragment extends BaseFragment {
         RequestManager.getCommManager().findSortParam(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
-
                 ResultData<ProductSortEntity> rd = (ResultData<ProductSortEntity>) GsonUtils.json(result, ProductSortEntity.class);
                 ProductSortEntity productSortEntity = rd.getData();
                 llSearchTitle.setVisibility(View.VISIBLE);
                 orgTypeInfos = productSortEntity.getOrgType();//机构集合
                 ProductSortEntity.OrgTypeBean orgTypeBean = new ProductSortEntity.OrgTypeBean();
-                orgTypeBean.setDictSubId("");
+                orgTypeBean.setOptionValue("");
                 orgTypeBean.setOptionName("全部机构");
                 orgTypeInfos.add(0, orgTypeBean);//机构集合里面加一个
                 ParamsUtil.getInstance().setTjorgTypeInfos(orgTypeInfos);//机构
                 productInfos = productSortEntity.getProductOrder();//排序集合
                 ProductSortEntity.ProductOrderBean productOrderBean = new ProductSortEntity.ProductOrderBean();
-                productOrderBean.setDictSubId("");//排序
+                productOrderBean.setOptionValue("");//排序
                 productOrderBean.setOptionName("综合排序");
                 productInfos.add(0, productOrderBean);//排序集合里面加一个
                 moneyScopeInfos = productSortEntity.getMoneyScope();//金额集合
                 ProductSortEntity.MoneyScopeBean moneyScopeBean = new ProductSortEntity.MoneyScopeBean();
-                moneyScopeBean.setDictSubId("");
+                moneyScopeBean.setOptionValue("");
                 moneyScopeBean.setOptionName("金额范围");//金额集合里面加一个
                 moneyScopeInfos.add(0, moneyScopeBean);//金额
                 loanTermInfos = productSortEntity.getLoanTerm();//期限集合
                 ProductSortEntity.LoanTermBean loanTermBean = new ProductSortEntity.LoanTermBean();
-                loanTermBean.setDictSubId("");
+                loanTermBean.setOptionValue("");
                 loanTermBean.setOptionName("贷款期限");//期限集合加一个
                 loanTermInfos.add(0, loanTermBean);//期限
             }
@@ -219,7 +219,7 @@ public class TjlistFragment extends BaseFragment {
             case R.id.rb_bank:
                 intent = new Intent(getActivity(), OrgTypeListAct.class);
                 intent.putExtra("type",2);
-                startActivityForResult(intent, ORGQUEST);
+                startActivityForResult(intent, 2);
                 sbp.hide();
 //                listItem = orgTypeInfos;
                 clearArrow();
@@ -275,7 +275,7 @@ public class TjlistFragment extends BaseFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ORGQUEST && null != data) {
+        if (requestCode == 2 && null != data) {
             int position = data.getIntExtra("org", 0);
             String name = orgTypeInfos.get(position).getOptionName();
             if (name.length() > 4) {
@@ -283,9 +283,9 @@ public class TjlistFragment extends BaseFragment {
             } else {
                 rbBank.setText(name);
             }
-            cBank = orgTypeInfos.get(position).getDictSubId();
+            cBank = orgTypeInfos.get(position).getOptionValue();
             page = 1;
-            getTjproduct(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),tuijianbean.getCreditMoney(),tuijianbean.getCreditTime(), tuijianbean.getEduLevel(), tuijianbean.getDomicile(), tuijianbean.getCreditStatusKey(), tuijianbean.getJobIdentityKey(), tuijianbean.getAge(), tuijianbean.getLicenseTimeLength(), tuijianbean.getCreditStatusKey(), tuijianbean.getPropertyTypeKey(), tuijianbean.getSalary(), tuijianbean.getGuaranteeSlip(), tuijianbean.getOtherAssets(), tuijianbean.getFundTimeLength(),"", page, rows);//获取推荐产品
+            getTjproduct(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cMoney,cTime,cBank,cSort,"ASC",tuijianbean.getEduLevel(), tuijianbean.getDomicile(), tuijianbean.getCreditStatusKey(), tuijianbean.getJobIdentityKey(), tuijianbean.getAge(), tuijianbean.getLicenseTimeLength(), tuijianbean.getCreditStatusKey(), tuijianbean.getPropertyTypeKey(), tuijianbean.getSalary(), tuijianbean.getGuaranteeSlip(), tuijianbean.getOtherAssets(), tuijianbean.getFundTimeLength(),"", page, rows);//获取推荐产品
         }
     }
 
@@ -314,7 +314,7 @@ public class TjlistFragment extends BaseFragment {
                         } else {
                             rbMoney.setText(textView.getText().toString() + "");
                         }
-                        cMoney = moneyScopeInfos.get(position).getDictSubId();
+                        cMoney = moneyScopeInfos.get(position).getOptionValue();
                         page = 1;
                         break;
                     case ProductSortAdapter.SORT:
@@ -323,7 +323,7 @@ public class TjlistFragment extends BaseFragment {
                         } else {
                             rbRange.setText(textView.getText().toString() + "");
                         }
-                        cSort = productInfos.get(position).getDictSubId();
+                        cSort = productInfos.get(position).getOptionValue();
                         page = 1;
                         break;
                     case ProductSortAdapter.TIME:
@@ -332,7 +332,7 @@ public class TjlistFragment extends BaseFragment {
                         } else {
                             rbTime.setText(textView.getText().toString() + "");
                         }
-                        cTime = loanTermInfos.get(position).getDictSubId();
+                        cTime = loanTermInfos.get(position).getOptionValue();
                         page = 1;
                         break;
                     default:
@@ -343,18 +343,26 @@ public class TjlistFragment extends BaseFragment {
 //                lvCreditSort.setEnabled(false);
 
                 sbp.setClickable(false);
-                getTjproduct(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),tuijianbean.getCreditMoney(),tuijianbean.getCreditTime(), tuijianbean.getEduLevel(), tuijianbean.getDomicile(), tuijianbean.getCreditStatusKey(), tuijianbean.getJobIdentityKey(), tuijianbean.getAge(), tuijianbean.getLicenseTimeLength(), tuijianbean.getCreditStatusKey(), tuijianbean.getPropertyTypeKey(), tuijianbean.getSalary(), tuijianbean.getGuaranteeSlip(), tuijianbean.getOtherAssets(), tuijianbean.getFundTimeLength(),"", page, rows);//获取推荐产品
-
-
+                getTjproduct(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cMoney,cTime,cBank,cSort,"ASC",tuijianbean.getEduLevel(), tuijianbean.getDomicile(), tuijianbean.getCreditStatusKey(), tuijianbean.getJobIdentityKey(), tuijianbean.getAge(), tuijianbean.getLicenseTimeLength(), tuijianbean.getCreditStatusKey(), tuijianbean.getPropertyTypeKey(), tuijianbean.getSalary(), tuijianbean.getGuaranteeSlip(), tuijianbean.getOtherAssets(), tuijianbean.getFundTimeLength(),"", page, rows);//获取推荐产品
 
             }
         });
 
+        sbp.setOnStateChangeListener(new SlideBottomPanel.OnStateChangeListener() {
+            @Override
+            public void Hidden(boolean isHidden) {
+                clearArrow();
+                clearTextColor();
+            }
+        });
+
+
+
     }
     private List<ProductBean> datas = new ArrayList<>();
     //获取推荐产品
-    private void getTjproduct(String cityId, String creditMoney, String creditTime, String eduLevel, String domicile, String creditStatusKey, String jobIdentityKey, String age, String licenseTimeLength, String carStatusKey, String propertyTypeKey, String salary, String guaranteeSlip, String otherAssets, String fundTimeLength,String propertyName, final int page, int rows) {
-        RequestManager.getMangManger().findTjProductList(cityId,creditMoney,creditTime, eduLevel, domicile, creditStatusKey, jobIdentityKey, age, licenseTimeLength, carStatusKey, propertyTypeKey, salary, guaranteeSlip, otherAssets, fundTimeLength,propertyName, page, rows, new RequestManager.CallBack() {
+    private void getTjproduct(String cityId, String creditMoney, String creditTime,String orgTypeKey, String productOrder, String orderByOfType, String eduLevel, String domicile, String creditStatusKey, String jobIdentityKey, String age, String licenseTimeLength, String carStatusKey, String propertyTypeKey, String salary, String guaranteeSlip, String otherAssets, String fundTimeLength,String propertyName, final int page, int rows) {
+        RequestManager.getMangManger().findTjProductList(cityId,creditMoney,creditTime,orgTypeKey,productOrder,orderByOfType,eduLevel, domicile, creditStatusKey, jobIdentityKey, age, licenseTimeLength, carStatusKey, propertyTypeKey, salary, guaranteeSlip, otherAssets, fundTimeLength,propertyName, page, rows, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
                 loadView.loadComplete();
@@ -419,7 +427,7 @@ public class TjlistFragment extends BaseFragment {
         if(!hidden){
             initTit();//初识化头部筛选条件
             getSortParam();//获取头部筛选条件
-            getTjproduct(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),tuijianbean.getCreditMoney(),tuijianbean.getCreditTime(), tuijianbean.getEduLevel(), tuijianbean.getDomicile(), tuijianbean.getCreditStatusKey(), tuijianbean.getJobIdentityKey(), tuijianbean.getAge(), tuijianbean.getLicenseTimeLength(), tuijianbean.getCreditStatusKey(), tuijianbean.getPropertyTypeKey(), tuijianbean.getSalary(), tuijianbean.getGuaranteeSlip(), tuijianbean.getOtherAssets(), tuijianbean.getFundTimeLength(),"", page, rows);//获取推荐产品
+            getTjproduct(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cMoney,cTime,cBank,cSort,"ASC",tuijianbean.getEduLevel(), tuijianbean.getDomicile(), tuijianbean.getCreditStatusKey(), tuijianbean.getJobIdentityKey(), tuijianbean.getAge(), tuijianbean.getLicenseTimeLength(), tuijianbean.getCreditStatusKey(), tuijianbean.getPropertyTypeKey(), tuijianbean.getSalary(), tuijianbean.getGuaranteeSlip(), tuijianbean.getOtherAssets(), tuijianbean.getFundTimeLength(),"", page, rows);//获取推荐产品
         }
     }
 }

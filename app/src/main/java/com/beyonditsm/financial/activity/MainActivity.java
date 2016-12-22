@@ -23,6 +23,7 @@ import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.speedcredit.creditspeedthied.CreditSpeedThird_2Act;
 import com.beyonditsm.financial.activity.user.BannerDetailAct;
+import com.beyonditsm.financial.activity.user.LoginAct;
 import com.beyonditsm.financial.db.FriendDao;
 import com.beyonditsm.financial.entity.FriendBean;
 import com.beyonditsm.financial.entity.ResultData;
@@ -208,12 +209,12 @@ public class MainActivity extends BaseActivity {
                     if (RongIM.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED)) {
                         if (!TextUtils.isEmpty(user.getAccountId())) {
                             RongIM.getInstance().setCurrentUserInfo(new UserInfo(user.getAccountId(), user.getUserName(),
-                                    Uri.parse(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon())));
+                                    Uri.parse(IFinancialUrl.SECURITY_IMAGE_URL + user.getHeadIcon())));
                             RongIM.getInstance().refreshUserInfoCache(new UserInfo(user.getAccountId(), user.getUserName(),
-                                    Uri.parse(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon())));
+                                    Uri.parse(IFinancialUrl.SECURITY_IMAGE_URL + user.getHeadIcon())));
                             RongIM.getInstance().setMessageAttachedUserInfo(true);
                             FriendBean bean = new FriendBean();
-                            bean.setUserHead(IFinancialUrl.BASE_IMAGE_URL + user.getHeadIcon());
+                            bean.setUserHead(IFinancialUrl.SECURITY_IMAGE_URL + user.getHeadIcon());
                             bean.setUserName(user.getUserName());
                             bean.setUserId(user.getAccountId());
                             FriendDao.saveMes(bean);
@@ -256,13 +257,13 @@ public class MainActivity extends BaseActivity {
                 break;
             //我的
             case R.id.llMine:
-//                if (TextUtils.isEmpty(SpUtils.getRoleName(MainActivity.this))) {
-//                    gotoActivity(LoginAct.class, false);
-//                } else {
+                if (TextUtils.isEmpty(SpUtils.getRoleName(MyApplication.getInstance().getApplicationContext()))) {
+                    gotoActivity(LoginAct.class, false);
+                } else {
                     setAllTabNor();
                     setTabSelection(3);
                     setCheckItem(3);
-//                }
+                }
                 break;
 
         }

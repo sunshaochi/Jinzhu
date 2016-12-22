@@ -89,7 +89,7 @@ public class ImagePagerActivity extends FragmentActivity {
                     @Override
                     public void run() {
                         @SuppressLint("SdCardPath") boolean isSave = sts.ToSDCard(ImagePagerActivity.this,
-                                IFinancialUrl.BASE_IMAGE_URL + urls.get(position),
+                                IFinancialUrl.SECURITY_IMAGE_URL + urls.get(position),
                                 "/sdcard/education", System.currentTimeMillis() + ".jpg");
                         if (isSave) {
                             handler.sendEmptyMessage(0);

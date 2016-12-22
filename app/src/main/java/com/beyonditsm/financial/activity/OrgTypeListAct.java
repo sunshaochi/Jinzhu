@@ -29,9 +29,9 @@ public class OrgTypeListAct extends BaseActivity {
         setLeftTv("返回");
         setTopTitle("贷款机构");
         type=getIntent().getExtras().getInt("type");
-        if(type==1){
+        if(type==1){//大额贷
         lvOrgType.setAdapter(new OrgTypeAdapter(ParamsUtil.getInstance().getOrgTypeInfos(),OrgTypeListAct.this));}
-        else if(type==2){
+        else if(type==2){//推荐
             lvOrgType.setAdapter(new OrgTypeAdapter(ParamsUtil.getInstance().getTjorgTypeInfos(),OrgTypeListAct.this));
         }
         lvOrgType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -40,7 +40,7 @@ public class OrgTypeListAct extends BaseActivity {
                 Intent intent = new Intent();
                 intent.putExtra("org",position);
                 setResult(0, intent);
-                EventBus.getDefault().post(new OrgEvent(position));
+                EventBus.getDefault().post(new OrgEvent(position));//这个方法是传到大额贷里面的因为
                 finish();
             }
         });

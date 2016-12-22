@@ -13,7 +13,7 @@ public interface IFinancialUrl {
     /*吕东测试*/
 //    String BASE_URL = "http://172.16.5.59";
 
-//    String BASE_URL ="http://172.16.6.218:8082";
+    String BASE_URL ="http://172.16.6.218:8082";
 
 //    String BASE_URL ="http://172.16.6.218:8082";
 //    String BASE_URL ="http://172.16.6.159:8061";
@@ -89,7 +89,8 @@ public interface IFinancialUrl {
         String API_VERSION = "/easyplay";
 //    String API_VERSION = "/file";
 
-    String BASE_IMAGE_URL = BASE_URL +  "/file/";
+    String BASE_IMAGE_URL = BASE_URL +  "/unlogin/file/";
+    String SECURITY_IMAGE_URL =BASE_URL +  "/file/";
 
     /*登录*/
 //    String LOGIN_URL = BASE_URL + API_VERSION + "/manager/unLogin/login.do";

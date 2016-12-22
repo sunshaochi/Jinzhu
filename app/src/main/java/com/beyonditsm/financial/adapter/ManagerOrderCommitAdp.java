@@ -107,7 +107,7 @@ public class ManagerOrderCommitAdp extends BaseAdapter  {
 //                holder.llDefaultRate.setLayoutParams(layoutParams);
 //            }
 //            holder.tvpingji.setText("用户评级："+"D");
-            ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + datas.get(i).getImageLogoPath(), holder.ivPic, options);
+            ImageLoader.getInstance().displayImage(IFinancialUrl.SECURITY_IMAGE_URL + datas.get(i).getImageLogoPath(), holder.ivPic, options);
         }
         return view;
     }

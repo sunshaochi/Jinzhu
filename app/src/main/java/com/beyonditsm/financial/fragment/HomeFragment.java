@@ -141,6 +141,11 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
     }
 
     @Override
+    public void onLoginBack() {
+        super.onLoginBack();
+    }
+
+    @Override
     public void onStart() {
 
         super.onStart();
@@ -296,8 +301,8 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
                 getActivity().sendBroadcast(new Intent(CreditFragment.CHANGE));
                 break;
 
-            case R.id.ll_work://打工挣钱
-                if (!"".equals(SpUtils.getRoleName(context))) {
+            case R.id.ll_work://代言人
+                if (!TextUtils.isEmpty(SpUtils.getRoleName(context))) {
 //                    intent = new Intent(mParentActivity, NewWorkAct.class);//跳转打工挣钱页面
                     intent = new Intent(mParentActivity, MyRecommAct.class);//跳转代言人页面
                     if (null != ule && !"".equals(ule.getReferralCode())) {
