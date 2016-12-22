@@ -394,6 +394,7 @@ public class LoginAct extends BaseActivity {
                 SpUtils.setRoleName(MyApplication.getInstance().getApplicationContext(),rd.getData().getRoleName()+"");
                 Intent intent = new Intent("com.update.user");
                 sendBroadcast(intent);
+                finish();
 //                ParamsUtil.getInstance().setUle(rd.getData());
 //                if ("ROLE_CREDIT_MANAGER".equals(roleName)) {
 //                    sendBroadcast(new Intent(ManagerMainAct.UPDATATAB));
