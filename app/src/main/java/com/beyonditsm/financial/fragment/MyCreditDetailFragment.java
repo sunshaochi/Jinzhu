@@ -50,6 +50,7 @@ import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.List;
@@ -158,6 +159,7 @@ public class MyCreditDetailFragment extends BaseFragment {
     private String creditName;
     public static String monthlyPayments;//月供
     private String totalRath;
+    private String tv_danwei;//期限后面的单位
 
     OrderDetailInfo.DataEntity data;
 
@@ -252,7 +254,29 @@ public class MyCreditDetailFragment extends BaseFragment {
         orderbean=orderListBean.getOrder();
         prodct=orderListBean.getProduct();
         customer=orderListBean.getCustomer();
+        if(!TextUtils.isEmpty(orderListBean.getLoanPeriodType())){
+            if("1".equals(orderListBean.getLoanPeriodType())){
+                tv_danwei="年";
+            }
+            else if("2".equals(orderListBean.getLoanPeriodType())){
+                tv_danwei="月";
+            }else if("3".equals(orderListBean.getLoanPeriodType())){
+                tv_danwei="周";
+            }else if("4".equals(orderListBean.getLoanPeriodType())){
+                tv_danwei="日";
+            }else if("5".equals(orderListBean.getLoanPeriodType())){
+                tv_danwei="期数";
+            }
+        }else {
+            tv_danwei="月";
+        }
 
+            if (!TextUtils.isEmpty(orderListBean.getMinLoanPeriod())||!TextUtils.isEmpty(orderListBean.getMaxLoanPeriod())) {
+                if(orderListBean.getMaxLoanPeriod().equals(orderListBean.getMinLoanPeriod())){
+                    tvL.setText("期限范围：" + data.getTimeMinVal() + tv_danwei);
+                }else {
+                tvL.setText("期限范围：" + data.getTimeMinVal() + "~" + data.getTimeMaxVal() + tv_danwei);}
+            }
         if(prodct!=null){
             loadingView.loadComplete();
             ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + prodct.getProductLogo(), ivBank, options);
@@ -409,6 +433,9 @@ public class MyCreditDetailFragment extends BaseFragment {
 
 
         }
+        if (!TextUtils.isEmpty(orderListBean.getAddress())) {//详细地址
+                address.setText(orderListBean.getAddress());
+            }
         if(customer!=null){
             if (!TextUtils.isEmpty(customer.getCusName()))
                 tv_tochat.setText(customer.getCusName());

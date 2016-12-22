@@ -195,23 +195,23 @@ public class DefaultCreditFrag extends BaseFragment {
                 llSearchTitle.setVisibility(View.VISIBLE);
                 orgTypeInfos = productSortEntity.getOrgType();//机构集合
                 ProductSortEntity.OrgTypeBean orgTypeBean = new ProductSortEntity.OrgTypeBean();
-                orgTypeBean.setDictSubId("");
+                orgTypeBean.setOptionValue("");
                 orgTypeBean.setOptionName("全部机构");
                 orgTypeInfos.add(0, orgTypeBean);//机构集合里面加一个
                 ParamsUtil.getInstance().setOrgTypeInfos(orgTypeInfos);//机构
                 productInfos = productSortEntity.getProductOrder();//排序集合
                 ProductSortEntity.ProductOrderBean productOrderBean = new ProductSortEntity.ProductOrderBean();
-                productOrderBean.setDictSubId("");//排序
+                productOrderBean.setOptionValue("");//排序
                 productOrderBean.setOptionName("综合排序");
                 productInfos.add(0, productOrderBean);//排序集合里面加一个
                 moneyScopeInfos = productSortEntity.getMoneyScope();//金额集合
                 ProductSortEntity.MoneyScopeBean moneyScopeBean = new ProductSortEntity.MoneyScopeBean();
-                moneyScopeBean.setDictSubId("");
+                moneyScopeBean.setOptionValue("");
                 moneyScopeBean.setOptionName("金额范围");//金额集合里面加一个
                 moneyScopeInfos.add(0, moneyScopeBean);//金额
                 loanTermInfos = productSortEntity.getLoanTerm();//期限集合
                 ProductSortEntity.LoanTermBean loanTermBean = new ProductSortEntity.LoanTermBean();
-                loanTermBean.setDictSubId("");
+                loanTermBean.setOptionValue("");
                 loanTermBean.setOptionName("贷款期限");//期限集合加一个
                 loanTermInfos.add(0, loanTermBean);//期限
             }
@@ -260,7 +260,7 @@ public class DefaultCreditFrag extends BaseFragment {
                         } else {
                             rbMoney.setText(textView.getText().toString() + "");
                         }
-                        cMoney = moneyScopeInfos.get(position).getDictSubId();
+                        cMoney = moneyScopeInfos.get(position).getOptionValue();
                         currentP = 1;
                         break;
                     case ProductSortAdapter.SORT:
@@ -269,7 +269,7 @@ public class DefaultCreditFrag extends BaseFragment {
                         } else {
                             rbRange.setText(textView.getText().toString() + "");
                         }
-                        cSort = productInfos.get(position).getDictSubId();
+                        cSort = productInfos.get(position).getOptionValue();
                         currentP = 1;
                         break;
                     case ProductSortAdapter.TIME:
@@ -278,7 +278,7 @@ public class DefaultCreditFrag extends BaseFragment {
                         } else {
                             rbTime.setText(textView.getText().toString() + "");
                         }
-                        cTime = loanTermInfos.get(position).getDictSubId();
+                        cTime = loanTermInfos.get(position).getOptionValue();
                         currentP = 1;
                         break;
                     default:
@@ -434,28 +434,28 @@ public class DefaultCreditFrag extends BaseFragment {
         } else {
             rbBank.setText(name);
         }
-        cBank = orgTypeInfos.get(orgEvent.position).getDictSubId();
+        cBank = orgTypeInfos.get(orgEvent.position).getOptionValue();
         currentP = 1;
         getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cMoney,cTime,cBank,cSort,"ASC",currentP, pageSize);//获取产品列表
     }
 
-    @SuppressLint("SetTextI18n")
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ORGQUEST && null != data) {
-            int position = data.getIntExtra("org", 0);
-            String name = orgTypeInfos.get(position).getOptionName();
-            if (name.length() > 4) {
-                rbBank.setText(name.substring(0, 4) + "..");
-            } else {
-                rbBank.setText(name);
-            }
-            cBank = orgTypeInfos.get(position).getDictSubId();
-            currentP = 1;
-            getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cMoney,cTime,cBank,cSort,"ASC",currentP, pageSize);//获取产品列表
-        }
-    }
+//    @SuppressLint("SetTextI18n")
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == ORGQUEST && null != data) {
+//            int position = data.getIntExtra("org", 0);
+//            String name = orgTypeInfos.get(position).getOptionName();
+//            if (name.length() > 4) {
+//                rbBank.setText(name.substring(0, 4) + "..");
+//            } else {
+//                rbBank.setText(name);
+//            }
+//            cBank = orgTypeInfos.get(position).getOptionValue();
+//            currentP = 1;
+//            getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cMoney,cTime,cBank,cSort,"ASC",currentP, pageSize);//获取产品列表
+//        }
+//    }
 
     public void clearTextColor() {
         rbTime.setTextColor(context.getResources().getColor(R.color.black));

@@ -13,7 +13,7 @@ public interface IFinancialUrl {
     /*吕东测试*/
 //    String BASE_URL = "http://172.16.5.59";
 
-//    String BASE_URL ="http://172.16.6.218:8082";
+    String BASE_URL ="http://172.16.6.218:8082";
 
 //    String BASE_URL ="http://172.16.6.218:8082";
 //    String BASE_URL ="http://172.16.6.159:8061";
@@ -72,7 +72,7 @@ public interface IFinancialUrl {
 //    String BASE_URL = "http://172.16.6.228:8080";
 
 
-      String BASE_URL="http://139.196.227.53:9010";
+//      String BASE_URL="http://139.196.227.53:9010";
 
 //    String BASE_URL="http://172.16.5.32:8083";
 

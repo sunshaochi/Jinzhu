@@ -141,6 +141,11 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
     }
 
     @Override
+    public void onLoginBack() {
+        super.onLoginBack();
+    }
+
+    @Override
     public void onStart() {
 
         super.onStart();

@@ -7,6 +7,7 @@
     <include layout="@layout/title_act_layout"></include>
     
     <EditText
+        android:inputType="number"
         android:id="@+id/et_tv"
         android:layout_marginTop="15dp"
         android:layout_marginRight="15dp"
