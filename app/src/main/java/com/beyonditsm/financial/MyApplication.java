@@ -19,6 +19,7 @@ import com.beyonditsm.financial.util.CustomImageDownloader;
 import com.beyonditsm.financial.util.PackageUtil;
 import com.lidroid.xutils.util.LogUtils;
 import com.tandong.sa.sql.util.Log;
+import com.tandong.sa.tag.helper.StringUtil;
 import com.tandong.sa.zUImageLoader.cache.disc.naming.Md5FileNameGenerator;
 import com.tandong.sa.zUImageLoader.core.ImageLoader;
 import com.tandong.sa.zUImageLoader.core.ImageLoaderConfiguration;
@@ -27,7 +28,8 @@ import com.testin.agent.TestinAgent;
 import com.testin.agent.TestinAgentConfig;
 
 import java.util.Map;
-import java.util.jar.*;
+import java.util.jar.Attributes;
+import java.util.jar.JarFile;
 
 import cn.jpush.android.api.JPushInterface;
 import io.rong.imkit.RongIM;
@@ -66,14 +68,12 @@ public class MyApplication extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        Log.d( "loadDex", "App attachBaseContext ");
+
         if (!quickStart() && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {//>=5.0的系统默认对dex进行oat优化
             if (needWait(base)){
                 waitForDexopt(base);
             }
             MultiDex.install (this );
-        } else {
-            return;
         }
     }
     //neead wait for dexopt ?
@@ -86,11 +86,7 @@ public class MyApplication extends Application {
         return !TextUtils.equals(flag,saveValue);
     }
     public boolean quickStart() {
-        if (getCurProcessName(this).contains(":mini")) {
-            Log.d( "loadDex", ":mini start!");
-            return true;
-        }
-        return false ;
+        return (getCurProcessName(this) + "").contains(":mini");
     }
     @Override
     public void onCreate() {
@@ -128,7 +124,6 @@ public class MyApplication extends Application {
         while (needWait(base)) {
             try {
                 long nowWait = System.currentTimeMillis() - startWait;
-                Log.d("loadDex" , "wait ms :" + nowWait);
                 if (nowWait >= waitTime) {
                     return;
                 }
@@ -161,7 +156,7 @@ public class MyApplication extends Application {
     public void installFinish(Context context){
         SharedPreferences sp = context.getSharedPreferences(
                 PackageUtil.getPackageInfo(context).versionName, MODE_MULTI_PROCESS);
-        sp.edit().putString(KEY_DEX2_SHA1,get2thDexSHA1(context)).commit();
+        sp.edit().putString(KEY_DEX2_SHA1,get2thDexSHA1(context)).apply();
     }
     private void initPragram() {
         /**
