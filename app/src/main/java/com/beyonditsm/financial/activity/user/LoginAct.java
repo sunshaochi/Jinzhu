@@ -391,7 +391,7 @@ public class LoginAct extends BaseActivity {
 
                 loginBtn.setEnabled(true);
                 progressBar1.setVisibility(View.GONE);
-                SpUtils.setRoleName(MyApplication.getInstance().getApplicationContext(),rd.getData().getRoleName()+"");
+                SpUtils.setRoleName(MyApplication.getInstance().getApplicationContext(),rd.getData().getUsername()+"");
                 Intent intent = new Intent("com.update.user");
                 sendBroadcast(intent);
                 finish();
