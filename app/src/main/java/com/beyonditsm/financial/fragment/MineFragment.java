@@ -19,7 +19,6 @@ import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.MessageActivity;
 import com.beyonditsm.financial.activity.speedcredit.CreditSpeedFirstAct;
-import com.beyonditsm.financial.activity.user.LoginAct;
 import com.beyonditsm.financial.activity.user.MyCreditAct;
 import com.beyonditsm.financial.activity.user.MyRecommAct;
 import com.beyonditsm.financial.activity.user.SettingAct;
@@ -205,12 +204,12 @@ public class MineFragment extends BaseFragment {
         switch (v.getId()) {
             //我的资料
             case R.id.rlMyData:
-                if (isLogin) {
+//                if (isLogin) {
                     intent = new Intent(getActivity(), UpdateAct.class);
                     intent.putExtra(MineFragment.USER_KEY, user);
-                } else {
-                    intent = new Intent(getActivity(), LoginAct.class);
-                }
+//                } else {
+//                    intent = new Intent(getActivity(), LoginAct.class);
+//                }
                 startActivity(intent);
                 break;
 
@@ -562,17 +561,17 @@ public class MineFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
 //        getUserInfo();
-//        if (TextUtils.isEmpty(SpUtils.getUsername(getContext()))) {
-//            isLogin = false;
-//            tvName.setText("去登录");
-//            tvExit.setVisibility(View.GONE);
-//        } else {
-//            isLogin = true;
-//            tvName.setText(SpUtils.getUsername(getContext()));
-//            tvExit.setVisibility(View.VISIBLE);
-////            getUserInfo();
-////            getUserLoginInfo();
-//        }
+        if (TextUtils.isEmpty(SpUtils.getUsername(getContext()))) {
+            isLogin = false;
+            tvName.setText("去登录");
+            tvExit.setVisibility(View.GONE);
+        } else {
+            isLogin = true;
+            tvName.setText(SpUtils.getUsername(getContext()));
+            tvExit.setVisibility(View.VISIBLE);
+//            getUserInfo();
+//            getUserLoginInfo();
+        }
 
     }
 

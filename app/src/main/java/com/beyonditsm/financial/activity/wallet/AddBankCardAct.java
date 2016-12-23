@@ -13,7 +13,7 @@ import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.entity.AddBankCardEntity;
 import com.beyonditsm.financial.entity.BanksBean;
-import com.beyonditsm.financial.entity.UserEntity;
+import com.beyonditsm.financial.entity.ProfileInfoBean;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.MyToastUtils;
@@ -49,7 +49,7 @@ public class AddBankCardAct extends BaseActivity {
     private TextView tvSetPassword;
     @ViewInject(R.id.tv_sureAdd)
     private TextView tvSureAdd;
-    private UserEntity user;//用户实体
+    private ProfileInfoBean user;//用户实体
     private List<BanksBean> bankList;
     private int bankNamePos;
 
