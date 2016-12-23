@@ -60,7 +60,7 @@ public class UserManager extends RequestManager {
     public void findUserLoginInfo(CallBack callBack) {
         Map<String, String> params = new HashMap<String, String>();
 //        List<NameValuePair> params = new ArrayList<>();
-        doPost(IFinancialUrl.USER_LOGIN_URL, params, callBack);
+        doGet(IFinancialUrl.USER_LOGIN_URL, callBack);
     }
 
     public void findOrderDealHistory(String orderId, CallBack callBack) {

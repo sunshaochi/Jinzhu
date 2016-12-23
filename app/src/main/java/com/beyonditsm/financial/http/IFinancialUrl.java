@@ -13,7 +13,7 @@ public interface IFinancialUrl {
     /*吕东测试*/
 //    String BASE_URL = "http://172.16.5.59";
 
-    String BASE_URL ="http://172.16.6.218:8082";
+//    String BASE_URL ="http://172.16.6.218:8082";
 
 //    String BASE_URL ="http://172.16.6.218:8082";
 //    String BASE_URL ="http://172.16.6.159:8061";
@@ -75,12 +75,12 @@ public interface IFinancialUrl {
 //      String BASE_URL="http://139.196.227.53:9010";
 
 //    String BASE_URL="http://172.16.5.32:8083";
-
+        String BASE_URL="http://139.196.227.38:9040/GS.API.Online-0.2.0";
 //      String BASE_URL="http://139.196.227.53:9010";
 //    String BASE_URL="http://172.16.5.32:8083";
 //    String BASE_URL="http://172.16.5.32:8083";
 
-    String BASE_URL="http://139.196.227.38:9000";//#  后台
+//    String BASE_URL="http://139.196.227.38:9000";//#  后台
 //  String BASE_URL="http://172.16.6.159:8061";
     /**
      * @MARKEY_CODE 渠道号设置，默认渠道设置为空字符串
