@@ -385,14 +385,15 @@ public class LoginAct extends BaseActivity {
             @Override
             public void onSucess(String result) throws JSONException {
 
+//<<<<<<< HEAD
                 ResultData<UserLoginBean> rd = (ResultData<UserLoginBean>) GsonUtils.json(result, UserLoginBean.class);
                 UserLoginBean data = rd.getData();
                 if (TextUtils.equals(data.getUserStatus(),"ROLE_COMMON_USER")){
                     ProfileInfoBean profileInfo = data.getProfileInfo();
                     if (!TextUtils.isEmpty(profileInfo.getName())){
-                        SpUtils.setUsername(getApplicationContext(),profileInfo.getName());
+                        SpUtils.setUsername(MyApplication.getInstance().getApplicationContext(),profileInfo.getName());
                     }else {
-                        SpUtils.setUsername(getApplicationContext(),data.getUsername());
+                        SpUtils.setUsername(MyApplication.getInstance().getApplicationContext(),data.getUsername());
                     }
 
                     loginBtn.setEnabled(true);
@@ -403,12 +404,20 @@ public class LoginAct extends BaseActivity {
                     sendBroadcast(intent);
                     finish();
                 }else if (TextUtils.equals(data.getUserStatus(),"ROLE_CREDIT_MANAGER_0")){
-                    MyToastUtils.showShortToast(getApplicationContext(),"该用户为信贷经理用户，请下载信贷经理端后重新登录");
+                    MyToastUtils.showShortToast(MyApplication.getInstance().getApplicationContext(),"该用户为信贷经理用户，请下载信贷经理端后重新登录");
                     loginBtn.setEnabled(true);
                     progressBar1.setVisibility(View.GONE);
                     return;
                 }
-
+//
+//=======
+//                loginBtn.setEnabled(true);
+//                progressBar1.setVisibility(View.GONE);
+//                SpUtils.setRoleName(MyApplication.getInstance().getApplicationContext(),rd.getData().getUsername()+"");
+//                Intent intent = new Intent("com.update.user");
+//                sendBroadcast(intent);
+//                finish();
+//>>>>>>> 997395d331f60be2a0aa3eb875151111492b27b5
 //                ParamsUtil.getInstance().setUle(rd.getData());
 //                if ("ROLE_CREDIT_MANAGER".equals(roleName)) {
 //                    sendBroadcast(new Intent(ManagerMainAct.UPDATATAB));

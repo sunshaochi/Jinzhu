@@ -51,6 +51,8 @@ public class UserLoginBean implements Parcelable {
     }
 
     public AdressBean getAddress() {
+        if (address == null)
+            address = new AdressBean();
         return address;
     }
 
