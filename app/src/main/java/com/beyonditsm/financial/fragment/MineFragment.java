@@ -19,7 +19,6 @@ import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.MessageActivity;
 import com.beyonditsm.financial.activity.speedcredit.CreditSpeedFirstAct;
-import com.beyonditsm.financial.activity.user.LoginAct;
 import com.beyonditsm.financial.activity.user.MyCreditAct;
 import com.beyonditsm.financial.activity.user.MyRecommAct;
 import com.beyonditsm.financial.activity.user.SettingAct;
@@ -153,6 +152,12 @@ public class MineFragment extends BaseFragment {
 
     @Override
     public void setListener() {
+        minePageLoadingView.setOnRetryListener(new MinePageLoadingView.OnRetryListener() {
+            @Override
+            public void OnRetry() {
+                getUserInfo();
+            }
+        });
 //        minePageLoadingView.setOnRetryListener(new MinePageLoadingView.OnRetryListener() {
 //            @Override
 //            public void OnRetry() {
@@ -638,6 +643,7 @@ public class MineFragment extends BaseFragment {
                 user = rd.getData();
                 minePageLoadingView.loadComplete();
                 if (user != null) {
+                    isLogin = true;
                     ProfileInfoBean profileInfo = user.getProfileInfo();
                     if (!TextUtils.isEmpty(profileInfo.getName())){
                         tvName.setText(profileInfo.getName());
@@ -646,7 +652,7 @@ public class MineFragment extends BaseFragment {
                     ImageLoader.getInstance().displayImage(IFinancialUrl.SECURITY_IMAGE_URL + profileInfo.getAvatarPic(), civHead, options);
                 } else {
                     tvExit.setVisibility(View.VISIBLE);
-                    isLogin = true;
+                    isLogin = false;
                     tvName.setText("");
 //                getUserInfo();
                 }

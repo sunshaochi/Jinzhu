@@ -17,13 +17,10 @@ import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.activity.MainActivity;
-import com.beyonditsm.financial.activity.speedcredit.CreditSpeedFirstAct;
 import com.beyonditsm.financial.entity.ProfileInfoBean;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.entity.UserLoginBean;
-import com.beyonditsm.financial.entity.UserLoginEntity;
-import com.beyonditsm.financial.fragment.MineFragment;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
@@ -387,14 +384,40 @@ public class LoginAct extends BaseActivity {
         RequestManager.getUserManager().findUserLoginInfo(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-                ResultData<UserLoginEntity> rd = (ResultData<UserLoginEntity>) GsonUtils.json(result, UserLoginEntity.class);
 
-                loginBtn.setEnabled(true);
-                progressBar1.setVisibility(View.GONE);
-                SpUtils.setRoleName(MyApplication.getInstance().getApplicationContext(),rd.getData().getRoleName()+"");
-                Intent intent = new Intent("com.update.user");
-                sendBroadcast(intent);
-                finish();
+//<<<<<<< HEAD
+                ResultData<UserLoginBean> rd = (ResultData<UserLoginBean>) GsonUtils.json(result, UserLoginBean.class);
+                UserLoginBean data = rd.getData();
+                if (TextUtils.equals(data.getUserStatus(),"ROLE_COMMON_USER")){
+                    ProfileInfoBean profileInfo = data.getProfileInfo();
+                    if (!TextUtils.isEmpty(profileInfo.getName())){
+                        SpUtils.setUsername(MyApplication.getInstance().getApplicationContext(),profileInfo.getName());
+                    }else {
+                        SpUtils.setUsername(MyApplication.getInstance().getApplicationContext(),data.getUsername());
+                    }
+
+                    loginBtn.setEnabled(true);
+                    progressBar1.setVisibility(View.GONE);
+                    SpUtils.setRoleName(MyApplication.getInstance().getApplicationContext(),rd.getData().getUserStatus()+"");
+                    SpUtils.setPhonenumber(MyApplication.getInstance().getApplicationContext(),rd.getData().getUsername());
+                    Intent intent = new Intent("com.update.user");
+                    sendBroadcast(intent);
+                    finish();
+                }else if (TextUtils.equals(data.getUserStatus(),"ROLE_CREDIT_MANAGER_0")){
+                    MyToastUtils.showShortToast(MyApplication.getInstance().getApplicationContext(),"该用户为信贷经理用户，请下载信贷经理端后重新登录");
+                    loginBtn.setEnabled(true);
+                    progressBar1.setVisibility(View.GONE);
+                    return;
+                }
+//
+//=======
+//                loginBtn.setEnabled(true);
+//                progressBar1.setVisibility(View.GONE);
+//                SpUtils.setRoleName(MyApplication.getInstance().getApplicationContext(),rd.getData().getUsername()+"");
+//                Intent intent = new Intent("com.update.user");
+//                sendBroadcast(intent);
+//                finish();
+//>>>>>>> 997395d331f60be2a0aa3eb875151111492b27b5
 //                ParamsUtil.getInstance().setUle(rd.getData());
 //                if ("ROLE_CREDIT_MANAGER".equals(roleName)) {
 //                    sendBroadcast(new Intent(ManagerMainAct.UPDATATAB));

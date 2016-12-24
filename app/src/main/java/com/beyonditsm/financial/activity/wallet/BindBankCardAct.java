@@ -12,7 +12,7 @@ import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.adapter.BindBankCardAdp;
 import com.beyonditsm.financial.entity.BindCardBean;
-import com.beyonditsm.financial.entity.UserEntity;
+import com.beyonditsm.financial.entity.ProfileInfoBean;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.view.ListViewForScrollView;
@@ -36,7 +36,7 @@ public class BindBankCardAct extends BaseActivity {
     private ListViewForScrollView lvBankCard;
     @ViewInject(R.id.sv_bindBankCard)
     private ScrollView svBindBankCard;
-    private UserEntity user;//用户实体
+    private ProfileInfoBean user;//用户实体
     private BindBankCardAdp adapter;
     private MyBroadcastReceiver receiver;
 
@@ -65,7 +65,7 @@ public class BindBankCardAct extends BaseActivity {
                 break;
             case R.id.tv_setzjpassword:
                 intent=new Intent(BindBankCardAct.this,SetPwdActivity.class);
-                intent.putExtra("userPhone",user.getAccountName());
+                intent.putExtra("userPhone",user.getMobilePhone());
                 startActivity(intent);
                 break;
             case R.id.tv_surebind:

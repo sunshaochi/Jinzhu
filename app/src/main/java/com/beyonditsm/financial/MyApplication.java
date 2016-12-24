@@ -163,15 +163,15 @@ public class MyApplication extends Application {
          * OnCreate 会被多个进程重入，这段保护代码，确保只有您需要使用 RongIM 的进程和 Push 进程执行了 init。
          * io.rong.push 为融云 push 进程名称，不可修改。
          */
-        if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext())) ||
-                "io.rong.push".equals(getCurProcessName(getApplicationContext()))) {
-            RongIM.init(this);
-            LogUtils.i("融云初始化成功");
-            if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
-                RongCloudEvent.init(this);
-                Thread.setDefaultUncaughtExceptionHandler(new RongExceptionHandler(this));
-            }
-        }
+//        if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext())) ||
+//                "io.rong.push".equals(getCurProcessName(getApplicationContext()))) {
+//            RongIM.init(this);
+//            LogUtils.i("融云初始化成功");
+//            if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
+//                RongCloudEvent.init(this);
+//                Thread.setDefaultUncaughtExceptionHandler(new RongExceptionHandler(this));
+//            }
+//        }
         JPushInterface.setDebugMode(false);    // 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);            // 初始化 JPush
         initImageLoader(this);

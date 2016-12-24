@@ -76,13 +76,13 @@ public interface IFinancialUrl {
 //      String BASE_URL="http://139.196.227.53:9010";
 
 //    String BASE_URL="http://172.16.5.32:8083";
-
+        String BASE_URL="http://139.196.227.38:9040/GS.API.Online-0.2.0";
 //      String BASE_URL="http://139.196.227.53:9010";
 //    String BASE_URL="http://172.16.5.32:8083";
 //    String BASE_URL="http://172.16.5.32:8083";
 
 //    String BASE_URL="http://139.196.227.38:9000";//#  后台
-
+//  String BASE_URL="http://172.16.6.159:8061";
     /**
      * @MARKEY_CODE 渠道号设置，默认渠道设置为空字符串
      */
@@ -228,7 +228,7 @@ public interface IFinancialUrl {
     //    /*代言人推荐信息获取*/
 //    String SERVANT_GET_REWARD = BASE_URL + API_VERSION + "/servant/unlogin/getServantSummary.do";
     /*领取奖励*/
-    String SERVANT_GET_REWARD = BASE_URL + API_VERSION + "/servant/login/pickUnhandledAward.do";
+    String SERVANT_GET_REWARD = BASE_URL +  "/servant/login/pickUnhandledAward";
     /*最低提现额度*/
     String MIN_EXCHANGE = BASE_URL + API_VERSION + "/wallet/login/ifGetMinExchange.do";
     /*领取奖励（修改资料）*/
@@ -331,7 +331,7 @@ public interface IFinancialUrl {
     /*取消订单*/
     String CANCEL_ORDER = BASE_URL + "/order/updateOrderStatus";
     /*代言人推荐信息获取*/
-    String SERVANT_RMD_INFO = BASE_URL + "/servant/login/getServantSummary.do";
+    String SERVANT_RMD_INFO = BASE_URL + "/servant/login/getServantSummary";
     /*查找获取登录用户个人信息*/
     String USERINFO_URL = BASE_URL + "/customer/getAccountInfo";
     /*修改密码*/
