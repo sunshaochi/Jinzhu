@@ -49,6 +49,12 @@ public abstract  class BaseFragment extends Fragment{
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        context.unregisterReceiver(mybroad);
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         IntentFilter filter = new IntentFilter();
         filter.addAction("LOGIN_BACK");
