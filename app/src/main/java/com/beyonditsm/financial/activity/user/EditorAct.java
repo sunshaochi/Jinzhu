@@ -37,7 +37,6 @@ public class EditorAct extends BaseActivity {
     public void init(Bundle savedInstanceState) {
         type=getIntent().getExtras().getInt("type");
         ettext=getIntent().getExtras().getString("text");
-
         if(type==1){
             title="贷款金额";
         }else if(type==2){
