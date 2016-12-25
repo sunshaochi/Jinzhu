@@ -309,19 +309,20 @@ public class MyCreditDetailFragment extends BaseFragment {
         if(orderbean!=null){
             total.setText("贷款金额：");
             time.setText("贷款期限：");
+
             if (!TextUtils.isEmpty(String.valueOf(orderbean.getGrantAmount()))) {
 //                tvTotal.setText( df2.format(Double.parseDouble(orderbean.getGrantAmount()) / 10000) + "万");
-                 tvTotal.setText( orderbean.getGrantAmount());
+                 tvTotal.setText( orderbean.getApplyAmount());
 
             }
             if (!TextUtils.isEmpty(String.valueOf(orderbean.getGrantPeriods()))) {
-                tvTime.setText(orderbean.getGrantPeriods() + "");
+                tvTime.setText(orderbean.getApplyPeriods() + "");
             }
             if(!TextUtils.isEmpty(String.valueOf(orderbean.getPeriodsAmount()))){//月供
                tvYueG.setText(orderbean.getPeriodsAmount());
             }
             if (!TextUtils.isEmpty(orderbean.getPaymentType())) {
-                tvHf.setText("还款方式：" + orderbean.getPaymentType());
+                tvHf.setText("还款方式：" + orderbean.getPaymentType()+"");
             }
             if (!TextUtils.isEmpty(orderbean.getTotalInterest())) {//总利息
                 tvT.setText( df2.format(orderbean.getTotalInterest()));
