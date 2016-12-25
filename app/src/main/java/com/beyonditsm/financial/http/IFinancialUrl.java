@@ -6,7 +6,7 @@ package com.beyonditsm.financial.http;
  * Created by wangbin on 15/11/18.
  */
 public interface IFinancialUrl {
-//    String BASE_URL="http://139.196.227.38:9040/GS.API.Online-0.2.0";
+    String BASE_URL="http://139.196.227.38:9040/GS.API.Online-0.2.0";
     /*吕建明*/
 //    String BASE_URL = "http://172.16.6.236:8080";
 //    String BASE_URL = "http://172.16.6.95:8083";
