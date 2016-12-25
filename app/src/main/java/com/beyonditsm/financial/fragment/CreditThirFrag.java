@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.AppManager;
+import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.MainActivity;
 import com.beyonditsm.financial.activity.credit.CreditStepAct;
@@ -164,7 +165,7 @@ public class CreditThirFrag extends BaseFragment {
                 }else{
                     lvCreditThird.noContent();
                     applayCredit(orderId);
-                    MyDismissDialog myDismissDialog = new MyDismissDialog(getContext());
+                    MyDismissDialog myDismissDialog = new MyDismissDialog(mParentActivity);
                     myDismissDialog.builder().show();
                 }
                 applayStatus(orderId);
@@ -284,7 +285,7 @@ public class CreditThirFrag extends BaseFragment {
                     mParentActivity.sendBroadcast(new Intent(MyCreditAct.CREDIT_RECEIVER));
                     mParentActivity.sendBroadcast(new Intent(MyCreditDetailFragment.UPDATE_ORDER));
                     mParentActivity.sendBroadcast(new Intent(MyCreditStatusFragment.UPDATE_DEAL));
-                    mParentActivity.finish();
+//                    mParentActivity.finish();
                 }
             }
 

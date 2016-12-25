@@ -584,9 +584,9 @@ public class UpdateAct extends BaseActivity {
 //                friendBean.setUserName(userInfo.getUserName());
 //                FriendDao.updateUser(friendBean);
 //
-//                ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + result, civHead, options);
-//                userInfo.setHeadIcon(result);
-//                updateData(userInfo, 1);
+                ImageLoader.getInstance().displayImage(IFinancialUrl.SECURITY_IMAGE_URL + result, civHead, options);
+                userInfo.setAvatarPic(result);
+                updateData(userInfo,adressBean,1);
             }
 
             @Override

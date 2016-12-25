@@ -381,6 +381,7 @@ public class RequestManager {
         final HttpUtils httpUtils = new HttpUtils();
         httpUtils.configCurrentHttpCacheExpiry(0);
         MyLogUtils.info("地址:" + url);
+        MyLogUtils.info("queryParams"+queryParams.toString());
         RequestParams params = null;
         if (!"".equals(SpUtils.getCookie(MyApplication.getInstance()))) {
             params = new RequestParams();

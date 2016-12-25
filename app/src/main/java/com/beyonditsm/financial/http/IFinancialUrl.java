@@ -6,7 +6,7 @@ package com.beyonditsm.financial.http;
  * Created by wangbin on 15/11/18.
  */
 public interface IFinancialUrl {
-    String BASE_URL="http://139.196.227.38:9040/GS.API.Online-0.2.0";
+//    String BASE_URL="http://139.196.227.38:9040/GS.API.Online-0.2.0";
     /*吕建明*/
 //    String BASE_URL = "http://172.16.6.236:8080";
 //    String BASE_URL = "http://172.16.6.95:8083";
@@ -310,9 +310,9 @@ public interface IFinancialUrl {
     /*获取支持的银行列表*/
     String QUERY_BANK2 = BASE_URL + "/bankcard/queryBank.do";
     /*设置资金密码*/
-    String SET_PWD_URL2 = BASE_URL + "/wallet/login/setFundPassword.do";
+    String SET_PWD_URL2 = BASE_URL + "/customer/setFundPassword";
     /*添加银行卡*/
-    String ADD_BANK_CARD2 = BASE_URL + "/wallet/login/addBankCard.do";
+    String ADD_BANK_CARD2 = BASE_URL + "/bankcard/addBankCard.do";
 
     /*注册*/
     String REGISTER_URL2 = BASE_URL + "/customer/unLogin/registerCustomer";

@@ -25,6 +25,7 @@ public class EditorAct extends BaseActivity {
 
     private String text;
     private int type;
+    private String ettext;
 
     private String title;
     @Override
@@ -35,6 +36,8 @@ public class EditorAct extends BaseActivity {
     @Override
     public void init(Bundle savedInstanceState) {
         type=getIntent().getExtras().getInt("type");
+        ettext=getIntent().getExtras().getString("text");
+
         if(type==1){
             title="贷款金额";
         }else if(type==2){
@@ -47,7 +50,10 @@ public class EditorAct extends BaseActivity {
             title="公积金/社保时长";
         }
         setTopTitle(title);
-        et_tv.setHint(title);
+        if(!TextUtils.isEmpty(ettext)){
+           et_tv.setText(ettext);
+        }else {
+        et_tv.setHint(title);}
     }
 
     @OnClick({R.id.tv_btn_bc})

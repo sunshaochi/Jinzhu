@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
@@ -91,6 +92,7 @@ public class TjfirstFragment extends BaseFragment {
 
     public static TujianBean tujianBean;
     private MySelfSheetDialog dialog;
+    private List<String> keyLists;
 
 
     private String money, time, diqu, xueli, huji, xyjl, zhiwu, nianji, gzsc, cc, fc, dfgz, bd, qtzc, sbcs;
@@ -118,12 +120,19 @@ public class TjfirstFragment extends BaseFragment {
         cityList=new ArrayList<>();
         counyList=new ArrayList<>();
 
-        getDictCode(5, "loanTerm");//贷款期限
+//        getDictCode(5, "loanTerm");//贷款期限
         getPorvice();//获得省地区户籍也可以用这个
-        getDictCode(0, "qualifications");//学历
-        getDictCode(2, "productCreditStatus");//信用状况
-        getDictCode(1, "productJop");//职业身份
-        getDictCode(3, "salary");//代发工资金额
+//        getDictCode(0, "qualifications");//学历
+//        getDictCode(2, "productCreditStatus");//信用状况
+//        getDictCode(1, "productJop");//职业身份
+//        getDictCode(3, "salary");//代发工资金额
+        keyLists = new ArrayList<>();
+        keyLists.add("qualifications");
+        keyLists.add("productJop");
+        keyLists.add("productCreditStatus");
+        keyLists.add("salary");
+        keyLists.add("loanTerm");
+        getDictionaryContent(keyLists);//获取选项
 
 
     }
@@ -211,42 +220,29 @@ public class TjfirstFragment extends BaseFragment {
             }
         });
     }
+    //获取选项
+    private void getDictionaryContent( List<String> key) {
 
-
-
-    //获取选择项
-    private void getDictCode(final int i, String key) {
-        RequestManager.getMangManger().findTjselet(key, new RequestManager.CallBack() {
+        RequestManager.getCommManager().findDicMap(key, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-//                JSONObject jsonObject = new JSONObject(result);
-//                JSONArray dataArr = jsonObject.getJSONArray("data");
+
+                JSONObject jsonObject = new JSONObject(result);
+                JSONObject data = jsonObject.getJSONObject("data");
                 Gson gson = new Gson();
-                switch (i) {
-                    case 0://学历
-                        xuelilist = gson.fromJson(result.toString(), new TypeToken<List<RelationEntity>>() {
-                        }.getType());
-                        break;
-                    case 1://职务
-                        joplist = gson.fromJson(result.toString(), new TypeToken<List<RelationEntity>>() {
-                        }.getType());
-                        break;
-                    case 2://信用记录
-                        creditlist = gson.fromJson(result.toString(), new TypeToken<List<RelationEntity>>() {
-                        }.getType());
-                        break;
-                    case 3://代发工资
-                        salarylist = gson.fromJson(result.toString(), new TypeToken<List<RelationEntity>>() {
-                        }.getType());
-                        break;
-//
-                    case 5://贷款期限
-                        loanlist = gson.fromJson(result.toString(), new TypeToken<List<RelationEntity>>() {
-                        }.getType());
-                        break;
-//
-//
-                }
+                xuelilist = gson.fromJson(data.getJSONArray("qualifications").toString(),new TypeToken<List<RelationEntity>>() {
+                }.getType());
+                joplist = gson.fromJson(data.getJSONArray("productJop").toString(),new TypeToken<List<RelationEntity>>() {
+                }.getType());
+                creditlist = gson.fromJson(data.getJSONArray("productCreditStatus").toString(),new TypeToken<List<RelationEntity>>() {
+                }.getType());
+                salarylist = gson.fromJson(data.getJSONArray("salary").toString(),new TypeToken<List<RelationEntity>>() {
+                }.getType());
+                loanlist = gson.fromJson(data.getJSONArray("loanTerm").toString(),new TypeToken<List<RelationEntity>>() {
+                }.getType());
+
+
+//                }
 
             }
 
@@ -256,6 +252,50 @@ public class TjfirstFragment extends BaseFragment {
             }
         });
     }
+
+
+//    //获取选择项
+//    private void getDictCode(final int i, String key) {
+//        RequestManager.getMangManger().findTjselet(key, new RequestManager.CallBack() {
+//            @Override
+//            public void onSucess(String result) throws JSONException {
+////                JSONObject jsonObject = new JSONObject(result);
+////                JSONArray dataArr = jsonObject.getJSONArray("data");
+//                Gson gson = new Gson();
+//                switch (i) {
+//                    case 0://学历
+//                        xuelilist = gson.fromJson(result.toString(), new TypeToken<List<RelationEntity>>() {
+//                        }.getType());
+//                        break;
+//                    case 1://职务
+//                        joplist = gson.fromJson(result.toString(), new TypeToken<List<RelationEntity>>() {
+//                        }.getType());
+//                        break;
+//                    case 2://信用记录
+//                        creditlist = gson.fromJson(result.toString(), new TypeToken<List<RelationEntity>>() {
+//                        }.getType());
+//                        break;
+//                    case 3://代发工资
+//                        salarylist = gson.fromJson(result.toString(), new TypeToken<List<RelationEntity>>() {
+//                        }.getType());
+//                        break;
+////
+//                    case 5://贷款期限
+//                        loanlist = gson.fromJson(result.toString(), new TypeToken<List<RelationEntity>>() {
+//                        }.getType());
+//                        break;
+////
+////
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onError(int status, String msg) {
+//
+//            }
+//        });
+//    }
 
 
     @Override
@@ -269,6 +309,10 @@ public class TjfirstFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.rl_money://金额
                 intent.putExtra("type", 1);
+                if(!TextUtils.isEmpty(money)){
+                String text=money.substring(0,money.length()-1);
+                    intent.putExtra("text",text);
+                }
                 startActivityForResult(intent,1);
                 break;
             case R.id.rl_qixian://期限
@@ -373,12 +417,19 @@ public class TjfirstFragment extends BaseFragment {
                 break;
             case R.id.rl_nianji://年纪
                 intent.putExtra("type", 2);
+                if(!TextUtils.isEmpty(nianji)){
+                String text=nianji.substring(0,nianji.length()-1);
+                intent.putExtra("text",text);}
                 startActivityForResult(intent,2);
 
 
                 break;
             case R.id.rl_zhucesc://注册时长
                 intent.putExtra("type", 3);
+                if(!TextUtils.isEmpty(gzsc)){
+                    String text=gzsc.substring(0,gzsc.length()-1);
+                    intent.putExtra("text",text);
+                }
                 startActivityForResult(intent,3);
 
                 break;
@@ -470,6 +521,10 @@ public class TjfirstFragment extends BaseFragment {
                 break;
             case R.id.rl_sbsc://社保时长
                 intent.putExtra("type", 4);
+                if(!TextUtils.isEmpty(sbcs)){
+                    String text=sbcs.substring(0,sbcs.length()-1);
+                    intent.putExtra("text",text);
+                }
                 startActivityForResult(intent,4);
                 break;
             case R.id.tv_tujian://推荐

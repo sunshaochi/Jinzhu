@@ -144,7 +144,7 @@ public class ApplicationAct extends BaseActivity {
         initTit();
         loadView.setNoContentTxt("暂无此类产品，换个条件试试");
 //        etAmount.setSelection(etAmount.getText().length());
-        rl_back.setVisibility(View.GONE);
+//        rl_back.setVisibility(View.GONE);
         plv.setPullRefreshEnabled(true);
         plv.setScrollLoadEnabled(true);
         plv.setPullLoadEnabled(false);
