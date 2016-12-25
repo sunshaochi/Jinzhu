@@ -172,7 +172,7 @@ public class SubFlowAct extends BaseActivity {
                 holder = (ViewHolder) convertView.getTag();
             }
             holder.tvContent.setText(list.get(position).getDisplayName());
-            if ("0".equals(list.get(position).getIsComplete())) {
+            if ("false".equals(list.get(position).getIsComplete())) {
 //                holder.ivUpload.setImageResource(R.mipmap.cm_btn_more_nor);
                 holder.tvIsLoad.setText("未上传");
                 holder.tvState.setVisibility(View.GONE);
