@@ -226,7 +226,6 @@ public class TjfirstFragment extends BaseFragment {
         RequestManager.getCommManager().findDicMap(key, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-
                 JSONObject jsonObject = new JSONObject(result);
                 JSONObject data = jsonObject.getJSONObject("data");
                 Gson gson = new Gson();
@@ -308,9 +307,10 @@ public class TjfirstFragment extends BaseFragment {
         Intent intent = new Intent(getActivity(), EditorAct.class);
         switch (view.getId()) {
             case R.id.rl_money://金额
+                money = tv_money.getText().toString();
                 intent.putExtra("type", 1);
                 if(!TextUtils.isEmpty(money)){
-                String text=money.substring(0,money.length()-1);
+                String text=money.substring(1,money.length());
                     intent.putExtra("text",text);
                 }
                 startActivityForResult(intent,1);
@@ -416,8 +416,9 @@ public class TjfirstFragment extends BaseFragment {
 
                 break;
             case R.id.rl_nianji://年纪
+                nianji = tv_nianji.getText().toString().trim();
                 intent.putExtra("type", 2);
-                if(!TextUtils.isEmpty(nianji)){
+                if(!TextUtils.isEmpty(nianji)&&!nianji.equals("例如:33岁")){
                 String text=nianji.substring(0,nianji.length()-1);
                 intent.putExtra("text",text);}
                 startActivityForResult(intent,2);
@@ -425,9 +426,10 @@ public class TjfirstFragment extends BaseFragment {
 
                 break;
             case R.id.rl_zhucesc://注册时长
+                gzsc = tv_zhucesc.getText().toString().trim();
                 intent.putExtra("type", 3);
-                if(!TextUtils.isEmpty(gzsc)){
-                    String text=gzsc.substring(0,gzsc.length()-1);
+                if(!TextUtils.isEmpty(gzsc)&&!gzsc.equals("例如:3月")){
+                    String text=gzsc.substring(0,gzsc.length()-2);
                     intent.putExtra("text",text);
                 }
                 startActivityForResult(intent,3);
@@ -520,9 +522,10 @@ public class TjfirstFragment extends BaseFragment {
                 dialog.show();
                 break;
             case R.id.rl_sbsc://社保时长
+                sbcs = tv_cbsc.getText().toString().trim();
                 intent.putExtra("type", 4);
-                if(!TextUtils.isEmpty(sbcs)){
-                    String text=sbcs.substring(0,sbcs.length()-1);
+                if(!TextUtils.isEmpty(sbcs)&&!sbcs.equals("例如:24月")){
+                    String text=sbcs.substring(0,sbcs.length()-2);
                     intent.putExtra("text",text);
                 }
                 startActivityForResult(intent,4);
@@ -562,10 +565,8 @@ public class TjfirstFragment extends BaseFragment {
         if(TextUtils.isEmpty(time)||time.equals("请选择")){
             tujianBean.setCreditTime("");
         }
-        if(TextUtils.isEmpty(money)){
+        if(TextUtils.isEmpty(money)){//金额
             tujianBean.setCreditMoney("");
-        }else {
-            tujianBean.setCreditMoney(money);
         }
         if(TextUtils.isEmpty(xueli)||xueli.equals("请选择")){
             tujianBean.setEduLevel("");
@@ -578,18 +579,14 @@ public class TjfirstFragment extends BaseFragment {
         if(TextUtils.isEmpty(xyjl)||xyjl.equals("请选择")){
             tujianBean.setCreditStatusKey("");
         }
-        if(TextUtils.isEmpty(nianji)||nianji.equals("例如:33岁")){
+        if(TextUtils.isEmpty(nianji)||nianji.equals("例如:33岁")){//年纪
             tujianBean.setAge("");
-        }else {
-            tujianBean.setAge(nianji);
         }
         if(TextUtils.isEmpty(zhiwu)||zhiwu.equals("请选择")){
             tujianBean.setJobIdentityKey("");
         }
-        if(TextUtils.isEmpty(gzsc)||gzsc.equals("例如:3月")){
+        if(TextUtils.isEmpty(gzsc)||gzsc.equals("例如:3月")){//工作时长
             tujianBean.setLicenseTimeLength("");
-        }else {
-            tujianBean.setLicenseTimeLength(gzsc);
         }
         if(TextUtils.isEmpty(cc)||cc.equals("请选择")){
             tujianBean.setCarStatusKey("");
@@ -606,10 +603,8 @@ public class TjfirstFragment extends BaseFragment {
         if(TextUtils.isEmpty(qtzc)||qtzc.equals("请选择")){
             tujianBean.setOtherAssets("");
         }
-        if(TextUtils.isEmpty(sbcs)||sbcs.equals("例如:24月")){
+        if(TextUtils.isEmpty(sbcs)||sbcs.equals("例如:24月")){//社保时长
             tujianBean.setFundTimeLength("");
-        }else {
-            tujianBean.setFundTimeLength(sbcs);
         }
 
 
@@ -716,16 +711,21 @@ public class TjfirstFragment extends BaseFragment {
             case RESULT_OK:
                 String str = data.getExtras().getString("text");//str即为回传的值 //data为B中回传的Intent
                 if(requestCode==1){
-                    tv_money.setText(str);
+                    tv_money.setText("￥"+str);
+                    tujianBean.setCreditMoney(str);
                 }else
                 if(requestCode==2){
-                    tv_nianji.setText(str);
+                    tv_nianji.setText(str+"岁");
+                    tujianBean.setAge(str);
                 }else
                 if(requestCode==3){
-                    tv_zhucesc.setText(str);
+                    tv_zhucesc.setText(str+"个月");
+                    tujianBean.setLicenseTimeLength(str);
+
                 }else
                 if(requestCode==4){
-                    tv_cbsc.setText(str);
+                    tv_cbsc.setText(str+"个月");
+                    tujianBean.setFundTimeLength(str);
                 }
 
                 break;

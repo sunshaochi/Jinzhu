@@ -577,7 +577,7 @@ public class MineFragment extends BaseFragment {
             isLogin = true;
             tvName.setText(SpUtils.getUsername(getContext()));
             tvExit.setVisibility(View.VISIBLE);
-//            getUserInfo();
+            getUserInfo();
 //            getUserLoginInfo();
         }
 
