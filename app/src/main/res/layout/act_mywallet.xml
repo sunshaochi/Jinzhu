@@ -168,7 +168,8 @@
                                 android:paddingTop="12dp"
                                 android:paddingBottom="2dp"
                                 android:textColor="@color/tv_third_color"
-                                android:textSize="14sp" />
+                                android:textSize="14sp"
+                                android:id="@+id/textView" />
 
                             <TextView
                                 android:text="100"
