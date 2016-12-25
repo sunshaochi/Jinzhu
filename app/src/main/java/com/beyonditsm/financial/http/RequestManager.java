@@ -132,6 +132,7 @@ public class RequestManager {
                                 SpUtils.setRoleName(MyApplication.getInstance().getApplicationContext(),"");
                                 MyLogUtils.degug("roleName"+SpUtils.getRoleName(MyApplication.getInstance().getApplicationContext()));
                                 MyApplication.getInstance().getApplicationContext().sendBroadcast(unlogin);
+                                callback.onError(600,"未登录");
                                 return;
                             }
                             int status = obj.getInt("status");
@@ -200,6 +201,7 @@ public class RequestManager {
                        SpUtils.setRoleName(MyApplication.getInstance().getApplicationContext(),"");
                        MyLogUtils.degug("roleName"+SpUtils.getRoleName(MyApplication.getInstance().getApplicationContext()));
                        MyApplication.getInstance().getApplicationContext().sendBroadcast(unlogin);
+                       callback.onError(600,"未登录");
                        return;
                    }
                    if (obj.getInt("status")==200){
@@ -315,6 +317,7 @@ public class RequestManager {
                                     MyLogUtils.degug("roleName"+SpUtils.getRoleName(MyApplication.getInstance().getApplicationContext()));
                                     MyApplication.getInstance().getApplicationContext().sendBroadcast(unlogin);
                                     MyLogUtils.degug("roleName"+SpUtils.getRoleName(MyApplication.getInstance().getApplicationContext()));
+                                    callback.onError(600,"未登录");
                                 }
                                 return;
                             }
@@ -430,6 +433,7 @@ public class RequestManager {
                         unlogin.setAction("UNLOGIN");
                         SpUtils.setRoleName(MyApplication.getInstance().getApplicationContext(),"");
                         MyApplication.getInstance().getApplicationContext().sendBroadcast(unlogin);
+                        callBack.onError(600,"未登录");
                         return;
                     }
                     int status = obj.getInt("status");
