@@ -128,7 +128,11 @@ public class RequestManager {
                             if (obj.has("statusCode")){
                                 Intent unlogin = new Intent();
                                 unlogin.setAction("UNLOGIN");
+                                MyLogUtils.degug("roleName"+SpUtils.getRoleName(MyApplication.getInstance().getApplicationContext()));
+                                SpUtils.setRoleName(MyApplication.getInstance().getApplicationContext(),"");
+                                MyLogUtils.degug("roleName"+SpUtils.getRoleName(MyApplication.getInstance().getApplicationContext()));
                                 MyApplication.getInstance().getApplicationContext().sendBroadcast(unlogin);
+                                callback.onError(600,"未登录");
                                 return;
                             }
                             int status = obj.getInt("status");
@@ -193,7 +197,11 @@ public class RequestManager {
                    if (obj.has("statusCode")){
                        Intent unlogin = new Intent();
                        unlogin.setAction("UNLOGIN");
+                       MyLogUtils.degug("roleName"+SpUtils.getRoleName(MyApplication.getInstance().getApplicationContext()));
+                       SpUtils.setRoleName(MyApplication.getInstance().getApplicationContext(),"");
+                       MyLogUtils.degug("roleName"+SpUtils.getRoleName(MyApplication.getInstance().getApplicationContext()));
                        MyApplication.getInstance().getApplicationContext().sendBroadcast(unlogin);
+                       callback.onError(600,"未登录");
                        return;
                    }
                    if (obj.getInt("status")==200){
@@ -203,7 +211,8 @@ public class RequestManager {
                    }
 
                } catch (JSONException e) {
-                   e.printStackTrace();
+                   callback.onError(500,"请求数据错误");
+
                }
            }
        },new Response.ErrorListener(){
@@ -305,7 +314,10 @@ public class RequestManager {
                                     ParamsUtil.getInstance().setLogin(true);
                                     Intent unlogin = new Intent();
                                     unlogin.setAction("UNLOGIN");
+                                    MyLogUtils.degug("roleName"+SpUtils.getRoleName(MyApplication.getInstance().getApplicationContext()));
                                     MyApplication.getInstance().getApplicationContext().sendBroadcast(unlogin);
+                                    MyLogUtils.degug("roleName"+SpUtils.getRoleName(MyApplication.getInstance().getApplicationContext()));
+                                    callback.onError(600,"未登录");
                                 }
                                 return;
                             }
@@ -420,7 +432,9 @@ public class RequestManager {
                     if (obj.has("statusCode")){
                         Intent unlogin = new Intent();
                         unlogin.setAction("UNLOGIN");
+                        SpUtils.setRoleName(MyApplication.getInstance().getApplicationContext(),"");
                         MyApplication.getInstance().getApplicationContext().sendBroadcast(unlogin);
+                        callBack.onError(600,"未登录");
                         return;
                     }
                     int status = obj.getInt("status");
@@ -428,7 +442,7 @@ public class RequestManager {
                         callBack.onSucess(result);
                     } else if (status == 600) {
                         SpUtils.clearSp(MyApplication.getInstance());
-                        SpUtils.clearRoleName(MyApplication.getInstance());
+                        SpUtils.setRoleName(MyApplication.getInstance(),"");
                     } else {
                         callBack.onError(obj.getInt("status"), obj.getString("message"));
                     }

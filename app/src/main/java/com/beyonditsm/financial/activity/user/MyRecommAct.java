@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -13,12 +14,16 @@ import android.widget.Toast;
 
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
+import com.beyonditsm.financial.activity.speedcredit.CreditSpeedFirstAct;
 import com.beyonditsm.financial.activity.wallet.MyWalletActivity;
 import com.beyonditsm.financial.entity.MyRecommeEntity;
+import com.beyonditsm.financial.entity.ProfileInfoBean;
 import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.entity.UserEntity;
+import com.beyonditsm.financial.entity.UserLoginBean;
 import com.beyonditsm.financial.entity.UserLoginEntity;
 import com.beyonditsm.financial.fragment.MineFragment;
+import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GsonUtils;
@@ -27,6 +32,7 @@ import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.tandong.sa.zUImageLoader.core.ImageLoader;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.controller.UMServiceFactory;
@@ -92,7 +98,7 @@ public class MyRecommAct extends BaseActivity {
     private UMSocialService mController;
     private Context context;
     private UserLoginEntity ule;
-    private UserEntity user;//用户信息
+    private UserLoginBean user;//用户信息
     private int RewardAmount;
     //    private String title = "金蛛金服，业内返佣减利最高，欢迎加入抢钱大队";
     private String title = "成为金蛛代言人，躺着就能赚钱！";
@@ -245,8 +251,8 @@ public class MyRecommAct extends BaseActivity {
             //累计收益进入我的钱包
             case R.id.ll_wallet:
                 Intent intent2 = new Intent(MyRecommAct.this, MyWalletActivity.class);
-                intent2.putExtra("userLogin", ule);
                 intent2.putExtra("userInfo", user);
+//                intent2.putExtra("userInfo", user);
                 startActivity(intent2);
                 break;
             case R.id.iv_wxpyq:
@@ -498,7 +504,7 @@ public class MyRecommAct extends BaseActivity {
             @SuppressWarnings("unchecked")
             @Override
             public void onSucess(String result) {
-                ResultData<UserEntity> rd = (ResultData<UserEntity>) GsonUtils.json(result, UserEntity.class);
+                ResultData<UserLoginBean> rd = (ResultData<UserLoginBean>) GsonUtils.json(result, UserLoginBean.class);
                 user = rd.getData();
 
             }
@@ -526,4 +532,6 @@ public class MyRecommAct extends BaseActivity {
             }
         });
     }
+
+
 }

@@ -56,13 +56,14 @@ public class AutoDismissDialog {
 
     public void dismiss(){
         dialog.dismiss();
+        mThread.interrupt();
         flag = false;
     }
     private Thread mThread = new Thread(){
         @Override
         public void run() {
             super.run();
-            while(flag){
+
                 try {
                     Thread.sleep(2000);
                     Message msg = mHandler.obtainMessage();
@@ -71,7 +72,7 @@ public class AutoDismissDialog {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            }
+
         }
     };
 

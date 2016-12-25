@@ -676,6 +676,7 @@ public class HomeCreditDetailAct extends BaseActivity {
      * @param month（期限）
      */
     private void getMonthlyPay(double rate,double repaymentMoney ,int month) {
+        rate = rate/100;
         double sum = repaymentMoney*10000 * (rate * Math.pow(1 + rate, month)) / (Math.pow(1 + rate, month) - 1);
         BigDecimal big = new BigDecimal(sum);
         Double monthpay=big.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();//四舍五入
@@ -687,12 +688,15 @@ public class HomeCreditDetailAct extends BaseActivity {
     /**
      * 获取总利息
      * @param monthlyPay 月供
-     * @param month 月份
      * @param creditAmount 金额
+     * @param month 月
      */
-    private void getTotlePay(double monthlyPay,double creditAmount,int month) {
-        Double totle= monthlyPay * month - (creditAmount*10000);
-        tvTotal.setText(totle+"");
+    @SuppressLint("SetTextI18n")
+    private void getTotlePay(double monthlyPay, double creditAmount, int month) {
+        Double total = monthlyPay * month - (creditAmount*10000);
+        BigDecimal bigDecimal = new BigDecimal(total);
+        total = bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();//四舍五入
+        tvTotal.setText(total+"");
     }
 
     /**

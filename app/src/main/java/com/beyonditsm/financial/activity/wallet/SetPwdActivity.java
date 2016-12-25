@@ -6,10 +6,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.util.SpUtils;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
 import org.json.JSONException;
@@ -45,7 +47,7 @@ public class SetPwdActivity extends BaseActivity {
         setTopTitle("设置资金密码");
         setLeftTv("返回");
         assignViews();
-        amount=getIntent().getStringExtra("userPhone");
+        amount= SpUtils.getPhonenumber(MyApplication.getInstance().getApplicationContext());
         tvAmount.setText(amount);
     }
 

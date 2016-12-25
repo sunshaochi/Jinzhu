@@ -86,7 +86,7 @@ public class CreditCardItemAdp extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        ImageLoader.getInstance().displayImage(IFinancialUrl.SECURITY_IMAGE_URL + datas.get(position).getMobileCreditcardImg(), holder.iv_creditCard, options, new ImageLoadingListener() {
+        ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + datas.get(position).getMobileCreditcardImg(), holder.iv_creditCard, options, new ImageLoadingListener() {
                     @Override
                     public void onLoadingStarted(String s, View view) {
                         ((ImageView) view).setScaleType(ImageView.ScaleType.CENTER);

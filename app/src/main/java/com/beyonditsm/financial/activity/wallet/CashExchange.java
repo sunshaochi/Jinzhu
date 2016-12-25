@@ -263,7 +263,7 @@ public class CashExchange extends BaseActivity {
                 break;
             case R.id.rlset:
                 intent = new Intent(CashExchange.this, SetPwdActivity.class);
-                intent.putExtra("userPhone", user.getAccountName());
+//                intent.putExtra("userPhone", user.getAccountName());
                 startActivity(intent);
                 break;
         }

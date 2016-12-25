@@ -232,11 +232,15 @@ public class MyWalletActivity extends BaseActivity {
                 intent = new Intent(MyWalletActivity.this, OrderDetailAct.class);
                 startActivity(intent);
                 break;
-            //现金券兑换
+           // 现金券兑换
             case R.id.rlxianjin:
                 intent = new Intent(MyWalletActivity.this, CashExchange.class);
-                intent.putExtra("userInfo", user);
+//                intent.putExtra("userInfo", user);
+                intent.putExtra("xianjin",tvWeitGetMoney.getText().toString().trim());
                 startActivity(intent);
+//                intent = new Intent(MyWalletActivity.this, CashExchange.class);
+//                intent.putExtra("userInfo", user);
+//                startActivity(intent);
                 break;
             //抵扣券
             case R.id.rldikou:
@@ -251,12 +255,12 @@ public class MyWalletActivity extends BaseActivity {
                 intent.putExtra("userInfo", user);
                 startActivity(intent);
                 break;
-            case R.id.ll_xj:
-                intent = new Intent(MyWalletActivity.this, CashExchange.class);
-//                intent.putExtra("userInfo", user);
-                intent.putExtra("xianjin",tvWeitGetMoney.getText().toString().trim());
-                startActivity(intent);
-                break;
+//            case R.id.ll_xj:
+//                intent = new Intent(MyWalletActivity.this, CashExchange.class);
+////                intent.putExtra("userInfo", user);
+//                intent.putExtra("xianjin",tvWeitGetMoney.getText().toString().trim());
+//                startActivity(intent);
+//                break;
 //            case R.id.rlyj:
 //                intent = new Intent(MyWalletActivity.this, CourtageAct.class);
 ////                intent.putExtra("userInfo", user);

@@ -323,14 +323,15 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
                 break;
             case R.id.ll_creditCard://信用卡
 //                MyToastUtils.showShortToast(getContext(), "敬请期待");
-//                if (TextUtils.isEmpty(SpUtils.getRoleName(context).toString())) {
-//                    MyToastUtils.showShortToast(getContext(), "请先登录金蛛账号");
-//                    Intent goLog = new Intent(context, LoginAct.class);
-//                    context.startActivity(goLog);
-//                } else {
+                MyLogUtils.degug("roleName"+SpUtils.getRoleName(MyApplication.getInstance().getApplicationContext()));
+                if (TextUtils.isEmpty(SpUtils.getRoleName(context))) {
+                    MyToastUtils.showShortToast(getContext(), "请先登录金蛛账号");
+                    Intent goLog = new Intent(context, LoginAct.class);
+                    context.startActivity(goLog);
+                } else {
                     intent = new Intent(mParentActivity, CreditCardAct.class);
                     startActivity(intent);
-//                }
+                }
                 break;
 
             case R.id.ll_gps://GPS
