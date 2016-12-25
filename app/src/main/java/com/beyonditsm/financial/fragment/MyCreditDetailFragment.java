@@ -273,9 +273,9 @@ public class MyCreditDetailFragment extends BaseFragment {
 
             if (!TextUtils.isEmpty(orderListBean.getMinLoanPeriod())||!TextUtils.isEmpty(orderListBean.getMaxLoanPeriod())) {
                 if(orderListBean.getMaxLoanPeriod().equals(orderListBean.getMinLoanPeriod())){
-                    tvL.setText("期限范围：" + data.getTimeMinVal() + tv_danwei);
+                    tvL.setText("期限范围：" + orderListBean.getMinLoanPeriod() + tv_danwei);
                 }else {
-                tvL.setText("期限范围：" + data.getTimeMinVal() + "~" + data.getTimeMaxVal() + tv_danwei);}
+                tvL.setText("期限范围：" + orderListBean.getMinLoanPeriod() + "~" + orderListBean.getMaxLoanPeriod() + tv_danwei);}
             }
         if(prodct!=null){
             loadingView.loadComplete();

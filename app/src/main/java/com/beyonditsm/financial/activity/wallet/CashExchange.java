@@ -94,7 +94,7 @@ public class CashExchange extends BaseActivity {
 //            }else{
 //                user.setUserName(name.getText().toString().trim());
 //            }
-            if (!TextUtils.isEmpty(user.getCashTicketAmount())) {
+            if (!TextUtils.isEmpty(user.getCashTicketAmount())) {//现金卷数量
                 double dCashA = Double.valueOf(user.getCashTicketAmount());
                 tvxianjin.setText((long) dCashA + "");
                 MAX_MARK = Double.parseDouble(user.getCashTicketAmount());
