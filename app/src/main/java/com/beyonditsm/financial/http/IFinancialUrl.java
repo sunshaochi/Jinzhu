@@ -76,7 +76,6 @@ public interface IFinancialUrl {
 //      String BASE_URL="http://139.196.227.53:9010";
 
 //    String BASE_URL="http://172.16.5.32:8083";
-        String BASE_URL="http://139.196.227.38:9040/GS.API.Online-0.2.0";
 //      String BASE_URL="http://139.196.227.53:9010";
 //    String BASE_URL="http://172.16.5.32:8083";
 //    String BASE_URL="http://172.16.5.32:8083";

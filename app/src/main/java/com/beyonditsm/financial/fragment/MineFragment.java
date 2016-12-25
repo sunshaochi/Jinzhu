@@ -280,6 +280,7 @@ public class MineFragment extends BaseFragment {
                                 SpUtils.clearSp(getContext());
                                 SpUtils.clearUserName(getContext());
                                 SpUtils.clearOrderId(getContext());
+                                SpUtils.setRoleName(MyApplication.getInstance().getApplicationContext(),"");
 //                                getActivity().sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
 //                                ivWalletRedPoint.setVisibility(View.GONE);
 //                                msg_top_point.setVisibility(View.GONE);
