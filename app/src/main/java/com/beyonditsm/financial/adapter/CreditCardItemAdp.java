@@ -113,7 +113,7 @@ public class CreditCardItemAdp extends BaseAdapter {
                 }
         );
 
-        ImageLoader.getInstance().displayImage(IFinancialUrl.SECURITY_IMAGE_URL + datas.get(position).getMobileCreditcardImg(), holder.iv_creditCard, options);
+//        ImageLoader.getInstance().displayImage(IFinancialUrl.SECURITY_IMAGE_URL + datas.get(position).getMobileCreditcardImg(), holder.iv_creditCard, options);
         holder.tv_description.setText(datas.get(position).getMobileCreditcardDesc());
 
         holder.btn_applyCard.setOnClickListener(new View.OnClickListener() {
