@@ -40,6 +40,7 @@ import com.beyonditsm.financial.view.MinePageLoadingView;
 import com.beyonditsm.financial.widget.MyAlertDialog;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.tandong.sa.eventbus.EventBus;
 import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
 import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
@@ -207,7 +208,7 @@ public class MineFragment extends BaseFragment {
     @OnClick({R.id.rlMyCode, R.id.rlRecomm, R.id.rlLines, R.id.rlMyCredit, R.id.rlSet, R.id.tvExit,
             R.id.rlWork, R.id.rlMyData, R.id.msg_top, R.id.rlWallet, R.id.rlVip,R.id.rlCustom,R.id.rlHelp})
     public void toClick(View v) {
-        Intent intent;
+        final Intent intent;
         switch (v.getId()) {
             //我的资料
             case R.id.rlMyData:
@@ -286,10 +287,12 @@ public class MineFragment extends BaseFragment {
 //                                ivWalletRedPoint.setVisibility(View.GONE);
 //                                msg_top_point.setVisibility(View.GONE);
 //                                ivRedPoint.setVisibility(View.GONE);
-//                                EventBus.getDefault().post(new SwitchEvent());
+                                EventBus.getDefault().post(new SwitchEvent());
                                 isLogin = false;
                                 tvName.setText("去登录");
                                 tvExit.setVisibility(View.GONE);
+                                Intent intent1=new Intent(getActivity(),LoginAct.class);
+                                startActivity(intent1);
                             }
 
                             @Override
@@ -573,6 +576,8 @@ public class MineFragment extends BaseFragment {
             isLogin = false;
             tvName.setText("去登录");
             tvExit.setVisibility(View.GONE);
+//            Intent intent1=new Intent(getActivity(),LoginAct.class);
+//            startActivity(intent1);
         } else {
             isLogin = true;
             tvName.setText(SpUtils.getUsername(getContext()));
