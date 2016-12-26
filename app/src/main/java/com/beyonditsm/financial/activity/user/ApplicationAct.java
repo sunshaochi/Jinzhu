@@ -208,29 +208,28 @@ public class ApplicationAct extends BaseActivity {
         RequestManager.getCommManager().findSortParam( new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
-
                 ResultData<ProductSortEntity> rd = (ResultData<ProductSortEntity>) GsonUtils.json(result, ProductSortEntity.class);
                 ProductSortEntity productSortEntity = rd.getData();
                 llSearchTitle.setVisibility(View.VISIBLE);
                 orgTypeInfos = productSortEntity.getOrgType();//机构集合
                 ProductSortEntity.OrgTypeBean orgTypeBean = new ProductSortEntity.OrgTypeBean();
-                orgTypeBean.setDictSubId("");
+                orgTypeBean.setOptionValue("");
                 orgTypeBean.setOptionName("全部机构");
                 orgTypeInfos.add(0, orgTypeBean);//机构集合里面加一个
                 ParamsUtil.getInstance().setOrgTypeInfos(orgTypeInfos);//机构
                 productInfos = productSortEntity.getProductOrder();//排序集合
                 ProductSortEntity.ProductOrderBean productOrderBean = new ProductSortEntity.ProductOrderBean();
-                productOrderBean.setDictSubId("");//排序
+                productOrderBean.setOptionValue("");//排序
                 productOrderBean.setOptionName("综合排序");
                 productInfos.add(0, productOrderBean);//排序集合里面加一个
                 moneyScopeInfos = productSortEntity.getMoneyScope();//金额集合
                 ProductSortEntity.MoneyScopeBean moneyScopeBean = new ProductSortEntity.MoneyScopeBean();
-                moneyScopeBean.setDictSubId("");
+                moneyScopeBean.setOptionValue("");
                 moneyScopeBean.setOptionName("金额范围");//金额集合里面加一个
                 moneyScopeInfos.add(0, moneyScopeBean);//金额
                 loanTermInfos = productSortEntity.getLoanTerm();//期限集合
                 ProductSortEntity.LoanTermBean loanTermBean = new ProductSortEntity.LoanTermBean();
-                loanTermBean.setDictSubId("");
+                loanTermBean.setOptionValue("");
                 loanTermBean.setOptionName("贷款期限");//期限集合加一个
                 loanTermInfos.add(0, loanTermBean);//期限
             }
@@ -311,7 +310,7 @@ public class ApplicationAct extends BaseActivity {
                         } else {
                             rbMoney.setText(textView.getText().toString() + "");
                         }
-                        cMoney = moneyScopeInfos.get(position).getMoneyKey();
+                        cMoney = moneyScopeInfos.get(position).getOptionValue();
                         currentP = 1;
                         break;
                     case ProductSortAdapter.SORT:
@@ -320,7 +319,7 @@ public class ApplicationAct extends BaseActivity {
                         } else {
                             rbRange.setText(textView.getText().toString() + "");
                         }
-                        cSort = productInfos.get(position).getOrderKey();
+                        cSort = productInfos.get(position).getOptionValue();
                         currentP = 1;
                         break;
                     case ProductSortAdapter.TIME:
@@ -329,7 +328,7 @@ public class ApplicationAct extends BaseActivity {
                         } else {
                             rbTime.setText(textView.getText().toString() + "");
                         }
-                        cTime = loanTermInfos.get(position).getTermKey();
+                        cTime = loanTermInfos.get(position).getOptionValue();
                         currentP = 1;
                         break;
                     default:
@@ -340,7 +339,8 @@ public class ApplicationAct extends BaseActivity {
 //                lvCreditSort.setEnabled(false);
 
                 sbp.setClickable(false);
-                getCredit(ParamsUtil.getInstance().getUle().getUsername(), SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
+//                getCredit(ParamsUtil.getInstance().getUle().getUsername(), SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
+                getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cMoney,cTime,cBank,cSort,"ASC",currentP, pageSize);
 
             }
         });
@@ -371,15 +371,17 @@ public class ApplicationAct extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ORGQUEST && null != data) {
             int position = data.getIntExtra("org", 0);
-            String name = orgTypeInfos.get(position).getOrgName();
+            String name = orgTypeInfos.get(position).getOptionName();
             if (name.length() > 4) {
                 rbBank.setText(name.substring(0, 4) + "..");
             } else {
                 rbBank.setText(name);
             }
-            cBank = orgTypeInfos.get(position).getOrgId();
+            cBank = orgTypeInfos.get(position).getOptionValue();
             currentP = 1;
-            getCredit(ParamsUtil.getInstance().getUle().getUsername(), SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
+//            getCredit(ParamsUtil.getInstance().getUle().getUsername(), SpUtils.getCity(MyApplication.getInstance().getApplicationContext()), cBank, cSort, cMoney, cTime, currentP, pageSize);
+            getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cMoney,cTime,cBank,cSort,"ASC",currentP, pageSize);
+
         }
     }
     public void clearTextColor() {
@@ -402,6 +404,7 @@ public class ApplicationAct extends BaseActivity {
         switch (v.getId()) {
             case R.id.rb_bank:
                 intent = new Intent(ApplicationAct.this, OrgTypeListAct.class);
+                intent.putExtra("type",1);
                 startActivityForResult(intent, ORGQUEST);
                 sbp.hide();
 //                listItem = orgTypeInfos;
