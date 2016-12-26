@@ -205,10 +205,10 @@ public class CashExchange extends BaseActivity {
                                 bankCount.setText(bindList.get(which - 1).getCardNo());
                                 name.setText(bindList.get(which - 1).getAccountName());
                                 depositBank.setText(bindList.get(which - 1).getBranchBankName());
-                                bankCount.setTextColor(ContextCompat.getColor(CashExchange.this,R.color.tv_primary_color));
-                                bankName.setTextColor(ContextCompat.getColor(CashExchange.this,R.color.tv_primary_color));
-                                name.setTextColor(ContextCompat.getColor(CashExchange.this,R.color.tv_primary_color));
-                                depositBank.setTextColor(ContextCompat.getColor(CashExchange.this,R.color.tv_primary_color));
+                                bankCount.setTextColor(ContextCompat.getColor(CashExchange.this, R.color.tv_primary_color));
+                                bankName.setTextColor(ContextCompat.getColor(CashExchange.this, R.color.tv_primary_color));
+                                name.setTextColor(ContextCompat.getColor(CashExchange.this, R.color.tv_primary_color));
+                                depositBank.setTextColor(ContextCompat.getColor(CashExchange.this, R.color.tv_primary_color));
                             }
                         });
                     }
@@ -239,6 +239,10 @@ public class CashExchange extends BaseActivity {
 
                             @Override
                             public void onError(int status, String msg) {
+                                if (TextUtils.equals(msg, "资金密码为空，请先设置资金密码，再绑定银行卡!")) {
+                                    Intent intent = new Intent(CashExchange.this, SetPwdActivity.class);
+                                    startActivity(intent);
+                                }
 //                                Toast.makeText(CashExchange.this, msg, Toast.LENGTH_SHORT).show();
 //                                MyLogUtils.degug(msg);
 //                                MyLogUtils.degug(orderBean.getUserName() + ">" + orderBean.getBankName() + ">" + orderBean.getBankCardNo()
@@ -287,7 +291,7 @@ public class CashExchange extends BaseActivity {
         if (!TextUtils.isEmpty(tvgetxianjin.getText().toString())) {
             orderBean.setAmount(tvgetxianjin.getText().toString());
         }
-        orderBean.setType(1+"");
+        orderBean.setType(1 + "");
     }
 
     private boolean isValidate() {
@@ -324,8 +328,8 @@ public class CashExchange extends BaseActivity {
             Toast.makeText(CashExchange.this, "输入的兑换金额无效", Toast.LENGTH_SHORT).show();
             tvxianjinfen.requestFocus();
             return false;
-        }else if (Integer.parseInt(tvxianjinfen.getText().toString())<minPayment){
-            MyToastUtils.showShortToast(CashExchange.this,"申请兑换金额需大于"+minPayment+"元");
+        } else if (Integer.parseInt(tvxianjinfen.getText().toString()) < minPayment) {
+            MyToastUtils.showShortToast(CashExchange.this, "申请兑换金额需大于" + minPayment + "元");
             tvxianjinfen.requestFocus();
             return false;
         }
@@ -351,22 +355,22 @@ public class CashExchange extends BaseActivity {
                             if (!TextUtils.isEmpty(bindList.get(i).getBankName())) {
                                 bankName.setText(bindList.get(i).getBankName());
                                 bankName.setEnabled(false);
-                                bankName.setTextColor(ContextCompat.getColor(CashExchange.this,R.color.tv_primary_color));
+                                bankName.setTextColor(ContextCompat.getColor(CashExchange.this, R.color.tv_primary_color));
                             }
                             if (!TextUtils.isEmpty(bindList.get(i).getCardNo())) {
                                 bankCount.setText(bindList.get(i).getCardNo());
                                 bankCount.setEnabled(false);
-                                bankCount.setTextColor(ContextCompat.getColor(CashExchange.this,R.color.tv_primary_color));
+                                bankCount.setTextColor(ContextCompat.getColor(CashExchange.this, R.color.tv_primary_color));
                             }
                             if (!TextUtils.isEmpty(bindList.get(i).getAccountName())) {
                                 name.setText(bindList.get(i).getAccountName());
                                 name.setEnabled(false);
-                                name.setTextColor(ContextCompat.getColor(CashExchange.this,R.color.tv_primary_color));
+                                name.setTextColor(ContextCompat.getColor(CashExchange.this, R.color.tv_primary_color));
                             }
                             if (!TextUtils.isEmpty(bindList.get(i).getBranchBankName())) {
                                 depositBank.setText(bindList.get(i).getBranchBankName());
                                 depositBank.setEnabled(false);
-                                depositBank.setTextColor(ContextCompat.getColor(CashExchange.this,R.color.tv_primary_color));
+                                depositBank.setTextColor(ContextCompat.getColor(CashExchange.this, R.color.tv_primary_color));
                             }
                         }
                     }
@@ -384,7 +388,7 @@ public class CashExchange extends BaseActivity {
     /**
      * 获取最小兑换金额
      */
-    private void getMinExchange(){
+    private void getMinExchange() {
         RequestManager.getCommManager().getMinExchange(new RequestManager.CallBack() {
             @SuppressLint("SetTextI18n")
             @Override

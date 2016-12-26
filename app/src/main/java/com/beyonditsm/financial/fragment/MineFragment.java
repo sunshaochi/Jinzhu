@@ -480,6 +480,10 @@ public class MineFragment extends BaseFragment {
     public class MyBroadCastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
+//          String pichead=  intent.getStringExtra("headPic");
+//            if (!TextUtils.isEmpty(pichead)){
+//                                ImageLoader.getInstance().displayImage(IFinancialUrl.SECURITY_IMAGE_URL + pichead, civHead, options);
+//            }
             getUserInfo();
 //            user = intent.getParcelableExtra(USER_KEY);
 //            if (user != null) {

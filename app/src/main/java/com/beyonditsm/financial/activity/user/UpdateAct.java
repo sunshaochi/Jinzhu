@@ -584,8 +584,12 @@ public class UpdateAct extends BaseActivity {
 //                friendBean.setUserName(userInfo.getUserName());
 //                FriendDao.updateUser(friendBean);
 //
+                MyLogUtils.info("返回的个人头像地址"+result);
                 ImageLoader.getInstance().displayImage(IFinancialUrl.SECURITY_IMAGE_URL + result, civHead, options);
                 userInfo.setAvatarPic(result);
+                Intent intent=new Intent(MineFragment.UPDATE_USER);
+                intent.putExtra("headPic",result);
+                sendBroadcast(intent);
                 updateData(userInfo,adressBean,1);
             }
 

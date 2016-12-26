@@ -71,6 +71,8 @@ public class MyWalletActivity extends BaseActivity {
     private RelativeLayout rlyj;
     @ViewInject(R.id.yj)
     private TextView tv_yj;
+    @ViewInject(R.id.rlxianjin)
+    private RelativeLayout rlxianjin;
 //    @ViewInject(R.id.ivPaymentsRed)
 //    private ImageView ivPaymentsRedPoint;//收支明细推送红点
 

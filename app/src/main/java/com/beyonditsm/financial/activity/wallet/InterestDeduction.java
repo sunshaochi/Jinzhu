@@ -283,6 +283,10 @@ public class InterestDeduction extends BaseActivity {
                                 @Override
                                 public void onError(int status, String msg) {
                                     Toast.makeText(InterestDeduction.this, msg, Toast.LENGTH_SHORT).show();
+                                    if (TextUtils.equals(msg, "资金密码为空，请先设置资金密码，再绑定银行卡!")) {
+                                        Intent intent = new Intent(InterestDeduction.this, SetPwdActivity.class);
+                                        startActivity(intent);
+                                    }
 //                                    MyLogUtils.degug(orderBean.getUserName() + ">" + orderBean.getBankName() + ">" + orderBean.getBankCardNo()
 //                                            + ">" + orderBean.getCashOutAmount() + ">" + orderBean.getOrderNo() + ">" + zjPassword.getText().toString());
 
