@@ -240,7 +240,7 @@
     android:textSize="17sp"
     style="@style/com_textnots"
     android:id="@+id/tv_zhucesc"
-    android:text="例如:3月" />
+    android:text="例如:3个月" />
 
 
     </RelativeLayout>
@@ -387,7 +387,7 @@
     android:layout_marginRight="25dp"
     style="@style/com_textnots"
     android:id="@+id/tv_cbsc"
-    android:text="例如:24月" />
+    android:text="例如:24个月" />
 
     </RelativeLayout>
 

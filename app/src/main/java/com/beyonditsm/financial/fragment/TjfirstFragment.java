@@ -428,7 +428,7 @@ public class TjfirstFragment extends BaseFragment {
             case R.id.rl_zhucesc://注册时长
                 gzsc = tv_zhucesc.getText().toString().trim();
                 intent.putExtra("type", 3);
-                if(!TextUtils.isEmpty(gzsc)&&!gzsc.equals("例如:3月")){
+                if(!TextUtils.isEmpty(gzsc)&&!gzsc.equals("例如:3个月")){
                     String text=gzsc.substring(0,gzsc.length()-2);
                     intent.putExtra("text",text);
                 }
@@ -524,7 +524,7 @@ public class TjfirstFragment extends BaseFragment {
             case R.id.rl_sbsc://社保时长
                 sbcs = tv_cbsc.getText().toString().trim();
                 intent.putExtra("type", 4);
-                if(!TextUtils.isEmpty(sbcs)&&!sbcs.equals("例如:24月")){
+                if(!TextUtils.isEmpty(sbcs)&&!sbcs.equals("例如:24个月")){
                     String text=sbcs.substring(0,sbcs.length()-2);
                     intent.putExtra("text",text);
                 }
@@ -585,7 +585,7 @@ public class TjfirstFragment extends BaseFragment {
         if(TextUtils.isEmpty(zhiwu)||zhiwu.equals("请选择")){
             tujianBean.setJobIdentityKey("");
         }
-        if(TextUtils.isEmpty(gzsc)||gzsc.equals("例如:3月")){//工作时长
+        if(TextUtils.isEmpty(gzsc)||gzsc.equals("例如:3个月")){//工作时长
             tujianBean.setLicenseTimeLength("");
         }
         if(TextUtils.isEmpty(cc)||cc.equals("请选择")){
@@ -603,73 +603,25 @@ public class TjfirstFragment extends BaseFragment {
         if(TextUtils.isEmpty(qtzc)||qtzc.equals("请选择")){
             tujianBean.setOtherAssets("");
         }
-        if(TextUtils.isEmpty(sbcs)||sbcs.equals("例如:24月")){//社保时长
+        if(TextUtils.isEmpty(sbcs)||sbcs.equals("例如:24个月")){//社保时长
             tujianBean.setFundTimeLength("");
         }
 
 
 
-//        if (TextUtils.isEmpty(tv_money.getText())) {
-//            MyToastUtils.showShortToast(getActivity(), "贷款金额不能为空");
-//            return false;
-//        }
-//        if (TextUtils.isEmpty(tv_qixian.getText())) {
-//            MyToastUtils.showShortToast(getActivity(), "期限不能为空");
-//            return false;
-//        }
-//        if (TextUtils.isEmpty(tv_diqu.getText())) {
-//            MyToastUtils.showShortToast(getActivity(), "地区不能为空");
-//            return false;
-//        }
-//        if (TextUtils.isEmpty(tv_xueli.getText())) {
-//            MyToastUtils.showShortToast(getActivity(), "学历不能为空");
-//            return false;
-//        }
-//        if (TextUtils.isEmpty(tv_huji.getText())) {
-//            MyToastUtils.showShortToast(getActivity(), "户籍不能为空");
-//            return false;
-//        }
-//        if (TextUtils.isEmpty(tv_xyjl.getText())) {
-//            MyToastUtils.showShortToast(getActivity(), "信用记录不能为空");
-//            return false;
-//        }
-//        if (TextUtils.isEmpty(tv_zhiwei.getText())) {
-//            MyToastUtils.showShortToast(getActivity(), "职务不能为空");
-//            return false;
-//        }
-//        if (TextUtils.isEmpty(tv_nianji.getText())) {
-//            MyToastUtils.showShortToast(getActivity(), "年纪不能为空");
-//            return false;
-//        }
-//        if (TextUtils.isEmpty(tv_zhucesc.getText())) {
-//            MyToastUtils.showShortToast(getActivity(), "注册时长不能为空");
-//            return false;
-//        }
-//
-//        if (TextUtils.isEmpty(tv_cc.getText())) {
-//            MyToastUtils.showShortToast(getActivity(), "车产不能为空");
-//            return false;
-//        }
-//        if (TextUtils.isEmpty(tv_fc.getText())) {
-//            MyToastUtils.showShortToast(getActivity(), "房产不能为空");
-//            return false;
-//        }
-//        if (TextUtils.isEmpty(tv_dfgzje.getText())) {
-//            MyToastUtils.showShortToast(getActivity(), "代发工资不能为空");
-//            return false;
-//        }
-//        if (TextUtils.isEmpty(tv_bd.getText())) {
-//            MyToastUtils.showShortToast(getActivity(), "保单不能为空");
-//            return false;
-//        }
-//        if (TextUtils.isEmpty(tv_qtzc.getText())) {
-//            MyToastUtils.showShortToast(getActivity(), "其他资产");
-//            return false;
-//        }
-//        if (TextUtils.isEmpty(tv_cbsc.getText())) {
-//            MyToastUtils.showShortToast(getActivity(), "攻击经社保时长不能为空");
-//            return false;
-//        }
+        if (TextUtils.isEmpty(tv_money.getText())) {
+            MyToastUtils.showShortToast(getActivity(), "贷款金额不能为空");
+            return false;
+        }
+        if (TextUtils.isEmpty(tv_qixian.getText())||tv_qixian.getText().equals("请选择")) {
+            MyToastUtils.showShortToast(getActivity(), "期限不能为空");
+            return false;
+        }
+        if(diqu.equals("请选择")&&xueli.equals("请选择")&&huji.equals("请选择")&&xyjl.equals("请选择")&&zhiwu.equals("请选择")&&nianji.equals("例如:33岁")
+                &&gzsc.equals("例如:3个月")&&cc.equals("请选择")&&fc.equals("请选择")&&dfgz.equals("请选择")&&bd.equals("请选择")&&qtzc.equals("请选择")&&sbcs.equals("例如:24个月")){
+            MyToastUtils.showShortToast(getActivity(), "请至少填写一项资料信息");
+            return false;
+        }
 
 
         return true;

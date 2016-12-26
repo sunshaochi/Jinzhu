@@ -246,7 +246,7 @@ public interface IFinancialUrl {
     /*急借通列表*/
     String GET_CREDIT_SPEED = BASE_URL + "/unlogin/findProductPager.do";
 
-    /*急借通列表*/
+    /*急借详情*/
     String GETSHORTLOANPRODUCTDETAIL = BASE_URL + "/unLogin/getShortLoanProductDetail";
 
     /*借款用途接口*/

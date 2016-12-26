@@ -271,7 +271,6 @@ public class CreditSpeedSecond_1Act extends BaseActivity implements JJTInterface
 
     @OnClick({R.id.tv_speed_toTwo,R.id.rl_speedSelectLiving,R.id.rl_speedSelectMarriage,R.id.rl_speedSelectEdu,R.id.rl_speedSelectPermanent,R.id.rl_speedSelectResident,R.id.rl_speedSelectChildrenNum})
     public void todo(View view){
-
         switch (view.getId()){
             case R.id.tv_speed_toTwo:
                 if (isHaveData()) {
