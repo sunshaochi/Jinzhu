@@ -172,6 +172,9 @@ public class CreditUploadAct extends BaseActivity {
         List<SubUplEntity> list = new ArrayList<>();
         for (int i = 0; i < getList.size(); i++) {
             SubUplEntity se = new SubUplEntity();
+            if (getList.get(i).getUploadItemId().equals(i+"")){
+                getList.get(i).setUploadItemId("");
+            }
             se.setUploadItemId(getList.get(i).getUploadItemId());
             se.setImageUrl(getList.get(i).getImage());
             list.add(se);
@@ -244,6 +247,11 @@ public class CreditUploadAct extends BaseActivity {
         LinkedHashMap<String, List<CreditImageBean>> map = new LinkedHashMap<>();
         if (ceList != null && ceList.size() > 0) {
             for (int i = 0; i < ceList.size(); i++) {
+                if (TextUtils.isEmpty(ceList.get(i).getUploadItemId())) {
+                    map.put(i + "", ceList.get(i).getImage());
+                    ceList.get(i).setUploadItemId(i+"");
+                }
+                else
                 map.put(ceList.get(i).getUploadItemId(), ceList.get(i).getImage());
             }
         }
@@ -252,6 +260,7 @@ public class CreditUploadAct extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         try {
             if (resultCode != RESULT_OK) {
                 return;
@@ -278,7 +287,7 @@ public class CreditUploadAct extends BaseActivity {
             }
             path = Environment.getExternalStorageDirectory() + "/upload/cache/credit_upload" + time + ".png";
             uploadFile(path);//上传图片
-            super.onActivityResult(requestCode, resultCode, data);
+
         } catch (NullPointerException e) {
             e.printStackTrace();
         }

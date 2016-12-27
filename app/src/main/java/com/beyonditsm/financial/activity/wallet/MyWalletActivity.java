@@ -23,6 +23,7 @@ import com.beyonditsm.financial.entity.UserLoginBean;
 import com.beyonditsm.financial.entity.UserLoginEntity;
 import com.beyonditsm.financial.entity.WalletQuanBean;
 import com.beyonditsm.financial.fragment.MineFragment;
+import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
@@ -34,6 +35,7 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.json.Gson;
 import com.tandong.sa.json.reflect.TypeToken;
 import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
+import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -110,6 +112,7 @@ public class MyWalletActivity extends BaseActivity {
         if (user2!=null){
             user=  user2.getProfileInfo();
         }
+        ImageLoader.getInstance().displayImage(IFinancialUrl.SECURITY_IMAGE_URL + user.getAvatarPic(), civHead, options);
         if (!TextUtils.isEmpty(SpUtils.getPhonenumber(getApplicationContext()))){
             getWalletQuan(SpUtils.getPhonenumber(getApplicationContext()));
         }else {

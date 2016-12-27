@@ -43,6 +43,7 @@ public class ParamsUtil {
     private boolean firstLocated = true;
     private List<ProductSortEntity.OrgTypeBean> orgTypeInfos;
     private List<ProductSortEntity.OrgTypeBean> tjorgTypeInfos;//推荐机构列表
+    private int creditPage = 0;//贷款列表当前页左边 0 大额贷  1 极速贷款
 
     public List<ProductSortEntity.OrgTypeBean> getTjorgTypeInfos() {
         return tjorgTypeInfos;
@@ -284,5 +285,13 @@ public class ParamsUtil {
             e.printStackTrace();
         }
         return queryParams;
+    }
+
+    public int getCreditPage() {
+        return creditPage;
+    }
+
+    public void setCreditPage(int creditPage) {
+        this.creditPage = creditPage;
     }
 }
