@@ -282,9 +282,12 @@ public class CreditThirFrag extends BaseFragment {
                 }else {
                     CreditStepAct.upList = null;
                     MyToastUtils.showShortToast(getContext(), "订单已提交，请耐心等待审批");
+                    llUploadSuccess.setVisibility(View.VISIBLE);
+                    llUpload.setVisibility(View.GONE);
                     mParentActivity.sendBroadcast(new Intent(MyCreditAct.CREDIT_RECEIVER));
                     mParentActivity.sendBroadcast(new Intent(MyCreditDetailFragment.UPDATE_ORDER));
                     mParentActivity.sendBroadcast(new Intent(MyCreditStatusFragment.UPDATE_DEAL));
+                    findUploadSuccess();
 //                    mParentActivity.finish();
                 }
             }

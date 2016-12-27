@@ -8,7 +8,7 @@ package com.beyonditsm.financial.http;
 public interface IFinancialUrl {
     String BASE_URL="http://139.196.227.38:9040/GS.API.Online-0.2.0";
     /*吕建明*/
-//    String BASE_URL = "http://172.16.6.236:8080";
+//    String BASE_URL = "http://172.16.6.218:8082";
 //    String BASE_URL = "http://172.16.6.95:8083";
 //    String BASE_URL = "http://172.16.5.32:8083";
     /*吕东测试*/

@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.beyonditsm.financial.R;
+import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.view.pullfreshview.ILoadingLayout;
 import com.beyonditsm.financial.view.tablayout.SlidingTabLayout;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -58,6 +59,7 @@ public class CreditFragment extends BaseFragment {
         tvTitle.setText("贷款");
         rl_back.setVisibility(View.GONE);
         initViewPager();
+        creditViewpager.setCurrentItem(ParamsUtil.getInstance().getCreditPage());
 
     }
 
