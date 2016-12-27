@@ -99,11 +99,11 @@ public class CreditThirFrag extends BaseFragment {
 //            tvCredit.setVisibility(View.GONE);
 //        }
         lvCreditThird.setNoContentTxt("暂无上传资料项");
-        if ("PASS".equals(orderStatus)) {
+        if ("PASS".equals(orderStatus)) {//订单状态
             ivProgress.setBackgroundResource(R.mipmap.progress_04);
             tvCredit.setVisibility(View.GONE);
         }
-        getUploadList(orderId);
+        getUploadList(orderId);//获取上传的列表
         lvCredit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -197,7 +197,7 @@ public class CreditThirFrag extends BaseFragment {
 
 
     /**
-     * 提交审核
+     * 提交审核申请贷款
      *
      * @param orderId 订单id
      */

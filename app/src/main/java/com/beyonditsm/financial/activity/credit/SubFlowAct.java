@@ -103,23 +103,26 @@ public class SubFlowAct extends BaseActivity {
                 loadView.loadComplete();
                 JSONObject jsonObject = new JSONObject(result);
                 String message = jsonObject.getString("message");
-                if (message.equals("查询流程成功")) {
+//                if (message.equals("查询流程成功")) {
                     JSONArray array = jsonObject.getJSONArray("data");
 //                List<UpLoadEntity> datas = gson.fromJson(array.toString(), new TypeToken<List<UpLoadEntity>>() {
 //                }.getType());
                     datas = gson.fromJson(array.toString(), new TypeToken<List<UpLoadEntity>>() {
                     }.getType());
-
-                    if (adapter == null) {
-                        adapter = new MyAdapter(datas);
-                        lvCredit.setAdapter(adapter);
-                    } else {
-                        adapter.notifyChange(datas);
-                    }
-                }else{
-//                    JSONObject data = jsonObject.getJSONObject("data");
-                    loadView.setNoContentTxt("暂无增信资料需要上传");
-                }
+                  if(datas.size()>0) {
+                      if (adapter == null) {
+                          adapter = new MyAdapter(datas);
+                          lvCredit.setAdapter(adapter);
+                      } else {
+                          adapter.notifyChange(datas);
+                      }
+                  }else {
+                      loadView.setNoContentTxt("暂无增信资料需要上传");
+                  }
+//                }else{
+////                    JSONObject data = jsonObject.getJSONObject("data");
+//                    loadView.setNoContentTxt("暂无增信资料需要上传");
+//                }
             }
 
             @Override
