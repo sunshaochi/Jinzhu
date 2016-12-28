@@ -315,11 +315,11 @@ public class MineFragment extends BaseFragment {
                 CSCustomServiceInfo.Builder csBuilder = new CSCustomServiceInfo.Builder();
                 CSCustomServiceInfo csInfo;
                 if (user !=null){
-                    csInfo = csBuilder.nickName("users")//user.getRoleName() == null ||user.getRoleName().equals("")?tvName.getText().toString():user.getRoleName()+""
-                            .city(adressBean.getCity()+"")
-                            .address(adressBean.getAddress()+"")
-                            .age(profileInfoBean.getAge()+"")
-                            .email(profileInfoBean.getEmail()+"").build();
+                    csInfo = csBuilder.nickName(user.getUsername())//user.getRoleName() == null ||user.getRoleName().equals("")?tvName.getText().toString():user.getRoleName()+""
+                            .city(user.getAddress().getCity()+"")
+                            .address(user.getAddress().getAddress()+"")
+                            .age(user.getProfileInfo().getAge()+"")
+                            .email(user.getProfileInfo().getEmail()+"").build();
                 }else {
                     csInfo = csBuilder.nickName(tvName.getText().toString()).build();
                 }

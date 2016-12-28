@@ -3,7 +3,7 @@
     android:id="@+id/rl_creditList"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="110dp"
+    android:layout_height="wrap_content"
     android:background="@drawable/item_back">
 
     <!--<LinearLayout-->
@@ -106,6 +106,7 @@
         <!--style="@style/view_line"-->
         <!--android:layout_alignParentBottom="true" />-->
     <RelativeLayout
+        android:layout_margin="10dp"
         android:layout_marginLeft="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -127,23 +128,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"
+            android:paddingBottom="2dp"
+            android:paddingTop="2dp"
+            android:background="@drawable/withe_org_btn"
             android:id="@+id/tv_zhuangtai"
-            android:padding="5dp"
-            android:layout_margin="10dp"
             android:layout_alignParentRight="true"
-            android:textColor="#666666"
+            android:textColor="#ff6633"
             android:textSize="12sp"
             android:text="订单编号"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </RelativeLayout>
     <View
+        android:layout_marginLeft="10dp"
       style="@style/view_line"></View>
     <LinearLayout
+        android:paddingBottom="20dp"
+        android:paddingTop="15dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/iv_tubiao"
             android:layout_marginLeft="10dp"
@@ -155,10 +162,10 @@
             android:layout_width="match_parent"
             android:layout_height="40dp">
             <TextView
-                android:textColor="#999999"
+                android:textColor="#333333"
                 android:id="@+id/tv_dkname"
                 android:textSize="15sp"
-                android:text=""
+                android:text="chanpin1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <LinearLayout

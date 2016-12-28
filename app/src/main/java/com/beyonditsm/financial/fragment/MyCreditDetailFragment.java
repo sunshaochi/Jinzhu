@@ -39,6 +39,7 @@ import com.beyonditsm.financial.util.Arith;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.util.StatuUtil;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.widget.FinalLoadDialog;
 import com.leaf.library.widget.MyListView;
@@ -61,6 +62,7 @@ import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.UserInfo;
 
 /**
+ * 贷款详情
  * Created by Administrator on 2015/12/13
  */
 @SuppressWarnings("deprecation")
@@ -329,16 +331,12 @@ public class MyCreditDetailFragment extends BaseFragment {
             }
 
             String status = orderbean.getOrderStatus();
-            if ( "ORGANIZATION_APPROVAL".equals(status)) {//机构审批 机构正在进行审批
-                tvStatus.setText("机构审批中");
-            }else if ("CREDIT_MANAGER_GRAB".equals(status)){//信贷经理抢单 当前节点信贷经理可以抢单
-                tvStatus.setText("待抢单");
-            }else if ("CREDIT_MANAGER_APPROVAL".equals(status)){//信贷经理审批中 当前节点信贷经理已抢到单
-                tvStatus.setText("已抢单");
-            }else if ("PASS".equals(status)) {//审批通过 机构审批通过
-                tvStatus.setText("审批通过");
-                tvStatus.setBackgroundResource(R.drawable.cre_btn_green);
-                llCreditRemark.setVisibility(View.GONE);
+            if(!TextUtils.isEmpty(status)){
+                tvStatus.setText(StatuUtil.getStatutext(status));//状态匹配
+                if ("PASS".equals(status)) {//审批通过 机构审批通过
+                    tvStatus.setText("审批通过");
+                    tvStatus.setBackgroundResource(R.drawable.cre_btn_green);
+                    llCreditRemark.setVisibility(View.GONE);
 //                total.setText("放款金额：");
 //                time.setText("还款期限：");
 //                if (!TextUtils.isEmpty(data.getPracticalLoan()))
@@ -359,78 +357,18 @@ public class MyCreditDetailFragment extends BaseFragment {
 //                    String periods = data.getBankPracticalPeriods();
 //                    getMOnthPay(loan, rate, periods);
 //                }}
-            }else if ("WAIT_BACKGROUND_APPROVAL".equals(status)) {
-                tvStatus.setText("待审批");
-            } else if ("SUPPLEMENT_DATA".equals(status)) {//补件中 由信贷经理或机构发起的补件 由信贷经理与客户联系，要求客户补件
-                tvStatus.setText("补件中");
-                rlbj.setVisibility(View.VISIBLE);
-            } else if ("NO_PASS".equals(status)) {//不通过 机构审批不通过
-                tvStatus.setText("审批不通过");
-            } else if ("CANCEL_REQUET".equals(status)) {//取消申请 客户取消申请
-                tvStatus.setText("已取消");
-            }else if ("DRAFT".equals(status)){//草稿
-                tvStatus.setText("资料待上传");
-            }else if ("REJECT".equals(status)){
-                tvStatus.setText("已驳回");
-            }else if ("CREDIT_MANAGER_DRAFT".equals(status)){
-                tvStatus.setText("信贷经理-资料待上传");
-            }
-            else if ("AREA_MANAGER_APPROVAL".equals(status)){
-                tvStatus.setText("区域经理-审批");
-            }else if ("ELECTRICPIN_TOBE_DISTRIBUTED".equals(status)){
-                tvStatus.setText("电销待分派");
-            }else if ("ELECTRICPIN_EXAMINING".equals(status)){
-                tvStatus.setText("电销审批中");
-            }else if ("ELECTRICPIN_PATCH".equals(status)){
-                tvStatus.setText("电销补件中");
-            }else if ("ELECTRICPIN_LOANEND".equals(status)){
-                tvStatus.setText("申贷结束");
-            }else if ("ELECTRICPIN_LEADER_EXAMINING".equals(status)){
-                tvStatus.setText("电销主管审批中");
-            }else if ("AREA_MANAGER_EXAMINE".equals(status)){
-                tvStatus.setText("区域经理审批");
-            }else if ("CREDIT_MANAGER_PATCH".equals(status)){
-                tvStatus.setText("信贷经理补件");
-            }else if ("AGENT_EXAMINE".equals(status)){
-                tvStatus.setText("代理商审批");
-            }else if ("AREA_MANAGER_PATCH".equals(status)){
-                tvStatus.setText("区域经理补件");
-            }else if ("RISK_TOBE_DISTRIBUTED".equals(status)){
-                tvStatus.setText("风控分派中");
-            }else if ("PLATFORM_FIRSTEXAMINING".equals(status)){
-                tvStatus.setText("平台初审中");
-            }else if ("RISK_PATCH".equals(status)){
-                tvStatus.setText("风控补件中");
-            }else if ("FIRSTEXAMINING_PASS".equals(status)){
-                tvStatus.setText("初审通过");
-            }else if ("FIRSTEXAMINING_REFUSE".equals(status)){
-                tvStatus.setText("初审拒绝");
-            }else if ("PLATFORM_REFUSE".equals(status)){
-                tvStatus.setText("平台拒绝");
-            }else if ("RECOMMEND_TO_OTHERS".equals(status)){
-                tvStatus.setText("推荐其他产品");
-            }else if ("RISK_LOAN_END".equals(status)){
-                tvStatus.setText("申贷结束");
-            }else if ("PLATFORM_PASS".equals(status)){
-                tvStatus.setText("平台通过");
-            }else if ("TOBE_SIGNED".equals(status)){
-                tvStatus.setText("待面签");
-            }else if ("SIGNED_CONFIRM".equals(status)){
-                tvStatus.setText("已面签待确认");
-            }else if ("SIGNED_DONE".equals(status)){
-                tvStatus.setText("已面签");
-            }else if ("SUBMIT_ORG".equals(status)){
-                tvStatus.setText("提交机构");
-            }else if ("LOAN_SUCC".equals(status)){
-                tvStatus.setText("银行通过");
-            }else if ("LOAN_FAIL".equals(status)){
-                tvStatus.setText("银行拒绝");
+                }
+//                if ("SUPPLEMENT_DATA".equals(status)) {//补件中 由信贷经理或机构发起的补件 由信贷经理与客户联系，要求客户补件
+//                    tvStatus.setText("补件中");
+//                    rlbj.setVisibility(View.VISIBLE);
+//                }
+
+                if (!"SUPPLEMENT_DATA".equals(status)) {//不是补件中
+                    EventBus.getDefault().post(new PatchEvent("", 2));
+                    rlbj.setVisibility(View.GONE);//提交其他附件影藏
+                }
             }
 
-            if (!"SUPPLEMENT_DATA".equals(status)) {
-                EventBus.getDefault().post(new PatchEvent("", 2));
-                rlbj.setVisibility(View.GONE);
-            }
 
 
         }

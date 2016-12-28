@@ -8,7 +8,7 @@ package com.beyonditsm.financial.http;
 public interface IFinancialUrl {
     String BASE_URL="http://139.196.227.38:9040/GS.API.Online-0.2.0";
     /*吕建明*/
-//    String BASE_URL = "http://172.16.6.236:8080";
+//    String BASE_URL = "http://172.16.6.218:8082";
 //    String BASE_URL = "http://172.16.6.95:8083";
 //    String BASE_URL = "http://172.16.5.32:8083";
     /*吕东测试*/
@@ -246,7 +246,7 @@ public interface IFinancialUrl {
     /*急借通列表*/
     String GET_CREDIT_SPEED = BASE_URL + "/unlogin/findProductPager.do";
 
-    /*急借通列表*/
+    /*急借详情*/
     String GETSHORTLOANPRODUCTDETAIL = BASE_URL + "/unLogin/getShortLoanProductDetail";
 
     /*借款用途接口*/

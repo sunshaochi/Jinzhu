@@ -296,10 +296,12 @@ public class HomeFragment extends BaseFragment implements LocationListener, BGAR
         switch (v.getId()) {
             case R.id.ll_credit://我要贷款
                 EventBus.getDefault().post(new ToSwitchEvent());
+                ParamsUtil.getInstance().setCreditPage(0);
                 break;
             case R.id.ll_tillage://急速贷
                 EventBus.getDefault().post(new ToSwitchEvent());
-                getActivity().sendBroadcast(new Intent(CreditFragment.CHANGE));
+                context.sendBroadcast(new Intent(CreditFragment.CHANGE));
+                ParamsUtil.getInstance().setCreditPage(1);
                 break;
 
             case R.id.ll_work://代言人

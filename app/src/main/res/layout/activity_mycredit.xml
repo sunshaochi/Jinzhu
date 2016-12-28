@@ -59,6 +59,7 @@
             android:layout_height="match_parent">
             <com.beyonditsm.financial.view.pullfreshview.LoadRefreshView
                 android:id="@+id/plv"
+                android:divider="@color/bg_color"
                 style="@style/pullrefresh_style"/>
 
             <com.beyonditsm.financial.view.LoadingView
