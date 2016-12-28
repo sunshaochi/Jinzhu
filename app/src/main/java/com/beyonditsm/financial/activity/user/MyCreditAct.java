@@ -78,7 +78,8 @@ public class MyCreditAct extends BaseActivity {
         plv.setScrollLoadEnabled(false);
         plv.setPullLoadEnabled(true);
         plv.setHasMoreData(true);
-        plv.getRefreshableView().setDivider(null);
+//        plv.getRefreshableView().setDivider(null);
+        plv.getRefreshableView().setDividerHeight(20);
         plv.getRefreshableView().setVerticalScrollBarEnabled(false);
         plv.getRefreshableView().setSelector(new ColorDrawable(Color.TRANSPARENT));
         plv.setLastUpdatedLabel(FinancialUtil.getCurrentTime());

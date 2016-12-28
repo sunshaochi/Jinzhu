@@ -18,6 +18,7 @@ import com.beyonditsm.financial.entity.FriendBean;
 import com.beyonditsm.financial.entity.OrderDealEntity;
 import com.beyonditsm.financial.entity.OrderWorkMarkBean;
 import com.beyonditsm.financial.util.MyLogUtils;
+import com.beyonditsm.financial.util.StatuUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -88,7 +89,7 @@ public class OrderDetailAdapter extends BaseAdapter  {
 //            holder.llListFoot.setVisibility(View.VISIBLE);
 //        }
         if (!TextUtils.isEmpty(ode.getStatus())) {
-            holder.tvCreditStatus.setText(ode.getStatus());
+            holder.tvCreditStatus.setText(StatuUtil.getStatutext(ode.getStatus()));
         }
 
         Date date = new Date();

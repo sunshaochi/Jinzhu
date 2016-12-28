@@ -59,13 +59,16 @@ public class CreditStepAct extends BaseActivity {
     public void init(Bundle savedInstanceState) {
         setLeftTv("返回");
         activityInstance = this;
-        orderId = getIntent().getStringExtra("orderId");
-        // 1 线上  2线下
-        String orderType = getIntent().getStringExtra("orderType");
-        productInfo = getIntent().getParcelableExtra(HomeCreditDetailAct.PRODUCTINFO);//普通产品从贷款详情带过来
-        credit_type = getIntent().getStringExtra(CreditSpeedDetailAct.CREDIT_TYPE);//急速度产品
         EventBus.getDefault().register(this);
         fragmentManager = getSupportFragmentManager();
+
+        orderId = getIntent().getStringExtra("orderId");//我的贷款详情传过来的
+        String orderType = getIntent().getStringExtra("orderType"); // 1 线上  2线下//我的贷款详情传递过来的
+
+        productInfo = getIntent().getParcelableExtra(HomeCreditDetailAct.PRODUCTINFO);//普通产品从贷款详情带过来
+        credit_type = getIntent().getStringExtra(CreditSpeedDetailAct.CREDIT_TYPE);//急速度产品
+
+
 //        if (TextUtils.isEmpty(SpUtils.getRoleName(this))) {
 //            setTabSelection(0);//未登陆
 //        } else
@@ -153,7 +156,7 @@ public class CreditStepAct extends BaseActivity {
             case 2:
                 setTopTitle("上传资质图片");
                 Bundle bundle = new Bundle();
-                bundle.putInt("act_type", getIntent().getIntExtra("credit_upload", 0));
+                bundle.putInt("act_type", getIntent().getIntExtra("credit_upload", 0));//我的贷款里面传过来的
                 String orderStatus = getIntent().getStringExtra("orderStatus");
                 if (!TextUtils.isEmpty(orderStatus)) {
                     bundle.putString("orderStatus", orderStatus);

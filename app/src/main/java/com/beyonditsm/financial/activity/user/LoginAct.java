@@ -385,7 +385,6 @@ public class LoginAct extends BaseActivity {
             @Override
             public void onSucess(String result) throws JSONException {
 
-//<<<<<<< HEAD
                 ResultData<UserLoginBean> rd = (ResultData<UserLoginBean>) GsonUtils.json(result, UserLoginBean.class);
                 UserLoginBean data = rd.getData();
                 if (TextUtils.equals(data.getUserStatus(),"ROLE_COMMON_USER")){
@@ -409,8 +408,6 @@ public class LoginAct extends BaseActivity {
                     progressBar1.setVisibility(View.GONE);
                     return;
                 }
-//
-//=======
 //                loginBtn.setEnabled(true);
 //                progressBar1.setVisibility(View.GONE);
 //                SpUtils.setRoleName(MyApplication.getInstance().getApplicationContext(),rd.getData().getUsername()+"");

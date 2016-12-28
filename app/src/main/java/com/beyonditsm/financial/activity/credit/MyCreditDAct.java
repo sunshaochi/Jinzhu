@@ -115,27 +115,27 @@ public class MyCreditDAct extends BaseActivity {
     }
 
     public void onEvent(final MyCreditDetailFragment.PatchEvent event) {
-        if (event._type == 1) {
-            setRightBtn("补件说明", new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-//                    SpUtils.clearOrderId(MyApplication.getInstance());
-//                    ivDetailRedPoint.setVisibility(View.INVISIBLE);
-//                    ivStatusRedPoint.setVisibility(View.INVISIBLE);
-//                    sendBroadcast(new Intent(MyCreditAct.CREDIT_RECEIVER));
-//                    sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
-//                    sendBroadcast(new Intent(MineFragment.HIDE_POINT));
-                    DialogHint dialogHint = new DialogHint(MyCreditDAct.this, event._remark).builder();
-                    dialogHint.show();
-                }
-            });
-        } else {
-            if ("CANCEL_REQUET".equals(orderListBean.getOrder().getOrderStatus())) {
-                setRightVG(false);
-            } else if ("WAIT_BACKGROUND_APPROVAL".equals(orderListBean.getOrder().getOrderStatus()) || "CREDIT_MANAGER_GRAB".equals(orderListBean.getOrder().getOrderStatus())) {
-                setCancel();
-            }
-        }
+//        if (event._type == 1) {
+//            setRightBtn("补件说明", new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+////                    SpUtils.clearOrderId(MyApplication.getInstance());
+////                    ivDetailRedPoint.setVisibility(View.INVISIBLE);
+////                    ivStatusRedPoint.setVisibility(View.INVISIBLE);
+////                    sendBroadcast(new Intent(MyCreditAct.CREDIT_RECEIVER));
+////                    sendBroadcast(new Intent(MainActivity.HIDE_REDPOINT));
+////                    sendBroadcast(new Intent(MineFragment.HIDE_POINT));
+//                    DialogHint dialogHint = new DialogHint(MyCreditDAct.this, event._remark).builder();
+//                    dialogHint.show();
+//                }
+//            });
+//        } else {
+//            if ("CANCEL_REQUET".equals(orderListBean.getOrder().getOrderStatus())) {
+//                setRightVG(false);
+//            } else if ("WAIT_BACKGROUND_APPROVAL".equals(orderListBean.getOrder().getOrderStatus()) || "CREDIT_MANAGER_GRAB".equals(orderListBean.getOrder().getOrderStatus())) {
+////                setCancel();//取消订单不需要了
+//            }
+//        }
     }
 
     public void setCancel() {
