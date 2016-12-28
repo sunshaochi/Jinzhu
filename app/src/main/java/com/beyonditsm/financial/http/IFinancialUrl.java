@@ -289,7 +289,7 @@ public interface IFinancialUrl {
     /*个人信息查询区县*/
     String QUERY_DISTRICT = BASE_URL + "/unLogin/getRegions";
     /*极速贷贷款详情接口*/
-    String SHORT_LOAN_ORDER_DETAIL = BASE_URL + API_VERSION + "/platform/login/ShortLoanOrderDetail.do";
+    String SHORT_LOAN_ORDER_DETAIL = BASE_URL + "/ShortLoanOrderDetail.do";
     /*急速贷推送第三方接口*/
 //    String APPLY_SHORT_LOAN_ORDER = BASE_URL +API_VERSION + "/platform/login/applyShortLoanOrder.do";
 

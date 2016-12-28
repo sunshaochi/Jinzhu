@@ -421,20 +421,20 @@ public class SpeedCreditDetailFragment extends BaseFragment {
                 intent2.putExtra("orderType", rowe.getOrderType());
                 getActivity().startActivity(intent2);
                 break;
-            case R.id.tvUpCredit://增信上传
+            case R.id.tvUpCredit://补全极速带资料
                 switch (STEP) {
                     case "1":
-                        Intent intent3 = new Intent(getContext(), CreditSpeedSecond_2Act.class);
+                        Intent intent3 = new Intent(context, CreditSpeedSecond_2Act.class);
                         intent3.putExtra("order_id", rowe.getId());
                         getActivity().startActivity(intent3);
                         break;
                     case "2":
-                        Intent intent4 = new Intent(getContext(), CreditSpeedSecond_3Act.class);
+                        Intent intent4 = new Intent(context, CreditSpeedSecond_3Act.class);
                         intent4.putExtra("orderId", rowe.getId());
                         getActivity().startActivity(intent4);
                         break;
                     case "3":
-                        Intent intent5 = new Intent(getContext(), CreditSpeedThird_2Act.class);
+                        Intent intent5 = new Intent(context, CreditSpeedThird_2Act.class);
                         intent5.putExtra("orderId", rowe.getId());
                         getActivity().startActivity(intent5);
                         break;
@@ -478,16 +478,18 @@ public class SpeedCreditDetailFragment extends BaseFragment {
                 Gson gson = new Gson();
                 JSONObject jsonObject = new JSONObject(result);
                 JSONObject data = jsonObject.getJSONObject("data");
-                if (data.getJSONArray("payType") != null){
-                    StringBuilder sb = new StringBuilder();
-                    JSONArray payJSON = data.getJSONArray("payType");
-                    for(int i =0;i<payJSON.length();i++){
-                        JSONObject jsonObject1 = payJSON.getJSONObject(i);
-                        sb.append(jsonObject1.getString("name"));
-                        sb.append(" ,");
-                    }
-                    tvHf.setText("还款方式：" + sb.toString().substring(0,sb.length()-1));
-                }
+//                if (data.getJSONArray("payType") != null){
+//                    StringBuilder sb = new StringBuilder();
+//                    JSONArray payJSON = data.getJSONArray("payType");
+//                    for(int i =0;i<payJSON.length();i++){
+//                        JSONObject jsonObject1 = payJSON.getJSONObject(i);
+//                        sb.append(jsonObject1.getString("name"));
+//                        sb.append(" ,");
+//                    }
+//                    tvHf.setText("还款方式：" + sb.toString().substring(0,sb.length()-1));
+//                }
+                if (!TextUtils.isEmpty(data.getString("paytypemap")))
+                tvHf.setText(data.getString("paytypemap"));
 
                 info = gson.fromJson(data.toString(), SpeedOrderInfo.class);
                 if (info != null) {
