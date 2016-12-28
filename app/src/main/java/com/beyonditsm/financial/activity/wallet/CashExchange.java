@@ -21,8 +21,10 @@ import com.beyonditsm.financial.entity.UserEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.widget.DialogChooseProvince;
+import com.beyonditsm.financial.widget.MyAlertDialog;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.json.Gson;
@@ -66,11 +68,11 @@ public class CashExchange extends BaseActivity {
     private QueRenOrderBean orderBean;//订单实体
     private UserEntity user;//用户实体
 
-    private double MIN_MARK = 0.0;
+    private double MIN_MARK = 100;
     private double MAX_MARK = 0.0;
     private List<BindCardBean> bindList;
-    private int minPayment;
-
+    private int minPayment=100;
+    private String xianjin;
     @Override
     public void setLayout() {
         setContentView(R.layout.act_cash_exchange);
@@ -82,24 +84,29 @@ public class CashExchange extends BaseActivity {
         AppManager.getAppManager().addActivity(CashExchange.this);
         setLeftTv("返回");
         setTopTitle("现金兑换");
-
-        user = getIntent().getParcelableExtra("userInfo");
-        findBankCard();
-        getMinExchange();
-
-        if (user != null) {
-//            if (!TextUtils.isEmpty(user.getUserName())){
-//                name.setText(user.getUserName());
-//                name.setEnabled(false);
-//            }else{
-//                user.setUserName(name.getText().toString().trim());
-//            }
-            if (!TextUtils.isEmpty(user.getCashTicketAmount())) {//现金卷数量
-                double dCashA = Double.valueOf(user.getCashTicketAmount());
-                tvxianjin.setText((long) dCashA + "");
-                MAX_MARK = Double.parseDouble(user.getCashTicketAmount());
-            }
+        xianjin=getIntent().getStringExtra("xianjin");
+        if (!TextUtils.isEmpty(xianjin)) {//现金卷数量
+            double dCashA = Double.valueOf(xianjin);
+            tvxianjin.setText((long) dCashA + "");
+            MAX_MARK = Double.parseDouble(xianjin);
         }
+//        user = getIntent().getParcelableExtra("userInfo");
+        findBankCard();
+//        getMinExchange();
+
+//        if (user != null) {
+////            if (!TextUtils.isEmpty(user.getUserName())){
+////                name.setText(user.getUserName());
+////                name.setEnabled(false);
+////            }else{
+////                user.setUserName(name.getText().toString().trim());
+////            }
+//            if (!TextUtils.isEmpty(user.getCashTicketAmount())) {//现金卷数量
+//                double dCashA = Double.valueOf(user.getCashTicketAmount());
+//                tvxianjin.setText((long) dCashA + "");
+//                MAX_MARK = Double.parseDouble(user.getCashTicketAmount());
+//            }
+//        }
         setListener();
 //        if (!TextUtils.isEmpty(bankName.getText()) && !TextUtils.isEmpty(bankCount.getText()) && !TextUtils.isEmpty(name.getText())) {
 //            bankCount.setEnabled(false);
@@ -276,6 +283,9 @@ public class CashExchange extends BaseActivity {
     private void setOrderBean() {
         orderBean = new QueRenOrderBean();
 
+        if(!TextUtils.isEmpty(SpUtils.getPhonenumber(getApplicationContext()))){
+            orderBean.setUid(SpUtils.getPhonenumber(getApplicationContext()));
+        }
         if (!TextUtils.isEmpty(name.getText().toString())) {
             orderBean.setName(name.getText().toString());
         }
@@ -324,11 +334,13 @@ public class CashExchange extends BaseActivity {
             Toast.makeText(CashExchange.this, "未输入兑换金额", Toast.LENGTH_SHORT).show();
             tvxianjinfen.requestFocus();
             return false;
-        } else if (!TextUtils.isEmpty(tvxianjinfen.getText().toString()) && ((Double.parseDouble(tvxianjinfen.getText().toString()) == 0))) {
+        }
+        else if (!TextUtils.isEmpty(tvxianjinfen.getText().toString()) && ((Double.parseDouble(tvxianjinfen.getText().toString()) == 0))) {
             Toast.makeText(CashExchange.this, "输入的兑换金额无效", Toast.LENGTH_SHORT).show();
             tvxianjinfen.requestFocus();
             return false;
-        } else if (Integer.parseInt(tvxianjinfen.getText().toString()) < minPayment) {
+        }
+        else if (Integer.parseInt(tvxianjinfen.getText().toString()) < minPayment) {
             MyToastUtils.showShortToast(CashExchange.this, "申请兑换金额需大于" + minPayment + "元");
             tvxianjinfen.requestFocus();
             return false;
@@ -343,6 +355,18 @@ public class CashExchange extends BaseActivity {
             @Override
             public void onSucess(String result) throws JSONException {
                 JSONObject object = new JSONObject(result);
+                JSONObject obresult= object.getJSONObject("data");
+                boolean ob= obresult.isNull("data");
+                if (ob){
+                    MyAlertDialog dialog=new MyAlertDialog(CashExchange.this);
+                    dialog.builder().setTitle("提示").setMsg("请先绑定银行卡!").setPositiveButton("确定",new View.OnClickListener(){
+                        @Override
+                        public void onClick(View v) {
+                            finish();
+                        }
+                    }).show();
+                    return;
+                }
                 JSONArray data = object.getJSONArray("data");
                 Gson gson = new Gson();
                 bindList = gson.fromJson(data.toString(), new TypeToken<List<BindCardBean>>() {
