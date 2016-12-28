@@ -841,9 +841,9 @@ public class SpeedCreditDetailFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (receiver != null) {
-            getActivity().unregisterReceiver(receiver);
-        }
+//        if (receiver != null) {
+//            getActivity().unregisterReceiver(receiver);
+//        }
         if (order_receiver != null) {
             getActivity().unregisterReceiver(order_receiver);
         }

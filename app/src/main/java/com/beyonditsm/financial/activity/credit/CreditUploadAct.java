@@ -309,6 +309,8 @@ public class CreditUploadAct extends BaseActivity {
             @Override
             public void onSucess(String result) {
                 dialog.cancel();
+                File file1 = new File(file);
+                file1.delete();
                 CreditImageBean cib = new CreditImageBean();
                 try{
                     if (imageMap.get(uploadItemId).size() == 0) {
