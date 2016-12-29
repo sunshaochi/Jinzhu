@@ -36,6 +36,7 @@ import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.AddressUtil;
 import com.beyonditsm.financial.util.Arith;
+import com.beyonditsm.financial.util.DefutProductUtil;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
@@ -146,6 +147,8 @@ public class MyCreditDetailFragment extends BaseFragment {
     private TextView onpay;
     @ViewInject(R.id.total)
     private TextView total;
+    @ViewInject(R.id.tvLim)
+    private TextView tvLim;//贷款期限后面的单位
     @ViewInject(R.id.time)
     private TextView time;
     @ViewInject(R.id.start_bj)
@@ -257,19 +260,10 @@ public class MyCreditDetailFragment extends BaseFragment {
         prodct = orderListBean.getProduct();
         customer = orderListBean.getCustomer();
         if (!TextUtils.isEmpty(orderListBean.getLoanPeriodType())) {
-            if ("1".equals(orderListBean.getLoanPeriodType())) {
-                tv_danwei = "年";
-            } else if ("2".equals(orderListBean.getLoanPeriodType())) {
-                tv_danwei = "月";
-            } else if ("3".equals(orderListBean.getLoanPeriodType())) {
-                tv_danwei = "周";
-            } else if ("4".equals(orderListBean.getLoanPeriodType())) {
-                tv_danwei = "日";
-            } else if ("5".equals(orderListBean.getLoanPeriodType())) {
-                tv_danwei = "期数";
-            }
+            tv_danwei= DefutProductUtil.getProStatu(orderListBean.getLoanPeriodType());
+
         } else {
-            tv_danwei = "月";
+            tv_danwei = "";
         }
 
         if (!TextUtils.isEmpty(orderListBean.getMinLoanPeriod()) || !TextUtils.isEmpty(orderListBean.getMaxLoanPeriod())) {
@@ -317,6 +311,7 @@ public class MyCreditDetailFragment extends BaseFragment {
         if (orderbean != null) {
             total.setText("贷款金额：");
             time.setText("贷款期限：");
+            tvLim.setText(tv_danwei);
 
             if (!TextUtils.isEmpty(String.valueOf(orderbean.getGrantAmount()))) {
 //                tvTotal.setText( df2.format(Double.parseDouble(orderbean.getGrantAmount()) / 10000) + "万");
@@ -397,18 +392,20 @@ public class MyCreditDetailFragment extends BaseFragment {
 
 
             if (!TextUtils.isEmpty(customer.getCurrentProvince()) || !TextUtils.isEmpty(customer.getCurrentCtiy())
-                    || !TextUtils.isEmpty((customer.getCurrentRegion()))) {//常驻地
+                    || !TextUtils.isEmpty((customer.getCurrentRegion())))
+            {//常驻地
                 alwaysaddress.setText(addressUtil.getProName(customer.getCurrentProvince()) +
                         addressUtil.getCityName(customer.getCurrentProvince(), customer.getCurrentCtiy()) +
                         addressUtil.getCountryName(customer.getCurrentCtiy(), customer.getCurrentRegion()));
+            }
 
-                String[] provinceId = orderListBean.getAddress().split(",");
-                if (provinceId != null) {//常驻地
-                    alwaysaddress.setText(addressUtil.getProName(provinceId[0]) +
-                            addressUtil.getCityName(provinceId[0], provinceId[1]) +
-                            addressUtil.getCountryName(provinceId[1], provinceId[2]));
-
-                }
+//                String[] provinceId = orderListBean.getAddress().split(",");
+//                if (provinceId != null) {//常驻地
+//                    alwaysaddress.setText(addressUtil.getProName(provinceId[0]) +
+//                            addressUtil.getCityName(provinceId[0], provinceId[1]) +
+//                            addressUtil.getCountryName(provinceId[1], provinceId[2]));
+//
+//                }
 //
 
                 if ("1".equals(customer.getMarried())) {
@@ -455,7 +452,7 @@ public class MyCreditDetailFragment extends BaseFragment {
                 }
 
             }
-        }
+
     }
 
     @Override

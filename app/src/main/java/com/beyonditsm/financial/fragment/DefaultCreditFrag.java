@@ -143,9 +143,7 @@ public class DefaultCreditFrag extends BaseFragment {
         }
 
         EventBus.getDefault().register(this);
-
         initTit();//头部标题
-        loadView.setNoContentTxt("暂无此类产品，换个条件试试");
 //        etAmount.setSelection(etAmount.getText().length());
 
         plv.setPullRefreshEnabled(true);
@@ -189,7 +187,6 @@ public class DefaultCreditFrag extends BaseFragment {
         RequestManager.getCommManager().findSortParam(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
-
                 ResultData<ProductSortEntity> rd = (ResultData<ProductSortEntity>) GsonUtils.json(result, ProductSortEntity.class);
                 ProductSortEntity productSortEntity = rd.getData();
                 llSearchTitle.setVisibility(View.VISIBLE);

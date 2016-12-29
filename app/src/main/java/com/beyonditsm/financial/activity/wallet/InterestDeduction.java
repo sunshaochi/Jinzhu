@@ -24,6 +24,7 @@ import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GsonUtils;
+import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
@@ -123,7 +124,7 @@ public class InterestDeduction extends BaseActivity {
 //        }
         getOrderNoList(SpUtils.getPhonenumber(InterestDeduction.this));
         findBankCard();
-        getMinExchange();
+//        getMinExchange();
 
         setListener();
         if (!TextUtils.isEmpty(bankName.getText())&&!TextUtils.isEmpty(bankCount.getText())&&!TextUtils.isEmpty(name.getText())){
@@ -424,9 +425,13 @@ public class InterestDeduction extends BaseActivity {
         RequestManager.getWalletManager().findOrderNoListByUserName(uid,new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-                list=new ArrayList<>();
                 JSONObject jsonObject = new JSONObject(result);
+                if(jsonObject.get("data")instanceof JSONObject){
+
+                }else
+                MyLogUtils.info("获取订单"+result);
                 JSONArray dataArr = jsonObject.getJSONArray("data");
+                list=new ArrayList<>();
                 Gson gson = new Gson();
                 list = gson.fromJson(dataArr.toString(), new TypeToken<List<OrderBean2>>() {
                 }.getType());
@@ -475,9 +480,7 @@ public class InterestDeduction extends BaseActivity {
             @Override
             public void onSucess(String result) throws JSONException {
                 JSONObject object = new JSONObject(result);
-                JSONObject obresult= object.getJSONObject("data");
-               boolean ob= obresult.isNull("data");
-                if (ob){
+                if(object.get("data")instanceof JSONObject){
                     MyAlertDialog dialog=new MyAlertDialog(InterestDeduction.this);
                     dialog.builder().setTitle("提示").setMsg("请先绑定银行卡!").setPositiveButton("确定",new View.OnClickListener(){
                         @Override
@@ -485,39 +488,39 @@ public class InterestDeduction extends BaseActivity {
                             finish();
                         }
                     }).show();
-                    return;
-                }
-                JSONArray data = object.getJSONArray("data");
-                Gson gson = new Gson();
-                bindList = gson.fromJson(data.toString(), new TypeToken<List<BindCardBean>>() {
-                }.getType());
+                }else {
+                    JSONArray data = object.getJSONArray("data");
+                    Gson gson = new Gson();
+                    bindList = gson.fromJson(data.toString(), new TypeToken<List<BindCardBean>>() {
+                    }.getType());
 
-                if (bindList != null) {
-                    for (int i = 0; i < bindList.size(); i++) {
-                        int status =Integer.parseInt(bindList.get(i).getStatus());
-                        if (status == 2) {
+                    if (bindList != null) {
+                        for (int i = 0; i < bindList.size(); i++) {
+                            int status = Integer.parseInt(bindList.get(i).getStatus());
+//                        if (status == 2) {
                             if (!TextUtils.isEmpty(bindList.get(i).getBankName())) {
                                 bankName.setText(bindList.get(i).getBankName());
                                 bankName.setEnabled(false);
-                                bankName.setTextColor(ContextCompat.getColor(InterestDeduction.this,R.color.tv_primary_color));
+                                bankName.setTextColor(ContextCompat.getColor(InterestDeduction.this, R.color.tv_primary_color));
                             }
                             if (!TextUtils.isEmpty(bindList.get(i).getCardNo())) {
                                 bankCount.setText(bindList.get(i).getCardNo());
                                 bankCount.setEnabled(false);
-                                bankCount.setTextColor(ContextCompat.getColor(InterestDeduction.this,R.color.tv_primary_color));
+                                bankCount.setTextColor(ContextCompat.getColor(InterestDeduction.this, R.color.tv_primary_color));
                             }
                             if (!TextUtils.isEmpty(bindList.get(i).getAccountName())) {
                                 name.setText(bindList.get(i).getAccountName());
                                 name.setEnabled(false);
-                                name.setTextColor(ContextCompat.getColor(InterestDeduction.this,R.color.tv_primary_color));
+                                name.setTextColor(ContextCompat.getColor(InterestDeduction.this, R.color.tv_primary_color));
                             }
                             if (!TextUtils.isEmpty(bindList.get(i).getBranchBankName())) {
                                 depositBank.setText(bindList.get(i).getBranchBankName());
                                 depositBank.setEnabled(false);
-                                depositBank.setTextColor(ContextCompat.getColor(InterestDeduction.this,R.color.tv_primary_color));
+                                depositBank.setTextColor(ContextCompat.getColor(InterestDeduction.this, R.color.tv_primary_color));
                             }
                         }
                     }
+//                }
                 }
             }
 

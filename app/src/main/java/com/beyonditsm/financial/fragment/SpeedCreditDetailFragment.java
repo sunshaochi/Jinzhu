@@ -37,6 +37,7 @@ import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.AddressUtil;
 import com.beyonditsm.financial.util.CheckUtil;
+import com.beyonditsm.financial.util.DefutProductUtil;
 import com.beyonditsm.financial.util.GeneralUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.view.LoadingView;
@@ -120,6 +121,8 @@ public class SpeedCreditDetailFragment extends BaseFragment {
 
     @ViewInject(R.id.llsf)
     private LinearLayout llsf;
+    @ViewInject(R.id.tvLim)
+    private TextView tvLim;
 //    @ViewInject(R.id.)
 
     @ViewInject(R.id.tv_zy)
@@ -221,6 +224,7 @@ public class SpeedCreditDetailFragment extends BaseFragment {
     private String creditName;
     public static String monthlyPayments;//月供
     private String totalRath;
+    private String danwei;//期限单位
 
     OrderDetailInfo.DataEntity data;
     SpeedOrderInfo info;
@@ -260,11 +264,19 @@ public class SpeedCreditDetailFragment extends BaseFragment {
     public void initData(Bundle savedInstanceState) {
         addressUtil = new AddressUtil(getActivity());
         orderListBean = getArguments().getParcelable("orderListBean");
-        if (rowe != null) {
-            tvName.setText(orderListBean.getProduct().getProductName());
-        }
+//        if (rowe != null) {
+//            tvName.setText(orderListBean.getProduct().getProductName());
+//        }
         dialog = new FinalLoadDialog(getActivity());
+        if(orderListBean!=null){
+            if(!TextUtils.isEmpty(orderListBean.getLoanPeriodType())){
+                danwei= DefutProductUtil.getProStatu(orderListBean.getLoanPeriodType());
+            }else {
+                danwei="";
+            }
         ShortLoanOrderDetail(orderListBean.getOrder().getOrderId());
+
+        }
 
 //        obaDown = ObjectAnimator.ofFloat(ivSlide, "rotation", 0,
 //                180);
@@ -480,7 +492,6 @@ public class SpeedCreditDetailFragment extends BaseFragment {
                 Gson gson = new Gson();
                 JSONObject jsonObject = new JSONObject(result);
                 JSONObject data = jsonObject.getJSONObject("data");
-
                 info=gson.fromJson(data.toString(),new TypeToken<SpeedOrderInfo>() {
                 }.getType());
 
@@ -537,6 +548,7 @@ public class SpeedCreditDetailFragment extends BaseFragment {
 
                         total.setText("贷款金额：");
                         time.setText("贷款期限：");
+                        tvLim.setText(danwei);
                         if (!TextUtils.isEmpty(String.valueOf(info.getTotalAmount()))) {
                             tvTotal.setText(df2.format(info.getTotalAmount() / 10000) + "万");
                         }
@@ -544,7 +556,7 @@ public class SpeedCreditDetailFragment extends BaseFragment {
                             tvLimit.setText("额度范围：" + df.format(info.getMinVal() / 10000) + "~" + df.format(info.getMaxVal() / 10000) + "万");
                         }
                         if (!TextUtils.isEmpty(String.valueOf(info.getRepaymentPeriod()))) {
-                            tvL.setText("期限范围：" + info.getRepaymentPeriod() + "");
+                            tvL.setText("期限范围：" + info.getRepaymentPeriod() + ""+danwei);
                         }
                         if (!TextUtils.isEmpty(String.valueOf(info.getTotalPeriods()))) {
                             tvTime.setText(info.getTotalPeriods() + "");
