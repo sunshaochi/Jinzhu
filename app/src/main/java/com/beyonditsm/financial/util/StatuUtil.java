@@ -168,6 +168,9 @@ public class StatuUtil {
 //            holder.tv_zhuangtai.setText("银行拒绝");
             text="银行拒绝";
             return text;
+        }else if(TextUtils.equals("PASS_BLACK_NAME",statu)){
+            text="通过黑名单";
+            return text;
         }
         return text;
     }

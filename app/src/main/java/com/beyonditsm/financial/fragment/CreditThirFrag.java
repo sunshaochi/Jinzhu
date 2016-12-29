@@ -147,7 +147,7 @@ public class CreditThirFrag extends BaseFragment {
         RequestManager.getCommManager().getUpLoadList(orderId, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
-
+                MyLogUtils.info("getUploadList"+result);
                 lvCreditThird.loadComplete();
                 JSONObject jsonObject = new JSONObject(result);
 

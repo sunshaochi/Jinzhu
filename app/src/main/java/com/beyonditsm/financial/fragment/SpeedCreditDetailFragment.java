@@ -37,6 +37,7 @@ import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.AddressUtil;
 import com.beyonditsm.financial.util.CheckUtil;
+import com.beyonditsm.financial.util.GeneralUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.widget.FinalLoadDialog;
@@ -45,6 +46,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.animation.ObjectAnimator;
 import com.tandong.sa.json.Gson;
+import com.tandong.sa.json.reflect.TypeToken;
 import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
 import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
@@ -425,17 +427,17 @@ public class SpeedCreditDetailFragment extends BaseFragment {
                 switch (STEP) {
                     case "1":
                         Intent intent3 = new Intent(getContext(), CreditSpeedSecond_2Act.class);
-                        intent3.putExtra("order_id", rowe.getId());
+                        intent3.putExtra("order_id", orderListBean.getOrder().getOrderId());
                         getActivity().startActivity(intent3);
                         break;
                     case "2":
                         Intent intent4 = new Intent(getContext(), CreditSpeedSecond_3Act.class);
-                        intent4.putExtra("orderId", rowe.getId());
+                        intent4.putExtra("orderId", orderListBean.getOrder().getOrderId());
                         getActivity().startActivity(intent4);
                         break;
                     case "3":
                         Intent intent5 = new Intent(getContext(), CreditSpeedThird_2Act.class);
-                        intent5.putExtra("orderId", rowe.getId());
+                        intent5.putExtra("orderId", orderListBean.getOrder().getOrderId());
                         getActivity().startActivity(intent5);
                         break;
 
@@ -478,19 +480,24 @@ public class SpeedCreditDetailFragment extends BaseFragment {
                 Gson gson = new Gson();
                 JSONObject jsonObject = new JSONObject(result);
                 JSONObject data = jsonObject.getJSONObject("data");
-                if (data.getJSONArray("payType") != null){
-                    StringBuilder sb = new StringBuilder();
-                    JSONArray payJSON = data.getJSONArray("payType");
-                    for(int i =0;i<payJSON.length();i++){
-                        JSONObject jsonObject1 = payJSON.getJSONObject(i);
-                        sb.append(jsonObject1.getString("name"));
-                        sb.append(" ,");
-                    }
-                    tvHf.setText("还款方式：" + sb.toString().substring(0,sb.length()-1));
-                }
-
-                info = gson.fromJson(data.toString(), SpeedOrderInfo.class);
+                info=gson.fromJson(data.toString(),new TypeToken<SpeedOrderInfo>() {
+                }.getType());
+//                if (data.getJSONArray("payType") != null){
+//                    StringBuilder sb = new StringBuilder();
+//                    JSONArray payJSON = data.getJSONArray("payType");
+//                    for(int i =0;i<payJSON.length();i++){
+//                        JSONObject jsonObject1 = payJSON.getJSONObject(i);
+//                        sb.append(jsonObject1.getString("name"));
+//                        sb.append(" ,");
+//                    }
+//                    tvHf.setText("还款方式：" + sb.toString().substring(0,sb.length()-1));
+//                }
+//
+//                info = gson.fromJson(data.toString(), SpeedOrderInfo.class);
                 if (info != null) {
+                    if(!TextUtils.isEmpty(info.getPaytypemap())){
+                        tvHf.setText("还款方式：" + info.getPaytypemap());
+                    }
 //                    data = info.getData();
 //                    if (data != null) {
                         creditName = info.getProductName();
@@ -513,7 +520,7 @@ public class SpeedCreditDetailFragment extends BaseFragment {
                         } else {
                             if (STEP.equals("1") || STEP.equals("2") || STEP.equals("3")){
                                 MyCreditDAct act = (MyCreditDAct) getActivity();
-                                act.setCancel();
+//                                act.setCancel();
                             }
                             rlUpCredit.setVisibility(View.VISIBLE);
                         }
@@ -782,15 +789,15 @@ public class SpeedCreditDetailFragment extends BaseFragment {
                 });
     }
 
-    public static final String UPDATE_ORDER = "com.update.order";
-    private SpeedCreditDetailFragment.OrderBroadCastReceiver order_receiver;
-
-    private class OrderBroadCastReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            ShortLoanOrderDetail(rowe.getId());
-        }
-    }
+//    public static final String UPDATE_ORDER = "com.update.order";
+//    private SpeedCreditDetailFragment.OrderBroadCastReceiver order_receiver;
+//
+//    private class OrderBroadCastReceiver extends BroadcastReceiver {
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            ShortLoanOrderDetail(rowe.getId());
+//        }
+//    }
 
     private List<TaskEntity> taskEntityList, finishList;//任务列表
     private PrimaryTaskAdapter adapter;
@@ -829,31 +836,31 @@ public class SpeedCreditDetailFragment extends BaseFragment {
     @Override
     public void onStart() {
         super.onStart();
-        if (receiver == null) {
-            receiver = new MyBroadCastReceiver();
-        }
-        if (order_receiver == null) {
-            order_receiver = new SpeedCreditDetailFragment.OrderBroadCastReceiver();
-        }
-        getActivity().registerReceiver(order_receiver, new IntentFilter(UPDATE_ORDER));
+//        if (receiver == null) {
+//            receiver = new MyBroadCastReceiver();
+//        }
+//        if (order_receiver == null) {
+//            order_receiver = new SpeedCreditDetailFragment.OrderBroadCastReceiver();
+//        }
+//        getActivity().registerReceiver(order_receiver, new IntentFilter(UPDATE_ORDER));
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (receiver != null) {
-            getActivity().unregisterReceiver(receiver);
-        }
-        if (order_receiver != null) {
-            getActivity().unregisterReceiver(order_receiver);
-        }
+//        if (receiver != null) {
+//            getActivity().unregisterReceiver(receiver);
+//        }
+//        if (order_receiver != null) {
+//            getActivity().unregisterReceiver(order_receiver);
+//        }
     }
 
-    private SpeedCreditDetailFragment.MyBroadCastReceiver receiver;
-
-    public class MyBroadCastReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-        }
-    }
+//    private SpeedCreditDetailFragment.MyBroadCastReceiver receiver;
+//
+//    public class MyBroadCastReceiver extends BroadcastReceiver {
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//        }
+//    }
 }

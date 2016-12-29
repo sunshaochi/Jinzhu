@@ -279,6 +279,12 @@ public class MyCreditDetailFragment extends BaseFragment {
                 }else {
                 tvL.setText("期限范围：" + orderListBean.getMinLoanPeriod() + "~" + orderListBean.getMaxLoanPeriod() + tv_danwei);}
             }
+
+        if (!TextUtils.isEmpty(orderListBean.getAddress())) {//详细地址
+                address.setText(orderListBean.getAddress());
+            }
+
+
         if(prodct!=null){
             loadingView.loadComplete();
             ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + prodct.getProductLogo(), ivBank, options);
@@ -295,7 +301,7 @@ public class MyCreditDetailFragment extends BaseFragment {
                 if (Double.valueOf(prodct.getMinRate()) - Double.valueOf(prodct.getMaxRate()) == 0) {
                     tvRate.setText("利率:" + prodct.getMaxRate() + "%");
                 } else {
-                    tvRate.setText("利率：" + prodct.getMaxRate() + "%" + "~" + prodct.getMaxRate() + "%");
+                    tvRate.setText("利率：" + prodct.getMinRate() + "%" + "~" + prodct.getMaxRate() + "%");
                 }
             }
 //            if (!TextUtils.isEmpty(data.getDisposableRateMax())&&!TextUtils.isEmpty(data.getDisposableRateMin())) {
@@ -390,15 +396,13 @@ public class MyCreditDetailFragment extends BaseFragment {
                 IdCard.setText(customer.getIdNo());
             }
 
-            if (!TextUtils.isEmpty(customer.getCurrentProvince()) && !TextUtils.isEmpty(customer.getCurrentCtiy())
-                    && !TextUtils.isEmpty((customer.getCurrentRegion()))) {//常驻地
+            if (!TextUtils.isEmpty(customer.getCurrentProvince()) ||!TextUtils.isEmpty(customer.getCurrentCtiy())
+                   || !TextUtils.isEmpty((customer.getCurrentRegion()))) {//常驻地
                 alwaysaddress.setText(addressUtil.getProName(customer.getCurrentProvince()) +
                         addressUtil.getCityName(customer.getCurrentProvince(), customer.getCurrentCtiy()) +
                         addressUtil.getCountryName(customer.getCurrentCtiy(), customer.getCurrentRegion()));
             }
-//            if (!TextUtils.isEmpty(data.getDetailAddress())) {//详细地址
-//                address.setText(data.getDetailAddress());
-//            }
+//
 
             if ("1".equals(customer.getMarried())) {
                 tv_wyl.setText("已婚");

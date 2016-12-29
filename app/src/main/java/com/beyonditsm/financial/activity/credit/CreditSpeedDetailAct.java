@@ -26,6 +26,7 @@ import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
+import com.beyonditsm.financial.util.ProductStatuUtil;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.widget.DialogChooseMonth;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -35,6 +36,7 @@ import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
 import org.json.JSONException;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -152,10 +154,6 @@ public class CreditSpeedDetailAct extends BaseActivity {
 
     @Override
     public void init(Bundle savedInstanceState) {
-//        propertyTypeList = (ArrayList<CreditSpeedEntity.ResideStatusmapBean>) getIntent().getSerializableExtra(SpeedCreditFrag.PROPERTY_TYPES);//居住状况
-//        jobIdentitysList = (ArrayList<CreditSpeedEntity.debtTypemapBean>) getIntent().getSerializableExtra(SpeedCreditFrag.JOB_IDENTITYS);//借款用途
-//        payTypessList = (ArrayList<CreditSpeedEntity.PayTypessBean>) getIntent().getSerializableExtra(SpeedCreditFrag.PAY_TYPE);//还款方式
-//        creditSpeedEntity = getIntent().getParcelableExtra(SpeedCreditFrag.CREDIT_SPEED);//实体
         productId = getIntent().getExtras().getString("productId");
         getinfo(productId);
     }
@@ -185,6 +183,7 @@ public class CreditSpeedDetailAct extends BaseActivity {
 
 
             if (!TextUtils.isEmpty(creditSpeedEntity.getMinVal())) {//最小额度
+                creditMoney=creditSpeedEntity.getMaxVal();
                 etSpeedAmount.setText(creditSpeedEntity.getMinVal());//金额
             }
 
@@ -194,9 +193,9 @@ public class CreditSpeedDetailAct extends BaseActivity {
 //                String minTime = split[0];
 ////                String timeMinValue = minTime.split("周");
 //                String timeMinValue = minTime.substring(0, minTime.length()-1);
-                String timeMinValue = creditSpeedEntity.getMinLoanPeriod();
-                minWeek = Integer.valueOf(timeMinValue);
-                tvSpeedWeek.setText(timeMinValue);//期限
+               creditMonth = creditSpeedEntity.getMinLoanPeriod();
+
+                tvSpeedWeek.setText(creditMonth);//期限
             }
 
 
@@ -210,28 +209,19 @@ public class CreditSpeedDetailAct extends BaseActivity {
 
             tvScope.setText("额度范围：" + df.format(minVal / 10000) + "-" + df.format(maxVal / 10000) + "万");
             tvProName.setText(creditSpeedEntity.getProductName());
+
             if (!TextUtils.isEmpty(creditSpeedEntity.getLoanPeriodType())) {//获取期限类型
-                switch (creditSpeedEntity.getLoanPeriodType()) {
-                    case "1":
-                        tvLim.setText("期限范围：" + creditSpeedEntity.getMinLoanPeriod() + "-" + creditSpeedEntity.getMaxLoanPeriod() + "年");
-                        break;
-                    case "2":
-                        tvLim.setText("期限范围：" + creditSpeedEntity.getMinLoanPeriod() + "-" + creditSpeedEntity.getMaxLoanPeriod() + "月");
-                        break;
-                    case "3":
-                        tvLim.setText("期限范围：" + creditSpeedEntity.getMinLoanPeriod() + "-" + creditSpeedEntity.getMaxLoanPeriod() + "周");
-                        break;
-                    case "4":
-                        tvLim.setText("期限范围：" + creditSpeedEntity.getMinLoanPeriod() + "-" + creditSpeedEntity.getMaxLoanPeriod() + "日");
-                        break;
-                    case "5":
-                        tvLim.setText("期限范围：" + creditSpeedEntity.getMinLoanPeriod() + "-" + creditSpeedEntity.getMaxLoanPeriod() + "期限");
-                        break;
-
+                String protype= ProductStatuUtil.getProStatu(creditSpeedEntity.getLoanPeriodType());
+                if (!TextUtils.isEmpty(creditSpeedEntity.getMinLoanPeriod())||!TextUtils.isEmpty(creditSpeedEntity.getMaxLoanPeriod())) {//最高最低还款期限
+                    if (Double.valueOf(creditSpeedEntity.getMinLoanPeriod()) - Double.valueOf(creditSpeedEntity.getMaxLoanPeriod()) == 0) {
+                        tvLim.setText("期限范围：" +creditSpeedEntity.getMinLoanPeriod()+protype+"");
+                    } else {
+                        tvLim.setText("期限范围：" + creditSpeedEntity.getMinLoanPeriod() + "-" +creditSpeedEntity.getMaxLoanPeriod()+protype);
+                    }
                 }
+                tvspeedMonth.setText(protype);//期限选择框单位
 
-
-                getTotlerate();//获取总利息
+            }
 
 
                 if (payTypessList != null && payTypessList.size() > 0) {//还款方式
@@ -248,6 +238,8 @@ public class CreditSpeedDetailAct extends BaseActivity {
                         tvRate.setText(creditSpeedEntity.getMinRate() + "%-" + creditSpeedEntity.getMaxRate());
                     }
                 }
+            Double monthRath = (Double.valueOf(creditSpeedEntity.getMinRate()) + Double.valueOf(creditSpeedEntity.getMaxRate())) / 2;
+            getTotlerate(monthRath,Double.parseDouble(creditMoney),Integer.parseInt(creditMonth));//获取总利息
 
                 if (!TextUtils.isEmpty(creditSpeedEntity.getLoanPeriod())) {//放款周期
                     tvLoan.setText(creditSpeedEntity.getLoanPeriod() + "个工作日");
@@ -265,7 +257,7 @@ public class CreditSpeedDetailAct extends BaseActivity {
                 }
 
 
-            }
+
             initAnim();
             setLeftTv("返回");
             map.put(0, false);
@@ -300,76 +292,20 @@ public class CreditSpeedDetailAct extends BaseActivity {
         });
     }
 
-    //获取总利息
-    private void getTotlerate() {
-        if (creditSpeedEntity.getLoanRateType().equals("1")) {//月息
-            switch (creditSpeedEntity.getLoanPeriodType()) {
-                case "1"://贷款期限年
-                    double v = Double.valueOf(etSpeedAmount.getText().toString().trim()) * (Integer.valueOf(tvSpeedWeek.getText().toString()) * 12) * Double.valueOf(creditSpeedEntity.getMinRate().toString());
-                    tvTotal.setText(String.valueOf(v));//总利息
-                    tvspeedMonth.setText("年");//期限单位
-                    tvLim.setText("期限范围：" + creditSpeedEntity.getMinLoanPeriod() + "-" + creditSpeedEntity.getMaxLoanPeriod() + "年");
-                    break;
-                case "2"://贷款期限月
-                    double v1 = Double.valueOf(etSpeedAmount.getText().toString().trim()) * (Integer.valueOf(tvSpeedWeek.getText().toString()) * 1) * Double.valueOf(creditSpeedEntity.getMinRate().toString());
-                    tvTotal.setText(String.valueOf(v1));//总利息
-                    tvspeedMonth.setText("月");//期限单位
-                    tvLim.setText("期限范围：" + creditSpeedEntity.getMinLoanPeriod() + "-" + creditSpeedEntity.getMaxLoanPeriod() + "月");
-                    break;
-                case "3"://贷款期限周（这类占时先把他当成返回过来的是日利率）
-                    double v2 = Double.valueOf(etSpeedAmount.getText().toString().trim()) * (Integer.valueOf(tvSpeedWeek.getText().toString()) * 7) * Double.valueOf(creditSpeedEntity.getMinRate().toString());
-                    tvTotal.setText(String.valueOf(v2));//总利息
-                    tvspeedMonth.setText("周");//期限单位
-                    tvLim.setText("期限范围：" + creditSpeedEntity.getMinLoanPeriod() + "-" + creditSpeedEntity.getMaxLoanPeriod() + "周");
-                    break;
-                case "4"://贷款期限 日
-                    double v3 = Double.valueOf(etSpeedAmount.getText().toString().trim()) * (Integer.valueOf(tvSpeedWeek.getText().toString()) * 1) * Double.valueOf(creditSpeedEntity.getMinRate().toString());
-                    tvTotal.setText(String.valueOf(v3));//总利息
-                    tvspeedMonth.setText("日");//期限单位
-                    tvLim.setText("期限范围：" + creditSpeedEntity.getMinLoanPeriod() + "-" + creditSpeedEntity.getMaxLoanPeriod() + "日");
-                    break;
-                case "5"://贷款期限年
-                    double v4 = Double.valueOf(etSpeedAmount.getText().toString().trim()) * (Integer.valueOf(tvSpeedWeek.getText().toString()) * 1) * Double.valueOf(creditSpeedEntity.getMinRate().toString());
-                    tvTotal.setText(String.valueOf(v4));//总利息
-                    tvspeedMonth.setText("期数");//期限单位
-                    tvLim.setText("期限范围：" + creditSpeedEntity.getMinLoanPeriod() + "-" + creditSpeedEntity.getMaxLoanPeriod() + "期数");
-                    break;
-            }
+    //获取单期利息
+    private void getTotlerate(double rate,double repaymentMoney ,int month) {
+        rate = rate/100;
+        double sum = repaymentMoney* (rate * Math.pow(1 + rate, month)) / (Math.pow(1 + rate, month) - 1);
+        BigDecimal big = new BigDecimal(sum);
+        Double monthpay=big.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();//四舍五入
+        getTotlePay(monthpay,repaymentMoney,month);//计算总利息
+    }
 
-        } else if (creditSpeedEntity.getLoanRateType().equals("2")) {//日息
-            switch (creditSpeedEntity.getLoanPeriodType()) {
-                case "1"://贷款期限年
-                    double v = Double.valueOf(etSpeedAmount.getText().toString().trim()) * (Integer.valueOf(tvSpeedWeek.getText().toString()) * 365) * Double.valueOf(creditSpeedEntity.getMinRate().toString());
-                    tvTotal.setText(String.valueOf(v));//总利息
-                    tvspeedMonth.setText("年");//期限单位
-                    tvLim.setText("期限范围：" + creditSpeedEntity.getMinLoanPeriod() + "-" + creditSpeedEntity.getMaxLoanPeriod() + "年");
-                    break;
-                case "2"://贷款期限月
-                    double v1 = Double.valueOf(etSpeedAmount.getText().toString().trim()) * (Integer.valueOf(tvSpeedWeek.getText().toString()) * 30) * Double.valueOf(creditSpeedEntity.getMinRate().toString());
-                    tvTotal.setText(String.valueOf(v1));//总利息
-                    tvspeedMonth.setText("月");//期限单位
-                    tvLim.setText("期限范围：" + creditSpeedEntity.getMinLoanPeriod() + "-" + creditSpeedEntity.getMaxLoanPeriod() + "月");
-                    break;
-                case "3"://贷款期限周（这类占时先把他当成返回过来的是日利率）
-                    double v2 = Double.valueOf(etSpeedAmount.getText().toString().trim()) * (Integer.valueOf(tvSpeedWeek.getText().toString()) * 7) * Double.valueOf(creditSpeedEntity.getMinRate().toString());
-                    tvTotal.setText(String.valueOf(v2));//总利息
-                    tvspeedMonth.setText("周");//期限单位
-                    tvLim.setText("期限范围：" + creditSpeedEntity.getMinLoanPeriod() + "-" + creditSpeedEntity.getMaxLoanPeriod() + "周");
-                    break;
-                case "4"://贷款期限 日
-                    double v3 = Double.valueOf(etSpeedAmount.getText().toString().trim()) * (Integer.valueOf(tvSpeedWeek.getText().toString()) * 1) * Double.valueOf(creditSpeedEntity.getMinRate().toString());
-                    tvTotal.setText(String.valueOf(v3));//总利息
-                    tvspeedMonth.setText("日");//期限单位
-                    tvLim.setText("期限范围：" + creditSpeedEntity.getMinLoanPeriod() + "-" + creditSpeedEntity.getMaxLoanPeriod() + "日");
-                    break;
-                case "5"://贷款期限年
-                    double v4 = Double.valueOf(etSpeedAmount.getText().toString().trim()) * (Integer.valueOf(tvSpeedWeek.getText().toString()) * 1) * Double.valueOf(creditSpeedEntity.getMinRate().toString());
-                    tvTotal.setText(String.valueOf(v4));//总利息
-                    tvspeedMonth.setText("期数");//期限单位
-                    tvLim.setText("期限范围：" + creditSpeedEntity.getMinLoanPeriod() + "-" + creditSpeedEntity.getMaxLoanPeriod() + "期数");
-                    break;
-            }
-        }
+    private void getTotlePay(double monthlyPay, double creditAmount, int month) {
+        Double total = monthlyPay * month - (creditAmount);
+        BigDecimal bigDecimal = new BigDecimal(total);
+        total = bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();//四舍五入
+        tvTotal.setText(total+"");
     }
 
 
@@ -422,6 +358,7 @@ public class CreditSpeedDetailAct extends BaseActivity {
                     if (null != creditSpeedEntity.getMinVal() && null != creditSpeedEntity.getMaxVal()) {
                         double curVal = Double.valueOf(creditMoney);
                         if (TextUtils.isEmpty(creditMonth)) {
+                            minWeek = Integer.valueOf(creditMonth);
                             creditMonth = minWeek + "";
                         } else {
                             creditMonth = tvSpeedWeek.getText().toString();
@@ -465,10 +402,14 @@ public class CreditSpeedDetailAct extends BaseActivity {
 //            }
 //
 //        } else {
-        double v = curVal * Integer.valueOf(creditMonth) * 7 * Double.valueOf(creditSpeedEntity.getMinRate()) / 100;
-        tvTotal.setText(String.valueOf(v));
+//        double v = curVal * Integer.valueOf(creditMonth) * 7 * Double.valueOf(creditSpeedEntity.getMinRate()) / 100;
+//        tvTotal.setText(String.valueOf(v));
+
 
 //        }
+
+        Double monthRath = (Double.valueOf(creditSpeedEntity.getMinRate()) + Double.valueOf(creditSpeedEntity.getMaxRate())) / 2;
+        getTotlerate(monthRath,Double.parseDouble(creditMoney),Integer.parseInt(creditMonth));//获取总利息
     }
 
     private void scrollDown() {
