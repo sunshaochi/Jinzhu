@@ -619,7 +619,7 @@ public class CreditSecondFrag extends BaseFragment {
                             && !TextUtils.isEmpty(user.getCurrentRegion())) {
                         position.setText(addressUtil.getProName(user.getCurrentProvince())
                                 +addressUtil.getCityName(user.getCurrentProvince(),user.getCurrentCity())
-                                +addressUtil.getCityName(user.getCurrentCity(),user.getCurrentRegion()));//常住地
+                                +addressUtil.getCountryName(user.getCurrentCity(),user.getCurrentRegion()));//常住地
                     }
 
 //                    if (!TextUtils.isEmpty(user.getDetailAddr())) {

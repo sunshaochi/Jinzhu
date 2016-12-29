@@ -128,9 +128,7 @@ public class RequestManager {
                             if (obj.has("statusCode")){
                                 Intent unlogin = new Intent();
                                 unlogin.setAction("UNLOGIN");
-                                MyLogUtils.degug("roleName"+SpUtils.getRoleName(MyApplication.getInstance().getApplicationContext()));
                                 SpUtils.setRoleName(MyApplication.getInstance().getApplicationContext(),"");
-                                MyLogUtils.degug("roleName"+SpUtils.getRoleName(MyApplication.getInstance().getApplicationContext()));
                                 MyApplication.getInstance().getApplicationContext().sendBroadcast(unlogin);
                                 callback.onError(600,"未登录");
                                 return;

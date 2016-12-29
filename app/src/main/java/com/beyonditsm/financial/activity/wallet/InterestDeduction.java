@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.beyonditsm.financial.AppManager;
+import com.beyonditsm.financial.MyApplication;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.entity.BindCardBean;
@@ -27,6 +28,7 @@ import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.widget.DialogChooseProvince;
+import com.beyonditsm.financial.widget.MyAlertDialog;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.json.Gson;
@@ -98,11 +100,12 @@ public class InterestDeduction extends BaseActivity {
         setTopTitle("抵扣利息");
 
 
-        dikou=getIntent().getParcelableExtra("dikou");
+        dikou=getIntent().getStringExtra("dikou");
         if (TextUtils.isEmpty(dikou)){
             tvDikouMoney.setText(0+"");
         }else {
             tvDikouMoney.setText(dikou);
+            MAX_MARK=Double.parseDouble(dikou);
         }
 //        if(user!=null){
 ////            if (!TextUtils.isEmpty(user.getUserName())){
@@ -270,6 +273,7 @@ public class InterestDeduction extends BaseActivity {
                     setOrderBean();
                         if (!TextUtils.isEmpty(zjPassword.getText().toString().trim())) {
                             orderBean.setFundPassword(zjPassword.getText().toString().trim());
+                            orderBean.setAmount("100");
                             RequestManager.getWalletManager().comitOrder(orderBean, new RequestManager.CallBack() {
                                 @Override
                                 public void onSucess(String result) throws JSONException {
@@ -324,6 +328,9 @@ public class InterestDeduction extends BaseActivity {
      */
     private void setOrderBean(){
         orderBean=new QueRenOrderBean();
+        if (!TextUtils.isEmpty(SpUtils.getPhonenumber(getApplicationContext()))){
+            orderBean.setUid(SpUtils.getPhonenumber(MyApplication.getInstance().getApplicationContext()));
+        }
         if(!TextUtils.isEmpty(name.getText().toString())){
             orderBean.setName(name.getText().toString());
         }
@@ -468,6 +475,18 @@ public class InterestDeduction extends BaseActivity {
             @Override
             public void onSucess(String result) throws JSONException {
                 JSONObject object = new JSONObject(result);
+                JSONObject obresult= object.getJSONObject("data");
+               boolean ob= obresult.isNull("data");
+                if (ob){
+                    MyAlertDialog dialog=new MyAlertDialog(InterestDeduction.this);
+                    dialog.builder().setTitle("提示").setMsg("请先绑定银行卡!").setPositiveButton("确定",new View.OnClickListener(){
+                        @Override
+                        public void onClick(View v) {
+                            finish();
+                        }
+                    }).show();
+                    return;
+                }
                 JSONArray data = object.getJSONArray("data");
                 Gson gson = new Gson();
                 bindList = gson.fromJson(data.toString(), new TypeToken<List<BindCardBean>>() {

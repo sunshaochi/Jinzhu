@@ -27,6 +27,7 @@ public class BindBankCardAdp extends BaseAdapter {
     private List<BindCardBean> list;
     private final LayoutInflater inflater;
     private int status;
+    private int clickpos;
 
     public BindBankCardAdp(Context context, List<BindCardBean> list) {
         this.context = context;
@@ -89,8 +90,9 @@ public class BindBankCardAdp extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 status = 0;
+                clickpos=position;
                 modifyBankCardStatus(cardNo, status);
-                list.remove(position);
+//                list.remove(position);
 
             }
         });
@@ -102,10 +104,14 @@ public class BindBankCardAdp extends BaseAdapter {
         return convertView;
     }
 
-    private void modifyBankCardStatus(String cardNo, int status) {
+    private void modifyBankCardStatus(String cardNo, final int status) {
         RequestManager.getWalletManager().modifyBankCard(cardNo, status, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
+                if (status==0){
+                    list.remove(clickpos);
+                    notifyDataSetChanged();
+                }
 //                tvStatus.setText("默认");
                 Intent intent = new Intent(BindBankCardAct.ADDBANKCARD);
                 context.sendBroadcast(intent);

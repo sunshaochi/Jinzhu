@@ -253,42 +253,42 @@ public class MyCreditDetailFragment extends BaseFragment {
      * @param orderListBean
      */
     private void getOrderDetail(OrderListBean orderListBean) {
-        orderbean=orderListBean.getOrder();
-        prodct=orderListBean.getProduct();
-        customer=orderListBean.getCustomer();
-        if(!TextUtils.isEmpty(orderListBean.getLoanPeriodType())){
-            if("1".equals(orderListBean.getLoanPeriodType())){
-                tv_danwei="年";
+        orderbean = orderListBean.getOrder();
+        prodct = orderListBean.getProduct();
+        customer = orderListBean.getCustomer();
+        if (!TextUtils.isEmpty(orderListBean.getLoanPeriodType())) {
+            if ("1".equals(orderListBean.getLoanPeriodType())) {
+                tv_danwei = "年";
+            } else if ("2".equals(orderListBean.getLoanPeriodType())) {
+                tv_danwei = "月";
+            } else if ("3".equals(orderListBean.getLoanPeriodType())) {
+                tv_danwei = "周";
+            } else if ("4".equals(orderListBean.getLoanPeriodType())) {
+                tv_danwei = "日";
+            } else if ("5".equals(orderListBean.getLoanPeriodType())) {
+                tv_danwei = "期数";
             }
-            else if("2".equals(orderListBean.getLoanPeriodType())){
-                tv_danwei="月";
-            }else if("3".equals(orderListBean.getLoanPeriodType())){
-                tv_danwei="周";
-            }else if("4".equals(orderListBean.getLoanPeriodType())){
-                tv_danwei="日";
-            }else if("5".equals(orderListBean.getLoanPeriodType())){
-                tv_danwei="期数";
-            }
-        }else {
-            tv_danwei="月";
+        } else {
+            tv_danwei = "月";
         }
 
-            if (!TextUtils.isEmpty(orderListBean.getMinLoanPeriod())||!TextUtils.isEmpty(orderListBean.getMaxLoanPeriod())) {
-                if(orderListBean.getMaxLoanPeriod().equals(orderListBean.getMinLoanPeriod())){
-                    tvL.setText("期限范围：" + orderListBean.getMinLoanPeriod() + tv_danwei);
-                }else {
-                tvL.setText("期限范围：" + orderListBean.getMinLoanPeriod() + "~" + orderListBean.getMaxLoanPeriod() + tv_danwei);}
+        if (!TextUtils.isEmpty(orderListBean.getMinLoanPeriod()) || !TextUtils.isEmpty(orderListBean.getMaxLoanPeriod())) {
+            if (orderListBean.getMaxLoanPeriod().equals(orderListBean.getMinLoanPeriod())) {
+                tvL.setText("期限范围：" + orderListBean.getMinLoanPeriod() + tv_danwei);
+            } else {
+                tvL.setText("期限范围：" + orderListBean.getMinLoanPeriod() + "~" + orderListBean.getMaxLoanPeriod() + tv_danwei);
             }
+        }
 
         if (!TextUtils.isEmpty(orderListBean.getAddress())) {//详细地址
-                address.setText(orderListBean.getAddress());
-            }
+            address.setText(orderListBean.getAddress());
+        }
 
 
-        if(prodct!=null){
+        if (prodct != null) {
             loadingView.loadComplete();
             ImageLoader.getInstance().displayImage(IFinancialUrl.BASE_IMAGE_URL + prodct.getProductLogo(), ivBank, options);
-            if (!TextUtils.isEmpty(prodct.getMaxLoanAmt())&&!TextUtils.isEmpty(String.valueOf(prodct.getMinLoanAmt()))) {
+            if (!TextUtils.isEmpty(prodct.getMaxLoanAmt()) && !TextUtils.isEmpty(String.valueOf(prodct.getMinLoanAmt()))) {
                 tvLimit.setText("额度范围：" + df.format(Double.parseDouble(prodct.getMinLoanAmt()) / 10000) + "~" + df.format(Double.parseDouble(prodct.getMaxLoanAmt()) / 10000) + "万");
             }
 //            if (!TextUtils.isEmpty(String.valueOf(prodct.gett()))&&!TextUtils.isEmpty(String.valueOf(data.getTimeMaxVal()))) {
@@ -297,7 +297,7 @@ public class MyCreditDetailFragment extends BaseFragment {
             if (!TextUtils.isEmpty(String.valueOf(prodct.getGrantDays()))) {
                 tvFTime.setText(prodct.getGrantDays() + "个工作日");
             }
-            if (!TextUtils.isEmpty(prodct.getMinRate())&&!TextUtils.isEmpty(prodct.getMaxRate())) {
+            if (!TextUtils.isEmpty(prodct.getMinRate()) && !TextUtils.isEmpty(prodct.getMaxRate())) {
                 if (Double.valueOf(prodct.getMinRate()) - Double.valueOf(prodct.getMaxRate()) == 0) {
                     tvRate.setText("利率:" + prodct.getMaxRate() + "%");
                 } else {
@@ -311,33 +311,33 @@ public class MyCreditDetailFragment extends BaseFragment {
 //                    onpay.setText("一次性收费：" + data.getDisposableRateMin() + "%" + "~" + data.getDisposableRateMax() + "%");
 //                }
 //            }
-        }else {
+        } else {
             loadingView.noContent();
         }
-        if(orderbean!=null){
+        if (orderbean != null) {
             total.setText("贷款金额：");
             time.setText("贷款期限：");
 
             if (!TextUtils.isEmpty(String.valueOf(orderbean.getGrantAmount()))) {
 //                tvTotal.setText( df2.format(Double.parseDouble(orderbean.getGrantAmount()) / 10000) + "万");
-                 tvTotal.setText( orderbean.getApplyAmount());
+                tvTotal.setText(orderbean.getApplyAmount());
 
             }
             if (!TextUtils.isEmpty(String.valueOf(orderbean.getGrantPeriods()))) {
                 tvTime.setText(orderbean.getApplyPeriods() + "");
             }
-            if(!TextUtils.isEmpty(String.valueOf(orderbean.getPeriodsAmount()))){//月供
-               tvYueG.setText(orderbean.getPeriodsAmount());
+            if (!TextUtils.isEmpty(String.valueOf(orderbean.getPeriodsAmount()))) {//月供
+                tvYueG.setText(orderbean.getPeriodsAmount());
             }
             if (!TextUtils.isEmpty(orderbean.getPaymentType())) {
-                tvHf.setText("还款方式：" + orderbean.getPaymentType()+"");
+                tvHf.setText("还款方式：" + orderbean.getPaymentType() + "");
             }
             if (!TextUtils.isEmpty(orderbean.getTotalInterest())) {//总利息
-                tvT.setText( df2.format(orderbean.getTotalInterest()));
+                tvT.setText(df2.format(orderbean.getTotalInterest()));
             }
 
             String status = orderbean.getOrderStatus();
-            if(!TextUtils.isEmpty(status)){
+            if (!TextUtils.isEmpty(status)) {
                 tvStatus.setText(StatuUtil.getStatutext(status));//状态匹配
                 if ("PASS".equals(status)) {//审批通过 机构审批通过
                     tvStatus.setText("审批通过");
@@ -376,16 +376,15 @@ public class MyCreditDetailFragment extends BaseFragment {
             }
 
 
-
         }
         if (!TextUtils.isEmpty(orderListBean.getAddress())) {//详细地址
-                address.setText(orderListBean.getAddress());
-            }
-        if(customer!=null){
+            address.setText(orderListBean.getAddress());
+        }
+        if (customer != null) {
             if (!TextUtils.isEmpty(customer.getCusName()))
                 tv_tochat.setText(customer.getCusName());
 
-            if (customer.getSex()!=null) {
+            if (customer.getSex() != null) {
                 if (customer.getSex() == 1) {
                     tvSex.setText("男");
                 } else {
@@ -396,57 +395,66 @@ public class MyCreditDetailFragment extends BaseFragment {
                 IdCard.setText(customer.getIdNo());
             }
 
-            if (!TextUtils.isEmpty(customer.getCurrentProvince()) ||!TextUtils.isEmpty(customer.getCurrentCtiy())
-                   || !TextUtils.isEmpty((customer.getCurrentRegion()))) {//常驻地
+
+            if (!TextUtils.isEmpty(customer.getCurrentProvince()) || !TextUtils.isEmpty(customer.getCurrentCtiy())
+                    || !TextUtils.isEmpty((customer.getCurrentRegion()))) {//常驻地
                 alwaysaddress.setText(addressUtil.getProName(customer.getCurrentProvince()) +
                         addressUtil.getCityName(customer.getCurrentProvince(), customer.getCurrentCtiy()) +
                         addressUtil.getCountryName(customer.getCurrentCtiy(), customer.getCurrentRegion()));
-            }
+
+                String[] provinceId = orderListBean.getAddress().split(",");
+                if (provinceId != null) {//常驻地
+                    alwaysaddress.setText(addressUtil.getProName(provinceId[0]) +
+                            addressUtil.getCityName(provinceId[0], provinceId[1]) +
+                            addressUtil.getCountryName(provinceId[1], provinceId[2]));
+
+                }
 //
 
-            if ("1".equals(customer.getMarried())) {
-                tv_wyl.setText("已婚");
-            } else {
-                tv_wyl.setText("未婚");
-            }
+                if ("1".equals(customer.getMarried())) {
+                    tv_wyl.setText("已婚");
+                } else {
+                    tv_wyl.setText("未婚");
+                }
 
-            if (!TextUtils.isEmpty(customer.getNativePlace())) {//籍贯
-                tv_jgl.setText(customer.getNativePlace());
-            }
+                if (!TextUtils.isEmpty(customer.getNativePlace())) {//籍贯
+                    tv_jgl.setText(customer.getNativePlace());
+                }
 
-            if (!TextUtils.isEmpty(customer.getDomicileAddr())) {//户籍地址
-                user_data.setText(customer.getDomicileAddr());
-            }
-            if (!TextUtils.isEmpty(customer.getCareerName())) {//职业身份
-                tv_zy.setText(customer.getCareerName());
-            }
-            if (customer.getHasSocialInsurance()) {
-                tv_sb.setText("有");
-            } else {
-                tv_sb.setText("无");
-            }
+                if (!TextUtils.isEmpty(customer.getDomicileAddr())) {//户籍地址
+                    user_data.setText(customer.getDomicileAddr());
+                }
+                if (!TextUtils.isEmpty(customer.getCareerName())) {//职业身份
+                    tv_zy.setText(customer.getCareerName());
+                }
+                if (customer.getHasSocialInsurance()) {
+                    tv_sb.setText("有");
+                } else {
+                    tv_sb.setText("无");
+                }
 
-            if (customer.getHasHouseFunding()) {//公积金
-                gjj_data.setText("有");
-            } else {
-                gjj_data.setText("无");
-            }
+                if (customer.getHasHouseFunding()) {//公积金
+                    gjj_data.setText("有");
+                } else {
+                    gjj_data.setText("无");
+                }
 
-            if (!TextUtils.isEmpty(customer.getHaveOwnHouse())) {//房产
-                house_data.setText(customer.getHaveOwnHouse());
-            }
+                if (!TextUtils.isEmpty(customer.getHaveOwnHouse())) {//房产
+                    house_data.setText(customer.getHaveOwnHouse());
+                }
 
-            if (!TextUtils.isEmpty(customer.getHaveOwnCar())) {//车产
-                car_data.setText(customer.getHaveOwnCar());
-            }
+                if (!TextUtils.isEmpty(customer.getHaveOwnCar())) {//车产
+                    car_data.setText(customer.getHaveOwnCar());
+                }
 
-            if (!TextUtils.isEmpty(customer.getCreditState())) {//信用状况
-                ll_xy.setVisibility(View.VISIBLE);
-                xy_data.setText(customer.getCreditState());
-            }else {
-                ll_xy.setVisibility(View.GONE);
-            }
+                if (!TextUtils.isEmpty(customer.getCreditState())) {//信用状况
+                    ll_xy.setVisibility(View.VISIBLE);
+                    xy_data.setText(customer.getCreditState());
+                } else {
+                    ll_xy.setVisibility(View.GONE);
+                }
 
+            }
         }
     }
 
@@ -854,6 +862,8 @@ public class MyCreditDetailFragment extends BaseFragment {
 
     @Override
     public void onDestroy() {
+        getActivity().unregisterReceiver(order_receiver);
+
         super.onDestroy();
 
     }

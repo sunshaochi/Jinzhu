@@ -423,7 +423,7 @@ public class SpeedCreditDetailFragment extends BaseFragment {
                 intent2.putExtra("orderType", rowe.getOrderType());
                 getActivity().startActivity(intent2);
                 break;
-            case R.id.tvUpCredit://增信上传
+            case R.id.tvUpCredit://补全极速带资料
                 switch (STEP) {
                     case "1":
                         Intent intent3 = new Intent(getContext(), CreditSpeedSecond_2Act.class);
@@ -480,8 +480,10 @@ public class SpeedCreditDetailFragment extends BaseFragment {
                 Gson gson = new Gson();
                 JSONObject jsonObject = new JSONObject(result);
                 JSONObject data = jsonObject.getJSONObject("data");
+
                 info=gson.fromJson(data.toString(),new TypeToken<SpeedOrderInfo>() {
                 }.getType());
+
 //                if (data.getJSONArray("payType") != null){
 //                    StringBuilder sb = new StringBuilder();
 //                    JSONArray payJSON = data.getJSONArray("payType");
@@ -492,8 +494,15 @@ public class SpeedCreditDetailFragment extends BaseFragment {
 //                    }
 //                    tvHf.setText("还款方式：" + sb.toString().substring(0,sb.length()-1));
 //                }
+
 //
 //                info = gson.fromJson(data.toString(), SpeedOrderInfo.class);
+
+                if (!TextUtils.isEmpty(data.getString("paytypemap")))
+                tvHf.setText(data.getString("paytypemap"));
+
+                info = gson.fromJson(data.toString(), SpeedOrderInfo.class);
+
                 if (info != null) {
                     if(!TextUtils.isEmpty(info.getPaytypemap())){
                         tvHf.setText("还款方式：" + info.getPaytypemap());
@@ -851,9 +860,15 @@ public class SpeedCreditDetailFragment extends BaseFragment {
 //        if (receiver != null) {
 //            getActivity().unregisterReceiver(receiver);
 //        }
+
 //        if (order_receiver != null) {
 //            getActivity().unregisterReceiver(order_receiver);
 //        }
+
+//        if (order_receiver != null) {
+//            getActivity().unregisterReceiver(order_receiver);
+//        }
+
     }
 
 //    private SpeedCreditDetailFragment.MyBroadCastReceiver receiver;

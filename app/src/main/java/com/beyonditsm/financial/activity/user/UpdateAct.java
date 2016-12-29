@@ -420,11 +420,17 @@ public class UpdateAct extends BaseActivity {
             }
 
             if (adressBean != null) {//常住地
-                if (!TextUtils.isEmpty(adressBean.getProvince())) {
-                    tvLocal.setText(adressBean.getProvince() + adressBean.getCity() + adressBean.getDistrict());
-                } else {
-                    tvLocal.setText(adressBean.getCity() + adressBean.getDistrict());
+                if (TextUtils.isEmpty(adressBean.getProvince()) && TextUtils.isEmpty(adressBean.getCity()))
+                    tvLocal.setText("请选择");
+                else {
+                    if (!TextUtils.isEmpty(adressBean.getProvince())) {
+                        tvLocal.setText(addressUtil.getProName(adressBean.getProvince()) +addressUtil.getCityName(adressBean.getProvince(),adressBean.getCity())  +
+                                addressUtil.getCountryName(adressBean.getCity(),adressBean.getDistrict()));
+                    } else {
+                        tvLocal.setText(adressBean.getProvince() +addressUtil.getCityName(adressBean.getProvince(),adressBean.getCity()));
+                    }
                 }
+
             }
 
         }
@@ -455,10 +461,16 @@ public class UpdateAct extends BaseActivity {
                         tvHouseHold.setText(nativePlaceAddrProvince + nativePlaceAddrCity + nativePlaceAddrDistrict);
                         break;
                     case 3://常住地
-                        tvLocal.setText(defaultProvince + defaultCity + defaultArea);
+                        if (TextUtils.isEmpty(defaultProvince))
+                            tvLocal.setText("请选择");
+                        else
+                            tvLocal.setText(defaultProvince + defaultCity + defaultArea);
                         break;
                     case 4://籍贯
-                        tvnative.setText(nativePlaceProvince + nativePlaceCity + nativePlaceDistrict);
+                        if (TextUtils.isEmpty(nativePlaceProvince))
+                            tvnative.setText(nativePlaceProvince + nativePlaceCity + nativePlaceDistrict);
+                        else
+                            tvnative.setText("请选择");
                         break;
                     case 5://性别
                         if (TextUtils.equals(ue.getSex(), 1 + "")) {
@@ -584,13 +596,13 @@ public class UpdateAct extends BaseActivity {
 //                friendBean.setUserName(userInfo.getUserName());
 //                FriendDao.updateUser(friendBean);
 //
-                MyLogUtils.info("返回的个人头像地址"+result);
+                MyLogUtils.info("返回的个人头像地址" + result);
                 ImageLoader.getInstance().displayImage(IFinancialUrl.SECURITY_IMAGE_URL + result, civHead, options);
                 userInfo.setAvatarPic(result);
-                Intent intent=new Intent(MineFragment.UPDATE_USER);
-                intent.putExtra("headPic",result);
+                Intent intent = new Intent(MineFragment.UPDATE_USER);
+                intent.putExtra("headPic", result);
                 sendBroadcast(intent);
-                updateData(userInfo,adressBean,1);
+                updateData(userInfo, adressBean, 1);
             }
 
             @Override

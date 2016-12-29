@@ -103,7 +103,7 @@ public class MyCreditAct extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MyCreditAct.this, MyCreditDAct.class);
 //                MyCreditBean.RowsEntity credit = datas.get(position);
-                OrderListBean orderListBean=orderList.get(position);
+                OrderListBean orderListBean=datas.get(position);
 //                if (position==0){
 //                    intent.putExtra("type","comm");
 //                }else if (position==1){
