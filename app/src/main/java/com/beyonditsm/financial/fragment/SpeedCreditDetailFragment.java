@@ -515,7 +515,7 @@ public class SpeedCreditDetailFragment extends BaseFragment {
                         } else {
                             if (STEP.equals("1") || STEP.equals("2") || STEP.equals("3")){
                                 MyCreditDAct act = (MyCreditDAct) getActivity();
-                                act.setCancel();
+//                                act.setCancel();
                             }
                             rlUpCredit.setVisibility(View.VISIBLE);
                         }

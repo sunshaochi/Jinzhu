@@ -390,11 +390,11 @@ public class MyCreditDetailFragment extends BaseFragment {
                 IdCard.setText(customer.getIdNo());
             }
 
-            if (!TextUtils.isEmpty(customer.getCurrentProvince()) && !TextUtils.isEmpty(customer.getCurrentCtiy())
-                    && !TextUtils.isEmpty((customer.getCurrentRegion()))) {//常驻地
-                alwaysaddress.setText(addressUtil.getProName(customer.getCurrentProvince()) +
-                        addressUtil.getCityName(customer.getCurrentProvince(), customer.getCurrentCtiy()) +
-                        addressUtil.getCountryName(customer.getCurrentCtiy(), customer.getCurrentRegion()));
+            String[] provinceId = orderListBean.getAddress().split(",");
+            if (provinceId !=null ) {//常驻地
+                alwaysaddress.setText(addressUtil.getProName(provinceId[0]) +
+                        addressUtil.getCityName(provinceId[0], provinceId[1]) +
+                        addressUtil.getCountryName(provinceId[1], provinceId[2]));
             }
 //            if (!TextUtils.isEmpty(data.getDetailAddress())) {//详细地址
 //                address.setText(data.getDetailAddress());
@@ -850,6 +850,8 @@ public class MyCreditDetailFragment extends BaseFragment {
 
     @Override
     public void onDestroy() {
+        getActivity().unregisterReceiver(order_receiver);
+
         super.onDestroy();
 
     }
