@@ -424,9 +424,10 @@ public class UpdateAct extends BaseActivity {
                     tvLocal.setText("请选择");
                 else {
                     if (!TextUtils.isEmpty(adressBean.getProvince())) {
-                        tvLocal.setText(adressBean.getProvince() + adressBean.getCity() + adressBean.getDistrict());
+                        tvLocal.setText(addressUtil.getProName(adressBean.getProvince()) +addressUtil.getCityName(adressBean.getProvince(),adressBean.getCity())  +
+                                addressUtil.getCountryName(adressBean.getCity(),adressBean.getDistrict()));
                     } else {
-                        tvLocal.setText(adressBean.getCity() + adressBean.getDistrict());
+                        tvLocal.setText(adressBean.getProvince() +addressUtil.getCityName(adressBean.getProvince(),adressBean.getCity()));
                     }
                 }
 
