@@ -37,6 +37,8 @@ import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.AddressUtil;
 import com.beyonditsm.financial.util.CheckUtil;
+import com.beyonditsm.financial.util.DefutProductUtil;
+import com.beyonditsm.financial.util.GeneralUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.widget.FinalLoadDialog;
@@ -45,6 +47,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.animation.ObjectAnimator;
 import com.tandong.sa.json.Gson;
+import com.tandong.sa.json.reflect.TypeToken;
 import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
 import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
@@ -118,6 +121,8 @@ public class SpeedCreditDetailFragment extends BaseFragment {
 
     @ViewInject(R.id.llsf)
     private LinearLayout llsf;
+    @ViewInject(R.id.tvLim)
+    private TextView tvLim;
 //    @ViewInject(R.id.)
 
     @ViewInject(R.id.tv_zy)
@@ -219,6 +224,7 @@ public class SpeedCreditDetailFragment extends BaseFragment {
     private String creditName;
     public static String monthlyPayments;//月供
     private String totalRath;
+    private String danwei;//期限单位
 
     OrderDetailInfo.DataEntity data;
     SpeedOrderInfo info;
@@ -258,11 +264,19 @@ public class SpeedCreditDetailFragment extends BaseFragment {
     public void initData(Bundle savedInstanceState) {
         addressUtil = new AddressUtil(getActivity());
         orderListBean = getArguments().getParcelable("orderListBean");
-        if (rowe != null) {
-            tvName.setText(orderListBean.getProduct().getProductName());
-        }
+//        if (rowe != null) {
+//            tvName.setText(orderListBean.getProduct().getProductName());
+//        }
         dialog = new FinalLoadDialog(getActivity());
+        if(orderListBean!=null){
+            if(!TextUtils.isEmpty(orderListBean.getLoanPeriodType())){
+                danwei= DefutProductUtil.getProStatu(orderListBean.getLoanPeriodType());
+            }else {
+                danwei="";
+            }
         ShortLoanOrderDetail(orderListBean.getOrder().getOrderId());
+
+        }
 
 //        obaDown = ObjectAnimator.ofFloat(ivSlide, "rotation", 0,
 //                180);
@@ -424,18 +438,18 @@ public class SpeedCreditDetailFragment extends BaseFragment {
             case R.id.tvUpCredit://补全极速带资料
                 switch (STEP) {
                     case "1":
-                        Intent intent3 = new Intent(context, CreditSpeedSecond_2Act.class);
-                        intent3.putExtra("order_id", rowe.getId());
+                        Intent intent3 = new Intent(getContext(), CreditSpeedSecond_2Act.class);
+                        intent3.putExtra("order_id", orderListBean.getOrder().getOrderId());
                         getActivity().startActivity(intent3);
                         break;
                     case "2":
-                        Intent intent4 = new Intent(context, CreditSpeedSecond_3Act.class);
-                        intent4.putExtra("orderId", rowe.getId());
+                        Intent intent4 = new Intent(getContext(), CreditSpeedSecond_3Act.class);
+                        intent4.putExtra("orderId", orderListBean.getOrder().getOrderId());
                         getActivity().startActivity(intent4);
                         break;
                     case "3":
-                        Intent intent5 = new Intent(context, CreditSpeedThird_2Act.class);
-                        intent5.putExtra("orderId", rowe.getId());
+                        Intent intent5 = new Intent(getContext(), CreditSpeedThird_2Act.class);
+                        intent5.putExtra("orderId", orderListBean.getOrder().getOrderId());
                         getActivity().startActivity(intent5);
                         break;
 
@@ -478,6 +492,9 @@ public class SpeedCreditDetailFragment extends BaseFragment {
                 Gson gson = new Gson();
                 JSONObject jsonObject = new JSONObject(result);
                 JSONObject data = jsonObject.getJSONObject("data");
+                info=gson.fromJson(data.toString(),new TypeToken<SpeedOrderInfo>() {
+                }.getType());
+
 //                if (data.getJSONArray("payType") != null){
 //                    StringBuilder sb = new StringBuilder();
 //                    JSONArray payJSON = data.getJSONArray("payType");
@@ -488,11 +505,19 @@ public class SpeedCreditDetailFragment extends BaseFragment {
 //                    }
 //                    tvHf.setText("还款方式：" + sb.toString().substring(0,sb.length()-1));
 //                }
+
+//
+//                info = gson.fromJson(data.toString(), SpeedOrderInfo.class);
+
                 if (!TextUtils.isEmpty(data.getString("paytypemap")))
                 tvHf.setText(data.getString("paytypemap"));
 
                 info = gson.fromJson(data.toString(), SpeedOrderInfo.class);
+
                 if (info != null) {
+                    if(!TextUtils.isEmpty(info.getPaytypemap())){
+                        tvHf.setText("还款方式：" + info.getPaytypemap());
+                    }
 //                    data = info.getData();
 //                    if (data != null) {
                         creditName = info.getProductName();
@@ -523,6 +548,7 @@ public class SpeedCreditDetailFragment extends BaseFragment {
 
                         total.setText("贷款金额：");
                         time.setText("贷款期限：");
+                        tvLim.setText(danwei);
                         if (!TextUtils.isEmpty(String.valueOf(info.getTotalAmount()))) {
                             tvTotal.setText(df2.format(info.getTotalAmount() / 10000) + "万");
                         }
@@ -530,7 +556,7 @@ public class SpeedCreditDetailFragment extends BaseFragment {
                             tvLimit.setText("额度范围：" + df.format(info.getMinVal() / 10000) + "~" + df.format(info.getMaxVal() / 10000) + "万");
                         }
                         if (!TextUtils.isEmpty(String.valueOf(info.getRepaymentPeriod()))) {
-                            tvL.setText("期限范围：" + info.getRepaymentPeriod() + "");
+                            tvL.setText("期限范围：" + info.getRepaymentPeriod() + ""+danwei);
                         }
                         if (!TextUtils.isEmpty(String.valueOf(info.getTotalPeriods()))) {
                             tvTime.setText(info.getTotalPeriods() + "");
@@ -784,15 +810,15 @@ public class SpeedCreditDetailFragment extends BaseFragment {
                 });
     }
 
-    public static final String UPDATE_ORDER = "com.update.order";
-    private SpeedCreditDetailFragment.OrderBroadCastReceiver order_receiver;
-
-    private class OrderBroadCastReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            ShortLoanOrderDetail(rowe.getId());
-        }
-    }
+//    public static final String UPDATE_ORDER = "com.update.order";
+//    private SpeedCreditDetailFragment.OrderBroadCastReceiver order_receiver;
+//
+//    private class OrderBroadCastReceiver extends BroadcastReceiver {
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            ShortLoanOrderDetail(rowe.getId());
+//        }
+//    }
 
     private List<TaskEntity> taskEntityList, finishList;//任务列表
     private PrimaryTaskAdapter adapter;
@@ -831,13 +857,13 @@ public class SpeedCreditDetailFragment extends BaseFragment {
     @Override
     public void onStart() {
         super.onStart();
-        if (receiver == null) {
-            receiver = new MyBroadCastReceiver();
-        }
-        if (order_receiver == null) {
-            order_receiver = new SpeedCreditDetailFragment.OrderBroadCastReceiver();
-        }
-        getActivity().registerReceiver(order_receiver, new IntentFilter(UPDATE_ORDER));
+//        if (receiver == null) {
+//            receiver = new MyBroadCastReceiver();
+//        }
+//        if (order_receiver == null) {
+//            order_receiver = new SpeedCreditDetailFragment.OrderBroadCastReceiver();
+//        }
+//        getActivity().registerReceiver(order_receiver, new IntentFilter(UPDATE_ORDER));
     }
 
     @Override
@@ -846,16 +872,22 @@ public class SpeedCreditDetailFragment extends BaseFragment {
 //        if (receiver != null) {
 //            getActivity().unregisterReceiver(receiver);
 //        }
-        if (order_receiver != null) {
-            getActivity().unregisterReceiver(order_receiver);
-        }
+
+//        if (order_receiver != null) {
+//            getActivity().unregisterReceiver(order_receiver);
+//        }
+
+//        if (order_receiver != null) {
+//            getActivity().unregisterReceiver(order_receiver);
+//        }
+
     }
 
-    private SpeedCreditDetailFragment.MyBroadCastReceiver receiver;
-
-    public class MyBroadCastReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-        }
-    }
+//    private SpeedCreditDetailFragment.MyBroadCastReceiver receiver;
+//
+//    public class MyBroadCastReceiver extends BroadcastReceiver {
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//        }
+//    }
 }

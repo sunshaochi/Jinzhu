@@ -129,6 +129,7 @@ public class MyCreditStatusFragment extends BaseFragment {
         if(list.size()==0){
             loadingView.noContent();
         }else if(list.size()>0){
+            loadingView.loadComplete();
             if (detailAdapter == null) {
                     detailAdapter = new OrderDetailAdapter(getActivity(), list);
                     plvCreditStatus.getRefreshableView().setAdapter(detailAdapter);

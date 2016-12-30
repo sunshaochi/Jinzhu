@@ -14,6 +14,7 @@ import com.beyonditsm.financial.entity.OrderBean3;
 import com.beyonditsm.financial.entity.OrderListBean;
 import com.beyonditsm.financial.entity.ProductBean2;
 import com.beyonditsm.financial.http.IFinancialUrl;
+import com.beyonditsm.financial.util.DefutProductUtil;
 import com.beyonditsm.financial.util.StatuUtil;
 import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
@@ -27,6 +28,7 @@ public  class MyCreditAdapter extends BaseAdapter {
     private Context context;
     private List<OrderListBean> list;
     private String orderId;
+    private String danwei;
 
     java.text.DecimalFormat df = new java.text.DecimalFormat("#0.00");//保留小数
 
@@ -197,8 +199,13 @@ public  class MyCreditAdapter extends BaseAdapter {
             if (!TextUtils.isEmpty(order.getApplyAmount())){
                 holder.tv_dkje.setText("贷款金额："+order.getApplyAmount());
             }
+            if(!TextUtils.isEmpty(list.get(position).getLoanPeriodType())){//产品类型判断单位（年，月，周，日）
+                danwei= DefutProductUtil.getProStatu(list.get(position).getLoanPeriodType());
+            }else {
+                danwei="";
+            }
             if (order.getApplyPeriods()!=0){
-                holder.tv_dksj.setText("贷款期限："+order.getApplyPeriods()+"个月");
+                holder.tv_dksj.setText("贷款期限："+order.getApplyPeriods()+danwei);
             }
 
         }

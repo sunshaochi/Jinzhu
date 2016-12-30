@@ -8,6 +8,7 @@ public class SpeedOrderInfo {
 
     /**
      * workPropId : null
+     *  workProp: "合同",
      * repaymentPeriod : 12周,13周
      * companyName : null
      * relatives1Name : null
@@ -67,6 +68,7 @@ public class SpeedOrderInfo {
      * idCardBack : null
      * loanPeriod : 3
      * domicileAreaId : 城关区
+     * paytypemap://还款方式
      */
     private String relatives2Rs;
     private String relatives1Rs;
@@ -136,6 +138,16 @@ public class SpeedOrderInfo {
     private int loanPeriod;
     private String domicileAreaId;
     private String companyPhoneNum;//公司电话
+    private String paytypemap;
+
+
+    public String getPaytypemap() {
+        return paytypemap;
+    }
+
+    public void setPaytypemap(String paytypemap) {
+        this.paytypemap = paytypemap;
+    }
 
     public String getCompanyPhoneNum() {
         return companyPhoneNum;

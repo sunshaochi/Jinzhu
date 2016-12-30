@@ -185,7 +185,9 @@ public class MyCreditDAct extends BaseActivity {
         Fragment detailFragment;
         if (orderListBean.getOrder().getOrderType().equals("4")) {//急借通
             detailFragment = new SpeedCreditDetailFragment();
+            tlCreditDetail.setVisibility(View.GONE);
         } else {
+            tlCreditDetail.setVisibility(View.VISIBLE);
             detailFragment = new MyCreditDetailFragment();//贷款详情
             MyCreditStatusFragment statusFragment = new MyCreditStatusFragment();//贷款状态
             statusFragment.setArguments(bundle);

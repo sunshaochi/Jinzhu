@@ -27,6 +27,7 @@ import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.view.MySelfSheetDialog;
 import com.beyonditsm.financial.widget.jijietong.DialogJJTAddress;
 import com.beyonditsm.financial.widget.jijietong.JJTInterface;
+import com.beyonditsm.financial.widget.jijietong.ShenSiDialog;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.tandong.sa.json.Gson;
@@ -87,7 +88,8 @@ public class TjfirstFragment extends BaseFragment {
     private List<JJTProvinceEntity> provinceList;
     private List<JJTCityEntity> cityList;
     private List<JJTCounyEntity> counyList;
-    private DialogJJTAddress dialogJJTAddress;
+//    private DialogJJTAddress dialogJJTAddress;
+    private ShenSiDialog dialogJJTAddress;
 
 
     public static TujianBean tujianBean;
@@ -151,7 +153,7 @@ public class TjfirstFragment extends BaseFragment {
                ParamsUtil.getInstance().setProvinceEntityList(provinceList);
                queryCity(provinceList.get(0).getCode());//获取城市
                if (provinceList != null && provinceList.size() > 0) {
-                   dialogJJTAddress = new DialogJJTAddress(getActivity(), provinceList).builder();
+                   dialogJJTAddress = new ShenSiDialog(getActivity(), provinceList).builder();
                    dialogJJTAddress.getJJTPicker().setOnSrollListener(new JJTInterface() {
                        @Override
                        public void onProvinceSelected(JJTProvinceEntity jjtProvinceEntity) {
@@ -336,16 +338,17 @@ public class TjfirstFragment extends BaseFragment {
                 break;
             case R.id.rl_diqu://地区
                 dialogJJTAddress.show();
-                dialogJJTAddress.setOnSheetItemClickListener(new DialogJJTAddress.SexClickListener() {
+                dialogJJTAddress.setOnSheetItemClickListener(new ShenSiDialog.SexClickListener() {
                     @Override
                     public void getAdress(List<String> adress,List<Integer> id) {
                         String defaultProvince = adress.get(0);
 //                        String provinceCode = queryProvinceCodeByName(defaultProvince);
                         String defaultCity = adress.get(1);
 //                        String cityCode = queryCityCodeByName(defaultCity);
-                        String defaultArea = adress.get(2);
+                        String defaultArea = adress.get(2);//区
 //                        String districtCode = queryAreaCodeByName(defaultArea);
-                        tv_diqu.setText(defaultProvince + defaultCity + defaultArea);
+                        tv_diqu.setText(defaultProvince + defaultCity );
+                        tujianBean.setCityId(defaultCity);
                     }
                 });
 
@@ -368,7 +371,7 @@ public class TjfirstFragment extends BaseFragment {
                 break;
             case R.id.rl_huji://户籍
                 dialogJJTAddress.show();
-                dialogJJTAddress.setOnSheetItemClickListener(new DialogJJTAddress.SexClickListener() {
+                dialogJJTAddress.setOnSheetItemClickListener(new ShenSiDialog.SexClickListener() {
                     @Override
                     public void getAdress(List<String> adress,List<Integer> id) {
                         String defaultProvince = adress.get(0);
@@ -377,7 +380,8 @@ public class TjfirstFragment extends BaseFragment {
 //                        String cityCode = queryCityCodeByName(defaultCity);
                         String defaultArea = adress.get(2);
 //                        String districtCode = queryAreaCodeByName(defaultArea);
-                        tv_huji.setText(defaultProvince + defaultCity + defaultArea);
+                        tv_huji.setText(defaultProvince + defaultCity);
+                        tujianBean.setDomicile(cityList.get(id.get(1)).getCode());//户籍传id
                     }
                 });
 
@@ -565,6 +569,9 @@ public class TjfirstFragment extends BaseFragment {
         if(TextUtils.isEmpty(time)||time.equals("请选择")){
             tujianBean.setCreditTime("");
         }
+        if(TextUtils.isEmpty(diqu)||diqu.equals("请选择")){
+            tujianBean.setCityId("");
+        }
         if(TextUtils.isEmpty(money)){//金额
             tujianBean.setCreditMoney("");
         }
@@ -573,8 +580,6 @@ public class TjfirstFragment extends BaseFragment {
         }
         if(TextUtils.isEmpty(huji)||huji.equals("请选择")){
             tujianBean.setDomicile("");
-        }else {
-            tujianBean.setDomicile(huji);
         }
         if(TextUtils.isEmpty(xyjl)||xyjl.equals("请选择")){
             tujianBean.setCreditStatusKey("");

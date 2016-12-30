@@ -184,7 +184,7 @@ public class CreditUploadAct extends BaseActivity {
     }
 
     /**
-     * 获取上传列表
+     * 获取上传列表里面的上传列表
      *
      * @param orderId 订单id
      * @param flowId  流程id
@@ -522,6 +522,8 @@ public class CreditUploadAct extends BaseActivity {
                         holder.tvStatus.setText("通过");
                     } else if ("2".equals(list.get(position).getIsPass())) {
                         holder.tvStatus.setText("待审核");
+                    }else if("3".equals(list.get(position).getIsPass())){
+                        holder.tvStatus.setText("草稿");
                     }
                 }
             }

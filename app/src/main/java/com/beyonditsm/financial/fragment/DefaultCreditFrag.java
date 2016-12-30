@@ -30,6 +30,7 @@ import com.beyonditsm.financial.entity.ResultData;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GsonUtils;
+import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.util.Uitls;
@@ -115,17 +116,22 @@ public class DefaultCreditFrag extends BaseFragment {
     public void onHiddenChanged(boolean hidden) {//重新切换frg后原来数据不变
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            initTit();
+//            initTit();
+//            getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cMoney,cTime,cBank,cSort,"ASC",currentP, pageSize);//获取产品列表
+//            String city = SpUtils.getCity(MyApplication.getInstance().getApplicationContext());//定位的城市名称
+//            if (TextUtils.isEmpty(city)) {
+////                getSortParam(ParamsUtil.getInstance().getChangedCity());//获取产品列表筛选参数（选取的城市）
+//                getSortParam();
+//            } else {
+////                getSortParam(city);//获取产品列表筛选参数
+//                getSortParam();
+//                initTit();
+//            }
+            llSearchTitle.setVisibility(View.GONE);
+            initTit();//初识化标题
+            getSortParam();//获取筛选列表
             getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cMoney,cTime,cBank,cSort,"ASC",currentP, pageSize);//获取产品列表
-            String city = SpUtils.getCity(MyApplication.getInstance().getApplicationContext());//定位的城市名称
-            if (TextUtils.isEmpty(city)) {
-//                getSortParam(ParamsUtil.getInstance().getChangedCity());//获取产品列表筛选参数（选取的城市）
-                getSortParam();
-            } else {
-//                getSortParam(city);//获取产品列表筛选参数
-                getSortParam();
-                initTit();
-            }
+
         }
     }
 
@@ -142,12 +148,19 @@ public class DefaultCreditFrag extends BaseFragment {
             initTit();
         }
 
+//        if (TextUtils.isEmpty(city)) {
+////            getSortParam(ParamsUtil.getInstance().getChangedCity());
+//            getSortParam();
+//        } else {
+////            getSortParam(city);
+//            getSortParam();
+//            initTit();
+//        }
+
         EventBus.getDefault().register(this);
-
         initTit();//头部标题
-        loadView.setNoContentTxt("暂无此类产品，换个条件试试");
+        getSortParam();
 //        etAmount.setSelection(etAmount.getText().length());
-
         plv.setPullRefreshEnabled(true);
         plv.setScrollLoadEnabled(true);
         plv.setPullLoadEnabled(false);
@@ -177,6 +190,8 @@ public class DefaultCreditFrag extends BaseFragment {
             @Override
             public void OnRetry() {
 //                getSortParam(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()) + "");
+                llSearchTitle.setClickable(false);
+                initTit();
                 getSortParam();
                 getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cMoney,cTime,cBank,cSort,"ASC",currentP, pageSize);//获取产品列表
             }
@@ -217,7 +232,14 @@ public class DefaultCreditFrag extends BaseFragment {
 
             @Override
             public void onError(int status, String msg) {
-
+                loadView.loadError();
+                MyToastUtils.showShortToast(context,msg);
+                loadView.setOnRetryListener(new LoadingView.OnRetryListener() {
+                    @Override
+                    public void OnRetry() {
+                        getSortParam();
+                    }
+                });
 
             }
         });
@@ -386,6 +408,7 @@ public class DefaultCreditFrag extends BaseFragment {
             @Override
             public void onSucess(String result) {
 //                MyLogUtils.info("获取列表时传的机构类型：" + orgType);
+                llSearchTitle.setClickable(true);
                 loadView.loadComplete();
                 plv.onPullDownRefreshComplete();
                 plv.onPullUpRefreshComplete();
@@ -420,6 +443,7 @@ public class DefaultCreditFrag extends BaseFragment {
                 plv.onPullDownRefreshComplete();
                 plv.onPullUpRefreshComplete();
                 loadView.loadError();
+
             }
         });
 

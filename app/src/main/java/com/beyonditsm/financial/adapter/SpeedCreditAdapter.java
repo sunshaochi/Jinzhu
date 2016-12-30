@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.entity.CreditSpeedEntity;
 import com.beyonditsm.financial.http.IFinancialUrl;
+import com.beyonditsm.financial.util.ProductStatuUtil;
 import com.tandong.sa.zUImageLoader.core.DisplayImageOptions;
 import com.tandong.sa.zUImageLoader.core.ImageLoader;
 
@@ -103,53 +104,15 @@ public class SpeedCreditAdapter extends BaseAdapter {
             minloanperiod=creditSpeedEntity.getMinLoanPeriod();
         }
         if(!TextUtils.isEmpty(creditSpeedEntity.getLoanPeriodType())){//贷款期限类型(1.年2.月3.周4.日5.期数)
-            protype=creditSpeedEntity.getLoanPeriodType().toString();
-            if(protype.equals("1")){
-                if (!TextUtils.isEmpty(minloanperiod)||!TextUtils.isEmpty(maxloanperiod)) {//最高最低还款期限
+          String protype= ProductStatuUtil.getProStatu(creditSpeedEntity.getLoanPeriodType());
+            if (!TextUtils.isEmpty(minloanperiod)||!TextUtils.isEmpty(maxloanperiod)) {//最高最低还款期限
                     if (Double.valueOf(minloanperiod) - Double.valueOf(maxloanperiod) == 0) {
-                        holder.tvTime.setText(minloanperiod+"年");
+                        holder.tvTime.setText(minloanperiod+protype+"");
                     } else {
-                        holder.tvTime.setText( minloanperiod + "-" + maxloanperiod+"年");
+                        holder.tvTime.setText( minloanperiod + "-" + maxloanperiod+protype);
                     }
                 }
 
-                }
-            else if(protype.equals("2")){
-                if (!TextUtils.isEmpty(minloanperiod)||!TextUtils.isEmpty(maxloanperiod)) {//最高最低还款期限
-                    if (Double.valueOf(minloanperiod) - Double.valueOf(maxloanperiod) == 0) {
-                        holder.tvTime.setText(minloanperiod+"月");
-                    } else {
-                        holder.tvTime.setText( minloanperiod + "-" + maxloanperiod+"月");
-                    }
-                }
-            }
-            else if(protype.equals("3")){
-                if (!TextUtils.isEmpty(minloanperiod)||!TextUtils.isEmpty(maxloanperiod)) {//最高最低还款期限
-                    if (Double.valueOf(minloanperiod) - Double.valueOf(maxloanperiod) == 0) {
-                        holder.tvTime.setText(minloanperiod+"周");
-                    } else {
-                        holder.tvTime.setText( minloanperiod + "-" + maxloanperiod+"周");
-                    }
-                }
-            }
-            else if(protype.equals("4")){
-                if (!TextUtils.isEmpty(minloanperiod)||!TextUtils.isEmpty(maxloanperiod)) {//最高最低还款期限
-                    if (Double.valueOf(minloanperiod) - Double.valueOf(maxloanperiod) == 0) {
-                        holder.tvTime.setText(minloanperiod+"日");
-                    } else {
-                        holder.tvTime.setText( minloanperiod + "-" + maxloanperiod+"日");
-                    }
-                }
-            }
-            else if(protype.equals("5")){
-                if (!TextUtils.isEmpty(minloanperiod)||!TextUtils.isEmpty(maxloanperiod)) {//最高最低还款期限
-                    if (Double.valueOf(minloanperiod) - Double.valueOf(maxloanperiod) == 0) {
-                        holder.tvTime.setText(minloanperiod+"期数");
-                    } else {
-                        holder.tvTime.setText( minloanperiod + "-" + maxloanperiod+"期数");
-                    }
-                }
-            }
             }
 
         double minVal = Double.valueOf(creditSpeedEntity.getMinVal());//最小额度
@@ -157,24 +120,32 @@ public class SpeedCreditAdapter extends BaseAdapter {
         holder.tvValue.setText(df.format(minVal/10000)+"-"+df.format(maxVal/10000)+"万");//额度
 //        holder.tvRate.setText(creditSpeedEntity.getMinRate()+"-"+creditSpeedEntity.getMaxRate());
         if(!TextUtils.isEmpty(creditSpeedEntity.getLoanRateType())) {//利率类型(1.月利率2.日利率)
-            ratatype=creditSpeedEntity.getLoanRateType();
-            if(ratatype.equals("1")){
+            String rattype=ProductStatuUtil.getRoxstatu(creditSpeedEntity.getLoanPeriodType());
             if (!TextUtils.isEmpty(creditSpeedEntity.getMinRate()) || !TextUtils.isEmpty(creditSpeedEntity.getMaxRate())) {//利率
                 if (Double.valueOf(creditSpeedEntity.getMaxRate()) - Double.valueOf(creditSpeedEntity.getMinRate()) == 0) {
-                    holder.tvRate.setText(creditSpeedEntity.getMinRate() + "%(月)");
+                    holder.tvRate.setText(creditSpeedEntity.getMinRate() + "%"+"（"+rattype+")");
                 } else {
                     holder.tvRate.setText(creditSpeedEntity.getMinRate() + "%-" + creditSpeedEntity.getMaxRate() + "%(月)");
                 }
             }
-            }else if(ratatype.equals("2")){
-                if (!TextUtils.isEmpty(creditSpeedEntity.getMinRate()) || !TextUtils.isEmpty(creditSpeedEntity.getMaxRate())) {//利率
-                    if (Double.valueOf(creditSpeedEntity.getMaxRate()) - Double.valueOf(creditSpeedEntity.getMinRate()) == 0) {
-                        holder.tvRate.setText(creditSpeedEntity.getMinRate() + "%(天)");
-                    } else {
-                        holder.tvRate.setText(creditSpeedEntity.getMinRate() + "%-" + creditSpeedEntity.getMaxRate() + "%(天)");
-                    }
-                }
-            }
+
+//            if(ratatype.equals("1")){
+//            if (!TextUtils.isEmpty(creditSpeedEntity.getMinRate()) || !TextUtils.isEmpty(creditSpeedEntity.getMaxRate())) {//利率
+//                if (Double.valueOf(creditSpeedEntity.getMaxRate()) - Double.valueOf(creditSpeedEntity.getMinRate()) == 0) {
+//                    holder.tvRate.setText(creditSpeedEntity.getMinRate() + "%(月)");
+//                } else {
+//                    holder.tvRate.setText(creditSpeedEntity.getMinRate() + "%-" + creditSpeedEntity.getMaxRate() + "%(月)");
+//                }
+//            }
+//            }else if(ratatype.equals("2")){
+//                if (!TextUtils.isEmpty(creditSpeedEntity.getMinRate()) || !TextUtils.isEmpty(creditSpeedEntity.getMaxRate())) {//利率
+//                    if (Double.valueOf(creditSpeedEntity.getMaxRate()) - Double.valueOf(creditSpeedEntity.getMinRate()) == 0) {
+//                        holder.tvRate.setText(creditSpeedEntity.getMinRate() + "%(天)");
+//                    } else {
+//                        holder.tvRate.setText(creditSpeedEntity.getMinRate() + "%-" + creditSpeedEntity.getMaxRate() + "%(天)");
+//                    }
+//                }
+//            }
         }
         if (!TextUtils.isEmpty(String.valueOf(creditSpeedEntity.getLoanPeriod()))) {
             holder.tvLoanPeriod.setText(creditSpeedEntity.getLoanPeriod() + "个工作日");
