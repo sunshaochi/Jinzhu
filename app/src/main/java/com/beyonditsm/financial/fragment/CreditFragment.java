@@ -20,6 +20,7 @@ import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.view.pullfreshview.ILoadingLayout;
 import com.beyonditsm.financial.view.tablayout.SlidingTabLayout;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.tandong.sa.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,8 @@ public class CreditFragment extends BaseFragment {
         super.onHiddenChanged(hidden);
         if (!hidden){
             creditViewpager.setCurrentItem(0);
+                getActivity().sendBroadcast(new Intent("defaultCredit"));
+
         }
     }
 
@@ -60,6 +63,7 @@ public class CreditFragment extends BaseFragment {
         rl_back.setVisibility(View.GONE);
         initViewPager();
         creditViewpager.setCurrentItem(ParamsUtil.getInstance().getCreditPage());
+        EventBus.getDefault().post(new DefaultCredit());
 
     }
 
@@ -74,7 +78,30 @@ public class CreditFragment extends BaseFragment {
         creditViewpager.setAdapter(new MyAdapter(getChildFragmentManager(),fragmentList));
         creditViewpager.setCurrentItem(0);
         tlCreditType.setViewPager(creditViewpager);
+        creditViewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 0){
+                    getActivity().sendBroadcast(new Intent("defaultCredit"));
+                }
+
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
     }
+
+
 
     @Override
     public void setListener() {
@@ -157,4 +184,5 @@ public class CreditFragment extends BaseFragment {
         if(brodecast!=null){
         getActivity().unregisterReceiver(brodecast);}
     }
+
 }

@@ -1,7 +1,10 @@
 package com.beyonditsm.financial.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -135,8 +138,13 @@ public class DefaultCreditFrag extends BaseFragment {
         }
     }
 
+
     @Override
     public void initData(Bundle savedInstanceState) {
+        if(broadcast==null){
+            broadcast=new MyBroadcast();
+        }
+        getActivity().registerReceiver(broadcast,new IntentFilter("defaultCredit"));
         String city = SpUtils.getCity(MyApplication.getInstance().getApplicationContext());
         llSearchTitle.setClickable(false);
         if (TextUtils.isEmpty(city)) {
@@ -497,6 +505,20 @@ public class DefaultCreditFrag extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        getActivity().unregisterReceiver(broadcast);
         EventBus.getDefault().unregister(this);
     }
+
+    String name = "defaultCredit";
+    private MyBroadcast broadcast;
+    private class MyBroadcast extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            llSearchTitle.setClickable(false);
+            initTit();//初识化标题
+            getSortParam();//获取筛选列表
+            getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cMoney,cTime,cBank,cSort,"ASC",currentP, pageSize);//获取产品列表
+        }
+    }
+
 }
