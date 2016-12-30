@@ -497,7 +497,7 @@ public class InterestDeduction extends BaseActivity {
                     if (bindList != null) {
                         for (int i = 0; i < bindList.size(); i++) {
                             int status = Integer.parseInt(bindList.get(i).getStatus());
-//                        if (status == 2) {
+                        if (status == 2) {//默认银行卡逻辑是如果是默认显示默认，不是默认就显示列表的第一个
                             if (!TextUtils.isEmpty(bindList.get(i).getBankName())) {
                                 bankName.setText(bindList.get(i).getBankName());
                                 bankName.setEnabled(false);
@@ -518,9 +518,30 @@ public class InterestDeduction extends BaseActivity {
                                 depositBank.setEnabled(false);
                                 depositBank.setTextColor(ContextCompat.getColor(InterestDeduction.this, R.color.tv_primary_color));
                             }
+                        }else {//无默认情况下选择第一个
+                            if (!TextUtils.isEmpty(bindList.get(0).getBankName())) {
+                                bankName.setText(bindList.get(0).getBankName());
+                                bankName.setEnabled(false);
+                                bankName.setTextColor(ContextCompat.getColor(InterestDeduction.this, R.color.tv_primary_color));
+                            }
+                            if (!TextUtils.isEmpty(bindList.get(0).getCardNo())) {
+                                bankCount.setText(bindList.get(0).getCardNo());
+                                bankCount.setEnabled(false);
+                                bankCount.setTextColor(ContextCompat.getColor(InterestDeduction.this, R.color.tv_primary_color));
+                            }
+                            if (!TextUtils.isEmpty(bindList.get(0).getAccountName())) {
+                                name.setText(bindList.get(0).getAccountName());
+                                name.setEnabled(false);
+                                name.setTextColor(ContextCompat.getColor(InterestDeduction.this, R.color.tv_primary_color));
+                            }
+                            if (!TextUtils.isEmpty(bindList.get(0).getBranchBankName())) {
+                                depositBank.setText(bindList.get(0).getBranchBankName());
+                                depositBank.setEnabled(false);
+                                depositBank.setTextColor(ContextCompat.getColor(InterestDeduction.this, R.color.tv_primary_color));
+                            }
                         }
                     }
-//                }
+                }
                 }
             }
 

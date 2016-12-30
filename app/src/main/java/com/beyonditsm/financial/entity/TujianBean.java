@@ -23,6 +23,16 @@ public class TujianBean implements Parcelable {
     private String fundTimeLength;//公积金社保时长(Integer)
     private String creditMoney;//金额
     private String creditTime;//期限
+    private String cityId;//地区
+
+
+    public String getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(String cityId) {
+        this.cityId = cityId;
+    }
 
     public String getEduLevel() {
         return eduLevel;
@@ -136,6 +146,9 @@ public class TujianBean implements Parcelable {
         this.creditTime = creditTime;
     }
 
+    public TujianBean() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -157,9 +170,7 @@ public class TujianBean implements Parcelable {
         dest.writeString(this.fundTimeLength);
         dest.writeString(this.creditMoney);
         dest.writeString(this.creditTime);
-    }
-
-    public TujianBean() {
+        dest.writeString(this.cityId);
     }
 
     protected TujianBean(Parcel in) {
@@ -177,9 +188,10 @@ public class TujianBean implements Parcelable {
         this.fundTimeLength = in.readString();
         this.creditMoney = in.readString();
         this.creditTime = in.readString();
+        this.cityId = in.readString();
     }
 
-    public static final Parcelable.Creator<TujianBean> CREATOR = new Parcelable.Creator<TujianBean>() {
+    public static final Creator<TujianBean> CREATOR = new Creator<TujianBean>() {
         @Override
         public TujianBean createFromParcel(Parcel source) {
             return new TujianBean(source);

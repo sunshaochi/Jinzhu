@@ -115,17 +115,22 @@ public class DefaultCreditFrag extends BaseFragment {
     public void onHiddenChanged(boolean hidden) {//重新切换frg后原来数据不变
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            initTit();
+//            initTit();
+//            getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cMoney,cTime,cBank,cSort,"ASC",currentP, pageSize);//获取产品列表
+//            String city = SpUtils.getCity(MyApplication.getInstance().getApplicationContext());//定位的城市名称
+//            if (TextUtils.isEmpty(city)) {
+////                getSortParam(ParamsUtil.getInstance().getChangedCity());//获取产品列表筛选参数（选取的城市）
+//                getSortParam();
+//            } else {
+////                getSortParam(city);//获取产品列表筛选参数
+//                getSortParam();
+//                initTit();
+//            }
+            llSearchTitle.setVisibility(View.GONE);
+            initTit();//初识化标题
+            getSortParam();//获取筛选列表
             getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cMoney,cTime,cBank,cSort,"ASC",currentP, pageSize);//获取产品列表
-            String city = SpUtils.getCity(MyApplication.getInstance().getApplicationContext());//定位的城市名称
-            if (TextUtils.isEmpty(city)) {
-//                getSortParam(ParamsUtil.getInstance().getChangedCity());//获取产品列表筛选参数（选取的城市）
-                getSortParam();
-            } else {
-//                getSortParam(city);//获取产品列表筛选参数
-                getSortParam();
-                initTit();
-            }
+
         }
     }
 
@@ -133,19 +138,19 @@ public class DefaultCreditFrag extends BaseFragment {
     public void initData(Bundle savedInstanceState) {
         String city = SpUtils.getCity(MyApplication.getInstance().getApplicationContext());
         llSearchTitle.setVisibility(View.GONE);
-        if (TextUtils.isEmpty(city)) {
-//            getSortParam(ParamsUtil.getInstance().getChangedCity());
-            getSortParam();
-        } else {
-//            getSortParam(city);
-            getSortParam();
-            initTit();
-        }
+//        if (TextUtils.isEmpty(city)) {
+////            getSortParam(ParamsUtil.getInstance().getChangedCity());
+//            getSortParam();
+//        } else {
+////            getSortParam(city);
+//            getSortParam();
+//            initTit();
+//        }
 
         EventBus.getDefault().register(this);
         initTit();//头部标题
+        getSortParam();
 //        etAmount.setSelection(etAmount.getText().length());
-
         plv.setPullRefreshEnabled(true);
         plv.setScrollLoadEnabled(true);
         plv.setPullLoadEnabled(false);
@@ -175,6 +180,8 @@ public class DefaultCreditFrag extends BaseFragment {
             @Override
             public void OnRetry() {
 //                getSortParam(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()) + "");
+                llSearchTitle.setVisibility(View.GONE);
+                initTit();
                 getSortParam();
                 getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cMoney,cTime,cBank,cSort,"ASC",currentP, pageSize);//获取产品列表
             }
