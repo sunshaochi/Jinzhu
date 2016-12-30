@@ -127,7 +127,7 @@ public class DefaultCreditFrag extends BaseFragment {
 //                getSortParam();
 //                initTit();
 //            }
-            llSearchTitle.setVisibility(View.GONE);
+            llSearchTitle.setClickable(false);
             initTit();//初识化标题
             getSortParam();//获取筛选列表
             getCredit(SpUtils.getCity(MyApplication.getInstance().getApplicationContext()),cMoney,cTime,cBank,cSort,"ASC",currentP, pageSize);//获取产品列表
