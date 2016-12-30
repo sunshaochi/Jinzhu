@@ -272,22 +272,23 @@ public class UpdateAct extends BaseActivity {
                     @Override
                     public void getAdress(List<String> adress, List<Integer> id) {
                         defaultProvince = adress.get(0);
-                        String provinceCode = queryProvinceCodeByName(defaultProvince);
+
+                        String provinceCode = provinceList.get(id.get(0)).getCode();
                         defaultCity = adress.get(1);
                         if (!TextUtils.isEmpty(defaultCity)) {
-                            String cityCode = queryCityCodeByName(defaultCity);
-                            adressBean.setCity(defaultCity);
+                            String cityCode = cityList.get(id.get(1)).getCode();
+                            adressBean.setCity(cityCode);
                         } else {
                             adressBean.setCity("");
                         }
                         defaultArea = adress.get(2);
 
                         if (!TextUtils.isEmpty(defaultArea)) {
-                            String districtCode = queryAreaCodeByName(defaultArea);
-                            adressBean.setDistrict(defaultArea);
+                            String districtCode = counyList.get(id.get(2)).getCode();
+                            adressBean.setDistrict(districtCode);
                         }
 
-                        adressBean.setProvince(defaultProvince);
+                        adressBean.setProvince(provinceCode);
 
 
                         updateData(userInfo, adressBean, 3);
@@ -340,12 +341,12 @@ public class UpdateAct extends BaseActivity {
                     @Override
                     public void getAdress(List<String> adress, List<Integer> id) {
                         nativePlaceAddrProvince = adress.get(0);
-                        String nativePlaceAddrProvinceCode = queryProvinceCodeByName(nativePlaceAddrProvince);
+                        String nativePlaceAddrProvinceCode = provinceList.get(id.get(0)).getCode();
                         nativePlaceAddrCity = adress.get(1);
-                        String nativePlaceAddrCityCode = queryCityCodeByName(nativePlaceAddrCity);
+                        String nativePlaceAddrCityCode = cityList.get(id.get(1)).getCode();
                         nativePlaceAddrDistrict = adress.get(2);
-                        String nativePlaceAddrCounyCode = queryAreaCodeByName(nativePlaceAddrDistrict);
-                        userInfo.setHomeAddress(nativePlaceAddrProvince + nativePlaceAddrCity + nativePlaceDistrict);
+                        String nativePlaceAddrCounyCode = counyList.get(id.get(2)).getCode();
+                        userInfo.setHomeAddress(nativePlaceAddrProvince + nativePlaceAddrCity + nativePlaceAddrDistrict);
 
 //                        userInfo.setNativePlaceAddrProvince(nativePlaceAddrProvinceCode);
 //                        userInfo.setNativePlaceAddrCity(nativePlaceAddrCityCode);
@@ -426,9 +427,9 @@ public class UpdateAct extends BaseActivity {
                     if (!TextUtils.isEmpty(adressBean.getProvince())) {
                         tvLocal.setText(addressUtil.getProName(adressBean.getProvince()) +addressUtil.getCityName(adressBean.getProvince(),adressBean.getCity())  +
                                 addressUtil.getCountryName(adressBean.getCity(),adressBean.getDistrict()));
-                    } else {
+                    } else
                         tvLocal.setText(adressBean.getProvince() +addressUtil.getCityName(adressBean.getProvince(),adressBean.getCity()));
-                    }
+
                 }
 
             }
@@ -467,7 +468,7 @@ public class UpdateAct extends BaseActivity {
                             tvLocal.setText(defaultProvince + defaultCity + defaultArea);
                         break;
                     case 4://籍贯
-                        if (TextUtils.isEmpty(nativePlaceProvince))
+                        if (!TextUtils.isEmpty(nativePlaceProvince))
                             tvnative.setText(nativePlaceProvince + nativePlaceCity + nativePlaceDistrict);
                         else
                             tvnative.setText("请选择");

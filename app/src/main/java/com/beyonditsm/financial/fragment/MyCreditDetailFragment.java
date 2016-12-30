@@ -372,9 +372,9 @@ public class MyCreditDetailFragment extends BaseFragment {
 
 
         }
-        if (!TextUtils.isEmpty(orderListBean.getAddress())) {//详细地址
-                address.setText(orderListBean.getAddress());
-            }
+//        if (!TextUtils.isEmpty(orderListBean.getAddress())) {//详细地址
+//                address.setText(orderListBean.getAddress());
+//            }
         if(customer!=null){
             if (!TextUtils.isEmpty(customer.getCusName()))
                 tv_tochat.setText(customer.getCusName());
@@ -391,16 +391,21 @@ public class MyCreditDetailFragment extends BaseFragment {
             }
 
             String[] provinceId = orderListBean.getAddress().split(",");
-            if (provinceId !=null ) {//常驻地
-                alwaysaddress.setText(addressUtil.getProName(provinceId[0]) +
-                        addressUtil.getCityName(provinceId[0], provinceId[1]) +
-                        addressUtil.getCountryName(provinceId[1], provinceId[2]));
-            }
-//            if (!TextUtils.isEmpty(data.getDetailAddress())) {//详细地址
+            //常驻地
+            String provinceName;
+            String cityName="";
+            String areaName = "";
+            provinceName = addressUtil.getProName(provinceId[0]);
+            if (provinceId.length>1)
+            cityName =  addressUtil.getCityName(provinceId[0], provinceId[1]);
+            if (provinceId.length>2)
+            areaName = addressUtil.getCountryName(provinceId[1], provinceId[2]);
+            alwaysaddress.setText(provinceName+cityName+areaName);
+            //            if (!TextUtils.isEmpty(data.getDetailAddress())) {//详细地址
 //                address.setText(data.getDetailAddress());
 //            }
 
-            if ("1".equals(customer.getMarried())) {
+            if (customer.getMarried()) {
                 tv_wyl.setText("已婚");
             } else {
                 tv_wyl.setText("未婚");

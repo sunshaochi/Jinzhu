@@ -177,6 +177,7 @@ public class RegisterAct extends BaseActivity {
             @Override
             public void onSucess(String result) {
                 finish();
+                MyToastUtils.showShortToast(getApplicationContext(),"注册成功，请查看短信登录密码");
                 try {
                     JSONObject object = new JSONObject(result);
                     JSONObject data = object.getJSONObject("data");

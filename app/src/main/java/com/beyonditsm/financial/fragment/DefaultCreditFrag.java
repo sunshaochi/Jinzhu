@@ -132,7 +132,7 @@ public class DefaultCreditFrag extends BaseFragment {
     @Override
     public void initData(Bundle savedInstanceState) {
         String city = SpUtils.getCity(MyApplication.getInstance().getApplicationContext());
-        llSearchTitle.setVisibility(View.GONE);
+        llSearchTitle.setClickable(false);
         if (TextUtils.isEmpty(city)) {
 //            getSortParam(ParamsUtil.getInstance().getChangedCity());
             getSortParam();
@@ -189,10 +189,9 @@ public class DefaultCreditFrag extends BaseFragment {
         RequestManager.getCommManager().findSortParam(new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) {
-
+                llSearchTitle.setClickable(true);
                 ResultData<ProductSortEntity> rd = (ResultData<ProductSortEntity>) GsonUtils.json(result, ProductSortEntity.class);
                 ProductSortEntity productSortEntity = rd.getData();
-                llSearchTitle.setVisibility(View.VISIBLE);
                 orgTypeInfos = productSortEntity.getOrgType();//机构集合
                 ProductSortEntity.OrgTypeBean orgTypeBean = new ProductSortEntity.OrgTypeBean();
                 orgTypeBean.setOptionValue("");
@@ -321,7 +320,7 @@ public class DefaultCreditFrag extends BaseFragment {
     public void toClick(View v) {
         Intent intent;
         switch (v.getId()) {
-            case R.id.rb_bank:
+            case R.id.rb_bank: //机构
                 intent = new Intent(getActivity(), OrgTypeListAct.class);
                 intent.putExtra("type",1);
                 startActivityForResult(intent, ORGQUEST);
@@ -330,7 +329,7 @@ public class DefaultCreditFrag extends BaseFragment {
                 clearArrow();
                 clearTextColor();
                 break;
-            case R.id.rb_money:
+            case R.id.rb_money: //金额范围
                 List<?> listItem = moneyScopeInfos;
                 clearArrow();
                 clearTextColor();
