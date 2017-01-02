@@ -166,7 +166,7 @@ public interface IFinancialUrl {
     /*移动端获取上次使用的地区*/
     String GET_MOBILE_LAST_REGION_URL = BASE_URL + API_VERSION + "/platform/unLogin/getMobileLastRegion.do";
     /*检查版本更新*/
-    String VERSION_URL = BASE_URL + API_VERSION + "/platform/unLogin/checkUpdrage.do";
+    String VERSION_URL = BASE_URL +  "/unLogin/checkUpdrage.do";
     /*取消订单*/
 //    String CANCEL_ORDER = BASE_URL + API_VERSION + "/platform/login/modifyToCancelOrderById.do";
     /*根据key查找各种特点*/

@@ -1077,6 +1077,11 @@ public class CreditSecondFrag extends BaseFragment {
         return "";
     }
 
+    @Override
+    public void onLoginBack() {
+        super.onLoginBack();
+        getDictionaryContent(keyLists);//职业身份获取身份列表供选择、获取用户信息并负值、获取省市区
+    }
 
     @Override
     public void onDestroy() {

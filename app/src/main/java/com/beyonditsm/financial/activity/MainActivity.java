@@ -34,6 +34,7 @@ import com.beyonditsm.financial.fragment.MineFragment;
 import com.beyonditsm.financial.fragment.RecomFragment;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.GeneralUtils;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
@@ -189,7 +190,7 @@ public class MainActivity extends BaseActivity {
 //            }
 //        }
         //检查版本更新
-//        gUtils.toVersion(MainActivity.this, FinancialUtil.getAppVer(MainActivity.this), 1);
+        gUtils.toVersion(MainActivity.this, FinancialUtil.getAppVer(MainActivity.this), 1);
 
 
     }
