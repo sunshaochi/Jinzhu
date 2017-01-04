@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -20,9 +21,11 @@ import com.beyonditsm.financial.activity.credit.MyCreditDAct;
 import com.beyonditsm.financial.adapter.MyCreditAdapter;
 import com.beyonditsm.financial.entity.MyCreditEntity;
 import com.beyonditsm.financial.entity.OrderListBean;
+import com.beyonditsm.financial.entity.RelationEntity;
 import com.beyonditsm.financial.http.RequestManager;
 import com.beyonditsm.financial.util.FinancialUtil;
 import com.beyonditsm.financial.util.MyLogUtils;
+import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.view.pullfreshview.LoadRefreshView;
@@ -53,11 +56,12 @@ public class MyCreditAct extends BaseActivity {
 
     private int currentPage = 1;
     private MyCreditAdapter adapter;
-
     public static String CREDIT = "credit";
     private PushBroadReceiver pushBroadReceiver;
     private String orderId;
     private List<OrderListBean> orderList=new ArrayList<>();
+    private List<String> keyLists;
+    private List<RelationEntity> carList,hourseList, creditList;//车产，职业，房产，信用
     //    private String id;
 
     @Override
@@ -69,6 +73,7 @@ public class MyCreditAct extends BaseActivity {
     public void init(Bundle savedInstanceState) {
         setTopTitle("我的贷款");
         setLeftTv("返回");
+
         //强制关闭键盘
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         loadingView.setNoContentTxt("暂无贷款");
@@ -97,7 +102,8 @@ public class MyCreditAct extends BaseActivity {
                 getMycreditList(SpUtils.getPhonenumber(MyApplication.getInstance().getApplicationContext()),currentPage);
             }
         });
-        getMycreditList(SpUtils.getPhonenumber(MyApplication.getInstance().getApplicationContext()),currentPage);
+        getDictionaryContent();//获取房产类型，车产类型，信用记录传递到详情里面匹配成功后，获取贷款列表
+//        getMycreditList(SpUtils.getPhonenumber(MyApplication.getInstance().getApplicationContext()),currentPage);
         plv.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -118,7 +124,8 @@ public class MyCreditAct extends BaseActivity {
         loadingView.setOnRetryListener(new LoadingView.OnRetryListener() {
             @Override
             public void OnRetry() {
-                getMycreditList(SpUtils.getPhonenumber(MyApplication.getInstance().getApplicationContext()),currentPage);
+                getDictionaryContent();
+//                getMycreditList(SpUtils.getPhonenumber(MyApplication.getInstance().getApplicationContext()),currentPage);
             }
         });
         rlBack.setOnClickListener(new View.OnClickListener() {
@@ -128,6 +135,41 @@ public class MyCreditAct extends BaseActivity {
             }
         });
 
+    }
+
+    /**
+     * 获取房产类型，车产类型，信用类型
+     */
+    private void getDictionaryContent() {
+        keyLists = new ArrayList<>();
+        keyLists.add("cardProperty");
+        keyLists.add("houseProperty");
+        keyLists.add("creidtType");
+        RequestManager.getCommManager().findDicMap(keyLists, new RequestManager.CallBack() {
+            @Override
+            public void onSucess(String result) throws JSONException {
+                JSONObject jsonObject = new JSONObject(result);
+                JSONObject data = jsonObject.getJSONObject("data");
+                Gson gson = new Gson();
+                carList = gson.fromJson(data.getJSONArray("cardProperty").toString(),new TypeToken<List<RelationEntity>>() {
+                }.getType());
+                hourseList = gson.fromJson(data.getJSONArray("houseProperty").toString(),new TypeToken<List<RelationEntity>>() {
+                }.getType());
+                creditList = gson.fromJson(data.getJSONArray("creidtType").toString(),new TypeToken<List<RelationEntity>>() {
+                }.getType());
+                ParamsUtil.getInstance().setCarList(carList);
+                ParamsUtil.getInstance().setHourseList(hourseList);
+                ParamsUtil.getInstance().setCreditList(creditList);
+
+                getMycreditList(SpUtils.getPhonenumber(MyApplication.getInstance().getApplicationContext()),currentPage);
+
+            }
+
+            @Override
+            public void onError(int status, String msg) {
+                loadingView.loadError();
+            }
+        });
     }
 
     private List<OrderListBean> datas = new ArrayList<>();
@@ -211,7 +253,8 @@ public class MyCreditAct extends BaseActivity {
         super.onRestart();
 //        String orderId = SpUtils.getOrderId(MyApplication.getInstance());
 //        if (!TextUtils.isEmpty(orderId)){
-            getMycreditList(SpUtils.getPhonenumber(MyApplication.getInstance().getApplicationContext()),currentPage);
+        getDictionaryContent();
+//            getMycreditList(SpUtils.getPhonenumber(MyApplication.getInstance().getApplicationContext()),currentPage);
 //        }
     }
 
@@ -234,7 +277,8 @@ public class MyCreditAct extends BaseActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             currentPage = 1;
-            getMycreditList(SpUtils.getPhonenumber(MyApplication.getInstance().getApplicationContext()),currentPage);
+            getDictionaryContent();
+//            getMycreditList(SpUtils.getPhonenumber(MyApplication.getInstance().getApplicationContext()),currentPage);
         }
     }
 
@@ -246,7 +290,8 @@ public class MyCreditAct extends BaseActivity {
             String orderId = SpUtils.getOrderId(MyApplication.getInstance());
             MyLogUtils.info("广播发回来的orderID"+orderId);
             currentPage = 1;
-            getMycreditList(SpUtils.getPhonenumber(MyApplication.getInstance().getApplicationContext()),currentPage);
+            getDictionaryContent();
+//            getMycreditList(SpUtils.getPhonenumber(MyApplication.getInstance().getApplicationContext()),currentPage);
         }
     }
 

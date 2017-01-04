@@ -7,6 +7,7 @@ import com.beyonditsm.financial.entity.JJTCityEntity;
 import com.beyonditsm.financial.entity.JJTCounyEntity;
 import com.beyonditsm.financial.entity.JJTProvinceEntity;
 import com.beyonditsm.financial.entity.ProductSortEntity;
+import com.beyonditsm.financial.entity.RelationEntity;
 import com.beyonditsm.financial.entity.UserLoginEntity;
 
 import org.apache.http.NameValuePair;
@@ -59,6 +60,32 @@ public class ParamsUtil {
     private List<JJTCityEntity> cityEntityList;
     private List<JJTCounyEntity> counyEntityList;
     private ArrayList<CreditSpeedEntity.ResideStatusmapBean> propertyTypeList;
+    private List<RelationEntity> carList,hourseList, creditList;//车产，职业，房产，信用
+
+    public List<RelationEntity> getCarList() {
+        return carList;
+    }
+
+    public void setCarList(List<RelationEntity> carList) {
+        this.carList = carList;
+    }
+
+    public List<RelationEntity> getHourseList() {
+        return hourseList;
+    }
+
+    public void setHourseList(List<RelationEntity> hourseList) {
+        this.hourseList = hourseList;
+    }
+
+    public List<RelationEntity> getCreditList() {
+        return creditList;
+    }
+
+    public void setCreditList(List<RelationEntity> creditList) {
+        this.creditList = creditList;
+    }
+
     public boolean isLogin = false;
 
     public boolean isLogin() {
