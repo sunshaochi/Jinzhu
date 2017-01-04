@@ -238,7 +238,7 @@ public class CreditSpeedDetailAct extends BaseActivity {
                         tvRate.setText(creditSpeedEntity.getMinRate() + "%-" + creditSpeedEntity.getMaxRate());
                     }
                 }
-            Double monthRath = (Double.valueOf(creditSpeedEntity.getMinRate()) + Double.valueOf(creditSpeedEntity.getMaxRate())) / 2;
+            Double monthRath = Double.valueOf(creditSpeedEntity.getMinRate());
             getTotlerate(monthRath,Double.parseDouble(creditMoney),Integer.parseInt(creditMonth));//获取总利息
 
                 if (!TextUtils.isEmpty(creditSpeedEntity.getLoanPeriod())) {//放款周期
@@ -295,17 +295,10 @@ public class CreditSpeedDetailAct extends BaseActivity {
     //获取单期利息
     private void getTotlerate(double rate,double repaymentMoney ,int month) {
         rate = rate/100;
-        double sum = repaymentMoney* (rate * Math.pow(1 + rate, month)) / (Math.pow(1 + rate, month) - 1);
+        double sum = repaymentMoney* rate * month * 7;
         BigDecimal big = new BigDecimal(sum);
         Double monthpay=big.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();//四舍五入
-        getTotlePay(monthpay,repaymentMoney,month);//计算总利息
-    }
-
-    private void getTotlePay(double monthlyPay, double creditAmount, int month) {
-        Double total = monthlyPay * month - (creditAmount);
-        BigDecimal bigDecimal = new BigDecimal(total);
-        total = bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();//四舍五入
-        tvTotal.setText(total+"");
+        tvTotal.setText(monthpay+"");
     }
 
 

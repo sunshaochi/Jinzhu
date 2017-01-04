@@ -24,8 +24,10 @@ public class HomeHotProductBean implements Parcelable {
     private String maxLoanAmt;//": 100000,
     private String maxLoanRate;//": 12,最大利率
     private String productNO;//": "Test001",
+    private String productLogo;
     private String preLoanPeriod;//": 0,放款周期
     private String applyDetailDesc;//": "这是详细说明"
+
 
 
     public String getMinLoanAmt() {
@@ -164,6 +166,15 @@ public class HomeHotProductBean implements Parcelable {
         this.applyDetailDesc = applyDetailDesc;
     }
 
+
+    public String getProductLogo() {
+        return productLogo;
+    }
+
+    public void setProductLogo(String productLogo) {
+        this.productLogo = productLogo;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -186,6 +197,7 @@ public class HomeHotProductBean implements Parcelable {
         dest.writeString(this.maxLoanAmt);
         dest.writeString(this.maxLoanRate);
         dest.writeString(this.productNO);
+        dest.writeString(this.productLogo);
         dest.writeString(this.preLoanPeriod);
         dest.writeString(this.applyDetailDesc);
     }
@@ -209,11 +221,12 @@ public class HomeHotProductBean implements Parcelable {
         this.maxLoanAmt = in.readString();
         this.maxLoanRate = in.readString();
         this.productNO = in.readString();
+        this.productLogo = in.readString();
         this.preLoanPeriod = in.readString();
         this.applyDetailDesc = in.readString();
     }
 
-    public static final Creator<HomeHotProductBean> CREATOR = new Creator<HomeHotProductBean>() {
+    public static final Parcelable.Creator<HomeHotProductBean> CREATOR = new Parcelable.Creator<HomeHotProductBean>() {
         @Override
         public HomeHotProductBean createFromParcel(Parcel source) {
             return new HomeHotProductBean(source);

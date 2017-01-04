@@ -81,6 +81,7 @@ public class AutoDismissDialog {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if(msg.what == FLAG_DISMISS)
+                if (context!=null)
                 dismiss();
         }
 
