@@ -92,17 +92,29 @@ public class CreditAdapter extends BaseAdapter {
 //        if (!TextUtils.isEmpty(productEntity.get_monthlyPayment())) {
 //            viewHolder.tvReim.setText(df.format(Double.valueOf(productEntity.get_monthlyPayment())) );
 //        }
-        if (!TextUtils.isEmpty(productEntity.getDisposableRateMax())||!TextUtils.isEmpty(productEntity.getDisposableRateMin())) {
-            if(TextUtils.isEmpty(productEntity.getDisposableRateMin())){
-                productEntity.setDisposableRateMin("0.0");
-            }
-            if (TextUtils.isEmpty(productEntity.getDisposableRateMax())){
-                productEntity.setDisposableRateMax("0.0");
-            }
-            if (Double.valueOf(productEntity.getDisposableRateMax()) - Double.valueOf(productEntity.getDisposableRateMin()) == 0) {
-                viewHolder.onepay.setText("一次性收费:" + productEntity.getDisposableRateMax() + "%");
-            } else {
-                viewHolder.onepay.setText("一次性收费:" + productEntity.getDisposableRateMin() + "%~" + productEntity.getDisposableRateMax() + "%");
+        if (!TextUtils.isEmpty(productEntity.getDisposableFeeType())){
+            switch (productEntity.getDisposableFeeType()){
+
+                case "1"://展示百分比
+                    if (!TextUtils.isEmpty(productEntity.getDisposableRateMax()) || !TextUtils.isEmpty(productEntity.getDisposableRateMin())) {
+                        if (TextUtils.isEmpty(productEntity.getDisposableRateMax())){
+                            productEntity.setDisposableRateMax("0.0");
+                        }
+                        if (TextUtils.isEmpty(productEntity.getDisposableRateMin())){
+                            productEntity.setDisposableRateMin("0.0");
+                        }
+                        if (Double.valueOf(productEntity.getDisposableRateMax()) - Double.valueOf(productEntity.getDisposableRateMin()) == 0) {
+                            viewHolder.onepay.setText("一次性收费：" + productEntity.getDisposableRateMax() + "%");
+                        } else {
+                            viewHolder.onepay.setText("一次性收费：" + productEntity.getDisposableRateMin() + "%" + "~" + productEntity.getDisposableRateMax() + "%");
+                        }
+
+                    }
+                    break;
+                case "2"://展示元
+                    if (!TextUtils.isEmpty(productEntity.getOneTimeCharge()))
+                        viewHolder.onepay.setText(productEntity.getOneTimeCharge()+"元");
+                    break;
             }
         }
         return convertView;

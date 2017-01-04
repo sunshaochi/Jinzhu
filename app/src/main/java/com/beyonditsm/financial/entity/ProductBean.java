@@ -27,10 +27,28 @@ public class ProductBean implements Parcelable{
     private String preLoanPeriod;//放款周期（工作日）
     private List<String> paymentTerm;//还款方式
     private  String productLogo;//贷款log
-    private String disposableRateMin;//一次性费率最小
-    private String disposableRateMax;//一次性费率最大值
+    private String disposableRateMin;//一次性费率最小 （%）
+    private String disposableRateMax;//一次性费率最大值（%）
     private String productType;//( 0代表大额带1代表急借通)
+    private String disposableFeeType;//(一次性费率：1展示百分比，2展示元)
+    private String oneTimeCharge;//一次性收费（元）
 
+
+    public String getDisposableFeeType() {
+        return disposableFeeType;
+    }
+
+    public void setDisposableFeeType(String disposableFeeType) {
+        this.disposableFeeType = disposableFeeType;
+    }
+
+    public String getOneTimeCharge() {
+        return oneTimeCharge;
+    }
+
+    public void setOneTimeCharge(String oneTimeCharge) {
+        this.oneTimeCharge = oneTimeCharge;
+    }
 
     public String getProductType() {
         return productType;
@@ -222,6 +240,8 @@ public class ProductBean implements Parcelable{
         dest.writeString(this.disposableRateMin);
         dest.writeString(this.disposableRateMax);
         dest.writeString(this.productType);
+        dest.writeString(this.disposableFeeType);
+        dest.writeString(this.oneTimeCharge);
     }
 
     protected ProductBean(Parcel in) {
@@ -244,6 +264,8 @@ public class ProductBean implements Parcelable{
         this.disposableRateMin = in.readString();
         this.disposableRateMax = in.readString();
         this.productType = in.readString();
+        this.disposableFeeType = in.readString();
+        this.oneTimeCharge = in.readString();
     }
 
     public static final Creator<ProductBean> CREATOR = new Creator<ProductBean>() {

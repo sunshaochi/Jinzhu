@@ -643,20 +643,32 @@ public class HomeCreditDetailAct extends BaseActivity {
                     if (!TextUtils.isEmpty(productEntity.getApplyDetailDesc())) {//详细说明
                         tvDetail.setText(productEntity.getApplyDetailDesc());
                     }
-                    if (!TextUtils.isEmpty(productEntity.getDisposableRateMax()) || !TextUtils.isEmpty(productEntity.getDisposableRateMin())) {
-                        if (TextUtils.isEmpty(productEntity.getDisposableRateMax())){
-                            productEntity.setDisposableRateMax("0.0");
-                        }
-                        if (TextUtils.isEmpty(productEntity.getDisposableRateMin())){
-                            productEntity.setDisposableRateMin("0.0");
-                        }
-                        if (Double.valueOf(productEntity.getDisposableRateMax()) - Double.valueOf(productEntity.getDisposableRateMin()) == 0) {
-                            tvOnePay.setText("一次性收费：" + productEntity.getDisposableRateMax() + "%");
-                        } else {
-                            tvOnePay.setText("一次性收费：" + productEntity.getDisposableRateMin() + "%" + "~" + productEntity.getDisposableRateMax() + "%");
-                        }
+                    if (!TextUtils.isEmpty(productEntity.getDisposableFeeType())){
+                        switch (productEntity.getDisposableFeeType()){
 
+                            case "1"://展示百分比
+                                if (!TextUtils.isEmpty(productEntity.getDisposableRateMax()) || !TextUtils.isEmpty(productEntity.getDisposableRateMin())) {
+                                    if (TextUtils.isEmpty(productEntity.getDisposableRateMax())){
+                                        productEntity.setDisposableRateMax("0.0");
+                                    }
+                                    if (TextUtils.isEmpty(productEntity.getDisposableRateMin())){
+                                        productEntity.setDisposableRateMin("0.0");
+                                    }
+                                    if (Double.valueOf(productEntity.getDisposableRateMax()) - Double.valueOf(productEntity.getDisposableRateMin()) == 0) {
+                                        tvOnePay.setText("一次性费率：" + productEntity.getDisposableRateMax() + "%");
+                                    } else {
+                                        tvOnePay.setText("一次性费率：" + productEntity.getDisposableRateMin() + "%" + "~" + productEntity.getDisposableRateMax() + "%");
+                                    }
+
+                                }
+                                break;
+                            case "2"://展示元
+                                if (!TextUtils.isEmpty(productEntity.getOneTimeCharge()))
+                                    tvOnePay.setText("一次性收费："+productEntity.getOneTimeCharge()+"元");
+                                break;
+                        }
                     }
+
                     Double monthRath = (Double.valueOf(productEntity.getMinLoanRate()) + Double.valueOf(productEntity.getMaxLoanRate())) / 2;
 //                    getMOnthPay(creditMoney, monthRath, creditMonth);//计算月供里面返回总利息和月供
                     getMonthlyPay(monthRath,Double.parseDouble(creditMoney),Integer.parseInt(creditMonth));
