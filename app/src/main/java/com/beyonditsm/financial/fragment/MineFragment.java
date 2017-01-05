@@ -656,11 +656,14 @@ public class MineFragment extends BaseFragment {
                 if (user != null) {
                     isLogin = true;
                     ProfileInfoBean profileInfo = user.getProfileInfo();
-                    if (!TextUtils.isEmpty(profileInfo.getName())){
-                        tvName.setText(profileInfo.getName());
-                    }
+                    if (profileInfo !=null){
+                        if (!TextUtils.isEmpty(profileInfo.getName())){
+                            tvName.setText(profileInfo.getName());
+                        }
 //                暂时没有头像，注掉，后台无返回。
-                    ImageLoader.getInstance().displayImage(IFinancialUrl.SECURITY_IMAGE_URL + profileInfo.getAvatarPic(), civHead, options);
+                        ImageLoader.getInstance().displayImage(IFinancialUrl.SECURITY_IMAGE_URL + profileInfo.getAvatarPic(), civHead, options);
+                    }
+
                 } else {
                     tvExit.setVisibility(View.VISIBLE);
                     isLogin = false;
