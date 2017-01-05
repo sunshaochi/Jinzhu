@@ -31,6 +31,7 @@ import com.beyonditsm.financial.entity.OrderBean3;
 import com.beyonditsm.financial.entity.OrderDetailInfo;
 import com.beyonditsm.financial.entity.OrderListBean;
 import com.beyonditsm.financial.entity.ProductBean2;
+import com.beyonditsm.financial.entity.RelationEntity;
 import com.beyonditsm.financial.entity.TaskEntity;
 import com.beyonditsm.financial.http.IFinancialUrl;
 import com.beyonditsm.financial.http.RequestManager;
@@ -40,6 +41,7 @@ import com.beyonditsm.financial.util.DefutProductUtil;
 import com.beyonditsm.financial.util.GsonUtils;
 import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
+import com.beyonditsm.financial.util.ParamsUtil;
 import com.beyonditsm.financial.util.StatuUtil;
 import com.beyonditsm.financial.view.LoadingView;
 import com.beyonditsm.financial.widget.FinalLoadDialog;
@@ -54,6 +56,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -182,6 +185,8 @@ public class MyCreditDetailFragment extends BaseFragment {
     private ProductBean2 prodct;
     private CustomerBean customer;
 
+    private List<RelationEntity> carList,hourseList, creditList;
+
     @Override
     public View initView(LayoutInflater inflater) {
 
@@ -215,6 +220,7 @@ public class MyCreditDetailFragment extends BaseFragment {
         dialog = new FinalLoadDialog(getActivity());
 //        getOrderDetail(rowe.getId());
         getOrderDetail(orderListBean);
+
 
 //        obaDown = ObjectAnimator.ofFloat(ivSlide, "rotation", 0,
 //                180);
@@ -437,16 +443,39 @@ public class MyCreditDetailFragment extends BaseFragment {
                 }
 
                 if (!TextUtils.isEmpty(customer.getHaveOwnHouse())) {//房产
-                    house_data.setText(customer.getHaveOwnHouse());
+                    hourseList=ParamsUtil.getInstance().getHourseList();
+                    if(hourseList!=null&&hourseList.size()!=0){
+                        for (int i=0;i<hourseList.size();i++){
+                            if(customer.getHaveOwnHouse().equals(hourseList.get(i).getDictSubId())){
+                                house_data.setText(hourseList.get(i).getOptionName());
+                            }
+                        }
+                    }
+
                 }
 
                 if (!TextUtils.isEmpty(customer.getHaveOwnCar())) {//车产
-                    car_data.setText(customer.getHaveOwnCar());
+                    carList=ParamsUtil.getInstance().getCarList();
+                    if(carList!=null&&carList.size()!=0){
+                        for (int i=0;i<carList.size();i++){
+                            if(customer.getHaveOwnCar().equals(carList.get(i).getDictSubId())){
+                                car_data.setText(carList.get(i).getOptionName());
+                            }
+                        }
+                    }
                 }
 
                 if (!TextUtils.isEmpty(customer.getCreditState())) {//信用状况
                     ll_xy.setVisibility(View.VISIBLE);
-                    xy_data.setText(customer.getCreditState());
+                    creditList=ParamsUtil.getInstance().getCreditList();
+                    if(creditList!=null&&creditList.size()!=0){
+                        for (int i=0;i<creditList.size();i++){
+                            if(customer.getCreditState().equals(creditList.get(i).getDictSubId())){
+                                xy_data.setText(creditList.get(i).getOptionName());
+                            }
+                        }
+                    }
+
                 } else {
                     ll_xy.setVisibility(View.GONE);
                 }
