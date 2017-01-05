@@ -61,7 +61,7 @@ public class MyCreditAct extends BaseActivity {
     private String orderId;
     private List<OrderListBean> orderList=new ArrayList<>();
     private List<String> keyLists;
-    private List<RelationEntity> carList,hourseList, creditList;//车产，职业，房产，信用
+    private List<RelationEntity> carList,hourseList, creditList,jobList;//车产，职业，房产，信用
     //    private String id;
 
     @Override
@@ -145,6 +145,7 @@ public class MyCreditAct extends BaseActivity {
         keyLists.add("cardProperty");
         keyLists.add("houseProperty");
         keyLists.add("creidtType");
+        keyLists.add("jobType");
         RequestManager.getCommManager().findDicMap(keyLists, new RequestManager.CallBack() {
             @Override
             public void onSucess(String result) throws JSONException {
@@ -157,9 +158,12 @@ public class MyCreditAct extends BaseActivity {
                 }.getType());
                 creditList = gson.fromJson(data.getJSONArray("creidtType").toString(),new TypeToken<List<RelationEntity>>() {
                 }.getType());
+                jobList = gson.fromJson(data.getJSONArray("jobType").toString(),new TypeToken<List<RelationEntity>>() {
+                }.getType());
                 ParamsUtil.getInstance().setCarList(carList);
                 ParamsUtil.getInstance().setHourseList(hourseList);
                 ParamsUtil.getInstance().setCreditList(creditList);
+                ParamsUtil.getInstance().setJobType(jobList);
 
                 getMycreditList(SpUtils.getPhonenumber(MyApplication.getInstance().getApplicationContext()),currentPage);
 

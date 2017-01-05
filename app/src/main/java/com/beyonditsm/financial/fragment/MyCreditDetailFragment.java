@@ -117,7 +117,8 @@ public class MyCreditDetailFragment extends BaseFragment {
     private TextView tv_jgl;//籍贯
     @ViewInject(R.id.user_data)
     private TextView user_data;//户籍地址
-
+    @ViewInject(R.id.ll_totalCharge)
+    private LinearLayout totalCharge;
     @ViewInject(R.id.tv_zy)
     private TextView tv_zy;//职业身份
     @ViewInject(R.id.tv_sb)
@@ -185,7 +186,7 @@ public class MyCreditDetailFragment extends BaseFragment {
     private ProductBean2 prodct;
     private CustomerBean customer;
 
-    private List<RelationEntity> carList,hourseList, creditList;
+    private List<RelationEntity> jobType;
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -261,6 +262,7 @@ public class MyCreditDetailFragment extends BaseFragment {
      * 获取订单详情
      * @param orderListBean
      */
+    @SuppressLint("SetTextI18n")
     private void getOrderDetail(OrderListBean orderListBean) {
         orderbean = orderListBean.getOrder();
         prodct = orderListBean.getProduct();
@@ -280,9 +282,6 @@ public class MyCreditDetailFragment extends BaseFragment {
             }
         }
 
-        if (!TextUtils.isEmpty(orderListBean.getAddress())) {//详细地址
-            address.setText(orderListBean.getAddress());
-        }
 
 
         if (prodct != null) {
@@ -330,11 +329,18 @@ public class MyCreditDetailFragment extends BaseFragment {
             if (!TextUtils.isEmpty(String.valueOf(orderbean.getPeriodsAmount()))) {//月供
                 tvYueG.setText(orderbean.getPeriodsAmount());
             }
-            if (!TextUtils.isEmpty(orderbean.getPaymentType())) {
-                tvHf.setText("还款方式：" + orderbean.getPaymentType() + "");
+            if (!TextUtils.isEmpty(orderListBean.getProduct().getPaymentTerm())) {
+                tvHf.setVisibility(View.VISIBLE);
+                tvHf.setText("还款方式：" + orderListBean.getProduct().getPaymentTerm() + "");
+            }else {
+                tvHf.setVisibility(View.GONE);
             }
             if (!TextUtils.isEmpty(orderbean.getTotalInterest())) {//总利息
+                totalCharge.setVisibility(View.VISIBLE);
                 tvT.setText(df2.format(orderbean.getTotalInterest()));
+            }else {
+                totalCharge.setVisibility(View.GONE);
+
             }
 
             String status = orderbean.getOrderStatus();
@@ -378,9 +384,8 @@ public class MyCreditDetailFragment extends BaseFragment {
 
 
         }
-        if (!TextUtils.isEmpty(orderListBean.getAddress())) {//详细地址
-            address.setText(orderListBean.getAddress());
-        }
+
+
         if (customer != null) {
             if (!TextUtils.isEmpty(customer.getCusName()))
                 tv_tochat.setText(customer.getCusName());
@@ -404,7 +409,20 @@ public class MyCreditDetailFragment extends BaseFragment {
                         addressUtil.getCityName(customer.getCurrentProvince(), customer.getCurrentCtiy()) +
                         addressUtil.getCountryName(customer.getCurrentCtiy(), customer.getCurrentRegion()));
             }
+            String[] addressArray = orderListBean.getAddress().split(",");
 
+            if (addressArray.length == 3){
+                alwaysaddress.setText(addressUtil.getProName(addressArray[0]) +
+                        addressUtil.getCityName(addressArray[0],addressArray[1]) +
+                        addressUtil.getCountryName(addressArray[1],addressArray[2]));
+            }else {
+                alwaysaddress.setText(addressUtil.getProName(addressArray[0]) +
+                        addressUtil.getCityName(addressArray[0],addressArray[1]));
+            }
+
+            if (!TextUtils.isEmpty(orderListBean.getAddress())) {//详细地址
+                address.setText(orderListBean.getAddress());
+            }
 //                String[] provinceId = orderListBean.getAddress().split(",");
 //                if (provinceId != null) {//常驻地
 //                    alwaysaddress.setText(addressUtil.getProName(provinceId[0]) +
@@ -428,7 +446,14 @@ public class MyCreditDetailFragment extends BaseFragment {
                     user_data.setText(customer.getDomicileAddr());
                 }
                 if (!TextUtils.isEmpty(customer.getCareerName())) {//职业身份
-                    tv_zy.setText(customer.getCareerName());
+                    List<RelationEntity> jobType = ParamsUtil.getInstance().getJobType();
+                    if(jobType !=null&& jobType.size()!=0){
+                        for (int i = 0; i< jobType.size(); i++){
+                            if(customer.getCareerName().equals(jobType.get(i).getDictSubId())){
+                                tv_zy.setText(jobType.get(i).getOptionName());
+                            }
+                        }
+                    }
                 }
                 if (customer.getHasSocialInsurance()) {
                     tv_sb.setText("有");
@@ -443,9 +468,9 @@ public class MyCreditDetailFragment extends BaseFragment {
                 }
 
                 if (!TextUtils.isEmpty(customer.getHaveOwnHouse())) {//房产
-                    hourseList=ParamsUtil.getInstance().getHourseList();
-                    if(hourseList!=null&&hourseList.size()!=0){
-                        for (int i=0;i<hourseList.size();i++){
+                    List<RelationEntity> hourseList = ParamsUtil.getInstance().getHourseList();
+                    if(hourseList !=null&& hourseList.size()!=0){
+                        for (int i = 0; i< hourseList.size(); i++){
                             if(customer.getHaveOwnHouse().equals(hourseList.get(i).getDictSubId())){
                                 house_data.setText(hourseList.get(i).getOptionName());
                             }
@@ -455,9 +480,9 @@ public class MyCreditDetailFragment extends BaseFragment {
                 }
 
                 if (!TextUtils.isEmpty(customer.getHaveOwnCar())) {//车产
-                    carList=ParamsUtil.getInstance().getCarList();
-                    if(carList!=null&&carList.size()!=0){
-                        for (int i=0;i<carList.size();i++){
+                    List<RelationEntity> carList = ParamsUtil.getInstance().getCarList();
+                    if(carList !=null&& carList.size()!=0){
+                        for (int i = 0; i< carList.size(); i++){
                             if(customer.getHaveOwnCar().equals(carList.get(i).getDictSubId())){
                                 car_data.setText(carList.get(i).getOptionName());
                             }
@@ -467,9 +492,9 @@ public class MyCreditDetailFragment extends BaseFragment {
 
                 if (!TextUtils.isEmpty(customer.getCreditState())) {//信用状况
                     ll_xy.setVisibility(View.VISIBLE);
-                    creditList=ParamsUtil.getInstance().getCreditList();
-                    if(creditList!=null&&creditList.size()!=0){
-                        for (int i=0;i<creditList.size();i++){
+                    List<RelationEntity> creditList = ParamsUtil.getInstance().getCreditList();
+                    if(creditList !=null&& creditList.size()!=0){
+                        for (int i = 0; i< creditList.size(); i++){
                             if(customer.getCreditState().equals(creditList.get(i).getDictSubId())){
                                 xy_data.setText(creditList.get(i).getOptionName());
                             }

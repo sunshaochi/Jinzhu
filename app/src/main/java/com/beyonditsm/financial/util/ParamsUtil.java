@@ -60,7 +60,7 @@ public class ParamsUtil {
     private List<JJTCityEntity> cityEntityList;
     private List<JJTCounyEntity> counyEntityList;
     private ArrayList<CreditSpeedEntity.ResideStatusmapBean> propertyTypeList;
-    private List<RelationEntity> carList,hourseList, creditList;//车产，职业，房产，信用
+    private List<RelationEntity> carList,hourseList, creditList,jobType;//车产，职业，房产，信用
 
     public List<RelationEntity> getCarList() {
         return carList;
@@ -320,5 +320,13 @@ public class ParamsUtil {
 
     public void setCreditPage(int creditPage) {
         this.creditPage = creditPage;
+    }
+
+    public List<RelationEntity> getJobType() {
+        return jobType;
+    }
+
+    public void setJobType(List<RelationEntity> jobType) {
+        this.jobType = jobType;
     }
 }
