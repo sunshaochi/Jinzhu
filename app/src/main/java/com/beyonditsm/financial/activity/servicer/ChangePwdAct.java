@@ -8,6 +8,7 @@ import com.beyonditsm.financial.R;
 import com.beyonditsm.financial.activity.BaseActivity;
 import com.beyonditsm.financial.entity.ChangePwdEntity;
 import com.beyonditsm.financial.http.RequestManager;
+import com.beyonditsm.financial.util.MyLogUtils;
 import com.beyonditsm.financial.util.MyToastUtils;
 import com.beyonditsm.financial.util.SpUtils;
 import com.beyonditsm.financial.widget.ClearEditText;
@@ -66,6 +67,7 @@ public class ChangePwdAct extends BaseActivity {
             changePwdEntity.setUserName(SpUtils.getPhonenumber(getApplicationContext()));
             changePwdEntity.setPassword(oldpwd);
             changePwdEntity.setNewPassword(newpwd);
+            MyLogUtils.info("changePwdEntity"+changePwdEntity);
             RequestManager.getCommManager().toChangePwd(changePwdEntity, new RequestManager.CallBack() {
                 @Override
                 public void onSucess(String result) {

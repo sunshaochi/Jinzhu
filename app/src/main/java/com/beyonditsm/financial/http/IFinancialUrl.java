@@ -335,7 +335,7 @@ public interface IFinancialUrl {
     /*查找获取登录用户个人信息*/
     String USERINFO_URL = BASE_URL + "/customer/getAccountInfo";
     /*修改密码*/
-    String UPDATE_PWD_URL = BASE_URL + "customer/unLogin/modifyUserPassword";
+    String UPDATE_PWD_URL = BASE_URL + "/customer/modifyUserPassword";
     /*发送验证码找回密码的验证码 */
     String FPRGET_PWD_SMSCAPTCHA = BASE_URL + "/customer/unLogin/sendCaptchaPassword";
     /*更新位置*/
