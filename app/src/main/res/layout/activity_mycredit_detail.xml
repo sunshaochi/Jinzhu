@@ -183,6 +183,7 @@
                             android:orientation="horizontal">
 
                             <LinearLayout
+                                android:id="@+id/ll_totalCharge"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -230,7 +231,7 @@
                                 android:text="利率：" />
 
                             <TextView
-
+                                android:visibility="invisible"
                                 android:id="@+id/onpay"
                                 style="@style/tv_second_style"
                                 android:layout_width="0dp"
@@ -389,6 +390,7 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:visibility="gone"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="15dp"

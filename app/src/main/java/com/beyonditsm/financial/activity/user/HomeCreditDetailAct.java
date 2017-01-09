@@ -461,7 +461,7 @@ public class HomeCreditDetailAct extends BaseActivity {
      * @param curVal 当前金额
      */
     private void validateCredit(double curVal, String creditMonth) {
-        Double monthRath = (Double.valueOf(productEntity.getMinLoanRate()) + Double.valueOf(productEntity.getMaxLoanRate())) / 2 ;
+        Double monthRath = Double.valueOf(productEntity.getMinLoanRate());
 
 //        getMOnthPay(curVal / 10000 + "", monthRath, creditMonth);//获取月供
         getMonthlyPay(monthRath,curVal,Integer.parseInt(creditMonth));
@@ -669,7 +669,7 @@ public class HomeCreditDetailAct extends BaseActivity {
                         }
                     }
 
-                    Double monthRath = (Double.valueOf(productEntity.getMinLoanRate()) + Double.valueOf(productEntity.getMaxLoanRate())) / 2;
+                    Double monthRath = Double.valueOf(productEntity.getMinLoanRate());
 //                    getMOnthPay(creditMoney, monthRath, creditMonth);//计算月供里面返回总利息和月供
                     getMonthlyPay(monthRath,Double.parseDouble(creditMoney),Integer.parseInt(creditMonth));
                 }

@@ -402,7 +402,8 @@ public class LoginAct extends BaseActivity {
                     Intent intent = new Intent("com.update.user");
                     sendBroadcast(intent);
                     finish();
-                }else if (TextUtils.equals(data.getUserStatus(),"ROLE_CREDIT_MANAGER_0")){
+                }else if (TextUtils.equals(data.getUserStatus(),"ROLE_CREDIT_MANAGER_0") || TextUtils.equals(data.getUserStatus(),"UNASSIGNED")
+                        || TextUtils.equals(data.getUserStatus(),"ROLE_AREA_MANAGER") || TextUtils.equals(data.getUserStatus(),"ROLE_CREDIT_MANAGER")){
                     MyToastUtils.showShortToast(MyApplication.getInstance().getApplicationContext(),"该用户为信贷经理用户，请下载信贷经理端后重新登录");
                     loginBtn.setEnabled(true);
                     progressBar1.setVisibility(View.GONE);
