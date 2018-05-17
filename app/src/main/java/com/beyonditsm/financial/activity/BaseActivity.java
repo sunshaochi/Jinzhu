@@ -28,6 +28,9 @@ import cn.jpush.android.api.JPushInterface;
  */
 public abstract class BaseActivity extends SmartFragmentActivity {
 
+
+    
+
     private RelativeLayout rl_right;
     private int  REQUEST_LOGIN = 110;
 //    private RelativeLayout rlStatusBar;
